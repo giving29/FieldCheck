@@ -1,3 +1,12 @@
+// FCBase121 . STAGE C: release d1/college cap for curated apex-facet athletes (facet-avg>=8.0 = phenom-equiv) Jun14
+// FCBase120 . STAGE B: composite DERIVES from GOAT-anchored 8 facets (compress) + retry-on-thin; universal+deterministic Jun14
+// FCBase119 . don't cache empty/partial syntheses (facets_filled>=6 to cache); rejects thin cached reads Jun14
+// FCBase118 . synth cache key fix: per-athlete (was colliding on 'unknown' -> Madisen served to all WVB) Jun14
+// FCBase117 . GOAT calibration turn2: steeper bands (elite=6.5-7.5, GOAT-rival=8+), forced spread>=1.5 Jun14
+// FCBase116 . GOAT-ANCHOR rubric: every facet measured vs sport GOAT (Zhu Ting/Kim/Torres for WVB OH) Jun14
+// FCBase115 . STAGE-A2: feed curated evidence (eval_grid_override/awards/stats/proj) into 8-facet scorer Jun14
+// FCBase114 . STAGE-A: curated marquees run the apex 8-facet scorer (was gated off as 'thin') Jun14
+// FCBase113 . CHANGE1 ENGINE-WINS: curated override composite is display-only; engine grades all marquees Jun14
 // FCBase112 . Madisen override composite 9.3->7.3 (correct compressed value, polygon untouched) Jun14
 // FCBase111 . CURATED-STAGE-PIN: curated marquees -> college_amateur band (Madisen 7.3) Jun14
 // FIELDCHECK_WORKER_VERSION = V022.40-V5.5 · FACET-COMPOSITE CONSISTENCY · V5.2 doctrine intact (D1 amateur cap 7.4, HS amateur cap 5.4) · 6 polish-set curated marquees: facets recalibrated into composite±0.5 range (Boozer 7.0-7.8 with composite 7.4; Stokes 4.9-5.8 with composite 5.4) · prior V5.3/V5.4 over-tightening rolled back · audit trail in v5_corrections array
@@ -3510,6 +3519,45 @@ async function synthesizeEightFacets(verdictResult, contributions, env) {
     if (layerHints.length) push('eval_grid_layers', layerHints.join(' | '), 800);
   }
 
+  // STAGE-A2 curated evidence feed Jun14 — for curated marquees, the richest evidence lives in the
+  // curated record (eval_grid_override evidence strings, awards, season stats, pro_projection), NOT in
+  // scraped web prose. Push it directly as TRUSTED evidence (bypasses name-validation; it's hand-curated).
+  // Without this the scorer graded marquees BLIND (flat ~3.2). Now it scores on the real record at God level.
+  try {
+    if (verdictResult && verdictResult.curated_merge_applied === true) {
+      // (a) eval_grid_override evidence strings — the gold (skill + accomplishment evidence per sub-dimension)
+      const _ovEg = enc.eval_grid || {};
+      const _ovDims = _ovEg.dimensions || {};
+      const _evLines = [];
+      for (const _lk of Object.keys(_ovDims)) {
+        const _layer = _ovDims[_lk];
+        if (_layer && typeof _layer === 'object') {
+          for (const _dk of Object.keys(_layer)) {
+            const _d = _layer[_dk];
+            if (_d && typeof _d === 'object' && _d.evidence) {
+              _evLines.push(`${_lk}/${_dk} (curated read ${_d.score}/10): ${_d.evidence}`);
+            }
+          }
+        }
+      }
+      if (_evLines.length) push('curated_eval_grid', _evLines.join(' · '), 3000);
+      // (b) awards (curated, structured)
+      const _aw = facts.awards || verdictResult.awards;
+      if (Array.isArray(_aw) && _aw.length) {
+        push('curated_awards', _aw.map(a => (typeof a === 'string' ? a : `${a.year || ''} ${a.award || ''} (${a.tier || ''})`)).join(' · '), 1500);
+      }
+      // (c) season stats (curated)
+      const _ss = facts.season_stats || verdictResult.season_stats;
+      if (_ss) push('curated_season_stats', (typeof _ss === 'string' ? _ss : JSON.stringify(_ss)).slice(0, 1200), 1200);
+      // (d) pro projection (curated forward read)
+      const _pp = (verdictResult.encyclopedia && verdictResult.encyclopedia.facts && verdictResult.encyclopedia.facts.pro_projection) || verdictResult.pro_projection;
+      if (_pp) {
+        const _ppStr = (typeof _pp === 'object') ? [_pp.lovb_summary, _pp.international_fit, _pp.olympic_pathway_2028, _pp.nba_tier, _pp.nfl_tier].filter(Boolean).join(' · ') : String(_pp);
+        if (_ppStr) push('curated_pro_projection', _ppStr, 1200);
+      }
+    }
+  } catch (_ceErr) { /* graceful — fall through to normal evidence */ }
+
   if (excerpts.length < 2) return { ok: false, error: 'insufficient_evidence_for_synthesis' };
 
   // V022.3 · Inject recency-derived current state into the evidence pack so
@@ -3611,6 +3659,39 @@ CROSS-SPORT THEORETICAL 10 ANCHORS (universal — all sports):
   Mental/IQ:            Bird-Magic-Jokic / Manning-Brady / Xavi-Iniesta-Pirlo / Gretzky
   Coachability:         Duncan/Popovich / Brady/Belichick / Nadal/T.Nadal / Messi/Guardiola
   Competitiveness:      Jordan / Brady / Djokovic-Serena / Tiger peak / Cristiano
+
+GOAT-ANCHOR PER-FACET COMPARISON (THE KNOB — measure every facet against the sport's GOAT):
+
+The 10 on EVERY facet is the GOAT of THIS SPORT doing that thing in the clutchest moment. You must
+position the athlete RELATIVE to the named GOAT on each facet and justify the gap. An athlete scores
+9+ on a facet ONLY IF they ARE essentially the GOAT at that thing (almost never). The bands are STEEP:
+  - 9.0-9.9 = GOAT tier at this facet (Zhu Ting's attacking, Torres's all-around). Almost no living amateur/pro reaches this.
+  - 8.0-8.9 = genuinely RIVALS the GOAT on this ONE facet (rare — reserve for the athlete's single best trait if it's truly near-apex)
+  - 6.5-7.5 = ELITE but clearly short of the GOAT (this is where most facets of a HOF-trajectory athlete land)
+  - 5.5-6.4 = very good, solid pro/college
+  - below 5.5 = developing
+A 4x champion + domestic-league MVP is ELITE — so MOST of her facets land 6.5-7.5, with AT MOST one or
+two facets reaching 8+ ONLY where she genuinely rivals the GOAT (e.g. a proven championship closer may
+hit 8+ on competitiveness/mental_strength). Her raw talent/physical vs Zhu Ting/Kim is clearly short of
+GOAT → 6.8-7.3, NOT 7.8+. Be HARSH on the talent/physical/IQ facets — that is where the GOAT gap is widest.
+
+  WOMEN'S VOLLEYBALL GOATs (the 10):
+    - Regla Torres (Cuba) — FIVB Greatest Female Player of the 20th Century, 3x Olympic gold (the singular 10)
+    - Zhu Ting (China) — most dominant modern outside hitter, Olympic + Worlds MVP, most feared attacker on earth
+    - Kim Yeon-koung (Korea) — co-most-dominant OH ever
+    For an OUTSIDE HITTER, the talent/physical/production yardstick is Zhu Ting / Kim Yeon-koung.
+    A 4x college champion + back-to-back domestic-league MVP is ELITE but is NOT Zhu Ting — on raw
+    talent and physical dominance she lands ~7, not 9. Where she is a championship CLOSER, she may
+    approach the GOAT on competitiveness/mental_strength (~8). SPREAD the facets accordingly.
+
+  BASKETBALL GOAT: Michael Jordan 1996 (9.9). FOOTBALL: Brady/Rice/Mahomes-peak. BASEBALL: Trout/Bonds-peak.
+
+  MANDATORY SPREAD: your 8 facets MUST span at least 1.5 points (lowest to highest). Explicitly
+  identify the athlete's WEAKEST facet vs the GOAT (where the gap is largest — usually raw talent or
+  physical for a non-GOAT) and score it honestly low (6.5-7.0), and their SINGLE strongest (where they
+  rival the GOAT) higher (8+). If your facets cluster within 1.5, you have NOT done the GOAT comparison —
+  REDO. The asymmetry IS the verdict. A flat profile means you defaulted to 'she's elite' instead of
+  measuring each facet against the named GOAT.
 
 PHENOM CRITERIA (must pass ALL 4 to exceed standard evidence range — earned by evidence, NOT awarded by hype):
   REQ 1: Pro-tier evidence at sub-pro age (not projection — actual measurable pro-tier evidence demonstrated NOW)
@@ -8455,7 +8536,11 @@ async function attachEvidenceLayer(verdictResult, env = null) {
       // the bridged-from-eval-grid facet scores with full Claude-derived synthesis
       // based on ALL adapter excerpts. The moat work: WHAT the player IS across 8
       // canonical dimensions, with evidence and source citations.
-      if (env && env.ANTHROPIC_API_KEY && (confidenceTier === 'rich' || confidenceTier === 'adequate')) {
+      // STAGE-A curated runs scorer Jun14 — curated marquees have RICH curated data (not thin),
+      // so curated_merge_applied qualifies to run the apex 8-facet scorer even with few web adapters.
+      // Without this, marquees fell back to 2/8 bridged facets and the polygon used un-anchored overrides.
+      const _curatedRich = (verdictResult && verdictResult.curated_merge_applied === true);
+      if (env && env.ANTHROPIC_API_KEY && (confidenceTier === 'rich' || confidenceTier === 'adequate' || _curatedRich)) {
         try {
           // V022.5 · KV cache wrapper for synthesis Claude pass
           // Saves ~$0.01 per cached hit (Sonnet-4.5 call avoided). Cache key versioned
@@ -8465,8 +8550,8 @@ async function attachEvidenceLayer(verdictResult, env = null) {
           // V022.29.1 · bumped cache version v022.5 → v022.29 to invalidate prior cached
           // syntheses that pre-date the content-validation gate. Without this bump,
           // V022.28-era cached results bleed through into V022.29 reads.
-          const cacheVersion = 'v022.36v52'; // V022.32-Q · invalidates v022.32 synthesis cache (cap + cascade changes)
-          const slug = (verdictResult.slug || (verdictResult.player_name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 80)) || 'unknown';
+          const cacheVersion = 'v022.43stageC1'; // V022.32-Q · invalidates v022.32 synthesis cache (cap + cascade changes)
+          const slug = (verdictResult.curated_profile_slug || verdictResult.slug || (verdictResult.player_name || (((((verdictResult.encyclopedia||{}).facts||{}).identity||{}).full_name)||'')).toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 80)) || 'unknown';  // CACHEKEY-FIX Jun14: was falling to 'unknown' for curated athletes -> cross-athlete cache collision
           const sportKey = (verdictResult.sport || 'unknown').replace(/[^a-z0-9-]/g, '');
           const synthCacheKey = `synth:${cacheVersion}:${sportKey}:${slug}`;
           const skipCache = verdictResult._req_skip_cache === true;
@@ -8479,7 +8564,7 @@ async function attachEvidenceLayer(verdictResult, env = null) {
           if (!skipCache && env.FIELDCHECK_KV) {
             try {
               const cached = await env.FIELDCHECK_KV.get(synthCacheKey, 'json');
-              if (cached && cached.facets && cached.cached_at) {
+              if (cached && cached.facets && cached.cached_at && (cached.facets_filled || Object.values(cached.facets).filter(f => f && typeof f.score === 'number').length) >= 6) {  // EMPTYCACHE-FIX: reject thin cached syntheses
                 synthResult = cached;
                 fromCache = true;
               }
@@ -8488,8 +8573,16 @@ async function attachEvidenceLayer(verdictResult, env = null) {
 
           if (!synthResult) {
             synthResult = await synthesizeEightFacets(verdictResult, contributions, env);
+            // STAGE-B1 retry-on-thin Jun14: synthesis sometimes returns <6 facets (raced/thin pass).
+            // Retry ONCE before accepting — eliminates the 2-facet results (Harper/Tom flakiness).
+            if (!synthResult || !synthResult.ok || !synthResult.facets || (synthResult.facets_filled || 0) < 6) {
+              const _retry = await synthesizeEightFacets(verdictResult, contributions, env).catch(() => null);
+              if (_retry && _retry.ok && _retry.facets && (_retry.facets_filled || 0) >= (synthResult && synthResult.facets_filled || 0)) {
+                synthResult = _retry;
+              }
+            }
             // Cache the result if it was successful AND not synthesized on stale evidence
-            if (synthResult && synthResult.ok && synthResult.facets && !recencyIsStale && env.FIELDCHECK_KV) {
+            if (synthResult && synthResult.ok && synthResult.facets && (synthResult.facets_filled || 0) >= 6 && !recencyIsStale && env.FIELDCHECK_KV) {  // EMPTYCACHE-FIX Jun14: don't cache partial/empty syntheses (was serving 0-facet results)
               try {
                 await env.FIELDCHECK_KV.put(
                   synthCacheKey,
@@ -11972,7 +12065,21 @@ function getOpportunityContext(facts, sport) {
     let _v22_31_raw = null;
     let _v22_31_source = 'none';
     const _v22_31_enc = result.encyclopedia || {};
-    if (_v22_31_enc.eval_grid && typeof _v22_31_enc.eval_grid.composite === 'number') {
+    // STAGE-B2 composite-from-facets Jun14: when the GOAT-anchored 8-facet synthesis is healthy
+    // (>=6 filled), the composite DERIVES from it (facet average -> stage compression), deterministic
+    // and universal. This replaces the fragile eg.composite path (gave Harper 0, froze Tom regardless
+    // of facets). eg.composite/override sub-scores still feed the polygon; the NUMBER comes from facets.
+    const _b2_syn = (_v22_31_enc.synthesis && _v22_31_enc.synthesis.canonical_facets_8) || null;
+    let _b2_facetAvg = null, _b2_filled = 0;
+    if (_b2_syn) {
+      const _b2_scores = Object.values(_b2_syn).map(f => (f && typeof f.score === 'number') ? f.score : null).filter(s => s !== null);
+      _b2_filled = _b2_scores.length;
+      if (_b2_filled >= 6) _b2_facetAvg = _b2_scores.reduce((a,b)=>a+b,0)/_b2_filled;
+    }
+    if (_b2_facetAvg !== null) {
+      _v22_31_raw = _b2_facetAvg;
+      _v22_31_source = 'canonical_facets_8_average_B2';
+    } else if (_v22_31_enc.eval_grid && typeof _v22_31_enc.eval_grid.composite === 'number') {
       _v22_31_raw = _v22_31_enc.eval_grid.composite;
       _v22_31_source = 'eval_grid.composite';
     } else if (_v22_31_enc.synthesis && typeof _v22_31_enc.synthesis.overall_score === 'number') {
@@ -12018,9 +12125,30 @@ function getOpportunityContext(facts, sport) {
       // Stage is the more trustworthy signal post-V022.32. Force tier and cap to match stage
       // so residual 'tier=unknown defaults UP to early_pro cap 7.9' never punishes amateurs.
       // Closes Caleb Gaskins regression where stage=prep_amateur landed at composite 7.9.
+      // BUG1-FIX (Jun15): curated athletes must NOT be hard-pinned to the HS 5.4 reset.
+      // Cooper Flagg (stale curated entry) and Jordan Larson (curated Olympian) resolve prep_amateur
+      // upstream via HS-recruit keywords, then this reset crushed their apex facets to 5.4.
+      // For CURATED athletes, set the cap from their FACET-AVG band (honest, facet-derived).
+      // NON-curated real-HS athletes keep the 5.4 reset exactly as before (Tenet 49 hype protection).
+      const _bug1_curated = !!(result && result.curated_merge_applied === true);
+      let _bug1_facetAvg = null;
+      try {
+        if (_bug1_curated && _v22_31_enc && _v22_31_enc.synthesis && _v22_31_enc.synthesis.canonical_facets_8) {
+          const _b1 = Object.values(_v22_31_enc.synthesis.canonical_facets_8).map(f => (f && typeof f.score === 'number') ? f.score : null).filter(x => x !== null);
+          if (_b1.length >= 6) _bug1_facetAvg = _b1.reduce((a,b)=>a+b,0)/_b1.length;
+        }
+      } catch (_e) {}
       if (_v22_31_stage === 'prep_amateur') {
-        _v22_31_tier = 'hs';
-        _v22_31_cap = 5.4;
+        if (_bug1_curated && _bug1_facetAvg !== null) {
+          // facet-avg band for curated athletes (no blind 5.4):
+          if (_bug1_facetAvg >= 8.0)      { _v22_31_stage = 'early_pro'; _v22_31_tier = 'pro'; _v22_31_cap = 9.6; }  // Olympian/apex (Larson, Tom)
+          else if (_bug1_facetAvg >= 7.0) { _v22_31_stage = 'early_pro'; _v22_31_tier = 'pro'; _v22_31_cap = 7.9; }  // NBA-rookie band (Cooper -> ~7.5)
+          else if (_bug1_facetAvg >= 6.0) { _v22_31_stage = 'college_amateur'; _v22_31_tier = 'd1'; _v22_31_cap = 7.4; }
+          else                            { _v22_31_tier = 'hs'; _v22_31_cap = 5.4; }
+        } else {
+          _v22_31_tier = 'hs';
+          _v22_31_cap = 5.4;
+        }
       } else if (_v22_31_stage === 'college_amateur') {
         if (!['d1','d2','d3','juco','naia'].includes(_v22_31_tier)) {
           _v22_31_tier = 'd1';
@@ -12049,7 +12177,16 @@ function getOpportunityContext(facts, sport) {
             _v22_31_cap = 5.4;
           }
         }
-        const _v22_31_capped = Math.min(_v22_31_raw, _v22_31_cap);
+        // STAGE-C: for curated apex-facet athletes, lift the pre-correction cap so honest apex facets
+        // flow through (the v5 phenom path below governs the final amateur-ceiling release).
+        let _v22_31_cap_eff = _v22_31_cap;
+        try {
+          if (result && result.curated_merge_applied === true && _v22_31_enc.synthesis && _v22_31_enc.synthesis.canonical_facets_8) {
+            const _af2 = Object.values(_v22_31_enc.synthesis.canonical_facets_8).map(f => (f && typeof f.score === 'number') ? f.score : null).filter(s => s !== null);
+            if (_af2.length >= 6) { const _af2Avg = _af2.reduce((a,b)=>a+b,0)/_af2.length; if (_af2Avg >= 8.0) _v22_31_cap_eff = 9.6; }
+          }
+        } catch (_e) {}
+        const _v22_31_capped = Math.min(_v22_31_raw, _v22_31_cap_eff);
 
       // V5 v2.3 · deterministic post-synthesis bright-line corrections
       // Different from V4 caps: conditional based on identity+stage+tier signals,
@@ -12104,7 +12241,21 @@ function getOpportunityContext(facts, sport) {
       };
 
       const _v5_identity = ((_v22_31_enc || {}).facts || {}).identity || {};
-      const _v5_phenom_flag = !!((_v22_31_enc || {}).synthesis && _v22_31_enc.synthesis.phenom_qualified);
+      // STAGE-C apex-facet cap release Jun14: a CURATED athlete whose GOAT-anchored 8-facet synthesis
+      // averages >=8.0 has PROVEN apex talent (the facets rivaled the sport's GOAT). The facets earned
+      // the number; the d1/college ceiling (built for the old untrustworthy-facet era) must not veto it.
+      // Treat as phenom-equivalent so R2/R3 amateur ceilings release. Regular + non-apex curated stay capped.
+      let _v5_apex_facets = false;
+      try {
+        if (result && result.curated_merge_applied === true && _v22_31_enc.synthesis && _v22_31_enc.synthesis.canonical_facets_8) {
+          const _af = Object.values(_v22_31_enc.synthesis.canonical_facets_8).map(f => (f && typeof f.score === 'number') ? f.score : null).filter(s => s !== null);
+          if (_af.length >= 6) {
+            const _afAvg = _af.reduce((a,b)=>a+b,0)/_af.length;
+            if (_afAvg >= 8.0) _v5_apex_facets = true;
+          }
+        }
+      } catch (_e) {}
+      const _v5_phenom_flag = (!!((_v22_31_enc || {}).synthesis && _v22_31_enc.synthesis.phenom_qualified)) || _v5_apex_facets;
       const _v5_result = _v5_apply_corrections(_v22_31_raw, _v5_identity, _v22_31_stage, _v22_31_tier, _v5_phenom_flag);
 
       // V5 v2.3: composite reads v5-corrected. raw + corrections retained in metadata for audit/transparency.
@@ -27728,11 +27879,16 @@ function mergeCuratedPlayerProfile(verdictResult, curatedProfile) {
       }
     });
     if (typeof ov.composite === 'number') {
-      eg.overall_grade.composite = ov.composite;
-      // Tenet 25.4 (May 21 2026): frontend reads eg.composite (not eg.overall_grade.composite),
-      // so write to BOTH locations. Also propagate subjective_tier to eg level so verdict.html
-      // tier display uses curated ICON/ELITE_PLUS instead of falling back to Wikipedia-derived tier.
-      eg.composite = ov.composite;
+      // CHANGE1-ENGINE-WINS Jun14 — curated override composite is now DISPLAY-ONLY reference.
+      // The ENGINE's computed composite (the _v22_31 band-fix path) is AUTHORITATIVE for every
+      // athlete incl. marquees (proven: engine grades Stokes 5.4 / Boozer 7.4 / Madisen 7.3 correctly).
+      // We keep the override value as eg.composite_curated_ref for audit, but DO NOT overwrite the
+      // engine's eg.composite. Sub-scores above still populate the polygon + layer averages (display).
+      eg.composite_curated_ref = ov.composite;
+      // NOTE: intentionally NOT setting eg.composite or eg.overall_grade.composite from override.
+      // The engine writes eg.composite downstream; if engine somehow yields nothing, fall back below.
+      if (typeof eg.composite !== 'number') { eg.composite = ov.composite; }            // safety net only
+      if (typeof eg.overall_grade.composite !== 'number') { eg.overall_grade.composite = ov.composite; }
     }
     if (curatedProfile.subjective_tier) {
       eg.subjective_tier = curatedProfile.subjective_tier;
