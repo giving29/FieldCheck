@@ -134,3 +134,12 @@ Code lives in THREE places, each covering a different failure:
 cd ~/Desktop/fieldcheck-proxy && git add . && git commit -m "FCBase___ — what changed" && git push
 ```
 `.gitignore` keeps secrets + tarballs + baks + dead dirs out. NEVER commit secrets (worker reads env 398× = safe; only 9 directus read-only image tokens present = low-risk CDN URLs). Each clean ship = local freeze + git push, so code + reasoning both live offsite.
+
+---
+## 2026-06-15 · REDIRECTS LIVE IN `/_redirects`, NOT `.netlify/netlify.toml` (root cause of the June-15 day-loss)
+- **Netlify serves redirects from `/_redirects` at the publish root** (and root `netlify.toml`). It does NOT read `.netlify/netlify.toml`. All June-15 edits to `.netlify/netlify.toml` were on an IGNORED file.
+- Symptom: every clean URL (`/gems`, `/coaches`, `/clips`, …) served the HOME page, because the live `/_redirects` was only `/* /index.html 200`.
+- **Fix (committed 1396aca):** rebuilt `/_redirects` from the git-good toml (commit **369579c**, 43 rules) → converted to `_redirects` line format → added `/clips`,`/add-clip`,`/top100` → `/*` catch-all LAST. Verified all 8 nav links by `<title>` before commit.
+- **Authority going forward:** `/_redirects` is the source of truth for routing. The 45 clean-URL rules + catch-all live there. `.netlify/netlify.toml` is not read by Netlify.
+- **Recovery anchor:** good redirect set is in git `369579c:.netlify/netlify.toml`; current correct routing is committed in `1396aca:_redirects`.
+- Deploy mechanics confirmed: publish dir = repo root (13GB); park `freezes/`+`backups/` to `/tmp` before `netlify deploy --prod --dir . --site 03408b50-...`, restore after. `.netlifyignore` does NOT work.

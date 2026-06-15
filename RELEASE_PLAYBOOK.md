@@ -533,3 +533,26 @@ _(New lessons appended as they surface.)_
 - **Brainstorm prep:** `ROUTES_AUDIT.md` (Block 14 substrate)
 
 **Ready to deploy FC16.S1 when you give the word.** ✊
+
+---
+## 🛑 DEPLOY PRE-FLIGHT + VERIFY GATE *(June 15 2026 — mandatory on every deploy)*
+Born from the June-15 redirect day-loss. Every deploy follows this or it does not ship.
+
+### BEFORE editing (read-state-first · Tenets 58, 62, 63)
+1. **Find the file the platform actually reads.** Redirects: `find . -name _redirects -not -path "*/freezes/*"`. Netlify reads `/_redirects` at publish root, NOT `.netlify/netlify.toml`.
+2. **Read the current file** (`cat`/`grep`) immediately before editing. Never edit assumed state.
+3. **Rebuild from a known-good git source** when a file is damaged — never transform unknown on-disk state.
+4. **Back up** the file first (`.bak.$TS`).
+
+### BUILD (simplest · Tenet 62)
+5. ONE self-contained script, one command, downloads/content baked in.
+6. **Dry-run the core logic in-container first** (Tenet 59). PRINT the result (full redirect list / diff) before deploying.
+
+### DEPLOY (Netlify specifics)
+7. Park the 13GB: `mv freezes /tmp/fz; mv backups /tmp/bk` → `netlify deploy --prod --dir . --site 03408b50-33ef-4e80-b08f-a648c42eb2b4` → restore.
+
+### VERIFY GATE (regression-to-extreme-length · Tenet 60) — COMMIT ONLY IF ALL PASS
+8. **Site:** curl EVERY nav link by `<title>`; home-title where a real page is expected = ABORT, do not commit. Include adjacent existing links, not just the new page.
+9. **Engine:** athlete spread — target moved + others held + HS still capped + values varied.
+10. **Never break what works** (Tenet 61): the proven HP/nav stays intact; additive + reversible only.
+11. Commit + `git push` ONLY after the gate passes. On fail: leave a one-line restore, do not push.

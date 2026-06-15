@@ -35,3 +35,27 @@ or active generational HOF-lock). Active accomplishment alone - even multiple ti
 MVPs early in a career - caps at ELITE 8.9. Applies to curated marquees AND fresh
 evaluations. WVB corpus sweep pending Sridhar review: Logan Tom 9.4, Jordan Larson 9.3,
 Ogbogu 9.3, Robinson-Cook 9.2, Eggleston 9.0. KWJ/May-Treanor/Akinradewo are HOF, stand.
+
+## Tenet 58 - RIGHT-FILE-FIRST (June 15 2026, Sridhar — the day-killer)
+Before editing ANY config/redirect/build file, find the file the platform ACTUALLY reads.
+- Netlify reads **`/_redirects` at the publish root** AND root `netlify.toml` — it does NOT read `.netlify/netlify.toml`. June 15: hours lost editing `.netlify/netlify.toml` (ignored by Netlify) while the live `/_redirects` (a 3-line catch-all `/* /index.html 200`) sent every clean URL to home.
+- ALWAYS run `find . -name _redirects -not -path "*/freezes/*"` and confirm the publish dir + which redirect source wins, BEFORE touching redirects.
+- Read the SERVED bytes (`curl` the live URL, check `<title>`) and the REAL config file FIRST. Never edit blind.
+
+## Tenet 59 - TEST-BEFORE-HANDOVER (June 15 2026)
+Every script's core logic is dry-run in the container against representative data BEFORE it goes to Sridhar. No untested command leaves. If a parser/transform can be tested on a sample, it IS tested first. "Quality proof IS the work" applies to the scripts themselves, not just the output.
+
+## Tenet 60 - REGRESSION-GATE-EVERYTHING (June 15 2026, Sridhar — "regression to the extreme length")
+Every deploy ENDS with a verification gate that checks the ACTUAL LIVE result, and commits ONLY if all pass:
+- **Site deploys:** curl EVERY nav link by `<title>`; if any serves the home title when it shouldn't, ABORT the commit. New page → verify the new page AND the adjacent existing nav still resolve.
+- **Engine deploys:** run the athlete spread (target athlete moved + others held + HS still capped + varied, not clustered).
+- New features test the currently-working adjacent paths too, not just the new thing. The gate physically blocks a broken ship.
+
+## Tenet 61 - NEVER-BREAK-WHAT-WORKS (June 15 2026, Sridhar)
+The proven Home Page / nav / live pages are SACRED. Touch the minimum. Back up before every edit. Changes near working surfaces are ADDITIVE and reversible in one line (e.g. one `<a>` nav item, one redirect). After any change, verify the working surfaces STILL work. A redesign is a separate, explicit phase — never bundled into a feature add.
+
+## Tenet 62 - SIMPLEST-DEPLOY, FROM CLEAN SOURCE (June 15 2026, Sridhar)
+One self-contained script, one command, downloads baked in. Build from a KNOWN-GOOD source (git commit), never from unknown/damaged on-disk state. PRINT the result (the full redirect list / the diff) BEFORE deploying so Sridhar sees it. Never run a transform on a file whose current contents I haven't just read — rebuild from git-clean source instead. June 15: repeated damage came from python edits on a file I couldn't see; the fix was to rebuild `_redirects` fresh from git 369579c.
+
+## Tenet 63 - READ-STATE-BEFORE-EVERY-EDIT (June 15 2026)
+The repeated June-15 damage (43 redirects → 6) came from editing files in a state I assumed instead of one I'd just read. ALWAYS `cat`/`grep` the actual current file immediately before editing it. Never trust assumed state. If a count looks wrong after an edit, STOP and read — don't patch on top.
