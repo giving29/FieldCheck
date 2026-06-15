@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldCheck · Add a Clip (CLIP-1 production flow)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B0E13;--surface:#141A22;--surface2:#1B232E;--line:#28323F;--text:#EAEEF3;
+    --muted:#8B97A6;--faint:#5C6675;--gold:#F6B43A;--gold-dim:rgba(246,180,58,.13);
+    --gold-line:rgba(246,180,58,.35);--cyan:#46D8C6;--green:#54BE83;--maxw:480px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--text);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px 80px}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px;max-width:var(--maxw);margin:0 auto}
+  .close{width:36px;height:36px;border:1px solid var(--line);background:var(--surface);border-radius:10px;color:var(--muted);display:grid;place-items:center;cursor:pointer;font-size:16px}
+  .stepdots{display:flex;gap:6px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--line)}
+  .dot.on{background:var(--gold)}
+  h1{font-family:Archivo;font-weight:900;font-size:25px;letter-spacing:-.02em;line-height:1.1;margin-top:14px}
+  .sub{color:var(--muted);font-size:13.5px;margin-top:8px}
+  /* step container */
+  .step{display:none}
+  .step.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+  /* source picker */
+  .record{margin-top:22px;background:linear-gradient(168deg,var(--surface2),var(--surface));border:1px solid var(--gold-line);border-radius:18px;padding:24px;text-align:center;cursor:pointer;position:relative;overflow:hidden}
+  .rec-ring{width:64px;height:64px;border-radius:50%;border:3px solid var(--gold);margin:0 auto;display:grid;place-items:center}
+  .rec-dot{width:36px;height:36px;border-radius:50%;background:var(--gold)}
+  .rec-t{font-family:Archivo;font-weight:800;font-size:17px;margin-top:14px}
+  .rec-s{font-size:12px;color:var(--muted);margin-top:4px}
+  .or{display:flex;align-items:center;gap:12px;margin:20px 0 16px;color:var(--faint);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+  .or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+  .imports{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .imp{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px 8px;text-align:center;cursor:pointer;transition:.15s}
+  .imp:hover{border-color:var(--gold-line);transform:translateY(-2px)}
+  .imp-ic{font-size:21px}
+  .imp-t{font-size:11px;font-weight:600;margin-top:6px}
+  .paste{margin-top:10px;display:flex;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 6px 6px 14px;align-items:center}
+  .paste input{flex:1;background:none;border:none;color:var(--text);font-family:Inter;font-size:13px;outline:none}
+  .paste input::placeholder{color:var(--faint)}
+  .paste button{background:var(--surface2);border:1px solid var(--line);color:var(--text);font-weight:600;font-size:12.5px;padding:9px 13px;border-radius:9px;cursor:pointer}
+  .voice{margin-top:10px;display:flex;align-items:center;gap:11px;background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
+  .voice-ic{width:32px;height:32px;border-radius:9px;background:rgba(70,216,198,.1);border:1px solid rgba(70,216,198,.25);color:var(--cyan);display:grid;place-items:center;font-size:14px;flex-shrink:0}
+  .voice-t{font-size:12.5px;font-weight:600}
+  .voice-s{font-size:11px;color:var(--muted);margin-top:1px}
+  /* context chips (step 2) */
+  .chosen{display:flex;align-items:center;gap:11px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-top:18px}
+  .chosen .thumb{width:50px;height:36px;border-radius:7px;background:linear-gradient(135deg,#222c38,#151c25);display:grid;place-items:center;color:var(--muted);font-size:13px;flex-shrink:0}
+  .chosen-t{font-size:12.5px;font-weight:600}
+  .chosen-s{font-size:11px;color:var(--muted)}
+  .lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:22px 0 10px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{padding:9px 14px;border:1px solid var(--line);background:var(--surface);border-radius:20px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:.12s}
+  .chip.on{background:var(--gold);border-color:var(--gold);color:#160f02}
+  /* privacy (step 3) */
+  .priv{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .priv-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:13px 0;border-top:1px solid var(--line)}
+  .priv-row:first-child{border-top:none;padding-top:2px}
+  .priv-l{font-size:13.5px;font-weight:600}
+  .priv-d{font-size:11.5px;color:var(--muted);margin-top:3px}
+  .switch{width:46px;height:26px;border-radius:20px;background:var(--surface2);border:1px solid var(--line);position:relative;cursor:pointer;transition:.18s;flex-shrink:0;margin-top:2px}
+  .switch.on{background:var(--gold);border-color:var(--gold)}
+  .switch i{position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#cdd5df;transition:.18s}
+  .switch.on i{left:22px;background:#1a1205}
+  .guardian{display:none;margin-top:14px;background:rgba(70,216,198,.06);border:1px solid rgba(70,216,198,.22);border-radius:11px;padding:12px 14px}
+  .guardian.show{display:block}
+  .guardian-t{font-size:12.5px;font-weight:600;color:var(--cyan);display:flex;align-items:center;gap:7px}
+  .guardian-d{font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.5}
+  .safety{margin-top:12px;font-size:11px;color:var(--faint);display:flex;align-items:flex-start;gap:7px;line-height:1.5}
+  /* anticipation + cta */
+  .ant{margin-top:18px;text-align:center;background:var(--gold-dim);border:1px solid var(--gold-line);border-radius:14px;padding:15px}
+  .ant-t{font-family:Archivo;font-weight:800;font-size:14px;color:var(--gold)}
+  .ant-s{font-size:11.5px;color:var(--muted);margin-top:4px}
+  .cta{margin-top:18px;width:100%;background:var(--gold);color:#160f02;border:none;border-radius:14px;padding:16px;font-family:Archivo;font-weight:800;font-size:15px;cursor:pointer;letter-spacing:-.01em;box-shadow:0 8px 30px rgba(246,180,58,.2)}
+  .back{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-top:14px;padding:6px}
+  /* ack */
+  .ack{display:none;text-align:center;padding-top:30px}
+  .ack.show{display:block;animation:fade .3s ease}
+  .ack-check{width:64px;height:64px;border-radius:50%;background:var(--gold-dim);border:2px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:30px;margin:0 auto 16px}
+  .ack-t{font-family:Archivo;font-weight:900;font-size:22px}
+  .ack-read{font-size:12.5px;color:var(--cyan);margin-top:12px;background:rgba(70,216,198,.07);border:1px solid rgba(70,216,198,.2);border-radius:11px;padding:12px}
+  .ack-s{font-size:12.5px;color:var(--muted);margin-top:14px;line-height:1.5}
+  .ack-s b{color:var(--gold)}
+  .ack-row{display:flex;gap:10px;margin-top:20px}
+  .ack-row button{flex:1;border-radius:12px;padding:13px;font-weight:600;font-size:13.5px;cursor:pointer;font-family:Inter}
+  .ack-prim{background:var(--gold);color:#160f02;border:none}
+  .ack-sec{background:var(--surface2);color:var(--text);border:1px solid var(--line)}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="close" onclick="location.href='/clips'">✕</div>
+    <div class="stepdots"><div class="dot on" id="d0"></div><div class="dot" id="d1"></div><div class="dot" id="d2"></div></div>
+    <div style="width:36px"></div>
+  </div>
+
+  <div class="wrap">
+    <!-- STEP 0 · SOURCE -->
+    <div class="step active" id="step0">
+      <h1>Show what you've got.</h1>
+      <div class="sub">A rep from anywhere — a match, a 6am gym set, the park. 30 seconds is plenty.</div>
+      <div class="record" onclick="pick('Recorded clip','0:24','record')">
+        <div class="rec-ring"><div class="rec-dot"></div></div>
+        <div class="rec-t">Record now</div>
+        <div class="rec-s">Tap to film · up to 0:30</div>
+      </div>
+      <div class="or">or bring one in</div>
+      <div class="imports">
+        <div class="imp" onclick="pick('YouTube clip','0:30','youtube')"><div class="imp-ic">▶</div><div class="imp-t">YouTube</div></div>
+        <div class="imp" onclick="pick('Instagram reel','0:22','instagram')"><div class="imp-ic">◎</div><div class="imp-t">Instagram</div></div>
+        <div class="imp" onclick="pick('TikTok clip','0:18','tiktok')"><div class="imp-ic">♪</div><div class="imp-t">TikTok</div></div>
+      </div>
+      <div class="paste">
+        <input id="link" placeholder="…or paste any video link">
+        <button onclick="if(link.value)pick('Linked clip','0:27','upload')">Bring it in</button>
+      </div>
+      <div class="voice" onclick="pick('Voice-added clip','0:20','record')">
+        <div class="voice-ic">🎙</div>
+        <div><div class="voice-t">Add by voice</div><div class="voice-s">"Add my serve from Saturday's final"</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 1 · CONTEXT -->
+    <div class="step" id="step1">
+      <h1>What is it?</h1>
+      <div class="sub">One tap. It helps us read the clip right — and read effort, not just skill.</div>
+      <div class="chosen">
+        <div class="thumb">▶</div>
+        <div><div class="chosen-t" id="chosenName">Recorded clip</div><div class="chosen-s" id="chosenDur">0:24 · ready</div></div>
+      </div>
+      <div class="lbl">Where was this?</div>
+      <div class="chips" id="ctxChips">
+        <div class="chip" onclick="setCtx(this,'game')">Game / match</div>
+        <div class="chip" onclick="setCtx(this,'drill')">Drill / practice</div>
+        <div class="chip" onclick="setCtx(this,'gym')">Gym / training</div>
+        <div class="chip" onclick="setCtx(this,'park')">Park / pickup</div>
+      </div>
+      <button class="cta" id="ctxNext" onclick="go(2)" style="opacity:.5;pointer-events:none">Continue</button>
+      <button class="back" onclick="go(0)">← Back</button>
+    </div>
+
+    <!-- STEP 2 · PRIVACY -->
+    <div class="step" id="step2">
+      <h1>Your clip, your call.</h1>
+      <div class="sub">It counts toward your number either way. You decide who sees it.</div>
+      <div class="priv">
+        <div class="priv-row">
+          <div><div class="priv-l">Keep private</div><div class="priv-d">Only you (and your guardian) can see it. Still graded into your number.</div></div>
+          <div class="switch on" id="swPriv" onclick="setVis('private')"><i></i></div>
+        </div>
+        <div class="priv-row">
+          <div><div class="priv-l">Show on my public profile</div><div class="priv-d">Coaches can discover it. Can be featured in FC Top 100.</div></div>
+          <div class="switch" id="swPub" onclick="setVis('public')"><i></i></div>
+        </div>
+        <div class="guardian" id="guardian">
+          <div class="guardian-t">⚑ Guardian sign-off needed</div>
+          <div class="guardian-d">You're under 18. Making a clip public sends a one-tap approval to your guardian first. Your location is never attached to any clip.</div>
+        </div>
+      </div>
+      <div class="safety">🔒 <span>Location is stripped from every upload. Public profiles show your first name + sport + region only — never your school address or schedule.</span></div>
+      <div class="ant">
+        <div class="ant-t">Your number updates Friday</div>
+        <div class="ant-s">Every clip this week is part of the next read. More reps, more signal.</div>
+      </div>
+      <button class="cta" onclick="submit()">Add to my profile</button>
+      <button class="back" onclick="go(1)">← Back</button>
+    </div>
+
+    <!-- ACK -->
+    <div class="ack" id="ack">
+      <div class="ack-check">✓</div>
+      <div class="ack-t">Clip's in.</div>
+      <div class="ack-read" id="ackRead">We see a strong rep. Counts toward your facets.</div>
+      <div class="ack-s" id="ackVis">Kept <b>private</b> for now. Your number recomputes <b>Friday</b> across all your clips.</div>
+      <div class="ack-row">
+        <button class="ack-sec" onclick="reset()">Add another</button>
+        <button class="ack-prim" onclick="location.href='/clips'">Done</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  var state={name:'',dur:'',source:'',ctx:null,vis:'private',isMinor:true};
+  function pick(name,dur,source){
+    state.name=name;state.dur=dur;state.source=source;
+    document.getElementById('chosenName').textContent=name;
+    document.getElementById('chosenDur').textContent=dur+' · ready';
+    go(1);
+  }
+  function setCtx(el,ctx){
+    document.querySelectorAll('#ctxChips .chip').forEach(c=>c.classList.remove('on'));
+    el.classList.add('on');state.ctx=ctx;
+    var n=document.getElementById('ctxNext');n.style.opacity='1';n.style.pointerEvents='auto';
+  }
+  function setVis(v){
+    state.vis=v;
+    document.getElementById('swPriv').classList.toggle('on',v==='private');
+    document.getElementById('swPub').classList.toggle('on',v==='public');
+    document.getElementById('guardian').classList.toggle('show', v==='public' && state.isMinor);
+  }
+  function go(n){
+    document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+    document.getElementById('ack').classList.remove('show');
+    document.getElementById('step'+n).classList.add('active');
+    ['d0','d1','d2'].forEach((d,i)=>document.getElementById(d).classList.toggle('on', i<=n));
+    window.scrollTo(0,0);
+  }
+  function readFor(ctx){
+    var m={game:'a clutch in-game rep — reads as Talent & Competitiveness.',
+           drill:'clean technique under reps — reads as Talent & Game IQ.',
+           gym:'repeated training work — reads as Mindset & Physical.',
+           park:'self-driven reps off-schedule — reads as Mindset.'};
+    return 'We see '+(m[ctx]||'a strong rep.');
+  }
+  function submit(){
+    document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+    document.getElementById('ackRead').textContent=readFor(state.ctx);
+    var pend = (state.vis==='public' && state.isMinor) ? ' Public view is pending your guardian\'s one-tap OK.' : '';
+    document.getElementById('ackVis').innerHTML = 'Kept <b>'+(state.vis==='public'?'public':'private')+'</b>.'+pend+' Your number recomputes <b>Friday</b> across all your clips.';
+    document.getElementById('ack').classList.add('show');
+    window.scrollTo(0,0);
+  }
+  function reset(){
+    state={name:'',dur:'',source:'',ctx:null,vis:'private',isMinor:true};
+    setVis('private');
+    document.querySelectorAll('#ctxChips .chip').forEach(c=>c.classList.remove('on'));
+    var n=document.getElementById('ctxNext');n.style.opacity='.5';n.style.pointerEvents='none';
+    document.getElementById('link').value='';
+    go(0);
+  }
+</script>
+</body>
+</html>

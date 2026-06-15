@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldCheck · Top 100 (CLIP-1 production)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0B0E13;--surface:#141A22;--surface2:#1B232E;--line:#28323F;--text:#EAEEF3;--muted:#8B97A6;--faint:#5C6675;--gold:#F6B43A;--gold-dim:rgba(246,180,58,.13);--gold-line:rgba(246,180,58,.35);--cyan:#46D8C6;--green:#54BE83;--maxw:560px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--text);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px 60px}
+  .top{position:sticky;top:0;z-index:20;background:rgba(11,14,19,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:14px 16px;max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+  .mark{font-family:Archivo;font-weight:900;letter-spacing:-.02em;font-size:17px}.mark b{color:var(--gold)}
+  .icbtn{width:36px;height:36px;border:1px solid var(--line);background:var(--surface);border-radius:10px;color:var(--muted);display:grid;place-items:center;cursor:pointer;font-size:15px}
+  .hero{padding:24px 0 6px;text-align:center}
+  .ey{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{font-family:Archivo;font-weight:900;font-size:34px;letter-spacing:-.025em;line-height:1;margin-top:8px}
+  .hero-s{color:var(--muted);font-size:13.5px;margin-top:10px}
+  .refresh{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--cyan);margin-top:10px;background:rgba(70,216,198,.07);border:1px solid rgba(70,216,198,.2);padding:4px 11px;border-radius:20px}
+  .firepower{display:flex;justify-content:center;gap:22px;margin-top:16px}
+  .fp{text-align:center}
+  .fp-n{font-family:Archivo;font-weight:900;font-size:18px;font-variant-numeric:tabular-nums}
+  .fp-l{font-size:10px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+  .seglabel{font-size:11px;color:var(--faint);margin:20px 2px 8px;letter-spacing:.04em}
+  .segrow{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;-ms-overflow-style:none;scrollbar-width:none}
+  .segrow::-webkit-scrollbar{display:none}
+  .seg{flex-shrink:0;padding:7px 13px;border:1px solid var(--line);background:var(--surface);border-radius:20px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;transition:.15s}
+  .seg.on{background:var(--gold);border-color:var(--gold);color:#160f02}
+  .segnote{font-size:11.5px;color:var(--faint);margin:14px 2px 16px}.segnote b{color:var(--muted)}
+  .podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:8px;align-items:end;margin-bottom:18px}
+  .pod{background:linear-gradient(168deg,var(--surface2),var(--surface));border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;position:relative;overflow:hidden}
+  .pod.p1{border-color:var(--gold-line)}
+  .pod.p1::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:160px;height:120px;background:radial-gradient(circle,var(--gold-dim),transparent 65%)}
+  .pod-rank{font-family:Archivo;font-weight:900;font-size:22px;position:relative}.pod.p1 .pod-rank{color:var(--gold);font-size:28px}
+  .pod-av{width:42px;height:42px;border-radius:11px;margin:6px auto;background:linear-gradient(145deg,#26303d,#161d27);border:1px solid var(--line);display:grid;place-items:center;font-family:Archivo;font-weight:800;color:var(--gold);font-size:15px;position:relative}.pod.p1 .pod-av{width:50px;height:50px}
+  .pod-n{font-size:12px;font-weight:700;position:relative}.pod-m{font-size:10px;color:var(--muted);margin-top:2px;position:relative}
+  .pod-num{font-size:11px;font-weight:700;color:var(--cyan);margin-top:5px;font-variant-numeric:tabular-nums;position:relative}
+  .feed-h{display:flex;align-items:baseline;justify-content:space-between;margin:6px 2px 12px}
+  .feed-title{font-family:Archivo;font-weight:800;font-size:15px}.feed-c{font-size:11.5px;color:var(--faint)}
+  .row{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:9px;cursor:pointer;transition:.15s}
+  .row:hover{border-color:var(--gold-line)}
+  .row.you{border-color:var(--gold-line);background:linear-gradient(168deg,var(--surface2),var(--surface))}
+  .rank{font-family:Archivo;font-weight:800;font-size:15px;color:var(--faint);width:26px;text-align:center;flex-shrink:0;font-variant-numeric:tabular-nums}
+  .rthumb{width:64px;height:46px;border-radius:9px;flex-shrink:0;position:relative;background:linear-gradient(135deg,#222c38,#151c25);display:grid;place-items:center}
+  .rthumb .ico{opacity:.5;font-size:15px}.rthumb .dur{position:absolute;bottom:3px;right:4px;font-size:8.5px;background:rgba(0,0,0,.6);padding:0 3px;border-radius:3px}
+  .rmeta{flex:1;min-width:0}.rcap{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rwho{font-size:11.5px;color:var(--muted);margin-top:2px}.rwho .num{color:var(--cyan);font-weight:600}
+  .rlike{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;cursor:pointer;padding:4px}
+  .rlike .heart{font-size:17px}.rlike .cnt{font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .badge{margin:26px 0 0;background:linear-gradient(150deg,#23170a,#141A22 60%);border:1px solid var(--gold-line);border-radius:18px;padding:22px;position:relative;overflow:hidden}
+  .badge::before{content:"";position:absolute;top:-30%;right:-10%;width:240px;height:240px;background:radial-gradient(circle,rgba(246,180,58,.18),transparent 65%)}
+  .badge-ey{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;position:relative}
+  .badge-t{font-family:Archivo;font-weight:900;font-size:21px;margin-top:8px;line-height:1.1;position:relative}
+  .badge-s{font-size:12.5px;color:var(--muted);margin-top:8px;position:relative;max-width:340px}
+  .badge-card{margin-top:16px;background:rgba(11,14,19,.5);border:1px solid var(--gold-line);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;position:relative}
+  .bc-seal{width:46px;height:46px;border-radius:50%;border:2px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:18px;flex-shrink:0}
+  .bc-t{font-family:Archivo;font-weight:800;font-size:14px}.bc-s{font-size:11px;color:var(--muted);margin-top:2px}
+  .share{display:flex;gap:8px;margin-top:14px;position:relative}
+  .share button{flex:1;border-radius:11px;padding:12px;font-weight:700;font-size:13px;cursor:pointer;border:none;font-family:Inter}
+  .share .ig{background:var(--gold);color:#160f02}.share .cp{background:var(--surface2);color:var(--text);border:1px solid var(--line)}
+  .why{font-size:11px;color:var(--faint);text-align:center;margin-top:14px;position:relative}
+</style>
+</head>
+<body>
+  <div class="top"><div class="mark">FIELD<b>CHECK</b></div><div class="icbtn">⌕</div></div>
+  <div class="wrap">
+    <div class="hero">
+      <div class="ey">// Discovery</div>
+      <h1>FC Top 100</h1>
+      <div class="hero-s">The clips moving the needle right now — graded, not just liked.</div>
+      <div class="refresh">↻ Refreshes daily · next drop in 6h</div>
+      <div class="firepower">
+        <div class="fp"><div class="fp-n" id="fp1">1.2M</div><div class="fp-l">clips graded</div></div>
+        <div class="fp"><div class="fp-n" id="fp2">+38K</div><div class="fp-l">this week</div></div>
+        <div class="fp"><div class="fp-n" id="fp3">2,400</div><div class="fp-l">live boards</div></div>
+      </div>
+    </div>
+
+    <div class="seglabel">SPORT</div>
+    <div class="segrow" id="seg-sport"></div>
+    <div class="seglabel">AGE / LEVEL</div>
+    <div class="segrow" id="seg-age"></div>
+    <div class="seglabel">POSITION · REGION</div>
+    <div class="segrow" id="seg-pos"></div>
+    <div class="segnote">Showing <b id="segname">15U · Volleyball · Outside Hitters · NorCal</b> — thousands of boards mean everyone can be top-100 something.</div>
+
+    <div class="podium">
+      <div class="pod p2" onclick="go()"><div class="pod-rank">2</div><div class="pod-av">JC</div><div class="pod-n">Jaylen C.</div><div class="pod-m">OH · Phoenix</div><div class="pod-num">6.7</div></div>
+      <div class="pod p1" onclick="go()"><div class="pod-rank">1</div><div class="pod-av">MA</div><div class="pod-n">Maya Alvarez</div><div class="pod-m">OH · Bay Area</div><div class="pod-num">6.4</div></div>
+      <div class="pod p3" onclick="go()"><div class="pod-rank">3</div><div class="pod-av">RT</div><div class="pod-n">Riya T.</div><div class="pod-m">S · Dallas</div><div class="pod-num">6.6</div></div>
+    </div>
+
+    <div class="feed-h"><div class="feed-title">The board</div><div class="feed-c">4–100</div></div>
+    <div id="feed"></div>
+
+    <div class="badge">
+      <div class="badge-ey">// You made it</div>
+      <div class="badge-t">You're #1 in 15U Volleyball this week.</div>
+      <div class="badge-s">That's a real thing to say out loud. Share it — your followers come see the clip, and your profile.</div>
+      <div class="badge-card"><div class="bc-seal">★</div><div><div class="bc-t">FC TOP 100 · #1</div><div class="bc-s">15U Volleyball · NorCal · week of Jun 15 · verified by FieldCheck</div></div></div>
+      <div class="share"><button class="ig" onclick="alert('→ shares badge to IG/TikTok story → followers come back to FieldCheck (flywheel 2)')">Share to story</button><button class="cp" onclick="alert('Badge link copied')">Copy link</button></div>
+      <div class="why">Every share is a clip coming in and a new player finding FieldCheck.</div>
+    </div>
+  </div>
+
+<script>
+  const SEGS={sport:['Volleyball','Basketball','Football','Soccer'],age:['12U','13U','14U','15U','16U','17U','HS Varsity','JUCO','D3','D2','D1'],pos:['Outside Hitters','Setters','Middles','Liberos','NorCal','SoCal','Texas','National']};
+  const SEL={sport:'Volleyball',age:'15U',pos:'Outside Hitters'};
+  function buildSeg(key,id){
+    const c=document.getElementById(id);c.innerHTML='';
+    SEGS[key].forEach(v=>{const d=document.createElement('div');d.className='seg'+(SEL[key]===v?' on':'');d.textContent=v;d.onclick=()=>{SEL[key]=v;buildAll();updateName();};c.appendChild(d);});
+  }
+  function buildAll(){buildSeg('sport','seg-sport');buildSeg('age','seg-age');buildSeg('pos','seg-pos');}
+  function updateName(){document.getElementById('segname').textContent=`${SEL.age} · ${SEL.sport} · ${SEL.pos}`;}
+  const rows=[
+    {r:4,cap:"Jump-serve ace, set point",who:"Devon K.",num:"6.3",dur:"0:14",likes:412},
+    {r:5,cap:"Triple-block stuff at the net",who:"Amara O.",num:"6.5",dur:"0:11",likes:388},
+    {r:6,cap:"Dig-to-kill transition",who:"Sofia R.",num:"6.2",dur:"0:19",likes:351},
+    {r:7,cap:"6am gym — approach reps",who:"Maya Alvarez",num:"6.4",dur:"0:18",likes:340,you:true},
+    {r:8,cap:"Comeback from 2 sets down",who:"Tariq B.",num:"6.1",dur:"0:27",likes:299},
+    {r:9,cap:"Line shot on match point",who:"Elena V.",num:"6.6",dur:"0:13",likes:281},
+    {r:10,cap:"Float-serve run of 6",who:"Noah P.",num:"5.9",dur:"0:22",likes:260},
+  ];
+  function renderFeed(){
+    const f=document.getElementById('feed');f.innerHTML='';
+    rows.forEach(x=>{
+      f.innerHTML+=`<div class="row${x.you?' you':''}" onclick="go()"><div class="rank">${x.r}</div><div class="rthumb"><div class="ico">▶</div><div class="dur">${x.dur}</div></div><div class="rmeta"><div class="rcap">${x.cap}</div><div class="rwho">${x.who}${x.you?' · you':''} · FC <span class="num">${x.num}</span></div></div><div class="rlike" onclick="event.stopPropagation();this.classList.toggle('liked');const c=this.querySelector('.cnt');c.textContent=this.classList.contains('liked')?${x.likes}+1:${x.likes}"><div class="heart">♥</div><div class="cnt">${x.likes}</div></div></div>`;
+    });
+  }
+  function go(){location.href='/clips';}
+  buildAll();updateName();renderFeed();
+</script>
+</body>
+</html>
