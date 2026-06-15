@@ -3541,16 +3541,32 @@ async function synthesizeEightFacets(verdictResult, contributions, env) {
         }
       }
       if (_evLines.length) push('curated_eval_grid', _evLines.join(' · '), 3000);
-      // (b) awards (curated, structured)
-      const _aw = facts.awards || verdictResult.awards;
+      // (b) awards (curated, structured) — BUG2-FIX (Jun15): read defensively from curated profile too.
+      // Curated fields are named eval_grid_override/awards on the curated profile object, which may be
+      // attached as curated_profile / encyclopedia fields, NOT always merged into facts.awards.
+      const _cp = verdictResult.curated_profile || verdictResult._curated_profile || verdictResult.curatedProfile || (enc.curated_profile) || {};
+      let _aw = facts.awards || verdictResult.awards || _cp.awards;
+      // also fold eval_grid_override evidence if enc.eval_grid was empty (curated uses eval_grid_override)
+      if ((!_evLines.length) && (_cp.eval_grid_override || enc.eval_grid_override)) {
+        const _ovEg2 = _cp.eval_grid_override || enc.eval_grid_override || {};
+        for (const _lk2 of Object.keys(_ovEg2)) {
+          const _layer2 = _ovEg2[_lk2];
+          if (_layer2 && typeof _layer2 === 'object' && _lk2 !== 'composite') {
+            for (const _dk2 of Object.keys(_layer2)) {
+              const _d2 = _layer2[_dk2];
+              if (_d2 && typeof _d2 === 'object' && _d2.evidence) push('curated_eval_grid', `${_lk2}/${_dk2} (curated ${_d2.score}/10): ${_d2.evidence}`, 600);
+            }
+          }
+        }
+      }
       if (Array.isArray(_aw) && _aw.length) {
         push('curated_awards', _aw.map(a => (typeof a === 'string' ? a : `${a.year || ''} ${a.award || ''} (${a.tier || ''})`)).join(' · '), 1500);
       }
       // (c) season stats (curated)
-      const _ss = facts.season_stats || verdictResult.season_stats;
+      const _ss = facts.season_stats || verdictResult.season_stats || _cp.season_stats;
       if (_ss) push('curated_season_stats', (typeof _ss === 'string' ? _ss : JSON.stringify(_ss)).slice(0, 1200), 1200);
       // (d) pro projection (curated forward read)
-      const _pp = (verdictResult.encyclopedia && verdictResult.encyclopedia.facts && verdictResult.encyclopedia.facts.pro_projection) || verdictResult.pro_projection;
+      const _pp = (verdictResult.encyclopedia && verdictResult.encyclopedia.facts && verdictResult.encyclopedia.facts.pro_projection) || verdictResult.pro_projection || _cp.pro_projection;
       if (_pp) {
         const _ppStr = (typeof _pp === 'object') ? [_pp.lovb_summary, _pp.international_fit, _pp.olympic_pathway_2028, _pp.nba_tier, _pp.nfl_tier].filter(Boolean).join(' · ') : String(_pp);
         if (_ppStr) push('curated_pro_projection', _ppStr, 1200);
