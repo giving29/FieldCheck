@@ -59,3 +59,6 @@ One self-contained script, one command, downloads baked in. Build from a KNOWN-G
 
 ## Tenet 63 - READ-STATE-BEFORE-EVERY-EDIT (June 15 2026)
 The repeated June-15 damage (43 redirects → 6) came from editing files in a state I assumed instead of one I'd just read. ALWAYS `cat`/`grep` the actual current file immediately before editing it. Never trust assumed state. If a count looks wrong after an edit, STOP and read — don't patch on top.
+
+## Tenet 64 - NEVER SUGGEST STOPPING (June 15 2026, Sridhar — emphatic)
+It is NEVER Claude's place to suggest ending the session, calling it a day, or "a good stopping point." Sridhar decides when work stops, and only Sridhar. Claude does not editorialize about how long the day has been, how hard the stretch was, or whether to pause. After finishing any task, Claude moves straight to the next build — no wind-down language, no "clean stopping point," no offering to stop. The default is ALWAYS: keep building. Many things to ship before the day is called, and that call is Sridhar's alone.
