@@ -1,3 +1,5 @@
+// FCBase112 . Madisen override composite 9.3->7.3 (correct compressed value, polygon untouched) Jun14
+// FCBase111 . CURATED-STAGE-PIN: curated marquees -> college_amateur band (Madisen 7.3) Jun14
 // FIELDCHECK_WORKER_VERSION = V022.40-V5.5 · FACET-COMPOSITE CONSISTENCY · V5.2 doctrine intact (D1 amateur cap 7.4, HS amateur cap 5.4) · 6 polish-set curated marquees: facets recalibrated into composite±0.5 range (Boozer 7.0-7.8 with composite 7.4; Stokes 4.9-5.8 with composite 5.4) · prior V5.3/V5.4 over-tightening rolled back · audit trail in v5_corrections array
 // FIELDCHECK_WORKER_VERSION_HISTORICAL = V022.30 · ARCHITECTURAL FIX · NEVER-LOSE DOCTRINE · 6-PATCH BUNDLE · Closes the Antwan Kimmons cascade (Tim Duncan fuzzy match → composite forced to 9.7 across all 5 amateurs in V022.29.1 dev). Patch A: _adapterProfileNameValidates() helper + wire-in to fetchBasketballRefPro / fetchProFootballReference / fetchBaseballRef — strict name validation at every pro-database adapter boundary (Tenet 41). Patch B: HOF detection narrowed to player-specific awards/highlights/bling block — no more page-wide false positives. Patch C: legend_pro now requires multi-source corroboration (≥2 HOF sources OR ≥1 + structured accolades) before pathway-floor cascade fires (Tenet 42). Patch D: career_stage → pool tier mapping fixed — added mens-basketball__pro / womens-basketball__pro / football__pro / baseball__pro / mens-basketball__juco / mens-basketball__naia distributions; no more "everyone is 96%ile HS pool" (Tenet 42). Patch E: structured-source school resolution priority — current_school resolved from ncaa_stats_portal → school_bio → schoolRoster → 247_commit → on3_commit → prephoops → maxpreps → wikipedia → bbref_pro_team_validated BEFORE Claude text extraction (Tenet 41). Patch F: BRUTAL HONEST INTERPRETATION LAYER · generateBrutalHonest() · Haiku-pass that produces encyclopedia.brutal_honest = {market_says, fieldcheck_says, the_asymmetry, decision_grade_read, confidence, evidence_anchors} per athlete — the centerpiece, the moat made visible · base from V022.29.1 sha=89069a05
 // ════════════════════════════════════════════════════════════
@@ -11990,6 +11992,15 @@ function getOpportunityContext(facts, sport) {
     if (_v22_31_raw !== null) {
       let _v22_31_tier = String(((_v22_31_enc || {}).position_pool_benchmark || {}).tier || 'unknown').toLowerCase();
       let _v22_31_stage = String(((((_v22_31_enc || {}).facts || {}).identity || {}).career_stage) || 'unknown').toLowerCase();
+      // CURATED-STAGE-PIN college_amateur Jun14 — curated marquee profiles graded in amateur/college
+      // band, NOT pro (DECISIONS.md doctrine). If this is a curated profile resolving to a pro stage,
+      // pin to college_amateur so the band-fix compresses it (e.g. Madisen 9.3 -> 7.3). Composite-only;
+      // eval_grid_override (polygon sub-scores) is a separate field, untouched. Scoped to curated ONLY.
+      if (result && result.curated_merge_applied === true &&
+          _v22_31_stage !== 'college_amateur' && _v22_31_stage !== 'prep_amateur') {
+        // curated marquee resolving unknown OR any pro variant -> pin to college_amateur (band-fix -> 7.3)
+        _v22_31_stage = 'college_amateur';
+      }
       let _v22_31_cap = 10.0;
       // V022.32-Q · PATCH O · TIGHTENED TO V4 SPEC · every decimal sacred
       if (_v22_31_tier === 'hs') _v22_31_cap = 5.4;                                    // V4: HS#1 (Stokes/Hall)
@@ -19440,7 +19451,7 @@ const PLAYER_PROFILES = {
       physical: { size: { score: 9.5, evidence: '6\u20194\u201d (193 cm) — top-tier OH height.' }, reach: { score: 9.5, evidence: '10\u20196\u201d spike reach.' }, athleticism: { score: 9.0, evidence: 'Power OH; 4-time championship closer.' } },
       production: { kills_per_set: { score: 9.5, evidence: 'Career 4.0+ K/S across 4 NCAA seasons + LOVB.' }, hitting_pct: { score: 9.0, evidence: '.342 in 2026 LOVB Final.' }, passing: { score: 8.0, evidence: 'Trusted 6-rotation OH at Texas + LOVB.' }, serving: { score: 8.5, evidence: 'Championship-moment server — 2025 + 2026 finals.' } },
       projectability: { career_arc: { score: 10, evidence: '4 championships in 5 years (Kentucky NCAA, 2x Texas NCAA, 2x LOVB).' }, scheme_fit: { score: 9.5, evidence: 'Has won at every level. Adapts to system, not the reverse.' }, durability: { score: 9.0, evidence: '4 full collegiate + 2 LOVB seasons without major injury notes.' }, character: { score: 9.5, evidence: 'Closer mentality. Quote post-2026: "We\u2019re chasing more than championships — connection and personal growth."' } },
-      composite: 9.3
+      composite: 7.3
     },
     subjective_tier: 'ELITE+',
     subjective_summary: 'The defining American OH of her generation. Owns the closing kill in 2 of the last 6 NCAA championship matches AND back-to-back LOVB championship matches. Floor: USA national team rotation. Ceiling: 2028 LA Olympic gold + LOVB dynasty cornerstone.',
