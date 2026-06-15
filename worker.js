@@ -11672,7 +11672,16 @@ function getOpportunityContext(facts, sport) {
       // in the NBA", "retired jersey number", "the school produced NBA players") from misclassifying
       // HS athletes. If current_school matches HS patterns AND does NOT match college, force prep_amateur.
       const _v22_31_currentSchool = String((id && id.current_school) || '').toLowerCase();
-      const _v22_31_isHSSchool = /\b(high school|hs\b|prep school|preparatory|academy|christian school|jesuit|catholic high|charter school|sierra canyon|montverde|prolific prep|spire academy|link academy|notre dame|imm?aculate|montverd|hebron christian|hill[- ]school)\b/i.test(_v22_31_currentSchool)
+      // COOPER-FIX (Jun15): the school field is sometimes a garbled HEADLINE string
+      // (e.g. "cooper flagg headlines four potential former montverde academy") that falsely trips
+      // the HS-school regex via 'montverde'/'academy'. Only trust the school field as a SCHOOL NAME
+      // when it's short and clean — not a sentence. Sentence-like junk → school treated as unknown,
+      // HS override does NOT fire. Real school fields ("Montverde Academy", "Sierra Canyon") still match.
+      const _v22_31_schoolWords = _v22_31_currentSchool.trim().split(/\s+/).filter(Boolean);
+      const _v22_31_schoolLooksClean = _v22_31_currentSchool.length > 0
+        && _v22_31_schoolWords.length <= 5
+        && !/\b(headlines?|potential|former|four|five|ranked|top|best|recruits?|prospects?|signs?|commits?|transfers?|projected|reportedly|according)\b/i.test(_v22_31_currentSchool);
+      const _v22_31_isHSSchool = _v22_31_schoolLooksClean && /\b(high school|hs\b|prep school|preparatory|academy|christian school|jesuit|catholic high|charter school|sierra canyon|montverde|prolific prep|spire academy|link academy|notre dame|imm?aculate|montverd|hebron christian|hill[- ]school)\b/i.test(_v22_31_currentSchool)
         && !/\b(college|university|institute|state college|community college|tech college|junior college)\b/i.test(_v22_31_currentSchool);
 
       // V022.31 · PATCH L2 · COLLEGE-school override · prevents pro-tier misclassification for college
@@ -12125,30 +12134,9 @@ function getOpportunityContext(facts, sport) {
       // Stage is the more trustworthy signal post-V022.32. Force tier and cap to match stage
       // so residual 'tier=unknown defaults UP to early_pro cap 7.9' never punishes amateurs.
       // Closes Caleb Gaskins regression where stage=prep_amateur landed at composite 7.9.
-      // BUG1-FIX (Jun15): curated athletes must NOT be hard-pinned to the HS 5.4 reset.
-      // Cooper Flagg (stale curated entry) and Jordan Larson (curated Olympian) resolve prep_amateur
-      // upstream via HS-recruit keywords, then this reset crushed their apex facets to 5.4.
-      // For CURATED athletes, set the cap from their FACET-AVG band (honest, facet-derived).
-      // NON-curated real-HS athletes keep the 5.4 reset exactly as before (Tenet 49 hype protection).
-      const _bug1_curated = !!(result && result.curated_merge_applied === true);
-      let _bug1_facetAvg = null;
-      try {
-        if (_bug1_curated && _v22_31_enc && _v22_31_enc.synthesis && _v22_31_enc.synthesis.canonical_facets_8) {
-          const _b1 = Object.values(_v22_31_enc.synthesis.canonical_facets_8).map(f => (f && typeof f.score === 'number') ? f.score : null).filter(x => x !== null);
-          if (_b1.length >= 6) _bug1_facetAvg = _b1.reduce((a,b)=>a+b,0)/_b1.length;
-        }
-      } catch (_e) {}
       if (_v22_31_stage === 'prep_amateur') {
-        if (_bug1_curated && _bug1_facetAvg !== null) {
-          // facet-avg band for curated athletes (no blind 5.4):
-          if (_bug1_facetAvg >= 8.0)      { _v22_31_stage = 'early_pro'; _v22_31_tier = 'pro'; _v22_31_cap = 9.6; }  // Olympian/apex (Larson, Tom)
-          else if (_bug1_facetAvg >= 7.0) { _v22_31_stage = 'early_pro'; _v22_31_tier = 'pro'; _v22_31_cap = 7.9; }  // NBA-rookie band (Cooper -> ~7.5)
-          else if (_bug1_facetAvg >= 6.0) { _v22_31_stage = 'college_amateur'; _v22_31_tier = 'd1'; _v22_31_cap = 7.4; }
-          else                            { _v22_31_tier = 'hs'; _v22_31_cap = 5.4; }
-        } else {
-          _v22_31_tier = 'hs';
-          _v22_31_cap = 5.4;
-        }
+        _v22_31_tier = 'hs';
+        _v22_31_cap = 5.4;
       } else if (_v22_31_stage === 'college_amateur') {
         if (!['d1','d2','d3','juco','naia'].includes(_v22_31_tier)) {
           _v22_31_tier = 'd1';
