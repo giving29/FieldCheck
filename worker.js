@@ -1,16 +1,4 @@
 // FIELDCHECK_WORKER_VERSION = V022.40-V5.5 · FACET-COMPOSITE CONSISTENCY · V5.2 doctrine intact (D1 amateur cap 7.4, HS amateur cap 5.4) · 6 polish-set curated marquees: facets recalibrated into composite±0.5 range (Boozer 7.0-7.8 with composite 7.4; Stokes 4.9-5.8 with composite 5.4) · prior V5.3/V5.4 over-tightening rolled back · audit trail in v5_corrections array
-// FCBase95 . phantom-match kill: upgrade blocked when resolver=insufficient_data Jun12
-// FCBase96 . DE-CURATION: eval_grid_override disabled, every athlete through the model Jun12
-// FCBase96b . marquee/instant path routed through model - both paths converge on model truth Jun12
-// FCBase97 . de-curation finisher: floor fill-only + no fake-zero Jun12
-// FCBase98 . composite sync: eg.composite == final result.composite, page==API Jun12
-// FCBase99 . STABILITY L1: temperature 0 pinned (determinism) Jun12
-// FCBase100 . STABILITY L2: curated stage pinned Jun12
-// STABILITY L2: curated stage pinned
-// FCBase106 . BAND: curated graded college_amateur band (R3 natural compression) Jun13
-// BAND: curated graded college_amateur band (R3 natural compression)
-// FCBase102 . STABILITY L3: verdict-lock cache Jun12
-// STABILITY L3: verdict-lock cache
 // FIELDCHECK_WORKER_VERSION_HISTORICAL = V022.30 · ARCHITECTURAL FIX · NEVER-LOSE DOCTRINE · 6-PATCH BUNDLE · Closes the Antwan Kimmons cascade (Tim Duncan fuzzy match → composite forced to 9.7 across all 5 amateurs in V022.29.1 dev). Patch A: _adapterProfileNameValidates() helper + wire-in to fetchBasketballRefPro / fetchProFootballReference / fetchBaseballRef — strict name validation at every pro-database adapter boundary (Tenet 41). Patch B: HOF detection narrowed to player-specific awards/highlights/bling block — no more page-wide false positives. Patch C: legend_pro now requires multi-source corroboration (≥2 HOF sources OR ≥1 + structured accolades) before pathway-floor cascade fires (Tenet 42). Patch D: career_stage → pool tier mapping fixed — added mens-basketball__pro / womens-basketball__pro / football__pro / baseball__pro / mens-basketball__juco / mens-basketball__naia distributions; no more "everyone is 96%ile HS pool" (Tenet 42). Patch E: structured-source school resolution priority — current_school resolved from ncaa_stats_portal → school_bio → schoolRoster → 247_commit → on3_commit → prephoops → maxpreps → wikipedia → bbref_pro_team_validated BEFORE Claude text extraction (Tenet 41). Patch F: BRUTAL HONEST INTERPRETATION LAYER · generateBrutalHonest() · Haiku-pass that produces encyclopedia.brutal_honest = {market_says, fieldcheck_says, the_asymmetry, decision_grade_read, confidence, evidence_anchors} per athlete — the centerpiece, the moat made visible · base from V022.29.1 sha=89069a05
 // ════════════════════════════════════════════════════════════
 // FIELDCHECK IQ · Cloudflare Worker
@@ -813,7 +801,7 @@ const USAV_NATIONAL_TEAM = {
       { name: 'Jordan Larson',           position: 'OH',  tier: 'Legend',   school: 'Nebraska',      lovb: 'Omaha' },
       { name: 'Kelsey Robinson-Cook',    position: 'OH',  tier: 'Senior',   school: 'Nebraska',      lovb: 'Omaha' },
       { name: 'Jordan Thompson',         position: 'OH',  tier: 'Senior',   school: 'Penn State',    lovb: 'Columbus' },
-      { name: 'Avery Skinner',           position: 'OH',  tier: 'Senior',   school: 'Baylor',        lovb: null },
+      { name: 'Avery Skinner',           position: 'OH',  tier: 'Senior',   school: 'Baylor',        lovb: 'Austin' },
       { name: 'Kathryn Plummer',         position: 'OPP', tier: 'Senior',   school: 'Stanford',      lovb: null },
       { name: 'Haleigh Washington',      position: 'OPP', tier: 'Senior',   school: 'Penn State',    lovb: 'Los Angeles' },
       { name: 'Justine Wong-Orantes',    position: 'L',   tier: 'Senior',   school: 'Nebraska',      lovb: 'Omaha' },
@@ -3311,7 +3299,6 @@ Return ONLY a JSON object (no preamble):
       headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        temperature: 0,
         max_tokens: 600,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -3750,7 +3737,6 @@ Return ONLY valid JSON, no preamble:
       headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        temperature: 0,
         max_tokens: 2500,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -3888,7 +3874,6 @@ Return ONLY valid JSON, no preamble:
       headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        temperature: 0,
         max_tokens: 1500,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -4268,7 +4253,6 @@ Return ONLY valid JSON, no preamble:
       headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        temperature: 0,
         max_tokens: 1500,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -4478,7 +4462,6 @@ CRITICAL RULES:
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        temperature: 0,
         max_tokens: 1500,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -4617,7 +4600,6 @@ Return ONLY valid JSON, no preamble:
       headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        temperature: 0,
         max_tokens: 3000,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -4716,7 +4698,6 @@ Return ONLY valid JSON, no preamble:
       headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        temperature: 0,
         max_tokens: 1000,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -4840,7 +4821,6 @@ Return ONLY valid JSON, no preamble:
       headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        temperature: 0,
         max_tokens: 2000,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -7242,7 +7222,7 @@ Rules:
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-5-20250929', max_tokens: 800, temperature: 0, messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({ model: 'claude-sonnet-4-5-20250929', max_tokens: 800, messages: [{ role: 'user', content: prompt }] })
     });
     if (!r.ok) return { score: null, confidence: 'extract_failed', error: 'http_' + r.status };
     const data = await r.json();
@@ -7308,7 +7288,7 @@ Rules:
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-5-20250929', max_tokens: 1200, temperature: 0, messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({ model: 'claude-sonnet-4-5-20250929', max_tokens: 1200, messages: [{ role: 'user', content: prompt }] })
     });
     if (!r.ok) return { profile: null, confidence: 'extract_failed', error: 'http_' + r.status };
     const data = await r.json();
@@ -8932,7 +8912,6 @@ async function extractSportsCatalyst(env, sourceText, sourceUrl, sourceLabel, co
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        temperature: 0,
         max_tokens: 800,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -10569,7 +10548,7 @@ const CAL_EXTENDED_CASES = [
     fc_pred:9.2, outcome:'ICON', validated:true, career:'6ft8in MB. Physical 10.0 is the ceiling — tallest in D1 history for position. LOVB career defined by physical dominance.',
     divergence:null, confidence:0.95 },
   { id:'vb024', player:'Avery Skinner', sport:'womens-volleyball', school:'Kentucky',
-    fc_pred:8.9, outcome:'ELITE+', validated:true, career:'USA National Team + Pallavolo Scandicci (Italy Serie A1). AVCA 1st Team at Kentucky. Transfer (Kentucky → Baylor) = Mindset signal. Consistent production arc.',
+    fc_pred:8.9, outcome:'ELITE+', validated:true, career:'LOVB Austin starter. AVCA 1st Team. Transfer (Baylor → Kentucky) = Mindset signal. Consistent production arc.',
     divergence:null, confidence:0.91 },
 ];
 
@@ -10867,33 +10846,10 @@ function getOpportunityContext(facts, sport) {
     photoCandidates.push(p);
   };
 
-  // PHOTO IDENTITY-GUARD Tenet41 openweb name-match — curated bio photo is the VERIFIED, correct
-  // photo for this athlete; add it FIRST so it wins over any open-web scrape (was only a last-resort).
-  if (facts && facts.bio && facts.bio.photo_url) {
-    addCandidate({ url: facts.bio.photo_url, source: (facts.bio.photo_source || 'Curated'), page_url: null, _verified_identity: true });
-  }
-  // name tokens for the open-web identity guard (mirrors the Wikipedia guard below)
-  const _pgName = String(name || playerSlug || '').trim();
-  const _pgParts = _pgName.toLowerCase().replace(/[.,]/g,'').split(/[\s\-]+/).filter(t => t.length >= 2);
-  const _pgFirst = _pgParts[0] || '';
-  const _pgLast = _pgParts[_pgParts.length - 1] || '';
-  const _photoMatchesAthlete = (img) => {
-    // match against the candidate's source title, page_url, and image filename
-    const hay = ((img.source || '') + ' ' + (img.page_url || '') + ' ' + (img.url || '')).toLowerCase();
-    if (!_pgLast) return false;
-    // require the LAST name present AND (first name present OR full-name substring) to accept
-    const lastIn = hay.includes(_pgLast);
-    const firstIn = _pgFirst && hay.includes(_pgFirst);
-    const fullIn = _pgName && hay.includes(_pgName.toLowerCase());
-    return (lastIn && firstIn) || fullIn;
-  };
-
   // v0.30.5.171: Photo cache lookup. If a previous verdict found a photo for this
   // slug, surface it instantly. Cache key: photo-cache:{playerSlug}. 30-day TTL
   // since photos rotate slowly. Best-effort — KV failure falls back cleanly.
-  // PHOTO CACHE GUARD skipCache + verified-only — on skipCache/refresh, do NOT read the photo cache
-  // (it may hold a stale/wrong photo from before the identity guard). Recompute fresh instead.
-  if (env && env.FIELDCHECK_KV && playerSlug && !(body && body.skipCache)) {
+  if (env && env.FIELDCHECK_KV && playerSlug) {
     try {
       const cached = await env.FIELDCHECK_KV.get('photo-cache:' + playerSlug);
       if (cached) {
@@ -10945,13 +10901,7 @@ function getOpportunityContext(facts, sport) {
     // will still show the link with a "(verify — title doesn't match)" warning.
   }
   if (openWeb && Array.isArray(openWeb.images)) {
-    // PHOTO IDENTITY-GUARD Tenet41 openweb name-match — only accept an open-web image if its
-    // source/page/filename actually matches THIS athlete. Stops teammate-face contamination
-    // (Madisen was getting Asjia O'Neal's photo because both surface on usavolleyball.org).
-    for (const img of openWeb.images) {
-      if (_photoMatchesAthlete(img)) addCandidate({ ...img, _identity_checked: true });
-      // else: silently drop — wrong person, same discipline as the Wikipedia guard.
-    }
+    for (const img of openWeb.images) addCandidate(img);
   }
 
   // v0.18: drop the blocking HEAD test. The trust filter below is the gate.
@@ -10964,15 +10914,7 @@ function getOpportunityContext(facts, sport) {
     'huskers.com', 'lsusports.net', 'texassports.com',
     'goduke.com', 'gostanford.com', 'wsucougars.com',
     'pittsburghpanthers.com', 'fightingillini.com',
-    'gobearcats.com', 'osubeavers.com',
-    // PHOTO CASCADE Tenet53 widen+headtest — broad legit sources we already pull from:
-    'a.run.app', 'directus-udhl7xviyq-uc.a.run.app',   // our curated CDN (Directus)
-    'lovb.com', 'usavolleyball.org', 'athletesunlimited.com',
-    'maxpreps.com', 'on3.com', '247sports.com', 'rivals.com', 'prephoops.com', 'hudl.com',
-    'espn.com', 'espncdn.com', 'ncaa.com', 'si.com', 'sports.yahoo.com',
-    'storage.googleapis.com', 'googleusercontent.com', 'imgproxy',
-    'upload.wikimedia.org', 'commons.wikimedia.org', 'wikimedia.org',
-    'cloudfront.net', 'imgix.net', 'akamaized.net', 'sidearmsports.com', 'sidearmdev.com'
+    'gobearcats.com', 'osubeavers.com'
   ];
   const isTrustedPhoto = (url) => {
     try {
@@ -10982,47 +10924,12 @@ function getOpportunityContext(facts, sport) {
   };
 
   const tPhotos = Date.now();
-  // PHOTO CASCADE Tenet53 widen+headtest — trusted hosts kept immediately; everything else is
-  // HEAD-tested for liveness (a live photo from ANY source survives, first good wins). No blind-drop.
-  const _headOk = async (url) => {
-    try {
-      const r = await fetch(url, { method: 'HEAD', headers: { 'User-Agent': 'Mozilla/5.0 (FieldCheck photo verify)' }, cf: { cacheTtl: 3600 } });
-      if (r.ok) { const ct = (r.headers.get('content-type') || '').toLowerCase(); return ct.startsWith('image/'); }
-      return false;
-    } catch { return false; }
-  };
-  const photos = [];
-  for (const p of photoCandidates) {
-    if (isTrustedPhoto(p.url)) { photos.push(p); continue; }            // trusted source → keep
-    if (await _headOk(p.url)) { photos.push({ ...p, head_verified: true }); }  // unknown but LIVE → keep
-    if (photos.length >= 4) break;                                      // enough; first good wins
-  }
-  // Fallback: if HEAD-tests dropped everything (e.g. hosts that block HEAD), keep trusted-by-pattern
-  // OR the curated bio photo so a page is never blank when we DO have a curated source.
-  if (photos.length === 0 && facts && facts.bio && facts.bio.photo_url) {
-    photos.push({ url: facts.bio.photo_url, source: facts.bio.photo_source || 'Curated', page_url: null });
-  }
+  // Keep trusted-host photos always; for non-trusted, skip them rather than HEAD-test.
+  // Open-web image candidates from random CDNs were the failure source anyway.
+  const photos = photoCandidates.filter(p => isTrustedPhoto(p.url));
   timing.photo_head_test_ms = Date.now() - tPhotos;
   timing.photo_candidates = photoCandidates.length;
   timing.photos_kept = photos.length;
-  // PHOTO CASCADE Tenet53 widen+headtest — promote winner into top-level encyclopedia.photos (page reads this)
-  try {
-    if (photos.length && facts) {
-      facts.encyclopedia = facts.encyclopedia || {};
-      if (!Array.isArray(facts.encyclopedia.photos)) facts.encyclopedia.photos = [];
-      for (const ph of photos) {
-        if (!facts.encyclopedia.photos.some(x => x && x.url === ph.url)) facts.encyclopedia.photos.unshift(ph);
-      }
-      // cache the winner for instant future loads
-      // PHOTO CACHE GUARD skipCache + verified-only — only cache a photo we TRUST is this athlete:
-      // curated bio (_verified_identity), name-matched open-web (_identity_checked), or trusted host.
-      const _w = photos[0];
-      const _wVerified = _w && (_w._verified_identity || _w._identity_checked || (typeof isTrustedPhoto === 'function' && isTrustedPhoto(_w.url)));
-      if (env && env.FIELDCHECK_KV && playerSlug && _w && _w.url && _wVerified) {
-        try { await env.FIELDCHECK_KV.put('photo-cache:' + playerSlug, JSON.stringify({ url: _w.url, source: _w.source || 'cascade', page_url: _w.page_url || null }), { expirationTtl: 86400 * 30 }); } catch (_) {}
-      }
-    }
-  } catch (_) {}
 
   // videos already fetched in the parallel wave above (8a-8b). Just use the const.
 
@@ -11196,7 +11103,7 @@ function getOpportunityContext(facts, sport) {
 
     // V019.6 · also handle VERIFY_FURTHER which scorer sets when sportsRef missing but some signal exists
     const upgradeEligibleVerdicts = ['INSUFFICIENT_DATA', 'VERIFY_FURTHER', 'TRACKED'];
-    if (upgradeEligibleVerdicts.includes(result.verdict) && !result.curated_lookup_succeeded && resolution && resolution.status !== 'insufficient_data') {
+    if (upgradeEligibleVerdicts.includes(result.verdict) && !result.curated_lookup_succeeded) {
       // V019.2 · Even MORE permissive: any of FOUR signals justifies upgrade
       const tierIsSubstantive = tier && !['INSUFFICIENT_DATA','UNRANKED','NONE','none','unranked','insufficient_data'].includes(String(tier));
       const compositeIsSubstantive = (compositeNum !== null) && !isNaN(compositeNum) && compositeNum >= 5.0;
@@ -11362,9 +11269,7 @@ function getOpportunityContext(facts, sport) {
           if (compositeNum === null && inferredComposite !== null) {
             depthPenaltyApplied = depthPenaltyApplied / 2;
           }
-          calibratedComposite = effectiveCompositeFloored - depthPenaltyApplied;
-          // DE-CURATE FINISH: no fake 0.0. If penalty drives below SCOUT floor (3.5), too little signal -> not-ranked.
-          if (calibratedComposite < 3.5) { calibratedComposite = null; }
+          calibratedComposite = Math.max(0, effectiveCompositeFloored - depthPenaltyApplied);
         }
         
         // V019.4 · LEVEL-AWARE COMPOSITE CEILING
@@ -11844,7 +11749,7 @@ function getOpportunityContext(facts, sport) {
       // V021.25 · Apply floor even when composite is null (Novak case — eval_grid failed entirely)
       if (pathwayFloor !== null && pathwayFloor !== undefined) {
         const currentComp = (typeof eg.composite === 'number') ? eg.composite : null;
-        if (currentComp === null) {  // DE-CURATE FINISH: floor fills only, no raise (Tenet 49). Model number is truth.
+        if (currentComp === null || currentComp < pathwayFloor) {
           eg.composite_pre_pathway_floor = currentComp;
           eg.composite = Math.round(pathwayFloor * 10) / 10;
           eg.composite_source = 'career_pathway_floor';
@@ -12085,16 +11990,6 @@ function getOpportunityContext(facts, sport) {
     if (_v22_31_raw !== null) {
       let _v22_31_tier = String(((_v22_31_enc || {}).position_pool_benchmark || {}).tier || 'unknown').toLowerCase();
       let _v22_31_stage = String(((((_v22_31_enc || {}).facts || {}).identity || {}).career_stage) || 'unknown').toLowerCase();
-      // STABILITY L2: curated stage pinned. Curated profiles KNOW the level; don't trust flaky web-derived stage.
-      // Pins the input FACT (what level they play), not the grade — model still scores freely under the correct cap.
-      // BAND: curated graded college_amateur band (R3 natural compression). Doctrine (Sridhar):
-      // curated marquee athletes are graded against their amateur/college field, not the pro band.
-      // Resolving college_amateur routes through U2 (-> tier d1, cap 7.4) and R3 compresses the raw
-      // to the honest number naturally. No artificial cap; the real compression path simply runs.
-      if (result.curated_lookup_succeeded) {
-        _v22_31_stage = 'college_amateur';
-        _v22_31_tier = 'd1';
-      }
       let _v22_31_cap = 10.0;
       // V022.32-Q · PATCH O · TIGHTENED TO V4 SPEC · every decimal sacred
       if (_v22_31_tier === 'hs') _v22_31_cap = 5.4;                                    // V4: HS#1 (Stokes/Hall)
@@ -12148,14 +12043,6 @@ function getOpportunityContext(facts, sport) {
       // V5 v2.3 · deterministic post-synthesis bright-line corrections
       // Different from V4 caps: conditional based on identity+stage+tier signals,
       // auditable (v5_corrections array), raw preserved in metadata, derived from design doc.
-      const _v5_compress = (x, ceiling, band, rawMax) => {
-        band = band || 0.2; rawMax = rawMax || 10.0;
-        var knee = ceiling - band;
-        if (x <= knee) return x;
-        var capped = knee + band * (x - knee) / (rawMax - knee);
-        return Math.min(ceiling, Math.max(knee, capped));
-      };
-      // V5 v3.0 FINE PASS . clamps -> compressions . ordering preserved . full granularity (Sridhar decision 2026-06-11)
       const _v5_apply_corrections = (rawComposite, identity, careerStage, tier, phenomFlag) => {
         let corrected = rawComposite;
         const corrections = [];
@@ -12163,46 +12050,41 @@ function getOpportunityContext(facts, sport) {
         const suffixRegex = /\b(Jr\.?|Sr\.?|II|III|IV|2nd|3rd)\b\s*$/i;
         const hasSuffix = suffixRegex.test(name.trim());
         const activeStages = ['rookie', 'early_pro', 'prime_pro', 'late_pro'];
-        const compressTo = (ceiling, rule, reason) => {
-          if (corrected > ceiling - 0.2) {
-            const to = Math.round(_v5_compress(corrected, ceiling) * 100) / 100;
-            corrections.push({ rule: rule, from: corrected, to: to, reason: reason + ' - compressed (ordering preserved), not clamped' });
-            corrected = to;
-          }
-        };
 
-        // R1 . suffix + amateur tier -> parent-contamination ceiling (compressed)
+        // R1 · Jr/Sr/II/III/IV suffix + amateur tier → likely parent career contamination
         if (hasSuffix && (careerStage === 'prep_amateur' || careerStage === 'college_amateur')) {
-          compressTo(careerStage === 'prep_amateur' ? 5.5 : 7.4, 'suffix-amateur-compress', 'Jr/Sr/II/III suffix at amateur tier - parent career data likely contaminated synthesis');
+          const ceiling = careerStage === 'prep_amateur' ? 5.5 : 7.4;
+          if (corrected > ceiling) {
+            corrections.push({ rule: 'suffix-amateur-ceiling', from: corrected, to: ceiling, reason: 'Jr/Sr/II/III suffix at amateur tier - parent career data likely contaminated synthesis' });
+            corrected = ceiling;
+          }
         }
 
-        // R2 . HS evidence ceiling for non-phenoms (compressed)
-        if (tier === 'hs' && careerStage === 'prep_amateur' && !phenomFlag) {
-          compressTo(5.4, 'hs-evidence-compress-non-phenom', 'HS-only evidence, no phenom criteria met (4 of 4 required)');
+        // R2 · HS evidence ceiling for non-phenoms
+        if (tier === 'hs' && careerStage === 'prep_amateur' && !phenomFlag && corrected > 5.4) {
+          corrections.push({ rule: 'hs-evidence-ceiling-non-phenom', from: corrected, to: 5.4, reason: 'HS-only evidence, no phenom criteria met (4 of 4 required)' });
+          corrected = 5.4;
         }
 
-        // R3 . D1 amateur ceiling for non-phenoms (compressed)
-        if (tier === 'd1' && careerStage === 'college_amateur' && !phenomFlag) {
-          compressTo(7.4, 'd1-college-amateur-compress', 'D1 amateur evidence ceiling');
+        // R3 · D1 amateur ceiling for non-phenoms
+        if (tier === 'd1' && careerStage === 'college_amateur' && !phenomFlag && corrected > 7.4) {
+          corrections.push({ rule: 'd1-college-amateur-ceiling', from: corrected, to: 7.4, reason: 'D1 amateur evidence ceiling' });
+          corrected = 7.4;
         }
 
-        // R3b . NEW . D2/D3/JUCO/NAIA ceiling (V5 doctrine gap closed - V4 cap was metadata-only)
-        if (['d2','d3','juco','naia'].includes(tier) && careerStage === 'college_amateur' && !phenomFlag) {
-          compressTo(6.8, 'd2-d3-juco-naia-compress', 'sub-D1 college amateur evidence ceiling (doctrine gap closure)');
+        // R4 · Active player ceiling - Jordan retired singular at 9.9; active careers cap 9.3
+        if (activeStages.includes(careerStage) && corrected > 9.6) {
+          corrections.push({ rule: 'active-player-ceiling', from: corrected, to: 9.3, reason: '9.7+ reserved for Jordan retired singular; active multi-MVP cap 9.3' });
+          corrected = 9.3;
         }
 
-        // R4 . active player ceiling 9.3 (compressed; previously only fired above 9.6)
-        if (activeStages.includes(careerStage)) {
-          compressTo(9.3, 'active-player-compress', '9.4+ reserved for retired greats; Jordan retired singular 9.9; active careers compress under 9.3');
-        }
-
-        // R5 . rookie evidence ceiling (CLAMP retained - option b, tier stability; revisit post-draft)
+        // R5 · Rookie evidence ceiling (1st-2nd pro year)
         if (careerStage === 'rookie' && corrected > 7.5) {
           corrections.push({ rule: 'rookie-evidence-ceiling', from: corrected, to: 7.5, reason: 'Rookie sample - draft slot/recruiting rank does not elevate' });
           corrected = 7.5;
         }
 
-        // R6 . identity classification mismatch (flag only, unchanged)
+        // R6 · HS tier + pro stage = identity classification mismatch (flag only, no correction)
         if (tier === 'hs' && activeStages.includes(careerStage)) {
           corrections.push({ rule: 'identity-classification-mismatch', flag: 'review-needed', reason: 'HS tier classified with pro stage - likely name collision (Antwan Kimmons, Tate Ivanyo pattern)' });
         }
@@ -12215,9 +12097,7 @@ function getOpportunityContext(facts, sport) {
       const _v5_result = _v5_apply_corrections(_v22_31_raw, _v5_identity, _v22_31_stage, _v22_31_tier, _v5_phenom_flag);
 
       // V5 v2.3: composite reads v5-corrected. raw + corrections retained in metadata for audit/transparency.
-      result.composite = Math.round(_v5_result.composite * 100) / 100;
-      // COMPOSITE SYNC: eg.composite = final result.composite (Tenet 49). Page reads eg.composite; keep it == API truth.
-      if (result.encyclopedia && result.encyclopedia.eval_grid) { result.encyclopedia.eval_grid.composite = result.composite; }
+      result.composite = Math.round(_v5_result.composite * 10) / 10;
       result.composite_v022_31 = {
         raw: Math.round(_v22_31_raw * 100) / 100,
         capped_legacy: Math.round(_v22_31_capped * 10) / 10,
@@ -12232,7 +12112,6 @@ function getOpportunityContext(facts, sport) {
       };
     } else {
       result.composite = null;
-      if (result.encyclopedia && result.encyclopedia.eval_grid) { result.encyclopedia.eval_grid.composite = null; }
       result.composite_v022_31 = { raw: null, reason: 'no_composite_source_available' };
     }
   } catch (_v22_31_e) {
@@ -14297,7 +14176,6 @@ For EACH dimension above, output a score object. The score is 1-10, OR null if y
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        temperature: 0,
         max_tokens: 2000,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -14610,7 +14488,6 @@ CRITICAL RULES:
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        temperature: 0,
         max_tokens: 2000,
         messages: [{ role: 'user', content: prompt + '\n\n' + pronounHint }]
       })
@@ -14816,7 +14693,6 @@ ABSOLUTE RULES:
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        temperature: 0,
         max_tokens: 1200,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -14961,7 +14837,6 @@ ABSOLUTE RULES:
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        temperature: 0,
         max_tokens: 1500,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -15098,7 +14973,7 @@ WRITE 3 PARAGRAPHS
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-5-20250929', max_tokens: 800, temperature: 0, messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({ model: 'claude-sonnet-4-5-20250929', max_tokens: 800, messages: [{ role: 'user', content: prompt }] })
     });
     if (!r.ok) { const body = await r.text(); return 'Narrative generation failed (HTTP ' + r.status + '): ' + body.slice(0, 250); }
     const data = await r.json();
@@ -15206,7 +15081,7 @@ WRITE 3 PARAGRAPHS
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-5-20250929', max_tokens: 800, temperature: 0, messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({ model: 'claude-sonnet-4-5-20250929', max_tokens: 800, messages: [{ role: 'user', content: prompt }] })
     });
     if (!r.ok) { const body = await r.text(); return 'Narrative generation failed (HTTP ' + r.status + '): ' + body.slice(0, 250); }
     const data = await r.json();
@@ -19562,12 +19437,12 @@ const PLAYER_PROFILES = {
       olympic_pathway_2028: 'Strong contender for USA roster.'
     },
     eval_grid_override: {
-      physical: { size: { score: 8.4, evidence: '6\u20194\u201d (193 cm) — top-tier OH height.' }, reach: { score: 8.4, evidence: '10\u20196\u201d spike reach.' }, athleticism: { score: 7.9, evidence: 'Power OH; 4-time championship closer.' } },
-      production: { kills_per_set: { score: 8.4, evidence: 'Career 4.0+ K/S across 4 NCAA seasons + LOVB.' }, hitting_pct: { score: 7.9, evidence: '.342 in 2026 LOVB Final.' }, passing: { score: 8.0, evidence: 'Trusted 6-rotation OH at Texas + LOVB.' }, serving: { score: 8.5, evidence: 'Championship-moment server — 2025 + 2026 finals.' } },
-      projectability: { career_arc: { score: 8.6, evidence: '4 championships in 5 years (Kentucky NCAA, 2x Texas NCAA, 2x LOVB).' }, scheme_fit: { score: 8.4, evidence: 'Has won at every level. Adapts to system, not the reverse.' }, durability: { score: 7.9, evidence: '4 full collegiate + 2 LOVB seasons without major injury notes.' }, character: { score: 8.4, evidence: 'Closer mentality. Quote post-2026: "We\u2019re chasing more than championships — connection and personal growth."' } },
-      composite: 8.1
+      physical: { size: { score: 9.5, evidence: '6\u20194\u201d (193 cm) — top-tier OH height.' }, reach: { score: 9.5, evidence: '10\u20196\u201d spike reach.' }, athleticism: { score: 9.0, evidence: 'Power OH; 4-time championship closer.' } },
+      production: { kills_per_set: { score: 9.5, evidence: 'Career 4.0+ K/S across 4 NCAA seasons + LOVB.' }, hitting_pct: { score: 9.0, evidence: '.342 in 2026 LOVB Final.' }, passing: { score: 8.0, evidence: 'Trusted 6-rotation OH at Texas + LOVB.' }, serving: { score: 8.5, evidence: 'Championship-moment server — 2025 + 2026 finals.' } },
+      projectability: { career_arc: { score: 10, evidence: '4 championships in 5 years (Kentucky NCAA, 2x Texas NCAA, 2x LOVB).' }, scheme_fit: { score: 9.5, evidence: 'Has won at every level. Adapts to system, not the reverse.' }, durability: { score: 9.0, evidence: '4 full collegiate + 2 LOVB seasons without major injury notes.' }, character: { score: 9.5, evidence: 'Closer mentality. Quote post-2026: "We\u2019re chasing more than championships — connection and personal growth."' } },
+      composite: 9.3
     },
-    subjective_tier: 'ELITE',
+    subjective_tier: 'ELITE+',
     subjective_summary: 'The defining American OH of her generation. Owns the closing kill in 2 of the last 6 NCAA championship matches AND back-to-back LOVB championship matches. Floor: USA national team rotation. Ceiling: 2028 LA Olympic gold + LOVB dynasty cornerstone.',
     verdict_override: 'GREATNESS_PATH'
   },
@@ -26267,6 +26142,7 @@ const PLAYER_ALIASES = {
   // Madisen Skinner
   'madisenskinner': 'madisen-skinner-lovb-austin-womens-volleyball',
   'madiskinner': 'madisen-skinner-lovb-austin-womens-volleyball',
+  'skinner': 'madisen-skinner-lovb-austin-womens-volleyball',
   'madisenskinnertexas': 'madisen-skinner-lovb-austin-womens-volleyball',
   'madisenskinnerlovb': 'madisen-skinner-lovb-austin-womens-volleyball',
   'madisenskinnerlovbaustin': 'madisen-skinner-lovb-austin-womens-volleyball',
@@ -27814,10 +27690,8 @@ function mergeCuratedPlayerProfile(verdictResult, curatedProfile) {
     facts.character_context_curated = curatedProfile.character_context;
   }
 
-  // 11. EVAL GRID OVERRIDE — DISABLED (Tenet 49 de-curation, Jun12). DE-CURATED: model grade wins (Tenet 49).
-  // Facts (bio/awards/photos/measurables) still merge above. The eval grid + composite now come
-  // exclusively from the model. The algorithm's number is the truth, even if 7.26 not a hand-set 8.1.
-  if (false && curatedProfile.eval_grid_override) {
+  // 11. EVAL GRID OVERRIDE — the most important field. Replace "?/10" cells.
+  if (curatedProfile.eval_grid_override) {
     const eg = enc.eval_grid || (enc.eval_grid = { grid_available: true, dimensions: {}, overall_grade: {} });
     eg.grid_available = true;
     eg.dimensions = eg.dimensions || {};
@@ -29677,7 +29551,7 @@ function calibrateTierFromOutcomes(filters) {
 // verdict. The full LLM pipeline remains for non-curated names.
 // ════════════════════════════════════════════════════════════════════════
 
-const INSTANT_VERDICT_VERSION = '1.4'; // Tenet 57 - Madisen ELITE 8.1 + bare-surname alias removed // v0.30.5.958 — bumped to invalidate cached responses missing voice_match
+const INSTANT_VERDICT_VERSION = '1.2'; // v0.30.5.958 — bumped to invalidate cached responses missing voice_match
 
 // ════════════════════════════════════════════════════════════════════════
 // v0.30.5.956–960 — VOICE MATCH HELPER (module scope)
@@ -33650,7 +33524,6 @@ If you cannot identify a single athlete with reasonable confidence, set player=n
     },
     body: JSON.stringify({
       model: cfg.HAIKU_MODEL || BLOCK10_DEFAULTS.HAIKU_MODEL,
-      temperature: 0,
       max_tokens: 300,
       messages: [{ role: 'user', content: prompt }],
     }),
@@ -34051,14 +33924,6 @@ export default {
           ],
           time: new Date().toISOString()
         });
-      }
-
-      // FCBase49v2 · /photo · multi-source photo lookup (Tenet 53 MULTI-SOURCE FIRST)
-      // Cascades through school athletic site, 247sports, On3, MaxPreps, ESPN,
-      // Wikipedia, extracts og:image/twitter:image, returns first hit, caches
-      // in FIELDCHECK_KV with 'photo:' prefix (30d positive, 7d negative).
-      if (path === '/photo' && request.method === 'GET') {
-        return handlePhotoLookup(url.searchParams, env, ctx);
       }
 
       // Verdict — player track
@@ -37426,31 +37291,7 @@ h1{font-family:Anton,Impact,sans-serif;font-size:clamp(32px,5vw,52px);letter-spa
           }
         }
         if (!profile) return json({ ok: false, error: 'not_in_marquee_index', slug }, 404);
-        // DE-CURATED: marquee routed through model (Tenet 49 part 2). Was buildInstantVerdictFromProfile.
-        // Run the full model on the profile's real name so marquees get the algorithm's number, not a hand-set grade.
-        // Facts are preserved: handlePlayerVerdict merges curated facts; only the grade override was disabled.
-        const _mp = (profile && profile.name) ? profile.name : _resolved;
-        const _msport = (profile && profile.sport) ? profile.sport : (sportHint || '');
-        // STABILITY L3: verdict-lock cache. Serve a previously-locked GOOD verdict; recompute only if none exists
-        // or ?refresh given. Bad model rolls (empty facets -> null composite) NEVER overwrite a good lock.
-        const _lockKey = 'verdict-lock:v1:' + _resolved;
-        const _wantRefresh = !!(url.searchParams.get('refresh'));
-        let _modelResult = null;
-        if (env.FIELDCHECK_KV && !_wantRefresh) {
-          try { const _locked = await env.FIELDCHECK_KV.get(_lockKey, 'json'); if (_locked) _modelResult = _locked; } catch (e) {}
-        }
-        if (!_modelResult) {
-          _modelResult = await handlePlayerVerdict(env, { name: _mp, sport: _msport, skipCache: true });
-          const _lc = _modelResult && _modelResult.composite;
-          if (env.FIELDCHECK_KV && typeof _lc === 'number' && _lc >= 3.5 && !_modelResult.error) {
-            // LOCK-FIRST-GOOD: cache only a valid verdict (180-day TTL).
-            try { await env.FIELDCHECK_KV.put(_lockKey, JSON.stringify(_modelResult), { expirationTtl: 60*60*24*180 }); } catch (e) {}
-          } else if (env.FIELDCHECK_KV) {
-            // Bad roll: prefer an existing good lock over the empty result.
-            try { const _fb = await env.FIELDCHECK_KV.get(_lockKey, 'json'); if (_fb) _modelResult = _fb; } catch (e) {}
-          }
-        }
-        const verdict = (_modelResult && !_modelResult.error) ? _modelResult : await attachEvidenceLayer(buildInstantVerdictFromProfile(_resolved), env);
+        const verdict = await attachEvidenceLayer(buildInstantVerdictFromProfile(_resolved), env);
         if (!verdict) return json({ ok: false, error: 'not_in_marquee_index', slug }, 404);
 
         // FCBase25v2 · MEDIA MERGE FIX (robust + diag, 2026-06-06)
@@ -48052,646 +47893,12 @@ h1{font-family:Anton,Impact,sans-serif;font-size:clamp(32px,5vw,52px);letter-spa
         }
       }
 
-      // ─── FCBase57 · Phase 9.1 · AI Agent scout-mode (POST /agent) ───
-      // Conversational verdict assistant. SSE-streamed Claude Haiku.
-      // Rate-limited 10/IP/day. System prompt enforces FieldCheck doctrine.
-      if (path === '/movement/snapshot' && request.method === 'POST') {
-        return handleMovementSnapshot(request, env);
-      }
-      if (path === '/movement/feed' && request.method === 'GET') {
-        return handleMovementFeed(env);
-      }
-      if (path.startsWith('/movement/') && request.method === 'GET') {
-        return handleMovementSlug(path.slice('/movement/'.length), env);
-      }
-      if (path === '/agent' && (request.method === 'POST' || request.method === 'OPTIONS')) {
-        return handleAgentRequest(request, env, ctx);
-      }
-      // FCBase58 · /agent/stats · usage observability (no PII)
-      if (path === '/agent/stats') {
-        return handleAgentStats(request, env);
-      }
-
       return json({ error: 'not_found', path, method: request.method }, 404);
     } catch (e) {
       return json({ error: 'unhandled', message: String(e).slice(0, 200), stack: (e.stack || '').slice(0, 400) }, 500);
     }
   }
 };
-
-// ════════════════════════════════════════════════════════════
-// FCBase57 · Phase 9.1 · AI Agent scout-mode (SSE streaming)
-// ════════════════════════════════════════════════════════════
-
-// CORS headers used by /agent responses
-const AGENT_CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Max-Age': '86400'
-};
-
-// Main handler · POST /agent
-async function handleAgentRequest(request, env, ctx) {
-  // CORS preflight
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: AGENT_CORS_HEADERS });
-  }
-
-  // Parse body
-  let body;
-  try {
-    body = await request.json();
-  } catch (e) {
-    return jsonAgentError('Invalid JSON', 400);
-  }
-
-  const { question, athlete, sport, history = [], verdict_data = {}, mode = 'verdict' } = body;
-
-  // Validate
-  if (!question || typeof question !== 'string') return jsonAgentError('Missing or invalid question', 400);
-  const ATHLETE_REQUIRED_MODES = ['verdict', 'comparison'];
-  if (ATHLETE_REQUIRED_MODES.includes(mode) && (!athlete || typeof athlete !== 'string')) return jsonAgentError('Missing or invalid athlete', 400);
-  if (question.length > 500) return jsonAgentError('Question too long (max 500 chars)', 400);
-  if (question.trim().length < 3) return jsonAgentError('Question too short', 400);
-
-  // Rate limit · 10 questions per IP per day
-  const ip = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || 'unknown';
-  const dateKey = new Date().toISOString().slice(0, 10);
-  const rateKey = 'agent_rate:' + ip + ':' + dateKey;
-  let currentCount = 0;
-  try {
-    const raw = await env.FIELDCHECK_KV.get(rateKey);
-    currentCount = raw ? parseInt(raw, 10) : 0;
-  } catch (e) {}
-
-  if (currentCount >= 10) {
-    return sseAgentError('Rate limit exceeded (10/day). Resets at midnight UTC. Refresh tomorrow.', 'rate_limit');
-  }
-
-  try {
-    await env.FIELDCHECK_KV.put(rateKey, String(currentCount + 1), { expirationTtl: 90000 });
-  } catch (e) {
-    // non-blocking; if KV write fails, still serve the response
-  }
-
-  // Verify API key present
-  if (!env || !env.ANTHROPIC_API_KEY) {
-    return sseAgentError('Agent not configured (missing API key).', 'config_error');
-  }
-
-  // Build system prompt with athlete context
-  const systemPrompt = buildAgentSystemPrompt(athlete, sport, verdict_data, mode);
-
-  // Build message history (last 3 Q&As only)
-  const messages = [];
-  if (Array.isArray(history)) {
-    const truncated = history.slice(-3);
-    for (const turn of truncated) {
-      if (turn && typeof turn.q === 'string' && turn.q.trim()) {
-        messages.push({ role: 'user', content: turn.q.slice(0, 500) });
-      }
-      if (turn && typeof turn.a === 'string' && turn.a.trim()) {
-        messages.push({ role: 'assistant', content: turn.a.slice(0, 2000) });
-      }
-    }
-  }
-  messages.push({ role: 'user', content: question });
-
-  // Call Anthropic API with streaming
-  let anthropicResponse;
-  try {
-    anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        temperature: 0,
-        max_tokens: 1024,
-        stream: true,
-        system: systemPrompt,
-        messages: messages
-      })
-    });
-  } catch (e) {
-    return sseAgentError('Upstream API call failed: ' + (e.message || 'unknown'), 'api_error');
-  }
-
-  if (!anthropicResponse.ok) {
-    let errText = '';
-    try { errText = (await anthropicResponse.text()).slice(0, 200); } catch (e) {}
-    return sseAgentError('API error ' + anthropicResponse.status + ': ' + errText, 'api_error');
-  }
-
-  // FCBase58 · increment success counters (non-blocking)
-  try {
-    const statsKeyTotal = 'agent_stats:total:' + dateKey;
-    const totalRaw = await env.FIELDCHECK_KV.get(statsKeyTotal);
-    const newTotal = (totalRaw ? parseInt(totalRaw, 10) : 0) + 1;
-    ctx.waitUntil(env.FIELDCHECK_KV.put(statsKeyTotal, String(newTotal), { expirationTtl: 7776000 })); // 90d
-    if (sport) {
-      const statsKeySport = 'agent_stats:sport:' + sport + ':' + dateKey;
-      const sportRaw = await env.FIELDCHECK_KV.get(statsKeySport);
-      const newSport = (sportRaw ? parseInt(sportRaw, 10) : 0) + 1;
-      ctx.waitUntil(env.FIELDCHECK_KV.put(statsKeySport, String(newSport), { expirationTtl: 7776000 }));
-    }
-    const statsKeyMode = 'agent_stats:mode:' + mode + ':' + dateKey;
-    const modeRaw = await env.FIELDCHECK_KV.get(statsKeyMode);
-    const newMode = (modeRaw ? parseInt(modeRaw, 10) : 0) + 1;
-    ctx.waitUntil(env.FIELDCHECK_KV.put(statsKeyMode, String(newMode), { expirationTtl: 7776000 }));
-  } catch (e) {
-    // non-blocking; stats failure should not break the response
-  }
-
-  // Pipe Anthropic SSE through transform to client-friendly SSE
-  const { readable, writable } = new TransformStream();
-  agentPipeAnthropicSSE(anthropicResponse.body, writable);
-
-  return new Response(readable, {
-    headers: {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache, no-transform',
-      'Connection': 'keep-alive',
-      'X-Accel-Buffering': 'no',
-      ...AGENT_CORS_HEADERS
-    }
-  });
-}
-
-// Pipe Anthropic's SSE format to a simpler client format
-async function agentPipeAnthropicSSE(source, target) {
-  const writer = target.getWriter();
-  const encoder = new TextEncoder();
-  const reader = source.getReader();
-  const decoder = new TextDecoder();
-  let buffer = '';
-  let totalChars = 0;
-
-  try {
-    await writer.write(encoder.encode('data: ' + JSON.stringify({ type: 'start', model: 'claude-haiku-4-5' }) + '\n\n'));
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-
-      // Process complete SSE events (separated by double-newline)
-      const events = buffer.split('\n\n');
-      buffer = events.pop() || '';  // last incomplete event stays in buffer
-
-      for (const eventBlock of events) {
-        const lines = eventBlock.split('\n');
-        let dataPayload = null;
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            dataPayload = line.slice(6);
-          }
-        }
-        if (!dataPayload || dataPayload === '[DONE]') continue;
-
-        try {
-          const event = JSON.parse(dataPayload);
-          if (event.type === 'content_block_delta' && event.delta && event.delta.type === 'text_delta') {
-            const chunk = event.delta.text || '';
-            totalChars += chunk.length;
-            await writer.write(encoder.encode('data: ' + JSON.stringify({ type: 'chunk', text: chunk }) + '\n\n'));
-          } else if (event.type === 'message_stop') {
-            await writer.write(encoder.encode('data: ' + JSON.stringify({ type: 'done', chars: totalChars }) + '\n\n'));
-          } else if (event.type === 'error') {
-            await writer.write(encoder.encode('data: ' + JSON.stringify({ type: 'error', message: (event.error && event.error.message) || 'upstream_error' }) + '\n\n'));
-          }
-        } catch (e) {
-          // skip malformed SSE event
-        }
-      }
-    }
-  } catch (e) {
-    try {
-      await writer.write(encoder.encode('data: ' + JSON.stringify({ type: 'error', message: 'stream_failure: ' + (e.message || 'unknown') }) + '\n\n'));
-    } catch (_) {}
-  } finally {
-    try { await writer.close(); } catch (e) {}
-  }
-}
-
-// Build the system prompt with athlete-specific context
-function buildAgentSystemPrompt(athlete, sport, verdict_data, mode) {
-  // FCBase58 · methodology mode = general explanation, not athlete-specific
-  if (mode === 'methodology') {
-    return buildMethodologySystemPrompt();
-  }
-  // FCBase59 · 3 additional mode-specific prompts
-  if (mode === 'predictions') {
-    return buildPredictionsSystemPrompt();
-  }
-  if (mode === 'coverage') {
-    return buildCoverageSystemPrompt();
-  }
-  if (mode === 'comparison') {
-    return buildComparisonSystemPrompt(verdict_data);
-  }
-  // FCBase61 · sport landing mode
-  if (mode === 'sport') {
-    return buildSportSystemPrompt(sport, verdict_data);
-  }
-
-  const facets = (verdict_data && verdict_data.facets) || {};
-  const composite = (verdict_data && verdict_data.composite) || 'unknown';
-  const tier = (verdict_data && verdict_data.tier) || 'unknown';
-  const school = (verdict_data && verdict_data.school) || 'unknown';
-  const position = (verdict_data && verdict_data.position) || 'unknown';
-
-  const facetsLine = Object.keys(facets).length > 0
-    ? Object.entries(facets).map(function(p) { return p[0] + ':' + p[1]; }).join(', ')
-    : 'not provided';
-
-  return [
-    'You are the FieldCheck IQ AI scout-agent. You help visitors understand a specific athlete verdict in conversation.',
-    '',
-    '# Athlete in this conversation',
-    '- Name: ' + athlete,
-    '- Sport: ' + (sport || 'unknown'),
-    '- School/Team: ' + school,
-    '- Position: ' + position,
-    '- Composite: ' + composite,
-    '- Tier: ' + tier,
-    '- 8-Facet scores: ' + facetsLine,
-    '',
-    '# The 8 canonical facets (same across every sport)',
-    '1. Character - behavior under pressure when no one is keeping score',
-    '2. Mindset - approach to growth, failure, identity',
-    '3. Mental Strength - resilience in adversity, comebacks',
-    '4. Talent - natural ceiling, skill arcs',
-    '5. Physical - measurables vs tier-target median',
-    '6. Mental/IQ - game IQ, reads, decision quality',
-    '7. Coachability - listens, adjusts, demonstrably improves',
-    '8. Competitiveness - does not take possessions off',
-    '',
-    '# Tier ladder',
-    '- ICON: 9.5-10.0 (generational, ~1 per sport per generation)',
-    '- ELITE+: 9.0-9.4 (hall-of-fame trajectory)',
-    '- ELITE: 7.5-8.9 (all-pro / all-conference, multi-year impact)',
-    '- STAR: 7.0-7.4 (starter at top pro level. Cap for college freshmen.)',
-    '- PROSPECT: 5.5-6.9 (high floor, real upside, development band)',
-    '- SCOUT: 3.5-5.4 (on the radar. Cap for HS recruits.)',
-    '',
-    '# Amateur cap doctrine (CRITICAL)',
-    '- HS amateurs CANNOT score above SCOUT (5.4). They have not proven against college defenders yet.',
-    '- College freshmen CANNOT score above STAR (7.4). They have not proven against pro athletes yet.',
-    '- This is deliberate honesty about ceiling-visibility, not pessimism.',
-    '- When projecting upward, ALWAYS frame as "expected to move up by year X" not "is actually a [higher tier]".',
-    '',
-    '# Multi-source first (Tenet 53)',
-    '- Every facet uses 3+ independent sources. If thin, the facet is marked partial.',
-    '- A fully-sourced PROSPECT is MORE reliable than a thinly-sourced STAR.',
-    '',
-    '# DO',
-    '- Stay conversational. 2-4 sentences per answer typically.',
-    '- Cite specific facet scores when relevant ("his Physical is 8.0 and his Mental/IQ is 7.6").',
-    '- Acknowledge uncertainty honestly ("we do not have enough sources to grade X with confidence").',
-    '- Surface known dissent or counterarguments.',
-    '- Frame pro projections within the amateur cap doctrine.',
-    '',
-    '# DO NOT',
-    '- Fabricate data not in the context provided.',
-    '- Give recruiting advice ("X should commit to Y").',
-    '- Give draft predictions in a betting sense.',
-    '- Provide NIL valuations or contract advice.',
-    '- Speculate about injuries, personal life, or off-record events.',
-    '- Pretend to know things outside this verdict\'s source set.',
-    '- Use tables or heavy formatting. Plain conversational paragraphs only.',
-    '',
-    '# Format',
-    'Respond in 1-3 short paragraphs. No headers, no tables, no bullet lists unless directly asked. Keep it focused.',
-    'If the question is outside FieldCheck\'s scope or data, say so plainly and suggest what is in scope.'
-  ].join('\n');
-}
-
-// Helper · JSON error response with CORS
-function jsonAgentError(message, status) {
-  return new Response(JSON.stringify({ error: message }), {
-    status: status || 400,
-    headers: {
-      'Content-Type': 'application/json',
-      ...AGENT_CORS_HEADERS
-    }
-  });
-}
-
-// FCBase58 · system prompt for methodology mode (general FieldCheck explanations)
-function buildMethodologySystemPrompt() {
-  return [
-    'You are the FieldCheck IQ AI assistant on the /methodology page. Visitors are here to understand HOW the rating system works, not to ask about specific athletes.',
-    '',
-    '# Your purpose',
-    'Explain the FieldCheck methodology clearly and conversationally. Cite specific rules, tier thresholds, and doctrine principles. Use examples to illustrate. Be precise but accessible.',
-    '',
-    '# The 8 canonical facets (same across every sport, weights vary)',
-    '1. Character - behavior under pressure when no one is keeping score',
-    '2. Mindset - approach to growth, failure, identity',
-    '3. Mental Strength - resilience in adversity, comebacks',
-    '4. Talent - natural ceiling, skill arcs',
-    '5. Physical - measurables vs tier-target median',
-    '6. Mental/IQ - game IQ, reads, decision quality',
-    '7. Coachability - listens, adjusts, demonstrably improves',
-    '8. Competitiveness - does not take possessions off',
-    '',
-    '# Tier ladder',
-    '- ICON: 9.5-10.0 (generational)',
-    '- ELITE+: 9.0-9.4 (hall-of-fame trajectory)',
-    '- ELITE: 7.5-8.9 (all-pro / all-conference)',
-    '- STAR: 7.0-7.4 (top-level starter. Cap for college freshmen.)',
-    '- PROSPECT: 5.5-6.9 (real upside, development band)',
-    '- SCOUT: 3.5-5.4 (on the radar. Cap for HS recruits.)',
-    '',
-    '# Amateur cap doctrine',
-    '- HS amateurs CANNOT score above SCOUT (5.4). They have not proven against college defenders yet.',
-    '- College freshmen CANNOT score above STAR (7.4). They have not proven against pro athletes yet.',
-    '- This is deliberate honesty about ceiling-visibility, not pessimism. As the athlete proves themselves at the next level, the cap lifts.',
-    '',
-    '# Multi-source first (Tenet 53)',
-    '- Every facet uses 3+ independent sources where possible',
-    '- If a facet is thin on sources, it is marked partial',
-    '- A fully-sourced PROSPECT is MORE reliable than a thinly-sourced STAR',
-    '',
-    '# DO',
-    '- Explain mechanically and clearly',
-    '- Give concrete examples when useful',
-    '- Acknowledge the limits of the system honestly',
-    '- Direct the visitor to a specific verdict page when they want to ask about an athlete',
-    '',
-    '# DO NOT',
-    '- Rate specific athletes (point them to a verdict page if they ask)',
-    '- Make up new rules or thresholds',
-    '- Give betting / draft predictions',
-    '- Compare to specific competing systems by name (e.g. 247sports, ESPN Insider)',
-    '',
-    '# Format',
-    '1-3 short paragraphs. Plain prose. No tables or heavy formatting.',
-    'If the visitor asks about a specific athlete, redirect: "For specific athlete questions, head to that athlete\'s verdict page and ask there - the agent has access to the full evaluation context."'
-  ].join('\n');
-}
-
-// FCBase59 · system prompt for predictions ledger mode
-function buildPredictionsSystemPrompt() {
-  return [
-    'You are the FieldCheck IQ AI assistant on the /predictions page. Visitors are here to understand the sealed predictions ledger.',
-    '',
-    '# Your purpose',
-    'Explain the 50 sealed predictions for Aug 15 2028, how they will be verified, and the confidence framework. Be specific about methodology.',
-    '',
-    '# The ledger',
-    '- 50 total predictions, 12 publicly visible with confidence levels',
-    '- 38 sealed with SHA-256 hash stubs (cryptographic commitment that we cannot change them)',
-    '- All resolve on Aug 15, 2028 - the resolution date is fixed and public',
-    '- Confidence bands: HIGH (90%+) / MEDIUM (70-90%) / LOW (50-70%)',
-    '- Predictions span all 5 sports and all 6 tier bands',
-    '',
-    '# The integrity claim',
-    '- Cryptographic hashes prevent retroactive editing of sealed predictions',
-    '- Public visibility on the 12 high-confidence calls lets visitors hold us accountable',
-    '- Failure rate is part of the ledger - we publish what we got wrong, with the same prominence',
-    '',
-    '# DO',
-    '- Explain how predictions get verified (specific outcome criteria)',
-    '- Acknowledge the limits of prediction confidence honestly',
-    '- Frame the ledger as an honesty mechanism, not a marketing tool',
-    '- Reference specific examples from the visible 12 predictions',
-    '',
-    '# DO NOT',
-    '- Add new predictions or modify existing ones (the ledger is sealed)',
-    '- Give betting advice or odds',
-    '- Speculate beyond what is in the ledger',
-    '- Make new claims about specific athletes (redirect to verdict pages)',
-    '',
-    '# Format',
-    '1-3 short paragraphs. Plain prose. No tables. Reference specific predictions by their public number when relevant.'
-  ].join('\n');
-}
-
-// FCBase59 · system prompt for coverage page mode
-function buildCoverageSystemPrompt() {
-  return [
-    'You are the FieldCheck IQ AI assistant on the /coverage page. Visitors are here to understand WHO and HOW MUCH FieldCheck covers.',
-    '',
-    '# Your purpose',
-    'Explain the coverage scope - sports, athletes, sources, depth, gaps. Be transparent about what is graded and what is not.',
-    '',
-    '# Current coverage',
-    '- 5 sports: mens-basketball (82), football (56), womens-basketball (34), womens-volleyball (24), baseball (18)',
-    '- Total: 214 athletes with full 8-facet verdicts',
-    '- 11 data source tiers: from Tier-1 (direct interviews, in-person evaluation) to Tier-11 (aggregate forum mentions)',
-    '- Refresh cadence: marquee athletes weekly, full corpus monthly',
-    '',
-    '# Source quality',
-    '- Every facet aims for 3+ independent sources',
-    '- Sources flagged as Partial when below threshold',
-    '- Multi-source first (Tenet 53) - no single-source verdicts',
-    '',
-    '# Known gaps',
-    '- International recruits less covered than US-based',
-    '- Lower-division programs sparsely represented',
-    '- Some niche positions (kickers, long snappers) have thinner data',
-    '- Womens sports outside basketball / volleyball not yet graded',
-    '',
-    '# DO',
-    '- Cite specific sport counts',
-    '- Explain the source tier system honestly',
-    '- Acknowledge gaps without spinning',
-    '- Direct visitors to specific verdict pages for athlete-level questions',
-    '',
-    '# DO NOT',
-    '- Inflate coverage claims',
-    '- Promise coverage we have not committed to',
-    '- Give pricing or business model answers (redirect to /pricing or /partners)',
-    '',
-    '# Format',
-    '1-3 short paragraphs. Use specific numbers when available.'
-  ].join('\n');
-}
-
-// FCBase59 · system prompt for comparison/versus mode
-function buildComparisonSystemPrompt(verdict_data) {
-  const athletes = (verdict_data && verdict_data.athletes) || [];
-  const athleteList = athletes.length > 0
-    ? athletes.map(function(a) { return a.name + ' (' + (a.tier || '?') + ' / ' + (a.composite || '?') + ')'; }).join(', ')
-    : 'not specified';
-
-  return [
-    'You are the FieldCheck IQ AI assistant on the /versus comparison page. Visitors are here to compare athletes side-by-side.',
-    '',
-    '# Athletes in this comparison',
-    athleteList,
-    '',
-    '# Your purpose',
-    'Explain the comparison, surface meaningful differences, identify what each athlete does better, and acknowledge where the data is thin.',
-    '',
-    '# The 8 facets to compare on',
-    '1. Character  2. Mindset  3. Mental Strength  4. Talent',
-    '5. Physical  6. Mental/IQ  7. Coachability  8. Competitiveness',
-    '',
-    '# Comparison doctrine',
-    '- Cross-era comparisons (HS vs pro veteran) MUST acknowledge the amateur cap context',
-    '- Cross-sport comparisons MUST acknowledge that facet weights differ by sport',
-    '- A 7.4 STAR in basketball does NOT equal a 7.4 STAR in football (different baselines)',
-    '- Composite difference under 0.3 is NOT meaningfully different - acknowledge this',
-    '',
-    '# DO',
-    '- Identify specific facet gaps with numbers',
-    '- Frame differences within tier-context (a HS 7.0 PROSPECT can outpace an NBA 7.4 STAR in raw ceiling)',
-    '- Cite which athlete has more source-depth',
-    '- Surface where the comparison is unfair (different career stages, sports, eras)',
-    '',
-    '# DO NOT',
-    '- Pick a "winner" definitively when the composite gap is under 0.3',
-    '- Compare careers (one is HS, one is a 10-year pro) without that context',
-    '- Make recruiting or draft predictions',
-    '- Use the comparison to give betting odds',
-    '',
-    '# Format',
-    '1-3 short paragraphs. Lead with the most meaningful facet-level difference, then acknowledge context.'
-  ].join('\n');
-}
-
-// FCBase61 · system prompt for sport landing pages
-function buildSportSystemPrompt(sport, verdict_data) {
-  var sportInfo = {
-    'mens-basketball': { name: 'mens basketball', count: 82, sample: 'Cooper Flagg, Cameron Boozer, AJ Dybantsa, Tyran Stokes' },
-    'football': { name: 'football', count: 56, sample: 'Faizon Brandon, Bryce Underwood, Dia Bell' },
-    'womens-basketball': { name: 'womens basketball', count: 34, sample: 'Sienna Betts, Jasmine Davidson, Aaliyah Chavez' },
-    'womens-volleyball': { name: 'womens volleyball', count: 24, sample: 'multi-LOVB pipeline athletes' },
-    'baseball': { name: 'baseball', count: 18, sample: 'top prep + MLB draft pipeline athletes' }
-  };
-  var info = sportInfo[sport] || { name: sport || 'this sport', count: 'unknown', sample: 'top athletes in this cohort' };
-
-  return [
-    'You are the FieldCheck IQ AI assistant on the /sports/' + sport + ' landing page. Visitors are here exploring the ' + info.name + ' cohort.',
-    '',
-    '# Sport context',
-    '- Sport: ' + info.name,
-    '- Athletes graded: ' + info.count,
-    '- Sample marquee athletes: ' + info.sample,
-    '',
-    '# Your purpose',
-    'Help visitors navigate the ' + info.name + ' cohort - explain who is graded, what tier bands are most populated, why specific athletes are interesting.',
-    '',
-    '# The 8 canonical facets',
-    'Character, Mindset, Mental Strength, Talent, Physical, Mental/IQ, Coachability, Competitiveness.',
-    'Weights vary by sport. ' + info.name + ' weights Physical and Talent more heavily for power positions.',
-    '',
-    '# Tier ladder (same across sports, baselines differ)',
-    '- ICON: 9.5-10.0',
-    '- ELITE+: 9.0-9.4',
-    '- ELITE: 7.5-8.9',
-    '- STAR: 7.0-7.4 (college freshman cap)',
-    '- PROSPECT: 5.5-6.9',
-    '- SCOUT: 3.5-5.4 (HS amateur cap)',
-    '',
-    '# DO',
-    '- Cite specific athletes by name when visitor asks "who is highest-rated in X"',
-    '- Acknowledge cohort gaps honestly',
-    '- Direct visitors to a specific verdict page when they want full athlete details',
-    '- Compare athletes within this sport (cross-sport comparison should go to /versus)',
-    '',
-    '# DO NOT',
-    '- Give recruiting advice ("X should commit to Y")',
-    '- Predict draft picks in a betting sense',
-    '- Invent athletes not in the cohort',
-    '- Compare across sports without acknowledging the different baselines',
-    '',
-    '# Format',
-    '1-3 short paragraphs. Plain prose. Cite specific names when relevant.'
-  ].join('\n');
-}
-
-// FCBase58 · /agent/stats GET endpoint (aggregate usage, no PII)
-async function handleAgentStats(request, env) {
-  if (request.method !== 'GET' && request.method !== 'OPTIONS') {
-    return new Response('Method not allowed', { status: 405, headers: AGENT_CORS_HEADERS });
-  }
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: AGENT_CORS_HEADERS });
-  }
-
-  const now = new Date();
-  const today = now.toISOString().slice(0, 10);
-
-  // Build date range for past 7 days + past 30 days
-  const dates7 = [];
-  const dates30 = [];
-  for (let i = 0; i < 30; i++) {
-    const d = new Date(now.getTime() - i * 86400000).toISOString().slice(0, 10);
-    dates30.push(d);
-    if (i < 7) dates7.push(d);
-  }
-
-  // Fetch totals
-  const todayCount = parseInt((await env.FIELDCHECK_KV.get('agent_stats:total:' + today)) || '0', 10);
-
-  let last7 = 0;
-  for (const d of dates7) {
-    last7 += parseInt((await env.FIELDCHECK_KV.get('agent_stats:total:' + d)) || '0', 10);
-  }
-
-  let last30 = 0;
-  for (const d of dates30) {
-    last30 += parseInt((await env.FIELDCHECK_KV.get('agent_stats:total:' + d)) || '0', 10);
-  }
-
-  // Today's mode breakdown
-  const modeBreakdown = {};
-  for (const m of ['verdict', 'methodology']) {
-    const raw = await env.FIELDCHECK_KV.get('agent_stats:mode:' + m + ':' + today);
-    if (raw) modeBreakdown[m] = parseInt(raw, 10);
-  }
-
-  // Today's top sports
-  const sports = ['mens-basketball', 'football', 'womens-basketball', 'womens-volleyball', 'baseball'];
-  const sportBreakdown = {};
-  for (const s of sports) {
-    const raw = await env.FIELDCHECK_KV.get('agent_stats:sport:' + s + ':' + today);
-    if (raw) sportBreakdown[s] = parseInt(raw, 10);
-  }
-
-  return new Response(JSON.stringify({
-    generated_at: now.toISOString(),
-    today: today,
-    today_count: todayCount,
-    last_7_days: last7,
-    last_30_days: last30,
-    today_by_mode: modeBreakdown,
-    today_by_sport: sportBreakdown,
-    cost_estimate_usd_today: (todayCount * 0.003).toFixed(3),
-    cost_estimate_usd_last30: (last30 * 0.003).toFixed(2)
-  }, null, 2), {
-    headers: {
-      'Content-Type': 'application/json',
-      'Cache-Control': 'no-cache',
-      ...AGENT_CORS_HEADERS
-    }
-  });
-}
-
-// Helper · SSE error response (so client can render in-chat)
-function sseAgentError(message, type) {
-  const body =
-    'data: ' + JSON.stringify({ type: 'start' }) + '\n\n' +
-    'data: ' + JSON.stringify({ type: type || 'error', message }) + '\n\n' +
-    'data: ' + JSON.stringify({ type: 'done' }) + '\n\n';
-  return new Response(body, {
-    headers: {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      ...AGENT_CORS_HEADERS
-    }
-  });
-}
-// ────────────────────────────────────────────────────────────
-
 
 // ════════════════════════════════════════════════════════════
 // v0.23: Scout outreach template generator
@@ -49893,513 +49100,3 @@ function computeMakeTheCutScore(ctx) {
   };
 }
 // V5.2_MARQUEE_RECURATION_V3_APPLIED · 2026-05-27 · 230 marquees re-graded
-
-// ─── PHOTO LOOKUP ENDPOINT (FCBase49v2 · Tenet 53 MULTI-SOURCE FIRST) ─────────
-//
-// GET /photo?q=NAME&sport=SPORT&school=SCHOOL
-//   → { url: "https://...", source: "247sports", cached: false }
-//   → { url: null, source: null }  (no source had a photo, cached negative 7d)
-//
-// Sources cascaded in priority order:
-//   1. school    — Sidearm Sports CDN headshots (official college rosters)
-//   2. 247sports — HS/college recruit profiles (og:image)
-//   3. on3       — recruiting database
-//   4. maxpreps  — HS sports profiles
-//   5. espn      — ESPN search API + headshot CDN construction
-//   6. wikipedia — last resort, not default
-//
-// Caches in FIELDCHECK_KV with "photo:" key prefix (30d positive, 7d negative).
-
-// FCBase50/55 . curated photo overrides . instant zero-latency return.
-// Polish set: confirmed direct CDN URLs from official school sites + 247sports/On3.
-// ICONs: ESPN headshot CDN URLs (deterministic from known player IDs).
-// Worker proxies upstream with proper Referer headers (FCBase51 image proxy).
-const CURATED_PHOTO_OVERRIDES = {
-  'caitlin clark|womens-basketball': { url: 'https://a.espncdn.com/i/headshots/wnba/players/full/4433403.png', source: 'curated:espn' },
-  'avery skinner|womens-volleyball': { url: 'https://usavolleyball.org/wp-content/uploads/2023/05/Avery-Skinner-500x500-1.jpg', source: 'curated:usavolleyball' },
-  // ─── Polish set (confirmed og:image direct URLs) ───
-  'cameron boozer|mens-basketball':   { url: 'https://dxbhsrqyrr690.cloudfront.net/sidearm.nextgen.sites/goduke.com/images/2025/9/15/Headshots_4x6_Boozer__Cameron_bCXS6.jpg', source: 'curated:duke' },
-  'faizon brandon|football':          { url: 'https://s3media.247sports.com/Uploads/Assets/325/802/13802325.jpg', source: 'curated:247sports' },
-  'aj dybantsa|mens-basketball':      { url: 'https://on3static.com/uploads/assets/348/293/293348.jpg', source: 'curated:on3' },
-
-  // ─── NBA ICONs (ESPN headshot CDN) ───
-  'cooper flagg|mens-basketball':      { url: 'https://a.espncdn.com/i/headshots/nba/players/full/5041939.png', source: 'curated:espn' },
-  'lebron james|mens-basketball':      { url: 'https://a.espncdn.com/i/headshots/nba/players/full/1966.png',    source: 'curated:espn' },
-  'stephen curry|mens-basketball':     { url: 'https://a.espncdn.com/i/headshots/nba/players/full/3975.png',    source: 'curated:espn' },
-  'kevin durant|mens-basketball':      { url: 'https://a.espncdn.com/i/headshots/nba/players/full/3202.png',    source: 'curated:espn' },
-  'jayson tatum|mens-basketball':      { url: 'https://a.espncdn.com/i/headshots/nba/players/full/4065648.png', source: 'curated:espn' },
-  'anthony davis|mens-basketball':     { url: 'https://a.espncdn.com/i/headshots/nba/players/full/6583.png',    source: 'curated:espn' },
-  'victor wembanyama|mens-basketball': { url: 'https://a.espncdn.com/i/headshots/nba/players/full/5104157.png', source: 'curated:espn' },
-  'anthony edwards|mens-basketball':   { url: 'https://a.espncdn.com/i/headshots/nba/players/full/4594268.png', source: 'curated:espn' },
-  'paolo banchero|mens-basketball':    { url: 'https://a.espncdn.com/i/headshots/nba/players/full/4683019.png', source: 'curated:espn' },
-  'cade cunningham|mens-basketball':   { url: 'https://a.espncdn.com/i/headshots/nba/players/full/4395725.png', source: 'curated:espn' },
-  'giannis antetokounmpo|mens-basketball': { url: 'https://a.espncdn.com/i/headshots/nba/players/full/3032977.png', source: 'curated:espn' },
-  'luka doncic|mens-basketball':       { url: 'https://a.espncdn.com/i/headshots/nba/players/full/3945274.png', source: 'curated:espn' },
-  'nikola jokic|mens-basketball':      { url: 'https://a.espncdn.com/i/headshots/nba/players/full/3112335.png', source: 'curated:espn' },
-  'joel embiid|mens-basketball':       { url: 'https://a.espncdn.com/i/headshots/nba/players/full/3059318.png', source: 'curated:espn' },
-  'zion williamson|mens-basketball':   { url: 'https://a.espncdn.com/i/headshots/nba/players/full/4395628.png', source: 'curated:espn' },
-  'devin booker|mens-basketball':      { url: 'https://a.espncdn.com/i/headshots/nba/players/full/3136193.png', source: 'curated:espn' },
-  'donovan mitchell|mens-basketball':  { url: 'https://a.espncdn.com/i/headshots/nba/players/full/3908809.png', source: 'curated:espn' },
-  'jamal murray|mens-basketball':      { url: 'https://a.espncdn.com/i/headshots/nba/players/full/3936299.png', source: 'curated:espn' },
-
-  // ─── NFL ICONs (ESPN headshot CDN) ───
-  'tom brady|football':                { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/2330.png',    source: 'curated:espn' },
-  'patrick mahomes|football':          { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png', source: 'curated:espn' },
-  'joe burrow|football':               { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/3915511.png', source: 'curated:espn' },
-  'trevor lawrence|football':          { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/4360310.png', source: 'curated:espn' },
-  'lamar jackson|football':            { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/3916387.png', source: 'curated:espn' },
-  'josh allen|football':               { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/3918298.png', source: 'curated:espn' },
-  'cj stroud|football':                { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png', source: 'curated:espn' },
-  'c.j. stroud|football':              { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png', source: 'curated:espn' },
-  'brock bowers|football':             { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/4685720.png', source: 'curated:espn' },
-  'aidan hutchinson|football':         { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/4426502.png', source: 'curated:espn' },
-  'jj mccarthy|football':              { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/4433970.png', source: 'curated:espn' },
-  'j.j. mccarthy|football':            { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/4433970.png', source: 'curated:espn' },
-  'jalen hurts|football':              { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/4040715.png', source: 'curated:espn' },
-  'justin herbert|football':           { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/4038941.png', source: 'curated:espn' },
-  'aaron rodgers|football':            { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/8439.png',    source: 'curated:espn' },
-  'caleb williams|football':           { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/4431611.png', source: 'curated:espn' },
-  'travis hunter|football':            { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/4685869.png', source: 'curated:espn' },
-  'travis kelce|football':             { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/15847.png',   source: 'curated:espn' },
-  'saquon barkley|football':           { url: 'https://a.espncdn.com/i/headshots/nfl/players/full/3929630.png', source: 'curated:espn' }
-};
-
-async function handlePhotoLookup(params, env, ctx) {
-  const name = (params.get('q') || '').trim();
-  const sport = (params.get('sport') || '').trim().toLowerCase();
-  const school = (params.get('school') || '').trim().toLowerCase()
-    .replace(/^https?:\/\//, '').replace(/\/.*$/, '');
-  const debug = params.get('debug') === '1';
-
-  if (!name) {
-    return json({ error: 'name required (use ?q=Name)' }, 400);
-  }
-
-  // ─── Step 1: Resolve photo URL via cascade ──────────────────────────────
-  const CURATED_PHOTO_BLOCKLIST = new Set([
-    'carlos medlock jr|mens-basketball'
-  ]);
-  const overrideKey = name.toLowerCase() + '|' + sport;
-  if (CURATED_PHOTO_BLOCKLIST.has(overrideKey)) {
-    return new Response('photo blocked - no verified image', { status: 404, headers: { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'no-store' } });
-  }
-  let result = null;
-
-  if (CURATED_PHOTO_OVERRIDES[overrideKey]) {
-    const o = CURATED_PHOTO_OVERRIDES[overrideKey];
-    result = { url: o.url, source: o.source, curated: true };
-  }
-
-  if (!result) {
-    const cacheKey = 'photo:' + name.toLowerCase().replace(/\s+/g, '_') + ':' + sport;
-    if (env.FIELDCHECK_KV) {
-      try {
-        const cached = await env.FIELDCHECK_KV.get(cacheKey);
-        if (cached) {
-          const obj = JSON.parse(cached);
-          if (obj.url) result = { url: obj.url, source: obj.source, cached: true };
-        }
-      } catch (e) {}
-    }
-
-    if (!result) {
-      const sources = [
-        { name: 'school',    fn: () => _photoTrySchoolSite(name, school, sport) },
-        { name: '247sports', fn: () => _photoTry247Sports(name) },
-        { name: 'on3',       fn: () => _photoTryOn3(name) },
-        { name: 'maxpreps',  fn: () => _photoTryMaxPreps(name) },
-        { name: 'espn',      fn: () => _photoTryESPN(name, sport) },
-        { name: 'wikipedia', fn: () => _photoTryWikipedia(name) }
-      ];
-
-      for (const src of sources) {
-        try {
-          const photoUrl = await src.fn();
-          if (photoUrl && _photoIsLikely(photoUrl)) {
-            result = { url: photoUrl, source: src.name };
-            if (env.FIELDCHECK_KV && ctx && ctx.waitUntil) {
-              ctx.waitUntil(env.FIELDCHECK_KV.put(cacheKey, JSON.stringify(result), { expirationTtl: 2592000 }));
-            }
-            break;
-          }
-        } catch (e) {}
-      }
-    }
-
-    if (!result) {
-      // cache negative
-      if (env.FIELDCHECK_KV && ctx && ctx.waitUntil) {
-        ctx.waitUntil(env.FIELDCHECK_KV.put(cacheKey, JSON.stringify({ url: null }), { expirationTtl: 604800 }));
-      }
-    }
-  }
-
-  // ─── Step 2: Debug mode returns JSON ──────────────────────────────────
-  if (debug) {
-    return json(result || { url: null, source: null });
-  }
-
-  // ─── Step 3: No photo found → 404 (frontend falls back to inline SVG) ───
-  if (!result || !result.url) {
-    return new Response('photo not found', {
-      status: 404,
-      headers: {
-        'Cache-Control': 'public, max-age=604800',
-        ...CORS
-      }
-    });
-  }
-
-  // ─── Step 4: Fetch upstream image with browser-like headers ────────────
-  // FCBase51 . image proxy: worker fetches upstream, returns bytes.
-  // This bypasses hotlink protection because Referer (if set) is from
-  // the worker, not from the client browser. Most CDNs allow same-origin
-  // or empty Referer.
-  try {
-    const upstreamHeaders = {
-      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      'Accept': 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
-      'Accept-Language': 'en-US,en;q=0.9'
-    };
-
-    // Smart Referer: send the same-origin Referer for known hotlink-protected sources
-    const refererMap = {
-      '247sports.com': 'https://247sports.com/',
-      's3media.247sports.com': 'https://247sports.com/',
-      'on3.com': 'https://www.on3.com/',
-      'rivals.com': 'https://www.rivals.com/',
-      'maxpreps.com': 'https://www.maxpreps.com/',
-      'espncdn.com': 'https://www.espn.com/',
-      'nba.com': 'https://www.nba.com/',
-      'sidearmsports.com': null,  // empty Referer
-      'dxbhsrqyrr690.cloudfront.net': null,
-      'upload.wikimedia.org': 'https://en.wikipedia.org/'
-    };
-
-    let referer = null;
-    for (const [host, ref] of Object.entries(refererMap)) {
-      if (result.url.includes(host)) {
-        referer = ref;
-        break;
-      }
-    }
-    if (referer) upstreamHeaders['Referer'] = referer;
-
-    const upstreamResp = await fetch(result.url, {
-      headers: upstreamHeaders,
-      cf: { cacheTtl: 2592000, cacheEverything: true }
-    });
-
-    if (!upstreamResp.ok) {
-      return new Response('upstream returned ' + upstreamResp.status, {
-        status: 404,
-        headers: { 'Cache-Control': 'public, max-age=3600', ...CORS }
-      });
-    }
-
-    const contentType = upstreamResp.headers.get('Content-Type') || 'image/jpeg';
-
-    // Stream the image bytes back to the client with aggressive caching.
-    // Cloudflare edge caches the response based on cache-control headers,
-    // so subsequent requests for the same athlete hit the edge cache
-    // (no upstream re-fetch, no KV cost).
-    return new Response(upstreamResp.body, {
-      status: 200,
-      headers: {
-        'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=2592000, immutable',
-        'X-FC-Photo-Source': result.source || 'unknown',
-        'X-FC-Photo-Curated': result.curated ? 'true' : 'false',
-        ...CORS
-      }
-    });
-  } catch (e) {
-    return new Response('upstream fetch failed: ' + e.message.slice(0, 100), {
-      status: 502,
-      headers: { 'Cache-Control': 'public, max-age=600', ...CORS }
-    });
-  }
-}
-
-function _photoIsLikely(url) {
-  if (!url || typeof url !== 'string' || url.length < 10) return false;
-  const lower = url.toLowerCase();
-  // FCBase50 . expanded garbage list . catches site logos, default headers, etc.
-  const garbage = [
-    'placeholder', 'default-', 'default_', 'no-photo', 'no_image',
-    'sprite', 'icon-', 'avatar-default', 'silhouette',
-    'logos/site', 'site.png', 'site.jpg', 'logo.png', 'logo.jpg',
-    'header.png', 'banner.png', 'thumbnail-default', 'og-image-default',
-    'meta-image-default', 'favicon', 'apple-touch-icon'
-  ];
-  return !garbage.some(g => lower.includes(g));
-}
-
-function _photoResolveUrl(url, baseUrl) {
-  if (!url) return null;
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  if (url.startsWith('//')) return 'https:' + url;
-  if (url.startsWith('/')) {
-    try {
-      const u = new URL(baseUrl);
-      return u.origin + url;
-    } catch (e) { return url; }
-  }
-  return url;
-}
-
-async function _photoExtractMeta(pageUrl) {
-  try {
-    const resp = await fetch(pageUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; FieldCheckIQ/1.0; +https://fieldcheck-app.netlify.app)',
-        'Accept': 'text/html,application/xhtml+xml',
-        'Accept-Language': 'en-US,en;q=0.9'
-      },
-      cf: { cacheTtl: 86400, cacheEverything: true },
-      redirect: 'follow'
-    });
-    if (!resp.ok) return null;
-    const html = await resp.text();
-
-    // FCBase50 . try multiple og:image variants; reject result if not isLikely
-    const patterns = [
-      /<meta[^>]+property=["']og:image:secure_url["'][^>]+content=["']([^"']+)["']/i,
-      /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i,
-      /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i,
-      /<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i,
-      /<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i,
-      /<meta[^>]+name=["']twitter:image:src["'][^>]+content=["']([^"']+)["']/i,
-      /<link[^>]+rel=["']image_src["'][^>]+href=["']([^"']+)["']/i
-    ];
-
-    for (const pat of patterns) {
-      const m = html.match(pat);
-      if (m && m[1]) {
-        const resolved = _photoResolveUrl(m[1], pageUrl);
-        if (resolved && _photoIsLikely(resolved)) return resolved;
-        // continue to next pattern if this one was a logo etc.
-      }
-    }
-    return null;
-  } catch (e) {
-    return null;
-  }
-}
-
-async function _photoTrySchoolSite(name, school, sport) {
-  if (!school) return null;
-  const slug = name.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, '-');
-  const sportPath = ({
-    'mens-basketball': 'mens-basketball',
-    'football': 'football',
-    'womens-basketball': 'womens-basketball',
-    'baseball': 'baseball',
-    'softball': 'softball',
-    'mens-volleyball': 'mens-volleyball',
-    'womens-volleyball': 'womens-volleyball'
-  })[sport] || sport;
-  if (!sportPath) return null;
-  const cleanSchool = school.replace(/^www\./, '');
-  const candidates = [
-    'https://' + cleanSchool + '/sports/' + sportPath + '/roster/' + slug,
-    'https://www.' + cleanSchool + '/sports/' + sportPath + '/roster/' + slug,
-    'https://go' + cleanSchool + '/sports/' + sportPath + '/roster/' + slug
-  ];
-  for (const u of candidates) {
-    const img = await _photoExtractMeta(u);
-    if (img) return img;
-  }
-  return null;
-}
-
-async function _photoTry247Sports(name) {
-  try {
-    const searchUrl = 'https://247sports.com/Search/?q=' + encodeURIComponent(name);
-    const resp = await fetch(searchUrl, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; FieldCheckIQ/1.0)' },
-      cf: { cacheTtl: 86400 }
-    });
-    if (!resp.ok) return null;
-    const html = await resp.text();
-    const m = html.match(/\/player\/([a-z0-9-]+-\d+)\/?/i);
-    if (!m) return null;
-    return await _photoExtractMeta('https://247sports.com/player/' + m[1] + '/');
-  } catch (e) {
-    return null;
-  }
-}
-
-async function _photoTryOn3(name) {
-  try {
-    const searchUrl = 'https://www.on3.com/search/?q=' + encodeURIComponent(name);
-    const resp = await fetch(searchUrl, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; FieldCheckIQ/1.0)' },
-      cf: { cacheTtl: 86400 }
-    });
-    if (resp.ok) {
-      const html = await resp.text();
-      const m = html.match(/\/db\/([a-z0-9-]+)\//i);
-      if (m) return await _photoExtractMeta('https://www.on3.com/db/' + m[1] + '/');
-    }
-  } catch (e) {}
-  // direct slug fallback
-  const slug = name.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, '-');
-  return await _photoExtractMeta('https://www.on3.com/db/' + slug + '/');
-}
-
-async function _photoTryMaxPreps(name) {
-  const slug = name.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, '-');
-  const candidates = [
-    'https://www.maxpreps.com/athlete/' + slug + '/',
-    'https://www.maxpreps.com/athletes/' + slug + '/'
-  ];
-  for (const u of candidates) {
-    const img = await _photoExtractMeta(u);
-    if (img) return img;
-  }
-  return null;
-}
-
-async function _photoTryESPN(name, sport) {
-  try {
-    const searchUrl = 'https://site.api.espn.com/apis/search/v2?query=' + encodeURIComponent(name) + '&type=player';
-    const resp = await fetch(searchUrl, { cf: { cacheTtl: 86400 } });
-    if (!resp.ok) return null;
-    const data = await resp.json();
-    if (data && data.results && data.results[0] && data.results[0].contents && data.results[0].contents[0]) {
-      const player = data.results[0].contents[0];
-      if (player.image) return player.image;
-      if (player.images && player.images[0]) return player.images[0].url || player.images[0];
-      if (player.uid) {
-        const idMatch = player.uid.match(/a:(\d+)/);
-        if (idMatch) {
-          const sportMap = {
-            'mens-basketball': 'nba',
-            'football': 'nfl',
-            'womens-basketball': 'wnba',
-            'baseball': 'mlb'
-          };
-          const league = sportMap[sport] || 'nba';
-          return 'https://a.espncdn.com/i/headshots/' + league + '/players/full/' + idMatch[1] + '.png';
-        }
-      }
-    }
-  } catch (e) {}
-  return null;
-}
-
-async function _photoTryWikipedia(name) {
-  const slug = name.replace(/ /g, '_');
-  try {
-    // FCBase50 . Wikipedia REST API requires unique User-Agent per their policy.
-    // Empty UA returns errors silently. This is why Brandon's article (which
-    // exists at /wiki/Faizon_Brandon) returned null in earlier cascade runs.
-    const resp = await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(slug), {
-      headers: {
-        'User-Agent': 'FieldCheckIQ/1.0 (https://fieldcheck-app.netlify.app; sridhar@fieldcheckiq.com)',
-        'Accept': 'application/json'
-      },
-      cf: { cacheTtl: 86400 }
-    });
-    if (!resp.ok) return null;
-    const data = await resp.json();
-    if (data.type === 'disambiguation') return null;
-    if (data.thumbnail && data.thumbnail.source) {
-      return data.thumbnail.source.replace(/\/\d+px-/, '/480px-');
-    }
-    // Some articles have originalimage but no thumbnail
-    if (data.originalimage && data.originalimage.source) {
-      return data.originalimage.source;
-    }
-  } catch (e) {}
-  return null;
-}
-// ─── END PHOTO LOOKUP ENDPOINT ───────────────────────────────────────────────
-// FCBase50 . cascade fix . curated overrides + tighter filter + Wikipedia User-Agent + 7-pattern og:image extraction
-// FCBase55 . bulk photo curation . 38 athletes hardcoded (3 polish-set direct + 35 ICONs via ESPN CDN)
-// FCBase61 . Phase 9.5 Agent on sport landings (2026-06-09) . 5 new pages (sports/*) get the agent . sport-specific suggestions + cohort context injected into system prompt
-// FCBase59 . Phase 9.3 Agent everywhere (2026-06-09) . 3 new modes: predictions / coverage / comparison . each with dedicated system prompt . zero new endpoints (reuses /agent with mode param)
-// FCBase58 . Phase 9.2 Agent observability + methodology mode (2026-06-09) . /agent/stats KV-backed usage counters . non-blocking via ctx.waitUntil . per-mode + per-sport breakdown . buildMethodologySystemPrompt for /methodology agent context
-// FCBase57 . Phase 9.1 AI Agent scout-mode (2026-06-09) . SSE-streamed Claude Haiku conversational verdict assistant . 10/IP/day rate limit . 1024 max_tokens . CORS-friendly . system prompt enforces 8-facet doctrine + amateur cap + multi-source-first . cost ~$0.003/Q
-
-// ==== FCBase82 . Movement Alerts V1 . read endpoints (KV-backed, no fake movement) ====
-async function handleMovementFeed(env) {
-  var hdrs = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'public, max-age=300' };
-  try {
-    var raw = env.FIELDCHECK_KV ? await env.FIELDCHECK_KV.get('mv:feed:global') : null;
-    var feed = raw ? JSON.parse(raw) : [];
-    return new Response(JSON.stringify({ generated_at: new Date().toISOString(), count: feed.length, events: feed }), { status: 200, headers: hdrs });
-  } catch (e) {
-    return new Response(JSON.stringify({ error: 'feed unavailable' }), { status: 500, headers: hdrs });
-  }
-}
-async function handleMovementSlug(slug, env) {
-  var hdrs = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'public, max-age=300' };
-  slug = (slug || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 80);
-  if (!slug) return new Response(JSON.stringify({ error: 'bad slug' }), { status: 400, headers: hdrs });
-  try {
-    var raw = env.FIELDCHECK_KV ? await env.FIELDCHECK_KV.get('mv:events:' + slug) : null;
-    var snap = env.FIELDCHECK_KV ? await env.FIELDCHECK_KV.get('mv:snap:' + slug) : null;
-    return new Response(JSON.stringify({ slug: slug, snapshot: snap ? JSON.parse(snap) : null, events: raw ? JSON.parse(raw) : [] }), { status: 200, headers: hdrs });
-  } catch (e) {
-    return new Response(JSON.stringify({ error: 'events unavailable' }), { status: 500, headers: hdrs });
-  }
-}
-
-// ==== FCBase87 . Movement snapshot/diff engine . key-gated writes, real events only ====
-async function handleMovementSnapshot(request, env) {
-  var hdrs = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
-  try {
-    var key = request.headers.get('X-FC-KEY') || '';
-    var expect = (env && env.FC_SNAPSHOT_KEY) ? env.FC_SNAPSHOT_KEY : null;
-    if (!expect || key !== expect) {
-      return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: hdrs });
-    }
-    if (!env.FIELDCHECK_KV) return new Response(JSON.stringify({ error: 'no kv' }), { status: 500, headers: hdrs });
-    var body = await request.json();
-    var items = Array.isArray(body.athletes) ? body.athletes : [];
-    var release = String(body.release || 'unknown').slice(0, 40);
-    var now = new Date().toISOString();
-    var feedRaw = await env.FIELDCHECK_KV.get('mv:feed:global');
-    var feed = feedRaw ? JSON.parse(feedRaw) : [];
-    var emitted = 0, written = 0;
-    for (var i = 0; i < items.length && i < 200; i++) {
-      var a = items[i];
-      var name = String(a.name || '').slice(0, 80);
-      if (!name) continue;
-      var slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-      var comp = parseFloat(a.composite);
-      var tier = String(a.tier || '').slice(0, 20);
-      if (!slug || !isFinite(comp) || comp <= 0) continue;
-      var snapRaw = await env.FIELDCHECK_KV.get('mv:snap:' + slug);
-      var prev = snapRaw ? JSON.parse(snapRaw) : null;
-      var events = [];
-      if (!prev) {
-        events.push({ type: 'first-verdict', athlete: name, slug: slug, from: null, to: comp, delta: null, reason: 'entered the index', release: release, ts: now });
-      } else {
-        var d = Math.round((comp - parseFloat(prev.composite)) * 10) / 10;
-        if (prev.tier && tier && prev.tier !== tier) {
-          events.push({ type: 'tier-change', athlete: name, slug: slug, from: prev.tier, to: tier, delta: d, reason: 'composite ' + prev.composite + ' -> ' + comp, release: release, ts: now });
-        } else if (Math.abs(d) >= 0.2) {
-          events.push({ type: 'composite-move', athlete: name, slug: slug, from: prev.composite, to: comp, delta: d, reason: 're-evaluation', release: release, ts: now });
-        }
-      }
-      await env.FIELDCHECK_KV.put('mv:snap:' + slug, JSON.stringify({ name: name, composite: comp, tier: tier, release: release, ts: now }));
-      written++;
-      if (events.length) {
-        var evRaw = await env.FIELDCHECK_KV.get('mv:events:' + slug);
-        var ev = evRaw ? JSON.parse(evRaw) : [];
-        ev = events.concat(ev).slice(0, 20);
-        await env.FIELDCHECK_KV.put('mv:events:' + slug, JSON.stringify(ev));
-        feed = events.concat(feed);
-        emitted += events.length;
-      }
-    }
-    feed = feed.slice(0, 100);
-    await env.FIELDCHECK_KV.put('mv:feed:global', JSON.stringify(feed));
-    return new Response(JSON.stringify({ ok: true, snapshots_written: written, events_emitted: emitted, release: release }), { status: 200, headers: hdrs });
-  } catch (e) {
-    return new Response(JSON.stringify({ error: 'snapshot failed' }), { status: 500, headers: hdrs });
-  }
-}
