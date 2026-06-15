@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trajectory · FieldCheck IQ</title>
+<meta name="description" content="Growth curves, not snapshots. Track a player's five-layer trajectory over time.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--bg3:#201D2A;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);--red:#FF5C3A;--redl:rgba(255,92,58,.14);}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1040px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.nav-links{display:flex;gap:18px;flex:1}.nav-links a{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .15s}.nav-links a:hover,.nav-links a.on{color:var(--gold)}
+
+.hero{padding:48px 0 32px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(28px,4.5vw,52px);line-height:1.04;letter-spacing:-.014em;margin-bottom:12px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--t2);max-width:600px;line-height:1.68}
+
+.search-bar{display:flex;gap:10px;margin:24px 0;flex-wrap:wrap}
+.search-input{flex:1;min-width:200px;padding:12px 16px;background:var(--bg1);border:1px solid var(--ge);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--t);outline:none;transition:border-color .15s}.search-input:focus{border-color:var(--goldl)}
+.search-select{padding:12px 14px;background:var(--bg1);border:1px solid var(--ge);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t);outline:none;cursor:pointer}.search-select option{background:var(--bg2)}
+.search-btn{padding:12px 22px;background:var(--gold);color:#09080A;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:10px;cursor:pointer;transition:opacity .15s;white-space:nowrap}.search-btn:hover{opacity:.88}
+
+.status{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);padding:12px 0;min-height:36px}
+
+.trajectory-card{background:var(--bg1);border:1px solid var(--goldl);border-radius:16px;padding:24px 28px;margin-bottom:20px}
+.traj-header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.traj-name{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:-.008em}
+.traj-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);margin-top:4px;letter-spacing:.5px}
+.traj-composite-now{text-align:right}
+.traj-comp-num{font-family:'Anton',sans-serif;font-size:38px;color:var(--gold);line-height:1}
+.traj-comp-label{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-top:3px}
+.traj-direction{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:9999px;margin-top:6px;display:inline-block}
+.traj-direction.up{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.traj-direction.flat{background:var(--ge2);color:var(--t3);border:1px solid var(--ge)}
+.traj-direction.down{background:var(--redl);color:var(--red);border:1px solid rgba(255,92,58,.3)}
+
+.chart-wrap{position:relative;height:200px;margin:16px 0}
+.chart-wrap svg{width:100%;height:100%}
+
+.layer-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:20px}
+.layer-card{background:var(--bg2);border:1px solid var(--ge2);border-radius:10px;padding:12px 14px;text-align:center}
+.layer-card-name{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t4);margin-bottom:6px}
+.layer-card-val{font-family:'Anton',sans-serif;font-size:24px;line-height:1}
+.layer-card-delta{font-family:'JetBrains Mono',monospace;font-size:9px;margin-top:4px}
+
+.empty-state{text-align:center;padding:48px 24px;color:var(--t3)}
+.empty-state h3{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:-.005em;margin-bottom:8px;color:var(--t2)}
+.empty-state p{font-size:13.5px;line-height:1.65;max-width:480px;margin:0 auto}
+.empty-state .note{margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--t4)}
+
+.note-box{background:var(--golds);border:1px solid var(--goldl);border-radius:10px;padding:14px 18px;font-size:13px;color:var(--t);line-height:1.65;margin-bottom:20px}
+.note-box b{color:var(--gold)}
+
+.data-points-list{margin-top:20px;border-top:1px solid var(--ge2);padding-top:16px}
+.dp-label{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);margin-bottom:10px}
+.dp-row{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--ge2);font-size:12px;color:var(--t2);align-items:center}
+.dp-time{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);width:100px;flex-shrink:0}
+.dp-comp{font-family:'Anton',sans-serif;font-size:16px;color:var(--gold)}
+
+.footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer a{color:var(--t4);text-decoration:none}.footer a:hover{color:var(--gold)}
+@media(max-width:600px){.layer-grid{grid-template-columns:repeat(3,1fr)}.traj-header{flex-direction:column}.traj-composite-now{text-align:left}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div class="nav-links"><a href="/">Player</a><a href="/draft-intelligence">Draft IQ</a><a href="/calibration">Calibration</a><a href="/trajectory" class="on">Trajectory</a></div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Phase 2 · Trajectory Engine</div>
+  <h1>Growth curves.<br>Not <em>snapshots.</em></h1>
+  <p class="hero-sub">Track a player's five-layer arc over every verdict run. A player trending from 7.0 → 8.5 over two seasons tells a different story than a flatlined 8.0. This is that story.</p>
+</section>
+
+<div class="search-bar">
+  <input class="search-input" id="nameIn" placeholder="Player name (e.g. Harper Murray)" autocomplete="off">
+  <select class="search-select" id="sportIn">
+    <option value="">All sports</option>
+    <option value="womens-volleyball">Women's Volleyball</option>
+    <option value="mens-volleyball">Men's Volleyball</option>
+    <option value="mens-basketball">Men's Basketball</option>
+    <option value="womens-basketball">Women's Basketball</option>
+    <option value="football">Football</option>
+    <option value="baseball">Baseball</option>
+    <option value="tennis">Tennis</option>
+    <option value="mens-soccer">Men's Soccer</option>
+  </select>
+  <button class="search-btn" onclick="loadTrajectory()">View trajectory →</button>
+</div>
+
+<div class="status" id="status"></div>
+<div id="results"></div>
+
+<div class="note-box">
+  <b>Phase 2 — data accumulates with use.</b> Every verdict run after May 15, 2026 logs the five-layer scores to the trajectory database. The more verdicts run, the richer the growth curves. Early users see fewer data points; over time each player builds a full longitudinal arc.
+</div>
+
+<div class="footer">
+  <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ · Trajectory Engine v1.0</span>
+  <span><a href="/methodology">Methodology</a> · <a href="/calibration">Calibration</a> · <a href="/draft-intelligence">Draft IQ</a></span>
+</div>
+</div>
+
+<script>
+const W = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+const LAYERS = ['composite','physical','mindset','production','defense','pathway'];
+const LAYER_LABELS = {composite:'Composite',physical:'Physical',mindset:'Mindset',production:'Production',defense:'Defense',pathway:'Pathway'};
+const LAYER_COLORS = {composite:'#F5B800',physical:'#F5B800',mindset:'#6BAA5A',production:'#F5B800',defense:'#6BAA5A',pathway:'#4A9EFF'};
+
+function lc(v){return v==null?'var(--t3)':v>=9?'#F5B800':v>=8?'#6BAA5A':v>=7?'#A89F8C':'#FF5C3A'}
+
+async function loadTrajectory() {
+  const name = document.getElementById('nameIn').value.trim();
+  const sport = document.getElementById('sportIn').value;
+  const status = document.getElementById('status');
+  const results = document.getElementById('results');
+
+  if (!name) { status.textContent = 'Enter a player name.'; return; }
+  status.textContent = 'Loading trajectory data…';
+  results.innerHTML = '';
+
+  try {
+    const params = new URLSearchParams({ name, limit: '50' });
+    if (sport) params.set('sport', sport);
+    const r = await fetch(`${W}/api/trajectory?${params}`);
+    const d = await r.json();
+
+    if (!d.ok || !d.points || d.points.length === 0) {
+      status.textContent = '';
+      results.innerHTML = `<div class="empty-state">
+        <h3>No trajectory data yet</h3>
+        <p>Run a verdict for <strong>${escHtml(name)}</strong> to start building their trajectory. Every verdict logs the five-layer scores — run a few over time to see the growth curve emerge.</p>
+        <a href="/?run=${encodeURIComponent(JSON.stringify({track:'player',name,sport:sport||'womens-volleyball'}))}" style="display:inline-block;margin-top:16px;padding:10px 20px;background:var(--gold);color:#09080A;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:9999px;text-decoration:none">Run verdict →</a>
+        <div class="note">Trajectory engine launched May 2026 · Data accumulates with each verdict</div>
+      </div>`;
+      return;
+    }
+
+    status.textContent = `${d.points.length} data point${d.points.length !== 1 ? 's' : ''} found · ${d.date_range || ''}`;
+    renderTrajectoryCard(d, name);
+  } catch(e) {
+    status.textContent = 'Error loading trajectory: ' + String(e).slice(0, 80);
+  }
+}
+
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderTrajectoryCard(d, name) {
+  const pts = d.points;
+  const latest = pts[pts.length - 1];
+  const earliest = pts[0];
+  const comp = latest?.composite;
+  const compFmt = comp != null ? Number(comp).toFixed(1) : '—';
+
+  // Direction
+  const delta = pts.length >= 2 ? (latest.composite || 0) - (earliest.composite || 0) : 0;
+  const dirLabel = delta > 0.3 ? '↑ ASCENDING' : delta < -0.3 ? '↓ DECLINING' : '→ STABLE';
+  const dirCls = delta > 0.3 ? 'up' : delta < -0.3 ? 'down' : 'flat';
+
+  // Layer averages from latest
+  const layerCards = ['physical','mindset','production','defense','pathway'].map(l => {
+    const v = latest?.[l];
+    const earliest_v = earliest?.[l];
+    const ldelta = v != null && earliest_v != null ? (v - earliest_v) : null;
+    const dStr = ldelta != null ? (ldelta > 0 ? `+${ldelta.toFixed(1)}` : ldelta.toFixed(1)) : '';
+    const dCol = ldelta == null ? '' : ldelta > 0 ? 'color:var(--moss)' : ldelta < 0 ? 'color:var(--red)' : 'color:var(--t3)';
+    return `<div class="layer-card">
+      <div class="layer-card-name">${LAYER_LABELS[l]}</div>
+      <div class="layer-card-val" style="color:${lc(v)}">${v != null ? Number(v).toFixed(1).replace(/\.0$/,'') : '—'}</div>
+      ${dStr ? `<div class="layer-card-delta" style="${dCol}">${dStr}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  // Line chart SVG
+  const chartSvg = renderLineChart(pts);
+
+  const results = document.getElementById('results');
+  results.innerHTML = `<div class="trajectory-card">
+    <div class="traj-header">
+      <div>
+        <div class="traj-name">${escHtml(d.player || name)}</div>
+        <div class="traj-meta">${escHtml(d.sport || '')}${d.school ? ' · ' + escHtml(d.school) : ''}</div>
+      </div>
+      <div class="traj-composite-now">
+        <div class="traj-comp-num">${compFmt}</div>
+        <div class="traj-comp-label">Current composite</div>
+        <div class="traj-direction ${dirCls}">${dirLabel}</div>
+      </div>
+    </div>
+    <div class="chart-wrap">${chartSvg}</div>
+    <div class="layer-grid">${layerCards}</div>
+    <div class="data-points-list">
+      <div class="dp-label">// All data points — ${pts.length} verdict${pts.length !== 1 ? 's' : ''} logged</div>
+      ${pts.slice().reverse().map(p => {
+        const ts = p.timestamp ? new Date(p.timestamp).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+        return `<div class="dp-row">
+          <div class="dp-time">${ts}</div>
+          <div class="dp-comp">${p.composite != null ? Number(p.composite).toFixed(1) : '—'}</div>
+          <div>${['physical','mindset','production','defense','pathway'].map(l => p[l] != null ? `<span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);margin-right:8px">${l.slice(0,3).toUpperCase()} ${Number(p[l]).toFixed(1)}</span>` : '').join('')}</div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+function renderLineChart(pts) {
+  if (pts.length < 2) {
+    return `<svg viewBox="0 0 800 200"><text x="400" y="100" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="rgba(245,241,232,.3)">Need 2+ data points for curve visualization</text></svg>`;
+  }
+  const W2 = 800, H = 200, PAD = { t:20, b:40, l:50, r:20 };
+  const cw = W2 - PAD.l - PAD.r, ch = H - PAD.t - PAD.b;
+
+  const layers = ['composite','physical','mindset','production','defense','pathway'];
+  const allVals = pts.flatMap(p => layers.map(l => p[l]).filter(v => v != null));
+  const minV = Math.max(0, Math.min(...allVals) - 0.5);
+  const maxV = Math.min(10, Math.max(...allVals) + 0.5);
+  const scaleX = i => PAD.l + (i / (pts.length - 1)) * cw;
+  const scaleY = v => PAD.t + ch - ((v - minV) / (maxV - minV)) * ch;
+
+  // Grid lines at 7, 8, 9
+  const gridLines = [7, 8, 9].filter(v => v >= minV && v <= maxV).map(v => {
+    const y = scaleY(v);
+    return `<line x1="${PAD.l}" y1="${y.toFixed(1)}" x2="${W2 - PAD.r}" y2="${y.toFixed(1)}" stroke="rgba(255,252,245,.06)" stroke-width="1" stroke-dasharray="4,4"/>
+    <text x="${PAD.l - 4}" y="${(y+4).toFixed(1)}" text-anchor="end" font-size="9" font-family="JetBrains Mono,monospace" fill="rgba(245,241,232,.25)">${v}</text>`;
+  }).join('');
+
+  // X axis labels (dates)
+  const xLabels = pts.map((p, i) => {
+    if (i === 0 || i === pts.length - 1 || pts.length <= 6) {
+      const ts = p.timestamp ? new Date(p.timestamp).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '';
+      return `<text x="${scaleX(i).toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="9" font-family="JetBrains Mono,monospace" fill="rgba(245,241,232,.25)">${ts}</text>`;
+    }
+    return '';
+  }).join('');
+
+  // Lines for each layer (composite first and thicker)
+  const lines = ['composite','physical','pathway','mindset','production','defense'].map(l => {
+    const color = LAYER_COLORS[l] || 'rgba(245,241,232,.3)';
+    const width = l === 'composite' ? 2.5 : 1.2;
+    const opacity = l === 'composite' ? 1 : 0.5;
+    const validPts = pts.map((p, i) => p[l] != null ? [scaleX(i), scaleY(p[l])] : null).filter(Boolean);
+    if (validPts.length < 2) return '';
+    const path = 'M' + validPts.map(([x,y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' L');
+    const dots = validPts.map(([x,y]) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${l==='composite'?3.5:2}" fill="${color}" opacity="${opacity}"/>`).join('');
+    return `<path d="${path}" fill="none" stroke="${color}" stroke-width="${width}" opacity="${opacity}"/>${dots}`;
+  }).join('');
+
+  // Legend
+  const legend = ['composite','physical','mindset'].map((l, i) => {
+    const x = PAD.l + i * 140;
+    return `<circle cx="${(x+6).toFixed(1)}" cy="${(H-28).toFixed(1)}" r="4" fill="${LAYER_COLORS[l]}"/>
+    <text x="${(x+14).toFixed(1)}" y="${(H-24).toFixed(1)}" font-size="9" font-family="JetBrains Mono,monospace" fill="rgba(245,241,232,.4)" text-transform="uppercase">${l}</text>`;
+  }).join('');
+
+  return `<svg viewBox="0 0 ${W2} ${H}" xmlns="http://www.w3.org/2000/svg">
+    ${gridLines}${xLabels}${lines}${legend}
+  </svg>`;
+}
+
+// URL params: ?player=Harper+Murray&sport=womens-volleyball
+const params = new URLSearchParams(location.search);
+if (params.get('player')) {
+  document.getElementById('nameIn').value = params.get('player');
+  if (params.get('sport')) document.getElementById('sportIn').value = params.get('sport');
+  loadTrajectory();
+}
+document.getElementById('nameIn').addEventListener('keydown', e => { if (e.key === 'Enter') loadTrajectory(); });
+</script>
+</body>
+</html>

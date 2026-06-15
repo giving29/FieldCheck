@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pricing · FieldCheck IQ</title>
+<meta name="description" content="Some layers of FieldCheck IQ will always be free. The deeper intelligence is premium. We're being deliberate about how we price this.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0908;--bg1:#110F0D;--bg2:#1A1715;--bg3:#221F1C;
+  --ge:rgba(255,252,245,.13);--ge2:rgba(255,252,245,.07);
+  --t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);
+  --gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);
+  --moss:#6BAA5A;--mossl:rgba(107,170,90,.16);--mossd:rgba(107,170,90,.35);
+  --red:#FF5C3A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%),
+             radial-gradient(ellipse 50% 40% at 90% 100%,rgba(107,170,90,.04),transparent 55%);}
+
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:90;background:rgba(10,9,8,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1060px;margin:0 auto;padding:0 28px;height:54px;display:flex;align-items:center;gap:26px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}
+.brand span{color:var(--gold)}
+.nav-links{display:flex;gap:20px;flex:1}
+.nav-links a{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;
+  text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--gold)}
+
+/* HERO */
+.hero{padding:68px 0 52px;text-align:center}
+.ey{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.2px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;
+  justify-content:center;gap:10px}
+.ey::before,.ey::after{content:"";width:28px;height:1px;background:var(--gold);opacity:.6}
+h1{font-family:'Anton',sans-serif;font-size:clamp(38px,6vw,72px);line-height:1.02;
+  letter-spacing:-.018em;margin-bottom:18px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.hero-sub{font-size:17px;color:var(--t2);max-width:620px;margin:0 auto 28px;line-height:1.7}
+
+/* PHILOSOPHY STRIP */
+.phil{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.phil-pill{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:9999px;
+  border:1px solid var(--ge);color:var(--t3)}
+.phil-pill.on{border-color:var(--goldl);color:var(--gold);background:var(--golds)}
+.phil-pill.green{border-color:var(--mossd);color:var(--moss);background:var(--mossl)}
+
+/* TIER GRID */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:52px}
+.tier{background:var(--bg1);border:1px solid var(--ge);border-radius:18px;
+  padding:34px 30px;display:flex;flex-direction:column;gap:0;position:relative;overflow:hidden;
+  transition:border-color .2s}
+.tier:hover{border-color:var(--ge2)}
+.tier.featured{border-color:var(--goldl);background:linear-gradient(160deg,rgba(245,184,0,.06),var(--bg1))}
+.tier::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:18px 18px 0 0}
+.tier.open::before{background:linear-gradient(to right,var(--moss),transparent)}
+.tier.featured::before{background:linear-gradient(to right,var(--gold),rgba(245,184,0,.3))}
+.tier.partner::before{background:linear-gradient(to right,var(--t3),transparent)}
+
+.tier-eyebrow{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.4px;
+  text-transform:uppercase;margin-bottom:10px}
+.tier.open .tier-eyebrow{color:var(--moss)}
+.tier.featured .tier-eyebrow{color:var(--gold)}
+.tier.partner .tier-eyebrow{color:var(--t3)}
+
+.tier-name{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.006em;margin-bottom:8px}
+.tier-price{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--t3);
+  margin-bottom:20px;letter-spacing:.3px;line-height:1.5}
+.tier.featured .tier-price{color:var(--gold)}
+
+.tier-divider{height:1px;background:var(--ge2);margin:18px 0}
+
+.tier-features{list-style:none;display:flex;flex-direction:column;gap:10px;flex:1}
+.tier-features li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--t2);line-height:1.5}
+.tier-features li::before{content:'';width:5px;height:5px;border-radius:50%;margin-top:7px;flex-shrink:0}
+.tier.open .tier-features li::before{background:var(--moss)}
+.tier.featured .tier-features li::before{background:var(--gold)}
+.tier.partner .tier-features li::before{background:var(--t3)}
+.tier-features li.dim{color:var(--t4)}
+.tier-features li.dim::before{background:var(--t4)}
+
+.tier-cta{margin-top:24px}
+.btn{display:block;width:100%;padding:12px 20px;border-radius:10px;font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  text-align:center;text-decoration:none;transition:opacity .15s;cursor:pointer}
+.btn-outline{border:1px solid var(--ge);color:var(--t3);background:transparent}
+.btn-outline:hover{border-color:var(--goldl);color:var(--gold)}
+.btn-gold{background:var(--gold);color:#0A0908;border:none}
+.btn-gold:hover{opacity:.88}
+.btn-ghost{border:1px solid var(--ge);color:var(--t3);background:transparent}
+.btn-ghost:hover{border-color:var(--ge);color:var(--t2)}
+
+/* PHILOSOPHY BLOCK */
+.phil-block{background:var(--bg1);border:1px solid var(--ge);border-radius:16px;
+  padding:36px 40px;margin-bottom:52px;display:grid;grid-template-columns:1fr 1fr;gap:40px;
+  align-items:start}
+.pb-left h2{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:-.008em;
+  line-height:1.1;margin-bottom:14px}
+.pb-left h2 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.pb-left p{font-size:14px;color:var(--t2);line-height:1.75}
+.pb-right{display:flex;flex-direction:column;gap:14px}
+.pb-point{display:flex;gap:14px;align-items:flex-start}
+.pb-icon{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  color:var(--gold);background:var(--golds);border:1px solid var(--goldl);
+  padding:4px 8px;border-radius:6px;white-space:nowrap;margin-top:2px;flex-shrink:0}
+.pb-text strong{display:block;font-size:13.5px;color:var(--t);font-weight:600;margin-bottom:3px}
+.pb-text span{font-size:12.5px;color:var(--t3);line-height:1.6}
+
+/* CONNECT BAND */
+.connect{background:linear-gradient(135deg,rgba(245,184,0,.07),rgba(26,23,21,.6));
+  border:1px solid var(--goldl);border-radius:16px;padding:40px;
+  display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap;
+  margin-bottom:52px}
+.connect-left h2{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.007em;margin-bottom:8px}
+.connect-left p{font-size:14px;color:var(--t2);max-width:480px;line-height:1.7}
+.connect-left p a{color:var(--gold);text-decoration:none}
+.connect-left p a:hover{text-decoration:underline}
+.connect-right{display:flex;flex-direction:column;gap:10px;flex-shrink:0}
+.connect-btn{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;padding:12px 24px;border-radius:10px;
+  text-decoration:none;text-align:center;white-space:nowrap;transition:opacity .15s}
+.connect-btn.primary{background:var(--gold);color:#0A0908}
+.connect-btn.primary:hover{opacity:.88}
+.connect-btn.secondary{border:1px solid var(--ge);color:var(--t3)}
+.connect-btn.secondary:hover{border-color:var(--goldl);color:var(--gold)}
+
+/* PLEDGE */
+.pledge{text-align:center;padding:28px 0 52px;border-top:1px solid var(--ge2)}
+.pledge p{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--t4);line-height:2}
+
+/* FOOTER */
+.footer{padding:22px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:0}
+.footer a{color:var(--t4);text-decoration:none}.footer a:hover{color:var(--gold)}
+
+@media(max-width:800px){
+  .tiers{grid-template-columns:1fr}
+  .phil-block{grid-template-columns:1fr}
+  .connect{flex-direction:column}
+  .hero{padding:48px 0 36px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-i">
+    <a href="/" class="brand">Field<span>Check</span></a>
+    <div class="nav-links">
+      <a href="/">Player</a>
+      <a href="/draft-intelligence">Draft IQ</a>
+      <a href="/methodology">Methodology</a>
+      <a href="/calibration">Calibration</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="ey">Pricing · FieldCheck IQ</div>
+    <h1>Some layers free.<br>Some layers <em>earned.</em></h1>
+    <p class="hero-sub">
+      We're building something significant — and we're being deliberate about how it's priced.
+      The intelligence should be accessible. The edge should mean something.
+    </p>
+    <div class="phil">
+      <div class="phil-pill green">No ads · ever</div>
+      <div class="phil-pill green">No pay-to-rank</div>
+      <div class="phil-pill green">No affiliate revenue</div>
+      <div class="phil-pill on">Independence by default</div>
+    </div>
+  </section>
+
+  <!-- TIERS -->
+  <div class="tiers">
+
+    <!-- Open -->
+    <div class="tier open">
+      <div class="tier-eyebrow">// Always open</div>
+      <div class="tier-name">Open Access</div>
+      <div class="tier-price">Free · No account required<br>Start a verdict, right now</div>
+      <div class="tier-divider"></div>
+      <ul class="tier-features">
+        <li>Full player verdict — five layers scored</li>
+        <li>Physical · Mindset · Production · Defense · Pathway</li>
+        <li>Comparable athlete match</li>
+        <li>Signed audit trail (SHA-256)</li>
+        <li>Public-record source citations</li>
+        <li>Pro pathway read (LOVB · NBA · NFL · WNBA)</li>
+        <li>Honest caveats — thin data, injury flags, character signals</li>
+        <li class="dim">Priority processing</li>
+        <li class="dim">Deep intelligence layers</li>
+        <li class="dim">Institutional tools</li>
+      </ul>
+      <div class="tier-cta">
+        <a href="/" class="btn btn-outline">Run a verdict →</a>
+      </div>
+    </div>
+
+    <!-- Pro -->
+    <div class="tier featured">
+      <div class="tier-eyebrow">// Premium intelligence</div>
+      <div class="tier-name">FieldCheck Pro</div>
+      <div class="tier-price">
+        Pricing TBD · We're being deliberate.<br>
+        Connect with us if you're serious about this.
+      </div>
+      <div class="tier-divider"></div>
+      <ul class="tier-features">
+        <li>Everything in Open Access</li>
+        <li>Priority processing — faster verdicts</li>
+        <li>National team signal (USAV · Olympic pipeline)</li>
+        <li>Pro league roster data (LOVB · PVF)</li>
+        <li>Recruiting rank intelligence (PrepVolleyball)</li>
+        <li>Calibration-adjusted scoring (position-aware weights)</li>
+        <li>NIL market estimate</li>
+        <li>Coach culture read</li>
+        <li>Draft IQ access — pre-draft + historical analysis</li>
+        <li>Verdict history + longitudinal tracking</li>
+      </ul>
+      <div class="tier-cta">
+        <a href="mailto:hello@fieldcheck.ai?subject=FieldCheck Pro — interest" class="btn btn-gold">Connect with us →</a>
+      </div>
+    </div>
+
+    <!-- Institutional -->
+    <div class="tier partner">
+      <div class="tier-eyebrow">// For programs · scouts · leagues</div>
+      <div class="tier-name">Institutional</div>
+      <div class="tier-price">
+        Partnership pricing · Custom scope<br>
+        Built for serious organizations
+      </div>
+      <div class="tier-divider"></div>
+      <ul class="tier-features">
+        <li>Everything in FieldCheck Pro</li>
+        <li>Bulk verdict access — full rosters</li>
+        <li>Program intelligence database</li>
+        <li>Roster gap analysis</li>
+        <li>LOVB · collegiate integration</li>
+        <li>White-label or API access</li>
+        <li>Custom data sources and intelligence layers</li>
+        <li>Dedicated support and SLA</li>
+        <li>Co-development partnerships</li>
+        <li>Early access to new features</li>
+      </ul>
+      <div class="tier-cta">
+        <a href="mailto:partnerships@fieldcheck.ai?subject=FieldCheck Institutional — partnership interest" class="btn btn-ghost">Let's talk →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PHILOSOPHY -->
+  <div class="phil-block">
+    <div class="pb-left">
+      <h2>Why we're not publishing<br>a <em>price sheet yet.</em></h2>
+      <p>
+        We're building something that goes well beyond what any recruiting service, ranking platform,
+        or scouting tool has done. The right pricing model for that isn't obvious — and we'd rather
+        get it right than rush it.
+        <br><br>
+        Some intelligence will always be free. The verdict, the five-layer read, the signed audit —
+        these build trust and that trust needs to be accessible. The deeper layers, the institutional
+        tools, the real-time data pipelines — those take serious resources to build and maintain,
+        and they'll be priced accordingly.
+        <br><br>
+        If you're a program, a scout, a league, or a serious individual user — reach out.
+        We're having those conversations now.
+      </p>
+    </div>
+    <div class="pb-right">
+      <div class="pb-point">
+        <div class="pb-icon">// FREE</div>
+        <div class="pb-text">
+          <strong>The verdict layer is always free</strong>
+          <span>Five-layer scoring, signed audit, public-record sourcing, comparable athlete — open access, no account required.</span>
+        </div>
+      </div>
+      <div class="pb-point">
+        <div class="pb-icon">// PRO</div>
+        <div class="pb-text">
+          <strong>Premium layers for serious users</strong>
+          <span>National team signals, pro league data, calibration-adjusted scoring, draft intelligence, NIL estimates. Pricing TBD.</span>
+        </div>
+      </div>
+      <div class="pb-point">
+        <div class="pb-icon">// INSTITUTIONAL</div>
+        <div class="pb-text">
+          <strong>Partnership model for organizations</strong>
+          <span>Custom scope, API access, co-development, white-label. If you're a program or league — let's talk.</span>
+        </div>
+      </div>
+      <div class="pb-point">
+        <div class="pb-icon">// NEVER</div>
+        <div class="pb-text">
+          <strong>No ads. No pay-to-rank. No affiliate revenue.</strong>
+          <span>Independence is the product. We don't sell access to the model. We sell the model.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONNECT -->
+  <div class="connect">
+    <div class="connect-left">
+      <h2>Interested? Let's talk.</h2>
+      <p>
+        Whether you're an individual user who wants early Pro access, a program looking for
+        a scouting intelligence partnership, or a league exploring what FieldCheck IQ could
+        mean for your operations — we want to hear from you.
+        <br><br>
+        Reach us at <a href="mailto:hello@fieldcheck.ai">hello@fieldcheck.ai</a> or
+        <a href="mailto:partnerships@fieldcheck.ai">partnerships@fieldcheck.ai</a> for institutional inquiries.
+      </p>
+    </div>
+    <div class="connect-right">
+      <a href="mailto:hello@fieldcheck.ai?subject=FieldCheck — pricing interest" class="connect-btn primary">
+        General inquiry →
+      </a>
+      <a href="mailto:partnerships@fieldcheck.ai?subject=FieldCheck — institutional partnership" class="connect-btn secondary">
+        Institutional partnership →
+      </a>
+    </div>
+  </div>
+
+  <!-- PLEDGE -->
+  <div class="pledge">
+    <p>
+      Independence by default · No ads · No payola · No pay-to-rank · No affiliate revenue<br>
+      A ThinkDifferent Holdings product · © 2026 ThinkDifferent Holdings · All rights reserved
+    </p>
+  </div>
+
+  <div class="footer">
+    <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ</span>
+    <span>
+      <a href="/methodology">Methodology</a> ·
+      <a href="/draft-intelligence">Draft IQ</a> ·
+      <a href="/calibration">Calibration</a> ·
+      <a href="mailto:dispute@fieldcheck.ai">dispute@fieldcheck.ai</a> ·
+      5-day SLA
+    </span>
+  </div>
+
+</div>
+</body>
+</html>

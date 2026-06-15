@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Agents · FieldCheck IQ</title>
+  <meta name="description" content="The 22 agents that make up FieldCheck IQ. 8 live, 1 building, 13 queued. AI-native by design.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+:root { --bg: #0d0d0d; --bg-2: #161616; --text: #F5F1E8; --text-2: #b8b8b8; --text-3: #888; --gold: #d4af37; --moss: #95d5b2; --teal: #4ec9c0; --rust: #c45132; --border: rgba(255,255,255,0.08); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+.fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+.fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+.fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+.fc-canonical-wordmark { font-size: 18px; }
+.fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+.fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+.fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+.fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+.fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.fc-canonical-nav .nav-more-wrap { display: none; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.nav-primary:hover { color: #ffc94a; }
+.nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.nav-more-wrap { position: relative; display: inline-block; }
+.nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-wrap { display: none; }
+.nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.nav-more-chev { transform: rotate(180deg); }
+.nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.nav-more-group { padding: 6px 4px; }
+.nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+
+.ag-hero { max-width: 1000px; margin: 0 auto; padding: 64px 32px 24px; text-align: center; }
+.ag-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 14px; }
+.ag-title { font-family: 'Anton', sans-serif; font-size: clamp(42px, 6.5vw, 78px); line-height: 0.96; letter-spacing: -0.012em; margin-bottom: 18px; }
+.ag-title .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.ag-sub { font-size: 16.5px; color: var(--text-2); max-width: 720px; margin: 0 auto; line-height: 1.55; }
+.ag-statbar { max-width: 980px; margin: 28px auto 28px; padding: 18px 28px; background: linear-gradient(135deg, rgba(212,175,55,0.04), rgba(20,17,12,0.4)); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; }
+.ag-stat { text-align: center; }
+.ag-stat-num { font-family: 'Anton', sans-serif; font-size: 34px; line-height: 1; letter-spacing: -0.01em; margin-bottom: 4px; }
+.ag-stat-num.live { color: var(--moss); }
+.ag-stat-num.building { color: var(--gold); }
+.ag-stat-num.queued { color: var(--text-3); }
+.ag-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: var(--text-3); }
+.ag-filter-bar { max-width: 1200px; margin: 0 auto 28px; padding: 0 32px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.ag-chip { padding: 9px 16px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-2); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.4px; border-radius: 6px; cursor: pointer; transition: all 0.15s; font-weight: 600; }
+.ag-chip.active { background: rgba(212,175,55,0.15); border-color: var(--gold); color: var(--gold); }
+.ag-chip:hover { color: var(--text); }
+.ag-grid { max-width: 1200px; margin: 0 auto 56px; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 14px; }
+.ag-card { padding: 22px 24px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 14px; transition: all 0.18s; position: relative; }
+.ag-card.hidden { display: none; }
+.ag-card-num { position: absolute; top: 18px; right: 22px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 1.2px; font-weight: 600; }
+.ag-card.ag-live { border-color: rgba(149,213,178,0.3); background: linear-gradient(135deg, rgba(149,213,178,0.04), rgba(20,17,12,0.5)); }
+.ag-card.ag-building { border-color: rgba(212,175,55,0.4); background: linear-gradient(135deg, rgba(212,175,55,0.06), rgba(20,17,12,0.5)); }
+.ag-card.ag-queued { opacity: 0.92; }
+.ag-card:hover { transform: translateY(-2px); }
+.ag-card-head { margin-bottom: 14px; }
+.ag-card-tag-row { display: flex; gap: 8px; align-items: center; }
+.ag-card-status { padding: 3px 8px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; font-weight: 700; border-radius: 4px; }
+.ag-card.ag-live .ag-card-status { background: rgba(149,213,178,0.15); color: var(--moss); }
+.ag-card.ag-building .ag-card-status { background: rgba(212,175,55,0.18); color: var(--gold); animation: ag-pulse 2s infinite; }
+.ag-card.ag-queued .ag-card-status { background: rgba(255,255,255,0.04); color: var(--text-3); }
+@keyframes ag-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+.ag-card-v { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--text-3); letter-spacing: 1px; }
+.ag-card-name { font-family: 'Anton', sans-serif; font-size: 21px; line-height: 1.1; letter-spacing: -0.005em; margin-bottom: 6px; }
+.ag-card-short { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--gold); margin-bottom: 12px; }
+.ag-card.ag-queued .ag-card-short { color: var(--text-3); }
+.ag-card-desc { font-size: 13px; color: var(--text-2); line-height: 1.55; margin-bottom: 14px; }
+.ag-card-where { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.2px; color: var(--text-3); padding-top: 10px; border-top: 1px solid var(--border); }
+.ag-coda { max-width: 980px; margin: 32px auto 64px; padding: 30px 32px; background: linear-gradient(135deg, rgba(78,201,192,0.05), rgba(20,17,12,0.4)); border: 1px solid rgba(78,201,192,0.3); border-radius: 14px; text-align: center; }
+.ag-coda-h { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: var(--teal); font-weight: 700; margin-bottom: 12px; }
+.ag-coda h2 { font-family: 'Anton', sans-serif; font-size: clamp(26px, 4vw, 38px); line-height: 1.05; margin-bottom: 12px; letter-spacing: -0.005em; }
+.ag-coda h2 .iq-italic { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--teal); font-weight: 400; }
+.ag-coda p { color: var(--text-2); font-size: 14.5px; line-height: 1.6; max-width: 760px; margin: 0 auto; }
+@media (max-width: 720px) { .ag-grid { padding: 0 14px; grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="ag-hero">
+  <div class="ag-eyebrow">// THE AGENTS · AI-NATIVE BY DESIGN</div>
+  <h1 class="ag-title">22 agents. <span class="iq-italic">One audited engine.</span></h1>
+  <p class="ag-sub">FieldCheck IQ isn't a tool — it's a fleet of agents, each scoped to one job, each cited, each auditable. This page is the public roadmap: what's live, what's building, what's queued. Diff-tracked from V001.</p>
+</section>
+
+<div class="ag-statbar">
+  <div class="ag-stat"><div class="ag-stat-num live">12</div><div class="ag-stat-label">// LIVE</div></div>
+  <div class="ag-stat"><div class="ag-stat-num building">0</div><div class="ag-stat-label">// BUILDING</div></div>
+  <div class="ag-stat"><div class="ag-stat-num queued">10</div><div class="ag-stat-label">// QUEUED</div></div>
+  <div class="ag-stat"><div class="ag-stat-num" style="color:var(--gold)">22</div><div class="ag-stat-label">// TOTAL</div></div>
+</div>
+
+<div class="ag-filter-bar">
+  <button class="ag-chip active" onclick="agFilter('ALL', this)">ALL 22</button>
+  <button class="ag-chip" onclick="agFilter('LIVE', this)">LIVE 12</button>
+  <button class="ag-chip" onclick="agFilter('BUILDING', this)">BUILDING 0</button>
+  <button class="ag-chip" onclick="agFilter('QUEUED', this)">QUEUED 10</button>
+</div>
+
+<div class="ag-grid" id="ag-grid">
+    <div class="ag-card ag-live" data-tag="LIVE">
+      <div class="ag-card-num">01</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">LIVE</span>
+          <span class="ag-card-v">V001</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Verdict Engine</h3>
+      <div class="ag-card-short">The IQ scoring engine</div>
+      <p class="ag-card-desc">Reads any athlete. Returns IQ Score, tier, 5-layer moat, confidence band, SHA-256 audit envelope.</p>
+      <div class="ag-card-where">// /run · /api/verdict</div>
+    </div>
+    <div class="ag-card ag-live" data-tag="LIVE">
+      <div class="ag-card-num">02</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">LIVE</span>
+          <span class="ag-card-v">V008</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Watchlist Enrichment</h3>
+      <div class="ag-card-short">Auto IQ-Score per watchlist entry</div>
+      <p class="ag-card-desc">When a coach adds an athlete to their workspace, background-fetches the curated IQ Score. Slug-pattern retry. Graceful fallback.</p>
+      <div class="ag-card-where">// /coach</div>
+    </div>
+    <div class="ag-card ag-live" data-tag="LIVE">
+      <div class="ag-card-num">03</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">LIVE</span>
+          <span class="ag-card-v">V005, V012</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Compare Agent</h3>
+      <div class="ag-card-short">Side-by-side IQ comparison</div>
+      <p class="ag-card-desc">2-3 athletes at once. LIVE composite + tier from enrichment cache; 5-layer bars mock until worker handshake.</p>
+      <div class="ag-card-where">// /coach</div>
+    </div>
+    <div class="ag-card ag-live" data-tag="LIVE">
+      <div class="ag-card-num">04</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">LIVE</span>
+          <span class="ag-card-v">V007</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Export Agent</h3>
+      <div class="ag-card-short">IQ-stamped verdict cards</div>
+      <p class="ag-card-desc">Generates one-page printable PDF + standalone SVG per athlete. Watermark + SHA-256 + audit citations preserved.</p>
+      <div class="ag-card-where">// /coach</div>
+    </div>
+    <div class="ag-card ag-live" data-tag="LIVE">
+      <div class="ag-card-num">05</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">LIVE</span>
+          <span class="ag-card-v">V015</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Notifications Agent</h3>
+      <div class="ag-card-short">Watchlist activity log</div>
+      <p class="ag-card-desc">Fires on add, enrichment hit, compare, export. Bell + panel + unread count. localStorage-persisted.</p>
+      <div class="ag-card-where">// /coach</div>
+    </div>
+    <div class="ag-card ag-live" data-tag="LIVE">
+      <div class="ag-card-num">06</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">LIVE</span>
+          <span class="ag-card-v">V009, V013</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Trust Graph Walker</h3>
+      <div class="ag-card-short">Relationship graph navigator</div>
+      <p class="ag-card-desc">Coach → program → athlete graph with click-through drill-down per node. Citation counts on every edge.</p>
+      <div class="ag-card-where">// /trust-graph</div>
+    </div>
+    <div class="ag-card ag-live" data-tag="LIVE">
+      <div class="ag-card-num">07</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">LIVE</span>
+          <span class="ag-card-v">V010</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Pathway Journal Agent</h3>
+      <div class="ag-card-short">Longitudinal developmental record</div>
+      <p class="ag-card-desc">Date + dimension + milestone log. On-device. Sortable timeline. Powered by FieldCheck IQ.</p>
+      <div class="ag-card-where">// /pathway</div>
+    </div>
+    <div class="ag-card ag-live" data-tag="LIVE">
+      <div class="ag-card-num">08</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">LIVE</span>
+          <span class="ag-card-v">V018, V023</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Wire Agent</h3>
+      <div class="ag-card-short">Real-time signal feed</div>
+      <p class="ag-card-desc">30-signal pool, 30-second auto-poll, filter chips (IQ / LIVE / WIRE / EDGE). IQ-tags headlines with verdict links.</p>
+      <div class="ag-card-where">// /wire · /</div>
+    </div>
+    <div class="ag-card ag-live" data-tag="LIVE"><div class="ag-card-num">09</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">LIVE</span>
+          <span class="ag-card-v">V025</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Verdict Drift Agent</h3>
+      <div class="ag-card-short">Background score-change detector</div>
+      <p class="ag-card-desc">Periodically re-checks watchlist IQ Scores. Fires notifications when a verdict moves. The 9th live agent — re-checks every 30 minutes (V025).</p>
+      <div class="ag-card-where">// /coach</div>
+    </div>
+    <div class="ag-card ag-live" data-tag="LIVE">
+      <div class="ag-card-num">10</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">LIVE</span>
+          <span class="ag-card-v">V026</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Dispute Agent</h3>
+      <div class="ag-card-short">Structured dispute submission</div>
+      <p class="ag-card-desc">Wizard for filing disputes against any verdict. 6-field structured form pre-fills mailto:dispute@fieldcheck.ai with type, claim, evidence URLs, submitter. 5-day SLA enforced. LIVE on /coach.</p>
+      <div class="ag-card-where">// verdict pages</div>
+    </div>
+    <div class="ag-card ag-live" data-tag="LIVE">
+      <div class="ag-card-num">11</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">LIVE</span>
+          <span class="ag-card-v">V027</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">NIL Score Agent</h3>
+      <div class="ag-card-short">Audited NIL valuation</div>
+      <p class="ag-card-desc">NIL Score chip per watchlist row + reasoning trace panel exposing the 3 components (Social 0.32 · Performance 0.41 · Market 0.27) + regional comparable set. LIVE on /coach.</p>
+      <div class="ag-card-where">// /nil · /api/nil/score</div>
+    </div>
+    <div class="ag-card ag-live" data-tag="LIVE">
+      <div class="ag-card-num">12</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">LIVE</span>
+          <span class="ag-card-v">V028</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Comparable Discovery</h3>
+      <div class="ag-card-short">Founding Athlete recommender</div>
+      <p class="ag-card-desc">For any watchlist player, returns top-5 nearest Founding Athletes by cosine similarity (sport-aware). Archetype tags + match % + verdict-launch CTAs. LIVE on /coach.</p>
+      <div class="ag-card-where">// /api/comparable</div>
+    </div>
+    <div class="ag-card ag-live" data-tag="LIVE">
+      <div class="ag-card-num">13</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">QUEUED</span>
+          <span class="ag-card-v">V029</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Audit Verification Agent</h3>
+      <div class="ag-card-short">On-page SHA-256 verifier</div>
+      <p class="ag-card-desc">Visible audit panel on verdict pages. Recomputes the hash live, checks drift, flags stale citations. The receipts you can run.</p>
+      <div class="ag-card-where">// verdict pages</div>
+    </div>
+    <div class="ag-card ag-queued" data-tag="QUEUED">
+      <div class="ag-card-num">14</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">QUEUED</span>
+          <span class="ag-card-v">V030</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Schedule Agent</h3>
+      <div class="ag-card-short">Live game tracker</div>
+      <p class="ag-card-desc">Watches game schedules for watchlisted athletes. Fires notifications pre-game + post-game with verdict drift signals.</p>
+      <div class="ag-card-where">// /coach · /wire</div>
+    </div>
+    <div class="ag-card ag-queued" data-tag="QUEUED">
+      <div class="ag-card-num">15</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">QUEUED</span>
+          <span class="ag-card-v">V031</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Recruit Pipeline Agent</h3>
+      <div class="ag-card-short">Kanban-style recruit board</div>
+      <p class="ag-card-desc">Stages: prospect → contacted → visit → committed. Drag-and-drop. IQ-stamped status tracking per recruit.</p>
+      <div class="ag-card-where">// /coach</div>
+    </div>
+    <div class="ag-card ag-queued" data-tag="QUEUED">
+      <div class="ag-card-num">16</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">QUEUED</span>
+          <span class="ag-card-v">V032</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Coach Culture Agent</h3>
+      <div class="ag-card-short">5-dimension coach scoring</div>
+      <p class="ag-card-desc">Culture score per coach: development, transparency, retention, alumni outcomes, anti-toxicity. Cited per dimension.</p>
+      <div class="ag-card-where">// /coaches</div>
+    </div>
+    <div class="ag-card ag-queued" data-tag="QUEUED">
+      <div class="ag-card-num">17</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">QUEUED</span>
+          <span class="ag-card-v">V033</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Methodology Diff Agent</h3>
+      <div class="ag-card-short">Version diff for methodology updates</div>
+      <p class="ag-card-desc">When v1.0 → v1.1 lands, generates a public diff page. Which weights changed, which thresholds moved, which sources added.</p>
+      <div class="ag-card-where">// /methodology/diff</div>
+    </div>
+    <div class="ag-card ag-queued" data-tag="QUEUED">
+      <div class="ag-card-num">18</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">QUEUED</span>
+          <span class="ag-card-v">V034</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Roster Drift Agent</h3>
+      <div class="ag-card-short">Program-side roster monitoring</div>
+      <p class="ag-card-desc">Watches NCAA program rosters week-over-week. Flags transfers, injuries, lineup changes. Powers Edge tier roster analytics.</p>
+      <div class="ag-card-where">// Edge tier</div>
+    </div>
+    <div class="ag-card ag-queued" data-tag="QUEUED">
+      <div class="ag-card-num">19</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">QUEUED</span>
+          <span class="ag-card-v">V035</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Transfer Portal Agent</h3>
+      <div class="ag-card-short">Real-time portal monitoring</div>
+      <p class="ag-card-desc">Watches entered names and feeds them into the IQ pipeline. Generates "new in portal" notifications matched to your watchlist gaps.</p>
+      <div class="ag-card-where">// /wire · /coach</div>
+    </div>
+    <div class="ag-card ag-queued" data-tag="QUEUED">
+      <div class="ag-card-num">20</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">QUEUED</span>
+          <span class="ag-card-v">V036</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Founding Athlete Induction</h3>
+      <div class="ag-card-short">Quarterly archetype set expansion</div>
+      <p class="ag-card-desc">Identifies new athletes meeting Founding criteria (career arc traced, archetype unambiguous, dense citations). Quarterly induction.</p>
+      <div class="ag-card-where">// /founding-athletes</div>
+    </div>
+    <div class="ag-card ag-queued" data-tag="QUEUED">
+      <div class="ag-card-num">21</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">QUEUED</span>
+          <span class="ag-card-v">V037</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Edge Inquiry Agent</h3>
+      <div class="ag-card-short">Institutional buyer drafting</div>
+      <p class="ag-card-desc">Drafts custom Edge inquiry emails based on prospect type (P5 AD vs NIL collective vs pro club). Pre-fills with relevant priority targets.</p>
+      <div class="ag-card-where">// /edge</div>
+    </div>
+    <div class="ag-card ag-queued" data-tag="QUEUED">
+      <div class="ag-card-num">22</div>
+      <div class="ag-card-head">
+        <div class="ag-card-tag-row">
+          <span class="ag-card-status">QUEUED</span>
+          <span class="ag-card-v">V038</span>
+        </div>
+      </div>
+      <h3 class="ag-card-name">Search & Discovery</h3>
+      <div class="ag-card-short">Global search across the index</div>
+      <p class="ag-card-desc">Cmd+K search across athletes, programs, coaches, founding archetypes. With IQ Score chips inline. The 270+ athlete index made walkable.</p>
+      <div class="ag-card-where">// global</div>
+    </div>
+</div>
+
+<div class="ag-coda">
+  <div class="ag-coda-h">// WHY AGENTS, NOT FEATURES</div>
+  <h2>Each agent is <span class="iq-italic">scoped, cited, and auditable.</span></h2>
+  <p>Most recruiting SaaS is a monolithic UI. FieldCheck IQ is a fleet of independently auditable agents — each one returns its own SHA-256, references its own published methodology section, and has its own dispute pipeline. That's the difference between a tool you use and an engine you trust.</p>
+</div>
+
+<div style="text-align:center;padding:24px 32px 60px;color:#888;font-size:11px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:1.2px">
+  FieldCheck Agents · ThinkDifferent Holdings · © 2026 · 12 LIVE · v0.30.5.2248
+</div>
+
+<script>
+function agFilter(tag, btn) {
+  document.querySelectorAll('.ag-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ag-card').forEach(c => {
+    if (tag === 'ALL' || c.dataset.tag === tag) c.classList.remove('hidden');
+    else c.classList.add('hidden');
+  });
+}
+function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('fc-nav-more-wrap');
+  if (!wrap) return;
+  if (!wrap.contains(e.target)) {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+</body>
+</html>

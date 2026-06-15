@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Changelog · FieldCheck IQ</title>
+  <meta name="description" content="Every FieldCheck IQ release, in one place. The receipts of a serious team.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+:root { --bg: #0d0d0d; --bg-2: #161616; --text: #F5F1E8; --text-2: #b8b8b8; --text-3: #888; --gold: #d4af37; --moss: #95d5b2; --teal: #4ec9c0; --rust: #c45132; --border: rgba(255,255,255,0.08); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+.fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+.fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+.fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+.fc-canonical-wordmark { font-size: 18px; }
+.fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+.fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+.fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+.fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+.fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.fc-canonical-nav .nav-more-wrap { display: none; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.nav-primary:hover { color: #ffc94a; }
+.nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.nav-more-wrap { position: relative; display: inline-block; }
+.nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-wrap { display: none; }
+.nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.nav-more-chev { transform: rotate(180deg); }
+.nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.nav-more-group { padding: 6px 4px; }
+.nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+
+.cl-hero { max-width: 980px; margin: 0 auto; padding: 64px 32px 28px; text-align: center; }
+.cl-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 14px; }
+.cl-title { font-family: 'Anton', sans-serif; font-size: clamp(40px, 6vw, 64px); line-height: 0.98; letter-spacing: -0.012em; margin-bottom: 16px; }
+.cl-title .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.cl-sub { font-size: 16px; color: var(--text-2); max-width: 680px; margin: 0 auto; line-height: 1.55; }
+.cl-stats-bar { max-width: 980px; margin: 28px auto 36px; padding: 18px 28px; background: linear-gradient(135deg, rgba(212,175,55,0.04), rgba(20,17,12,0.4)); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; }
+.cl-stat { text-align: center; }
+.cl-stat-num { font-family: 'Anton', sans-serif; font-size: 32px; color: var(--gold); line-height: 1; letter-spacing: -0.01em; margin-bottom: 4px; }
+.cl-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: var(--text-3); }
+.cl-timeline { max-width: 980px; margin: 0 auto 80px; padding: 0 32px; position: relative; }
+.cl-timeline::before { content: ''; position: absolute; left: 49px; top: 16px; bottom: 16px; width: 1px; background: rgba(212,175,55,0.18); }
+.cl-entry { position: relative; padding: 22px 26px 22px 80px; margin-bottom: 12px; background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 12px; transition: all 0.15s; }
+.cl-entry:hover { border-color: rgba(212,175,55,0.3); }
+.cl-entry::before { content: ''; position: absolute; left: 44px; top: 30px; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg); z-index: 1; }
+.cl-entry-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+.cl-entry-v { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 1.5px; color: var(--gold); font-weight: 700; padding: 4px 10px; background: rgba(212,175,55,0.1); border-radius: 5px; }
+.cl-entry-meta { display: flex; gap: 12px; align-items: center; }
+.cl-entry-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: var(--moss); font-weight: 700; }
+.cl-entry-date { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--text-3); letter-spacing: 1px; }
+.cl-entry-title { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1.1; letter-spacing: -0.005em; margin-bottom: 6px; }
+.cl-entry-desc { color: var(--text-2); font-size: 14px; line-height: 1.55; margin-bottom: 10px; }
+.cl-entry-list { list-style: none; padding: 0; }
+.cl-entry-list li { padding: 4px 0 4px 16px; position: relative; font-size: 12.5px; color: var(--text-2); line-height: 1.5; }
+.cl-entry-list li::before { content: '·'; position: absolute; left: 4px; top: 4px; color: var(--gold); font-weight: 700; }
+.cl-footer { text-align: center; padding: 0 32px 60px; }
+.cl-footer-text { color: var(--text-3); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; }
+@media (max-width: 720px) { .cl-timeline { padding: 0 14px; } .cl-entry { padding: 18px 18px 18px 62px; } .cl-entry::before { left: 28px; } .cl-timeline::before { left: 33px; } }
+  </style>
+</head>
+<body>
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="cl-hero">
+  <div class="cl-eyebrow">// CHANGELOG · DIFF-TRACKED FROM v0.30</div>
+  <h1 class="cl-title">Every release. <span class="iq-italic">On the record.</span></h1>
+  <p class="cl-sub">FieldCheck IQ ships in tight increments. This page is the receipts — what shipped, when, what it touched. Methodology version diffs land here too.</p>
+</section>
+
+<div class="cl-stats-bar">
+  <div class="cl-stat"><div class="cl-stat-num">19</div><div class="cl-stat-label">// RELEASES</div></div>
+  <div class="cl-stat"><div class="cl-stat-num">1</div><div class="cl-stat-label">// DAY</div></div>
+  <div class="cl-stat"><div class="cl-stat-num">5</div><div class="cl-stat-label">// NEW PAGES</div></div>
+  <div class="cl-stat"><div class="cl-stat-num">8</div><div class="cl-stat-label">// /COACH FEATURES</div></div>
+  <div class="cl-stat"><div class="cl-stat-num">15</div><div class="cl-stat-label">// FOUNDING ATHLETES</div></div>
+</div>
+
+<div class="cl-timeline">
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V019</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// METHODOLOGY</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Changelog page</h3>
+    <p class="cl-entry-desc">This page. Every V in one place. Diff-tracked from now on.</p>
+    <ul class="cl-entry-list"><li>/changelog page live</li><li>V001-V019 documented</li><li>Diff-tracking begins</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V018</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// HOMEPAGE</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Wire Ticker</h3>
+    <p class="cl-entry-desc">Live signal ticker across the top of the homepage. Gameday feel.</p>
+    <ul class="cl-entry-list"><li>65s scrolling marquee</li><li>IQ / WIRE / LIVE / EDGE tags</li><li>Hover to pause</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V017</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// COMPARABLE</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Founding Athletes archive</h3>
+    <p class="cl-entry-desc">The archetype anchor set behind every Comparable.</p>
+    <ul class="cl-entry-list"><li>/founding-athletes page</li><li>15 founding athletes across 8 sports</li><li>Sport filter, archetype tags, citation counts</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V016</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// METHODOLOGY</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Published Methodology v1.0</h3>
+    <p class="cl-entry-desc">The math behind every IQ verdict, in public.</p>
+    <ul class="cl-entry-list"><li>/methodology page locked at v1.0</li><li>Composite formula, weights, tier thresholds</li><li>Cosine match, NIL Score formula, drift handling</li><li>The 7 Promises codified</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V015</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// WORKSPACE</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Notifications</h3>
+    <p class="cl-entry-desc">Bell + panel on /coach for watchlist activity.</p>
+    <ul class="cl-entry-list"><li>Fires on add, enrich, compare, export</li><li>Unread count badge</li><li>localStorage-persisted</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V014</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// EDGE</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">IQ API developer docs</h3>
+    <p class="cl-entry-desc">Hudl-style API docs at /api.</p>
+    <ul class="cl-entry-list"><li>5 endpoints documented</li><li>Curl + JS code samples</li><li>Audit envelope explained</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V013</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// TRUST GRAPH</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Trust Graph drill-down</h3>
+    <p class="cl-entry-desc">Click any of 10 nodes for stat grid + cited sources.</p>
+    <ul class="cl-entry-list"><li>Coach, program, 8 athlete nodes clickable</li><li>Hover ring effect</li><li>Verdict-launch CTA per node</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V012</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// WORKSPACE</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Compare uses live data</h3>
+    <p class="cl-entry-desc">Compare panels now pull real composite + tier from V008 enrichment.</p>
+    <ul class="cl-entry-list"><li>LIVE badge when curated</li><li>MOCK fallback otherwise</li><li>5-layer bars still mock until worker handshake</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V011</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// PHASE 3</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">FieldCheck Edge institutional</h3>
+    <p class="cl-entry-desc">Phase 3 begins — the Palantir-style institutional tier.</p>
+    <ul class="cl-entry-list"><li>/edge page</li><li>Dept $99/mo · Institution from $36K/yr · Pro from $96K/yr</li><li>4 buyer cards (P5 ADs, NIL collectives, pro clubs, networks)</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V010</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// PATHWAY</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Pathway Journal v2</h3>
+    <p class="cl-entry-desc">Longitudinal developmental record on /pathway.</p>
+    <ul class="cl-entry-list"><li>Date + dimension + milestone log</li><li>Sort by date desc</li><li>localStorage-persisted</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V009</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// TRUST GRAPH</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Trust Graph v0</h3>
+    <p class="cl-entry-desc">Coaches → Programs → Athletes, visualized.</p>
+    <ul class="cl-entry-list"><li>/trust-graph page</li><li>John Cook → Nebraska W-VB → 8 alumni</li><li>27 coaches · 62 programs · 1,400+ edges</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V008</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// WORKSPACE</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Watchlist enrichment</h3>
+    <p class="cl-entry-desc">Live IQ Score fetch per watchlist item.</p>
+    <ul class="cl-entry-list"><li>Slug-pattern retry</li><li>Graceful fallback to "run to compute"</li><li>No worker change required</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V007</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// WORKSPACE</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">IQ-Stamped Exports</h3>
+    <p class="cl-entry-desc">Print/PDF + SVG download per watchlist player.</p>
+    <ul class="cl-entry-list"><li>One-page verdict card</li><li>Print-to-PDF via window.print()</li><li>Standalone SVG with all visuals baked in</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V006</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// IQ DESTINATION</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Mimicked Product Walkthrough</h3>
+    <p class="cl-entry-desc">22-second simulated product video on /iq.</p>
+    <ul class="cl-entry-list"><li>Browser chrome mockup, cursor + typed input</li><li>Verdict materializes with bars + audit stamp</li><li>Pure CSS+SVG, no MP4 needed</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V005</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// WORKSPACE</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Side-by-Side IQ Compare</h3>
+    <p class="cl-entry-desc">Compare 2-3 watchlist players.</p>
+    <ul class="cl-entry-list"><li>Checkbox + Compare button</li><li>Side-by-side panels with bars + tier badges</li><li>Deterministic mock score seed</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V004</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// WORKSPACE</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">Coach Workspace v2 Foundation</h3>
+    <p class="cl-entry-desc">Layer 2 begins. The Hudl embedding pattern.</p>
+    <ul class="cl-entry-list"><li>/coach hero rewritten to "smartest way to manage your recruits"</li><li>Watchlist live (localStorage)</li><li>v2 roadmap stubs</li><li>v1 boards preserved</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V003</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// IQ BRAND</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">IQ Destination Round</h3>
+    <p class="cl-entry-desc">Hudl IQ playbook closed.</p>
+    <ul class="cl-entry-list"><li>/iq dedicated product page</li><li>6-frame SVG hero animation on homepage</li><li>"Powered by FieldCheck IQ" stamp on verdicts</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V002</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// IQ BRAND</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">IQ Positioning</h3>
+    <p class="cl-entry-desc">FieldCheck IQ brand architecture.</p>
+    <ul class="cl-entry-list"><li>Homepage hero rewrite — "Anyone can chase a ranking…"</li><li>DATA · TECH · AUDIT triple</li><li>/vs page (IQ vs the rankings)</li><li>Tool renames (IQ Score / Match / Fit / Roster)</li><li>About page Bloomberg analogy</li></ul>
+  </div>
+  <div class="cl-entry">
+    <div class="cl-entry-head">
+      <div class="cl-entry-v">V001</div>
+      <div class="cl-entry-meta"><span class="cl-entry-tag">// IQ ENGINE</span><span class="cl-entry-date">May 14</span></div>
+    </div>
+    <h3 class="cl-entry-title">The 5-Layer Moat</h3>
+    <p class="cl-entry-desc">The verdict architecture FieldCheck IQ rides on.</p>
+    <ul class="cl-entry-list"><li>Physical · Mindset · Production · Pathway · Defense</li><li>Sport-aware production-layer labels</li><li>Position-aware for football + baseball</li></ul>
+  </div>
+</div>
+
+<div class="cl-footer">
+  <div class="cl-footer-text">// CURRENT BUILD: v0.30.5.2237 · POWERED BY FIELDCHECK IQ · METHODOLOGY <a href="/methodology" style="color:var(--gold)">v1.0</a></div>
+</div>
+
+<script>
+function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('fc-nav-more-wrap');
+  if (!wrap) return;
+  if (!wrap.contains(e.target)) {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+</body>
+</html>

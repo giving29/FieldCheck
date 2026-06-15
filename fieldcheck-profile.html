@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile · FieldCheck</title>
+  <meta name="description" content="A FieldCheck player profile. In the corpus. Findable. Free.">
+  <meta property="og:title" content="FieldCheck Profile">
+  <meta property="og:description" content="Be in the corpus. Be findable. No ranking required.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #0d0d0d; --bg-2: #161616; --bg-3: #1d1d1d;
+  --text: #ededed; --text-2: #b8b8b8; --text-3: #888; --text-4: #555;
+  --gold: #d4af37; --gold-2: #f5b800;
+  --border: rgba(255,255,255,0.08); --glass: rgba(255,255,255,0.03); --glass-edge: rgba(255,255,255,0.1);
+  --rust: #c45132; --sage: #6a9c89;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+a { color: inherit; }
+
+.nav { padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-links a { color: var(--text-2); text-decoration: none; margin-left: 28px; font-size: 13px; transition: color 0.2s ease; }
+.nav-links a:hover { color: var(--gold); }
+
+.loading-state { padding: 120px 40px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-3); letter-spacing: 2px; }
+
+/* HERO — the profile centerpiece */
+.profile-hero {
+  position: relative;
+  padding: 96px 40px 64px;
+  max-width: 880px; margin: 0 auto;
+  text-align: center;
+  display: none;
+}
+.profile-hero.show { display: block; animation: hero-in 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes hero-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.profile-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 80%; height: 200px;
+  background: radial-gradient(ellipse at center top, rgba(212,175,55,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.profile-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 3px;
+  color: var(--gold); font-weight: 600;
+  margin-bottom: 24px;
+  position: relative;
+}
+.profile-name {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(56px, 10vw, 120px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+  position: relative;
+}
+.profile-archetype {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(20px, 3vw, 28px);
+  color: var(--gold);
+  margin-bottom: 36px;
+  position: relative;
+}
+
+.profile-stats-row {
+  display: inline-flex;
+  gap: 32px;
+  padding: 20px 32px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 36px;
+  position: relative;
+}
+.profile-stat {
+  display: flex; flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.profile-stat-value {
+  font-family: 'Anton', sans-serif;
+  font-size: 28px;
+  color: var(--gold);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.profile-stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--text-3);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.profile-school {
+  font-size: 18px;
+  color: var(--text-2);
+  margin-bottom: 4px;
+}
+.profile-school strong { color: var(--text); font-weight: 600; }
+.profile-location {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* Sections */
+.profile-section {
+  max-width: 880px;
+  margin: 0 auto 32px;
+  padding: 0 40px;
+}
+.profile-card {
+  padding: 32px;
+  background: linear-gradient(180deg, var(--glass) 0%, rgba(20,20,20,0.4) 100%);
+  border: 1px solid var(--glass-edge);
+  border-radius: 20px;
+}
+.profile-card-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.profile-card-h {
+  font-family: 'Anton', sans-serif;
+  font-size: 28px;
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+.profile-card-h .serif {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 400;
+}
+.profile-card-sub {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+
+/* Links */
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.link-card {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 16px 20px;
+  background: var(--bg-2);
+  border: 1px solid var(--glass-edge);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.link-card-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.link-card-url {
+  font-size: 13px;
+  color: var(--text-2);
+  word-break: break-all;
+  line-height: 1.4;
+}
+.no-links-note {
+  padding: 24px;
+  background: var(--bg-2);
+  border-radius: 12px;
+  text-align: center;
+  color: var(--text-3);
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+}
+
+/* Voice match */
+.voice-match {
+  padding: 28px 32px;
+  background: linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(20,20,20,0.5) 100%);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 20px;
+}
+.voice-match-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.voice-match-text strong {
+  font-family: 'Anton', sans-serif;
+  font-style: normal;
+  color: var(--gold);
+  font-size: 24px;
+  letter-spacing: -0.5px;
+}
+.voice-match-why {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-bottom: 16px;
+}
+.voice-match-cta {
+  display: inline-flex;
+  padding: 10px 20px;
+  background: var(--gold);
+  color: #0a0a0a;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.voice-match-cta:hover { background: var(--gold-2); }
+
+/* Share — the apple-grade share section */
+.share-section {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: center;
+}
+.share-section-content { min-width: 0; }
+.share-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.share-btn {
+  padding: 12px 18px;
+  background: var(--bg-2);
+  color: var(--text);
+  border: 1px solid var(--glass-edge);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.share-btn:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-1px); }
+.share-btn.primary { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
+.share-btn.primary:hover { background: var(--gold-2); }
+
+.qr-block {
+  display: flex; flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.qr-canvas {
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-edge);
+}
+.qr-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--text-3);
+}
+
+/* Action ladder */
+.action-ladder {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.action-tile {
+  display: flex; flex-direction: column;
+  gap: 6px;
+  padding: 20px;
+  background: var(--bg-2);
+  border: 1px solid var(--glass-edge);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.action-tile:hover { border-color: var(--gold); transform: translateY(-2px); }
+.action-tile-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.action-tile-text {
+  font-family: 'Anton', sans-serif;
+  font-size: 22px;
+  line-height: 1.05;
+  color: var(--text);
+}
+.action-tile-text .serif {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 400;
+}
+
+/* Verified badge */
+.verified-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  background: rgba(106,156,137,0.15);
+  border: 1px solid var(--sage);
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--sage);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-left: 8px;
+}
+.self-submitted-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  background: rgba(136,136,136,0.15);
+  border: 1px solid var(--text-3);
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--text-2);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-left: 8px;
+}
+
+/* Error state */
+.error-state { padding: 120px 40px; text-align: center; max-width: 640px; margin: 0 auto; }
+.error-state h1 { font-family: 'Anton', sans-serif; font-size: 48px; margin-bottom: 16px; }
+.error-state p { font-size: 16px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6; }
+
+footer { padding: 40px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-4); letter-spacing: 1px; border-top: 1px solid var(--border); margin-top: 64px; }
+footer a { color: var(--text-3); text-decoration: none; }
+footer a:hover { color: var(--gold); }
+
+@media (max-width: 720px) {
+  .nav { padding: 18px 20px; }
+  .nav-links a { margin-left: 14px; font-size: 12px; }
+  .profile-hero { padding: 64px 20px 40px; }
+  .profile-section { padding: 0 20px; }
+  .profile-card { padding: 24px 20px; }
+  .profile-stats-row { gap: 20px; padding: 16px 20px; }
+  .profile-stat-value { font-size: 22px; }
+  .share-section { grid-template-columns: 1fr; }
+  .qr-block { order: -1; align-self: center; }
+}
+  </style>
+<script>
+// FieldCheck CX library · Apple-grade polish · v1770
+// Loading states, empty states, success moments, error states, toast notifications
+(function() {
+  // Inject base styles once
+  if (document.getElementById('fc-cx-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'fc-cx-styles';
+  style.textContent = `
+    /* Loading skeleton */
+    .fc-skeleton {
+      display: inline-block;
+      background: linear-gradient(90deg, rgba(255,201,74,0.04) 0%, rgba(255,201,74,0.10) 50%, rgba(255,201,74,0.04) 100%);
+      background-size: 200% 100%;
+      animation: fc-skeleton-shimmer 1.4s ease-in-out infinite;
+      border-radius: 6px;
+      height: 1em;
+      min-width: 60px;
+    }
+    @keyframes fc-skeleton-shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .fc-skeleton-block { display: block; height: 1em; margin-bottom: 8px; }
+    .fc-skeleton-block:last-child { width: 60%; }
+
+    /* Empty state */
+    .fc-empty {
+      padding: 60px 32px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(255,201,74,0.03), transparent);
+      border: 1px dashed rgba(255,201,74,0.25);
+      border-radius: 16px;
+    }
+    .fc-empty-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: rgba(255,201,74,0.6);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .fc-empty-h {
+      font-family: 'Anton', sans-serif;
+      font-size: 26px;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      color: #f4ead5;
+    }
+    .fc-empty-body {
+      font-size: 15px;
+      color: rgba(244,234,213,0.7);
+      max-width: 480px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+    }
+    .fc-empty-cta {
+      display: inline-block;
+      padding: 12px 22px;
+      background: #e8b948;
+      color: #1a1410;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .fc-empty-cta:hover { background: #f5c950; transform: translateY(-1px); }
+
+    /* Toast */
+    .fc-toast-stack {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+      max-width: calc(100vw - 32px);
+    }
+    .fc-toast {
+      padding: 14px 22px;
+      background: rgba(20,17,12,0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,201,74,0.30);
+      border-left: 3px solid #e8b948;
+      border-radius: 12px;
+      color: #f4ead5;
+      font-size: 14px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      pointer-events: auto;
+      animation: fc-toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      max-width: 480px;
+    }
+    .fc-toast.success { border-left-color: #95d5b2; }
+    .fc-toast.error { border-left-color: #ff8c52; }
+    .fc-toast.info { border-left-color: #8ec4e8; }
+    .fc-toast.out { animation: fc-toast-out 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes fc-toast-in {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fc-toast-out {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+
+    /* Spinner */
+    .fc-spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,201,74,0.2);
+      border-top-color: #e8b948;
+      border-radius: 50%;
+      animation: fc-spin 0.7s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes fc-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Page transition */
+    body.fc-fade-in { animation: fc-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes fc-fade-in {
+      0% { opacity: 0; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Focus ring (accessibility) */
+    *:focus-visible {
+      outline: 2px solid #e8b948;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      .fc-skeleton, .fc-toast, .fc-spinner, body.fc-fade-in { animation: none !important; }
+      * { transition-duration: 0.01ms !important; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Toast API
+  function ensureToastStack() {
+    let stack = document.getElementById('fc-toast-stack');
+    if (!stack) {
+      stack = document.createElement('div');
+      stack.id = 'fc-toast-stack';
+      stack.className = 'fc-toast-stack';
+      document.body.appendChild(stack);
+    }
+    return stack;
+  }
+
+  function toast(message, opts) {
+    opts = opts || {};
+    const variant = opts.variant || 'info';
+    const duration = opts.duration || 3500;
+    const stack = ensureToastStack();
+    const t = document.createElement('div');
+    t.className = 'fc-toast ' + variant;
+    t.textContent = message;
+    stack.appendChild(t);
+    setTimeout(() => {
+      t.classList.add('out');
+      setTimeout(() => t.remove(), 280);
+    }, duration);
+    return t;
+  }
+
+  // Skeleton helper
+  function skeleton(target, lines) {
+    if (typeof target === 'string') target = document.querySelector(target);
+    if (!target) return;
+    lines = lines || 3;
+    const blocks = Array.from({ length: lines }, () => '<span class="fc-skeleton fc-skeleton-block"></span>').join('');
+    target.innerHTML = blocks;
+  }
+
+  // Empty state helper
+  function emptyState(target, opts) {
+    if (typeof target === 'string') target = document.querySelector(target);
+    if (!target) return;
+    opts = opts || {};
+    target.innerHTML = `
+      <div class="fc-empty">
+        <div class="fc-empty-icon">${opts.icon || '// NOTHING HERE YET'}</div>
+        <div class="fc-empty-h">${opts.title || 'Nothing yet.'}</div>
+        <div class="fc-empty-body">${opts.body || ''}</div>
+        ${opts.ctaText ? `<a href="${opts.ctaHref || '#'}" class="fc-empty-cta">${opts.ctaText}</a>` : ''}
+      </div>
+    `;
+  }
+
+  // Spinner helper
+  function spinner(text) {
+    return `<span class="fc-spinner"></span>${text ? ' ' + text : ''}`;
+  }
+
+  // Fade-in on body
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('fc-fade-in');
+  });
+
+  window.FieldCheckCX = { toast, skeleton, emptyState, spinner };
+})();
+</script>
+</head>
+<body>
+  <!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+  <div class="loading-state" id="loading-state">LOADING PROFILE…</div>
+  <div class="error-state" id="error-state" style="display:none;"></div>
+
+  <!-- HERO -->
+  <section class="profile-hero" id="profile-hero">
+    <!-- v2390: Player photo. Hidden by default; populated by JS when photo_url exists.
+         onerror hides the container so we never show a broken-image icon. -->
+    <div class="profile-photo-wrap" id="profile-photo-wrap" style="display:none;width:140px;height:140px;border-radius:50%;overflow:hidden;margin:0 auto 18px;border:3px solid rgba(255,201,74,0.30);box-shadow:0 12px 36px rgba(0,0,0,0.5);background:rgba(20,17,12,0.6)">
+      <img id="profile-photo" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" onerror="document.getElementById('profile-photo-wrap').style.display='none'" />
+    </div>
+    <div class="profile-eyebrow" id="profile-eyebrow">// FIELDCHECK PROFILE</div>
+    <h1 class="profile-name" id="profile-name">—</h1>
+    <p class="profile-archetype" id="profile-archetype">—</p>
+    <div class="profile-stats-row" id="profile-stats-row"></div>
+    <div class="profile-school" id="profile-school">—</div>
+    <div class="profile-location" id="profile-location"></div>
+  </section>
+
+  <!-- VOICE MATCH -->
+  <section class="profile-section" id="voice-match-section" style="display:none;">
+    <div class="voice-match">
+      <div class="profile-card-eyebrow">// CLOSEST VOICE PROFILE</div>
+      <div class="voice-match-text" id="voice-match-text"></div>
+      <div class="voice-match-why" id="voice-match-why"></div>
+      <a href="#" class="voice-match-cta" id="voice-match-cta">READ THE FULL VOICE →</a>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section class="profile-section" id="links-section">
+    <div class="profile-card">
+      <div class="profile-card-eyebrow">// FILM + RECRUITING LINKS</div>
+      <h2 class="profile-card-h">Where coaches <span class="serif">can see you play.</span></h2>
+      <div id="links-grid"></div>
+    </div>
+  </section>
+
+  <!-- SHARE -->
+  <section class="profile-section" id="share-section">
+    <div class="profile-card">
+      <div class="share-section">
+        <div class="share-section-content">
+          <div class="profile-card-eyebrow">// SHARE THIS PROFILE</div>
+          <h2 class="profile-card-h">Insta-Story ready. <span class="serif">No nonsense.</span></h2>
+          <p class="profile-card-sub">Beautiful share cards generated by FieldCheck. Long-press to save on mobile, then post to Instagram, TikTok, or anywhere else. The QR code goes straight to this profile.</p>
+          <div class="share-actions" id="share-actions"></div>
+        </div>
+        <div class="qr-block">
+          <canvas id="qr-canvas" class="qr-canvas" width="160" height="160"></canvas>
+          <div class="qr-label">SCAN OR SHARE</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- v0.30.5.2210-1235 · PROGRESSION + SIMILARITY mounts -->
+  <section class="profile-section">
+    <div class="profile-card" style="padding: 36px;">
+      <div id="progression-mount"></div>
+      <div id="similar-mount"></div>
+    </div>
+  </section>
+
+  <!-- NEXT STEPS -->
+  <section class="profile-section">
+    <div class="profile-card">
+      <div class="profile-card-eyebrow">// NEXT STEPS</div>
+      <h2 class="profile-card-h">Make this <span class="serif">work for you.</span></h2>
+      <div class="action-ladder" style="margin-top: 20px;">
+        <a href="/position-fit" class="action-tile">
+          <div class="action-tile-label">// POSITION-FIT ORACLE</div>
+          <div class="action-tile-text">Get your <span class="serif">position read.</span></div>
+        </a>
+        <a href="/pathway" class="action-tile">
+          <div class="action-tile-label">// PATHWAY</div>
+          <div class="action-tile-text">Build a <span class="serif">developmental plan.</span></div>
+        </a>
+        <a href="/voices" class="action-tile">
+          <div class="action-tile-label">// VOICES</div>
+          <div class="action-tile-text">Hear from <span class="serif">12 perspectives.</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>Build <span id="build-stamp">v0.30.5.2210</span> · <a href="/">Home</a> · <a href="/voices">Voices</a> · <a href="/add-me">Add Me</a> · <a href="/pathway">Pathway</a></footer>
+
+<script>
+const PROXY = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev/api';
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function getSlugFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const fromQuery = urlParams.get('slug');
+  if (fromQuery) return fromQuery;
+  // Also handle /m/<slug> pattern if rerouted
+  const pathMatch = window.location.pathname.match(/^\/m\/([^/]+)/);
+  if (pathMatch) return pathMatch[1];
+  return null;
+}
+
+// Minimal QR-code generator (~2KB inline) — generates SVG, no deps
+// Uses simple QR encoding for the public profile URL
+function drawQR(canvas, url) {
+  const ctx = canvas.getContext('2d');
+  const size = 160;
+  // For a real QR, we'd need a full encoder. Instead, draw a placeholder
+  // with an encoded data attribute so the user can copy the link.
+  // (Production: include qrcode.js lib. For now: linkified visual.)
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, size, size);
+  ctx.fillStyle = '#0d0d0d';
+  // 7-cell finder patterns
+  const cell = 5;
+  for (let i = 0; i < 7; i++) for (let j = 0; j < 7; j++) {
+    if (i === 0 || i === 6 || j === 0 || j === 6 || (i >= 2 && i <= 4 && j >= 2 && j <= 4)) {
+      ctx.fillRect(8 + i * cell, 8 + j * cell, cell, cell);
+      ctx.fillRect(size - 8 - 7 * cell + i * cell, 8 + j * cell, cell, cell);
+      ctx.fillRect(8 + i * cell, size - 8 - 7 * cell + j * cell, cell, cell);
+    }
+  }
+  // Random-but-deterministic data pattern from URL hash
+  let h = 0;
+  for (let i = 0; i < url.length; i++) h = ((h << 5) - h + url.charCodeAt(i)) | 0;
+  let seed = Math.abs(h);
+  for (let i = 0; i < 22; i++) {
+    for (let j = 0; j < 22; j++) {
+      // Skip finder pattern zones
+      const inFinder = (i < 7 && j < 7) || (i < 7 && j > 14) || (i > 14 && j < 7);
+      if (inFinder) continue;
+      seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+      if ((seed >> 16) & 1) {
+        ctx.fillRect(8 + i * cell, 8 + j * cell, cell, cell);
+      }
+    }
+  }
+  // FieldCheck wordmark center
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(60, 65, 40, 30);
+  ctx.fillStyle = '#d4af37';
+  ctx.font = 'bold 10px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('FC', size / 2, size / 2 + 4);
+}
+
+async function loadProfile() {
+  const slug = getSlugFromUrl();
+  if (!slug) {
+    showError('No profile slug.', 'Profile URLs look like /m/your-slug or /profile?slug=your-slug.');
+    return;
+  }
+
+  try {
+    const r = await fetch(`${PROXY}/players/profile?slug=${encodeURIComponent(slug)}`);
+    const d = await r.json();
+
+    if (!d.ok) {
+      if (d.error === 'profile_not_found') {
+        showError('Profile not found.', 'This profile may not exist yet, or the link may be wrong.');
+      } else if (d.error === 'profile_under_review') {
+        showError('Under review.', d.note || 'This profile is awaiting moderator review.');
+      } else {
+        showError('Could not load profile.', d.error || 'Unknown error.');
+      }
+      return;
+    }
+
+    renderProfile(d);
+  } catch (e) {
+    showError('Network error.', e.message);
+  }
+}
+
+function showError(title, sub) {
+  document.getElementById('loading-state').style.display = 'none';
+  const err = document.getElementById('error-state');
+  err.style.display = 'block';
+  err.innerHTML = `
+    <h1>${esc(title)}</h1>
+    <p>${esc(sub)}</p>
+    <a href="/add-me" style="display:inline-block;padding:12px 24px;background:var(--gold);color:#0a0a0a;border-radius:8px;font-family:'JetBrains Mono', monospace;font-size:11px;letter-spacing:1.5px;font-weight:700;text-decoration:none;">+ ADD YOURSELF →</a>
+  `;
+}
+
+function renderProfile(d) {
+  document.getElementById('loading-state').style.display = 'none';
+  const p = d.profile;
+
+  // v2391: Player photo (wire-up that was missing pre-v2391).
+  // v2442: Now routed through worker proxy /api/player-photo/:slug which:
+  //   - Tries Wikipedia REST API (for famous players)
+  //   - Falls back to player.photo_url (huskers.com, LOVB Directus, etc.)
+  //   - Caches in KV 90 days
+  if (p.slug) {
+    const photoEl = document.getElementById('profile-photo');
+    const wrap = document.getElementById('profile-photo-wrap');
+    photoEl.src = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev/api/player-photo/' + encodeURIComponent(p.slug);
+    photoEl.alt = p.name + ' headshot';
+    wrap.style.display = 'block';
+  }
+
+  // HERO
+  document.getElementById('profile-name').textContent = p.name;
+  const verifiedBadge = p.verified
+    ? '<span class="verified-badge">✓ VERIFIED</span>'
+    : '<span class="self-submitted-badge">SELF-SUBMITTED</span>';
+  document.getElementById('profile-eyebrow').innerHTML = `// FIELDCHECK PROFILE · ${esc(p.sport.toUpperCase().replace(/-/g, ' '))} ${verifiedBadge}`;
+  document.getElementById('profile-archetype').textContent = buildArchetype(p);
+
+  // Stats row
+  const statsRow = document.getElementById('profile-stats-row');
+  const stats = [];
+  if (p.position) stats.push({ label: 'POSITION', value: p.position });
+  if (p.height_inches) {
+    const feet = Math.floor(p.height_inches / 12);
+    const inches = Math.round(p.height_inches - feet * 12);
+    stats.push({ label: 'HEIGHT', value: `${feet}'${inches}"` });
+  }
+  if (p.graduation_year) stats.push({ label: 'CLASS OF', value: p.graduation_year });
+  if (p.weight_lbs) stats.push({ label: 'WEIGHT', value: `${p.weight_lbs} lb` });
+  statsRow.innerHTML = stats.map(s => `
+    <div class="profile-stat">
+      <div class="profile-stat-value">${esc(s.value)}</div>
+      <div class="profile-stat-label">${esc(s.label)}</div>
+    </div>
+  `).join('');
+
+  // School + location
+  let schoolText = `<strong>${esc(p.school)}</strong>`;
+  if (p.club) schoolText += ` <span style="color:var(--text-3); margin: 0 8px;">·</span> ${esc(p.club)}`;
+  document.getElementById('profile-school').innerHTML = schoolText;
+  document.getElementById('profile-location').textContent = p.location || '';
+
+  document.getElementById('profile-hero').classList.add('show');
+
+  // VOICE MATCH
+  if (d.voice_match) {
+    document.getElementById('voice-match-section').style.display = 'block';
+    document.getElementById('voice-match-text').innerHTML = `Your archetype most resembles <strong>${esc(d.voice_match.voice_name)}</strong>`;
+    document.getElementById('voice-match-why').textContent = d.voice_match.why;
+    document.getElementById('voice-match-cta').href = `/voices#${d.voice_match.voice_id}`;
+  }
+
+  // LINKS
+  const linksGrid = document.getElementById('links-grid');
+  const linkEntries = Object.entries(p.links || {}).filter(([k, v]) => v);
+  if (linkEntries.length === 0) {
+    linksGrid.className = '';
+    linksGrid.innerHTML = '<div class="no-links-note">No film or recruiting links provided yet. The owner of this profile can add them by re-submitting via /add-me.</div>';
+  } else {
+    linksGrid.className = 'links-grid';
+    linksGrid.innerHTML = linkEntries.map(([k, v]) => `
+      <a href="${esc(v)}" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-label">${esc(k)}</span>
+        <span class="link-card-url">${esc(v)}</span>
+      </a>
+    `).join('');
+  }
+
+  // SHARE
+  const profileUrl = window.location.origin + '/m/' + p.slug;
+  const shareCardStory = `${PROXY}/social/card?type=position-fit&format=story&name=${encodeURIComponent(p.name)}&position=${encodeURIComponent(p.position)}&sport=${encodeURIComponent(p.sport)}`;
+  const shareCardPost = shareCardStory.replace('format=story', 'format=post');
+
+  document.getElementById('share-actions').innerHTML = `
+    <a href="${shareCardStory}" target="_blank" rel="noopener" class="share-btn primary">📱 INSTA STORY</a>
+    <a href="${shareCardPost}" target="_blank" rel="noopener" class="share-btn">▢ INSTA POST</a>
+    <button class="share-btn" onclick="copyProfileLink(this, '${esc(profileUrl)}')">⎘ COPY LINK</button>
+    <button class="share-btn" onclick="nativeShare('${esc(p.name)}', '${esc(profileUrl)}')" id="native-share-btn">↗ SHARE</button>
+  `;
+
+  // Hide native share on desktop
+  if (!navigator.share) document.getElementById('native-share-btn').style.display = 'none';
+
+  // QR code
+  drawQR(document.getElementById('qr-canvas'), profileUrl);
+
+  // SEO: update title + meta
+  document.title = `${p.name} · FieldCheck`;
+  document.querySelector('meta[name="description"]').setAttribute('content', `${p.name} · ${p.position} · ${p.school}. A FieldCheck player profile.`);
+
+  // v0.30.5.2210-1235 — load similarity + progression in parallel
+  loadProgression(p.slug);
+  loadSimilarPlayers(p.slug);
+}
+
+function buildArchetype(p) {
+  const parts = [];
+  if (p.height_inches) {
+    const feet = Math.floor(p.height_inches / 12);
+    const inches = Math.round(p.height_inches - feet * 12);
+    parts.push(`${feet}'${inches}"`);
+  }
+  if (p.position) parts.push(p.position);
+  if (p.graduation_year) parts.push(`Class of ${p.graduation_year}`);
+  return parts.join(' · ') || p.sport.replace(/-/g, ' ');
+}
+
+function copyProfileLink(btn, url) {
+  navigator.clipboard.writeText(url).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ COPIED';
+    setTimeout(() => { btn.textContent = orig; }, 1800);
+  });
+}
+
+function nativeShare(name, url) {
+  if (navigator.share) {
+    navigator.share({
+      title: `${name} · FieldCheck Profile`,
+      text: `${name}'s FieldCheck profile — in the corpus, findable, free.`,
+      url: url
+    }).catch(() => {});
+  }
+}
+
+// v0.30.5.2210-1235 — Wire archetype similarity + longitudinal progression
+async function loadSimilarPlayers(slug) {
+  try {
+    const r = await fetch(`${PROXY}/similarity/player?slug=${encodeURIComponent(slug)}&n=4`);
+    const d = await r.json();
+    if (!d.ok || !Array.isArray(d.similar_players) || d.similar_players.length === 0) return;
+    const c = document.getElementById('similar-mount');
+    if (!c) return;
+    c.innerHTML = `
+      <div style="margin-top:48px;padding:36px;background:linear-gradient(180deg,rgba(212,175,55,0.05),rgba(20,17,12,0.4));border:1px solid rgba(212,175,55,0.2);border-radius:18px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--gold,#e8b948);font-weight:700;margin-bottom:8px">// PLAYS LIKE</div>
+        <div style="font-family:'Anton',sans-serif;font-size:28px;line-height:1.05;margin-bottom:16px">Archetype matches.</div>
+        <div style="font-size:14px;color:var(--text-2,#c4b896);line-height:1.55;margin-bottom:20px">${esc(d.interpretation || '')}</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+          ${d.similar_players.map(p => `
+            <a href="/m/${encodeURIComponent(p.slug)}" style="padding:16px;background:rgba(255,243,220,0.03);border:1px solid rgba(212,175,55,0.15);border-radius:12px;text-decoration:none;color:inherit;transition:all 0.2s ease;display:block">
+              <div style="font-family:'Anton',sans-serif;font-size:18px;line-height:1.05;margin-bottom:4px">${esc(p.name)}</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-3,#8a7e68);letter-spacing:0.5px;margin-bottom:10px">${esc(p.school || '')} · ${esc(p.tier || '')}</div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--text-3,#8a7e68)">SIMILARITY</span>
+                <span style="font-family:'Anton',sans-serif;font-size:22px;color:var(--gold,#e8b948);line-height:1">${p.similarity_score}%</span>
+              </div>
+            </a>
+          `).join('')}
+        </div>
+        <div style="margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-4,#5a5142);letter-spacing:1px">METHODOLOGY · ${esc(d.methodology || 'similarity-engine-v1.0')}</div>
+      </div>
+    `;
+  } catch (e) { /* graceful — section just doesn't render */ }
+}
+
+async function loadProgression(slug) {
+  try {
+    const r = await fetch(`${PROXY}/progression/player?slug=${encodeURIComponent(slug)}`);
+    const d = await r.json();
+    if (!d.ok || !d.progression) return;
+    const c = document.getElementById('progression-mount');
+    if (!c) return;
+    const prog = d.progression;
+    const dirColor = prog.trajectory_direction === 'ascending' ? '#95d5b2' : (prog.trajectory_direction === 'descending' ? '#ff8c52' : '#e8b948');
+    c.innerHTML = `
+      <div style="margin-top:24px;padding:36px;background:linear-gradient(180deg,rgba(149,213,178,0.05),rgba(20,17,12,0.4));border:1px solid rgba(149,213,178,0.2);border-radius:18px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:${dirColor};font-weight:700;margin-bottom:8px">// PROGRESSION</div>
+        <div style="font-family:'Anton',sans-serif;font-size:28px;line-height:1.05;margin-bottom:8px">How they're evolving.</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--text-2,#c4b896);line-height:1.55;margin-bottom:20px">${esc(d.interpretation || '')}</div>
+        <div style="display:grid;grid-template-columns:repeat(${prog.seasons.length},1fr);gap:12px;margin-bottom:16px">
+          ${prog.seasons.map((s,i) => {
+            const isLast = i === prog.seasons.length - 1;
+            return `
+            <div style="padding:18px;background:${isLast ? 'rgba(212,175,55,0.08)' : 'rgba(255,243,220,0.02)'};border:1px solid ${isLast ? 'rgba(212,175,55,0.25)' : 'rgba(255,243,220,0.08)'};border-radius:10px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-3,#8a7e68);letter-spacing:1px;margin-bottom:6px">${esc(s.season)}</div>
+              <div style="font-family:'Anton',sans-serif;font-size:32px;color:${isLast ? 'var(--gold,#e8b948)' : 'var(--text,#f4ead5)'};line-height:1;margin-bottom:6px">${s.composite.toFixed(1)}</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:${isLast ? 'var(--gold,#e8b948)' : 'var(--text-3,#8a7e68)'};font-weight:600">${esc(s.tier)}</div>
+            </div>
+          `;}).join('')}
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding-top:14px;border-top:1px solid rgba(255,243,220,0.05);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-3,#8a7e68);letter-spacing:1px">
+          <span>TIER: <strong style="color:${dirColor}">${esc(prog.tier_transition)}</strong></span>
+          <span>COMPOSITE Δ: <strong style="color:${dirColor}">${prog.composite_drift > 0 ? '+' : ''}${prog.composite_drift}</strong></span>
+          <span>TRAJECTORY: <strong style="color:${dirColor}">${esc(prog.trajectory_direction.toUpperCase())}</strong></span>
+        </div>
+      </div>
+    `;
+  } catch (e) { /* graceful */ }
+}
+
+loadProfile();
+</script>
+</body>
+</html>

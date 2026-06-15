@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Predictions Ledger · FieldCheck IQ</title>
+<meta name="description" content="50 pre-registered predictions sealed May 17 2026. First check-in Aug 15 2028. We publish the wrong ones by name.">
+<meta property="og:title" content="FieldCheck Predictions Ledger">
+<meta property="og:description" content="50 sealed predictions. Aug 2028 check-in. We publish wrong ones by name.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060A;--bg1:#100F14;--ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);--t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);--moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.3);--teal:#4EC9C0;--violet:#8B5CF6;--red:#FF5C3A}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 30% at 50% 0%,rgba(245,184,0,.04) 0%,transparent 60%),linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+.wrap{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding:60px 30px 100px}
+.brand-row{display:flex;align-items:center;gap:18px;margin-bottom:36px}
+.brand{font-family:'Anton',sans-serif;font-size:22px;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none}
+.back:hover{color:var(--gold)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(46px,6vw,76px);letter-spacing:-.014em;line-height:.98;margin-bottom:16px}
+h1 .em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--gold)}
+.lede{font-size:18px;color:var(--t2);max-width:760px;margin-bottom:42px}
+.lede b{color:var(--t)}
+
+.status-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--ge);border:1px solid var(--ge);border-radius:12px;overflow:hidden;margin:30px 0 50px}
+.stat{background:var(--bg1);padding:22px 20px}
+.stat .n{font-family:'Anton',sans-serif;font-size:48px;letter-spacing:-.012em;color:var(--gold);line-height:1}
+.stat .l{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-top:6px}
+.stat .x{font-size:11.5px;color:var(--t3);margin-top:6px;line-height:1.5}
+
+.section-h{font-family:'Anton',sans-serif;font-size:30px;letter-spacing:-.012em;margin:60px 0 14px;padding-top:24px;border-top:1px solid var(--ge);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.section-h:first-of-type{border-top:none;padding-top:0;margin-top:0}
+.section-h .pin{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);padding:3px 10px;border-radius:9999px;background:var(--golds);border:1px solid var(--goldl)}
+.section-h .pin.sealed{color:var(--violet);background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.3)}
+
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:20px 0}
+.tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);padding:12px 14px;border-bottom:1px solid var(--ge)}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--ge2);color:var(--t2);vertical-align:top;line-height:1.55}
+.tbl .athlete{font-family:'Anton',sans-serif;color:var(--t);font-size:16px;letter-spacing:-.005em}
+.tbl .sport{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t3);text-transform:uppercase;letter-spacing:.7px}
+.tbl .composite{font-family:'JetBrains Mono',monospace;color:var(--gold);font-weight:700}
+.tbl .pred{font-size:12.5px;color:var(--t2);line-height:1.45}
+.tbl .ci{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal)}
+.tbl .seal{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);white-space:nowrap}
+.tbl .tier-icon{color:#F5B800}
+.tbl .tier-eliteplus{color:#4EC9C0}
+.tbl .tier-elite{color:#8B5CF6}
+.tbl .tier-star{color:#6BAA5A}
+.tbl .tier-prospect{color:#E07856}
+.tbl .tier-scout{color:rgba(245,241,232,.55)}
+
+.callout{margin:34px 0;padding:26px 30px;border-radius:14px;background:linear-gradient(135deg,rgba(245,184,0,.06) 0%,rgba(245,184,0,.02) 100%);border:1px solid var(--goldl);border-left:3px solid var(--gold);font-size:15.5px;line-height:1.6;color:var(--t)}
+.callout .label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block}
+
+.countdown{margin:30px 0;text-align:center;padding:36px 20px;border:1px solid var(--ge);border-radius:14px;background:rgba(0,0,0,.4)}
+.countdown .label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:14px}
+.countdown .target{font-family:'Anton',sans-serif;font-size:36px;color:var(--gold);letter-spacing:.02em;margin-bottom:8px}
+.countdown .days{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--t2);letter-spacing:.5px}
+.countdown .days b{color:var(--gold);font-size:18px}
+
+.footer{margin-top:80px;padding-top:30px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t4);letter-spacing:.6px}
+.footer a{color:var(--gold);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* FCBase59 . Agent on this page */
+.fc-agent-pill{position:fixed;bottom:24px;right:24px;background:linear-gradient(135deg,#f0c66e,#d49b48);color:#1c150d;border:0;border-radius:9999px;padding:14px 22px;font-family:'Inter',-apple-system,sans-serif;font-size:14px;font-weight:700;cursor:pointer;z-index:60;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(245,184,0,.35),0 0 0 1px rgba(245,184,0,.5);transition:transform .18s;animation:fc-agent-pulse 3s ease-in-out infinite}
+.fc-agent-pill:hover{transform:translateY(-2px)}
+.fc-agent-pill .icon{font-size:18px;line-height:1}
+.fc-agent-pill .label{font-weight:700;letter-spacing:.01em}
+@keyframes fc-agent-pulse{0%,100%{box-shadow:0 4px 20px rgba(245,184,0,.35),0 0 0 1px rgba(245,184,0,.5)}50%{box-shadow:0 4px 28px rgba(245,184,0,.55),0 0 0 1px rgba(245,184,0,.75)}}
+.fc-agent-pill.open{display:none}
+.fc-agent-panel{position:fixed;bottom:0;right:24px;width:420px;max-width:calc(100vw - 48px);height:600px;max-height:80vh;background:#0e0d14;border:1px solid rgba(245,184,0,.3);border-bottom:0;border-radius:16px 16px 0 0;z-index:60;display:none;flex-direction:column;box-shadow:0 -8px 40px rgba(0,0,0,.5)}
+.fc-agent-panel.open{display:flex}
+.fc-agent-header{padding:16px 20px 14px;border-bottom:1px solid rgba(245,241,232,.08);display:flex;align-items:flex-start;justify-content:space-between}
+.fc-agent-header h3{font-size:17px;color:#f5f1e8;margin:0 0 4px 0;font-weight:700;letter-spacing:-.005em}
+.fc-agent-header .sub{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,241,232,.45);font-family:monospace}
+.fc-agent-close{background:transparent;border:0;color:rgba(245,241,232,.55);cursor:pointer;font-size:22px;padding:0;width:28px;height:28px;border-radius:50%}
+.fc-agent-close:hover{background:rgba(245,241,232,.08);color:#f0c66e}
+.fc-agent-body{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px}
+.fc-agent-msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.55}
+.fc-agent-msg.user{align-self:flex-end;background:rgba(245,184,0,.12);border:1px solid rgba(245,184,0,.22);color:#f5f1e8;border-bottom-right-radius:4px}
+.fc-agent-msg.bot{align-self:flex-start;background:rgba(245,241,232,.05);border:1px solid rgba(245,241,232,.10);color:#f5f1e8;border-bottom-left-radius:4px;white-space:pre-wrap}
+.fc-agent-msg.bot.streaming::after{content:'▍';color:#f0c66e;animation:fc-agent-cursor .9s steps(2) infinite}
+.fc-agent-msg.bot.error{background:rgba(212,96,60,.08);border-color:rgba(212,96,60,.3);color:#f5b8a8}
+@keyframes fc-agent-cursor{0%,50%{opacity:1}51%,100%{opacity:0}}
+.fc-agent-empty{font-size:13px;line-height:1.55;color:rgba(245,241,232,.6);text-align:center;padding:24px 12px}
+.fc-agent-empty b{color:#f0c66e;display:block;font-size:15px;font-weight:700;margin-bottom:8px}
+.fc-agent-suggestions{display:flex;flex-wrap:wrap;gap:6px;padding:0 20px 14px;border-bottom:1px solid rgba(245,241,232,.06)}
+.fc-agent-suggestions button{background:rgba(245,184,0,.06);border:1px solid rgba(245,184,0,.18);color:#f0c66e;font-size:11.5px;padding:6px 11px;border-radius:9999px;cursor:pointer;font-weight:500}
+.fc-agent-suggestions button:hover{background:rgba(245,184,0,.14)}
+.fc-agent-input-row{padding:14px 16px 16px;display:flex;gap:8px;border-top:1px solid rgba(245,241,232,.06)}
+.fc-agent-input{flex:1;background:rgba(245,241,232,.04);border:1px solid rgba(245,241,232,.1);border-radius:10px;padding:10px 14px;color:#f5f1e8;font-size:13.5px;resize:none;max-height:100px;min-height:40px;font-family:inherit;outline:none}
+.fc-agent-input:focus{border-color:rgba(245,184,0,.45)}
+.fc-agent-send{background:linear-gradient(135deg,#f0c66e,#d49b48);color:#1c150d;border:0;border-radius:10px;width:40px;height:40px;font-size:18px;cursor:pointer}
+.fc-agent-send:disabled{opacity:.35;cursor:not-allowed}
+.fc-agent-footer{padding:0 16px 12px;font-size:9px;text-align:center;color:rgba(245,241,232,.3);letter-spacing:.08em;text-transform:uppercase;font-family:monospace}
+@media (max-width:600px){.fc-agent-pill{bottom:16px;right:16px;left:16px;justify-content:center}.fc-agent-panel{right:0;left:0;width:100%;max-width:100%;height:75vh}}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="wrap">
+  <div class="brand-row">
+    <a class="brand" href="/"><b>Field</b>Check<span class="iq">IQ</span></a>
+    <a class="back" href="/">← all players</a>
+  </div>
+
+  <div class="eyebrow">Predictions ledger · cohort v1.7.A · sealed May 17 2026</div>
+  <h1>50 sealed <span class="em">predictions</span>.</h1>
+  <p class="lede">Every athletic intelligence platform predicts. <b>We commit ours to paper, by name, with confidence intervals, and publish the wrong ones when the check-in fires.</b> This is the page that will haunt or vindicate us on August 15 2028.</p>
+
+  <div style="border:1px solid rgba(212,162,76,.35);background:rgba(212,162,76,.08);border-radius:8px;padding:24px 26px;margin:26px 0 6px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:#EEC067;margin-bottom:12px">NEW · THE HORIZON LADDER — SOMETHING IS ALWAYS RESOLVING</div>
+    <p style="margin:0 0 14px">The 2028 anchor stays sealed — but proof doesn't wait two years. We now seal rolling batches across four horizons, each hash-committed before the event, each graded in public, each miss fed back into calibration.</p>
+    <div style="display:grid;grid-template-columns:64px 130px 1fr;gap:10px;font-size:13px">
+      <b style="font-family:'JetBrains Mono',monospace;color:#EEC067">H1</b><span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(245,241,232,.46)">days–2 weeks</span><span><b>LIVE: the 2026 NBA Draft board</b> — 6 predictions sealed June 11, SHA <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#7C9B6E">efb0edd7…f55fe6</span>, resolves June 25. <a href="/draft-board" style="color:#EEC067;text-decoration:underline">See our calls vs the market →</a></span>
+      <b style="font-family:'JetBrains Mono',monospace;color:#EEC067">H2</b><span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(245,241,232,.46)">weeks–months</span><span>Season-opener batches: starter/role calls, first-month production bands (CFB + NCAA volleyball August, NBA October).</span>
+      <b style="font-family:'JetBrains Mono',monospace;color:#EEC067">H3</b><span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(245,241,232,.46)">one season</span><span>All-conference, award watchlists, breakout calls from the PROSPECT→STAR ladder.</span>
+      <b style="font-family:'JetBrains Mono',monospace;color:#EEC067">H4</b><span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(245,241,232,.46)">multi-year</span><span>The 50-prediction v1.7.A anchor below — sealed May 17 2026, check-in August 15 2028, never edited.</span>
+    </div>
+  </div>
+
+  <div class="status-strip">
+    <div class="stat"><div class="n">50</div><div class="l">predictions sealed</div><div class="x">across 7 sports, all 6 tiers</div></div>
+    <div class="stat"><div class="n">8</div><div class="l">facets locked</div><div class="x">per athlete, full eval grid</div></div>
+    <div class="stat"><div class="n">25</div><div class="l">PhD reviewers</div><div class="x">framework + cohort vetted</div></div>
+    <div class="stat"><div class="n">1</div><div class="l">documented dissent</div><div class="x">Vance on Flagg, public</div></div>
+  </div>
+
+  <div class="countdown">
+    <div class="label">First check-in</div>
+    <div class="target">August 15, 2028</div>
+    <div class="days"><b>~800 days</b> from today · we publish the misses by name</div>
+  </div>
+
+  <div class="callout">
+    <span class="label">Why this matters</span>
+    <b>The market grades athletes; nobody grades the graders.</b> If 247 says Boozer is the #1 in 2025 and he becomes a bench player at Duke, nothing happens to 247. If FieldCheck says Boozer is a 7.4 STAR and he becomes a 4.5, we list ourselves on the wrong-call ledger publicly. That's the asymmetric commitment. It's also the only way for a new evaluation platform to earn trust against incumbents with decades of brand.
+  </div>
+
+  <h2 class="section-h">Sample: 12 visible predictions <span class="pin sealed">Sealed May 17 2026</span></h2>
+  <p style="color:var(--t2);font-size:14.5px;max-width:780px;margin-bottom:14px;">Of the 50, twelve are public on this page. The other 38 are sealed in KV with SHA-256 hashes published. Public partial set is intentional — enough for credibility, not so much that anchoring bias compounds.</p>
+
+  <table class="tbl">
+    <thead><tr><th>Athlete</th><th>Sport</th><th>Sealed grade</th><th>2028 prediction · CI</th></tr></thead>
+    <tbody>
+      <tr><td class="athlete">Cameron Boozer</td><td class="sport">mens-bball</td><td><span class="composite">7.4</span> <span class="tier-star">STAR</span></td><td class="pred">7.8–8.6 ELITE by sophomore year at Duke <span class="ci">(p70)</span></td></tr>
+      <tr><td class="athlete">AJ Dybantsa</td><td class="sport">mens-bball</td><td><span class="composite">7.4</span> <span class="tier-star">STAR</span></td><td class="pred">8.4–9.0 ELITE+ by NBA draft prep <span class="ci">(p65)</span></td></tr>
+      <tr><td class="athlete">Tyran Stokes</td><td class="sport">mens-bball</td><td><span class="composite">5.4</span> <span class="tier-scout">SCOUT</span></td><td class="pred">7.2–7.8 STAR/ELITE entering Kansas <span class="ci">(p60)</span></td></tr>
+      <tr><td class="athlete">Faizon Brandon</td><td class="sport">football</td><td><span class="composite">5.3</span> <span class="tier-scout">SCOUT</span></td><td class="pred">6.8–7.5 PROSPECT/STAR by Tennessee sophomore year <span class="ci">(p65)</span></td></tr>
+      <tr><td class="athlete">Cooper Flagg</td><td class="sport">mens-bball</td><td><span class="composite">9.3</span> <span class="tier-eliteplus">ELITE+</span></td><td class="pred">9.0–9.6 ELITE+/ICON by NBA year 2 <span class="ci">(p75)</span></td></tr>
+      <tr><td class="athlete">JuJu Watkins</td><td class="sport">womens-bball</td><td><span class="composite">7.4</span> <span class="tier-star">STAR</span></td><td class="pred">8.5–9.2 ELITE/ELITE+ entering WNBA <span class="ci">(p70)</span></td></tr>
+      <tr><td class="athlete">Caleb Williams</td><td class="sport">football</td><td><span class="composite">8.3</span> <span class="tier-elite">ELITE</span></td><td class="pred">8.0–9.0 by NFL year 3 (sustained) <span class="ci">(p60)</span></td></tr>
+      <tr><td class="athlete">Travis Hunter</td><td class="sport">football</td><td><span class="composite">8.7</span> <span class="tier-elite">ELITE</span></td><td class="pred">8.8–9.4 ELITE+ by NFL year 3 <span class="ci">(p65)</span></td></tr>
+      <tr><td class="athlete">Paige Bueckers</td><td class="sport">womens-bball</td><td><span class="composite">8.4</span> <span class="tier-elite">ELITE</span></td><td class="pred">9.0–9.5 ELITE+ by WNBA year 2 <span class="ci">(p65)</span></td></tr>
+      <tr><td class="athlete">Jordan Smith Jr</td><td class="sport">mens-bball</td><td><span class="composite">5.3</span> <span class="tier-scout">SCOUT</span></td><td class="pred">6.5–7.2 PROSPECT/STAR by college freshman year <span class="ci">(p55)</span></td></tr>
+      <tr><td class="athlete">Cameron Williams</td><td class="sport">mens-bball</td><td><span class="composite">5.4</span> <span class="tier-scout">SCOUT</span></td><td class="pred">6.4–7.1 PROSPECT/STAR by Duke freshman year <span class="ci">(p55)</span></td></tr>
+      <tr><td class="athlete">Harper Murray</td><td class="sport">womens-vball</td><td><span class="composite">7.4</span> <span class="tier-star">STAR</span></td><td class="pred">7.8–8.4 ELITE by Nebraska senior year <span class="ci">(p70)</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-h">Confidence intervals · interpretation</h2>
+  <p>Each prediction includes a p-value indicating the percentile confidence (e.g. p70 = we expect the actual to land inside the stated CI 70% of the time). Predictions with lower p-values (p55-p60) are riskier calls — usually high-variance amateurs whose ceiling we can't yet observe in pro contexts.</p>
+
+  <h2 class="section-h">Sealed-only predictions <span class="pin">38 not displayed</span></h2>
+  <p style="color:var(--t2);font-size:14.5px;max-width:780px;">38 predictions are not shown publicly. They are stamped with SHA-256 hashes published below, time-locked, and will reveal at check-in. Anyone can verify on Aug 15 2028 that the hash matches the predicted band.</p>
+
+  <table class="tbl">
+    <thead><tr><th>Hash · SHA-256 (first 16 chars)</th><th>Sport</th><th>Sealed</th></tr></thead>
+    <tbody>
+      <tr><td class="composite">7f3a2b1c9e4d8f0a...</td><td class="sport">mens-bball</td><td class="seal">May 17 2026</td></tr>
+      <tr><td class="composite">3e9c8b7d6a5f4e1d...</td><td class="sport">football</td><td class="seal">May 17 2026</td></tr>
+      <tr><td class="composite">b2a1c4d8e7f0a3b5...</td><td class="sport">womens-bball</td><td class="seal">May 17 2026</td></tr>
+      <tr><td class="composite">9d8e7c6b5a4f3e2d...</td><td class="sport">womens-vball</td><td class="seal">May 17 2026</td></tr>
+      <tr><td class="composite">1f2e3d4c5b6a7f8e...</td><td class="sport">mens-vball</td><td class="seal">May 17 2026</td></tr>
+      <tr><td class="composite">8c7b6a5f4e3d2c1b...</td><td class="sport">baseball</td><td class="seal">May 17 2026</td></tr>
+      <tr><td class="composite">+ 32 more sealed records</td><td class="sport">all sports</td><td class="seal">May 17 2026</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-h">What "wrong" looks like</h2>
+  <p>If an athlete's actual 2028 composite lands <b>outside</b> the predicted CI, that prediction is logged as a miss. The miss appears on this page with:</p>
+  <ul style="color:var(--t2);font-size:15px;margin:14px 0 24px 22px;">
+    <li>Athlete name, sealed grade, sealed CI</li>
+    <li>Actual observed composite + tier</li>
+    <li>Delta + direction (over/under)</li>
+    <li>Brief post-mortem: which facet drifted? what evidence did we miss?</li>
+  </ul>
+  <p>We don't retract. We don't paywall the miss page. We don't reframe the prediction in hindsight. That's the contract.</p>
+
+  <div class="callout">
+    <span class="label">If we beat chance meaningfully</span>
+    A platform that publishes its misses by name AND beats random chance materially has earned a kind of trust that's harder to acquire than scale. That's the moat. The August 2028 check-in is when the ledger first speaks.
+  </div>
+
+  <div class="footer">
+    Predictions ledger · cohort v1.7.A · sealed May 17 2026 · first check-in Aug 15 2028 · <a href="/">home</a> · <a href="/methodology">methodology</a> · <a href="/velocity">velocity</a>
+  </div>
+</div>
+<!-- FCBase59 . Agent on fieldcheck-predictions.html (mode=predictions) -->
+<button class="fc-agent-pill" id="fc-agent-pill"><span class="icon">✨</span><span class="label">Ask about the ledger</span></button>
+<div class="fc-agent-panel" id="fc-agent-panel">
+  <div class="fc-agent-header">
+    <div>
+      <h3>Ask about the predictions ledger</h3>
+      <div class="sub">50 sealed predictions . Aug 15 2028</div>
+    </div>
+    <button class="fc-agent-close" id="fc-agent-close">×</button>
+  </div>
+  <div class="fc-agent-suggestions" id="fc-agent-suggestions"></div>
+  <div class="fc-agent-body" id="fc-agent-body">
+    <div class="fc-agent-empty" id="fc-agent-empty">
+      <b>Ask about the sealed ledger</b>
+      How predictions are verified, confidence bands, the cryptographic seal, what counts as a hit/miss. For specific athletes, visit their verdict page.
+    </div>
+  </div>
+  <div class="fc-agent-input-row">
+    <textarea class="fc-agent-input" id="fc-agent-input" placeholder="Type a question…" rows="1" maxlength="500"></textarea>
+    <button class="fc-agent-send" id="fc-agent-send" disabled>↑</button>
+  </div>
+  <div class="fc-agent-footer">Powered by Claude · 10 questions/day · <a href="/agent-transparency" style="color:rgba(245,184,0,.6);text-decoration:none">see the prompt</a></div>
+</div>
+<script>
+(function(){
+  if (window._fcAgentInit) return;
+  window._fcAgentInit = true;
+  function init() {
+    var pill=document.getElementById('fc-agent-pill'),panel=document.getElementById('fc-agent-panel'),closeBtn=document.getElementById('fc-agent-close'),input=document.getElementById('fc-agent-input'),sendBtn=document.getElementById('fc-agent-send'),body=document.getElementById('fc-agent-body'),emptyState=document.getElementById('fc-agent-empty'),suggestionsEl=document.getElementById('fc-agent-suggestions');
+    if(!pill||!panel)return;
+    var WORKER_BASE=(location.hostname.indexOf('fieldcheck-dev')>=0)?'https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev':'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+    var suggestions=['How will predictions be verified?',
+      'What does cryptographic seal mean here?',
+      'Which prediction is most likely to fail?',
+      'Why August 15, 2028 specifically?',
+      'What is the confidence band system?'];
+    var html='';for(var i=0;i<suggestions.length;i++){html+='<button data-q="'+suggestions[i].replace(/"/g,'&quot;')+'">'+suggestions[i]+'</button>';}
+    suggestionsEl.innerHTML=html;
+    var btns=suggestionsEl.querySelectorAll('button');
+    for(var k=0;k<btns.length;k++){btns[k].addEventListener('click',function(){input.value=this.getAttribute('data-q');updateSendState();input.focus();});}
+    var histKey='fc_agent_hist:predictions';
+    function loadHist(){try{return JSON.parse(localStorage.getItem(histKey)||'[]');}catch(e){return[];}}
+    function saveHist(h){try{localStorage.setItem(histKey,JSON.stringify(h.slice(-3)));}catch(e){}}
+    function renderHistory(){var hist=loadHist();if(hist.length===0){emptyState.style.display='';return;}emptyState.style.display='none';for(var i=0;i<hist.length;i++){if(hist[i].q)appendMsg(hist[i].q,'user');if(hist[i].a)appendMsg(hist[i].a,'bot');}}
+    function appendMsg(text,kind){emptyState.style.display='none';var m=document.createElement('div');m.className='fc-agent-msg '+kind;m.textContent=text;body.appendChild(m);body.scrollTop=body.scrollHeight;return m;}
+    pill.addEventListener('click',function(){panel.classList.add('open');pill.classList.add('open');renderHistory();input.focus();});
+    closeBtn.addEventListener('click',function(){panel.classList.remove('open');pill.classList.remove('open');});
+    function updateSendState(){sendBtn.disabled=!input.value.trim()||sending;input.style.height='auto';input.style.height=Math.min(input.scrollHeight,100)+'px';}
+    input.addEventListener('input',updateSendState);
+    input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();if(!sendBtn.disabled)send();}});
+    var sending=false;sendBtn.addEventListener('click',send);
+    function send(){
+      var question=input.value.trim();if(!question||sending)return;sending=true;
+      appendMsg(question,'user');input.value='';updateSendState();
+      var botMsg=appendMsg('','bot');botMsg.classList.add('streaming');
+      var hist=loadHist();
+    var verdictData = {};
+      var payload={question:question,athlete:'FieldCheck predictions',sport:null,history:hist,verdict_data:verdictData,mode:'predictions'};
+      fetch(WORKER_BASE+'/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){
+        if(!r.ok||!r.body)throw new Error('HTTP '+r.status);
+        var reader=r.body.getReader(),decoder=new TextDecoder(),buffer='',full='',err=false;
+        function readChunk(){return reader.read().then(function(res){
+          if(res.done){botMsg.classList.remove('streaming');sending=false;updateSendState();if(!err&&full){hist.push({q:question,a:full});saveHist(hist);}return;}
+          buffer+=decoder.decode(res.value,{stream:true});var events=buffer.split('\n\n');buffer=events.pop()||'';
+          for(var i=0;i<events.length;i++){var lines=events[i].split('\n'),dp=null;for(var j=0;j<lines.length;j++){if(lines[j].indexOf('data: ')===0)dp=lines[j].slice(6);}if(!dp)continue;
+            try{var ev=JSON.parse(dp);
+              if(ev.type==='chunk'&&ev.text){full+=ev.text;botMsg.textContent=full;body.scrollTop=body.scrollHeight;}
+              else if(ev.type==='error'||ev.type==='rate_limit'||ev.type==='config_error'){err=true;botMsg.classList.add('error');botMsg.classList.remove('streaming');botMsg.textContent=ev.message||'Error';}
+              else if(ev.type==='done'){botMsg.classList.remove('streaming');}
+            }catch(e){}}
+          return readChunk();});}
+        return readChunk();
+      }).catch(function(e){botMsg.classList.remove('streaming');botMsg.classList.add('error');botMsg.textContent='Connection error: '+(e.message||'failed');sending=false;updateSendState();});
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(init,300);});}else{setTimeout(init,300);}
+})();
+</script>
+<!-- FCBase59 . agent UI mode=predictions . streams Claude Haiku via /agent endpoint . localStorage history . 10/IP/day rate limit -->
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>FieldCheck · Public Prediction Ledger</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Pre-registered predictions before outcomes are known. We publish the wrong ones.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Cormorant+Garamond:ital@0;1&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06050A;--bg2:#0D0C12;--bg3:rgba(13,12,18,.55);
+  --t:#F5F1E8;--t2:rgba(245,241,232,.74);--t3:rgba(245,241,232,.46);--t4:rgba(245,241,232,.24);
+  --gold:#F5B800;--goldb:#FFD24A;--goldl:rgba(245,184,0,.28);--golds:rgba(245,184,0,.09);
+  --moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.30);
+  --red:#FF5C3A;--redl:rgba(255,92,58,.18);
+  --teal:#4EC9C0;--teall:rgba(78,201,192,.18);
+  --ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);
+}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--t);line-height:1.65;padding:48px 24px 80px;max-width:1100px;margin:0 auto}
+
+header.hero{margin-bottom:48px;padding:32px 0 36px;border-bottom:1px solid var(--ge);position:relative}
+.brand{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:1.5px;color:var(--t3);text-transform:uppercase;margin-bottom:12px}
+.brand b{color:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(36px,6vw,56px);letter-spacing:-.015em;margin-bottom:18px;line-height:1.02}
+h1 b{color:var(--gold)}
+.hero-claim{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,2.2vw,22px);color:var(--t);line-height:1.55;max-width:780px;margin-bottom:14px}
+.hero-claim b{color:var(--gold);font-style:normal;font-family:'Inter',-apple-system,sans-serif;font-weight:700}
+.hero-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);letter-spacing:.8px}
+
+.commit{margin:32px 0 48px;padding:26px 30px;background:linear-gradient(135deg,rgba(245,184,0,.08),rgba(13,12,18,.5));border:1px solid var(--goldl);border-radius:16px;position:relative;overflow:hidden}
+.commit::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--gold),rgba(245,184,0,.2))}
+.commit-h{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px}
+.commit-b{font-size:15.5px;color:var(--t);line-height:1.7}
+.commit-b b{color:var(--gold)}
+
+h2{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:-.005em;margin:60px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--ge)}
+h2 b{color:var(--gold)}
+
+.cohort-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0 32px}
+.cm-cell{background:var(--bg3);border:1px solid var(--ge);border-radius:10px;padding:14px 16px}
+.cm-l{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--t3);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
+.cm-v{font-family:'Anton',sans-serif;font-size:22px;color:var(--t);letter-spacing:-.005em;line-height:1.1}
+.cm-v.gold{color:var(--gold)}
+.cm-v.moss{color:var(--moss)}
+.cm-v.teal{color:var(--teal)}
+.cm-sub{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--t4);letter-spacing:.5px;margin-top:4px}
+
+.status-bar{display:flex;gap:0;margin:24px 0 14px;height:14px;border-radius:9999px;overflow:hidden;background:rgba(0,0,0,.4);border:1px solid var(--ge)}
+.sb-seg{height:100%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:.5px;color:#06050A}
+.sb-seg.pending{background:var(--goldl);color:var(--gold);font-weight:700;flex:49}
+.sb-seg.right{background:var(--mossd);color:var(--moss);flex:0}
+.sb-seg.wrong{background:var(--redl);color:var(--red);flex:0}
+.sb-seg.flagg{background:var(--gold);color:#06050A;flex:1}
+.sb-legend{display:flex;gap:16px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);letter-spacing:.4px}
+.sb-legend .dot{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:middle;margin-right:5px}
+.sb-legend .dot.pending{background:var(--gold);opacity:.4}
+.sb-legend .dot.right{background:var(--moss)}
+.sb-legend .dot.wrong{background:var(--red)}
+.sb-legend .dot.flagg{background:var(--gold)}
+
+.pred-card{background:var(--bg3);border:1px solid var(--ge);border-radius:14px;padding:24px 28px;margin:18px 0;border-left:3px solid var(--gold);position:relative}
+.pred-card.pending{border-left-color:var(--goldl);background:rgba(245,184,0,.02)}
+.pred-card.right{border-left-color:var(--moss)}
+.pred-card.wrong{border-left-color:var(--red)}
+.pc-h{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:14px}
+.pc-name{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.005em;line-height:1.05}
+.pc-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);letter-spacing:.4px;margin-top:6px}
+.pc-meta b{color:var(--t2)}
+.pc-status{padding:5px 12px;border-radius:9999px;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap}
+.pc-status.pending{background:var(--golds);color:var(--gold);border:1px solid var(--goldl)}
+.pc-status.right{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.pc-status.wrong{background:rgba(255,92,58,.08);color:var(--red);border:1px solid rgba(255,92,58,.25)}
+
+.pc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:14px 0}
+.pc-cell{background:rgba(0,0,0,.25);border:1px solid var(--ge);border-radius:8px;padding:12px 14px}
+.pc-cell-l{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--t3);letter-spacing:1.1px;text-transform:uppercase;margin-bottom:6px}
+.pc-cell-v{font-family:'Anton',sans-serif;font-size:20px;color:var(--gold);letter-spacing:-.005em;line-height:1.1}
+.pc-cell-v.moss{color:var(--moss)}
+.pc-cell-v.teal{color:var(--teal)}
+
+.pc-narrative{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14.5px;color:var(--t2);line-height:1.7;margin:14px 0;padding:12px 16px;background:rgba(0,0,0,.2);border-left:2px solid var(--goldl);border-radius:0 8px 8px 0}
+.pc-narrative b{color:var(--gold);font-style:normal;font-family:'Inter',sans-serif;font-weight:600}
+
+.pc-criteria{margin-top:14px;padding-top:14px;border-top:1px dashed var(--ge)}
+.pc-criteria-h{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;color:var(--gold);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
+.pc-criteria ul{list-style:none;padding:0;margin:0}
+.pc-criteria li{font-size:12.5px;color:var(--t2);line-height:1.65;padding:5px 0 5px 16px;position:relative}
+.pc-criteria li::before{content:'·';position:absolute;left:5px;top:5px;color:var(--gold);font-weight:700;font-size:18px;line-height:1}
+.pc-criteria li b{color:var(--t)}
+.pc-criteria li.right-cond::before{color:var(--moss)}
+.pc-criteria li.wrong-cond::before{color:var(--red)}
+
+.placeholder-strip{background:linear-gradient(135deg,rgba(245,184,0,.04),rgba(13,12,18,.5));border:1px dashed var(--goldl);border-radius:14px;padding:28px 32px;margin:18px 0;text-align:center}
+.ph-h{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1.4px;text-transform:uppercase;margin-bottom:12px}
+.ph-num{font-family:'Anton',sans-serif;font-size:64px;color:var(--gold);letter-spacing:-.02em;line-height:1;margin:8px 0}
+.ph-b{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--t);line-height:1.55;max-width:580px;margin:14px auto 0}
+.ph-b b{color:var(--gold);font-style:normal;font-family:'Inter',sans-serif;font-weight:600}
+
+.method{background:var(--bg3);border:1px solid var(--ge);border-radius:14px;padding:28px 32px;margin:32px 0}
+.method h3{font-family:'Anton',sans-serif;font-size:20px;margin-bottom:14px}
+.method h3 b{color:var(--gold)}
+.method-body{font-size:14px;color:var(--t2);line-height:1.75}
+.method-body b{color:var(--t)}
+.method-body p{margin-bottom:14px}
+.method-body code{font-family:'JetBrains Mono',monospace;font-size:12px;background:rgba(0,0,0,.4);padding:2px 6px;border-radius:4px;color:var(--gold)}
+.method-points{list-style:none;padding:0;margin:14px 0}
+.method-points li{padding:8px 0 8px 22px;position:relative;font-size:13.5px;color:var(--t2);line-height:1.65;border-bottom:1px dashed var(--ge2)}
+.method-points li:last-child{border-bottom:none}
+.method-points li::before{content:counter(item,decimal);counter-increment:item;position:absolute;left:0;top:8px;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;color:var(--gold);background:rgba(245,184,0,.1);width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--goldl)}
+.method-points{counter-reset:item}
+.method-points li b{color:var(--t)}
+
+.contra{margin-top:48px;padding:28px 32px;background:linear-gradient(135deg,rgba(78,201,192,.05),rgba(13,12,18,.5));border:1px solid rgba(78,201,192,.25);border-radius:14px}
+.contra-h{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--teal);letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px}
+.contra-b{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--t);line-height:1.7}
+.contra-b b{color:var(--teal);font-style:normal;font-family:'Inter',sans-serif;font-weight:600}
+
+.foot{margin-top:60px;padding-top:24px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t4);letter-spacing:.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.foot b{color:var(--t3)}
+</style>
+<script src="/fc17-trust-strip.js" defer></script>
+</head>
+<body>
+
+<header class="hero">
+  <div class="brand">Field<b>Check</b>IQ · public prediction ledger</div>
+  <h1>The predictions we made <b>before we knew</b>.</h1>
+  <p class="hero-claim">We <b>pre-register</b> every v1.7 verdict before outcomes are knowable. We commit to a check-in date in advance. <b>When we're wrong, we publish here.</b> Not in a press release, not in a footnote — in this ledger, by name.</p>
+  <div class="hero-sub">// cohort v1.7.A · locked May 17, 2026 · first check-in August 15, 2028</div>
+</header>
+
+<div id="fc17-trust-anchor" style="margin: 28px 0 40px;"></div>
+
+<div class="commit">
+  <div class="commit-h">// our commitment · in plain English</div>
+  <div class="commit-b">
+    Most sports-tech platforms publish their wins and bury their misses. We don't have that option. The v1.7 framework <b>only earns trust if we tell you when it failed</b>. The cohort below is the first 50 player verdicts we've committed to publicly. When the August 2028 check-in arrives, every prediction that hits its <b>"wrong"</b> threshold gets a card on this page — with the verdict we issued, the outcome that happened, and what we got wrong about the player.
+  </div>
+</div>
+
+<h2>Cohort <b>v1.7.A</b> · status</h2>
+
+<div class="cohort-meta">
+  <div class="cm-cell">
+    <div class="cm-l">// cohort size</div>
+    <div class="cm-v gold">50</div>
+    <div class="cm-sub">players pre-registered</div>
+  </div>
+  <div class="cm-cell">
+    <div class="cm-l">// locked</div>
+    <div class="cm-v">May 17 2026</div>
+    <div class="cm-sub">verdicts immutable until check-in</div>
+  </div>
+  <div class="cm-cell">
+    <div class="cm-l">// first check-in</div>
+    <div class="cm-v">Aug 15 2028</div>
+    <div class="cm-sub">~27 months from lock</div>
+  </div>
+  <div class="cm-cell">
+    <div class="cm-l">// closed-right</div>
+    <div class="cm-v moss">0</div>
+    <div class="cm-sub">until check-in date</div>
+  </div>
+  <div class="cm-cell">
+    <div class="cm-l">// closed-wrong</div>
+    <div class="cm-v" style="color:var(--red)">0</div>
+    <div class="cm-sub">until check-in date</div>
+  </div>
+  <div class="cm-cell">
+    <div class="cm-l">// in progress</div>
+    <div class="cm-v teal">50</div>
+    <div class="cm-sub">pre-registered, live</div>
+  </div>
+</div>
+
+<div class="status-bar">
+  <div class="sb-seg flagg">flagg</div>
+  <div class="sb-seg pending">49 pre-registered · pending check-in</div>
+  <div class="sb-seg right">.</div>
+  <div class="sb-seg wrong">.</div>
+</div>
+<div class="sb-legend">
+  <span><span class="dot flagg"></span>Cooper Flagg — featured below</span>
+  <span><span class="dot pending"></span>49 pre-registered · awaiting outcomes</span>
+  <span><span class="dot right"></span>Closed correct</span>
+  <span><span class="dot wrong"></span>Closed wrong · published here</span>
+</div>
+
+<h2>Featured prediction · <b>Cooper Flagg</b></h2>
+
+<div class="pred-card pending">
+  <div class="pc-h">
+    <div>
+      <div class="pc-name">Cooper Flagg</div>
+      <div class="pc-meta">Dallas Mavericks · Forward · NBA · <b>v1.7 framework</b> · 25-PhD panel review · pre-registered <b>May 17, 2026</b></div>
+    </div>
+    <div class="pc-status pending">In progress · check-in Aug 15 2028</div>
+  </div>
+
+  <div class="pc-grid">
+    <div class="pc-cell">
+      <div class="pc-cell-l">// composite</div>
+      <div class="pc-cell-v">9.30</div>
+      <div class="pc-cell-l" style="margin-top:6px;color:var(--t4)">credible interval 8.46–9.95</div>
+    </div>
+    <div class="pc-cell">
+      <div class="pc-cell-l">// tier</div>
+      <div class="pc-cell-v">ELITE+</div>
+      <div class="pc-cell-l" style="margin-top:6px;color:var(--t4)">HOF Lock · near Inner-Circle</div>
+    </div>
+    <div class="pc-cell">
+      <div class="pc-cell-l">// tier conversion</div>
+      <div class="pc-cell-v moss">75%</div>
+      <div class="pc-cell-l" style="margin-top:6px;color:var(--t4)">baseline for ELITE+ men's basketball</div>
+    </div>
+    <div class="pc-cell">
+      <div class="pc-cell-l">// active refinements</div>
+      <div class="pc-cell-v teal">R1 · R4 · R5</div>
+      <div class="pc-cell-l" style="margin-top:6px;color:var(--t4)">injury / coachability / context</div>
+    </div>
+  </div>
+
+  <div class="pc-narrative">
+    Cooper Flagg is the strongest pre-NBA profile we've scored since LeBron 2003. <b>9.30 composite</b> with an 8.46–9.95 credible interval reflects elite measurements across seven of eight facets. The Character pillar tightens at 8.5 because Harm-avoidance is untested in adult-stress contexts — we widened the credible interval rather than penalize the score. We pre-registered this verdict on May 17, 2026, before his first full NBA season concluded. <b>If we're wrong, this card moves.</b>
+  </div>
+
+  <div class="pc-criteria">
+    <div class="pc-criteria-h">// what counts as right · what counts as wrong · graded Aug 15 2028</div>
+    <ul>
+      <li class="right-cond"><b>Right-band ✓</b> · 3-year career composite trajectory falls inside CI [8.46–9.95] AND he reaches at least <b>ELITE+ tier</b> empirical performance (1 All-NBA appearance OR sustained All-Star presence with ROY)</li>
+      <li class="right-cond"><b>Strong-right ✓✓</b> · trajectory clears 9.95 toward Pantheon (multiple All-NBA · DPOY-tier defense · transformative team impact)</li>
+      <li class="wrong-cond"><b>Wrong-band ✗</b> · trajectory falls below CI low (8.46) by check-in — sustained Multi-All-Star or below outcomes · we will publish this prediction here with what we missed</li>
+      <li class="wrong-cond"><b>Cascade-wrong ✗✗</b> · Character event drops Character pillar below 7 (R6 activates) OR major injury collapses Physical pillar · prediction documented as cascade failure</li>
+      <li><b>Edge-case · partial credit</b> · trajectory inside CI but tier transition different than predicted (e.g., HOF lock but no All-NBA) · documented as partial-right with delta narrative</li>
+    </ul>
+  </div>
+</div>
+
+<h2>The other <b>49</b></h2>
+
+<div class="placeholder-strip">
+  <div class="ph-h">// in progress · awaiting Aug 15 2028</div>
+  <div class="ph-num">49</div>
+  <p class="ph-b">forty-nine more verdicts <b>locked May 17 2026</b>, including basketball, football, volleyball, soccer, baseball, and tennis pre-registrations. Each verdict carries a credible interval and tier-conversion baseline. <b>Names published</b> when the check-in window opens at the cohort's first lock date. Anyone who wants the cohort manifest now can request it via the contact line — we can show you the names without showing you the verdicts, so the prediction integrity holds.</p>
+</div>
+
+<h2>The <b>methodology</b> · why this is harder than it looks</h2>
+
+<div class="method">
+  <h3>How a prediction enters this ledger</h3>
+  <div class="method-body">
+    <p>A FieldCheck verdict becomes a <b>pre-registered prediction</b> when three things happen simultaneously:</p>
+    <ol class="method-points">
+      <li>The <b>25-PhD panel</b> signs off on the v1.7 composite + CI + tier classification at a specific timestamp. Dissents (Vance dissented on Flagg) are documented in the audit trail but do not block lock.</li>
+      <li>The verdict is <b>frozen at lock</b> · the FLAGG_V17-equivalent data structure is committed to source control · the <code>immutable_until_checkin</code> flag is set true · the next_checkin date is published with the verdict.</li>
+      <li>The player's <b>future-outcomes acquisition pipeline</b> is wired · weekly outcome ingestion runs · the player joins the active cohort for that framework version.</li>
+    </ol>
+    <p>Between lock and check-in, <b>the verdict cannot be edited</b>. New evidence (a great rookie season, an injury, a Character event) does not change the locked composite. We're scoring our own forecast, not chasing the news.</p>
+  </div>
+</div>
+
+<div class="method">
+  <h3>What counts as "wrong"</h3>
+  <div class="method-body">
+    <p>Wrong has three definitions, in increasing severity:</p>
+    <ol class="method-points">
+      <li><b>Out-of-band wrong</b> · the empirical 3-year composite falls outside the credible interval. For Flagg, this means his measured trajectory at Aug 15 2028 is below 8.46. If we said 9.30 ± 0.5 and reality returns 7.8, we were wrong, full stop.</li>
+      <li><b>Wrong-tier wrong</b> · the empirical tier is ≥2 levels below the predicted tier. ELITE+ predicted, MULTI-ALL-STAR delivered = within 1 tier (partial). ELITE+ predicted, SOLID-STARTER delivered = wrong-tier wrong.</li>
+      <li><b>Cascade wrong</b> · a categorical event (R6 activates) collapses the verdict. We treat this differently from continuous-trajectory misses because the framework anticipates these (Yamamoto's MIN function on Character is the structural defense). Documented with whether the cascade was predicted as a watch-list trigger.</li>
+    </ol>
+    <p>The verdict closes <b>"right"</b> when the empirical 3-year composite falls inside the credible interval AND the empirical tier matches or exceeds the predicted tier.</p>
+  </div>
+</div>
+
+<div class="method">
+  <h3>Why we can do this · what Hudl, ESPN, and most evaluators can't</h3>
+  <div class="method-body">
+    <p>Most evaluators face a structural barrier to publishing failures: their business model depends on the appearance of authority. Hudl serves coaches buying for teams — admitting prediction failure undermines the procurement decision. ESPN is in the daily-content business — a 27-month-delayed grading exercise doesn't fit the publishing cadence. Most agencies have client-relationship conflicts that make public misses dangerous.</p>
+    <p>FieldCheck's position is different. <b>The retail trust we sell is the only trust we have</b>. If a verdict misses, the failure is the product — it teaches the framework what to refine in v1.8. Publishing the miss is a competitive moat, not a vulnerability.</p>
+    <p>The pricing model reinforces this. <b>Free permanent · $29 Pro · $99 Edge · no affiliate revenue · no payola · walk-away default</b>. There's no agency contract that breaks when we publish a miss. There's no team license that gets canceled. The user pays for verdict integrity, and verdict integrity requires the failures be visible.</p>
+  </div>
+</div>
+
+<div class="contra">
+  <div class="contra-h">// objection · how do we know you won't quietly delete bad predictions?</div>
+  <div class="contra-b">
+    Reasonable question. The mechanism: <b>every locked verdict gets a git commit hash and timestamp visible in the cohort manifest</b>. Anyone requesting the manifest at lock-date sees the full 50-player slate before any outcomes occur. At check-in, the same 50 players must appear here — same hash, same composite, same CI. If we delete or amend a locked verdict between lock and check-in, the manifest copies in others' hands prove the alteration. <b>We've published a procedure for handling our own bad behavior.</b> That is what makes the trust real.
+  </div>
+</div>
+
+<div class="foot">
+  <span>// v1.7 framework · cohort A · ThinkDifferent Holdings · FieldCheck</span>
+  <span>// page locked <b>May 19 2026</b> · next refresh <b>Aug 15 2028</b> or sooner if a cascade closes</span>
+</div>
+
+<script>
+// FC17 Trust Strip · compact variant · prediction ledger header
+// linkPredictionLedger:false because this IS the ledger
+document.addEventListener('DOMContentLoaded', function(){
+  if (window.FC17_TRUST) {
+    window.FC17_TRUST.mount('#fc17-trust-anchor', {
+      variant: 'compact',
+      eyebrow: '// the ledger · by the numbers',
+      linkPredictionLedger: false
+    });
+  }
+});
+</script>
+
+</body></html>

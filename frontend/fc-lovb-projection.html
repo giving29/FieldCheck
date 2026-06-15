@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IQ Score · LOVB Intel · FieldCheck IQ</title>
+<meta name="description" content="Project any D1 women's volleyball player's path to LOVB Pro. Input a profile, get a projection tier, market fit, Founding Athlete comparable, and confidence interval.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0908; --bg-2: #14110c; --bg-3: #1a1612;
+    --text: #fbf6ea; --text-2: rgba(251,246,234,0.7); --text-3: rgba(251,246,234,0.45);
+    --gold: #ffc94a; --gold-deep: #c89d2c;
+    --teal: #b5e2c2; --crimson: #d44a4a;
+    --line: rgba(251,246,234,0.1); --line-strong: rgba(251,246,234,0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text); font-family: 'Crimson Pro', serif;
+    line-height: 1.55; min-height: 100vh; position: relative;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.07 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+    opacity: 0.55; pointer-events: none; z-index: 1; mix-blend-mode: overlay;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+  /* TOP NAV — global mega-menu pattern */
+  .nav-global{position:sticky;top:0;z-index:100;background:rgba(10,9,8,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--line)}
+  .nav-global-inner{max-width:1240px;margin:0 auto;padding:0 32px;display:flex;align-items:center;height:60px}
+  .nav-global-brand{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--text);font-weight:500;margin-right:auto;text-decoration:none;display:flex;align-items:center;gap:6px}
+  .nav-global-brand b{color:var(--gold);font-weight:500}
+  .nav-global-brand .sep{color:var(--text-3);margin:0 2px}
+  .nav-global-brand .ctx{color:var(--teal)}
+  .nav-global-main{display:flex;align-items:center}
+  .nav-global-item{position:relative}
+  .nav-global-link{display:flex;align-items:center;gap:6px;padding:0 20px;height:60px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-2);background:none;border:0;cursor:pointer;transition:color .2s}
+  .nav-global-link:hover,.nav-global-link.open{color:var(--text)}
+  .nav-global-caret{font-size:7px;opacity:.6;transition:transform .2s}
+  .nav-global-link.open .nav-global-caret{transform:rotate(180deg)}
+  .nav-global-cta{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--gold);color:var(--gold);border-radius:2px;margin-left:18px;text-decoration:none;transition:all .2s}
+  .nav-global-cta:hover{background:var(--gold);color:var(--bg)}
+  .nav-global-mega{position:absolute;top:60px;left:50%;transform:translateX(-50%) translateY(-6px);min-width:440px;background:rgba(16,14,12,.97);backdrop-filter:blur(28px);border:1px solid var(--line);border-radius:6px;padding:24px;opacity:0;pointer-events:none;transition:all .22s;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+  .nav-global-item.open .nav-global-mega{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+  .nav-global-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 22px}
+  .nav-global-col-head{grid-column:span 2;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+  .nav-global-mega a{display:flex;flex-direction:column;padding:9px 10px;border-radius:3px;text-decoration:none}
+  .nav-global-mega a strong{font-family:'Crimson Pro',serif;font-size:15px;font-weight:500;color:var(--text)}
+  .nav-global-mega a span{font-family:'Instrument Serif',serif;font-style:italic;font-size:12.5px;color:var(--text-2);margin-top:1px;line-height:1.3}
+  .nav-global-mega a:hover{background:rgba(245,241,232,.06)}
+  .nav-global-mega a:hover strong{color:var(--gold)}
+  @media(max-width:880px){.nav-global-main,.nav-global-cta{display:none}}
+.topnav-links a { font-size: 10px; letter-spacing: 1.4px; } }
+
+  .hero { padding: 80px 0 48px; }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; font-weight: 700;
+    margin-bottom: 24px;
+  }
+  .hero-h {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(48px, 8vw, 88px);
+    line-height: 0.92; letter-spacing: -0.015em; margin-bottom: 24px;
+    max-width: 760px;
+  }
+  .hero-h .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .hero-deck { font-size: 19px; line-height: 1.55; color: var(--text-2); max-width: 620px; }
+
+  .section { padding: 48px 0; }
+  .section-h-mini {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--text-3); text-transform: uppercase; font-weight: 700;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 14px;
+  }
+  .section-h-mini::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .section-h-mini .gold { color: var(--gold); }
+
+  /* INPUT CARD */
+  .input-card {
+    border: 1px solid var(--line); border-radius: 8px; background: var(--bg-2);
+    padding: 36px 36px;
+  }
+  .preset-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+  .preset-chip {
+    padding: 8px 14px; background: var(--bg-3); border: 1px solid var(--line); border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.2px; color: var(--text-2); text-transform: uppercase; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+  }
+  .preset-chip:hover { color: var(--gold); border-color: var(--gold); }
+  .preset-chip.active { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 22px; }
+  @media (max-width: 600px) { .field-grid { grid-template-columns: 1fr; } }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; color: var(--text-3); text-transform: uppercase; font-weight: 600;
+  }
+  .field-input, .field-select {
+    padding: 12px 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 4px;
+    color: var(--text); font-family: 'Crimson Pro', serif; font-size: 15px;
+    transition: border-color .2s;
+  }
+  .field-input:focus, .field-select:focus { outline: none; border-color: var(--gold); }
+  .field-help {
+    font-family: 'Crimson Pro', serif; font-style: italic; font-size: 12.5px; color: var(--text-3);
+  }
+  .run-btn {
+    margin-top: 16px;
+    padding: 14px 28px; background: var(--gold); color: var(--bg); border: none; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase;
+    cursor: pointer; transition: all .2s;
+  }
+  .run-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,201,74,0.25); }
+  .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* RESULTS CARD */
+  .results { margin-top: 36px; display: none; }
+  .results.active { display: block; animation: fadeIn .35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .verdict-card {
+    border: 1px solid var(--gold); border-radius: 8px; padding: 36px 36px;
+    background: linear-gradient(180deg, rgba(255,201,74,0.06), rgba(20,17,12,0.6));
+    margin-bottom: 28px;
+  }
+  .verdict-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); text-transform: uppercase; font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .verdict-tier {
+    font-family: 'Anton', sans-serif; font-size: clamp(40px, 7vw, 72px); line-height: 1; letter-spacing: -0.015em;
+    margin-bottom: 14px;
+  }
+  .verdict-tier .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .verdict-score {
+    display: flex; align-items: baseline; gap: 18px; margin-bottom: 22px;
+  }
+  .verdict-score .big {
+    font-family: 'Anton', sans-serif; font-size: 56px; color: var(--gold); line-height: 1;
+  }
+  .verdict-score .out-of {
+    font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--text-3); letter-spacing: 1.5px;
+  }
+  .verdict-score .ci {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-2); letter-spacing: 1.2px;
+    padding: 6px 10px; background: var(--bg-3); border-radius: 4px;
+  }
+  .verdict-summary {
+    font-family: 'Crimson Pro', serif; font-style: italic; font-size: 17px; line-height: 1.5; color: var(--text);
+    border-top: 1px solid rgba(255,201,74,0.2); padding-top: 18px;
+  }
+
+  /* DETAIL GRID */
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 720px) { .detail-grid { grid-template-columns: 1fr; } }
+  .detail-card {
+    border: 1px solid var(--line); border-radius: 8px; padding: 26px 28px;
+    background: var(--bg-2);
+  }
+  .detail-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.8px; color: var(--gold); text-transform: uppercase; font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .detail-h {
+    font-family: 'Anton', sans-serif; font-size: 24px; line-height: 1.05; letter-spacing: -0.005em; margin-bottom: 12px;
+  }
+  .detail-h .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .detail-p { font-size: 14.5px; line-height: 1.55; color: var(--text-2); }
+  .detail-p strong { color: var(--text); font-weight: 600; }
+
+  /* MARKET TABLE */
+  .markets-table { margin-top: 8px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--bg-3); }
+  .market-row {
+    display: grid; grid-template-columns: 30px 1fr 80px; gap: 12px; align-items: center;
+    padding: 12px 14px; border-bottom: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  }
+  .market-row:last-child { border-bottom: none; }
+  .market-row .rank { color: var(--gold); font-weight: 700; }
+  .market-row .name { color: var(--text); font-family: 'Crimson Pro', serif; font-size: 14.5px; }
+  .market-row .score { text-align: right; color: var(--text-2); }
+  .market-row .score .bar {
+    display: inline-block; height: 4px; background: var(--gold); margin-left: 6px; vertical-align: middle; border-radius: 2px;
+  }
+
+  /* DELTAS / SOURCING */
+  .deltas-card { margin-top: 18px; }
+  .deltas-list { list-style: none; }
+  .deltas-list li {
+    padding: 12px 0; border-bottom: 1px dashed var(--line);
+    font-size: 14.5px; line-height: 1.5; color: var(--text-2);
+    display: grid; grid-template-columns: 28px 1fr; gap: 14px;
+  }
+  .deltas-list li:last-child { border-bottom: none; }
+  .deltas-list .marker {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gold); font-weight: 700;
+  }
+  .deltas-list strong { color: var(--text); font-weight: 600; }
+
+  /* METHODOLOGY */
+  .method {
+    border: 1px solid var(--line); border-radius: 8px; padding: 28px 32px;
+    background: var(--bg-2); font-size: 14.5px; line-height: 1.6; color: var(--text-2);
+  }
+  .method strong { color: var(--text); font-weight: 600; }
+  .method .row { margin-bottom: 12px; }
+  .method .label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-right: 10px;
+  }
+
+  /* FOOTER */
+  .footer { padding: 56px 0 40px; margin-top: 56px; border-top: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; color: var(--text-3); text-transform: uppercase; }
+  .footer a { color: var(--text-2); text-decoration: none; }
+  .footer a:hover { color: var(--gold); }
+  .footer-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(255,201,74,0.3); }
+  a:hover { border-bottom-color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">// Tool 01 · IQ Score</div>
+    <h1 class="hero-h">Will she <span class="italic">go pro?</span></h1>
+    <p class="hero-deck">Input a D1 women's volleyball player's profile. Get a projected pro tier, the closest Founding Athlete comparable, best-fit market, and confidence interval — with the reasoning shown.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-h-mini">§ <span class="gold">01</span> · Player profile</div>
+
+    <div class="input-card">
+      <div class="preset-row">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; color: var(--text-3); text-transform: uppercase; margin-right: 4px; align-self: center;">Quick presets:</span>
+        <button class="preset-chip" data-preset="elite-oh">Elite OH · Big Ten</button>
+        <button class="preset-chip" data-preset="setter-acc">Senior S · ACC</button>
+        <button class="preset-chip" data-preset="mb-sec">MB · SEC</button>
+        <button class="preset-chip" data-preset="libero-big12">Libero · Big 12</button>
+        <button class="preset-chip" data-preset="stretch-opp">Stretch OPP</button>
+        <button class="preset-chip" data-preset="clear">Clear</button>
+      </div>
+
+      <div class="field-grid">
+        <div class="field">
+          <label class="field-label" for="position">Position</label>
+          <select class="field-select" id="position">
+            <option value="">— Select position —</option>
+            <option value="OH">OH · Outside Hitter</option>
+            <option value="OPP">OPP · Opposite</option>
+            <option value="MB">MB · Middle Blocker</option>
+            <option value="S">S · Setter</option>
+            <option value="L">L · Libero / DS</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="conference">Conference</label>
+          <select class="field-select" id="conference">
+            <option value="">— Select conference —</option>
+            <option value="bigten">Big Ten</option>
+            <option value="sec">SEC</option>
+            <option value="acc">ACC</option>
+            <option value="big12">Big 12</option>
+            <option value="pac">Pac-12 / WCC / Mountain West</option>
+            <option value="mid">Mid-major</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="year">Year</label>
+          <select class="field-select" id="year">
+            <option value="">— Select year —</option>
+            <option value="sr">Senior / Grad</option>
+            <option value="jr">Junior</option>
+            <option value="so">Sophomore</option>
+            <option value="fr">Freshman</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="height">Height (inches)</label>
+          <input class="field-input" type="number" id="height" min="60" max="84" placeholder="e.g. 74" />
+          <div class="field-help">Approximate. For libero/setter, height matters less.</div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="kps">Kills per set (or assists per set for S, digs/set for L)</label>
+          <input class="field-input" type="number" id="kps" step="0.1" min="0" max="20" placeholder="e.g. 4.2" />
+        </div>
+        <div class="field">
+          <label class="field-label" for="hitpct">Hitting % (decimal) · or efficiency proxy for S/L</label>
+          <input class="field-input" type="number" id="hitpct" step="0.001" min="-0.5" max="0.7" placeholder="e.g. 0.340" />
+        </div>
+        <div class="field">
+          <label class="field-label" for="honors">All-conference / All-American honors?</label>
+          <select class="field-select" id="honors">
+            <option value="0">None</option>
+            <option value="1">All-conference</option>
+            <option value="2">All-region / 2nd-team AA</option>
+            <option value="3">1st-team All-American</option>
+            <option value="4">National POY / AVCA POY</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="postseason">Postseason / NCAA tournament tape?</label>
+          <select class="field-select" id="postseason">
+            <option value="0">None or first round only</option>
+            <option value="1">Sweet 16</option>
+            <option value="2">Elite 8</option>
+            <option value="3">Final Four</option>
+            <option value="4">National title or final</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="run-btn" id="runBtn">Compute projection →</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results" id="results">
+      <div class="verdict-card">
+        <div class="verdict-eyebrow">// Projection</div>
+        <div class="verdict-tier" id="vTier">— <span class="italic">tier here</span></div>
+        <div class="verdict-score">
+          <div class="big" id="vScore">—</div>
+          <div class="out-of">/ 100</div>
+          <div class="ci" id="vCI">CI: ± —</div>
+        </div>
+        <div class="verdict-summary" id="vSummary">Summary appears after compute.</div>
+      </div>
+
+      <div class="detail-grid">
+        <div class="detail-card">
+          <div class="detail-eyebrow">// Closest Founding Athlete</div>
+          <div class="detail-h" id="faName">—</div>
+          <p class="detail-p" id="faReason">Reasoning here.</p>
+        </div>
+        <div class="detail-card">
+          <div class="detail-eyebrow">// Best-fit markets · top 3</div>
+          <div class="markets-table" id="marketsTable">
+            <div class="market-row"><div class="rank">—</div><div class="name">—</div><div class="score">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-card deltas-card">
+        <div class="detail-eyebrow">// What would move the score</div>
+        <p class="detail-p" style="margin-bottom: 14px;">Three deltas — what changes most given the current profile.</p>
+        <ul class="deltas-list" id="deltaList">
+          <li><span class="marker">—</span><div>Compute first.</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-h-mini">§ <span class="gold">02</span> · Methodology</div>
+    <div class="method">
+      <div class="row"><span class="label">Inputs</span>Position, height, kills/set (or position-equivalent), hitting %, conference strength, year of eligibility, honors, postseason exposure.</div>
+      <div class="row"><span class="label">Weights</span>Position-specific. OH/OPP weight hitting % and kills/set highest. MB weights blocking proxies (hitting % and height). S weights assist/set and tournament exposure. L weights digs/set and postseason performance.</div>
+      <div class="row"><span class="label">Tiers</span><strong>80+</strong> First-round pro · <strong>65–79</strong> Second-round / likely pro · <strong>50–64</strong> Stash / development · <strong>&lt; 50</strong> Not yet — keep developing or transfer first.</div>
+      <div class="row"><span class="label">Confidence</span>Interval widens for freshmen/sophomores (smaller sample) and narrows for seniors with NCAA postseason tape. Mid-major projections carry a higher uncertainty band than power-conference players with the same raw stats.</div>
+      <div class="row"><span class="label">Limits</span>This is a projection tool, not a verdict. It uses publicly available statistical patterns. It does not replace coach evaluation, video study, or athlete interviews. Use it as a starting point — not a destination.</div>
+      <div class="row"><span class="label">Sourcing</span>Position thresholds calibrated against the current LOVB Pro roster as published at <a href="https://www.lovb.com">lovb.com</a>. Conference strength weights derived from NCAA postseason representation patterns. Full methodology and citations: <a href="/lovb/sources">/lovb/sources</a>.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-row">
+      <div>// IQ Score · v0.1 · Powered by FieldCheck IQ · Public-record sourced</div>
+      <div>
+        <a href="/lovb">Hub</a> &nbsp;·&nbsp;
+        <a href="/lovb/match">FA Match</a> &nbsp;·&nbsp;
+        <a href="/lovb/fit">Market Fit</a> &nbsp;·&nbsp;
+        <a href="/lovb/sources">Sources</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ───────────────────────────────────────────────────────────
+// IQ Score · client-side projection engine v0.1 (Powered by FieldCheck IQ)
+// ───────────────────────────────────────────────────────────
+
+// Position-specific weight profiles. Each input is normalized to a 0-1
+// quality score against position-specific thresholds, then weighted.
+const WEIGHTS = {
+  OH:  { height: 0.10, kps: 0.25, hitpct: 0.25, conf: 0.15, year: 0.05, honors: 0.10, postseason: 0.10 },
+  OPP: { height: 0.12, kps: 0.25, hitpct: 0.25, conf: 0.13, year: 0.05, honors: 0.10, postseason: 0.10 },
+  MB:  { height: 0.18, kps: 0.20, hitpct: 0.27, conf: 0.10, year: 0.05, honors: 0.10, postseason: 0.10 },
+  S:   { height: 0.05, kps: 0.30, hitpct: 0.18, conf: 0.15, year: 0.05, honors: 0.12, postseason: 0.15 },
+  L:   { height: 0.02, kps: 0.32, hitpct: 0.15, conf: 0.15, year: 0.05, honors: 0.13, postseason: 0.18 }
+};
+
+// Position-specific min/max for the "raw stat" input (interpreted differently by position):
+// OH/OPP/MB: kills/set, hitting %
+// S: assists/set in kps field, hitting % is "team eff proxy"
+// L: digs/set in kps field, "passing rating" approx in hitpct field
+const NORMS = {
+  OH:  { heightMin: 70, heightMax: 78, kpsMin: 2.0, kpsMax: 5.0, hpMin: 0.18, hpMax: 0.42 },
+  OPP: { heightMin: 72, heightMax: 80, kpsMin: 2.5, kpsMax: 5.5, hpMin: 0.22, hpMax: 0.46 },
+  MB:  { heightMin: 73, heightMax: 80, kpsMin: 1.5, kpsMax: 3.5, hpMin: 0.30, hpMax: 0.50 },
+  S:   { heightMin: 68, heightMax: 76, kpsMin: 6.0, kpsMax: 12.0, hpMin: 0.24, hpMax: 0.40 },
+  L:   { heightMin: 65, heightMax: 72, kpsMin: 3.5, kpsMax: 6.5,  hpMin: 0.00, hpMax: 0.40 }
+};
+
+const CONF_SCORE = { bigten: 1.00, sec: 0.95, big12: 0.85, acc: 0.80, pac: 0.70, mid: 0.45 };
+const YEAR_SCORE = { sr: 1.0, jr: 0.85, so: 0.65, fr: 0.50 };
+const HONORS_SCORE = { 0: 0.10, 1: 0.50, 2: 0.70, 3: 0.88, 4: 1.0 };
+const POSTSEASON_SCORE = { 0: 0.15, 1: 0.50, 2: 0.68, 3: 0.85, 4: 1.0 };
+
+// Founding Athletes (placeholder profiles — replace with real data via fc-lovb-data.js)
+// Position, height, style descriptor, team
+const FOUNDING_TEN = [
+  { name: 'Founding Athlete · OH (Atlanta)',   pos: 'OH',  height: 73, style: 'power outside, six-rotation', market: 'atl' },
+  { name: 'Founding Athlete · S (Madison)',    pos: 'S',   height: 71, style: 'quick-tempo orchestrator',    market: 'mad' },
+  { name: 'Founding Athlete · OPP (Houston)',  pos: 'OPP', height: 75, style: 'crossover power right-side',  market: 'htx' },
+  { name: 'Founding Athlete · MB (Omaha)',     pos: 'MB',  height: 76, style: 'reading slide blocker',       market: 'neb' },
+  { name: 'Founding Athlete · L (Austin)',     pos: 'L',   height: 67, style: 'serve-receive specialist',    market: 'atx' },
+  { name: 'Founding Athlete · OH (Salt Lake)', pos: 'OH',  height: 72, style: 'all-around six-rotation',     market: 'sl'  },
+  { name: 'Founding Athlete · MB (Atlanta)',   pos: 'MB',  height: 77, style: 'physical blocker, slide',     market: 'atl' },
+  { name: 'Founding Athlete · OPP (Madison)',  pos: 'OPP', height: 74, style: 'efficient finisher',          market: 'mad' },
+  { name: 'Founding Athlete · S (Houston)',    pos: 'S',   height: 70, style: 'tempo-shifter, dump threat',  market: 'htx' },
+  { name: 'Founding Athlete · OH (Omaha)',     pos: 'OH',  height: 74, style: 'balanced attack, vocal',      market: 'neb' }
+];
+
+// Market style profiles (which player profiles fit best)
+const MARKETS = [
+  { code: 'atl', name: 'Atlanta',   needs: ['OH', 'MB'],     style: 'power outside, defensive grit' },
+  { code: 'atx', name: 'Austin',    needs: ['S', 'L'],       style: 'system volleyball, ball control' },
+  { code: 'htx', name: 'Houston',   needs: ['OPP', 'OH'],    style: 'high-tempo attack' },
+  { code: 'mad', name: 'Madison',   needs: ['S', 'MB'],      style: 'quick tempo, slide-heavy' },
+  { code: 'neb', name: 'Omaha',     needs: ['MB', 'OH'],     style: 'pin power, big block' },
+  { code: 'sl',  name: 'Salt Lake', needs: ['L', 'OPP'],     style: 'defensive system, balanced' }
+];
+
+const PRESETS = {
+  'elite-oh':    { position: 'OH', conference: 'bigten', year: 'sr', height: 74, kps: 4.3,  hitpct: 0.340, honors: '3', postseason: '3' },
+  'setter-acc':  { position: 'S',  conference: 'acc',    year: 'sr', height: 71, kps: 11.0, hitpct: 0.310, honors: '2', postseason: '2' },
+  'mb-sec':      { position: 'MB', conference: 'sec',    year: 'jr', height: 76, kps: 2.5,  hitpct: 0.420, honors: '1', postseason: '1' },
+  'libero-big12':{ position: 'L',  conference: 'big12',  year: 'sr', height: 67, kps: 5.5,  hitpct: 0.260, honors: '2', postseason: '2' },
+  'stretch-opp': { position: 'OPP',conference: 'pac',    year: 'so', height: 76, kps: 3.9,  hitpct: 0.330, honors: '0', postseason: '0' }
+};
+
+function normalize(value, min, max) {
+  if (value == null || isNaN(value)) return 0;
+  return Math.max(0, Math.min(1, (value - min) / (max - min)));
+}
+
+function compute(p) {
+  const w = WEIGHTS[p.position];
+  const n = NORMS[p.position];
+  if (!w || !n) return null;
+
+  const hQ = normalize(p.height, n.heightMin, n.heightMax);
+  const kQ = normalize(p.kps, n.kpsMin, n.kpsMax);
+  const pQ = normalize(p.hitpct, n.hpMin, n.hpMax);
+  const cQ = CONF_SCORE[p.conference] || 0.5;
+  const yQ = YEAR_SCORE[p.year] || 0.6;
+  const oQ = HONORS_SCORE[p.honors] || 0.1;
+  const sQ = POSTSEASON_SCORE[p.postseason] || 0.15;
+
+  const raw = (
+    w.height * hQ + w.kps * kQ + w.hitpct * pQ +
+    w.conf * cQ + w.year * yQ + w.honors * oQ + w.postseason * sQ
+  );
+  const score = Math.round(raw * 100);
+
+  // Confidence interval — wider for younger, mid-major, less postseason
+  let ci = 6;
+  if (p.year === 'fr' || p.year === 'so') ci += 4;
+  if (p.conference === 'mid') ci += 3;
+  if (p.postseason === '0') ci += 2;
+  ci = Math.min(ci, 14);
+
+  // Tier
+  let tier, tierItalic, summary;
+  if (score >= 80) {
+    tier = 'First-round'; tierItalic = 'pro projection.';
+    summary = 'High-confidence pro projection. This profile reflects characteristics that consistently translate at the LOVB Pro level. Expect significant contract interest in the next signing window.';
+  } else if (score >= 65) {
+    tier = 'Likely pro'; tierItalic = 'with development.';
+    summary = 'Solid projection. Likely makes a pro roster within one cycle, possibly as a developmental signing in year one. Position-specific upside drivers will determine the ceiling.';
+  } else if (score >= 50) {
+    tier = 'Stash'; tierItalic = 'or develop further.';
+    summary = 'Borderline projection. A year of development, a portal move, or a deep tournament run could push this into a pro signing window. Watch for the right inflection.';
+  } else {
+    tier = 'Not yet'; tierItalic = 'keep developing.';
+    summary = 'Profile is not yet at projectable pro level. The path forward is more reps, a higher-leverage conference setting, or a position-fit reassessment. Revisit in 12 months.';
+  }
+
+  // Closest FA
+  const eligible = FOUNDING_TEN.filter(fa => fa.pos === p.position);
+  const candidates = eligible.length ? eligible : FOUNDING_TEN;
+  let best = candidates[0], bestDist = Infinity;
+  candidates.forEach(fa => {
+    const dh = (fa.height - p.height) / 10;
+    const dist = Math.abs(dh);
+    if (dist < bestDist) { bestDist = dist; best = fa; }
+  });
+  const faReason = `Closest analogue by position + physical profile. ${best.style.charAt(0).toUpperCase() + best.style.slice(1)} — a useful reference point for projecting how this player's style might translate at the pro level. Not a guarantee of a similar career arc.`;
+
+  // Best-fit markets — score each market
+  const marketScores = MARKETS.map(m => {
+    let s = score * 0.6; // baseline
+    if (m.needs.includes(p.position)) s += 18; // positional fit
+    // Style affinity: match conference strength to market style
+    if (m.code === 'mad' && p.position === 'S') s += 6;
+    if (m.code === 'neb' && p.position === 'MB') s += 5;
+    if (m.code === 'atl' && p.position === 'OH') s += 5;
+    if (m.code === 'htx' && p.position === 'OPP') s += 5;
+    if (m.code === 'atx' && p.position === 'L') s += 6;
+    if (m.code === 'sl' && p.position === 'L') s += 4;
+    s = Math.min(100, Math.round(s));
+    return { ...m, score: s };
+  }).sort((a, b) => b.score - a.score);
+
+  // Deltas — what would move the score
+  const deltas = [];
+  if (pQ < 0.6) deltas.push({ label: 'Improve hitting % / efficiency',
+    text: `Current efficiency is below the position's pro-projection threshold. A move from ${(p.hitpct).toFixed(3)} toward ${(n.hpMax).toFixed(3)} would push the projection up materially.` });
+  if (kQ < 0.6) deltas.push({ label: 'Increase per-set production',
+    text: `Per-set production lags the band that projects cleanly. Either more touches in system or a role expansion would raise this signal.` });
+  if (oQ < 0.6 && p.year !== 'fr') deltas.push({ label: 'Earn conference / national recognition',
+    text: 'No All-Conference or higher honors recorded. Recognition is a strong public signal — pro evaluators weight it.' });
+  if (sQ < 0.5) deltas.push({ label: 'Get NCAA tournament tape',
+    text: 'Postseason exposure carries asymmetric weight. Deep tournament runs accelerate pro evaluator interest more than any other in-college variable.' });
+  if (cQ < 0.7 && p.conference !== 'bigten' && p.conference !== 'sec') deltas.push({ label: 'Consider a portal move',
+    text: 'A move to a higher-leverage conference would raise the floor of the projection by giving pro scouts more direct tape against pro-projectable opponents.' });
+  if (p.year === 'so' || p.year === 'fr') deltas.push({ label: 'More development time',
+    text: 'Eligibility year carries weight. Two more years of growth typically widens the realistic projection window.' });
+  if (!deltas.length) deltas.push({ label: 'Maintain current trajectory',
+    text: 'Profile is already at or near the position-relevant ceiling for the inputs entered. The projection is unlikely to move on stats alone — health, interview, and team-fit will dominate from here.' });
+
+  return { score, ci, tier, tierItalic, summary, faName: best.name, faReason, markets: marketScores.slice(0, 3), deltas: deltas.slice(0, 4) };
+}
+
+// ───────────────────────────────────────────────────────────
+// UI wiring
+// ───────────────────────────────────────────────────────────
+function applyPreset(key) {
+  if (key === 'clear') {
+    ['position','conference','year','height','kps','hitpct','honors','postseason'].forEach(id => {
+      document.getElementById(id).value = id === 'honors' || id === 'postseason' ? '0' : '';
+    });
+    return;
+  }
+  const p = PRESETS[key];
+  if (!p) return;
+  Object.keys(p).forEach(k => {
+    const el = document.getElementById(k);
+    if (el) el.value = p[k];
+  });
+}
+
+document.querySelectorAll('.preset-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.preset-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    applyPreset(chip.dataset.preset);
+  });
+});
+
+document.getElementById('runBtn').addEventListener('click', () => {
+  const p = {
+    position: document.getElementById('position').value,
+    conference: document.getElementById('conference').value,
+    year: document.getElementById('year').value,
+    height: parseFloat(document.getElementById('height').value),
+    kps: parseFloat(document.getElementById('kps').value),
+    hitpct: parseFloat(document.getElementById('hitpct').value),
+    honors: document.getElementById('honors').value,
+    postseason: document.getElementById('postseason').value
+  };
+
+  if (!p.position || !p.conference || !p.year) {
+    alert('Please select position, conference, and year at minimum.');
+    return;
+  }
+  if (isNaN(p.height) || isNaN(p.kps) || isNaN(p.hitpct)) {
+    alert('Please enter numeric values for height, per-set production, and hitting %/efficiency.');
+    return;
+  }
+
+  const r = compute(p);
+  if (!r) { alert('Could not compute. Check inputs.'); return; }
+
+  // Render
+  document.getElementById('vTier').innerHTML = `${r.tier} <span class="italic">${r.tierItalic}</span>`;
+  document.getElementById('vScore').textContent = r.score;
+  document.getElementById('vCI').textContent = `CI: ± ${r.ci}`;
+  document.getElementById('vSummary').textContent = r.summary;
+
+  document.getElementById('faName').textContent = r.faName;
+  document.getElementById('faReason').textContent = r.faReason;
+
+  const mt = document.getElementById('marketsTable');
+  mt.innerHTML = r.markets.map((m, i) => `
+    <div class="market-row">
+      <div class="rank">${i + 1}</div>
+      <div class="name">${m.name}</div>
+      <div class="score">${m.score}<span class="bar" style="width:${m.score / 1.5}px"></span></div>
+    </div>
+  `).join('');
+
+  const dl = document.getElementById('deltaList');
+  dl.innerHTML = r.deltas.map((d, i) => `
+    <li><span class="marker">${String(i + 1).padStart(2, '0')}</span><div><strong>${d.label}.</strong> ${d.text}</div></li>
+  `).join('');
+
+  document.getElementById('results').classList.add('active');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+</script>
+
+
+<script>
+// Global mega-menu hover/click
+document.querySelectorAll('.nav-global-item').forEach(item => {
+  const link = item.querySelector('.nav-global-link');
+  let timeout;
+  item.addEventListener('mouseenter', () => { clearTimeout(timeout); document.querySelectorAll('.nav-global-item.open').forEach(o => { if(o!==item) o.classList.remove('open'); o.querySelector('.nav-global-link').classList.remove('open'); }); item.classList.add('open'); link.classList.add('open'); });
+  item.addEventListener('mouseleave', () => { timeout = setTimeout(() => { item.classList.remove('open'); link.classList.remove('open'); }, 150); });
+  link.addEventListener('click', e => { e.preventDefault(); item.classList.toggle('open'); link.classList.toggle('open'); });
+});
+</script>
+
+</body>
+</html>

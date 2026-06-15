@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The 7.4 Fine Pass - Design V1 - Internal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0908;--rule:rgba(248,244,237,.12);--t:#F5F1E8;--t2:rgba(245,241,232,.74);--t3:rgba(245,241,232,.46);--gold:#D4A24C;--gold-hi:#EEC067;--golds:rgba(212,162,76,.10);--moss:#7C9B6E}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ink);color:var(--t);font-family:Inter,sans-serif;line-height:1.6;font-size:14px}
+.wrap{max-width:880px;margin:0 auto;padding:30px 26px 70px}
+h1{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600}
+.sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin:4px 0 26px}
+h2{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--gold);margin:30px 0 12px;border-bottom:1px solid var(--rule);padding-bottom:8px}
+p,li{color:var(--t2);font-weight:300} b{color:var(--t)} ul{margin:8px 0 8px 20px}
+code{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--moss);background:rgba(124,155,110,.08);padding:1px 6px;border-radius:3px}
+.box{border:1px solid var(--rule);border-radius:6px;padding:16px 18px;margin:10px 0}
+.box .bh{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold-hi);margin-bottom:6px}
+.warn{border-left:3px solid var(--gold);background:var(--golds);padding:12px 16px;border-radius:4px;margin:12px 0}
+.rec{border:1px solid rgba(124,155,110,.4);background:rgba(124,155,110,.08);border-radius:6px;padding:16px 18px;margin:12px 0}
+.rec .bh{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--moss);margin-bottom:6px}
+</style></head>
+<body><div class="wrap">
+<h1>The 7.4 Fine Pass</h1>
+<div class="sub">Design V1 \u00b7 June 11 2026 \u00b7 differentiated numbers within the amateur cap \u00b7 V5-hybrid consistent</div>
+
+<h2>0 \u00b7 The problem, precisely</h2>
+<p>The amateur cap (no active amateur above STAR 7.4) is doctrine and stays. But the code rule appears to <b>clamp</b> rather than <b>compress</b>: every elite freshman whose raw evidence score exceeds the cap lands on exactly 7.4. Result: Dybantsa = Boozer = Peterson = Brown = Ament = Wilson = 7.4 \u2014 a pancake. The model's raw evaluation almost certainly DID differentiate them; the clamp throws that ordering away. (Same disease as the known R4 9.3 pancake at the top of the pro ladder.)</p>
+
+<h2>1 \u00b7 Design principle</h2>
+<div class="warn"><b>Preserve the cap, preserve the ordering.</b> The fix is code-side (a deterministic post-synthesis rule, per V5 hybrid doctrine) \u2014 never a prompt change with named-entity anchors (permanent LLM lesson: anchor lists amplify variance). The model keeps scoring raw and uncapped; the code maps raw into the band without flattening.</div>
+
+<h2>2 \u00b7 Two options</h2>
+<div class="box"><div class="bh">Option A \u00b7 Piecewise compression (deterministic, cohort-free)</div>
+<p>Raw \u2264 7.4 \u2192 unchanged. Raw \u2208 (7.4, 9.4] \u2192 <code>capped = 7.2 + 0.2 \u00d7 (raw \u2212 7.4) / 2.0</code> \u2192 lands in (7.2, 7.4]. One-decimal display yields 7.2 / 7.3 / 7.4 \u2014 three distinct values. Ordering preserved, no cohort dependence, fully reproducible from a single athlete's raw score. <b>Limitation:</b> granularity \u2014 six athletes share at most three display values.</p></div>
+<div class="box"><div class="bh">Option B \u00b7 Two-decimal composites for capped amateurs</div>
+<p>Same compression, but display two decimals (7.27, 7.34, 7.38\u2026) for athletes whose raw exceeded the cap \u2014 visually signals "elite amateur, capped, finely ranked." <b>Limitation:</b> product-surface change (tier ladder, PATH math, share card, draft board all read composite); inconsistent precision across the index needs design care.</p></div>
+
+<div class="rec"><div class="bh">Recommendation</div>
+<p><b>Option A now, Option B evaluated after the draft.</b> A is a one-rule code change, zero prompt risk, immediate de-pancake (7.2/7.3/7.4 beats six 7.4s), and the full 110-battery regression validates nothing else moved. B is a product decision Sridhar makes deliberately, not a calibration patch.</p></div>
+
+<h2>3 \u00b7 What it unlocks</h2>
+<ul>
+<li><b>Draft board sharpens:</b> sealed values stay 7.4 forever (ledger immutability) \u2014 the board gains a "current grade" column next to the sealed one. <i>"Sealed at 7.4, currently 7.3"</i> demonstrates living index + frozen ledger in one row. That contrast IS the product story.</li>
+<li><b>Movement events fire honestly:</b> the fine pass itself is a release re-run \u2192 real composite-move events \u2192 first genuine entries on the wire and the verdict banners (FCBase85/88 light up with true data).</li>
+<li><b>Pipeline view credibility:</b> coach pool shows 6.7/6.4/6.1-style differentiation everywhere \u2014 the thing that made the prototype feel alive.</li>
+</ul>
+
+<h2>4 \u00b7 Execution plan (post-Friday, Tenet 51 full discipline)</h2>
+<ul>
+<li><b>Step 1:</b> locate the cap rule in the V5 post-synthesis code path; confirm clamp behavior on 2\u20133 known raws (needs the scoring code \u2014 Sridhar uploads or greps the rule).</li>
+<li><b>Step 2:</b> apply Option A compression; unit-sim across raw 7.0\u20139.4 grid.</li>
+<li><b>Step 3:</b> FULL 110-battery regression \u2014 hard gates: no non-capped athlete moves; capped athletes preserve raw ordering; no tier-boundary crossings except intended.</li>
+<li><b>Step 4:</b> release \u2192 snapshot push via FCBase87 \u2192 real movement events \u2192 verify wire + banner with true data.</li>
+<li><b>Step 5:</b> draft-board "current grade" column patch + whats-new entry ("the pancake is fixed \u2014 logged in the open").</li>
+</ul>
+
+<h2>5 \u00b7 Also queued from the same root cause</h2>
+<p>The <b>R4 9.3 pancake</b> (LeBron through Edwards all 9.3) gets the identical treatment in the ELITE+ band: compress raw (9.3, 10] \u2192 (9.1, 9.4]. Same battery gates. One design, two bands.</p>
+</div></body></html>

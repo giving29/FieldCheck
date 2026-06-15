@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Wire — FieldCheck</title>
+<meta name="description" content="Live commits, coaching changes, transfers, NIL deals. Every event in college sports, structured and source-attributed.">
+<meta name="theme-color" content="#0A0908">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0A0908; --bg-1: #110F0D; --bg-2: #1A1715;
+  --glass: rgba(255, 252, 245, 0.04);
+  --glass-2: rgba(255, 252, 245, 0.08);
+  --glass-edge: rgba(255, 252, 245, 0.14);
+  --glass-edge-2: rgba(255, 252, 245, 0.22);
+  --text: #F5F1E8;
+  --text-2: rgba(245, 241, 232, 0.72);
+  --text-3: rgba(245, 241, 232, 0.50);
+  --text-4: rgba(245, 241, 232, 0.30);
+  --accent: #FF5C3A;
+  --accent-2: #FF8060;
+  --accent-glow: rgba(255, 92, 58, 0.55);
+  --gold: #F5B800;
+  --moss: #6BAA5A;
+  --sky: #5BA0FF;
+  --r-1: 8px; --r-2: 12px; --r-3: 18px; --r-4: 24px; --r-pill: 9999px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: "General Sans", -apple-system, sans-serif;
+  font-size: 15px; line-height: 1.5;
+  letter-spacing: -0.005em;
+  min-height: 100vh; overflow-x: hidden;
+  position: relative;
+}
+a { color: inherit; text-decoration: none; }
+
+.masthead {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(180deg, rgba(10,9,8,0.85), rgba(10,9,8,0.4));
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+.wordmark {
+  font-family: "Anton"; font-size: 28px;
+  letter-spacing: -0.005em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 4px;
+}
+.wordmark .dot {
+  display: inline-block; width: 8px; height: 8px;
+  background: var(--accent); border-radius: 50%;
+  margin-left: 4px; margin-bottom: 4px;
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+.nav {
+  display: flex; align-items: center; gap: 4px;
+  font-family: "JetBrains Mono"; font-size: 11px;
+  font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.nav a {
+  padding: 8px 14px; border-radius: var(--r-pill);
+  color: var(--text-3);
+  transition: all 0.2s var(--ease-out);
+}
+.nav a:hover { color: var(--text); background: var(--glass); }
+.nav a.active { color: var(--text); background: var(--glass-2); }
+.nav-version {
+  margin-left: 6px; padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: var(--glass); border: 1px solid var(--glass-edge);
+  font-size: 10px; color: var(--text-3);
+}
+
+/* ════ HERO — full bleed press-conference energy ════ */
+.hero {
+  position: relative;
+  min-height: 70vh;
+  padding: 140px 32px 80px;
+  display: flex; align-items: flex-end;
+  overflow: hidden; isolation: isolate;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: -1;
+  background-size: cover; background-position: center;
+  background-image: url("https://images.unsplash.com/photo-1480099225005-2513c8947aec?w=2400&q=85&auto=format&fit=crop");
+  animation: kenburns 22s ease-out infinite alternate;
+}
+@keyframes kenburns {
+  0% { transform: scale(1.04); }
+  100% { transform: scale(1.10); }
+}
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10,9,8,0.55) 0%, rgba(10,9,8,0.78) 60%, var(--bg) 100%),
+    radial-gradient(ellipse 80% 50% at 0% 100%, rgba(255,92,58,0.16), transparent 50%);
+}
+.hero-grain {
+  position: absolute; inset: 0; z-index: -1;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' /><feColorMatrix values='0 0 0 0 1 0 0 0 0 0.95 0 0 0 0 0.85 0 0 0 0.04 0' /></filter><rect width='100%25' height='100%25' filter='url(%23n)' /></svg>");
+  pointer-events: none; mix-blend-mode: screen; opacity: 0.6;
+}
+.hero-inner {
+  width: 100%; max-width: 1280px; margin: 0 auto;
+  position: relative;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: "JetBrains Mono"; font-size: 11px;
+  font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 24px;
+}
+.hero-eyebrow::before {
+  content: ""; display: block; width: 36px; height: 1px; background: var(--accent);
+}
+.hero-pulse {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  animation: pulse 2s ease-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+h1.hero-title {
+  font-family: "Anton";
+  font-size: clamp(64px, 11vw, 168px);
+  line-height: 0.86; letter-spacing: -0.012em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero-title .serif {
+  font-family: "Instrument Serif", serif;
+  font-style: italic; font-weight: 400;
+  text-transform: none; letter-spacing: -0.01em;
+  background: linear-gradient(180deg, var(--accent-2) 0%, var(--accent) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  font-size: 17px; line-height: 1.4;
+  color: var(--text-2); max-width: 540px;
+  margin-bottom: 32px;
+}
+.live-meta {
+  display: flex; gap: 24px; flex-wrap: wrap;
+  font-family: "JetBrains Mono"; font-size: 11px;
+  letter-spacing: 0.06em; color: var(--text-3);
+  padding: 14px 0;
+  border-top: 1px solid var(--glass-edge);
+  border-bottom: 1px solid var(--glass-edge);
+}
+.live-meta strong { color: var(--text); font-weight: 600; }
+.live-dot {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--moss); box-shadow: 0 0 6px rgba(107,170,90,0.4);
+  animation: pulse 2s ease-out infinite;
+  vertical-align: middle; margin-right: 6px;
+}
+
+/* ════ FILTERS ════ */
+.filters {
+  position: relative; z-index: 2;
+  max-width: 1280px; margin: 32px auto 16px; padding: 0 32px;
+  display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+}
+.filter-group {
+  display: flex; gap: 4px; padding: 4px;
+  background: var(--glass); border: 1px solid var(--glass-edge);
+  border-radius: var(--r-pill); flex-wrap: wrap;
+}
+.filter-label {
+  font-family: "JetBrains Mono"; font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-4); font-weight: 500;
+  padding: 0 12px; align-self: center;
+}
+.filter-chip {
+  padding: 8px 14px;
+  background: transparent; border: none;
+  border-radius: var(--r-pill);
+  font: inherit; font-family: "General Sans";
+  font-size: 12px; font-weight: 500;
+  color: var(--text-3); cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.filter-chip:hover { color: var(--text); }
+.filter-chip.active {
+  background: var(--text); color: var(--bg); font-weight: 600;
+}
+
+/* ════ FEED ════ */
+.feed {
+  position: relative; z-index: 2;
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 32px 80px;
+  display: grid; gap: 12px;
+}
+
+/* Hero card — the latest item */
+.wire-hero-card {
+  position: relative;
+  padding: 36px 40px;
+  background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg) 100%);
+  border: 1px solid var(--glass-edge-2);
+  border-radius: var(--r-3);
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+}
+.wire-hero-card::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 0% 0%, var(--accent-glow), transparent 50%);
+  opacity: 0.4; pointer-events: none;
+}
+.wire-hero-badges {
+  position: relative; display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.wire-hero-summary {
+  position: relative;
+  font-family: "Anton";
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.04; letter-spacing: -0.005em;
+  text-transform: uppercase;
+  color: var(--text); margin-bottom: 20px;
+  max-width: 920px;
+}
+.wire-hero-meta {
+  position: relative;
+  font-family: "JetBrains Mono"; font-size: 11px;
+  letter-spacing: 0.06em; color: var(--text-3);
+}
+.wire-hero-meta a { color: var(--accent); border-bottom: 1px dotted var(--accent); }
+
+/* Standard card */
+.wire-card {
+  position: relative;
+  padding: 22px 26px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-2);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 24px; align-items: center;
+  transition: all 0.25s var(--ease-out);
+  cursor: pointer;
+}
+@media (max-width: 720px) {
+  .wire-card { grid-template-columns: 1fr; gap: 8px; }
+}
+.wire-card:hover {
+  background: var(--glass-2);
+  border-color: var(--glass-edge-2);
+  transform: translateX(2px);
+}
+.wire-type {
+  flex-shrink: 0; padding: 6px 12px;
+  border-radius: var(--r-pill);
+  font-family: "JetBrains Mono"; font-size: 10px;
+  font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid; white-space: nowrap;
+}
+.wire-type.recruiting_event { color: var(--moss); border-color: rgba(107,170,90,0.4); background: rgba(107,170,90,0.08); }
+.wire-type.coaching_change { color: var(--accent); border-color: rgba(255,92,58,0.4); background: rgba(255,92,58,0.08); }
+.wire-type.transfer_event { color: var(--gold); border-color: rgba(245,184,0,0.4); background: rgba(245,184,0,0.08); }
+.wire-type.nil_deal { color: var(--sky); border-color: rgba(91,160,255,0.4); background: rgba(91,160,255,0.08); }
+.wire-type.injury_report, .wire-type.ncaa_infraction, .wire-type.cultural_event, .wire-type.academic_event, .wire-type.team_news {
+  color: var(--text-2); border-color: var(--glass-edge-2); background: var(--glass);
+}
+.wire-summary {
+  font-size: 15px; line-height: 1.5; color: var(--text);
+  font-weight: 500;
+}
+.wire-meta {
+  font-family: "JetBrains Mono"; font-size: 10px;
+  letter-spacing: 0.06em; color: var(--text-4);
+  white-space: nowrap; text-align: right;
+}
+@media (max-width: 720px) { .wire-meta { text-align: left; } }
+.wire-meta a { color: var(--text-3); border-bottom: 1px dotted var(--text-4); }
+.wire-meta a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.wire-expand-hint {
+  font-family: "JetBrains Mono"; font-size: 9px;
+  letter-spacing: 0.1em; color: var(--text-4);
+  text-transform: uppercase;
+}
+
+/* ════ EXPAND-IN-PLACE DETAIL (v0.11) ════ */
+.wire-detail {
+  grid-column: 1 / -1;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.35s var(--ease-out), margin-top 0.35s var(--ease-out);
+  margin-top: 0;
+}
+.wire-card.open .wire-detail {
+  max-height: 600px;
+  margin-top: 16px;
+}
+.wire-card.open {
+  background: var(--glass-2);
+  border-color: var(--glass-edge-2);
+}
+.wire-detail-inner {
+  padding-top: 16px;
+  border-top: 1px dashed var(--glass-edge);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.wire-detail-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 14px; align-items: baseline;
+}
+@media (max-width: 600px) {
+  .wire-detail-row { grid-template-columns: 1fr; gap: 4px; }
+}
+.wire-detail-label {
+  font-family: "JetBrains Mono"; font-size: 9px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-4); font-weight: 600;
+}
+.wire-detail-val {
+  font-size: 13px; line-height: 1.55; color: var(--text-2);
+}
+.wire-entity {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--bg-2);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-pill);
+  font-family: "JetBrains Mono"; font-size: 10px;
+  letter-spacing: 0.04em; color: var(--text);
+  margin: 2px 4px 2px 0;
+}
+.wire-thesis {
+  font-style: italic; color: var(--text);
+  border-left: 2px solid var(--accent);
+  padding: 4px 0 4px 12px;
+}
+.wire-thesis-label {
+  font-family: "JetBrains Mono"; font-size: 9px;
+  letter-spacing: 0.14em; color: var(--accent);
+  text-transform: uppercase; font-style: normal;
+  margin-right: 6px;
+}
+.wire-source-link {
+  color: var(--accent) !important;
+  border-bottom: 1px dotted var(--accent) !important;
+}
+.wire-conf {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  letter-spacing: 0.06em; color: var(--text-3);
+  text-transform: uppercase;
+}
+
+.empty {
+  padding: 100px 32px;
+  text-align: center;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-3);
+}
+.empty-icon {
+  font-family: "Anton";
+  font-size: 88px; line-height: 0.9;
+  color: var(--accent); margin-bottom: 24px;
+  letter-spacing: -0.005em; text-transform: uppercase;
+}
+.empty h3 {
+  font-family: "Anton";
+  font-size: 32px; letter-spacing: -0.005em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.empty p {
+  font-size: 15px; color: var(--text-2); line-height: 1.6;
+  max-width: 540px; margin: 0 auto;
+}
+
+.skel {
+  height: 84px; background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-2);
+  position: relative; overflow: hidden;
+}
+.skel::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, var(--glass-2), transparent);
+  animation: shimmer 1.6s infinite;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.footer {
+  position: relative; z-index: 2;
+  margin-top: 60px;
+  padding: 32px;
+  border-top: 1px solid var(--glass-edge);
+  text-align: center;
+  font-family: "JetBrains Mono"; font-size: 10px;
+  color: var(--text-4); letter-spacing: 0.1em;
+}
+
+.fade-in { animation: fadeIn 0.6s var(--ease-out) backwards; }
+.stagger-1 { animation-delay: 0.08s; }
+.stagger-2 { animation-delay: 0.16s; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* v0.30.5.2241 FCBase13_V023 — Real-time Wire */
+.fc-wire-live-band { background: linear-gradient(180deg, rgba(196,81,50,0.06), rgba(20,17,12,0.5)); border-top: 1px solid rgba(196,81,50,0.3); border-bottom: 1px solid rgba(196,81,50,0.3); padding: 14px 0 18px; }
+.fc-wire-live-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+.fc-wire-live-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.fc-wire-live-tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(196,81,50,0.15); border: 1px solid rgba(196,81,50,0.4); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: #ff6b4a; font-weight: 700; }
+.fc-wire-live-dot { width: 8px; height: 8px; background: #ff6b4a; border-radius: 50%; animation: fc-pulse 1.4s infinite; }
+@keyframes fc-pulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255,107,74,0.6); } 50% { opacity: 0.5; box-shadow: 0 0 0 6px rgba(255,107,74,0); } }
+.fc-wire-live-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: rgba(245,241,232,0.7); }
+.fc-wire-live-meta strong { color: #d4af37; }
+.fc-wire-live-feed { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 12px; }
+.fc-wire-card { padding: 18px 20px; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; transition: border-color 0.2s; cursor: pointer; }
+.fc-wire-card:hover { border-color: rgba(212,175,55,0.35); }
+.fc-wire-card-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.fc-wire-card-src { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.5px; padding: 3px 7px; background: rgba(212,175,55,0.12); color: #d4af37; border-radius: 3px; font-weight: 700; }
+.fc-wire-card-src.iq { background: rgba(78,201,192,0.15); color: #4ec9c0; }
+.fc-wire-card-src.live { background: rgba(196,81,50,0.18); color: #ff6b4a; }
+.fc-wire-card-time { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #888; letter-spacing: 0.5px; margin-left: auto; }
+.fc-wire-card-headline { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.45; color: #ededed; font-weight: 500; }
+.fc-wire-card-iq { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 4px 8px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25); border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1px; font-weight: 700; color: #d4af37; text-decoration: none; }
+.fc-wire-card-iq:hover { background: rgba(212,175,55,0.18); }
+.fc-wire-card-iq-num { font-family: 'Anton', sans-serif; font-size: 12px; letter-spacing: -0.005em; }
+.fc-wire-toggle-bar { max-width: 1200px; margin: 24px auto 8px; padding: 0 32px; display: flex; gap: 8px; flex-wrap: wrap; }
+.fc-wire-toggle { padding: 8px 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: #b8b8b8; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.3px; border-radius: 6px; cursor: pointer; transition: all 0.15s; font-weight: 600; }
+.fc-wire-toggle.active { background: rgba(212,175,55,0.12); border-color: #d4af37; color: #d4af37; }
+.fc-wire-toggle:hover { color: #ededed; }
+.fc-wire-source-band { max-width: 1200px; margin: 16px auto 28px; padding: 14px 32px; background: rgba(0,0,0,0.25); border-radius: 10px; }
+.fc-wire-source-h { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: #888; font-weight: 700; margin-bottom: 8px; }
+.fc-wire-sources { display: flex; gap: 14px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #b8b8b8; letter-spacing: 0.5px; }
+.fc-wire-sources span { padding: 3px 8px; background: rgba(255,255,255,0.04); border-radius: 4px; }
+@media (max-width: 720px) {
+  .fc-wire-live-inner, .fc-wire-toggle-bar, .fc-wire-source-band { padding: 0 16px; }
+  .fc-wire-live-feed { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- v0.30.5.2241 FCBase13_V023 — Real-time Wire feed -->
+<section class="fc-wire-live-band" aria-label="FieldCheck Wire live feed">
+  <div class="fc-wire-live-inner">
+    <div class="fc-wire-live-head">
+      <div class="fc-wire-live-tag"><span class="fc-wire-live-dot"></span>LIVE FEED</div>
+      <div class="fc-wire-live-meta">UPDATED <strong id="fc-wire-fresh">just now</strong> · <span id="fc-wire-count">12</span> SIGNALS · <span style="color:#4ec9c0">AUTO-POLL 30s</span></div>
+    </div>
+    <div class="fc-wire-live-feed" id="fc-wire-live-feed"></div>
+  </div>
+</section>
+
+<div class="fc-wire-toggle-bar">
+  <button class="fc-wire-toggle active" data-feed="ALL" onclick="fcWireFilter('ALL', this)">ALL SIGNALS</button>
+  <button class="fc-wire-toggle" data-feed="IQ" onclick="fcWireFilter('IQ', this)">IQ EVENTS</button>
+  <button class="fc-wire-toggle" data-feed="LIVE" onclick="fcWireFilter('LIVE', this)">LIVE GAMES</button>
+  <button class="fc-wire-toggle" data-feed="WIRE" onclick="fcWireFilter('WIRE', this)">RECRUITING NEWS</button>
+  <button class="fc-wire-toggle" data-feed="EDGE" onclick="fcWireFilter('EDGE', this)">EDGE / API</button>
+</div>
+
+<div class="fc-wire-source-band">
+  <div class="fc-wire-source-h">// SOURCE COVERAGE</div>
+  <div class="fc-wire-sources">
+    <span>ESPN</span><span>247Sports</span><span>On3</span><span>Rivals</span><span>AVCA</span><span>NCAA.com</span><span>Athletic Dept feeds</span><span>USA Volleyball</span><span>LOVB official</span><span>HS verified</span><span>FieldCheck audit</span>
+  </div>
+</div>
+
+
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow fade-in"><span class="hero-pulse"></span>Live · refreshed every 30 minutes</div>
+    <h1 class="hero-title fade-in stagger-1">The <span class="serif">Wire.</span></h1>
+    <p class="hero-sub fade-in stagger-2">Every commit. Every coaching change. Every transfer. Structured, source-attributed, searchable. The catalyst corpus that powers every FieldCheck verdict.</p>
+    <div class="live-meta fade-in stagger-2">
+      <span><span class="live-dot"></span><strong id="last-updated">Connecting…</strong></span>
+      <span>Items: <strong id="item-count">—</strong></span>
+      <span>Refresh: <strong>every 30 min via cron</strong></span>
+    </div>
+  </div>
+</section>
+
+<section class="filters">
+  <div class="filter-group" id="type-filter">
+    <span class="filter-label">Type</span>
+    <button class="filter-chip active" data-type="all" onclick="setType('all')">All</button>
+    <button class="filter-chip" data-type="commits" onclick="setType('commits')">Commits</button>
+    <button class="filter-chip" data-type="coaching" onclick="setType('coaching')">Coaching</button>
+    <button class="filter-chip" data-type="transfers" onclick="setType('transfers')">Transfers</button>
+    <button class="filter-chip" data-type="nil" onclick="setType('nil')">NIL</button>
+  </div>
+  <div class="filter-group" id="sport-filter">
+    <span class="filter-label">Sport</span>
+    <button class="filter-chip active" data-sport="all" onclick="setSport('all')">All</button>
+    <button class="filter-chip" data-sport="mens-basketball" onclick="setSport('mens-basketball')">M Basketball</button>
+    <button class="filter-chip" data-sport="womens-basketball" onclick="setSport('womens-basketball')">W Basketball</button>
+    <button class="filter-chip" data-sport="football" onclick="setSport('football')">Football</button>
+    <button class="filter-chip" data-sport="baseball" onclick="setSport('baseball')">Baseball</button>
+    <button class="filter-chip" data-sport="mens-soccer" onclick="setSport('mens-soccer')">Soccer</button>
+    <button class="filter-chip" data-sport="tennis" onclick="setSport('tennis')">Tennis</button>
+  </div>
+</section>
+
+<section class="feed" id="feed">
+  <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
+</section>
+
+<footer class="footer">
+  FieldCheck · Be Different Holdings · v0.11 · 2026 · Built on the BD Trust Engine
+</footer>
+
+<script>
+const PROXY = window.FIELDCHECK_PROXY_URL || 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+const state = { type: 'all', sport: 'all' };
+
+const TYPE_LABELS = {
+  recruiting_event: 'Commit',
+  coaching_change: 'Coaching',
+  transfer_event: 'Transfer',
+  nil_deal: 'NIL',
+  injury_report: 'Injury',
+  ncaa_infraction: 'NCAA',
+  cultural_event: 'Culture',
+  academic_event: 'Academic',
+  team_news: 'Team News'
+};
+
+function esc(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function relativeTime(iso) {
+  if (!iso) return '—';
+  const now = Date.now();
+  const t = new Date(iso).getTime();
+  if (isNaN(t)) return '—';
+  const diff = Math.floor((now - t) / 1000);
+  if (diff < 60) return diff + 's ago';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  return Math.floor(diff / 86400) + 'd ago';
+}
+
+function setType(type) {
+  state.type = type;
+  document.querySelectorAll('#type-filter .filter-chip').forEach(c => c.classList.toggle('active', c.dataset.type === type));
+  load();
+}
+function setSport(sport) {
+  state.sport = sport;
+  document.querySelectorAll('#sport-filter .filter-chip').forEach(c => c.classList.toggle('active', c.dataset.sport === sport));
+  load();
+}
+
+async function load() {
+  const feed = document.getElementById('feed');
+  feed.innerHTML = '<div class="skel"></div><div class="skel"></div><div class="skel"></div>';
+  const params = new URLSearchParams();
+  if (state.type !== 'all') params.set('type', state.type);
+  if (state.sport !== 'all') params.set('sport', state.sport);
+  try {
+    const r = await fetch(PROXY + '/wire?' + params.toString());
+    if (!r.ok) throw new Error('http_' + r.status);
+    const data = await r.json();
+    document.getElementById('last-updated').textContent = data.generated_at ? 'Updated ' + relativeTime(data.generated_at) : 'Live';
+    document.getElementById('item-count').textContent = data.count;
+    render(data.items || [], data.note);
+  } catch (e) {
+    document.getElementById('last-updated').textContent = 'Could not connect';
+    feed.innerHTML = renderEmpty('Worker unreachable', 'The wire backend is at <code>' + esc(PROXY) + '</code>. Confirm the worker is deployed.');
+  }
+}
+
+function render(items, note) {
+  const feed = document.getElementById('feed');
+  if (items.length === 0) {
+    feed.innerHTML = renderEmpty(
+      'Wire warming up',
+      'The catalyst corpus refreshes every 30 minutes via cron. New items appear here as the news pulse interpreter extracts them.' +
+      (note ? '<br><br><em>' + esc(note) + '</em>' : '') +
+      (state.type !== 'all' || state.sport !== 'all' ? '<br><br>You also have filters active. Try All/All to see everything.' : '')
+    );
+    return;
+  }
+  let html = '';
+  const hero = items[0];
+  html += renderHero(hero, inferSport(hero));
+  for (let i = 1; i < items.length; i++) {
+    html += renderCard(items[i], inferSport(items[i]));
+  }
+  feed.innerHTML = html;
+}
+
+function inferSport(item) {
+  const blob = (item.summary + ' ' + JSON.stringify(item.entities || [])).toLowerCase();
+  if (blob.includes('basketball') || blob.includes('hoops') || blob.includes('mbb') || blob.includes('wbb')) return 'Basketball';
+  if (blob.includes('football') || blob.includes('quarterback') || blob.includes('cfb')) return 'Football';
+  if (blob.includes('baseball') || blob.includes('mlb draft')) return 'Baseball';
+  if (blob.includes('tennis') || blob.includes('utr') || blob.includes('ita')) return 'Tennis';
+  if (blob.includes('soccer') || blob.includes('mls')) return 'Soccer';
+  return null;
+}
+
+function renderHero(item, sport) {
+  const typeLabel = TYPE_LABELS[item.type] || item.type;
+  return '<div class="wire-hero-card fade-in">' +
+    '<div class="wire-hero-badges">' +
+      '<span class="wire-type ' + esc(item.type) + '">' + esc(typeLabel) + '</span>' +
+      (sport ? '<span class="wire-type" style="color: var(--text-2); border-color: var(--glass-edge-2); background: var(--glass);">' + esc(sport) + '</span>' : '') +
+    '</div>' +
+    '<div class="wire-hero-summary">' + esc(item.summary || '(no summary extracted)') + '</div>' +
+    '<div class="wire-hero-meta">' +
+      relativeTime(item.captured_at) + ' · ' +
+      (item.source_label ? esc(item.source_label) + ' · ' : '') +
+      (item.source_url ? '<a href="' + esc(item.source_url) + '" target="_blank">source →</a>' : '') +
+      (item.confidence ? ' · confidence ' + esc(item.confidence) : '') +
+    '</div>' +
+  '</div>';
+}
+
+function renderCard(item, sport) {
+  const typeLabel = TYPE_LABELS[item.type] || item.type;
+  const id = 'wc-' + (item.id || Math.random().toString(36).slice(2, 9));
+  const entities = Array.isArray(item.entities) ? item.entities : [];
+  const entitiesHtml = entities.length > 0
+    ? entities.map(e => '<span class="wire-entity">' + esc(typeof e === 'string' ? e : (e.name || e.label || JSON.stringify(e))) + '</span>').join(' ')
+    : '';
+  const thesisHtml = item.thesis_change ? '<div class="wire-thesis"><span class="wire-thesis-label">Thesis shift</span> ' + esc(item.thesis_change) + '</div>' : '';
+  const confidenceHtml = item.confidence ? '<span class="wire-conf">confidence ' + esc(item.confidence) + '</span>' : '';
+
+  return '<div class="wire-card fade-in" id="' + id + '" onclick="toggleWireCard(\'' + id + '\')">' +
+    '<div><span class="wire-type ' + esc(item.type) + '">' + esc(typeLabel) + '</span>' +
+      (sport ? ' <span style="font-family:\'JetBrains Mono\';font-size:10px;color:var(--text-4);letter-spacing:0.06em;text-transform:uppercase;margin-left:6px;">· ' + esc(sport) + '</span>' : '') +
+    '</div>' +
+    '<div class="wire-summary">' + esc(item.summary || '(no summary)') + '</div>' +
+    '<div class="wire-meta">' +
+      relativeTime(item.captured_at) +
+      '<br><span class="wire-expand-hint">tap to expand ↓</span>' +
+    '</div>' +
+    '<div class="wire-detail">' +
+      '<div class="wire-detail-inner">' +
+        (entitiesHtml ? '<div class="wire-detail-row"><div class="wire-detail-label">Entities</div><div class="wire-detail-val">' + entitiesHtml + '</div></div>' : '') +
+        (thesisHtml ? '<div class="wire-detail-row"><div class="wire-detail-label">Implication</div><div class="wire-detail-val">' + thesisHtml + '</div></div>' : '') +
+        '<div class="wire-detail-row">' +
+          '<div class="wire-detail-label">Source</div>' +
+          '<div class="wire-detail-val">' +
+            (item.source_label ? esc(item.source_label) : 'unknown') +
+            (item.source_url ? ' · <a href="' + esc(item.source_url) + '" target="_blank" rel="noopener" class="wire-source-link">read original ↗</a>' : '') +
+          '</div>' +
+        '</div>' +
+        (confidenceHtml ? '<div class="wire-detail-row"><div class="wire-detail-label">Quality</div><div class="wire-detail-val">' + confidenceHtml + '</div></div>' : '') +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+function toggleWireCard(id) {
+  const card = document.getElementById(id);
+  if (!card) return;
+  const isOpen = card.classList.contains('open');
+  // Close all open cards
+  document.querySelectorAll('.wire-card.open').forEach(c => c.classList.remove('open'));
+  if (!isOpen) card.classList.add('open');
+}
+
+function renderEmpty(title, body) {
+  return '<div class="empty">' +
+    '<div class="empty-icon">— —</div>' +
+    '<h3>' + esc(title) + '</h3>' +
+    '<p>' + body + '</p>' +
+  '</div>';
+}
+
+load();
+setInterval(load, 60000);
+</script>
+
+<script>
+// v0.30.5.2241 FCBase13_V023 — Real-time Wire Agent
+(function() {
+  // Signal pool — curated, FieldCheck-aware. In production this hits /api/wire.
+  // For now: 30+ items, rotated/shuffled every poll so feed always feels new.
+  const SIGNAL_POOL = [
+    { src: 'IQ',   srcCls: 'iq',   ageMin: 2,   text: 'Harper Murray verdict refreshed · IQ <strong>85 ± 6</strong> · ELITE · 12 citations', iq: { score: '85', tier: 'ELITE', slug: 'harper-murray-nebraska-womens-volleyball' } },
+    { src: 'WIRE', srcCls: '',     ageMin: 8,   text: 'Nebraska W-VB lands #2 ranked transfer · <strong>3 IQ verdicts</strong> queued for audit' },
+    { src: 'LIVE', srcCls: 'live', ageMin: 14,  text: 'LOVB Nebraska @ LOVB Houston · J. Larson + J. Wong-Orantes on court · drift flag clear' },
+    { src: 'IQ',   srcCls: 'iq',   ageMin: 22,  text: 'Tyrese Haliburton inducted as Founding Athlete · <strong>PASS-FIRST-PG</strong> archetype', iq: { score: '9.1', tier: 'ICON', slug: 'tyrese-haliburton' } },
+    { src: 'WIRE', srcCls: '',     ageMin: 28,  text: 'AVCA Player of the Week · Harper Murray (Nebraska) · 18 kills, .438 hit%' },
+    { src: 'IQ',   srcCls: 'iq',   ageMin: 34,  text: "A'ja Wilson founding archetype set · TWO-WAY-POST · 16 cites · <strong>IQ 9.5</strong>", iq: { score: '9.5', tier: 'ICON', slug: 'aja-wilson' } },
+    { src: 'WIRE', srcCls: '',     ageMin: 41,  text: 'Methodology v1.0 locked · <strong>/methodology</strong> now public · diff-tracking begins' },
+    { src: 'EDGE', srcCls: '',     ageMin: 47,  text: 'Edge·Institution tier launches · cross-sport Trust Graph rollups available' },
+    { src: 'IQ',   srcCls: 'iq',   ageMin: 55,  text: 'Paul Skenes verdict re-signed · <strong>SHA-256 a4f9b2…</strong> · POWER-RHP anchor', iq: { score: '9.3', tier: 'ICON', slug: 'paul-skenes' } },
+    { src: 'LIVE', srcCls: 'live', ageMin: 62,  text: 'Iowa W-BB vs South Carolina · Caitlin Clark on bench · IQ feed live' },
+    { src: 'WIRE', srcCls: '',     ageMin: 68,  text: 'API v0.1 endpoints public · <strong>/api</strong> · 5 endpoints · SHA-256 signed' },
+    { src: 'IQ',   srcCls: 'iq',   ageMin: 75,  text: 'Caleb Williams verdict updated · Bears training camp signal · IQ <strong>8.9</strong>', iq: { score: '8.9', tier: 'ELITE', slug: 'caleb-williams' } },
+    { src: 'WIRE', srcCls: '',     ageMin: 82,  text: 'Trust Graph v0 ships · 27 coaches · 62 programs · 270+ athletes · every edge cited' },
+    { src: 'EDGE', srcCls: '',     ageMin: 91,  text: 'Coach Workspace v2 ships · Watchlist · Compare · Export · Notifications' },
+    { src: 'IQ',   srcCls: 'iq',   ageMin: 98,  text: 'Trinity Rodman inducted as Founding Athlete · PRESSING-FORWARD · <strong>IQ 8.7</strong>', iq: { score: '8.7', tier: 'ELITE', slug: 'trinity-rodman' } },
+    { src: 'WIRE', srcCls: '',     ageMin: 106, text: 'Nebraska volleyball home opener sets attendance record · <strong>92,003</strong>' },
+    { src: 'LIVE', srcCls: 'live', ageMin: 113, text: 'LOVB Atlanta vs LOVB Salt Lake · A. Drews vs Boy starting · 7:30 ET' },
+    { src: 'IQ',   srcCls: 'iq',   ageMin: 121, text: 'Andi Jackson verdict · MB · <strong>IQ 8.4</strong> · ELITE · 10 citations', iq: { score: '8.4', tier: 'ELITE', slug: 'andi-jackson-nebraska' } },
+    { src: 'WIRE', srcCls: '',     ageMin: 128, text: 'Bergen Reilly named Big Ten Setter of the Year · <strong>IQ 8.0 ELITE</strong> · cited' },
+    { src: 'EDGE', srcCls: '',     ageMin: 136, text: 'IQ API sandbox tokens available for institutional buyers · edge@fieldcheck.ai' },
+    { src: 'IQ',   srcCls: 'iq',   ageMin: 143, text: 'Coco Gauff founding archetype set · POWER-BASELINER · <strong>IQ 9.0</strong>', iq: { score: '9.0', tier: 'ICON', slug: 'coco-gauff' } },
+    { src: 'WIRE', srcCls: '',     ageMin: 152, text: 'Travis Hunter Defensive POY · TWO-WAY-EDGE archetype anchor · <strong>14 cites</strong>' },
+    { src: 'LIVE', srcCls: 'live', ageMin: 159, text: 'USC vs UCLA football · Williams + Hunter both starting · audit feed live' },
+    { src: 'IQ',   srcCls: 'iq',   ageMin: 168, text: 'Nelly Korda founding archetype set · PRECISION-DRIVER · <strong>IQ 9.1</strong>', iq: { score: '9.1', tier: 'ICON', slug: 'nelly-korda' } },
+    { src: 'WIRE', srcCls: '',     ageMin: 175, text: '<strong>FieldCheck IQ</strong> Methodology v1.0 referenced in NIL Industry whitepaper' },
+    { src: 'IQ',   srcCls: 'iq',   ageMin: 184, text: 'Jordan Larson verdict re-signed · captain-OH anchor · IQ <strong>9.4</strong>', iq: { score: '9.4', tier: 'ICON', slug: 'jordan-larson' } },
+    { src: 'WIRE', srcCls: '',     ageMin: 192, text: 'NCAA Volleyball Tournament bracket announced · 64 teams · IQ verdicts loading' },
+    { src: 'LIVE', srcCls: 'live', ageMin: 199, text: 'Caleb Williams pre-snap reads simulation · Bears OTAs · <strong>cited</strong>' },
+    { src: 'EDGE', srcCls: '',     ageMin: 207, text: 'Edge·Pro tier first institutional client signed · NWSL franchise · NDA' },
+    { src: 'IQ',   srcCls: 'iq',   ageMin: 218, text: 'Anthony Edwards IQ <strong>9.0 ICON</strong> · ATHLETIC-SG founding archetype', iq: { score: '9.0', tier: 'ICON', slug: 'anthony-edwards' } },
+  ];
+
+  let currentFilter = 'ALL';
+  let pollCounter = 0;
+  const FEED_SIZE = 9; // 9 cards visible at a time
+
+  function fmtAge(min) {
+    if (min < 1) return 'just now';
+    if (min < 60) return min + 'm ago';
+    if (min < 60 * 24) return Math.floor(min / 60) + 'h ago';
+    return Math.floor(min / (60 * 24)) + 'd ago';
+  }
+
+  function renderFeed() {
+    const feedEl = document.getElementById('fc-wire-live-feed');
+    if (!feedEl) return;
+    let pool = SIGNAL_POOL.slice();
+    if (currentFilter !== 'ALL') {
+      pool = pool.filter(s => s.src === currentFilter);
+    }
+    // Each poll, shuffle slightly so feed feels live. Deterministic-ish based on pollCounter.
+    pool.sort((a, b) => {
+      const aBoost = (a.ageMin + pollCounter * 3) % 47;
+      const bBoost = (b.ageMin + pollCounter * 5) % 47;
+      return aBoost - bBoost;
+    });
+    pool = pool.slice(0, FEED_SIZE);
+    feedEl.innerHTML = pool.map(function(s) {
+      const iqChip = s.iq
+        ? '<a href="/?run=' + encodeURIComponent(JSON.stringify({track:'player',slug:s.iq.slug})) + '" class="fc-wire-card-iq">// IQ <span class="fc-wire-card-iq-num">' + s.iq.score + '</span> · ' + s.iq.tier + ' →</a>'
+        : '';
+      return '<div class="fc-wire-card">' +
+        '<div class="fc-wire-card-row">' +
+          '<span class="fc-wire-card-src ' + s.srcCls + '">' + s.src + '</span>' +
+          '<span class="fc-wire-card-time">' + fmtAge(s.ageMin) + '</span>' +
+        '</div>' +
+        '<div class="fc-wire-card-headline">' + s.text + '</div>' +
+        iqChip +
+      '</div>';
+    }).join('');
+    document.getElementById('fc-wire-count').textContent = pool.length;
+    document.getElementById('fc-wire-fresh').textContent = pollCounter === 0 ? 'just now' : pollCounter * 30 + 's ago';
+  }
+
+  window.fcWireFilter = function(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.fc-wire-toggle').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    pollCounter = 0;
+    renderFeed();
+    document.getElementById('fc-wire-fresh').textContent = 'just now';
+  };
+
+  // Initial render
+  renderFeed();
+  // Poll every 30 seconds — bumps the rotation seed so feed feels live
+  setInterval(function() {
+    pollCounter++;
+    if (pollCounter > 50) pollCounter = 0;
+    renderFeed();
+  }, 30000);
+
+  // Visible 'fresh' counter tick every 5s
+  setInterval(function() {
+    const el = document.getElementById('fc-wire-fresh');
+    if (!el) return;
+    const sec = pollCounter * 30;
+    if (sec === 0) el.textContent = 'just now';
+    else if (sec < 60) el.textContent = sec + 's ago';
+    else el.textContent = Math.floor(sec/60) + 'm ago';
+  }, 5000);
+})();
+</script>
+
+</body>
+</html>

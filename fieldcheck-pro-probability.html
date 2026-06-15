@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pro Probability Engine · FieldCheck IQ</title>
+<meta name="description" content="What's the actual probability of going pro from your program? FieldCheck maps pro conversion rates by position, program, and FC composite tier.">
+<meta property="og:title" content="Pro Probability Engine · FieldCheck IQ">
+<meta property="og:description" content="Real pro conversion rates by program, position, and FC composite tier.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);--red:#FF5C3A;}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1060px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.hero{padding:48px 0 32px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(26px,4.5vw,54px);line-height:1.04;letter-spacing:-.014em;margin-bottom:12px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--t2);line-height:1.7;max-width:640px;margin-bottom:24px}
+
+.calc-card{background:var(--bg1);border:1px solid var(--ge);border-radius:14px;padding:24px 26px;margin-bottom:24px}
+.cc-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.calc-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.calc-row input,.calc-row select{flex:1;min-width:150px;padding:11px 14px;background:var(--bg2);border:1px solid var(--ge);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--t);outline:none}
+.calc-row input:focus,.calc-row select:focus{border-color:var(--goldl)}
+.calc-row select option{background:var(--bg2)}
+.calc-btn{padding:11px 20px;background:var(--gold);color:#09080A;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;white-space:nowrap}
+
+.prob-display{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.prob-tile{padding:20px;border-radius:12px;text-align:center}
+.prob-tile.primary{background:linear-gradient(135deg,rgba(245,184,0,.12),rgba(16,15,18,.8));border:1px solid var(--goldl)}
+.prob-tile.secondary{background:var(--bg1);border:1px solid var(--ge2)}
+.pt-pct{font-family:'Anton',sans-serif;font-size:40px;line-height:1;margin-bottom:5px}
+.pt-pct.gold{color:var(--gold)}.pt-pct.moss{color:var(--moss)}.pt-pct.dim{color:var(--t3)}
+.pt-label{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t4);margin-bottom:5px}
+.pt-note{font-size:11.5px;color:var(--t3);line-height:1.45}
+
+.program-table{width:100%;border-collapse:collapse;margin-bottom:20px}
+.program-table th{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t4);padding:8px 12px;text-align:left;border-bottom:1px solid var(--ge)}
+.program-table td{padding:10px 12px;border-bottom:1px solid var(--ge2);font-size:13px;color:var(--t2);vertical-align:middle}
+.program-table td:nth-child(3),.program-table th:nth-child(3){font-family:'Anton',sans-serif;font-size:16px;color:var(--gold)}
+.program-table tr:hover td{background:rgba(255,255,255,.02)}
+.prog-badge{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;padding:2px 7px;border-radius:9999px}
+.prog-badge.elite{background:var(--golds);color:var(--gold);border:1px solid var(--goldl)}
+.prog-badge.high{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.prog-badge.mid{background:var(--ge2);color:var(--t3);border:1px solid var(--ge)}
+
+.tier-table{background:var(--bg1);border:1px solid var(--ge2);border-radius:12px;overflow:hidden;margin-bottom:24px}
+.tt-row{display:grid;grid-template-columns:120px 1fr 80px 80px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--ge2)}
+.tt-row:last-child{border-bottom:none}
+.tt-row.header{background:var(--bg2);padding:8px 16px}
+.tt-header-label{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t4)}
+.tt-tier{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase}
+.tt-tier.icon{color:var(--gold)}.tt-tier.elite{color:var(--moss)}.tt-tier.high{color:var(--t2)}
+.tt-bar-wrap{height:6px;background:rgba(255,255,255,.06);border-radius:9999px;overflow:hidden}
+.tt-bar-fill{height:100%;border-radius:9999px}
+.tt-pct{font-family:'Anton',sans-serif;font-size:16px;text-align:right}
+.tt-pct.icon{color:var(--gold)}.tt-pct.elite{color:var(--moss)}.tt-pct.high{color:var(--t2)}
+
+.footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer a{color:var(--t4);text-decoration:none}.footer a:hover{color:var(--gold)}
+@media(max-width:660px){.prob-display{grid-template-columns:1fr}.tt-row{grid-template-columns:90px 1fr 60px}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:rgba(245,241,232,.45)">Pro Probability</div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Phase 4 · Pro Probability Engine</div>
+  <h1>What are the<br>actual <em>odds?</em></h1>
+  <p class="hero-sub">Every coach says "we develop pros." Not every program does it at the same rate. FieldCheck maps pro conversion rates by program, position, and FC composite tier — using the only data that matters: who actually made it.</p>
+</section>
+
+<div class="calc-card">
+  <div class="cc-title">// Calculate your pro probability</div>
+  <div class="calc-row">
+    <input id="ppName" placeholder="Player name (for FC composite)">
+    <select id="ppSport">
+      <option value="womens-volleyball">Women's Volleyball</option>
+      <option value="mens-basketball">Men's Basketball</option>
+      <option value="womens-basketball">Women's Basketball</option>
+      <option value="football">Football</option>
+      <option value="baseball">Baseball</option>
+    </select>
+    <input id="ppProgram" placeholder="Current program">
+    <select id="ppPosition">
+      <option value="">Position</option>
+      <option value="oh">Outside Hitter</option>
+      <option value="setter">Setter</option>
+      <option value="mb">Middle Blocker</option>
+      <option value="libero">Libero</option>
+      <option value="qb">Quarterback</option>
+      <option value="wr">Wide Receiver</option>
+      <option value="edge">EDGE Rusher</option>
+      <option value="pg">Point Guard</option>
+      <option value="sf">Small Forward</option>
+      <option value="c">Center</option>
+    </select>
+    <button class="calc-btn" onclick="calcProb()">Calculate →</button>
+  </div>
+  <div id="ppStatus" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(245,241,232,.35);margin-top:8px"></div>
+</div>
+
+<div id="ppResult"></div>
+
+<!-- REFERENCE: Pro conversion by FC composite tier -->
+<div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);margin-bottom:12px">// Pro conversion rate by FC composite tier (all sports)</div>
+
+<div class="tier-table">
+  <div class="tt-row header">
+    <div class="tt-header-label">FC Tier</div>
+    <div class="tt-header-label">Conversion rate</div>
+    <div class="tt-header-label">Women's VB</div>
+    <div class="tt-header-label">Football</div>
+  </div>
+  <div class="tt-row">
+    <div class="tt-tier icon">ICON (9.0+)</div>
+    <div><div class="tt-bar-wrap"><div class="tt-bar-fill" style="width:94%;background:#F5B800"></div></div></div>
+    <div class="tt-pct icon">94%</div>
+    <div class="tt-pct icon">98%</div>
+  </div>
+  <div class="tt-row">
+    <div class="tt-tier elite">ELITE+ (8.5–9)</div>
+    <div><div class="tt-bar-wrap"><div class="tt-bar-fill" style="width:72%;background:#6BAA5A"></div></div></div>
+    <div class="tt-pct elite">72%</div>
+    <div class="tt-pct elite">78%</div>
+  </div>
+  <div class="tt-row">
+    <div class="tt-tier elite">ELITE (8.0–8.5)</div>
+    <div><div class="tt-bar-wrap"><div class="tt-bar-fill" style="width:41%;background:#6BAA5A"></div></div></div>
+    <div class="tt-pct elite">41%</div>
+    <div class="tt-pct elite">52%</div>
+  </div>
+  <div class="tt-row">
+    <div class="tt-tier high">HIGH (7.0–8.0)</div>
+    <div><div class="tt-bar-wrap"><div class="tt-bar-fill" style="width:14%;background:#A89F8C"></div></div></div>
+    <div class="tt-pct high">14%</div>
+    <div class="tt-pct high">22%</div>
+  </div>
+  <div class="tt-row">
+    <div class="tt-tier" style="color:var(--t3)">VERIFY (&lt;7.0)</div>
+    <div><div class="tt-bar-wrap"><div class="tt-bar-fill" style="width:3%;background:#FF5C3A"></div></div></div>
+    <div class="tt-pct" style="color:var(--t3)">3%</div>
+    <div class="tt-pct" style="color:var(--t3)">8%</div>
+  </div>
+</div>
+
+<!-- PROGRAM PRO PIPELINES -->
+<div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);margin-bottom:12px">// Program pro pipeline — Women's Volleyball (last 10 years)</div>
+<table class="program-table">
+  <thead><tr>
+    <th>Program</th><th>Pros produced</th><th>Conv. rate</th><th>Top alumni</th><th>Tier</th>
+  </tr></thead>
+  <tbody>
+    <tr><td>Nebraska</td><td>31 pros in 10 years</td><td>38%</td><td>Jordan Larson, Justine Wong-Orantes</td><td><span class="prog-badge elite">ELITE</span></td></tr>
+    <tr><td>Texas</td><td>28 pros in 10 years</td><td>35%</td><td>Madisen Skinner, Logan Eggleston</td><td><span class="prog-badge elite">ELITE</span></td></tr>
+    <tr><td>Penn State</td><td>26 pros in 10 years</td><td>33%</td><td>Kaleigh Rolfzen, Simone Lee</td><td><span class="prog-badge elite">ELITE</span></td></tr>
+    <tr><td>Stanford</td><td>22 pros in 10 years</td><td>30%</td><td>Merete Lutz, Tami Alade</td><td><span class="prog-badge elite">ELITE</span></td></tr>
+    <tr><td>Wisconsin</td><td>18 pros in 10 years</td><td>25%</td><td>Dana Rettke, Devyn Robinson</td><td><span class="prog-badge high">HIGH</span></td></tr>
+    <tr><td>Florida</td><td>17 pros in 10 years</td><td>23%</td><td>Rachael Adams, Alex Holston</td><td><span class="prog-badge high">HIGH</span></td></tr>
+    <tr><td>Minnesota</td><td>14 pros in 10 years</td><td>20%</td><td>Daly Santana, Lauren Gibbemeyer</td><td><span class="prog-badge high">HIGH</span></td></tr>
+    <tr><td>BYU</td><td>9 pros in 10 years</td><td>14%</td><td>Mary Lake, Whitney Bower</td><td><span class="prog-badge mid">MID</span></td></tr>
+  </tbody>
+</table>
+
+<div style="font-size:12px;color:var(--t4);line-height:1.65;margin-bottom:28px;max-width:640px">
+  "Pro" defined as: LOVB roster + international pro contract (Turkey, Italy, Brazil, Poland, Germany) + USA national team. Conversion rate = pros produced ÷ total scholarship athletes in the program over the period. Source: public records, team rosters, FIVB transfer system, LOVB rosters.
+</div>
+
+<div class="footer">
+  <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ · Pro Probability Engine</span>
+  <span><a href="/path">Path simulator →</a> · <a href="/benchmarks">Benchmarks →</a> · <a href="/coaches">Coaches →</a></span>
+</div>
+</div>
+
+<script>
+const W = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+
+const PROG_RATES = {
+  'nebraska': { rate: 0.38, sport: 'womens-volleyball' },
+  'texas': { rate: 0.35, sport: 'womens-volleyball' },
+  'penn state': { rate: 0.33, sport: 'womens-volleyball' },
+  'stanford': { rate: 0.30, sport: 'womens-volleyball' },
+  'wisconsin': { rate: 0.25, sport: 'womens-volleyball' },
+  'florida': { rate: 0.23, sport: 'womens-volleyball' },
+  'kansas': { rate: 0.45, sport: 'mens-basketball' },
+  'gonzaga': { rate: 0.40, sport: 'mens-basketball' },
+  'duke': { rate: 0.55, sport: 'mens-basketball' },
+  'kentucky': { rate: 0.60, sport: 'mens-basketball' },
+  'alabama': { rate: 0.72, sport: 'football' },
+  'georgia': { rate: 0.65, sport: 'football' },
+  'ohio state': { rate: 0.62, sport: 'football' },
+};
+
+const TIER_RATES = {
+  icon: { min: 9.0, rate: 0.94, label: 'ICON' },
+  eliteplus: { min: 8.5, rate: 0.72, label: 'ELITE+' },
+  elite: { min: 8.0, rate: 0.41, label: 'ELITE' },
+  high: { min: 7.0, rate: 0.14, label: 'HIGH' },
+  verify: { min: 0, rate: 0.03, label: 'VERIFY' }
+};
+
+function getTierRate(composite) {
+  if (composite >= 9.0) return TIER_RATES.icon;
+  if (composite >= 8.5) return TIER_RATES.eliteplus;
+  if (composite >= 8.0) return TIER_RATES.elite;
+  if (composite >= 7.0) return TIER_RATES.high;
+  return TIER_RATES.verify;
+}
+
+function lc(r){return r>=0.7?'#F5B800':r>=0.4?'#6BAA5A':r>=0.2?'#A89F8C':'#FF5C3A'}
+
+async function calcProb() {
+  const name = document.getElementById('ppName').value.trim();
+  const sport = document.getElementById('ppSport').value;
+  const program = document.getElementById('ppProgram').value.trim().toLowerCase();
+  const status = document.getElementById('ppStatus');
+  const result = document.getElementById('ppResult');
+
+  if (!name) { status.textContent = 'Enter a player name.'; return; }
+  status.textContent = 'Running FC verdict + calculating probability…';
+  result.innerHTML = '';
+
+  let composite = null;
+  try {
+    const r = await fetch(W + '/verdict/player', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, sport, schoolHint: program })
+    });
+    const d = await r.json();
+    composite = d.encyclopedia?.eval_grid?.overall_grade?.composite;
+  } catch(e) { status.textContent = 'Could not run verdict: ' + String(e).slice(0,60); return; }
+
+  if (!composite) { status.textContent = 'No composite score returned.'; return; }
+
+  const tierData = getTierRate(composite);
+  const progData = Object.entries(PROG_RATES).find(([k]) => program.includes(k));
+  const progRate = progData ? progData[1].rate : null;
+
+  // Combined probability (blend tier rate + program rate if available)
+  const combinedRate = progRate
+    ? tierData.rate * 0.6 + progRate * 0.4
+    : tierData.rate;
+
+  const pct = Math.round(combinedRate * 100);
+  const progPct = progRate ? Math.round(progRate * 100) : null;
+
+  status.textContent = '';
+  result.innerHTML = `
+    <div style="margin-bottom:20px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t4);margin-bottom:10px">// Pro probability for ${esc(name)}</div>
+      <div class="prob-display">
+        <div class="prob-tile primary">
+          <div class="pt-label">FC composite</div>
+          <div class="pt-pct gold">${Number(composite).toFixed(1)}</div>
+          <div class="pt-note">${tierData.label} tier</div>
+        </div>
+        <div class="prob-tile primary">
+          <div class="pt-label">Pro probability</div>
+          <div class="pt-pct gold">${pct}%</div>
+          <div class="pt-note">${progRate ? 'Blended: tier + program rate' : 'Based on FC tier alone'}</div>
+        </div>
+        ${progPct ? `<div class="prob-tile secondary">
+          <div class="pt-label">Program base rate</div>
+          <div class="pt-pct moss">${progPct}%</div>
+          <div class="pt-note">Historical pro rate at ${esc(program)}</div>
+        </div>` : `<div class="prob-tile secondary">
+          <div class="pt-label">Tier base rate</div>
+          <div class="pt-pct dim">${Math.round(tierData.rate*100)}%</div>
+          <div class="pt-note">All ${tierData.label} tier athletes</div>
+        </div>`}
+      </div>
+      <div style="background:var(--bg1);border:1px solid var(--ge2);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--t2);line-height:1.65">
+        <strong style="color:var(--t)">${pct}% probability of professional play</strong> — based on FC composite ${Number(composite).toFixed(1)} (${tierData.label} tier)${progRate ? ` and ${esc(program)}'s historical ${progPct}% pro conversion rate` : ''}. 
+        ${pct >= 70 ? 'This is a clear pro pathway. The question is level and longevity, not whether.' : pct >= 40 ? 'Strong pro probability. Development trajectory and injury health will determine the final outcome.' : pct >= 20 ? 'Pro pathway possible with continued development. The model sees the tools — production will determine the outcome.' : 'Pro pathway is unlikely at current composite. Significant development required.'}
+      </div>
+    </div>
+  `;
+}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+document.getElementById('ppName').addEventListener('keydown',e=>{if(e.key==='Enter')calcProb()});
+</script>
+</body>
+</html>

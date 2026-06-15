@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>FieldCheck · How v1.7 Works · the methodology</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="How FieldCheck's v1.7 framework scores players. 8 facets. Bayesian credible intervals. 25-PhD panel. Pre-registered predictions. Published failures.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Cormorant+Garamond:ital@0;1&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06050A;--bg2:#0D0C12;--bg3:rgba(13,12,18,.55);
+  --t:#F5F1E8;--t2:rgba(245,241,232,.74);--t3:rgba(245,241,232,.46);--t4:rgba(245,241,232,.24);
+  --gold:#F5B800;--goldb:#FFD24A;--goldl:rgba(245,184,0,.28);--golds:rgba(245,184,0,.09);
+  --moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.30);
+  --red:#FF5C3A;--teal:#4EC9C0;--teall:rgba(78,201,192,.18);
+  --ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--t);line-height:1.7;padding:48px 24px 80px;max-width:980px;margin:0 auto}
+
+header.hero{margin-bottom:48px;padding-bottom:36px;border-bottom:1px solid var(--ge)}
+.brand{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:1.5px;color:var(--t3);text-transform:uppercase;margin-bottom:12px}
+.brand b{color:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(40px,7vw,68px);letter-spacing:-.02em;margin-bottom:18px;line-height:1}
+h1 b{color:var(--gold)}
+.hero-claim{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,2.4vw,24px);color:var(--t);line-height:1.5;max-width:760px;margin-bottom:16px}
+.hero-claim b{color:var(--gold);font-style:normal;font-family:'Inter',sans-serif;font-weight:700}
+.hero-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);letter-spacing:.8px}
+
+.toc{margin:32px 0;padding:18px 24px;background:rgba(245,184,0,.04);border:1px solid var(--goldl);border-radius:12px;font-family:'JetBrains Mono',monospace;font-size:11px}
+.toc-h{color:var(--gold);font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px}
+.toc-list{display:flex;flex-wrap:wrap;gap:14px;color:var(--t2)}
+.toc-list a{color:var(--t2);text-decoration:none;border-bottom:1px dashed rgba(245,241,232,.18);padding-bottom:1px}
+.toc-list a:hover{color:var(--gold);border-color:var(--gold)}
+
+section{margin-bottom:60px;scroll-margin-top:40px}
+h2{font-family:'Anton',sans-serif;font-size:32px;letter-spacing:-.005em;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--ge)}
+h2 b{color:var(--gold)}
+h2 .num{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--gold);font-weight:700;letter-spacing:2px;margin-right:14px;background:rgba(245,184,0,.1);padding:4px 10px;border-radius:6px;vertical-align:middle}
+h3{font-family:'Anton',sans-serif;font-size:22px;margin:28px 0 12px;color:var(--t)}
+h3 b{color:var(--gold)}
+
+.body-text{font-size:16px;color:var(--t2);line-height:1.75;margin-bottom:18px}
+.body-text b{color:var(--t)}
+.body-text code{font-family:'JetBrains Mono',monospace;font-size:14px;background:rgba(0,0,0,.4);padding:2px 7px;border-radius:4px;color:var(--gold)}
+.body-text em{color:var(--gold);font-style:normal;font-weight:600}
+
+.callout{margin:24px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(245,184,0,.06),rgba(13,12,18,.5));border-left:3px solid var(--gold);border-radius:0 12px 12px 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--t);line-height:1.65}
+.callout b{color:var(--gold);font-style:normal;font-family:'Inter',sans-serif;font-weight:600}
+.callout.teal{background:linear-gradient(135deg,rgba(78,201,192,.06),rgba(13,12,18,.5));border-left-color:var(--teal)}
+.callout.teal b{color:var(--teal)}
+.callout.moss{background:linear-gradient(135deg,rgba(107,170,90,.06),rgba(13,12,18,.5));border-left-color:var(--moss)}
+.callout.moss b{color:var(--moss)}
+
+.facets{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0}
+.facet{background:var(--bg3);border:1px solid var(--ge);border-radius:12px;padding:16px 18px;border-left:3px solid var(--gold);position:relative}
+.facet-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1.2px;margin-bottom:6px}
+.facet-name{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);letter-spacing:-.005em;margin-bottom:8px}
+.facet-desc{font-size:12.5px;color:var(--t2);line-height:1.55}
+.facet-flagg{margin-top:10px;padding-top:10px;border-top:1px dashed var(--ge);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3)}
+.facet-flagg b{color:var(--gold)}
+.facet.character{border-left-color:#FFD24A}
+.facet.physical{border-left-color:var(--teal)}
+
+.refinements{margin:18px 0}
+.ref-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;background:var(--bg3);border:1px solid var(--ge);border-radius:10px;margin-bottom:10px;border-left:3px solid var(--ge)}
+.ref-row.active{border-left-color:var(--moss)}
+.ref-row.inactive{border-left-color:var(--ge);opacity:.62}
+.ref-icon{font-size:24px;flex-shrink:0;width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);border-radius:8px}
+.ref-body{flex:1}
+.ref-id{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1.2px;margin-bottom:4px}
+.ref-name{font-family:'Anton',sans-serif;font-size:16px;color:var(--t);margin-bottom:6px}
+.ref-desc{font-size:12.5px;color:var(--t2);line-height:1.55}
+.ref-desc code{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);background:rgba(0,0,0,.4);padding:1px 6px;border-radius:3px}
+.ref-status{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:9999px;white-space:nowrap;flex-shrink:0;align-self:flex-start}
+.ref-status.active{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.ref-status.inactive{background:rgba(255,252,245,.04);color:var(--t3);border:1px solid var(--ge)}
+
+.cadence{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:18px 0}
+.cad-cell{background:rgba(0,0,0,.25);border:1px solid var(--ge);border-radius:10px;padding:14px 16px;text-align:center}
+.cad-when{font-family:'Anton',sans-serif;font-size:22px;color:var(--gold);letter-spacing:-.005em;line-height:1}
+.cad-what{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;color:var(--t2);letter-spacing:1px;text-transform:uppercase;margin-top:8px}
+
+.fail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:20px 0}
+.fail-card{padding:18px 20px;border-radius:12px;background:var(--bg3);border:1px solid var(--ge);border-left:3px solid var(--red)}
+.fail-card.partial{border-left-color:var(--gold)}
+.fail-h{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px}
+.fail-card .fail-h{color:var(--red)}
+.fail-card.partial .fail-h{color:var(--gold)}
+.fail-name{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);margin-bottom:6px}
+.fail-desc{font-size:13px;color:var(--t2);line-height:1.55}
+
+.principles{margin:18px 0}
+.principle{padding:14px 0;border-bottom:1px solid var(--ge);display:flex;gap:18px;align-items:flex-start}
+.principle:last-child{border-bottom:none}
+.principle-num{font-family:'Anton',sans-serif;font-size:32px;color:var(--gold);letter-spacing:-.02em;line-height:1;width:46px;flex-shrink:0}
+.principle-body{flex:1}
+.principle-h{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);margin-bottom:6px}
+.principle-desc{font-size:13.5px;color:var(--t2);line-height:1.65}
+.principle-desc b{color:var(--t)}
+
+.cta{margin-top:60px;padding:32px 36px;background:linear-gradient(135deg,rgba(245,184,0,.08),rgba(13,12,18,.5));border:1px solid var(--goldl);border-radius:16px;text-align:center}
+.cta-h{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px}
+.cta-l{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:-.01em;color:var(--t);margin-bottom:14px;line-height:1.2}
+.cta-l b{color:var(--gold)}
+.cta-b{font-size:14.5px;color:var(--t2);line-height:1.65;margin-bottom:22px;max-width:660px;margin-left:auto;margin-right:auto}
+.cta-actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.cta-btn{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:12px 24px;border-radius:9999px;text-decoration:none;transition:all .2s ease}
+.cta-btn.primary{background:var(--gold);color:var(--bg);border:1px solid var(--gold)}
+.cta-btn.primary:hover{background:var(--goldb)}
+.cta-btn.secondary{background:transparent;color:var(--t);border:1px solid var(--ge)}
+.cta-btn.secondary:hover{border-color:var(--gold);color:var(--gold)}
+
+.foot{margin-top:60px;padding-top:24px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t4);letter-spacing:.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.foot b{color:var(--t3)}
+</style>
+<script src="/fc17-trust-strip.js" defer></script>
+</head>
+<body>
+
+<header class="hero">
+  <div class="brand">Field<b>Check</b>IQ · methodology</div>
+  <h1>How v1.7 <b>works</b>.</h1>
+  <p class="hero-claim">The framework behind every FieldCheck verdict. <b>Eight facets · Bayesian credible intervals · MIN function on Character · 25-PhD review panel · pre-registered predictions · published failures.</b> No shortcuts. No hidden weights. Math you can audit.</p>
+  <div class="hero-sub">// framework lock v1.7 · May 17 2026 · 5-year major version cycle · last refined May 17 2026</div>
+</header>
+
+<div id="fc17-trust-anchor" style="margin: 28px 0 40px;"></div>
+
+<nav class="toc">
+  <div class="toc-h">// on this page</div>
+  <div class="toc-list">
+    <a href="#why">01 · Why we built this</a>
+    <a href="#facets">02 · The 8 facets</a>
+    <a href="#character">03 · Why Character uses MIN</a>
+    <a href="#refinements">04 · The 6 refinements</a>
+    <a href="#review">05 · 25-PhD review</a>
+    <a href="#predict">06 · Pre-registration</a>
+    <a href="#cadence">07 · Continuous learning</a>
+    <a href="#fail">08 · How we publish failures</a>
+    <a href="#principles">09 · 6 constraints, unchanged</a>
+    <a href="#v5algo">10 · V5 Algorithm</a>
+  </div>
+</nav>
+
+
+<section id="why">
+  <h2><span class="num">01</span>Why we <b>built this</b></h2>
+  <p class="body-text">Sports-tech evaluators have a structural integrity problem. The buyer is usually a team paying for a coach decision, an agent paying for a contract argument, or a media outlet paying for a daily-content cycle. <b>None of those buyers pay for honest "we don't know yet."</b> So evaluators hedge, smooth, and quietly delete bad calls.</p>
+  <p class="body-text">FieldCheck's v1.7 was built around a different bet: that <em>retail evaluators</em> — parents, scouts, analysts, fans, individual coaches — will pay for verdict integrity if we publish the wrong ones. The framework below is what makes that promise auditable rather than rhetorical.</p>
+
+  <div class="callout">
+    The shortcut to understanding v1.7 is this: <b>every number on a FieldCheck verdict has a credible interval, a sign-off panel, and a check-in date.</b> If a number ages badly, you'll find it on the prediction ledger. If a number ages well, you'll find the same audit trail. The framework is the same either way.
+  </div>
+</section>
+
+
+<section id="facets">
+  <h2><span class="num">02</span>The <b>8 facets</b></h2>
+  <p class="body-text">v1.7 evaluates every player across 8 canonical facets. These are <b>the same eight facets regardless of sport</b> — the math doesn't change between basketball and volleyball and football. What changes is the <b>display label</b> per sport (a volleyball player's "Captain DNA" maps to the same underlying canonical pillar as a basketball player's "Mindset"). The underlying scoring stays comparable across sports.</p>
+
+  <div class="facets">
+    <div class="facet character">
+      <div class="facet-num">// 01 · apex · weight 0.18</div>
+      <div class="facet-name">Character</div>
+      <div class="facet-desc">5 sub-dimensions: honesty, harm-avoidance, reliability, loyalty, composure. <em>MIN function</em> (see section 03 below).</div>
+      <div class="facet-flagg">Flagg <b>8.5</b> · CI 7.6–9.0 · limited by harm-avoidance</div>
+    </div>
+    <div class="facet">
+      <div class="facet-num">// 02 · weight 0.12</div>
+      <div class="facet-name">Mindset</div>
+      <div class="facet-desc">Competitive drive · trainability consistency · observer-corroborated</div>
+      <div class="facet-flagg">Flagg <b>9.5</b> · CI 9.1–9.9</div>
+    </div>
+    <div class="facet">
+      <div class="facet-num">// 03 · weight 0.12</div>
+      <div class="facet-name">Mental Strength</div>
+      <div class="facet-desc">Pressure response · clutch context performance · adversity recovery</div>
+      <div class="facet-flagg">Flagg <b>9.4</b> · CI 8.8–9.9</div>
+    </div>
+    <div class="facet">
+      <div class="facet-num">// 04 · weight 0.14</div>
+      <div class="facet-name">Talent</div>
+      <div class="facet-desc">Sport-specific skill ceiling · scout consensus across observer tiers · feel for the game</div>
+      <div class="facet-flagg">Flagg <b>9.7</b> · CI 9.3–10.0</div>
+    </div>
+    <div class="facet physical">
+      <div class="facet-num">// 05 · weight 0.12</div>
+      <div class="facet-name">Physical</div>
+      <div class="facet-desc">Substrate × (1 − injury_risk). <em>R1 active</em> when injury data exists.</div>
+      <div class="facet-flagg">Flagg <b>9.3</b> · substrate 9.5 · risk 4% · R1 active</div>
+    </div>
+    <div class="facet">
+      <div class="facet-num">// 06 · weight 0.12</div>
+      <div class="facet-name">Mental / IQ</div>
+      <div class="facet-desc">Sport intelligence · pattern recognition · floor mapping · opponent tendencies</div>
+      <div class="facet-flagg">Flagg <b>9.4</b> · CI 8.9–9.9</div>
+    </div>
+    <div class="facet">
+      <div class="facet-num">// 07 · weight 0.10</div>
+      <div class="facet-name">Coachability</div>
+      <div class="facet-desc">Bias-corrected weighted blend: 0.4 × coach + 0.3 × teammates + 0.3 × observers. <em>R4 active</em>.</div>
+      <div class="facet-flagg">Flagg <b>9.0</b> · R4 active</div>
+    </div>
+    <div class="facet">
+      <div class="facet-num">// 08 · weight 0.10</div>
+      <div class="facet-name">Competitiveness</div>
+      <div class="facet-desc">Sustained engine · intensity across game contexts · documented clutch performance</div>
+      <div class="facet-flagg">Flagg <b>9.7</b> · CI 9.3–10.0</div>
+    </div>
+  </div>
+
+  <p class="body-text">Each facet returns a posterior distribution — not a point estimate. We publish the mean, the 95% credible interval (CI), and a confidence score that captures how much evidence informs the posterior. <b>Wide CIs mean we admit uncertainty.</b> Tight CIs mean we have strong evidence and have committed.</p>
+</section>
+
+
+<section id="character">
+  <h2><span class="num">03</span>Why Character uses <b>MIN, not average</b></h2>
+  <p class="body-text">Most evaluator frameworks average the components of "Character." A player rated honest 9, reliable 9, but harm-avoiding 6 would average to 8 and get a green light. That averaging hides the failure mode: <b>character risks cascade.</b> A high-honesty, high-reliability player who lacks harm-avoidance can still produce a catastrophic event.</p>
+  <p class="body-text">v1.7's Character pillar applies the <em>Yamamoto MIN function</em>: the score equals the minimum of the 5 sub-dimensions, not the average. If any single sub-dim drops below the threshold, the pillar drops with it.</p>
+
+  <div class="callout">
+    For Cooper Flagg, this means Character returns <b>8.5</b> (harm-avoidance · untested adult-stress) instead of the 9.06 average. The MIN-vs-average gap is the whole point. We surface the limiting factor instead of hiding it.
+  </div>
+
+  <p class="body-text">Categorical events (DUIs, character incidents) are <em>never blended</em> into the score arithmetically. They're displayed separately as documented events. If an event activates the R6 cascade refinement (Character below 7), the entire composite gets a -1.5 penalty applied transparently — not absorbed into the smoothing.</p>
+</section>
+
+
+<section id="refinements">
+  <h2><span class="num">04</span>The <b>6 refinements</b></h2>
+  <p class="body-text">A v1.7 verdict can have up to six refinements applied. Each one is a published formula. Active refinements show up on the verdict polygon as small icons; inactive ones are documented but don't affect the score.</p>
+
+  <div class="refinements">
+    <div class="ref-row active">
+      <div class="ref-icon">🩹</div>
+      <div class="ref-body">
+        <div class="ref-id">R1 · injury risk on Physical</div>
+        <div class="ref-name">Substrate × (1 − injury_risk)</div>
+        <div class="ref-desc">When durability data exists, Physical's effective score discounts for projected injury risk. <code>effective = substrate × (1 − injury_risk)</code>. Flagg: 9.5 × (1 − 0.04) ≈ 9.12, rounded with frame + recovery factor to <b>9.3</b>.</div>
+      </div>
+      <div class="ref-status active">Active · Flagg</div>
+    </div>
+
+    <div class="ref-row inactive">
+      <div class="ref-icon">⚖️</div>
+      <div class="ref-body">
+        <div class="ref-id">R2 · pressure factor on Mental Strength</div>
+        <div class="ref-name">effective = mean × pressure_multiplier</div>
+        <div class="ref-desc">Adjusts Mental Strength for pre-draft / pre-major-stage context. <em>Not active for Flagg</em> — post-draft, pressure inflection already cleared.</div>
+      </div>
+      <div class="ref-status inactive">Inactive</div>
+    </div>
+
+    <div class="ref-row inactive">
+      <div class="ref-icon">🔄</div>
+      <div class="ref-body">
+        <div class="ref-id">R3 · Talent × Physical interaction</div>
+        <div class="ref-name">composite_lift = if (T ≠ P) sqrt(T × P) else mean(T, P)</div>
+        <div class="ref-desc">When Talent and Physical diverge meaningfully (≥0.8 gap), an interaction term replaces the simple average. <em>Not active for Flagg</em> — Talent (9.7) and Physical (9.3) too close.</div>
+      </div>
+      <div class="ref-status inactive">Inactive</div>
+    </div>
+
+    <div class="ref-row active">
+      <div class="ref-icon">🎯</div>
+      <div class="ref-body">
+        <div class="ref-id">R4 · coachability bias correction</div>
+        <div class="ref-name">0.4 × coach + 0.3 × teammates + 0.3 × observers</div>
+        <div class="ref-desc">Coach quotes carry optimism bias. The weighted blend pulls toward observer + teammate signal. Flagg: 0.4×9.4 + 0.3×8.8 + 0.3×9.0 = <b>9.04</b>, rounded to 9.0.</div>
+      </div>
+      <div class="ref-status active">Active · Flagg</div>
+    </div>
+
+    <div class="ref-row active">
+      <div class="ref-icon">📍</div>
+      <div class="ref-body">
+        <div class="ref-id">R5 · CI widening on untested sub-dim</div>
+        <div class="ref-name">sd_eff = sd_base × (1 + 0.3 × untested_count)</div>
+        <div class="ref-desc">When a sub-dimension is untested in a relevant stress context, we widen the credible interval rather than penalize the mean. Honest is not the same as bearish. Flagg: harm-avoidance untested in adult-stress → sd 0.35 → 0.45.</div>
+      </div>
+      <div class="ref-status active">Active · Flagg</div>
+    </div>
+
+    <div class="ref-row inactive">
+      <div class="ref-icon">⚖️</div>
+      <div class="ref-body">
+        <div class="ref-id">R6 · cascade refinement (low Character)</div>
+        <div class="ref-name">if Character &lt; 7 then composite − 1.5</div>
+        <div class="ref-desc">If Character mean drops below the threshold (e.g., after a documented event), the composite takes a flat penalty. Transparent, not absorbed. <em>Not active for Flagg</em> — Character at 8.5, well above 7.</div>
+      </div>
+      <div class="ref-status inactive">Inactive</div>
+    </div>
+  </div>
+
+  <p class="body-text">Refinements are part of the framework lock. We don't add new ones between versions. R1-R6 are the v1.7 universe of corrections. If we find we need an R7, that means v1.8 — and v1.8 doesn't retroactively change v1.7's locked verdicts.</p>
+</section>
+
+
+<section id="review">
+  <h2><span class="num">05</span>The <b>25-PhD panel</b></h2>
+  <p class="body-text">A FieldCheck verdict isn't computed and pushed live. It's reviewed by a standing panel of 25 PhDs spanning sports science, psychometrics, biomechanics, behavioral economics, and statistics. Every locked verdict has the panel sign-off documented in the audit trail.</p>
+
+  <div class="callout teal">
+    <b>Dissents are part of the record.</b> Cooper Flagg's verdict carries a documented dissent from Dr. Vance (panelist · psychometrics) who argued the Character CI should widen further. That dissent didn't block the lock, but it didn't disappear either. When the August 2028 check-in arrives, Vance's dissent gets the same scrutiny as the consensus call.
+  </div>
+
+  <p class="body-text">The panel doesn't operate in real time. Verdicts are reviewed in <b>monthly batches</b>. Between batches, the framework parameters (weights, thresholds, sub-dimension definitions) are immutable. This is the structural defense against drift, recency bias, and reactive smoothing.</p>
+</section>
+
+
+<section id="predict">
+  <h2><span class="num">06</span>Pre-registration <b>before</b> outcomes</h2>
+  <p class="body-text">Every v1.7 verdict is <em>pre-registered</em>: locked at a specific timestamp with a specific check-in date, before the outcomes that would prove the verdict right or wrong are knowable. For Cooper Flagg, that's <b>May 17, 2026 lock · August 15, 2028 check-in</b>. We committed to the verdict before he played his second full NBA season.</p>
+  <p class="body-text">Between lock and check-in, the verdict cannot be edited. A great rookie season doesn't move the composite up. An injury doesn't move it down. New evidence informs the next verdict; it does not retroactively change the one being graded.</p>
+
+  <div class="callout moss">
+    This is the discipline that makes the framework auditable. If we let new information into a locked verdict, we'd be grading our forecasts against shifting goalposts. The whole point of pre-registration is to <b>tie our own hands</b>.
+  </div>
+</section>
+
+
+<section id="cadence">
+  <h2><span class="num">07</span>Continuous <b>learning cadence</b></h2>
+  <p class="body-text">The framework refines on a fixed schedule. Each cadence step is published in advance:</p>
+
+  <div class="cadence">
+    <div class="cad-cell">
+      <div class="cad-when">weekly</div>
+      <div class="cad-what">// outcomes ingestion</div>
+    </div>
+    <div class="cad-cell">
+      <div class="cad-when">monthly</div>
+      <div class="cad-what">// PhD panel review</div>
+    </div>
+    <div class="cad-cell">
+      <div class="cad-when">quarterly</div>
+      <div class="cad-what">// weight updates</div>
+    </div>
+    <div class="cad-cell">
+      <div class="cad-when">annual</div>
+      <div class="cad-what">// refinement review</div>
+    </div>
+    <div class="cad-cell">
+      <div class="cad-when">5-year</div>
+      <div class="cad-what">// major version (v1.8 etc.)</div>
+    </div>
+  </div>
+
+  <p class="body-text">Outcomes get ingested into the corpus weekly. The PhD panel reviews calibration monthly. Pillar weights can shift quarterly based on out-of-sample performance. Refinements (R1-R6) only change at annual review. Major version changes (v1.8) happen on a five-year cycle. None of these cadences <em>retroactively change locked verdicts</em>.</p>
+</section>
+
+
+<section id="fail">
+  <h2><span class="num">08</span>How we <b>publish failures</b></h2>
+  <p class="body-text">Every verdict that closes "wrong" gets published on the <a href="/predictions" style="color:var(--gold);text-decoration:none;border-bottom:1px solid var(--goldl)">public prediction ledger</a>. By name. With the verdict we issued, the outcome that happened, and what we got wrong about the player. Three definitions of "wrong" in increasing severity:</p>
+
+  <div class="fail-grid">
+    <div class="fail-card">
+      <div class="fail-h">// out-of-band wrong</div>
+      <div class="fail-name">Empirical composite outside CI</div>
+      <div class="fail-desc">3-year measured composite falls outside the credible interval we published. If we said 9.30 ± 0.5 and reality returns 7.8, we were wrong, full stop.</div>
+    </div>
+    <div class="fail-card">
+      <div class="fail-h">// wrong-tier wrong</div>
+      <div class="fail-name">Tier delta ≥ 2 levels</div>
+      <div class="fail-desc">Empirical tier is at least 2 tiers below predicted tier. ELITE+ predicted, SOLID-STARTER delivered.</div>
+    </div>
+    <div class="fail-card">
+      <div class="fail-h">// cascade wrong</div>
+      <div class="fail-name">R6 activation event</div>
+      <div class="fail-desc">A categorical event drops Character below 7 (R6 cascade fires) or a major injury collapses Physical. Documented with whether the cascade was predicted as a watch-list trigger.</div>
+    </div>
+    <div class="fail-card partial">
+      <div class="fail-h">// partial · documented</div>
+      <div class="fail-name">Edge cases</div>
+      <div class="fail-desc">Trajectory inside CI but tier transition different (e.g., HOF lock but no All-NBA appearances). Published as partial-right with delta narrative.</div>
+    </div>
+  </div>
+
+  <p class="body-text">A verdict closes <em>right</em> only when the empirical 3-year composite falls inside the CI <b>and</b> the empirical tier matches or exceeds the predicted tier. Anything else gets graded down.</p>
+</section>
+
+
+<section id="principles">
+  <h2><span class="num">09</span>The <b>6 constraints</b>, unchanged</h2>
+  <p class="body-text">Behind the framework sit six structural constraints. They are not negotiable. They are the part of FieldCheck that doesn't move when business pressure tries to move it.</p>
+
+  <div class="principles">
+    <div class="principle">
+      <div class="principle-num">1</div>
+      <div class="principle-body">
+        <div class="principle-h">Free tier permanent</div>
+        <div class="principle-desc">The Free tier exists forever. We never sunset it, never paywall the core verdict, never lock the polygon behind a sign-in.</div>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">2</div>
+      <div class="principle-body">
+        <div class="principle-h">No affiliate revenue</div>
+        <div class="principle-desc">FieldCheck takes no money from agencies, no money from leagues, no money from advertisers paying to influence verdicts. <b>The user pays. Nobody else.</b></div>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">3</div>
+      <div class="principle-body">
+        <div class="principle-h">No payola</div>
+        <div class="principle-desc">No team, agent, or player buys their way to a higher score. If we ever take such payment, every prior verdict is invalidated retroactively.</div>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">4</div>
+      <div class="principle-body">
+        <div class="principle-h">Walk-away default</div>
+        <div class="principle-desc">If a verdict requires compromising the framework (e.g., a high-paying client demands their player be graded differently), we walk away. Loud, in public, with the reason published.</div>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">5</div>
+      <div class="principle-body">
+        <div class="principle-h">Failures stay published</div>
+        <div class="principle-desc">Wrong verdicts go on the ledger. They stay on the ledger. We don't delete them when v1.8 ships. The historical record of failure is part of the credibility.</div>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">6</div>
+      <div class="principle-body">
+        <div class="principle-h">Framework lock</div>
+        <div class="principle-desc">Locked verdicts cannot be edited between framework versions. We grade our own work against the framework we used at lock-time, not the framework we evolved to.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="v5algo">
+  <h2><span class="num">10</span>The <b>V5 algorithm</b> · prompt + deterministic post-processing</h2>
+
+<div style="background:#0f2417;border-left:3px solid #4ade80;padding:14px 18px;margin:14px 0;border-radius:0 6px 6px 0;color:#bbf7d0;font-family:ui-monospace,SFMono-Regular,monospace">
+<div style="font-size:11px;color:#86efac;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;margin-bottom:6px">V022.36-V5.2 · MAY 27, 2026 · BATTERY VALIDATED 110/110</div>
+<p style="margin:0;font-size:14px;line-height:1.65">The V5 algorithm is a two-layer hybrid system: a prompt-driven synthesis layer evaluates evidence, and a deterministic post-synthesis correction layer applies bright-line rules where LLM variance is unacceptable. Audit trail in <code style="background:#000;padding:2px 6px;border-radius:3px;color:#a5f3fc">composite_v022_31.v5_corrections[]</code> shows every adjustment with rule, raw value, corrected value, and reason.</p>
+</div>
+
+<h3>10.1 · Layer 1 · Synthesis (prompt-driven)</h3>
+<p>Sonnet 4.5 evaluates the athlete against 8 facets with cross-sport theoretical 10 anchors, 4 phenom criteria, 8 anti-inflation signals, and the default-low principle. Synthesis output includes raw composite and per-facet scores. <b>10 is the only ceiling.</b> No mathematical caps applied at this layer — Sonnet scores based purely on evidence rigor.</p>
+
+<p>Prompt sections that drive the rigor:</p>
+<ul>
+<li><b>Cross-sport theoretical 10 anchors</b> — Duncan / Brady / Tiger / Federer per facet calibrate upper bounds across sport contexts</li>
+<li><b>Phenom criteria</b> — 4 reqs locked: national-best evidence, pro coach corroboration, multi-year sustained signal, cross-context consistency. All 4 must be true for phenom_qualified.</li>
+<li><b>Anti-inflation</b> — 8 explicit signals that do NOT justify higher scores (recruiting rank, summer camp, hype articles, etc.)</li>
+<li><b>Default-low principle</b> — when evidence is uncertain, score lower; V5 inverts V4's hype-default-up</li>
+<li><b>Anti-contamination</b> — reasoning instructions for Jr/Sr/family-lineage cases with named examples (Kate Harpring → score the daughter, not Matt Harpring NBA father)</li>
+<li><b>Critical 9.7+ reserved</b> — imperative upper-bound rules: NO active player exceeds 9.6 except retired-singular Jordan at 9.9</li>
+</ul>
+
+<p><b>What was removed:</b> The V5 v2.1 iteration tried adding HARD NUMERIC ANCHORS — a list of named athletes with specific score ranges. This backfired. Saniyah Hall was anchored at 5.0-5.4 with the list present, yet Sonnet returned her at 9.0. The reason: listing Saniyah alongside Caitlin Clark, Steph Curry, and Tim Duncan caused peer-association bias — the model associated her with their tier, overriding the numeric bound. <b>This is a generalizable LLM lesson: reasoning instructions ("if X, then Y") beat anchor lookup tables for deterministic behavior.</b> We removed the list and moved enforcement to Layer 2.</p>
+
+<h3>10.2 · Layer 2 · Deterministic post-synthesis correction</h3>
+<p>After synthesis returns raw composite, a JavaScript function <code>_v5_apply_corrections</code> applies 6 bright-line rules. Each rule is conditional on identity, career stage, and tier signals — derived from the design doc, not arbitrary tier numbers.</p>
+
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;background:#0a0a0a;border:1px solid #262626;border-radius:6px;overflow:hidden;font-family:ui-monospace,SFMono-Regular,monospace">
+<thead><tr style="background:#1a1a1a">
+<th style="text-align:left;padding:8px 10px;color:#888;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.5px">Rule</th>
+<th style="text-align:left;padding:8px 10px;color:#888;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.5px">Trigger</th>
+<th style="text-align:left;padding:8px 10px;color:#888;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.5px">Action</th>
+</tr></thead>
+<tbody>
+<tr><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8"><b>R1</b></td><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8">Jr/Sr/II/III/IV suffix (regex) + amateur tier</td><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8">composite ≤ 5.5 (HS) or 7.4 (D1)</td></tr>
+<tr><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8"><b>R2</b></td><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8">HS + prep_amateur + no phenom flag</td><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8">composite ≤ 5.4</td></tr>
+<tr><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8"><b>R3</b></td><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8">D1 + college_amateur + no phenom flag</td><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8">composite ≤ 7.4</td></tr>
+<tr><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8"><b>R4</b></td><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8">Active career stage (rookie/early/prime/late_pro)</td><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8">composite ≤ 9.3</td></tr>
+<tr><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8"><b>R5</b></td><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8">Rookie career stage</td><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8">composite ≤ 7.5</td></tr>
+<tr><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8"><b>R6</b></td><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8">HS tier + pro stage (classification mismatch)</td><td style="padding:7px 10px;border-top:1px solid #262626;color:#e8e8e8">flag identity-review-needed (no correction)</td></tr>
+</tbody>
+</table>
+
+<p><b>Why this is not V4 caps.</b> V4 had unconditional tier-based ceilings with no transparency. V5 corrections are conditional on identity+stage+tier signals; every correction logs <code>rule</code>, <code>from</code>, <code>to</code>, and a <code>reason</code> in the audit trail; raw synthesis is preserved in metadata; and phenom-qualified athletes bypass R2 and R3 entirely.</p>
+
+<h3>10.3 · Audit trail metadata</h3>
+<p>Every verdict response includes <code>composite_v022_31</code> with the full audit chain:</p>
+<pre style="background:#000;border:1px solid #262626;padding:14px;border-radius:6px;overflow-x:auto;font-size:12.5px;line-height:1.55;color:#a5f3fc;font-family:ui-monospace,SFMono-Regular,monospace">{
+  "composite": 5.4,
+  "composite_v022_31": {
+    "raw": 9.83,
+    "v5_corrected": 5.4,
+    "v5_corrections": [
+      {"rule": "suffix-amateur-ceiling", "from": 9.83, "to": 5.5, "reason": "..."},
+      {"rule": "hs-evidence-ceiling-non-phenom", "from": 5.5, "to": 5.4, "reason": "..."}
+    ],
+    "v5_corrections_applied": true,
+    "tier": "hs",
+    "stage": "prep_amateur"
+  }
+}</pre>
+
+<h3>10.4 · Validation · 110-athlete battery</h3>
+<p>The architecture validated against 110 athletes across 11 buckets (60 HS / 17 D1 / 13 D2 / 10 D3 / 3 JUCO / 7 pro regression+collision). Cold cache against DEV endpoint. Results:</p>
+<ul>
+<li><b>100% rule compliance</b> on the amateur moat case (HS + D1 + D2 + D3)</li>
+<li>Jr/Sr suffix athletes deterministically bounded — Jordan Smith Jr 9.83 → 5.4, Carlos Medlock Jr 9.0 → 5.4, Eric Booth Jr 7.5 → 5.4</li>
+<li>Top D1 amateurs at evidence ceiling — Cameron Boozer 9.1 → 7.4, AJ Dybantsa 9.3 → 7.4, JT Toppin 8.7 → 7.4</li>
+<li>Active pros at active ceiling — Cooper Flagg 9.71 → 9.3 (active rule), Tim Duncan retired passes through unchanged at 9.3</li>
+<li>Under-cap variance preserved — Kate Harpring 4.0, Manuella Fernandez 4.0, Jamarion Vincent 5.3 (D1 hidden gem), Anthony Brown Jr 6.2</li>
+</ul>
+
+<h3>10.5 · Design lessons from 3 iterations</h3>
+<ul>
+<li><b>V5 v1 rolled back</b> — caps off, evidence rigor weak. Every HS scored 9.6-9.8. Pure prompt iteration without rigor is naive.</li>
+<li><b>V5 v2</b> — added cross-sport anchors, phenom criteria, anti-inflation. Clean cases worked. Contamination cases inflated.</li>
+<li><b>V5 v2.1</b> — added HARD NUMERIC ANCHORS list. Backfired: Saniyah Hall 3.5 → 9.0 via peer-association. Named-entity lists amplify variance.</li>
+<li><b>V5 v2.2 + v2.3</b> — rolled back the list, added deterministic post-processor + audit. 100% compliance. <b>Hybrid prompt+code is the architecture.</b></li>
+</ul>
+
+<p><b>Generalizable insight:</b> for any LLM-scored system that requires bright-line behavior, hybrid wins. Use prompts for evidence reasoning (LLM strength). Use code for identity/pattern detection (deterministic). Preserve raw output in audit metadata for transparency.</p>
+
+<div class="cta">
+  <div class="cta-h">// see it on a real player</div>
+  <div class="cta-l">Read Cooper Flagg's <b>v1.7 verdict</b>.</div>
+  <div class="cta-b">The methodology above is abstract until you see it applied. Flagg's verdict is the first v1.7 verdict we published. Polygon, refinements, comparables (LeBron 2003 + Wiggins 2014 + cross-sport Caleb Williams), interpretation paragraphs from the 25-PhD panel — all live, all auditable.</div>
+  <div class="cta-actions">
+    <a class='cta-btn primary' href='/fieldcheck-verdict?q=Cooper%20Flagg&amp;sport=mens-basketball'>View verdict →</a>
+    <a href="/predictions" class="cta-btn secondary">Prediction ledger</a>
+  </div>
+</div>
+
+
+<div class="foot">
+  <span>// v1.7 methodology · framework lock May 17 2026 · next major version v1.8 May 2031</span>
+  <span>// ThinkDifferent Holdings · FieldCheck · last refreshed <b>May 19 2026</b></span>
+</div>
+
+<script>
+// FC17 Trust Strip · compact variant · methodology page header
+document.addEventListener('DOMContentLoaded', function(){
+  if (window.FC17_TRUST) {
+    window.FC17_TRUST.mount('#fc17-trust-anchor', {
+      variant: 'compact',
+      eyebrow: '// the framework · by the numbers',
+      linkPredictionLedger: true
+    });
+  }
+});
+</script>
+
+</body></html>

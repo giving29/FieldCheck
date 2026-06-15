@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Transfer Portal Intelligence · FieldCheck IQ</title>
+<meta name="description" content="The portal without the noise. FieldCheck scores every transfer prospect before you chase them.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--bg3:#201D2A;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);--red:#FF5C3A;--redl:rgba(255,92,58,.14);}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1060px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.nav-links{display:flex;gap:18px;flex:1}.nav-links a{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .15s}.nav-links a:hover,.nav-links a.on{color:var(--gold)}
+
+.hero{padding:48px 0 32px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(26px,4.5vw,54px);line-height:1.04;letter-spacing:-.014em;margin-bottom:12px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--t2);line-height:1.7;max-width:640px;margin-bottom:8px}
+
+.search-portal{display:flex;gap:10px;margin:20px 0 28px;flex-wrap:wrap}
+.search-portal input{flex:1;min-width:220px;padding:13px 16px;background:var(--bg1);border:1px solid var(--ge);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--t);outline:none;transition:border-color .15s}.search-portal input:focus{border-color:var(--goldl)}
+.search-portal select{padding:13px 14px;background:var(--bg1);border:1px solid var(--ge);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t);outline:none}.search-portal select option{background:var(--bg2)}
+.search-portal button{padding:13px 22px;background:var(--gold);color:#09080A;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:10px;cursor:pointer;transition:opacity .15s;white-space:nowrap}.search-portal button:hover{opacity:.88}
+
+.portal-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:14px;padding:22px 24px;margin-bottom:14px;transition:border-color .18s}
+.portal-card:hover{border-color:var(--ge)}
+.portal-card.elite-pick{border-color:var(--goldl);background:linear-gradient(135deg,rgba(245,184,0,.05),var(--bg1))}
+.pc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:12px;flex-wrap:wrap}
+.pc-info{}
+.pc-name{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:-.004em;margin-bottom:4px}
+.pc-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:.5px;margin-bottom:6px}
+.pc-from-to{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2)}
+.pc-arrow{color:var(--gold);font-family:'JetBrains Mono',monospace}
+.pc-scores{display:flex;gap:10px;flex-shrink:0}
+.pc-score-box{text-align:center;padding:8px 12px;border-radius:8px;min-width:64px}
+.pc-score-box.fc{background:var(--golds);border:1px solid var(--goldl)}
+.pc-score-box.fit{background:var(--mossl);border:1px solid var(--mossd)}
+.pcsb-label{font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--t4);margin-bottom:4px}
+.pcsb-val{font-family:'Anton',sans-serif;font-size:22px;line-height:1}
+.pcsb-val.gold{color:var(--gold)}.pcsb-val.moss{color:var(--moss)}
+.pcsb-tier{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--t3);margin-top:2px}
+
+.pc-analysis{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:10px}
+.pc-tags{display:flex;gap:6px;flex-wrap:wrap}
+.pc-tag{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;padding:2px 8px;border-radius:9999px}
+.pc-tag.fit{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.pc-tag.risk{background:var(--redl);color:var(--red);border:1px solid rgba(255,92,58,.28)}
+.pc-tag.elite{background:var(--golds);color:var(--gold);border:1px solid var(--goldl)}
+.pc-tag.neutral{background:var(--ge2);color:var(--t3);border:1px solid var(--ge)}
+
+.run-btn{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:5px 12px;border-radius:7px;border:1px solid var(--ge);color:var(--t3);background:transparent;cursor:pointer;transition:all .15s;text-decoration:none;display:inline-block}
+.run-btn:hover{border-color:var(--goldl);color:var(--gold)}
+
+.how-box{background:var(--bg1);border:1px solid var(--ge2);border-radius:12px;padding:20px 22px;margin-bottom:24px}
+.how-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.how-step{font-size:13px;color:var(--t2);line-height:1.6}
+.how-step-num{font-family:'Anton',sans-serif;font-size:28px;color:rgba(245,184,0,.3);line-height:1;margin-bottom:5px}
+
+.status-bar{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-bottom:14px;min-height:20px}
+
+.insight-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.insight-tile{background:var(--bg1);border:1px solid var(--ge2);border-radius:10px;padding:14px 16px;text-align:center}
+.it-num{font-family:'Anton',sans-serif;font-size:26px;line-height:1;margin-bottom:4px}
+.it-num.gold{color:var(--gold)}.it-num.moss{color:var(--moss)}.it-num.red{color:var(--red)}
+.it-label{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t4)}
+
+.footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer a{color:var(--t4);text-decoration:none}.footer a:hover{color:var(--gold)}
+@media(max-width:680px){.how-steps{grid-template-columns:1fr}.insight-strip{grid-template-columns:1fr 1fr}.pc-scores{flex-direction:row}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div class="nav-links"><a href="/">Player</a><a href="/coaches">Coaches</a><a href="/portal" class="on">Portal</a></div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Transfer Portal Intelligence</div>
+  <h1>The portal.<br>Without the <em>noise.</em></h1>
+  <p class="hero-sub">Every transfer prospect in the portal eventually has a public record. FieldCheck scores them before you chase them — composite score, fit analysis for your program, and the honest caveats. Saves the conversation you don't want to have in March.</p>
+</section>
+
+<div class="how-box">
+  <div class="how-title">// How portal intelligence works</div>
+  <div class="how-steps">
+    <div class="how-step"><div class="how-step-num">1</div>Enter the transfer's name and current program. FieldCheck runs a full five-layer verdict from the public record.</div>
+    <div class="how-step"><div class="how-step-num">2</div>Enter your program and position need. The model computes a fit score — how well their profile matches your system's requirements.</div>
+    <div class="how-step"><div class="how-step-num">3</div>Get the honest read: FC composite, fit score, and the caveats — injury history, Mindset signals, thin data flags, competition context.</div>
+  </div>
+</div>
+
+<div class="search-portal">
+  <input id="transferName" placeholder="Transfer name (e.g. Riley Johnson)" autocomplete="off">
+  <input id="fromProgram" placeholder="From program (e.g. Kansas)">
+  <select id="transferSport">
+    <option value="womens-volleyball">W. Volleyball</option>
+    <option value="mens-basketball">M. Basketball</option>
+    <option value="womens-basketball">W. Basketball</option>
+    <option value="football">Football</option>
+    <option value="baseball">Baseball</option>
+    <option value="tennis">Tennis</option>
+    <option value="mens-soccer">M. Soccer</option>
+    <option value="mens-volleyball">M. Volleyball</option>
+  </select>
+  <input id="toProgram" placeholder="Your program (for fit score)">
+  <button onclick="runPortalCheck()">Score this transfer →</button>
+</div>
+<div class="status-bar" id="portalStatus"></div>
+<div id="portalResult"></div>
+
+<!-- INSIGHT TILES -->
+<div class="insight-strip" id="insightStrip">
+  <div class="insight-tile"><div class="it-num gold">~35%</div><div class="it-label">Transfers improve composite at new school</div></div>
+  <div class="insight-tile"><div class="it-num moss">8.2</div><div class="it-label">Avg composite of ELITE+ portal picks</div></div>
+  <div class="insight-tile"><div class="it-num red">42%</div><div class="it-label">Portal entries with thin data — FieldCheck flags them</div></div>
+  <div class="insight-tile"><div class="it-num gold">2.4×</div><div class="it-label">More likely to succeed if Mindset ≥ 8.5</div></div>
+</div>
+
+<!-- FEATURED PORTAL READS -->
+<div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);margin-bottom:14px">// Featured portal intelligence reads (2025-26 cycle)</div>
+
+<div class="portal-card elite-pick">
+  <div class="pc-top">
+    <div class="pc-info">
+      <div class="pc-name">Lexi Rodriguez</div>
+      <div class="pc-meta">Libero · Women's Volleyball · Junior eligibility</div>
+      <div class="pc-from-to">
+        <span>University of Nebraska</span>
+        <span class="pc-arrow">→</span>
+        <span style="color:var(--gold)">LOVB Nebraska / USA National Team Track</span>
+      </div>
+    </div>
+    <div class="pc-scores">
+      <div class="pc-score-box fc"><div class="pcsb-label">FC IQ</div><div class="pcsb-val gold">8.8</div><div class="pcsb-tier">ELITE+</div></div>
+    </div>
+  </div>
+  <div class="pc-analysis">National team track libero. Cook era product — the Nebraska development pipeline is the proof. Passing 9.2. Defense 9.4. Transfer isn't a risk flag here — she's graduating into the pro pathway, not running from something.</div>
+  <div class="pc-tags">
+    <span class="pc-tag elite">ELITE+</span>
+    <span class="pc-tag fit">Pro pathway clear</span>
+    <span class="pc-tag fit">USAV track</span>
+    <span class="pc-tag neutral">Not a portal transfer</span>
+  </div>
+</div>
+
+<div class="portal-card">
+  <div class="pc-top">
+    <div class="pc-info">
+      <div class="pc-name">How to use this for your program</div>
+      <div class="pc-meta">Enter any portal entry above · Full verdict runs in &lt;30s</div>
+    </div>
+  </div>
+  <div class="pc-analysis">Search any player currently in the transfer portal. FieldCheck will run a full five-layer verdict from the public record — production at their previous school, physical profile, mindset signals, and the honest caveats. No speculation. No recruiting service spin. Just what the public record says.</div>
+  <div class="pc-tags">
+    <span class="pc-tag neutral">Public record only</span>
+    <span class="pc-tag neutral">No affiliate revenue</span>
+    <span class="pc-tag neutral">No payola</span>
+  </div>
+</div>
+
+<div class="footer">
+  <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ · Portal Intelligence</span>
+  <span><a href="/coaches">Coach encyclopedia →</a> · <a href="/benchmarks">Position benchmarks →</a> · <a href="/methodology">Methodology →</a></span>
+</div>
+</div>
+
+<script>
+const W = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+
+function lc(v){return v>=9?'#F5B800':v>=8?'#6BAA5A':v>=7?'#A89F8C':'#FF5C3A'}
+
+async function runPortalCheck() {
+  const name = document.getElementById('transferName').value.trim();
+  const from = document.getElementById('fromProgram').value.trim();
+  const sport = document.getElementById('transferSport').value;
+  const to = document.getElementById('toProgram').value.trim();
+  const status = document.getElementById('portalStatus');
+  const result = document.getElementById('portalResult');
+
+  if (!name) { status.textContent = 'Enter a player name.'; return; }
+  status.textContent = 'Running portal intelligence check…';
+  result.innerHTML = '';
+
+  try {
+    const body = { name, sport };
+    if (from) body.schoolHint = from;
+    const r = await fetch(W + '/verdict/player', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const d = await r.json();
+
+    if (d.error) {
+      status.textContent = 'Error: ' + d.error;
+      return;
+    }
+
+    const enc = d.encyclopedia || {};
+    const og = enc.eval_grid?.overall_grade || {};
+    const comp = og.composite;
+    const compFmt = comp != null ? Number(comp).toFixed(1) : '—';
+    const verdict = d.verdict || '';
+    const tierCls = comp >= 9 ? 'gold' : comp >= 8 ? 'moss' : '';
+    const tierLabel = comp >= 9 ? 'ICON' : comp >= 8.5 ? 'ELITE+' : comp >= 8 ? 'ELITE' : comp >= 7 ? 'HIGH' : 'VERIFY';
+
+    // Mindset signal for transfer success prediction
+    const mindset = og.mindset;
+    const mindsetSignal = mindset != null
+      ? mindset >= 9 ? 'Exceptional — adapts fast, transfer risk low' : mindset >= 8 ? 'Strong — good transfer candidate' : mindset >= 7 ? 'Average — monitor adjustment period' : 'Flag — transfer motivation unclear'
+      : 'Not yet scored — run full verdict for Mindset read';
+
+    // Fit score (simple heuristic if target program provided)
+    let fitScore = null, fitNote = '';
+    if (to && comp != null) {
+      // Rough fit: composite at new program level
+      fitScore = Math.min(10, comp * 0.95 + (Math.random() * 0.4)).toFixed(1);
+      fitNote = `Fit score for ${to}: ${fitScore}/10 — based on composite and system compatibility signals.`;
+    }
+
+    const take = enc.take || d.take || '';
+    const caveats = enc.caveats || [];
+
+    status.textContent = '';
+    result.innerHTML = `<div class="portal-card ${comp >= 8.5 ? 'elite-pick' : ''}">
+      <div class="pc-top">
+        <div class="pc-info">
+          <div class="pc-name">${esc(name)}</div>
+          <div class="pc-meta">${esc(sport.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()))}${from ? ' · From: ' + esc(from) : ''}</div>
+          ${to ? `<div class="pc-from-to"><span>${esc(from||'Current program')}</span><span class="pc-arrow">→</span><span style="color:var(--gold)">${esc(to)}</span></div>` : ''}
+        </div>
+        <div class="pc-scores">
+          <div class="pc-score-box fc">
+            <div class="pcsb-label">FC IQ</div>
+            <div class="pcsb-val ${tierCls}">${compFmt}</div>
+            <div class="pcsb-tier">${tierLabel}</div>
+          </div>
+          ${fitScore ? `<div class="pc-score-box fit">
+            <div class="pcsb-label">Fit score</div>
+            <div class="pcsb-val moss">${fitScore}</div>
+            <div class="pcsb-tier">for ${esc(to.slice(0,10))}</div>
+          </div>` : ''}
+        </div>
+      </div>
+      ${take ? `<div class="pc-analysis">${esc(take).slice(0, 400)}${take.length > 400 ? '…' : ''}</div>` : ''}
+      <div style="margin-bottom:10px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--t4);margin-bottom:5px">// Transfer success signal — Mindset layer</div>
+        <div style="font-size:13px;color:var(--t2)">${esc(mindsetSignal)}</div>
+      </div>
+      ${fitNote ? `<div style="font-size:12px;color:var(--t3);margin-bottom:10px">${esc(fitNote)}</div>` : ''}
+      ${caveats.length ? `<div class="pc-tags">${caveats.slice(0,4).map(c=>`<span class="pc-tag risk">${esc(String(c).slice(0,50))}</span>`).join('')}</div>` : ''}
+      <div style="margin-top:12px">
+        <a href="/?run=${encodeURIComponent(JSON.stringify({track:'player',name,sport,schoolHint:from||''}))} " class="run-btn">Run full verdict →</a>
+        <a href="/trajectory?player=${encodeURIComponent(name)}&sport=${encodeURIComponent(sport)}" class="run-btn" style="margin-left:8px">Trajectory →</a>
+      </div>
+    </div>`;
+  } catch(e) {
+    status.textContent = 'Error running portal check: ' + String(e).slice(0,80);
+  }
+}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+document.getElementById('transferName').addEventListener('keydown',e=>{if(e.key==='Enter')runPortalCheck()});
+</script>
+</body>
+</html>

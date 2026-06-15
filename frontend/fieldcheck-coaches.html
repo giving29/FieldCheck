@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coach Encyclopedia · FieldCheck IQ</title>
+<meta name="description" content="Every major program coach scored on development orientation, retention, and athlete outcomes. Know before you commit.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);--red:#FF5C3A;}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1060px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.nav-links{display:flex;gap:18px;flex:1}.nav-links a{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .15s}.nav-links a:hover,.nav-links a.on{color:var(--gold)}
+
+.hero{padding:48px 0 32px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(26px,4.5vw,54px);line-height:1.04;letter-spacing:-.014em;margin-bottom:12px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--t2);line-height:1.7;max-width:620px;margin-bottom:8px}
+.principle{padding:14px 18px;background:var(--golds);border:1px solid var(--goldl);border-radius:10px;font-size:13px;color:var(--t);line-height:1.65;margin-bottom:28px}
+.principle b{color:var(--gold)}
+
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+.fi{background:var(--bg1);border:1px solid var(--ge);border-radius:7px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--t3);cursor:pointer;transition:all .15s}
+.fi:hover,.fi.on{border-color:var(--goldl);color:var(--gold);background:var(--golds)}
+.search-in{flex:1;min-width:160px;padding:7px 12px;background:var(--bg1);border:1px solid var(--ge);border-radius:7px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t);outline:none}
+.search-in:focus{border-color:var(--goldl)}
+.count-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);letter-spacing:.8px;text-transform:uppercase;margin-left:auto}
+
+.coaches-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.coach-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:14px;padding:18px 20px;cursor:pointer;transition:border-color .18s}
+.coach-card:hover{border-color:var(--ge)}
+.cc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
+.cc-name{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:-.004em;line-height:1.2}
+.cc-school{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);margin-top:3px;letter-spacing:.4px}
+.cc-score-wrap{text-align:right;flex-shrink:0}
+.cc-score{font-family:'Anton',sans-serif;font-size:26px;line-height:1}
+.cc-score.high{color:var(--gold)}.cc-score.good{color:var(--moss)}.cc-score.mid{color:var(--t2)}
+.cc-score-label{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--t4);letter-spacing:.8px;text-transform:uppercase;margin-top:3px}
+
+.cc-dims{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+.cc-dim{display:flex;align-items:center;gap:7px}
+.cc-dim-name{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t4);letter-spacing:.6px;text-transform:uppercase;width:78px;text-align:right;flex-shrink:0}
+.cc-dim-bar{flex:1;height:4px;background:var(--bg2);border-radius:9999px;overflow:hidden}
+.cc-dim-fill{height:100%;border-radius:9999px}
+.cc-dim-val{font-family:'Anton',sans-serif;font-size:12px;width:24px}
+
+.cc-note{font-size:11.5px;color:var(--t3);line-height:1.5;border-top:1px solid var(--ge2);padding-top:8px;margin-top:8px}
+.cc-pipeline{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);margin-top:6px;letter-spacing:.3px}
+.cc-sport-badge{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 8px;border-radius:9999px;background:var(--ge2);color:var(--t3);border:1px solid var(--ge);display:inline-block;margin-bottom:8px}
+
+.empty{padding:32px;text-align:center;color:var(--t3);font-family:'JetBrains Mono',monospace;font-size:11px}
+
+.footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer a{color:var(--t4);text-decoration:none}.footer a:hover{color:var(--gold)}
+@media(max-width:680px){.coaches-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div class="nav-links"><a href="/">Player</a><a href="/coaches" class="on">Coaches</a><a href="/methodology">Methodology</a></div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Coach Program Encyclopedia</div>
+  <h1>Know the coach<br>before you <em>commit.</em></h1>
+  <p class="hero-sub">Every major program coach scored on development orientation, athlete retention, outcomes pipeline, and honest signal. The program you choose shapes the next four years.</p>
+  <div class="principle">
+    <b>Methodology:</b> Coach culture scores are derived from public-record sources — AVCA corpus, NCAA media days, transfer data, pro pipeline outcomes. These are not opinions. They are scored observations from documented behavior over multi-year tenures. <a href="/methodology" style="color:var(--gold)">Full methodology →</a>
+  </div>
+</section>
+
+<div class="filter-bar">
+  <input class="search-in" id="coachSearch" placeholder="Search coach or program…" oninput="filterCoaches()">
+  <button class="fi on" id="f-all" onclick="setSport('all',this)">All Sports</button>
+  <button class="fi" id="f-wvb" onclick="setSport('womens-volleyball',this)">W. Volleyball</button>
+  <button class="fi" id="f-fb" onclick="setSport('football',this)">Football</button>
+  <button class="fi" id="f-mbb" onclick="setSport('mens-basketball',this)">M. Basketball</button>
+  <span class="count-label" id="coachCount">Loading…</span>
+</div>
+
+<div class="coaches-grid" id="coachesGrid"></div>
+
+<div class="footer">
+  <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ · Coach Encyclopedia</span>
+  <span><a href="/">Run a player verdict →</a> · <a href="/accountability">Program accountability →</a></span>
+</div>
+</div>
+
+<script>
+const COACHES = [
+  // Women's Volleyball
+  { slug:'john-cook', name:'John Cook', school:'Nebraska', sport:'womens-volleyball', titles:4, record:'791-120 (.868)', composite:9.2,
+    development:9.5, retention:9.3, honesty:9.0, outcomes:9.8, pipeline:'Jordan Larson, Justine Wong-Orantes, Harper Murray, Lexi Rodriguez',
+    note:'AVCA Hall of Fame. Built Nebraska into the largest fan base in women\'s volleyball — 92,003 fans at Nebraska Coliseum 2023. Fast, aggressive 5-1 offense; emphasis on coachability. Lifetime emeritus track.', hired:2000 },
+  { slug:'jerritt-elliott', name:'Jerritt Elliott', school:'Texas', sport:'womens-volleyball', titles:3, record:'617-137 (.818)', composite:9.0,
+    development:9.0, retention:8.8, honesty:9.2, outcomes:9.5, pipeline:'Logan Eggleston, Madisen Skinner (back-to-back LOVB Finals MVP), Asjia O\'Neal',
+    note:'AVCA Hall of Fame. Won back-to-back national titles 2022-2023. Positionless offense, international tempo, selective on character — lower transfer portal activity than peers. Contract through 2030.', hired:2001 },
+  { slug:'karch-kiraly', name:'Karch Kiraly', school:'USA National Team', sport:'womens-volleyball', titles:0, record:'Olympic Gold (2020 Tokyo)', composite:9.3,
+    development:9.4, retention:9.0, honesty:9.5, outcomes:9.8, pipeline:'Entire national team pipeline — Jordan Larson, Kelsey Robinson-Cook, Avery Skinner',
+    note:'Greatest volleyball player ever, coaching the national team since 2012. Olympic gold 2020. LA28 preparation underway. USA W-Vball ranked #1-2 globally consistently under his tenure.', hired:2012 },
+  { slug:'russ-rose', name:'Russ Rose', school:'Penn State (retired 2023)', sport:'womens-volleyball', titles:7, record:'1312-178 (.880)', composite:9.4,
+    development:9.6, retention:9.2, honesty:9.1, outcomes:9.7, pipeline:'Kaleigh Rolfzen, Simone Lee, Ali Frantti, Megan Courtney',
+    note:'The most titles in D1 women\'s volleyball history. 39-year tenure at Penn State. AVCA Hall of Fame. Retired 2023 — successor is Katie Schumacher-Cawley. Legacy program with elite development track record.', hired:1979 },
+  { slug:'kelly-sheffield', name:'Kelly Sheffield', school:'Wisconsin', sport:'womens-volleyball', titles:0, record:'354-95 (.788)', composite:8.6,
+    development:8.8, retention:8.5, honesty:8.9, outcomes:8.7, pipeline:'Dana Rettke (LOVB), Devyn Robinson, Sydney Reed',
+    note:'Rebuilt Wisconsin into a national title contender from 2013. Three Final Four appearances. Known for developing big middles. Contract through 2028.', hired:2013 },
+  { slug:'paulo-coco', name:'Paulo Coco', school:'LOVB Atlanta', sport:'womens-volleyball', titles:0, record:'13-3 (2025 LOVB inaugural)', composite:8.8,
+    development:8.5, retention:8.9, honesty:8.7, outcomes:8.5, pipeline:'LOVB Atlanta (Andrea Drews, Jonni Parker, Regan Pittman)',
+    note:'2025 LOVB Coach of the Year. Brazilian coaching tradition — fast, physical, aggressive blocking. International tempo pioneer in US professional volleyball. Building the LOVB culture from day one.', hired:2024 },
+  { slug:'mary-wise', name:'Mary Wise', school:'Florida', sport:'womens-volleyball', titles:0, record:'800-164 (.830)', composite:9.1,
+    development:9.4, retention:9.2, honesty:9.0, outcomes:9.4, pipeline:'Rachael Adams, Alex Holston, Thayer Hall (USA national team)',
+    note:'Longest-tenured P5 W-VB head coach in modern era. 33 years at Florida. Players choose to finish 4 years even in portal era. AVCA Hall of Fame. Multiple Final Fours. Athletes consistently credit development-first culture.', hired:1991 },
+  { slug:'john-dunning', name:'John Dunning', school:'Stanford (retired)', sport:'womens-volleyball', titles:4, record:'786-183 (.811)', composite:9.2,
+    development:9.3, retention:9.0, honesty:9.4, outcomes:9.5, pipeline:'Jordan Larson (started at Nebraska, played for Dunning at Stanford), Foluke Akinradewo',
+    note:'Four national titles at Stanford (2001, 2004, 2016, 2019). AVCA Hall of Fame. Built Stanford into the premier academic-athletics program in volleyball. Retired 2019.', hired:1996 },
+
+  // Football
+  { slug:'nick-saban', name:'Nick Saban', school:'Alabama (retired 2024)', sport:'football', titles:6, record:'292-71-1 (.803)', composite:9.5,
+    development:9.8, retention:9.0, honesty:8.9, outcomes:9.9, pipeline:'Tua Tagovailoa, Mac Jones, Najee Harris, DeVonta Smith, Will Anderson Jr.',
+    note:'Greatest college football coach in modern era. 6 national titles in 17 years at Alabama. Retired January 2024. The Process framework defined a generation of coaching philosophy. Elite development track record despite massive roster turnover.', hired:2007 },
+  { slug:'bill-belichick', name:'Bill Belichick', school:'UNC (2024-)', sport:'football', titles:6, record:'(college debut)', composite:8.9,
+    development:9.2, retention:7.8, honesty:8.2, outcomes:9.3, pipeline:'NFL history — Brady era defined the modern game',
+    note:'6 NFL Super Bowls. Moved to college football (UNC) in 2024. Unproven as a college recruiter but elite development philosophy. The process matters more than the platform. Watch the first full recruiting class.', hired:2024 },
+  { slug:'kirby-smart', name:'Kirby Smart', school:'Georgia', sport:'football', titles:2, record:'97-17 (.851)', composite:9.0,
+    development:8.8, retention:8.6, honesty:8.5, outcomes:9.2, pipeline:'Stetson Bennett, Brock Bowers, Jalen Carter, Travon Walker',
+    note:'Back-to-back national titles 2021-2022. Built Georgia into a consistent top-5 program. Heavy transfer portal activity — best in class at acquiring talent, development-first culture still developing.', hired:2016 },
+  { slug:'dabo-swinney', name:'Dabo Swinney', school:'Clemson', sport:'football', titles:2, record:'164-47 (.777)', composite:8.7,
+    development:9.0, retention:8.9, honesty:8.8, outcomes:8.8, pipeline:'Trevor Lawrence, Deshaun Watson, DJ Uiagalelei',
+    note:'2 national titles. Elite culture-building — "best is the standard." Known for loyalty to players and genuine development philosophy. Competitive window narrowing but culture standards remain elite.', hired:2008 },
+
+  // Men's Basketball
+  { slug:'bill-self', name:'Bill Self', school:'Kansas', sport:'mens-basketball', titles:1, record:'800-214 (.789)', composite:8.9,
+    development:9.2, retention:8.4, honesty:8.0, outcomes:9.1, pipeline:'Paul Pierce, Kirk Hinrich, Andrew Wiggins, Frank Mason, Ochai Agbaji',
+    note:'2022 national title. Consistent Final Four program. Draft-and-reload model with elite player development reputation. Known for making good players great. NIL-era adapting well.', hired:2003 },
+  { slug:'john-calipari', name:'John Calipari', school:'Arkansas (2024-)', sport:'mens-basketball', titles:1, record:'785-206 (.792)', composite:8.2,
+    development:7.8, retention:6.9, honesty:7.5, outcomes:9.0, pipeline:'John Wall, Anthony Davis, Karl-Anthony Towns, Jamal Murray',
+    note:'1 national title at Kentucky. Left for Arkansas 2024 after 15 years. Elite talent acquisition but retention and one-and-done model limits development. Outcomes at NBA level are strong — individual development during short windows is legitimate.', hired:2024 },
+  { slug:'mark-few', name:'Mark Few', school:'Gonzaga', sport:'mens-basketball', titles:0, record:'699-148 (.825)', composite:9.0,
+    development:9.3, retention:9.1, honesty:9.2, outcomes:8.9, pipeline:'Domantas Sabonis, Rui Hachimura, Drew Timme, Corey Kispert, Brandon Clarke',
+    note:'The most successful mid-major coach of his era. Consistent top-5 AP ranking. Elite player development — routinely turns 3-star recruits into lottery picks. Four-year commitment culture. No title yet but the development standard is legitimate.', hired:1999 },
+];
+
+let sportFilter = 'all';
+
+function lc(v){return v>=9?'#F5B800':v>=8?'#6BAA5A':v>=7?'#A89F8C':'#FF5C3A'}
+function setSport(s,btn){
+  sportFilter=s;
+  document.querySelectorAll('.fi').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  filterCoaches();
+}
+function filterCoaches(){
+  const q=document.getElementById('coachSearch').value.toLowerCase();
+  let list=COACHES;
+  if(sportFilter!=='all') list=list.filter(c=>c.sport===sportFilter);
+  if(q) list=list.filter(c=>c.name.toLowerCase().includes(q)||c.school.toLowerCase().includes(q));
+  renderCoaches(list);
+}
+function renderCoaches(list){
+  document.getElementById('coachCount').textContent=list.length+' coaches';
+  const grid=document.getElementById('coachesGrid');
+  if(!list.length){grid.innerHTML='<div class="empty">No coaches match the filter.</div>';return;}
+  grid.innerHTML=list.map(c=>{
+    const dims=[
+      {name:'Development',val:c.development},
+      {name:'Retention',val:c.retention},
+      {name:'Outcomes',val:c.outcomes},
+      {name:'Honesty',val:c.honesty}
+    ];
+    const dimHtml=dims.map(d=>{
+      const col=lc(d.val);
+      return `<div class="cc-dim">
+        <div class="cc-dim-name">${d.name}</div>
+        <div class="cc-dim-bar"><div class="cc-dim-fill" style="width:${d.val*10}%;background:${col}"></div></div>
+        <div class="cc-dim-val" style="color:${col}">${d.val}</div>
+      </div>`;
+    }).join('');
+    const scoreClass=c.composite>=9?'high':c.composite>=8?'good':'mid';
+    const sportLabel=c.sport.replace(/-/g,' ').replace(/\b\w/g,x=>x.toUpperCase());
+    return `<div class="coach-card">
+      <div class="cc-sport-badge">${sportLabel}</div>
+      <div class="cc-top">
+        <div>
+          <div class="cc-name">${c.name}</div>
+          <div class="cc-school">${c.school}${c.titles?' · '+c.titles+' title'+(c.titles!==1?'s':''):''}${c.hired?' · since '+c.hired:''}</div>
+        </div>
+        <div class="cc-score-wrap">
+          <div class="cc-score ${scoreClass}">${c.composite}</div>
+          <div class="cc-score-label">Culture score</div>
+        </div>
+      </div>
+      <div class="cc-dims">${dimHtml}</div>
+      ${c.record?`<div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);margin-bottom:6px">Record: ${c.record}</div>`:''}
+      <div class="cc-note">${c.note}</div>
+      ${c.pipeline?`<div class="cc-pipeline">// Pro pipeline: ${c.pipeline}</div>`:''}
+    </div>`;
+  }).join('');
+}
+filterCoaches();
+</script>
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How FieldCheck works · Methodology</title>
+<meta name="description" content="FieldCheck IQ methodology: 8 canonical facets across all sports, 25-PhD reviewer panel, 50 pre-registered predictions, multi-source data cascade. The version of athlete evaluation that publishes its work.">
+<meta property="og:title" content="FieldCheck IQ · How it works">
+<meta property="og:description" content="8 facets · all sports · 25 PhD reviewers · 50 pre-registered predictions · we publish our wrong ones by name">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07060A;--bg1:#100F14;--bg2:#181620;
+  --ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);
+  --t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);
+  --gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);
+  --moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.30);
+  --teal:#4EC9C0;--violet:#8B5CF6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 30% at 50% 0%,rgba(245,184,0,.04) 0%,transparent 60%),linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+
+.wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:60px 30px 100px}
+.brand-row{display:flex;align-items:center;gap:18px;margin-bottom:40px}
+.brand{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:-.01em;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none}
+.back:hover{color:var(--gold)}
+
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(48px,6vw,84px);letter-spacing:-.015em;line-height:.96;margin-bottom:22px}
+h1 .em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--gold)}
+.lede{font-size:19px;color:var(--t2);line-height:1.55;max-width:740px;margin-bottom:42px}
+.lede b{color:var(--t)}
+
+h2{font-family:'Anton',sans-serif;font-size:34px;letter-spacing:-.012em;margin:64px 0 14px;padding-top:24px;border-top:1px solid var(--ge)}
+h2:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h2 .em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-weight:500}
+h3{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:-.005em;margin:36px 0 12px;color:var(--t)}
+h4{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin:20px 0 8px}
+p{font-size:16px;color:var(--t2);margin-bottom:16px;max-width:760px}
+p b{color:var(--t)}
+ul,ol{margin:14px 0 22px 22px;color:var(--t2);font-size:15.5px}
+ul li,ol li{margin-bottom:8px;line-height:1.6}
+ul li b,ol li b{color:var(--gold);font-weight:600}
+
+.facet-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin:30px 0}
+.facet{padding:22px 22px 18px;border:1px solid var(--ge);border-radius:12px;background:rgba(255,252,245,.015)}
+.facet .n{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.facet h4{font-family:'Anton',sans-serif;font-size:20px;font-weight:400;letter-spacing:-.005em;color:var(--t);margin-bottom:8px;text-transform:none}
+.facet p{font-size:13px;line-height:1.55;color:var(--t3);margin:0}
+
+.tier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1px;background:var(--ge);border:1px solid var(--ge);border-radius:12px;overflow:hidden;margin:24px 0}
+.tier{background:var(--bg1);padding:20px 18px;text-align:center}
+.tier .name{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:.04em;margin-bottom:4px}
+.tier .range{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-bottom:4px}
+.tier .desc{font-size:11px;color:var(--t3);line-height:1.45;margin-top:8px}
+.tier.icon .name{color:#F5B800}
+.tier.eliteplus .name{color:#4EC9C0}
+.tier.elite .name{color:#8B5CF6}
+.tier.star .name{color:#6BAA5A}
+.tier.prospect .name{color:#E07856}
+.tier.scout .name{color:rgba(245,241,232,.55)}
+
+.callout{margin:30px 0;padding:24px 28px;background:var(--golds);border:1px solid var(--goldl);border-left:3px solid var(--gold);border-radius:12px;font-size:15px;line-height:1.6;color:var(--t)}
+.callout .label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block}
+.callout.teal{background:rgba(78,201,192,.06);border-color:rgba(78,201,192,.3);border-left-color:var(--teal)}
+.callout.teal .label{color:var(--teal)}
+.callout.violet{background:rgba(139,92,246,.06);border-color:rgba(139,92,246,.3);border-left-color:var(--violet)}
+.callout.violet .label{color:var(--violet)}
+
+.sources-list{margin:18px 0 28px 0;padding:0;list-style:none}
+.sources-list li{padding:14px 0;border-top:1px solid var(--ge2);display:flex;gap:18px;align-items:flex-start;font-size:14px;color:var(--t2)}
+.sources-list li:first-child{border-top:none}
+.sources-list li b{flex:0 0 130px;font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:.4px;color:var(--gold);text-transform:uppercase}
+.sources-list li .desc{flex:1;line-height:1.5}
+
+.footer{margin-top:80px;padding-top:30px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t4);letter-spacing:.6px}
+.footer a{color:var(--gold);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+@media(max-width:720px){
+  .wrap{padding:40px 20px}
+  h1{font-size:42px}
+}
+
+/* ════ FCBase58 · Agent on methodology page ════ */
+.fc-agent-pill {
+  position: fixed; bottom: 24px; right: 24px;
+  background: linear-gradient(135deg, #f0c66e 0%, #d49b48 100%);
+  color: #1c150d; border: 0; border-radius: 9999px;
+  padding: 14px 22px; font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 14px; font-weight: 700; cursor: pointer; z-index: 60;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 4px 20px rgba(245, 184, 0, 0.35), 0 0 0 1px rgba(245, 184, 0, 0.5);
+  transition: transform 0.18s, box-shadow 0.18s;
+  animation: fc-agent-pulse 3s ease-in-out infinite;
+}
+.fc-agent-pill:hover { transform: translateY(-2px); }
+.fc-agent-pill .icon { font-size: 18px; line-height: 1; }
+.fc-agent-pill .label { font-weight: 700; letter-spacing: 0.01em; }
+@keyframes fc-agent-pulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(245, 184, 0, 0.35), 0 0 0 1px rgba(245, 184, 0, 0.5); }
+  50% { box-shadow: 0 4px 28px rgba(245, 184, 0, 0.55), 0 0 0 1px rgba(245, 184, 0, 0.75); }
+}
+.fc-agent-pill.open { display: none; }
+
+.fc-agent-panel {
+  position: fixed; bottom: 0; right: 24px;
+  width: 420px; max-width: calc(100vw - 48px);
+  height: 600px; max-height: 80vh;
+  background: #0e0d14; border: 1px solid rgba(245, 184, 0, 0.3);
+  border-bottom: 0; border-radius: 16px 16px 0 0;
+  z-index: 60; display: none; flex-direction: column;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.5);
+}
+.fc-agent-panel.open { display: flex; }
+.fc-agent-header {
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid rgba(245, 241, 232, 0.08);
+  display: flex; align-items: flex-start; justify-content: space-between;
+}
+.fc-agent-header h3 {
+  font-size: 17px; color: #f5f1e8; margin: 0 0 4px 0;
+  font-weight: 700; letter-spacing: -0.005em;
+}
+.fc-agent-header .sub {
+  font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: rgba(245, 241, 232, 0.45); font-family: monospace;
+}
+.fc-agent-close {
+  background: transparent; border: 0; color: rgba(245, 241, 232, 0.55);
+  cursor: pointer; font-size: 22px; padding: 0;
+  width: 28px; height: 28px; border-radius: 50%;
+}
+.fc-agent-close:hover { background: rgba(245, 241, 232, 0.08); color: #f0c66e; }
+.fc-agent-body {
+  flex: 1; overflow-y: auto; padding: 16px 20px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.fc-agent-msg {
+  max-width: 85%; padding: 10px 14px; border-radius: 14px;
+  font-size: 13.5px; line-height: 1.55;
+}
+.fc-agent-msg.user {
+  align-self: flex-end; background: rgba(245, 184, 0, 0.12);
+  border: 1px solid rgba(245, 184, 0, 0.22); color: #f5f1e8;
+  border-bottom-right-radius: 4px;
+}
+.fc-agent-msg.bot {
+  align-self: flex-start; background: rgba(245, 241, 232, 0.05);
+  border: 1px solid rgba(245, 241, 232, 0.10); color: #f5f1e8;
+  border-bottom-left-radius: 4px; white-space: pre-wrap;
+}
+.fc-agent-msg.bot.streaming::after {
+  content: '▍'; color: #f0c66e;
+  animation: fc-agent-cursor 0.9s steps(2) infinite;
+}
+.fc-agent-msg.bot.error {
+  background: rgba(212, 96, 60, 0.08); border-color: rgba(212, 96, 60, 0.3);
+  color: #f5b8a8;
+}
+@keyframes fc-agent-cursor {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.fc-agent-empty {
+  font-size: 13px; line-height: 1.55;
+  color: rgba(245, 241, 232, 0.6);
+  text-align: center; padding: 24px 12px;
+}
+.fc-agent-empty b {
+  color: #f0c66e; display: block; font-size: 15px;
+  font-weight: 700; margin-bottom: 8px;
+}
+.fc-agent-suggestions {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 0 20px 14px;
+  border-bottom: 1px solid rgba(245, 241, 232, 0.06);
+}
+.fc-agent-suggestions button {
+  background: rgba(245, 184, 0, 0.06);
+  border: 1px solid rgba(245, 184, 0, 0.18);
+  color: #f0c66e; font-size: 11.5px; padding: 6px 11px;
+  border-radius: 9999px; cursor: pointer; font-weight: 500;
+}
+.fc-agent-suggestions button:hover {
+  background: rgba(245, 184, 0, 0.14);
+}
+.fc-agent-input-row {
+  padding: 14px 16px 16px; display: flex; gap: 8px;
+  border-top: 1px solid rgba(245, 241, 232, 0.06);
+}
+.fc-agent-input {
+  flex: 1; background: rgba(245, 241, 232, 0.04);
+  border: 1px solid rgba(245, 241, 232, 0.1); border-radius: 10px;
+  padding: 10px 14px; color: #f5f1e8; font-size: 13.5px;
+  resize: none; max-height: 100px; min-height: 40px;
+  font-family: inherit; outline: none;
+}
+.fc-agent-input:focus { border-color: rgba(245, 184, 0, 0.45); }
+.fc-agent-send {
+  background: linear-gradient(135deg, #f0c66e 0%, #d49b48 100%);
+  color: #1c150d; border: 0; border-radius: 10px;
+  width: 40px; height: 40px; font-size: 18px; cursor: pointer;
+}
+.fc-agent-send:disabled { opacity: 0.35; cursor: not-allowed; }
+.fc-agent-footer {
+  padding: 0 16px 12px; font-size: 9px; text-align: center;
+  color: rgba(245, 241, 232, 0.3); letter-spacing: 0.08em;
+  text-transform: uppercase; font-family: monospace;
+}
+@media (max-width: 600px) {
+  .fc-agent-pill { bottom: 16px; right: 16px; left: 16px; justify-content: center; }
+  .fc-agent-panel { right: 0; left: 0; width: 100%; max-width: 100%; height: 75vh; }
+}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="wrap">
+  <div class="brand-row">
+    <a class="brand" href="/"><b>Field</b>Check<span class="iq">IQ</span></a>
+    <a class="back" href="/">← all players</a>
+  </div>
+
+  <div class="eyebrow">Methodology · v1.7 framework · cohort locked May 17 2026</div>
+  <h1>How we <span class="em">actually</span> grade an athlete.</h1>
+  <p class="lede"><b>Nine pages of methodology condensed into one.</b> No SEO fluff, no jargon-cloaked black box. The 8 facets, the source tiers, the PhD panel, the calibration loop, and the predictions we sealed last month for an August 2028 check-in.</p>
+
+  <h2>The 8 canonical facets</h2>
+  <p>One framework. Same 8 facets across every sport, every level. Different evidence weights per sport, but the structure is invariant. Calibration changes are versioned and dated; every shipped marquee notes which version graded it.</p>
+
+  <div class="facet-grid">
+    <div class="facet"><div class="n">F1</div><h4>Character</h4><p>How the athlete behaves under pressure when no one's keeping score. Verifiable through public-record signals (locker-room incidents, team conduct, on-field decisions in low-stakes moments).</p></div>
+    <div class="facet"><div class="n">F2</div><h4>Mindset</h4><p>Stated and demonstrated approach to growth, failure, and identity. Pulls from interviews, post-game quotes, social posts, coaches' public framing.</p></div>
+    <div class="facet"><div class="n">F3</div><h4>Mental Strength</h4><p>Resilience in adversity. Comebacks. Performance after losses or injuries. Composure in pressure spots (final minutes, championship games).</p></div>
+    <div class="facet"><div class="n">F4</div><h4>Talent</h4><p>The natural ceiling that scouting eyes have been describing for a decade. Skill arcs, raw measurables that don't show up in stat sheets.</p></div>
+    <div class="facet"><div class="n">F5</div><h4>Physical</h4><p>Measurables relative to sport + position. Calibrated to roster medians at the target pro tier (LOVB for womens-vball, NBA for mens-bball, etc.).</p></div>
+    <div class="facet"><div class="n">F6</div><h4>Mental / IQ</h4><p>Game IQ. Reads. Decision quality. The "feel" component. Captured via possession-level analysis, post-game decision audits.</p></div>
+    <div class="facet"><div class="n">F7</div><h4>Coachability</h4><p>Listens, adjusts, demonstrably improves between seasons. Triangulates through coach quotes + observable in-game changes.</p></div>
+    <div class="facet"><div class="n">F8</div><h4>Competitiveness</h4><p>Doesn't take possessions off. Shows up in losses. Demonstrable in level-of-play, not just stat sheets. The "wants it" axis.</p></div>
+  </div>
+
+  <h2>The tier ladder</h2>
+  <p>Composites map to tiers via fixed thresholds — same for every sport. Bright lines deliberately chosen to be slightly harder than market consensus, so a STAR at FieldCheck means more than 5-star at On3 or 247.</p>
+
+  <div class="tier-grid">
+    <div class="tier icon"><div class="name">ICON</div><div class="range">9.5–10.0</div><div class="desc">Generational. ~1 per sport per generation.</div></div>
+    <div class="tier eliteplus"><div class="name">ELITE+</div><div class="range">9.0–9.4</div><div class="desc">Hall-of-fame trajectory. Decade-defining.</div></div>
+    <div class="tier elite"><div class="name">ELITE</div><div class="range">7.5–8.9</div><div class="desc">All-pro / all-conference. Multi-year impact.</div></div>
+    <div class="tier star"><div class="name">STAR</div><div class="range">7.0–7.4</div><div class="desc">Starter at top pro level. Cap for college freshmen.</div></div>
+    <div class="tier prospect"><div class="name">PROSPECT</div><div class="range">5.5–6.9</div><div class="desc">High floor, real upside. The development band.</div></div>
+    <div class="tier scout"><div class="name">SCOUT</div><div class="range">3.5–5.4</div><div class="desc">On the radar. Cap for HS recruits pre-college.</div></div>
+  </div>
+
+  <div class="callout">
+    <span class="label">Why the amateur caps?</span>
+    <b>HS amateurs cap at SCOUT (5.4).</b> They can't be STAR until they prove against college defenders. <b>College freshmen cap at STAR (7.4).</b> They can't be ELITE until they prove against pro athletes. These are honest constraints, not pessimism — they protect against the recurring market mistake of grading off potential too early.
+  </div>
+
+  <h2>The PhD panel</h2>
+  <p>25 named PhDs (anonymized publicly for now) reviewed the framework and the first cohort's verdicts. <b>1 documented dissent</b> (Vance on Flagg) is on the record. The same panel reviews on a rolling schedule:</p>
+  <ul>
+    <li><b>Weekly:</b> Patel reads new verdicts as they ship, flags drift</li>
+    <li><b>Monthly:</b> Full PhD round — score audit, framework edge cases</li>
+    <li><b>Quarterly:</b> Weight updates to the facet system, calibration overlays</li>
+    <li><b>Annual:</b> Refinements ship as v1.x</li>
+    <li><b>5-year:</b> Major version (v2.0 targeted 2028-2030)</li>
+  </ul>
+
+  <h2>50 pre-registered <span class="em">predictions</span></h2>
+  <p>Locked May 17 2026 for an Aug 15 2028 check-in. <b>This is the part that matters.</b> Every athletic intelligence platform predicts; we publish the wrong ones by name.</p>
+
+  <div class="callout teal">
+    <span class="label">Trust commitment</span>
+    On August 15 2028, the predictions ledger updates with a 5th column: "inside CI / outside CI." Every athlete who didn't hit their predicted band gets listed by name with their actual outcome vs predicted. Not retracted, not paywalled — published. <b>If we're worse than chance, this kills us. If we're meaningfully better, this is the moat.</b>
+  </div>
+
+  <h2>Data sources <span class="em">(many, never one)</span></h2>
+  <p>The doctrine: for any data type, default to many sources with a priority cascade. Wikipedia is one of many, not the default.</p>
+  <ul class="sources-list">
+    <li><b>School sites</b><span class="desc">Official college athletic department rosters (Sidearm Sports CDN for ~90% of D1 programs). Verified headshots, official bios, class year, hometown.</span></li>
+    <li><b>247sports</b><span class="desc">Recruit profiles for HS athletes. Industry rankings, position analysis, evaluation copy.</span></li>
+    <li><b>On3 / Rivals</b><span class="desc">Cross-validation of recruit rankings. Different methodology, different blind spots.</span></li>
+    <li><b>MaxPreps</b><span class="desc">High school stats and game logs. Single-source-of-truth for HS verifiable production.</span></li>
+    <li><b>ESPN / NBA / NFL CDNs</b><span class="desc">Pro-level profiles, headshots, official stats endpoints.</span></li>
+    <li><b>CFBD</b><span class="desc">College Football Data — roster, recruits, transfer portal, official rankings.</span></li>
+    <li><b>Sports Reference</b><span class="desc">Historical stats across all major sports. The ground truth for season-by-season production.</span></li>
+    <li><b>Wikipedia</b><span class="desc">Bio context, career arcs, post-career trajectories. Last in the cascade, not the default.</span></li>
+    <li><b>Public news + press</b><span class="desc">Coach quotes, post-game interviews, behavioral observations. Tier 3 source (must triangulate).</span></li>
+    <li><b>Curated PhD priors</b><span class="desc">For ICONs and historical anchors, the panel's analytical record fills gaps that public-record alone can't.</span></li>
+  </ul>
+
+  <h2>What we <span class="em">don't</span> use</h2>
+  <ul>
+    <li><b>Paywalled scouting reports</b> we can't replicate. We don't take them; they can't be reverse-engineered for the panel.</li>
+    <li><b>Combine-only measurables</b> in isolation. 40-yard times don't grade competitiveness.</li>
+    <li><b>Social media virality</b> as a signal. Talent ≠ following.</li>
+    <li><b>NIL value</b> as a talent input. (We track NIL separately as market output, not skill input.)</li>
+    <li><b>Anonymous source quotes</b> that can't be triangulated.</li>
+  </ul>
+
+  <h2>The honest <span class="em">unknowns</span></h2>
+  <p>Every verdict page surfaces "honest caveats" — what we can't know with the source set available. <b>If we don't have 3 independent signals on a facet, the facet is marked partial.</b> That's a feature, not a bug. A 6.2 PROSPECT with all facets fully sourced is more reliable than a 7.4 STAR where only 5 facets are triangulated.</p>
+
+  <h2>Versioning + drift</h2>
+  <p>Every grade is stamped with the framework version that scored it (currently <b>v1.7.A</b>). Calibration changes are versioned (V5.5 doctrine locked June 8 2026). When a v1.8 or v2.0 ships, all prior verdicts are re-scored and the deltas published. <b>No silent revisions.</b></p>
+
+  <div class="callout violet">
+    <span class="label">Multi-source first · Tenet 53</span>
+    The methodology above isn't just for grading. It's the same pattern for every other data lookup — photos, stats, news, NIL. Cascade through many sources. Cache. First success wins. Never bet on one source. This is the lesson that took the longest to land.
+  </div>
+
+  <div class="footer">
+    FieldCheck IQ · methodology v1.7 · updated June 9 2026 · <a href="/">home</a> · <a href="/velocity">velocity</a> · <a href="/predictions">predictions ledger</a> · <a href="/coverage">coverage map</a> · <a href="/outcomes">outcomes</a> · <a href="/whats-new">what's new</a> · <a href="/agent-transparency">agent transparency</a>
+  </div>
+</div>
+<!-- FCBase58 · Agent on methodology page · mode=methodology -->
+<button class="fc-agent-pill" id="fc-agent-pill" aria-label="Ask FieldCheck">
+  <span class="icon">✨</span>
+  <span class="label">Ask about the methodology</span>
+</button>
+<div class="fc-agent-panel" id="fc-agent-panel">
+  <div class="fc-agent-header">
+    <div>
+      <h3>Ask about FieldCheck methodology</h3>
+      <div class="sub">How the system works</div>
+    </div>
+    <button class="fc-agent-close" id="fc-agent-close">×</button>
+  </div>
+  <div class="fc-agent-suggestions" id="fc-agent-suggestions"></div>
+  <div class="fc-agent-body" id="fc-agent-body">
+    <div class="fc-agent-empty" id="fc-agent-empty">
+      <b>Ask about how this works</b>
+      Tier ladder, facet weights, amateur caps, multi-source first. For questions about specific athletes, visit their verdict page instead.
+    </div>
+  </div>
+  <div class="fc-agent-input-row">
+    <textarea class="fc-agent-input" id="fc-agent-input" placeholder="Type a question…" rows="1" maxlength="500"></textarea>
+    <button class="fc-agent-send" id="fc-agent-send" disabled>↑</button>
+  </div>
+  <div class="fc-agent-footer">
+    Powered by Claude · 10 questions/day · <a href="/agent-transparency" style="color:rgba(245,184,0,.6);text-decoration:none">see the prompt</a>
+  </div>
+</div>
+<script>
+(function(){
+  if (window._fcAgentInit) return;
+  window._fcAgentInit = true;
+
+  function init() {
+    var pill = document.getElementById('fc-agent-pill');
+    var panel = document.getElementById('fc-agent-panel');
+    var closeBtn = document.getElementById('fc-agent-close');
+    var input = document.getElementById('fc-agent-input');
+    var sendBtn = document.getElementById('fc-agent-send');
+    var body = document.getElementById('fc-agent-body');
+    var emptyState = document.getElementById('fc-agent-empty');
+    var suggestionsEl = document.getElementById('fc-agent-suggestions');
+    if (!pill || !panel) return;
+
+    var WORKER_BASE = (location.hostname.indexOf('fieldcheck-dev') >= 0)
+      ? 'https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev'
+      : 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+
+    // Methodology-flavored suggestions
+    var suggestions = [
+      'What is the difference between ELITE and STAR?',
+      'Why are HS recruits capped at SCOUT?',
+      'How are the 8 facets weighted?',
+      'What counts as a source?',
+      'Why college freshmen capped at STAR?'
+    ];
+    var html = '';
+    for (var i = 0; i < suggestions.length; i++) {
+      html += '<button data-q="' + suggestions[i].replace(/"/g, '&quot;') + '">' + suggestions[i] + '</button>';
+    }
+    suggestionsEl.innerHTML = html;
+    var btns = suggestionsEl.querySelectorAll('button');
+    for (var k = 0; k < btns.length; k++) {
+      btns[k].addEventListener('click', function(){
+        input.value = this.getAttribute('data-q');
+        updateSendState();
+        input.focus();
+      });
+    }
+
+    var histKey = 'fc_agent_hist:methodology';
+    function loadHist() { try { return JSON.parse(localStorage.getItem(histKey) || '[]'); } catch(e) { return []; } }
+    function saveHist(h) { try { localStorage.setItem(histKey, JSON.stringify(h.slice(-3))); } catch(e) {} }
+
+    function renderHistory() {
+      var hist = loadHist();
+      if (hist.length === 0) { emptyState.style.display = ''; return; }
+      emptyState.style.display = 'none';
+      for (var i = 0; i < hist.length; i++) {
+        if (hist[i].q) appendMsg(hist[i].q, 'user');
+        if (hist[i].a) appendMsg(hist[i].a, 'bot');
+      }
+    }
+
+    function appendMsg(text, kind) {
+      emptyState.style.display = 'none';
+      var m = document.createElement('div');
+      m.className = 'fc-agent-msg ' + kind;
+      m.textContent = text;
+      body.appendChild(m);
+      body.scrollTop = body.scrollHeight;
+      return m;
+    }
+
+    pill.addEventListener('click', function(){
+      panel.classList.add('open');
+      pill.classList.add('open');
+      renderHistory();
+      input.focus();
+    });
+    closeBtn.addEventListener('click', function(){
+      panel.classList.remove('open');
+      pill.classList.remove('open');
+    });
+
+    function updateSendState() {
+      sendBtn.disabled = !input.value.trim() || sending;
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+    }
+    input.addEventListener('input', updateSendState);
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (!sendBtn.disabled) send(); }
+    });
+
+    var sending = false;
+    sendBtn.addEventListener('click', send);
+
+    function send() {
+      var question = input.value.trim();
+      if (!question || sending) return;
+      sending = true;
+      appendMsg(question, 'user');
+      input.value = '';
+      updateSendState();
+      var botMsg = appendMsg('', 'bot');
+      botMsg.classList.add('streaming');
+
+      var hist = loadHist();
+      // FCBase58 · methodology mode
+      var payload = {
+        question: question,
+        athlete: 'FieldCheck Methodology',
+        sport: null,
+        history: hist,
+        verdict_data: {},
+        mode: 'methodology'
+      };
+
+      fetch(WORKER_BASE + '/agent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function(response){
+        if (!response.ok || !response.body) throw new Error('HTTP ' + response.status);
+        var reader = response.body.getReader();
+        var decoder = new TextDecoder();
+        var buffer = '';
+        var fullAnswer = '';
+        var errorOccurred = false;
+        function readChunk() {
+          return reader.read().then(function(result){
+            if (result.done) {
+              botMsg.classList.remove('streaming');
+              sending = false;
+              updateSendState();
+              if (!errorOccurred && fullAnswer) {
+                hist.push({ q: question, a: fullAnswer });
+                saveHist(hist);
+              }
+              return;
+            }
+            buffer += decoder.decode(result.value, { stream: true });
+            var events = buffer.split('\n\n');
+            buffer = events.pop() || '';
+            for (var i = 0; i < events.length; i++) {
+              var lines = events[i].split('\n');
+              var dp = null;
+              for (var j = 0; j < lines.length; j++) {
+                if (lines[j].indexOf('data: ') === 0) dp = lines[j].slice(6);
+              }
+              if (!dp) continue;
+              try {
+                var ev = JSON.parse(dp);
+                if (ev.type === 'chunk' && ev.text) {
+                  fullAnswer += ev.text;
+                  botMsg.textContent = fullAnswer;
+                  body.scrollTop = body.scrollHeight;
+                } else if (ev.type === 'error' || ev.type === 'rate_limit' || ev.type === 'config_error') {
+                  errorOccurred = true;
+                  botMsg.classList.add('error');
+                  botMsg.classList.remove('streaming');
+                  botMsg.textContent = ev.message || 'Error';
+                } else if (ev.type === 'done') {
+                  botMsg.classList.remove('streaming');
+                }
+              } catch(e) {}
+            }
+            return readChunk();
+          });
+        }
+        return readChunk();
+      }).catch(function(err){
+        botMsg.classList.remove('streaming');
+        botMsg.classList.add('error');
+        botMsg.textContent = 'Connection error: ' + (err.message || 'failed');
+        sending = false;
+        updateSendState();
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(init, 300); });
+  } else {
+    setTimeout(init, 300);
+  }
+})();
+</script>
+<!-- FCBase58 · methodology agent UI (mode=methodology) · floating Ask pill + chat panel · streams Claude Haiku via worker /agent with mode='methodology' · 5 methodology-flavored suggested questions · localStorage history (last 3 Q&As) · same 10/IP/day rate limit -->
+</body>
+</html>

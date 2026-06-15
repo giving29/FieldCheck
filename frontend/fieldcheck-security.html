@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Security · FieldCheck IQ</title>
+<meta name="description" content="How FieldCheck IQ protects data. Hosting stack, encryption, vulnerability disclosure.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060A;--bg1:#100F14;--ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);--t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:60px 30px 100px}
+.brand-row{display:flex;align-items:center;gap:18px;margin-bottom:40px}
+.brand{font-family:'Anton',sans-serif;font-size:22px;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none}
+.back:hover{color:var(--gold)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(40px,5vw,64px);letter-spacing:-.014em;line-height:1;margin-bottom:18px}
+h1 .em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--gold)}
+.last-update{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-bottom:30px;letter-spacing:.5px}
+h2{font-family:'Anton',sans-serif;font-size:24px;letter-spacing:-.005em;margin:40px 0 12px;padding-top:20px;border-top:1px solid var(--ge)}
+h2:first-of-type{border-top:none;padding-top:0;margin-top:32px}
+h3{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin:18px 0 8px}
+p{font-size:15px;color:var(--t2);margin-bottom:14px}
+p b{color:var(--t)}
+p a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--goldl)}
+ul,ol{margin:10px 0 18px 22px;color:var(--t2);font-size:14.5px}
+ul li,ol li{margin-bottom:6px;line-height:1.65}
+.footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t4);letter-spacing:.6px}
+.footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="wrap">
+  <div class="brand-row">
+    <a class="brand" href="/"><b>Field</b>Check<span class="iq">IQ</span></a>
+    <a class="back" href="/">← all players</a>
+  </div>
+  <div class="eyebrow">Security</div>
+  <h1><span class="em">Security</span>.</h1>
+  <div class="last-update">Last updated: June 9 2026</div>
+  
+  <p>FieldCheck's security posture, in plain language. Stack details, what we encrypt, and how to disclose vulnerabilities.</p>
+
+  <h2>Hosting + transport</h2>
+  <ul>
+    <li><b>Frontend:</b> Netlify CDN. HTTPS-only. HSTS enabled.</li>
+    <li><b>Backend worker:</b> Cloudflare Workers. HTTPS-only. Cloudflare DDoS protection.</li>
+    <li><b>Data store:</b> Cloudflare KV (for ephemeral cache) + D1 (for structured records). All TLS in transit.</li>
+    <li><b>Forms:</b> Netlify Forms. Spam-filtered with Akismet. Encrypted at rest.</li>
+  </ul>
+
+  <h2>What's encrypted</h2>
+  <ul>
+    <li>All web traffic (TLS 1.2+).</li>
+    <li>All form submissions in transit and at rest.</li>
+    <li>Tier-jump alert subscriber emails (Netlify's encryption at rest).</li>
+    <li>D1 database (Cloudflare's managed encryption).</li>
+  </ul>
+
+  <h2>Access controls</h2>
+  <ul>
+    <li>Production worker + database access limited to single founder account.</li>
+    <li>2FA enabled on Cloudflare, Netlify, and DNS provider accounts.</li>
+    <li>No third-party operational access.</li>
+    <li>Wrangler deploy keys rotated quarterly.</li>
+  </ul>
+
+  <h2>Application security</h2>
+  <ul>
+    <li><b>No user accounts</b> on the public side means no credential database to compromise.</li>
+    <li><b>localStorage only</b> for user state; no server-side session for visitors.</li>
+    <li><b>CORS restricted</b> on worker endpoints to FieldCheck domains for state-changing endpoints.</li>
+    <li><b>Rate limiting</b> on all worker endpoints via Cloudflare.</li>
+    <li>Photo cascade does <b>not</b> proxy user-supplied URLs (only worker-resolved athlete photos).</li>
+  </ul>
+
+  <h2>Vulnerability disclosure</h2>
+  <p>If you discover a security vulnerability, please report it via the contact form on any verdict page with subject "Security" or directly. We commit to:</p>
+  <ul>
+    <li><b>Acknowledgment</b> within 24 hours.</li>
+    <li><b>Triage</b> within 72 hours.</li>
+    <li><b>Public credit</b> (with your permission) once the issue is patched.</li>
+    <li><b>No legal action</b> against good-faith researchers following responsible disclosure.</li>
+  </ul>
+
+  <h2>What we don't do</h2>
+  <ul>
+    <li>We don't have a bug bounty program (yet). Disclosure is voluntary and credited.</li>
+    <li>We don't run third-party security analytics that collect visitor data.</li>
+    <li>We don't share our threat-detection logs.</li>
+  </ul>
+
+  <div class="footer">
+    FieldCheck IQ · <a href="/">home</a> · <a href="/privacy">privacy</a> · <a href="/terms">terms</a> · <a href="/security">security</a> · <a href="/data-policy">data policy</a>
+  </div>
+</div>
+</body>
+</html>

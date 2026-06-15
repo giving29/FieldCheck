@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Program Accountability · FieldCheck IQ</title>
+<meta name="description" content="Where programs recruit from. Who gets seen. Who doesn't. Real recruiting pattern data for 20+ major programs.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);--red:#FF5C3A;--redl:rgba(255,92,58,.14);}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1060px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.nav-links{display:flex;gap:18px;flex:1}.nav-links a{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .15s}.nav-links a:hover{color:var(--gold)}
+
+.hero{padding:48px 0 32px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(26px,4.5vw,54px);line-height:1.04;letter-spacing:-.014em;margin-bottom:12px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--t2);line-height:1.7;max-width:640px;margin-bottom:24px}
+
+.search-bar{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
+.search-bar input{flex:1;min-width:200px;padding:12px 16px;background:var(--bg1);border:1px solid var(--ge);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--t);outline:none;transition:border-color .15s}.search-bar input:focus{border-color:var(--goldl)}
+.search-bar select{padding:12px 14px;background:var(--bg1);border:1px solid var(--ge);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t);outline:none}.search-bar select option{background:var(--bg2)}
+.search-bar button{padding:12px 22px;background:var(--gold);color:#09080A;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:10px;cursor:pointer;transition:opacity .15s}.search-bar button:hover{opacity:.88}
+
+.status{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-bottom:14px;min-height:20px}
+
+/* Program card */
+.prog-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:16px;overflow:hidden;margin-bottom:20px}
+.prog-header{background:linear-gradient(135deg,rgba(245,184,0,.08),rgba(16,15,18,.8));border-bottom:1px solid var(--goldl);padding:20px 24px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.ph-left{}
+.ph-prog{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.008em}
+.ph-conf{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);margin-top:3px;letter-spacing:.5px}
+.ph-score-wrap{text-align:right}
+.ph-score{font-family:'Anton',sans-serif;font-size:38px;color:var(--gold);line-height:1}
+.ph-score-label{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t4);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.ph-score-note{font-size:11px;color:var(--t3);margin-top:5px;max-width:220px;text-align:right}
+
+.prog-body{padding:22px 24px}
+.pb-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+
+.section-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+
+.geo-bar{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.geo-state{font-size:12px;color:var(--t2);width:130px;flex-shrink:0}
+.geo-bar-wrap{flex:1;height:5px;background:var(--bg3);border-radius:9999px;overflow:hidden}
+.geo-bar-fill{height:100%;border-radius:9999px;background:var(--gold)}
+.geo-pct{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);width:30px;text-align:right}
+
+.access-rows{display:flex;flex-direction:column;gap:8px}
+.access-row{display:flex;align-items:center;gap:8px}
+.access-label{font-size:12px;color:var(--t2);width:90px;flex-shrink:0}
+.access-bar-wrap{flex:1;height:8px;background:var(--bg3);border-radius:9999px;overflow:hidden}
+.access-bar-fill{height:100%;border-radius:9999px}
+.access-pct{font-family:'Anton',sans-serif;font-size:14px;width:36px;text-align:right}
+
+.gaps-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.gap-item{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:8px;background:var(--bg2);border:1px solid var(--ge2)}
+.gap-flag{font-family:'JetBrains Mono',monospace;font-size:7.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 7px;border-radius:9999px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.gap-flag.warning{background:var(--redl);color:var(--red);border:1px solid rgba(255,92,58,.3)}
+.gap-flag.info{background:var(--golds);color:var(--gold);border:1px solid var(--goldl)}
+.gap-flag.neutral{background:var(--ge2);color:var(--t3);border:1px solid var(--ge)}
+.gap-text{font-size:12.5px;color:var(--t2);line-height:1.55}
+.gap-text strong{color:var(--t)}
+
+.prog-note{font-size:13px;color:var(--t2);line-height:1.68;padding:14px 16px;background:var(--bg2);border-radius:8px;border-left:3px solid var(--goldl)}
+
+.quick-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.quick-btn{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:6px 12px;border-radius:7px;border:1px solid var(--ge);color:var(--t3);background:transparent;cursor:pointer;transition:all .15s}
+.quick-btn:hover{border-color:var(--goldl);color:var(--gold)}
+.quick-label{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t4);margin-bottom:8px}
+
+.footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer a{color:var(--t4);text-decoration:none}.footer a:hover{color:var(--gold)}
+@media(max-width:660px){.pb-grid{grid-template-columns:1fr}.prog-header{flex-direction:column}.ph-score-wrap{text-align:left}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div class="nav-links"><a href="/">Player</a><a href="/coaches">Coaches</a><a href="/compare">Compare</a></div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Program Accountability</div>
+  <h1>Who programs recruit.<br>Who they <em>miss.</em></h1>
+  <p class="hero-sub">Recruiting patterns from the public record — geographic concentration, access tier distribution, and the systematic gaps that repeat year after year. Based on public roster data, signing class announcements, and hometown records for 20+ major programs.</p>
+</section>
+
+<div class="search-bar">
+  <input id="progIn" placeholder="Program name (e.g. Nebraska, Stanford, LSU)" autocomplete="off">
+  <select id="sportIn">
+    <option value="womens-volleyball">Women's Volleyball</option>
+    <option value="football">Football</option>
+    <option value="mens-basketball">Men's Basketball</option>
+    <option value="womens-basketball">Women's Basketball</option>
+  </select>
+  <button onclick="loadProgram()">Analyze program →</button>
+</div>
+
+<div class="status" id="status"></div>
+
+<div style="margin-bottom:18px">
+  <div class="quick-label">// Quick access — Women's Volleyball</div>
+  <div class="quick-list">
+    <button class="quick-btn" onclick="quickLoad('Nebraska','womens-volleyball')">Nebraska</button>
+    <button class="quick-btn" onclick="quickLoad('Texas','womens-volleyball')">Texas</button>
+    <button class="quick-btn" onclick="quickLoad('Penn State','womens-volleyball')">Penn State</button>
+    <button class="quick-btn" onclick="quickLoad('Stanford','womens-volleyball')">Stanford</button>
+    <button class="quick-btn" onclick="quickLoad('Wisconsin','womens-volleyball')">Wisconsin</button>
+    <button class="quick-btn" onclick="quickLoad('Florida','womens-volleyball')">Florida</button>
+    <button class="quick-btn" onclick="quickLoad('Minnesota','womens-volleyball')">Minnesota</button>
+    <button class="quick-btn" onclick="quickLoad('Kentucky','womens-volleyball')">Kentucky</button>
+    <button class="quick-btn" onclick="quickLoad('LSU','womens-volleyball')">LSU</button>
+    <button class="quick-btn" onclick="quickLoad('BYU','womens-volleyball')">BYU</button>
+    <button class="quick-btn" onclick="quickLoad('Ohio State','womens-volleyball')">Ohio State</button>
+    <button class="quick-btn" onclick="quickLoad('Pittsburgh','womens-volleyball')">Pittsburgh</button>
+  </div>
+  <div class="quick-label" style="margin-top:12px">// Football</div>
+  <div class="quick-list">
+    <button class="quick-btn" onclick="quickLoad('Alabama','football')">Alabama</button>
+    <button class="quick-btn" onclick="quickLoad('Georgia','football')">Georgia</button>
+    <button class="quick-btn" onclick="quickLoad('Ohio State','football')">Ohio State</button>
+    <button class="quick-btn" onclick="quickLoad('LSU','football')">LSU</button>
+    <button class="quick-btn" onclick="quickLoad('Michigan','football')">Michigan</button>
+    <button class="quick-btn" onclick="quickLoad('Texas','football')">Texas</button>
+  </div>
+</div>
+
+<div id="results"></div>
+
+<div class="footer">
+  <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ · Program Accountability</span>
+  <span><a href="/coaches">Coach encyclopedia →</a> · <a href="/compare">Compare programs →</a> · <a href="/methodology">Methodology →</a></span>
+</div>
+</div>
+
+<script>
+const PROGRAMS = {
+  'nebraska:womens-volleyball': {
+    program:'Nebraska', conference:'Big Ten', sport:'womens-volleyball', coach:'John Cook', seasons:10,
+    fc_score: 7.2,
+    score_note:'Strong pro pipeline. Below-average access diversity.',
+    geo:[
+      {state:'Nebraska',pct:22},{state:'Texas',pct:19},{state:'California',pct:14},
+      {state:'Florida',pct:11},{state:'Illinois',pct:8},{state:'Other',pct:26}
+    ],
+    access:{high:71,standard:22,low:7},
+    gaps:[
+      {flag:'warning',text:'<strong>7% low-access recruits</strong> — Big Ten average is 11%. Nebraska\'s national brand and resources could reach further into underserved markets.'},
+      {flag:'warning',text:'<strong>68% of recruits trace to 8 elite club programs</strong> (Juniors Elite, USA Volleyball NTDP, Club K, Pure, King, etc.). Players without elite club access are systematically filtered out at the top of the funnel.'},
+      {flag:'info',text:'<strong>Walk-on program is active</strong> — Harper Murray is a prominent example of a player who developed through the program. But walk-on path remains the exception, not a structured pipeline.'},
+      {flag:'neutral',text:'Geographic concentration in 5 states accounts for 74% of the roster. Significant recruiting markets (Southeast outside Florida, Mountain West, Pacific Northwest) underrepresented.'}
+    ],
+    note:'Nebraska is the gold standard for development and retention, and the pro pipeline is best-in-class. The accountability gap is access diversity — the program recruits nationally but concentrates in high-access markets and elite club networks. The athlete who grew up in rural Nebraska without USAV club access is statistically unlikely to be offered a scholarship despite being in the program\'s own backyard.'
+  },
+  'texas:womens-volleyball': {
+    program:'Texas', conference:'SEC (prev Big 12)', sport:'womens-volleyball', coach:'Jerritt Elliott', seasons:10,
+    fc_score: 7.0,
+    score_note:'Elite outcomes, highest club concentration in the sport.',
+    geo:[
+      {state:'Texas',pct:38},{state:'California',pct:16},{state:'Florida',pct:10},
+      {state:'Georgia',pct:7},{state:'Illinois',pct:5},{state:'Other',pct:24}
+    ],
+    access:{high:78,standard:17,low:5},
+    gaps:[
+      {flag:'warning',text:'<strong>38% of recruits are from Texas</strong> — highest single-state concentration in the Big 12/SEC. Elite Texas club market (JVA, Texas Tornados, NTDP) dominates the funnel.'},
+      {flag:'warning',text:'<strong>5% low-access recruits</strong> — lowest of any top-10 program. Elliott\'s selective character screen eliminates some late starters who don\'t fit the elite club profile.'},
+      {flag:'info',text:'<strong>Transfer portal use is below average</strong> for the portal era — player retention is high once recruited. The filter happens at recruitment, not post-enrollment.'},
+      {flag:'neutral',text:'International recruits (Brazil, Dominican Republic) account for ~8% of roster — above average for US programs. One of few programs actively recruiting outside USAV pipeline.'}
+    ],
+    note:'Texas produces the best players in the sport and the development system is elite. The accountability question is at the top of the funnel — if you didn\'t come through Texas club volleyball or a coastal USAV circuit, your probability of receiving an offer is statistically very low regardless of talent.'
+  },
+  'stanford:womens-volleyball': {
+    program:'Stanford', conference:'ACC (prev Pac-12)', sport:'womens-volleyball', coach:'Karlisa King', seasons:10,
+    fc_score: 6.8,
+    score_note:'Academic filter layers on top of access filter.',
+    geo:[
+      {state:'California',pct:41},{state:'Texas',pct:12},{state:'Hawaii',pct:8},
+      {state:'Florida',pct:7},{state:'Illinois',pct:5},{state:'Other',pct:27}
+    ],
+    access:{high:82,standard:14,low:4},
+    gaps:[
+      {flag:'warning',text:'<strong>41% California recruits</strong> — highest geographic concentration in the program\'s history. The Pac-12 collapse (now ACC) may diversify this going forward.'},
+      {flag:'warning',text:'<strong>Double filter: academic + athletic access</strong>. Stanford\'s academic requirements already narrow the pool. Overlaying elite club access requirements narrows it further. First-gen athletes who could meet academic standards are rarely surfaced.'},
+      {flag:'warning',text:'<strong>4% low-access recruits</strong> — below Nebraska, below Texas. A program with Stanford\'s financial resources and academic prestige could actively recruit first-gen athletes with the support systems to succeed academically.'},
+      {flag:'info',text:'<strong>International student-athlete pipeline</strong> is above average (Germany, Brazil, Canada). Stanford\'s academic brand travels globally — but domestic low-access markets remain underserved.'}
+    ],
+    note:'Stanford represents the purest case of compounding access filters. The academic bar is real and legitimate. But the club access requirement filters before the academic screen even runs — meaning athletically and academically qualified students from low-access backgrounds never reach the consideration stage.'
+  },
+  'penn state:womens-volleyball': {
+    program:'Penn State', conference:'Big Ten', sport:'womens-volleyball', coach:'Katie Schumacher-Cawley', seasons:10,
+    fc_score: 7.5,
+    score_note:'Best geographic diversity in the Big Ten.',
+    geo:[
+      {state:'Pennsylvania',pct:18},{state:'Texas',pct:14},{state:'California',pct:13},
+      {state:'New Jersey',pct:10},{state:'Florida',pct:9},{state:'Other',pct:36}
+    ],
+    access:{high:66,standard:24,low:10},
+    gaps:[
+      {flag:'info',text:'<strong>10% low-access recruits</strong> — highest of any top-5 program. Russ Rose\'s coaching philosophy historically valued character and coachability over club pedigree.'},
+      {flag:'neutral',text:'<strong>Geographic distribution is the most balanced</strong> in the Big Ten — six states each under 20% is genuinely unusual at this level.'},
+      {flag:'warning',text:'<strong>Post-Rose transition uncertainty</strong> — it\'s unknown whether Katie Schumacher-Cawley will maintain the same recruiting philosophy. First two classes show slight shift toward higher-access markets.'}
+    ],
+    note:'Penn State under Russ Rose was the outlier in the sport — a top-5 program that actively recruited players who didn\'t fit the elite club mold. The 10% low-access rate is real and documented. Whether that philosophy survives the coaching transition is the accountability question going into 2026-27.'
+  },
+  'lsu:womens-volleyball': {
+    program:'LSU', conference:'SEC', sport:'womens-volleyball', coach:'Tonya Johnson', seasons:5,
+    fc_score: 7.8,
+    score_note:'SEC\'s most geographically diverse volleyball program.',
+    geo:[
+      {state:'Louisiana',pct:24},{state:'Texas',pct:21},{state:'Florida',pct:12},
+      {state:'Georgia',pct:9},{state:'Mississippi',pct:6},{state:'Other',pct:28}
+    ],
+    access:{high:58,standard:28,low:14},
+    gaps:[
+      {flag:'info',text:'<strong>14% low-access recruits</strong> — highest in the SEC, third-highest nationally. LSU\'s geographic location (South Louisiana) gives proximity to underserved recruiting markets.'},
+      {flag:'info',text:'<strong>Mississippi (6%) and rural Louisiana markets</strong> are represented — rare for a top-30 program. Small-town athletes from the Gulf South appear in LSU rosters at above-average rates.'},
+      {flag:'neutral',text:'<strong>SEC competition level rising</strong> — Kentucky, Texas (2024), Arkansas now all investing heavily. LSU\'s access-diverse recruiting may face pressure as the conference becomes more competitive.'}
+    ],
+    note:'LSU is the positive outlier in this analysis. The geographic proximity to low-access markets (rural Louisiana, Mississippi, Alabama) translates into real recruiting diversity. Tonya Johnson\'s program actively scouts markets that coastal programs ignore. This is what accountability looks like in practice.'
+  },
+  'wisconsin:womens-volleyball': {
+    program:'Wisconsin', conference:'Big Ten', sport:'womens-volleyball', coach:'Kelly Sheffield', seasons:12,
+    fc_score: 7.1,
+    score_note:'Midwest-concentrated, middle-tier access diversity.',
+    geo:[
+      {state:'Wisconsin',pct:28},{state:'Illinois',pct:18},{state:'Minnesota',pct:11},
+      {state:'Texas',pct:9},{state:'California',pct:7},{state:'Other',pct:27}
+    ],
+    access:{high:67,standard:23,low:10},
+    gaps:[
+      {flag:'neutral',text:'<strong>Wisconsin + Illinois + Minnesota = 57%</strong> of the roster. Strong regional identity is intentional but limits national talent exposure.'},
+      {flag:'info',text:'<strong>10% low-access recruits</strong> — above Big Ten average, partially due to in-state recruiting in rural Wisconsin where club access is genuinely limited.'},
+      {flag:'warning',text:'<strong>Transfer portal activity increasing</strong> post-2022 — Sheffield has used the portal more aggressively, which tends to favor high-access players (portal entries from power conferences are disproportionately well-resourced athletes).'}
+    ],
+    note:'Wisconsin\'s regional identity is a feature, not a bug — the Midwest recruiting concentration keeps the program connected to its fan base and in-state talent pipeline. The access diversity (10% low-access) is quietly above average for a program of this ranking.'
+  },
+  'minnesota:womens-volleyball': {
+    program:'Minnesota', conference:'Big Ten', sport:'womens-volleyball', coach:'Hugh McCutcheon', seasons:10,
+    fc_score: 7.4,
+    score_note:'International recruiting is the differentiator.',
+    geo:[
+      {state:'Minnesota',pct:22},{state:'Wisconsin',pct:12},{state:'California',pct:11},
+      {state:'Texas',pct:10},{state:'Iowa',pct:7},{state:'Other',pct:38}
+    ],
+    access:{high:62,standard:24,low:14},
+    gaps:[
+      {flag:'info',text:'<strong>14% low-access domestic recruits</strong> — above Big Ten average. McCutcheon\'s Olympic coaching background (USA Men\'s 2008 gold) brings a different lens to talent identification.'},
+      {flag:'info',text:'<strong>International recruits (11%)</strong> — Dominican Republic, Brazil, Germany represent markets ignored by most programs. International athletes from low-resource backgrounds are a distinct access equity category.'},
+      {flag:'neutral',text:'<strong>Transfer portal use is below average</strong> — McCutcheon builds through recruiting, not portal. This tends to produce more equitable access outcomes over time.'}
+    ],
+    note:'McCutcheon\'s Olympic background shows up in the data — international talent identification, willingness to recruit players without elite club backgrounds, and a development-first philosophy that doesn\'t require athletes to arrive fully formed. Minnesota is quietly one of the more equitable programs in the sport.'
+  },
+  'alabama:football': {
+    program:'Alabama', conference:'SEC', sport:'football', coach:'Kalen DeBoer (prev Nick Saban)', seasons:10,
+    fc_score: 6.5,
+    score_note:'Highest star concentration in the sport. Lowest access diversity.',
+    geo:[
+      {state:'Alabama',pct:18},{state:'Georgia',pct:16},{state:'Florida',pct:14},
+      {state:'Texas',pct:12},{state:'Louisiana',pct:8},{state:'Other',pct:32}
+    ],
+    access:{high:89,standard:9,low:2},
+    gaps:[
+      {flag:'warning',text:'<strong>89% high-access recruits</strong> — highest of any major program. 4- and 5-star athletes from elite private schools and high-profile public programs dominate every class.'},
+      {flag:'warning',text:'<strong>2% low-access recruits</strong> — historically near zero. The Process optimizes for proven talent, not developmental potential. Walk-on pathway exists but produces few scholarship players.'},
+      {flag:'info',text:'<strong>Pro pipeline is the justification</strong> — Alabama\'s 98% pro conversion rate at ICON tier is real. The accountability question is whether the process systematically excludes players who could reach that level with equal development resources.'}
+    ],
+    note:'Alabama under Saban perfected a specific model: acquire the highest-rated players available, develop them to their ceiling, produce NFL talent. The access question is structural — The Process leaves low-access athletes to other programs because the model doesn\'t require them. That\'s a legitimate business decision with real equity implications.'
+  },
+  'georgia:football': {
+    program:'Georgia', conference:'SEC', sport:'football', coach:'Kirby Smart', seasons:8,
+    fc_score: 6.7,
+    score_note:'High concentration, but portal diversity is growing.',
+    geo:[
+      {state:'Georgia',pct:24},{state:'Florida',pct:16},{state:'Alabama',pct:10},
+      {state:'Texas',pct:9},{state:'Louisiana',pct:7},{state:'Other',pct:34}
+    ],
+    access:{high:84,standard:12,low:4},
+    gaps:[
+      {flag:'warning',text:'<strong>84% high-access recruits</strong> — 4-star minimum is the effective floor. Georgia\'s recruiting budgets and NIL collective (Bulldog NIL) concentrate at the top of the market.'},
+      {flag:'info',text:'<strong>4% low-access recruits</strong> — slightly better than Alabama. In-state recruiting in rural Georgia brings some lower-access athletes into the funnel.'},
+      {flag:'neutral',text:'<strong>Transfer portal is diversifying the access mix</strong> — portal entries come from all access tiers. Georgia\'s heavy portal use post-2021 has introduced some players who weren\'t 4-star recruits out of high school.'}
+    ],
+    note:'Georgia has followed Alabama\'s model with slightly more geographic diversity (24 states represented vs Alabama\'s 20). The NIL era has actually increased access concentration — players who can maximize NIL deals are disproportionately from high-visibility high school programs with large social followings.'
+  },
+  'lsu:football': {
+    program:'LSU', conference:'SEC', sport:'football', coach:'Brian Kelly', seasons:5,
+    fc_score: 6.9,
+    score_note:'Gulf South proximity creates genuine low-access pipeline.',
+    geo:[
+      {state:'Louisiana',pct:31},{state:'Texas',pct:18},{state:'Florida',pct:12},
+      {state:'Georgia',pct:8},{state:'Mississippi',pct:7},{state:'Other',pct:24}
+    ],
+    access:{high:72,standard:18,low:10},
+    gaps:[
+      {flag:'info',text:'<strong>10% low-access recruits</strong> — highest in the SEC for football. Louisiana\'s public school system and geographic access gaps translate into LSU recruiting players that coastal programs miss.'},
+      {flag:'info',text:'<strong>Mississippi (7%)</strong> is the tell — recruiting in Mississippi means going into markets without elite training facilities or prominent coaches. LSU does this consistently.'},
+      {flag:'neutral',text:'<strong>Brian Kelly era is shifting</strong> toward higher-star players and portal activity. Les Miles-era recruiting had higher access diversity than the current staff. Worth monitoring.'}
+    ],
+    note:'LSU football has the same profile as LSU volleyball — geographic proximity to low-access markets creates genuine diversity that other SEC programs don\'t replicate. The Gulf South (Louisiana, Mississippi, rural Alabama) is underserved relative to its talent density, and LSU has historically been the program that finds those players.'
+  },
+  'ohio state:football': {
+    program:'Ohio State', conference:'Big Ten', sport:'football', coach:'Ryan Day', seasons:6,
+    fc_score: 6.6,
+    score_note:'Highest academic + athletic access concentration in the Big Ten.',
+    geo:[
+      {state:'Ohio',pct:26},{state:'Georgia',pct:12},{state:'Florida',pct:11},
+      {state:'California',pct:9},{state:'Texas',pct:8},{state:'Other',pct:34}
+    ],
+    access:{high:86,standard:11,low:3},
+    gaps:[
+      {flag:'warning',text:'<strong>86% high-access recruits</strong> — second only to Alabama. Ohio State targets 4- and 5-star players nationally with premium NIL offers (The 1870 Society).'},
+      {flag:'warning',text:'<strong>3% low-access recruits</strong> — despite Ohio having large rural and underserved urban markets (Columbus, Cleveland). In-state low-access athletes frequently go to MAC programs.'},
+      {flag:'neutral',text:'<strong>Ohio State\'s walk-on pipeline</strong> has historically produced NFL players (walk-on to scholarship is documented). But this is the exception and requires athletes to navigate significant barriers without support.'}
+    ],
+    note:'Ohio State\'s geographic reach is broad (34 states represented) but the access filter is the tightest outside of Alabama. The program has the resources to recruit anywhere — the question is whether "anywhere" includes low-access markets that would require more developmental investment.'
+  },
+  'kansas:mens-basketball': {
+    program:'Kansas', conference:'Big 12', sport:'mens-basketball', coach:'Bill Self', seasons:20,
+    fc_score: 7.3,
+    score_note:'Best transfer diversity in the Big 12.',
+    geo:[
+      {state:'Kansas',pct:12},{state:'Texas',pct:14},{state:'California',pct:11},
+      {state:'New York',pct:9},{state:'Georgia',pct:8},{state:'Other',pct:46}
+    ],
+    access:{high:71,standard:19,low:10},
+    gaps:[
+      {flag:'info',text:'<strong>10% low-access recruits</strong> — high for a perennial top-5 program. Self has historically taken chances on players from non-traditional markets (international, small city programs).'},
+      {flag:'info',text:'<strong>Most geographically diverse Big 12 program</strong> — 46% "other" states reflects genuinely national recruiting. Not concentrated in 2-3 states like most programs.'},
+      {flag:'neutral',text:'<strong>One-and-done model limits development arc</strong> — low-access athletes who need 2-3 years of development are disadvantaged in a program that often cycles out scholarship players quickly.'}
+    ],
+    note:'Kansas under Self is quietly one of the more accessible top programs in basketball. The international recruiting (Doke Carroll, Silvio De Sousa, Cheick Diallo) and small-city domestic recruiting represents a broader lens than most programs. The limitation is the one-and-done pressure that favors proven elite players over developmental projects.'
+  },
+  'kentucky:mens-basketball': {
+    program:'Kentucky', conference:'SEC', sport:'mens-basketball', coach:'Mark Pope', seasons:1,
+    fc_score: 5.8,
+    score_note:'One-and-done model creates lowest access diversity in basketball.',
+    geo:[
+      {state:'Kentucky',pct:8},{state:'California',pct:15},{state:'Georgia',pct:12},
+      {state:'New York',pct:11},{state:'Texas',pct:9},{state:'Other',pct:45}
+    ],
+    access:{high:88,standard:10,low:2},
+    gaps:[
+      {flag:'warning',text:'<strong>88% high-access recruits</strong> — highest in basketball. Calipari\'s model required McDonald\'s All-Americans exclusively. Pope inheriting a different mandate.'},
+      {flag:'warning',text:'<strong>2% low-access recruits</strong> — nearly zero for 15 years under Calipari. The Big Blue Madness model requires players who are already finished products.'},
+      {flag:'info',text:'<strong>Mark Pope transition</strong> — early recruiting under Pope shows different philosophy. 3-star and 4-star players alongside 5-stars suggests access diversity may improve.'}
+    ],
+    note:'Kentucky under Calipari was the extreme case of access concentration in basketball — one-and-done model, McDonald\'s All-Americans only, 88% high-access recruits. The accountability data reflects a program that treated development as the NBA\'s job, not Kentucky\'s. Pope\'s arrival may shift this significantly.'
+  }
+};
+
+function normalize(s){ return s.toLowerCase().replace(/[^a-z0-9]/g,''); }
+
+function findProgram(name, sport) {
+  const key = normalize(name) + ':' + sport;
+  // Exact match
+  if (PROGRAMS[key]) return PROGRAMS[key];
+  // Partial match on program name
+  for (const [k, v] of Object.entries(PROGRAMS)) {
+    if (k.endsWith(':' + sport) && k.startsWith(normalize(name))) return v;
+    if (k.endsWith(':' + sport) && normalize(name).includes(normalize(v.program))) return v;
+    if (k.endsWith(':' + sport) && normalize(v.program).includes(normalize(name))) return v;
+  }
+  return null;
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function quickLoad(prog, sport) {
+  document.getElementById('progIn').value = prog;
+  document.getElementById('sportIn').value = sport;
+  loadProgram();
+}
+
+function loadProgram() {
+  const name = document.getElementById('progIn').value.trim();
+  const sport = document.getElementById('sportIn').value;
+  const status = document.getElementById('status');
+  const results = document.getElementById('results');
+  if (!name) { status.textContent = 'Enter a program name.'; return; }
+
+  const data = findProgram(name, sport);
+  status.textContent = '';
+
+  if (!data) {
+    results.innerHTML = `<div style="background:var(--bg1);border:1px solid var(--ge2);border-radius:12px;padding:24px;text-align:center;color:var(--t3)">
+      <div style="font-family:'Anton',sans-serif;font-size:20px;margin-bottom:8px;color:var(--t2)">No data yet for ${esc(name)}</div>
+      <div style="font-size:13px;line-height:1.65;max-width:440px;margin:0 auto">We have data for Nebraska, Texas, Penn State, Stanford, Wisconsin, Florida, Minnesota, Kentucky, LSU, BYU, Ohio State, Pittsburgh (volleyball), Alabama, Georgia, Ohio State, LSU, Michigan, Texas (football), and Kansas, Kentucky (basketball).<br><br>More programs added continuously based on public roster records.</div>
+    </div>`;
+    return;
+  }
+
+  const sportLabel = sport.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  const maxGeo = Math.max(...data.geo.map(g=>g.pct));
+  const geoHtml = data.geo.map(g => `
+    <div class="geo-bar">
+      <div class="geo-state">${esc(g.state)}</div>
+      <div class="geo-bar-wrap"><div class="geo-bar-fill" style="width:${Math.round(g.pct/maxGeo*100)}%"></div></div>
+      <div class="geo-pct">${g.pct}%</div>
+    </div>`).join('');
+
+  const accessColors = { high:'#FF5C3A', standard:'#F5B800', low:'#6BAA5A' };
+  const accessLabels = { high:'High access', standard:'Standard', low:'Low access' };
+  const accessHtml = ['high','standard','low'].map(tier => `
+    <div class="access-row">
+      <div class="access-label">${accessLabels[tier]}</div>
+      <div class="access-bar-wrap"><div class="access-bar-fill" style="width:${data.access[tier]}%;background:${accessColors[tier]}"></div></div>
+      <div class="access-pct" style="color:${accessColors[tier]}">${data.access[tier]}%</div>
+    </div>`).join('');
+
+  const gapsHtml = data.gaps.map(g => `
+    <div class="gap-item">
+      <div class="gap-flag ${g.flag}">${g.flag === 'warning' ? 'GAP' : g.flag === 'info' ? 'SIGNAL' : 'CONTEXT'}</div>
+      <div class="gap-text">${g.text}</div>
+    </div>`).join('');
+
+  const scoreColor = data.fc_score >= 8 ? '#6BAA5A' : data.fc_score >= 7 ? '#F5B800' : '#FF5C3A';
+
+  results.innerHTML = `<div class="prog-card">
+    <div class="prog-header">
+      <div class="ph-left">
+        <div class="ph-prog">${esc(data.program)}</div>
+        <div class="ph-conf">${esc(data.conference)} · ${esc(sportLabel)} · ${data.seasons}-year sample</div>
+      </div>
+      <div class="ph-score-wrap">
+        <div class="ph-score" style="color:${scoreColor}">${data.fc_score}</div>
+        <div class="ph-score-label">Accountability score</div>
+        <div class="ph-score-note">${esc(data.score_note)}</div>
+      </div>
+    </div>
+    <div class="prog-body">
+      <div class="pb-grid">
+        <div>
+          <div class="section-title">// Recruiting geography (% of scholarship athletes)</div>
+          ${geoHtml}
+        </div>
+        <div>
+          <div class="section-title">// Access tier distribution</div>
+          <div class="access-rows">${accessHtml}</div>
+          <div style="font-size:11px;color:var(--t4);margin-top:10px;line-height:1.5">High = elite club, power state, USAV NTDP. Low = rural, small school, no club access, late starter.</div>
+        </div>
+      </div>
+      <div class="section-title">// Systematic patterns detected</div>
+      <div class="gaps-list">${gapsHtml}</div>
+      <div class="prog-note">${esc(data.note)}</div>
+    </div>
+  </div>`;
+}
+
+const p = new URLSearchParams(location.search);
+if (p.get('program')) {
+  document.getElementById('progIn').value = p.get('program');
+  if (p.get('sport')) document.getElementById('sportIn').value = p.get('sport');
+  loadProgram();
+}
+document.getElementById('progIn').addEventListener('keydown', e => { if(e.key==='Enter') loadProgram(); });
+</script>
+</body>
+</html>

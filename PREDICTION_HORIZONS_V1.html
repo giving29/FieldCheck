@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prediction Horizons V1 - FieldCheck IQ Internal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0908;--rule:rgba(248,244,237,.12);--t:#F5F1E8;--t2:rgba(245,241,232,.74);--t3:rgba(245,241,232,.46);--gold:#D4A24C;--gold-hi:#EEC067;--golds:rgba(212,162,76,.10);--moss:#7C9B6E}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ink);color:var(--t);font-family:Inter,sans-serif;line-height:1.6;font-size:14px}
+.wrap{max-width:880px;margin:0 auto;padding:30px 26px 70px}
+h1{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600}
+.sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin:4px 0 26px}
+h2{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--gold);margin:32px 0 12px;border-bottom:1px solid var(--rule);padding-bottom:8px}
+p,li{color:var(--t2);font-weight:300}
+b{color:var(--t)}
+ul{margin:8px 0 8px 20px}
+.h{display:grid;grid-template-columns:64px 150px 1fr;gap:14px;padding:13px 0;border-bottom:1px solid rgba(248,244,237,.06)}
+.h .hn{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--gold-hi)}
+.h .ht{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);letter-spacing:1px;text-transform:uppercase}
+.warn{border-left:3px solid var(--gold);background:var(--golds);padding:12px 16px;border-radius:4px;margin:12px 0}
+code{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--moss);background:rgba(124,155,110,.08);padding:1px 6px;border-radius:3px}
+.box{border:1px solid var(--rule);border-radius:6px;padding:16px 18px;margin:10px 0}
+.box .bh{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold-hi);margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Prediction Horizons \u00b7 V1</h1>
+<div class="sub">Internal design \u00b7 June 11 2026 \u00b7 falsifiability in days, not years \u00b7 the learning loop</div>
+
+<h2>0 \u00b7 Principle</h2>
+<div class="warn"><b>The 2028 anchor batch stays sealed and untouched</b> \u2014 its immutability is the moat. But proof cannot wait two years. We run a rolling ledger across four horizons so something is ALWAYS resolving \u2014 days away, weeks away, months away \u2014 and every resolution (hit or miss) feeds the calibration battery. <b>The ledger is simultaneously the proof and the training signal.</b></div>
+
+<h2>1 \u00b7 The four horizons</h2>
+<div class="h"><div class="hn">H1</div><div class="ht">Days \u2013 2 weeks</div><div><b>2026 NBA Draft (June 24\u201325 \u2014 13 days out)</b>: draft-range predictions for graded eligibles. MLB Draft (mid-July). Transfer-portal landing spots. HS commitment announcements. <b>Friday line: "our first sealed batch resolves twelve days from this meeting."</b></div></div>
+<div class="h"><div class="hn">H2</div><div class="ht">Weeks \u2013 months</div><div>Season openers: NCAA volleyball + CFB (August), NBA (October), LOVB (January). Starter/role calls, first-month production bands, freshman-impact predictions. Volleyball lane = Kevin-relevant.</div></div>
+<div class="h"><div class="hn">H3</div><div class="ht">One season</div><div>All-conference selections, award watchlists, tournament runs, breakout calls from the PROSPECT\u2192STAR ladder \u2014 resolves on a known sports calendar.</div></div>
+<div class="h"><div class="hn">H4</div><div class="ht">Multi-year anchor</div><div>The 50 predictions sealed May 17 2026 \u2192 public check-in August 15 2028. Never edited, never replaced. The credibility anchor the copycats cannot retrofit.</div></div>
+
+<h2>2 \u00b7 Sealing mechanism (same discipline at every horizon)</h2>
+<ul>
+<li>Batch JSON: athlete, sport, our composite + tier at seal time, the prediction (range/band/binary), rationale line, resolver (the public event that grades it), resolve-by date.</li>
+<li><b>SHA-256 over the canonical JSON + UTC timestamp</b>, recorded in KV (<code>pred:{horizon}:{batch}</code>) and in the repo. Hash published on /predictions the day of sealing \u2014 contents revealed at resolution if competitive-sensitive, or immediately if not.</li>
+<li>Resolution: outcome recorded next to prediction on /outcomes \u2014 hit / partial / miss, no deletions, no edits.</li>
+</ul>
+
+<h2>3 \u00b7 Scoring + the learning loop</h2>
+<ul>
+<li>Per-horizon accuracy scoreboard (hit-rate + calibration error) published on /outcomes \u2014 "we are 7/9 on H1 calls" beats any claim.</li>
+<li><b>Every miss becomes a battery case:</b> tagged with which facet/voice mis-read the athlete, fed into the next release's calibration set. Misses are fuel \u2014 this is the Player Thesis engine running at high frequency.</li>
+<li>Movement Alerts integration: a resolution that shifts an athlete's evaluation emits a real movement event (FCBase83+).</li>
+</ul>
+
+<h2>4 \u00b7 Ship plan</h2>
+<div class="box"><div class="bh">NOW (pre-Friday) \u00b7 H1-DRAFT-2026 seal</div><p>Fill <code>h1_draft2026.json</code> with 8\u201312 graded draft-eligibles (composites/tiers read from live verdicts), run <code>fc-seal-predictions.sh</code> \u2192 hash to KV + freeze. One line added to the Friday talk track. No frontend changes needed before the meeting (demo surface stays frozen).</p></div>
+<div class="box"><div class="bh">FCBase86 (post-Friday)</div><p>/predictions page gains the Horizons section + live batch hashes; /outcomes gains the per-horizon scoreboard; resolution of H1-DRAFT-2026 published June 25\u201326 with full reveal.</p></div>
+<div class="box"><div class="bh">Cadence</div><p>Seal at least one batch per month per active sport season. The wire never goes quiet.</p></div>
+</div>
+</body>
+</html>

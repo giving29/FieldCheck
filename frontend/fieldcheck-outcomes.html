@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outcomes · FieldCheck IQ</title>
+<meta name="description" content="Retrospective grading. How the 8-facet doctrine reads known historical outcomes. The hits, the misses, and what we learn from each.">
+<meta property="og:title" content="Outcomes · FieldCheck IQ">
+<meta property="og:description" content="Retrospective grading - what our framework would have caught, and where it would have missed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0d14;
+  --bg-card: #16141e;
+  --bg-card-hover: #1c1a28;
+  --border: rgba(245, 241, 232, 0.08);
+  --border-strong: rgba(245, 241, 232, 0.15);
+  --text: #f5f1e8;
+  --text-muted: rgba(245, 241, 232, 0.55);
+  --text-faint: rgba(245, 241, 232, 0.35);
+  --gold: #f0c66e;
+  --moss: #7fb069;
+  --orange: #e08e45;
+  --red: #d4603c;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 920px; margin: 0 auto; padding: 48px 24px 80px; }
+
+.hd { border-bottom: 1px solid var(--border); padding-bottom: 32px; margin-bottom: 48px; }
+.hd .tag {
+  display: inline-block; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--orange); background: rgba(224, 142, 69, 0.08);
+  border: 1px solid rgba(224, 142, 69, 0.25);
+  padding: 5px 12px; border-radius: 9999px; margin-bottom: 20px;
+}
+.hd h1 {
+  font-family: 'Anton', sans-serif; font-weight: 400;
+  font-size: clamp(36px, 6vw, 56px); letter-spacing: -0.015em;
+  line-height: 1.05; margin-bottom: 16px;
+}
+.hd p { font-size: 17px; line-height: 1.55; color: var(--text-muted); max-width: 720px; }
+.hd p b { color: var(--text); }
+
+/* Caveat banner */
+.caveat {
+  background: rgba(224, 142, 69, 0.05);
+  border: 1px solid rgba(224, 142, 69, 0.2);
+  border-radius: 10px; padding: 16px 20px; margin: 24px 0 40px;
+  font-size: 13.5px; line-height: 1.6; color: var(--text-muted);
+}
+.caveat b { color: var(--orange); }
+
+/* Section header */
+.sec { margin-bottom: 56px; }
+.sec h2 {
+  font-family: 'Anton', sans-serif; font-weight: 400;
+  font-size: 28px; letter-spacing: -0.005em; margin-bottom: 6px;
+}
+.sec .sec-desc {
+  color: var(--text-muted); font-size: 14px;
+  margin-bottom: 24px;
+}
+
+/* Case card */
+.case {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; margin-bottom: 16px;
+  overflow: hidden; transition: border-color 0.15s;
+}
+.case:hover { border-color: var(--border-strong); }
+.case .head {
+  padding: 18px 24px 14px;
+  display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+}
+.case .head .name {
+  font-family: 'Anton', sans-serif; font-size: 22px;
+  letter-spacing: -0.005em; color: var(--text);
+}
+.case .head .yr {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  letter-spacing: 0.04em; color: var(--text-faint);
+}
+.case .head .verdict {
+  margin-left: auto; padding: 4px 12px; border-radius: 9999px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;
+}
+.case .head .verdict.hit {
+  color: var(--moss); background: rgba(127, 176, 105, 0.1);
+  border: 1px solid rgba(127, 176, 105, 0.3);
+}
+.case .head .verdict.miss {
+  color: var(--red); background: rgba(212, 96, 60, 0.1);
+  border: 1px solid rgba(212, 96, 60, 0.3);
+}
+.case .head .verdict.lesson {
+  color: var(--gold); background: rgba(245, 184, 0, 0.08);
+  border: 1px solid rgba(245, 184, 0, 0.25);
+}
+
+.case .body {
+  padding: 20px 24px;
+}
+.case .row {
+  display: grid; grid-template-columns: 140px 1fr; gap: 16px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.case .row:last-child { border-bottom: 0; padding-bottom: 0; }
+.case .row .label {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-faint); padding-top: 3px;
+}
+.case .row .val {
+  color: var(--text); font-size: 14px; line-height: 1.55;
+}
+.case .row .val b { color: var(--gold); font-weight: 600; }
+.case .row .val.muted { color: var(--text-muted); }
+
+@media (max-width: 600px) {
+  .case .row { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* Stats banner */
+.stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--border); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; margin: 32px 0;
+}
+.stat { background: var(--bg-card); padding: 20px 16px; }
+.stat .v {
+  font-family: 'Anton', sans-serif; font-size: 32px;
+  line-height: 1; color: var(--gold);
+}
+.stat .v.miss { color: var(--red); }
+.stat .l {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-faint); margin-top: 4px;
+}
+@media (max-width: 600px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+/* Footer */
+.foot {
+  margin-top: 64px; padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 24px;
+  font-size: 13px; color: var(--text-faint);
+}
+.foot a { color: var(--text-muted); text-decoration: none; }
+.foot a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hd">
+    <span class="tag">FCBase64 · Phase 10.1 · Retrospective grading</span>
+    <h1>Outcomes</h1>
+    <p>
+      How the 8-facet doctrine reads known historical cases. <b>The hits, the misses, the cases where our framework would have caught the signal, and the cases where it would have missed.</b> We publish both. Saying you have a system is easy. Showing where it would have failed is the only honest way to evaluate one.
+    </p>
+  </div>
+
+  <div style="border:1px solid rgba(212,162,76,.35);background:rgba(212,162,76,.08);border-radius:8px;padding:22px 24px;margin:10px 0 26px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:#EEC067;margin-bottom:12px">THE LIVE SCOREBOARD · FORWARD PREDICTIONS, GRADED AS THEY RESOLVE</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+      <div style="border:1px solid rgba(248,244,237,.12);border-radius:6px;padding:14px 16px"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(245,241,232,.46)">H1 · 2026 NBA DRAFT</div><div style="font-family:'Cormorant Garamond',serif;font-size:26px;color:#EEC067;margin-top:6px">6 sealed</div><div style="font-size:12px;color:rgba(245,241,232,.6);margin-top:4px">resolves June 25 · <a href="/draft-board" style="color:#EEC067;text-decoration:underline">the board →</a></div></div>
+      <div style="border:1px solid rgba(248,244,237,.12);border-radius:6px;padding:14px 16px"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(245,241,232,.46)">H2–H3 · SEASON BATCHES</div><div style="font-family:'Cormorant Garamond',serif;font-size:26px;color:rgba(245,241,232,.74);margin-top:6px">sealing Aug</div><div style="font-size:12px;color:rgba(245,241,232,.6);margin-top:4px">CFB + volleyball openers</div></div>
+      <div style="border:1px solid rgba(248,244,237,.12);border-radius:6px;padding:14px 16px"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(245,241,232,.46)">H4 · ANCHOR COHORT</div><div style="font-family:'Cormorant Garamond',serif;font-size:26px;color:rgba(245,241,232,.74);margin-top:6px">50 sealed</div><div style="font-size:12px;color:rgba(245,241,232,.6);margin-top:4px">check-in Aug 15 2028 · <a href="/predictions" style="color:#EEC067;text-decoration:underline">ledger →</a></div></div>
+    </div>
+    <p style="font-size:12.5px;color:rgba(245,241,232,.6);margin:12px 0 0">When each batch resolves, this strip gains hit / partial / miss counts per horizon — by name, never edited. The retrospective cases below show how we grade; the scoreboard above is where the forward record accumulates.</p>
+  </div>
+
+  <div class="caveat">
+    <b>How to read this page.</b> These are retrospective applications of the FieldCheck doctrine to publicly known historical outcomes. The framework existed in some form before each case, but the actual ratings shown here are reconstructed — we ask "what would our current 8-facet doctrine have said?" then compare to what happened. Use this to evaluate the framework, not to evaluate us as past forecasters.
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="v">6</div><div class="l">Cases reviewed</div></div>
+    <div class="stat"><div class="v">4</div><div class="l">Hits (doctrine right)</div></div>
+    <div class="stat"><div class="v miss">2</div><div class="l">Misses (doctrine wrong)</div></div>
+    <div class="stat"><div class="v">67%</div><div class="l">Hit rate</div></div>
+  </div>
+
+  <div class="sec">
+    <h2>Hits · where doctrine caught the signal</h2>
+    <div class="sec-desc">Cases where the 8-facet framework would have surfaced a non-consensus call that turned out right.</div>
+
+    <!-- Jokic -->
+    <div class="case">
+      <div class="head">
+        <span class="name">Nikola Jokić</span>
+        <span class="yr">2014 NBA Draft · #41 overall</span>
+        <span class="verdict hit">Hit · doctrine surfaced the gem</span>
+      </div>
+      <div class="body">
+        <div class="row"><div class="label">Consensus then</div><div class="val muted">Late-second-round flyer. Heavy international. Poor athleticism. Most boards had him outside the first round.</div></div>
+        <div class="row"><div class="label">Doctrine read</div><div class="val">High <b>Mental/IQ</b> (court vision, passing reads). High <b>Coachability</b> (refined skill arc through age 17-19). Modest <b>Physical</b> but compensated by elite <b>Talent</b> ceiling in skill-shooting. Composite likely 7.0-7.4 STAR even with Physical drag.</div></div>
+        <div class="row"><div class="label">What happened</div><div class="val">3x MVP (2021, 2022, 2024). 2023 NBA champion + Finals MVP. ICON tier (9.5+) achieved.</div></div>
+        <div class="row"><div class="label">Lesson</div><div class="val">Heavy Physical weighting common in NBA scouting at the time would have flagged him low. Multi-source first + Mental/IQ weighting would have caught him. Validates the doctrine's resistance to single-facet over-weighting.</div></div>
+      </div>
+    </div>
+
+    <!-- Giannis -->
+    <div class="case">
+      <div class="head">
+        <span class="name">Giannis Antetokounmpo</span>
+        <span class="yr">2013 NBA Draft · #15 overall</span>
+        <span class="verdict hit">Hit · ceiling read correct</span>
+      </div>
+      <div class="body">
+        <div class="row"><div class="label">Consensus then</div><div class="val muted">Greek B-league teenager. Unknown ceiling. Most teams couldn't watch him play live. Talent evaluators uncertain.</div></div>
+        <div class="row"><div class="label">Doctrine read</div><div class="val">Elite <b>Physical</b> (7'+ wingspan still growing). Visible <b>Coachability</b> (rapid skill addition year over year). High <b>Competitiveness</b> in available footage. Limited multi-source - tier-target 7.0 STAR with explicit "ceiling uncapped if Physical projects."</div></div>
+        <div class="row"><div class="label">What happened</div><div class="val">2x MVP (2019, 2020). 2021 NBA champion + Finals MVP. ELITE+ trajectory by year 5.</div></div>
+        <div class="row"><div class="label">Lesson</div><div class="val">Even with thin source-depth, the Physical-trajectory signal was strong enough to override consensus uncertainty. Multi-source first doesn't mean "wait for consensus" - it means weight by what's actually verified.</div></div>
+      </div>
+    </div>
+
+    <!-- Caitlin Clark -->
+    <div class="case">
+      <div class="head">
+        <span class="name">Caitlin Clark</span>
+        <span class="yr">2020 HS recruiting class · #4 nationally</span>
+        <span class="verdict hit">Hit · scoring ceiling clear early</span>
+      </div>
+      <div class="body">
+        <div class="row"><div class="label">Consensus then</div><div class="val muted">Top-5 recruit but UConn/Stanford passed. Iowa landed her - widely seen as a strong-but-not-program-changing get.</div></div>
+        <div class="row"><div class="label">Doctrine read</div><div class="val">Generational <b>Talent</b> in shooting range + creation. High <b>Mental/IQ</b> on basketball reads. HS amateur cap (5.4 SCOUT) would have applied — but explicit trajectory note: "Project to STAR by sophomore year, ELITE by junior."</div></div>
+        <div class="row"><div class="label">What happened</div><div class="val">NCAA all-time scoring leader. Two Final Fours. #1 WNBA pick 2024. Rookie of the Year. Generational impact on WBB visibility.</div></div>
+        <div class="row"><div class="label">Lesson</div><div class="val">The HS amateur cap (Tenet 53 era) keeps us honest at evaluation time but doesn't blind us to trajectory. Composite + trajectory notes do more than composite alone.</div></div>
+      </div>
+    </div>
+
+    <!-- Luka -->
+    <div class="case">
+      <div class="head">
+        <span class="name">Luka Dončić</span>
+        <span class="yr">2018 NBA Draft · #3 overall</span>
+        <span class="verdict hit">Hit · tier confirmed</span>
+      </div>
+      <div class="body">
+        <div class="row"><div class="label">Consensus then</div><div class="val muted">EuroLeague MVP at 19. Mock drafts ranged from #2 to #5. Some scouts worried about NBA athleticism translation.</div></div>
+        <div class="row"><div class="label">Doctrine read</div><div class="val">Elite <b>Talent</b> + elite <b>Mental/IQ</b> + proven against pro-level competition (Real Madrid + Slovenian senior national team). Adult composite achievable — projected 7.5-8.5 ELITE.</div></div>
+        <div class="row"><div class="label">What happened</div><div class="val">5x All-NBA, multiple MVP finalist appearances, Finals appearance 2024. ELITE confirmed.</div></div>
+        <div class="row"><div class="label">Lesson</div><div class="val">When the amateur cap doesn't apply (pro-level competition already overcome), the composite can run hot honestly. Doctrine's age-context awareness pays off.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Misses · where doctrine would have been wrong</h2>
+    <div class="sec-desc">Cases where the 8-facet framework would have likely been on the wrong side. We publish these.</div>
+
+    <!-- Bennett -->
+    <div class="case">
+      <div class="head">
+        <span class="name">Anthony Bennett</span>
+        <span class="yr">2013 NBA Draft · #1 overall</span>
+        <span class="verdict miss">Miss · doctrine would have rated too high</span>
+      </div>
+      <div class="body">
+        <div class="row"><div class="label">Consensus then</div><div class="val muted">UNLV power forward. Surprise #1 pick. Multiple analysts skeptical but composite metrics looked strong.</div></div>
+        <div class="row"><div class="label">Doctrine read (retrospective)</div><div class="val">Strong <b>Physical</b> + adequate <b>Talent</b> + solid college production. Multi-source data was actually thin on <b>Mindset</b> and <b>Competitiveness</b> at the pro intensity level. Doctrine might have called him 6.5-7.0 PROSPECT-to-STAR.</div></div>
+        <div class="row"><div class="label">What happened</div><div class="val">52 career NBA games. Out of the league by age 24. Widely considered one of the worst #1 picks in NBA history.</div></div>
+        <div class="row"><div class="label">Lesson</div><div class="val">Mindset/Competitiveness facets are the hardest to source. When data is thin there, doctrine rules say "mark partial, expect downside." A more rigorous application of multi-source-first would have surfaced this. Codified in current doctrine: thin Mindset → automatic 0.5 composite drag.</div></div>
+      </div>
+    </div>
+
+    <!-- Bowie/Jordan -->
+    <div class="case">
+      <div class="head">
+        <span class="name">Sam Bowie (vs. Michael Jordan)</span>
+        <span class="yr">1984 NBA Draft · #2 vs #3</span>
+        <span class="verdict miss">Miss · doctrine in 1984 weighting</span>
+      </div>
+      <div class="body">
+        <div class="row"><div class="label">Consensus then</div><div class="val muted">Portland took Bowie #2 over Jordan. Most boards had Bowie ahead due to size and "need" weighting.</div></div>
+        <div class="row"><div class="label">Doctrine read (1984 weighting)</div><div class="val">If Physical was weighted higher than it currently is, Bowie's 7'1" would have advantaged him at the era's "need a center" baseline. Even with Jordan's 8/8 facets, sport-specific weights mattered.</div></div>
+        <div class="row"><div class="label">What happened</div><div class="val">Jordan: 6x champion, 5x MVP, ICON of ICONs. Bowie: respectable career derailed by injuries.</div></div>
+        <div class="row"><div class="label">Lesson</div><div class="val">Sport-specific facet weights must be CONTEMPORARY. A 1984 weighting overemphasized size for centers; 2026 weighting recognizes wing-creator value. Doctrine evolves - and old weights are an admitted blind spot of the framework, not a permanent limitation.</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sec">
+    <h2>What this teaches us</h2>
+    <div class="caveat" style="background: rgba(127, 176, 105, 0.05); border-color: rgba(127, 176, 105, 0.2);">
+      <b style="color: var(--moss);">The framework's job isn't to be infallible.</b> It's to be <b style="color: var(--text);">consistent, source-checkable, and honestly self-graded.</b> A 4-for-6 retrospective ratio on contested cases is genuinely useful if (a) the misses are admitted and (b) the doctrine evolves from them. Both are non-negotiable. The Bennett case directly shaped our current rule that thin Mindset sourcing triggers a 0.5 composite drag. The Bowie case is why we revisit sport-specific facet weights annually.
+    </div>
+  </div>
+
+  <div class="foot">
+    <a href="/">Home</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/predictions">Predictions</a>
+    <a href="/coverage">Coverage</a>
+    <a href="/agent-transparency">Agent transparency</a>
+    <a href="/whats-new">What's new</a>
+    <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px;">FCBase64 · June 9 2026</span>
+  </div>
+</div>
+<!-- FCBase64 . Phase 10.1 . Retrospective grading ledger . 6 case studies (4 hits + 2 misses) . each clearly labeled retrospective . credibility through public failure-publishing . doctrine-evolution narrative -->
+</body>
+</html>

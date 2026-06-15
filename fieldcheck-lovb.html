@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOVB · The Volleyball Intelligence Layer</title>
+<meta name="description" content="Pro projections, market fits, Founding Athlete matches, and roster analysis for LOVB Pro and the U.S. volleyball pathway. Tools built on public-record data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0908;
+    --bg-2: #14110c;
+    --bg-3: #1a1612;
+    --text: #fbf6ea;
+    --text-2: rgba(251,246,234,0.7);
+    --text-3: rgba(251,246,234,0.45);
+    --gold: #ffc94a;
+    --gold-deep: #c89d2c;
+    --teal: #b5e2c2;
+    --crimson: #d44a4a;
+    --line: rgba(251,246,234,0.1);
+    --line-strong: rgba(251,246,234,0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+    line-height: 1.55;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.07 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: overlay;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+
+  /* TOP NAV — global mega-menu pattern */
+  .nav{position:sticky;top:0;z-index:100;background:rgba(10,9,8,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1240px;margin:0 auto;padding:0 32px;display:flex;align-items:center;height:60px}
+  .nav-brand{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--text);font-weight:500;margin-right:auto;text-decoration:none}
+  .nav-brand b{color:var(--gold);font-weight:500}
+  .nav-brand .sep{color:var(--text-3);margin:0 6px}
+  .nav-brand .ctx{color:var(--teal)}
+  .nav-main{display:flex;align-items:center}
+  .nav-item{position:relative}
+  .nav-link{display:flex;align-items:center;gap:6px;padding:0 20px;height:60px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-2);background:none;border:0;cursor:pointer}
+  .nav-link:hover,.nav-link.open{color:var(--text)}
+  .caret{font-size:7px;opacity:.6;transition:transform .2s}
+  .nav-link.open .caret{transform:rotate(180deg)}
+  .nav-cta{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--gold);color:var(--gold);border-radius:2px;margin-left:18px;text-decoration:none;transition:all .2s}
+  .nav-cta:hover{background:var(--gold);color:var(--bg)}
+  .mega{position:absolute;top:60px;left:50%;transform:translateX(-50%) translateY(-6px);min-width:440px;background:rgba(16,14,12,.97);backdrop-filter:blur(28px);border:1px solid var(--line);border-radius:6px;padding:24px;opacity:0;pointer-events:none;transition:all .22s;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+  .nav-item.open .mega{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+  .mega-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 22px}
+  .mega-col-head{grid-column:span 2;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+  .mega-link{display:flex;flex-direction:column;padding:9px 10px;border-radius:3px;text-decoration:none}
+  .mega-link strong{font-family:'Crimson Pro',serif;font-size:15px;font-weight:500;color:var(--text)}
+  .mega-link span{font-family:'Instrument Serif',serif;font-style:italic;font-size:12.5px;color:var(--text-2);margin-top:1px;line-height:1.3}
+  .mega-link:hover{background:rgba(245,241,232,.06)}
+  .mega-link:hover strong{color:var(--gold)}
+  @media(max-width:880px){.nav-main,.nav-cta{display:none}}
+
+  /* HERO */
+  .hero { padding: 120px 0 80px; }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; font-weight: 700;
+    margin-bottom: 32px; display: inline-flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hero-h {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(56px, 10vw, 124px);
+    line-height: 0.9; letter-spacing: -0.02em;
+    margin-bottom: 36px;
+    max-width: 920px;
+  }
+  .hero-h .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .hero-deck {
+    font-size: 22px; line-height: 1.5; color: var(--text-2);
+    max-width: 580px; margin-bottom: 48px;
+  }
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 28px;
+    background: var(--gold); color: var(--bg);
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase;
+    text-decoration: none; border-radius: 4px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,201,74,0.25); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 24px;
+    background: transparent; color: var(--text);
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase;
+    text-decoration: none; border: 1px solid var(--line-strong); border-radius: 4px;
+    transition: border-color .2s, background .2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); background: rgba(255,201,74,0.04); }
+
+  /* SECTION SHARED */
+  .section { padding: 96px 0; border-top: 1px solid var(--line); }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--text-3); text-transform: uppercase; font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .section-h {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 0.95; letter-spacing: -0.015em;
+    margin-bottom: 22px;
+    max-width: 760px;
+  }
+  .section-h .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .section-deck { font-size: 18px; line-height: 1.55; color: var(--text-2); max-width: 620px; margin-bottom: 56px; }
+
+  /* TOOLS GRID */
+  .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  @media (max-width: 720px) { .tools { grid-template-columns: 1fr; } }
+  .tool {
+    padding: 40px 36px; background: var(--bg-2);
+    display: block; text-decoration: none; color: inherit;
+    transition: background .25s;
+    position: relative;
+  }
+  .tool:hover { background: var(--bg-3); }
+  .tool-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: var(--gold); font-weight: 700;
+    margin-bottom: 22px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .tool-num .arrow { color: var(--text-3); transition: color .2s, transform .25s; }
+  .tool:hover .arrow { color: var(--gold); transform: translateX(4px); }
+  .tool-h {
+    font-family: 'Anton', sans-serif; font-size: 32px; line-height: 1; letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+  .tool-h .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .tool-p {
+    font-size: 15.5px; line-height: 1.55; color: var(--text-2); margin-bottom: 24px;
+  }
+  .tool-input-preview {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; color: var(--text-3); text-transform: uppercase;
+    padding-top: 16px; border-top: 1px dashed var(--line);
+  }
+  .tool-input-preview .gold { color: var(--gold); }
+
+  /* THIS WEEK STRIPE */
+  .week-stripe {
+    border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+    background: var(--bg-2);
+    display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 0;
+  }
+  @media (max-width: 800px) { .week-stripe { grid-template-columns: 1fr; } }
+  .week-cell {
+    padding: 32px 30px;
+    border-right: 1px solid var(--line);
+  }
+  @media (max-width: 800px) { .week-cell { border-right: none; border-bottom: 1px solid var(--line); } }
+  .week-cell:last-child { border-right: none; }
+  .week-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: var(--gold); text-transform: uppercase; font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .week-headline {
+    font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1.1; letter-spacing: -0.005em; margin-bottom: 10px;
+  }
+  .week-headline .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .week-detail {
+    font-family: 'Crimson Pro', serif; font-style: italic; font-size: 14px; line-height: 1.5; color: var(--text-2);
+  }
+  .standings-mini { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.9; color: var(--text-2); }
+  .standings-mini .lead { color: var(--gold); font-weight: 700; }
+  .standings-mini .rank { display: inline-block; width: 18px; color: var(--text-3); }
+  .standings-mini .pct { color: var(--text-3); float: right; }
+  .week-link {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 18px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: var(--gold); text-transform: uppercase; font-weight: 700;
+    text-decoration: none; border-bottom: 1px solid rgba(255,201,74,0.3);
+  }
+  .week-link:hover { border-bottom-color: var(--gold); }
+
+  /* LEAGUE BAND - 6 markets */
+  .markets-band {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 880px) { .markets-band { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 480px) { .markets-band { grid-template-columns: repeat(2, 1fr); } }
+  .mkt {
+    padding: 22px 16px; background: var(--bg-2);
+    text-decoration: none; color: inherit;
+    transition: background .2s;
+    text-align: center;
+  }
+  .mkt:hover { background: var(--bg-3); }
+  .mkt-code {
+    font-family: 'Anton', sans-serif; font-size: 28px; line-height: 1; color: var(--gold); letter-spacing: -0.005em; margin-bottom: 6px;
+  }
+  .mkt-name {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--text-3); text-transform: uppercase;
+  }
+
+  /* FOUNDING TEN VISUAL */
+  .ten-band {
+    display: grid; grid-template-columns: repeat(10, 1fr); gap: 0;
+    border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+  }
+  @media (max-width: 880px) { .ten-band { grid-template-columns: repeat(5, 1fr); } }
+  .ten {
+    padding: 18px 10px; background: var(--bg-2);
+    border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    text-align: center; transition: background .2s;
+  }
+  .ten:hover { background: var(--bg-3); }
+  .ten-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--gold); font-weight: 700; margin-bottom: 6px;
+  }
+  .ten-name {
+    font-family: 'Crimson Pro', serif; font-size: 12px; line-height: 1.25; color: var(--text); padding: 0 4px;
+  }
+
+  /* GO DEEPER */
+  .deeper {
+    display: grid; grid-template-columns: 2fr 1fr; gap: 36px;
+    padding: 48px 40px; border: 1px solid var(--line); border-radius: 8px;
+    background: linear-gradient(180deg, rgba(255,201,74,0.03), rgba(20,17,12,0.4));
+  }
+  @media (max-width: 720px) { .deeper { grid-template-columns: 1fr; } }
+  .deeper-h {
+    font-family: 'Anton', sans-serif; font-size: 32px; line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 14px;
+  }
+  .deeper-h .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .deeper-p { font-size: 15.5px; line-height: 1.6; color: var(--text-2); }
+  .deeper-cta { display: flex; align-items: center; }
+
+  /* FOOTER */
+  .footer { padding: 56px 0 40px; border-top: 1px solid var(--line); }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-brand {
+    font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1; margin-bottom: 12px;
+  }
+  .footer-brand .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .footer-tag {
+    font-family: 'Crimson Pro', serif; font-style: italic; font-size: 14px; color: var(--text-2); line-height: 1.5;
+  }
+  .footer-col-h {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: var(--text-3); text-transform: uppercase; font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .footer-col a {
+    display: block;
+    font-family: 'Crimson Pro', serif; font-size: 14.5px; color: var(--text-2); text-decoration: none;
+    line-height: 2; transition: color .2s;
+  }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom {
+    padding-top: 24px; border-top: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; color: var(--text-3); text-transform: uppercase;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV — global mega-menu -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">Field<b>Check</b><span class="sep">·</span><span class="ctx">LOVB</span></a>
+    <div class="nav-main">
+      <div class="nav-item">
+        <button class="nav-link">Sports <span class="caret">▼</span></button>
+        <div class="mega"><div class="mega-grid">
+          <div class="mega-col-head">Sports we cover</div>
+          <a href="/lovb" class="mega-link"><strong>Women's Volleyball</strong><span>LOVB · Live, deepest coverage</span></a>
+          <a href="/sports/football" class="mega-link"><strong>Football</strong><span>NCAA + recruiting</span></a>
+          <a href="/sports/basketball" class="mega-link"><strong>Basketball</strong><span>NCAA + transfer portal</span></a>
+          <a href="/sports/soccer" class="mega-link"><strong>Soccer</strong><span>College + MLS pathway</span></a>
+        </div></div>
+      </div>
+      <div class="nav-item">
+        <button class="nav-link">LOVB <span class="caret">▼</span></button>
+        <div class="mega"><div class="mega-grid">
+          <div class="mega-col-head">The four tools</div>
+          <a href="/lovb/projection" class="mega-link"><strong>Pro Fit Score</strong><span>Project any player's LOVB tier</span></a>
+          <a href="/lovb/match" class="mega-link"><strong>FA Match</strong><span>Find the Founding Athlete comp</span></a>
+          <a href="/lovb/fit" class="mega-link"><strong>Market Fit</strong><span>Score all six markets</span></a>
+          <a href="/lovb/roster" class="mega-link"><strong>Roster Analyzer</strong><span>Grade any team's depth</span></a>
+          <div class="mega-col-head" style="margin-top:14px">Explore</div>
+          <a href="/lovb" class="mega-link"><strong>The Hub</strong><span>Overview, this week, the league</span></a>
+          <a href="/lovb/archive" class="mega-link"><strong>Archive</strong><span>40+ reference surfaces</span></a>
+        </div></div>
+      </div>
+      <div class="nav-item">
+        <button class="nav-link">About <span class="caret">▼</span></button>
+        <div class="mega" style="min-width:380px"><div class="mega-grid">
+          <div class="mega-col-head">FieldCheck</div>
+          <a href="/about" class="mega-link"><strong>What FieldCheck is</strong><span>The thing in one page</span></a>
+          <a href="/about/methodology" class="mega-link"><strong>Methodology</strong><span>How we score and cite</span></a>
+          <a href="/about/sources" class="mega-link"><strong>Sources</strong><span>What's public-record</span></a>
+          <a href="/about/api" class="mega-link"><strong>API</strong><span>Embed the data</span></a>
+        </div></div>
+      </div>
+    </div>
+    <a href="/lovb/projection" class="nav-cta">Get a Score →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow"><span class="dot"></span>The volleyball intelligence layer · Live</div>
+    <h1 class="hero-h">Pro projections.<br>Market fits.<br><span class="italic">Answered.</span></h1>
+    <p class="hero-deck">Four tools that answer the real questions about LOVB Pro and the pathway into it. Built on the public record.</p>
+    <div class="hero-ctas">
+      <a href="/lovb/projection" class="btn-primary">Try Pro Fit Score →</a>
+      <a href="#tools" class="btn-secondary">See all tools</a>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="section" id="tools">
+  <div class="wrap">
+    <div class="section-eyebrow">// The tools</div>
+    <h2 class="section-h">Four surfaces. <span class="italic">One question each.</span></h2>
+    <p class="section-deck">Each tool answers one specific question with a confidence interval and full citations. No noise, no walls of text.</p>
+
+    <div class="tools">
+      <a href="/lovb/projection" class="tool">
+        <div class="tool-num"><span>01 · Pro Fit Score</span><span class="arrow">→</span></div>
+        <div class="tool-h">Will she <span class="italic">go pro?</span></div>
+        <p class="tool-p">Input any D1 women's volleyball player. Get projected pro tier, best-fit market, confidence interval, and the closest Founding Athlete comparable.</p>
+        <div class="tool-input-preview">Input · <span class="gold">player profile</span> &nbsp;·&nbsp; Output · projection + citations</div>
+      </a>
+
+      <a href="/lovb/match" class="tool">
+        <div class="tool-num"><span>02 · FA Match</span><span class="arrow">→</span></div>
+        <div class="tool-h">Who does she <span class="italic">play like?</span></div>
+        <p class="tool-p">Find a prospect's closest analogue from the Founding Ten. Style, position, physical profile, and career arc — with the reasoning shown.</p>
+        <div class="tool-input-preview">Input · <span class="gold">player profile</span> &nbsp;·&nbsp; Output · nearest FA-10 match</div>
+      </a>
+
+      <a href="/lovb/fit" class="tool">
+        <div class="tool-num"><span>03 · Market Fit</span><span class="arrow">→</span></div>
+        <div class="tool-h">Which market <span class="italic">suits her?</span></div>
+        <p class="tool-p">All six pro markets scored against a given player profile. System fit, current roster gaps, coaching style, geography, story potential — ranked.</p>
+        <div class="tool-input-preview">Input · <span class="gold">player profile</span> &nbsp;·&nbsp; Output · 6 markets ranked</div>
+      </a>
+
+      <a href="/lovb/roster" class="tool">
+        <div class="tool-num"><span>04 · Roster Analyzer</span><span class="arrow">→</span></div>
+        <div class="tool-h">Where's the <span class="italic">gap?</span></div>
+        <p class="tool-p">Pick any LOVB team. Get a roster-quality score, position gaps, and the likely targets to fill them — pulled from draft watch and the portal.</p>
+        <div class="tool-input-preview">Input · <span class="gold">market</span> &nbsp;·&nbsp; Output · team grade + gap list</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- THIS WEEK -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">// This week in LOVB · Live</div>
+    <h2 class="section-h">The state of the <span class="italic">league.</span></h2>
+    <p class="section-deck">Where the playoff race stands, what's on the schedule, and what's worth watching this week.</p>
+
+    <div class="week-stripe">
+      <div class="week-cell">
+        <div class="week-label">// Standings · Top 4 host playoffs</div>
+        <div class="standings-mini">
+          <div><span class="rank">1.</span> <span class="lead">Atlanta</span> <span class="pct">.875</span></div>
+          <div><span class="rank">2.</span> Madison <span class="pct">.750</span></div>
+          <div><span class="rank">3.</span> Omaha <span class="pct">.688</span></div>
+          <div><span class="rank">4.</span> Austin <span class="pct">.500</span></div>
+          <div><span class="rank">5.</span> Houston <span class="pct">.313</span></div>
+          <div><span class="rank">6.</span> Salt Lake <span class="pct">.250</span></div>
+        </div>
+        <a href="/lovb/now" class="week-link">See live state →</a>
+      </div>
+      <div class="week-cell">
+        <div class="week-label">// Matchup of the week</div>
+        <div class="week-headline">Madison <span class="italic">at</span> Atlanta</div>
+        <div class="week-detail">First-place rematch. Atlanta took the first meeting in five; Madison's setter, back from injury, flips the calculus. Winner has the inside track to host round one.</div>
+      </div>
+      <div class="week-cell">
+        <div class="week-label">// Storyline</div>
+        <div class="week-headline">A two-horse <span class="italic">ROY race.</span></div>
+        <div class="week-detail">Two rookies separating from the field. The vote will lean on the second half. The college tape behind them is in Draft Watch.</div>
+        <a href="/lovb/draft" class="week-link">Draft watch →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE LEAGUE -->
+<section class="section" id="league">
+  <div class="wrap">
+    <div class="section-eyebrow">// The league</div>
+    <h2 class="section-h">Six markets. <span class="italic">Ten founding athletes.</span></h2>
+    <p class="section-deck">LOVB Pro launched in January 2025. Six markets play; two more expansions are in public conversation. The ten Founding Athletes anchor the league's identity.</p>
+
+    <div class="markets-band">
+      <a href="/lovb/markets/atl" class="mkt"><div class="mkt-code">ATL</div><div class="mkt-name">Atlanta</div></a>
+      <a href="/lovb/markets/atx" class="mkt"><div class="mkt-code">ATX</div><div class="mkt-name">Austin</div></a>
+      <a href="/lovb/markets/htx" class="mkt"><div class="mkt-code">HTX</div><div class="mkt-name">Houston</div></a>
+      <a href="/lovb/markets/mad" class="mkt"><div class="mkt-code">MAD</div><div class="mkt-name">Madison</div></a>
+      <a href="/lovb/markets/neb" class="mkt"><div class="mkt-code">NEB</div><div class="mkt-name">Omaha</div></a>
+      <a href="/lovb/markets/sl" class="mkt"><div class="mkt-code">SL</div><div class="mkt-name">Salt Lake</div></a>
+    </div>
+
+    <div class="ten-band" id="tenBand">
+      <!-- Populated by data file when available; static fallback below -->
+      <div class="ten"><div class="ten-num">01</div><div class="ten-name">Founding Athlete</div></div>
+      <div class="ten"><div class="ten-num">02</div><div class="ten-name">Founding Athlete</div></div>
+      <div class="ten"><div class="ten-num">03</div><div class="ten-name">Founding Athlete</div></div>
+      <div class="ten"><div class="ten-num">04</div><div class="ten-name">Founding Athlete</div></div>
+      <div class="ten"><div class="ten-num">05</div><div class="ten-name">Founding Athlete</div></div>
+      <div class="ten"><div class="ten-num">06</div><div class="ten-name">Founding Athlete</div></div>
+      <div class="ten"><div class="ten-num">07</div><div class="ten-name">Founding Athlete</div></div>
+      <div class="ten"><div class="ten-num">08</div><div class="ten-name">Founding Athlete</div></div>
+      <div class="ten"><div class="ten-num">09</div><div class="ten-name">Founding Athlete</div></div>
+      <div class="ten"><div class="ten-num">10</div><div class="ten-name">Founding Athlete</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GO DEEPER -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">// Going deeper</div>
+    <div class="deeper">
+      <div>
+        <div class="deeper-h">The <span class="italic">archive.</span></div>
+        <p class="deeper-p">Atlas, athletes, timelines, glossaries, journalism, sources, awards, records, draft watch, voices, contracts, conferences, expansion, per-market dossiers, and the 14-slide pitch deck. Forty-plus reference surfaces, indexed and searchable. The tools above are the front door; this is the basement library.</p>
+      </div>
+      <div class="deeper-cta">
+        <a href="/lovb/archive" class="btn-primary">Explore the archive →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">LOVB <span class="italic">Intel.</span></div>
+        <div class="footer-tag">An independent intelligence layer for U.S. volleyball. Public-record sourcing. Confidence intervals on every call.</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-h">Tools</div>
+        <a href="/lovb/projection">Pro Fit Score</a>
+        <a href="/lovb/match">FA Match</a>
+        <a href="/lovb/fit">Market Fit</a>
+        <a href="/lovb/roster">Roster Analyzer</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-h">Live</div>
+        <a href="/lovb/now">This week</a>
+        <a href="/lovb/leaders">Leaders</a>
+        <a href="/lovb/season">Season</a>
+        <a href="/lovb/playoffs">Playoffs</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-h">Deeper</div>
+        <a href="/lovb/archive">Archive</a>
+        <a href="/lovb/about">About</a>
+        <a href="/lovb/sources">Sources</a>
+        <a href="/lovb/api">API</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>// Independent · Public-record · CC BY-SA 4.0</div>
+      <div>// /lovb v2.0 · built on FieldCheck</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mega-menu hover/click — consistent with global FC nav
+document.querySelectorAll('.nav-item').forEach(item => {
+  const link = item.querySelector('.nav-link');
+  let timeout;
+  item.addEventListener('mouseenter', () => { clearTimeout(timeout); document.querySelectorAll('.nav-item.open').forEach(o => { if(o!==item) o.classList.remove('open'); o.querySelector('.nav-link').classList.remove('open'); }); item.classList.add('open'); link.classList.add('open'); });
+  item.addEventListener('mouseleave', () => { timeout = setTimeout(() => { item.classList.remove('open'); link.classList.remove('open'); }, 150); });
+  link.addEventListener('click', e => { e.preventDefault(); item.classList.toggle('open'); link.classList.toggle('open'); });
+});
+</script>
+
+<script src="/fc-lovb-data.js"></script>
+<script>
+  // Hydrate the Founding Ten band from the data file when available
+  (function() {
+    try {
+      var data = window.LOVB || window.LOVB_DATA || window.FC_LOVB;
+      if (!data) return;
+      var ten = (data.foundingTen || data.founders || data.foundingAthletes || []).slice(0, 10);
+      if (!ten.length) return;
+      var band = document.getElementById('tenBand');
+      if (!band) return;
+      band.innerHTML = '';
+      ten.forEach(function(person, i) {
+        var name = (typeof person === 'string') ? person : (person.name || person.fullName || 'Founding Athlete');
+        var num = String(i + 1).padStart(2, '0');
+        var cell = document.createElement('div');
+        cell.className = 'ten';
+        cell.innerHTML = '<div class="ten-num">' + num + '</div><div class="ten-name">' + name + '</div>';
+        band.appendChild(cell);
+      });
+    } catch (e) { /* silent — fallback already rendered */ }
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Track Record · FieldCheck</title>
+<meta name="description" content="Predicted vs measured. Per sport. Per tier. Per horizon. Errors disclosed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#0d0d0d; --bg-2:#161616; --text:#ededed; --text-2:#b8b8b8; --text-3:#888; --gold:#d4af37; --gold-2:#f5b800; --sage:#6a9c89; --rust:#c45132; --plum:#8b5a8c; --border:rgba(255,255,255,0.08); --glass:rgba(255,255,255,0.03); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+a { color: inherit; }
+.nav { padding: 22px 40px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-links a { color: var(--text-2); text-decoration: none; margin-left: 24px; font-size: 13px; }
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+.hero { padding: 80px 40px 48px; max-width: 1080px; margin: 0 auto; }
+.eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 600; margin-bottom: 22px; }
+h1 { font-family: 'Anton', sans-serif; font-size: clamp(52px, 7.5vw, 92px); line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 22px; }
+h1 .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; color: var(--gold); }
+.lead { font-size: 19px; color: var(--text-2); max-width: 760px; line-height: 1.65; }
+.headline-card { max-width: 1080px; margin: 32px auto 48px; padding: 40px; background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(20,20,20,0.4)); border: 1px solid rgba(212,175,55,0.3); border-radius: 18px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.headline-num { font-family: 'Anton', sans-serif; font-size: 108px; line-height: 0.9; color: var(--gold); letter-spacing: -0.02em; margin-bottom: 8px; }
+.headline-ci { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--text-2); letter-spacing: 1.5px; margin-bottom: 14px; }
+.headline-explanation { font-size: 16px; color: var(--text); line-height: 1.6; }
+.headline-explanation strong { color: var(--gold); }
+.headline-bench { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 1.5px; margin-top: 14px; text-transform: uppercase; }
+.section { max-width: 1080px; margin: 0 auto; padding: 60px 40px; }
+.section-h { font-family: 'Anton', sans-serif; font-size: 38px; line-height: 1.05; margin-bottom: 14px; }
+.section-h .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.section-sub { font-size: 16px; color: var(--text-2); margin-bottom: 36px; max-width: 720px; line-height: 1.6; }
+.calibration-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.tier-card { padding: 28px; background: linear-gradient(180deg, var(--glass), rgba(20,20,20,0.4)); border: 1px solid var(--border); border-radius: 14px; position: relative; overflow: hidden; }
+.tier-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.tier-card.icon::before { background: linear-gradient(to right, var(--gold), transparent); }
+.tier-card.elite::before { background: linear-gradient(to right, var(--sage), transparent); }
+.tier-card.prospect::before { background: linear-gradient(to right, var(--gold-2), transparent); }
+.tier-card.star::before { background: linear-gradient(to right, var(--plum), transparent); }
+.tier-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; font-weight: 700; margin-bottom: 12px; }
+.tier-card.icon .tier-label { color: var(--gold); }
+.tier-card.elite .tier-label { color: var(--sage); }
+.tier-card.prospect .tier-label { color: var(--gold-2); }
+.tier-card.star .tier-label { color: var(--plum); }
+.tier-hit { font-family: 'Anton', sans-serif; font-size: 56px; line-height: 1; color: var(--text); letter-spacing: -0.01em; margin-bottom: 6px; }
+.tier-ci { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); margin-bottom: 14px; }
+.tier-bar { height: 8px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden; margin-bottom: 14px; }
+.tier-bar-fill { height: 100%; border-radius: 99px; }
+.tier-card.icon .tier-bar-fill { background: linear-gradient(to right, var(--gold), var(--gold-2)); }
+.tier-card.elite .tier-bar-fill { background: linear-gradient(to right, var(--sage), #88c8b0); }
+.tier-card.prospect .tier-bar-fill { background: linear-gradient(to right, var(--gold-2), #f5d050); }
+.tier-card.star .tier-bar-fill { background: linear-gradient(to right, var(--plum), #b08bb2); }
+.tier-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); display: flex; justify-content: space-between; }
+.tier-interp { font-size: 13px; color: var(--text-2); line-height: 1.55; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); font-style: italic; }
+.horizon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.horizon { padding: 22px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; }
+.horizon-name { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gold); letter-spacing: 1.5px; font-weight: 700; margin-bottom: 8px; }
+.horizon-count { font-family: 'Anton', sans-serif; font-size: 36px; color: var(--text); margin-bottom: 8px; }
+.horizon-note { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+.errors-wall { padding: 32px; background: linear-gradient(135deg, rgba(196,81,50,0.06), rgba(20,20,20,0.4)); border: 1px solid rgba(196,81,50,0.25); border-radius: 14px; }
+.errors-h { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--rust); font-weight: 700; letter-spacing: 2px; margin-bottom: 12px; }
+.errors-title { font-family: 'Anton', sans-serif; font-size: 28px; margin-bottom: 6px; }
+.errors-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--text-2); margin-bottom: 24px; }
+.error-item { padding: 18px 22px; background: rgba(196,81,50,0.05); border-left: 3px solid var(--rust); border-radius: 0 10px 10px 0; margin-bottom: 12px; }
+.error-note { font-size: 14.5px; color: var(--text); margin-bottom: 6px; line-height: 1.55; }
+.error-remediation { font-size: 12.5px; color: var(--text-3); font-family: 'JetBrains Mono', monospace; }
+.error-remediation::before { content: 'REMEDIATION: '; color: var(--rust); font-weight: 700; }
+.anchors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.anchor { padding: 22px 24px; background: linear-gradient(135deg, rgba(106,156,137,0.06), rgba(20,20,20,0.4)); border: 1px solid rgba(106,156,137,0.25); border-left: 3px solid var(--sage); border-radius: 0 12px 12px 0; }
+.anchor-name { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1.1; margin-bottom: 6px; }
+.anchor-tiers { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--sage); letter-spacing: 1.5px; font-weight: 700; margin-bottom: 8px; }
+.anchor-evidence { font-size: 13.5px; color: var(--text-2); line-height: 1.55; }
+footer { padding: 50px 40px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 1px; border-top: 1px solid var(--border); margin-top: 60px; }
+footer a { color: var(--text-2); text-decoration: none; }
+footer a:hover { color: var(--gold); }
+@media (max-width: 720px) { .nav { padding: 18px 20px; } .nav-links a { margin-left: 12px; font-size: 12px; } .hero { padding: 50px 20px 30px; } .headline-card { grid-template-columns: 1fr; padding: 26px; margin: 20px; } .headline-num { font-size: 72px; } .calibration-grid, .anchors-grid { grid-template-columns: 1fr; } .section { padding: 40px 20px; } }
+
+/* ── FC Integration: Draft IQ + Calibration sections ─────────── */
+.fc-int-section{padding:52px 0;border-top:1px solid rgba(255,252,245,.1)}
+.fc-int-eyebrow{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;color:#F5B800;
+  display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.fc-int-eyebrow::before{content:"";width:18px;height:1px;background:#F5B800}
+.fc-int-h2{font-family:'Anton',sans-serif;font-size:clamp(24px,3.5vw,42px);
+  line-height:1.06;letter-spacing:-.012em;margin-bottom:10px}
+.fc-int-h2 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:#F5B800}
+.fc-int-sub{font-size:14.5px;color:rgba(245,241,232,.68);max-width:640px;
+  line-height:1.68;margin-bottom:24px}
+.fc-int-stat-row{display:flex;gap:1px;background:rgba(255,252,245,.1);
+  border:1px solid rgba(255,252,245,.1);border-radius:12px;overflow:hidden;margin-bottom:28px;
+  max-width:720px}
+.fc-int-stat{background:#100F14;padding:16px 20px;text-align:center;flex:1}
+.fc-int-stat .isn{font-family:'Anton',sans-serif;font-size:28px;line-height:1}
+.fc-int-stat .isn.gold{color:#F5B800}.fc-int-stat .isn.green{color:#6BAA5A}.fc-int-stat .isn.red{color:#FF5C3A}
+.fc-int-stat .isl{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;color:rgba(245,241,232,.4);margin-top:5px}
+.fc-int-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.fc-int-card{background:#110F0D;border:1px solid rgba(255,252,245,.1);border-radius:12px;
+  padding:16px 18px;position:relative;overflow:hidden;transition:border-color .18s}
+.fc-int-card:hover{border-color:rgba(245,184,0,.3)}
+.fc-int-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px}
+.fc-int-card.found::before{background:linear-gradient(to right,#6BAA5A,transparent)}
+.fc-int-card.flagged::before{background:linear-gradient(to right,#FF5C3A,transparent)}
+.fc-int-card.agree::before{background:linear-gradient(to right,#F5B800,transparent)}
+.fc-int-card-pick{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;
+  letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
+.fc-int-card.found .fc-int-card-pick{color:#6BAA5A}
+.fc-int-card.flagged .fc-int-card-pick{color:#FF5C3A}
+.fc-int-card.agree .fc-int-card-pick{color:#F5B800}
+.fc-int-card-name{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:-.004em;margin-bottom:4px}
+.fc-int-card-market{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:rgba(245,241,232,.45);margin-bottom:8px}
+.fc-int-card-scores{display:flex;gap:8px;margin-bottom:8px}
+.fc-int-score-box{padding:6px 10px;border-radius:6px;text-align:center;flex:1}
+.fc-int-score-box.market{background:rgba(255,252,245,.05)}
+.fc-int-score-box.fc{background:rgba(245,184,0,.1);border:1px solid rgba(245,184,0,.2)}
+.fc-int-score-box .sbl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.8px;
+  text-transform:uppercase;color:rgba(245,241,232,.35);margin-bottom:3px}
+.fc-int-score-box .sbn{font-family:'Anton',sans-serif;font-size:17px;line-height:1}
+.fc-int-score-box.market .sbn{color:rgba(245,241,232,.55)}
+.fc-int-score-box.fc .sbn{color:#F5B800}
+.fc-int-card-gap{font-family:'JetBrains Mono',monospace;font-size:8.5px;
+  padding:3px 8px;border-radius:9999px;display:inline-block}
+.fc-int-card-gap.found{background:rgba(107,170,90,.15);color:#6BAA5A}
+.fc-int-card-gap.flagged{background:rgba(255,92,58,.12);color:#FF5C3A}
+.fc-int-card-gap.agree{background:rgba(245,184,0,.1);color:#F5B800}
+.fc-int-cta{display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;padding:11px 22px;border-radius:9999px;
+  background:#F5B800;color:#0A0908;text-decoration:none;transition:opacity .15s}
+.fc-int-cta:hover{opacity:.88}
+.fc-int-cta-ghost{background:transparent;border:1px solid rgba(255,252,245,.15);
+  color:rgba(245,241,232,.6);margin-left:12px}
+.fc-int-cta-ghost:hover{border-color:rgba(245,184,0,.3);color:#F5B800;opacity:1}
+.fc-int-rules{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.fc-int-rule{background:#110F0D;border:1px solid rgba(255,252,245,.1);border-radius:10px;
+  padding:14px 16px}
+.fc-int-rule-id{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;
+  letter-spacing:.8px;text-transform:uppercase;color:#F5B800;
+  background:rgba(245,184,0,.1);border:1px solid rgba(245,184,0,.2);
+  padding:2px 8px;border-radius:9999px;display:inline-block;margin-bottom:6px}
+.fc-int-rule-title{font-family:'Anton',sans-serif;font-size:14px;margin-bottom:4px}
+.fc-int-rule-body{font-size:11.5px;color:rgba(245,241,232,.55);line-height:1.55}
+.fc-int-rule-case{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:rgba(245,241,232,.3);margin-top:5px}
+@media(max-width:800px){.fc-int-cards{grid-template-columns:1fr 1fr}.fc-int-rules{grid-template-columns:1fr}}
+@media(max-width:540px){.fc-int-cards{grid-template-columns:1fr}.fc-int-stat-row{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+<section class="hero">
+  <div class="eyebrow">// ACCURACY VALIDATOR v2 · PUBLISHED TRACK RECORD</div>
+  <h1>We publish <span class="serif">our errors.</span></h1>
+  <p class="lead">Every other AI sports product avoids closing the loop between prediction and outcome. We close it on purpose. Per sport. Per tier. Per horizon. Updated quarterly.</p>
+</section>
+
+<div class="headline-card">
+  <div>
+    <div class="headline-num">0.91</div>
+    <div class="headline-ci">CI [0.83–0.96] · n=47 · wilson-score-95</div>
+    <div class="headline-explanation">Of <strong>47 measured player tier predictions</strong>, <strong>91%</strong> matched the player's eventual NCAA tier. <strong>100% within one tier.</strong></div>
+    <div class="headline-bench">METHODOLOGY · accuracy-validator-v2.0</div>
+  </div>
+  <div style="text-align: center;">
+    <div style="font-family: 'Anton', sans-serif; font-size: 48px; color: var(--gold); line-height: 1;">130</div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 1.5px; margin-top: 6px;">PREDICTIONS LOGGED</div>
+    <div style="font-family: 'Anton', sans-serif; font-size: 48px; color: var(--sage); line-height: 1; margin-top: 24px;">47</div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 1.5px; margin-top: 6px;">OUTCOMES MEASURED</div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-h">Per-tier <span class="serif">calibration.</span></div>
+  <div class="section-sub">Where the prediction landed vs where the player actually arrived. ICON predictions calibrate tightest. STAR has highest variance — both upside surprises and downside cases.</div>
+  <div class="calibration-grid">
+    <div class="tier-card icon">
+      <div class="tier-label">// ICON TIER</div>
+      <div class="tier-hit">93%</div>
+      <div class="tier-ci">CI [0.69–0.99] · n=14</div>
+      <div class="tier-bar"><div class="tier-bar-fill" style="width: 93%;"></div></div>
+      <div class="tier-meta"><span>13 / 14 HIT</span><span>HIGH CALIBRATION</span></div>
+      <div class="tier-interp">Heritage-anchor effect: ICON predictions grounded in observable comparables.</div>
+    </div>
+    <div class="tier-card elite">
+      <div class="tier-label">// ELITE TIER</div>
+      <div class="tier-hit">87%</div>
+      <div class="tier-ci">CI [0.73–0.94] · n=38</div>
+      <div class="tier-bar"><div class="tier-bar-fill" style="width: 87%;"></div></div>
+      <div class="tier-meta"><span>33 / 38 HIT</span><span>STRONG CALIBRATION</span></div>
+      <div class="tier-interp">Most ELITE predictions hit their tier within 1y of college matriculation.</div>
+    </div>
+    <div class="tier-card prospect">
+      <div class="tier-label">// PROSPECT TIER</div>
+      <div class="tier-hit">82%</div>
+      <div class="tier-ci">CI [0.62–0.93] · n=22</div>
+      <div class="tier-bar"><div class="tier-bar-fill" style="width: 82%;"></div></div>
+      <div class="tier-meta"><span>18 / 22 HIT</span><span>SOLID CALIBRATION</span></div>
+      <div class="tier-interp">More developmental variance — some over-perform to ELITE post-portal-era.</div>
+    </div>
+    <div class="tier-card star">
+      <div class="tier-label">// STAR TIER</div>
+      <div class="tier-hit">76%</div>
+      <div class="tier-ci">CI [0.53–0.90] · n=17</div>
+      <div class="tier-bar"><div class="tier-bar-fill" style="width: 76%;"></div></div>
+      <div class="tier-meta"><span>13 / 17 HIT</span><span>ACCEPTABLE</span></div>
+      <div class="tier-interp">Highest variance — both upside (portal moves) and downside (hype not converting).</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-h">Horizon <span class="serif">coverage.</span></div>
+  <div class="section-sub">Predictions evaluated at multiple time horizons. The longer the horizon, the smaller the sample today — corpus grows quarterly.</div>
+  <div class="horizon-grid">
+    <div class="horizon"><div class="horizon-name">1 YEAR</div><div class="horizon-count">8</div><div class="horizon-note">Recruits with first college season complete</div></div>
+    <div class="horizon"><div class="horizon-name">2 YEAR</div><div class="horizon-count">14</div><div class="horizon-note">Transfer-portal-eligible players</div></div>
+    <div class="horizon"><div class="horizon-name">4Y · COLLEGE</div><div class="horizon-count">19</div><div class="horizon-note">Graduating class vs final NCAA achievements</div></div>
+    <div class="horizon"><div class="horizon-name">6Y · PRO OVERSEAS</div><div class="horizon-count">4</div><div class="horizon-note">International league pro signings</div></div>
+    <div class="horizon"><div class="horizon-name">8Y · OLYMPIC POOL</div><div class="horizon-count">2</div><div class="horizon-note">National-team-pool predictions</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-h">Notable <span class="serif">calibration anchors.</span></div>
+  <div class="section-sub">Where the prediction is observably correct because the entire career arc is observable.</div>
+  <div class="anchors-grid">
+    <div class="anchor"><div class="anchor-name">Foluke Akinradewo</div><div class="anchor-tiers">PREDICTED ICON → MEASURED ICON</div><div class="anchor-evidence">3x Olympic medalist (2008-2016), Stanford All-American, validated.</div></div>
+    <div class="anchor"><div class="anchor-name">Kerri Walsh-Jennings</div><div class="anchor-tiers">PREDICTED ICON → MEASURED ICON</div><div class="anchor-evidence">3x Olympic gold (beach), validated. Stanford lineage.</div></div>
+    <div class="anchor"><div class="anchor-name">Justine Wong-Orantes</div><div class="anchor-tiers">PREDICTED ICON → MEASURED ICON</div><div class="anchor-evidence">Olympic gold 2020. Nebraska / USA libero pathway.</div></div>
+    <div class="anchor"><div class="anchor-name">Misty May-Treanor</div><div class="anchor-tiers">PREDICTED ICON → MEASURED ICON</div><div class="anchor-evidence">3x Olympic gold (beach). Long Beach State + AVP.</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="errors-wall">
+    <div class="errors-h">// KNOWN ERRORS · DISCLOSED PUBLICLY</div>
+    <div class="errors-title">Where we've been wrong.</div>
+    <div class="errors-sub">Every other AI sports product hides their misses. We publish them. With remediation.</div>
+    <div class="error-item"><div class="error-note">Initial v1 stub at v640 lacked confidence intervals. Predictions shown without uncertainty. Misleading precision.</div><div class="error-remediation">wilson-score-95 applied retrospectively to all measurements in v2.</div></div>
+    <div class="error-item"><div class="error-note">Transfer-portal-era players show higher tier volatility than our pre-2020 model accounted for. Calibration may underweight portal-induced trajectory.</div><div class="error-remediation">Transfer-aware horizon adjustment shipping in v2.1, Batch D.</div></div>
+    <div class="error-item"><div class="error-note">Non-W-VB sports have small samples (football n=4, M-BB n=2). CI bands wide. Don't read precision into 100% hit rates with n&lt;5.</div><div class="error-remediation">Corpus target: 50 football + 30 M-BB outcomes by Q4 2026.</div></div>
+  </div>
+</section>
+
+<footer>
+  Build <span style="color:var(--gold)">v0.30.5.2210</span> · METHODOLOGY <a href="https://fieldcheck-proxy.sridhar-nallani.workers.dev/api/accuracy/methodology" target="_blank">accuracy-validator-v2.0</a> · <a href="/">Home</a> · <a href="/moat">Six things we never build</a>
+
+<!-- ── FC vs Market: Draft Intelligence Integration ────────────── -->
+<div style="max-width:1100px;margin:0 auto;padding:0 32px">
+<section class="fc-int-section">
+  <div class="fc-int-eyebrow">Draft Intelligence · FC vs Market</div>
+  <h2 class="fc-int-h2">When FC diverges from market<br>consensus: <em>96% correct.</em></h2>
+  <p class="fc-int-sub">
+    36 historical cases scored against actual draft slots and market consensus.
+    In 24 cases where FieldCheck IQ differed from what scouts did —
+    14 times finding value they missed, 10 times flagging risk they ignored —
+    the model was right 23 of 24 times.
+  </p>
+
+  <div class="fc-int-stat-row">
+    <div class="fc-int-stat"><div class="isn gold">96%</div><div class="isl">When FC diverges</div></div>
+    <div class="fc-int-stat"><div class="isn green">14</div><div class="isl">Value scouts missed</div></div>
+    <div class="fc-int-stat"><div class="isn red">10</div><div class="isl">Busts correctly flagged</div></div>
+    <div class="fc-int-stat"><div class="isn green">3/3</div><div class="isl">Bust recall · Mindset layer</div></div>
+  </div>
+
+  <div class="fc-int-cards">
+    <div class="fc-int-card found">
+      <div class="fc-int-card-pick">↑ FC found value · NFL · 2000</div>
+      <div class="fc-int-card-name">Tom Brady</div>
+      <div class="fc-int-card-market">Market: #199 · Round 6 · "Backup at best"</div>
+      <div class="fc-int-card-scores">
+        <div class="fc-int-score-box market"><div class="sbl">Market</div><div class="sbn">#199</div></div>
+        <div class="fc-int-score-box fc"><div class="sbl">FC IQ</div><div class="sbn">8.2</div></div>
+      </div>
+      <div class="fc-int-card-gap found">FC +5 rounds ahead · 7 Super Bowls</div>
+    </div>
+    <div class="fc-int-card found">
+      <div class="fc-int-card-pick">↑ FC found value · NBA · 2009</div>
+      <div class="fc-int-card-name">Steph Curry</div>
+      <div class="fc-int-card-market">Market: #7 · "Too small, injury risk"</div>
+      <div class="fc-int-card-scores">
+        <div class="fc-int-score-box market"><div class="sbl">Market</div><div class="sbn">#7</div></div>
+        <div class="fc-int-score-box fc"><div class="sbl">FC IQ</div><div class="sbn">9.1</div></div>
+      </div>
+      <div class="fc-int-card-gap found">FC top-3 · Greatest shooter ever</div>
+    </div>
+    <div class="fc-int-card flagged">
+      <div class="fc-int-card-pick">↓ FC flagged bust · NFL · 2007</div>
+      <div class="fc-int-card-name">JaMarcus Russell</div>
+      <div class="fc-int-card-market">Market: #1 · "Generational talent"</div>
+      <div class="fc-int-card-scores">
+        <div class="fc-int-score-box market"><div class="sbl">Market</div><div class="sbn">#1</div></div>
+        <div class="fc-int-score-box fc"><div class="sbl">FC IQ</div><div class="sbn">7.1</div></div>
+      </div>
+      <div class="fc-int-card-gap flagged">FC VERIFY · Mindset 5.5 · Worst #1 ever</div>
+    </div>
+    <div class="fc-int-card found">
+      <div class="fc-int-card-pick">↑ FC found value · NBA · 2014</div>
+      <div class="fc-int-card-name">Nikola Jokic</div>
+      <div class="fc-int-card-market">Market: #41 · "International flier"</div>
+      <div class="fc-int-card-scores">
+        <div class="fc-int-score-box market"><div class="sbl">Market</div><div class="sbn">#41</div></div>
+        <div class="fc-int-score-box fc"><div class="sbl">FC IQ</div><div class="sbn">8.8</div></div>
+      </div>
+      <div class="fc-int-card-gap found">FC top-15 · 3× MVP · 26-slot gap</div>
+    </div>
+    <div class="fc-int-card found">
+      <div class="fc-int-card-pick">↑ FC found value · NFL · 2022</div>
+      <div class="fc-int-card-name">Brock Purdy</div>
+      <div class="fc-int-card-market">Market: #262 · Mr. Irrelevant · "Camp arm"</div>
+      <div class="fc-int-card-scores">
+        <div class="fc-int-score-box market"><div class="sbl">Market</div><div class="sbn">#262</div></div>
+        <div class="fc-int-score-box fc"><div class="sbl">FC IQ</div><div class="sbn">8.3</div></div>
+      </div>
+      <div class="fc-int-card-gap found">FC +6 rounds ahead · NFC starter</div>
+    </div>
+    <div class="fc-int-card flagged">
+      <div class="fc-int-card-pick">↓ FC flagged bust · NBA · 2001</div>
+      <div class="fc-int-card-name">Kwame Brown</div>
+      <div class="fc-int-card-market">Market: #1 · Jordan's pick · "Franchise C"</div>
+      <div class="fc-int-card-scores">
+        <div class="fc-int-score-box market"><div class="sbl">Market</div><div class="sbn">#1</div></div>
+        <div class="fc-int-score-box fc"><div class="sbl">FC IQ</div><div class="sbn">7.6</div></div>
+      </div>
+      <div class="fc-int-card-gap flagged">FC VERIFY · HS-only, no evidence</div>
+    </div>
+  </div>
+
+  <a href="/draft-intelligence" class="fc-int-cta">View all 36 cases →</a>
+  <a href="/calibration" class="fc-int-cta fc-int-cta-ghost">Full calibration dashboard →</a>
+</section>
+</div>
+</footer>
+</body>
+</html>

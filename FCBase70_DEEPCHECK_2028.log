@@ -1,0 +1,131 @@
+===== DEEP CHECK =====
+
+=== ISSUE 1: Methodology and Predictions 'agent' counts ===
+Phase 7 reported methodology=1, predictions=0 agent occurrences (looked wrong).
+BUT that was 'grep -c' = LINE count, not occurrence count. Let me verify properly.
+
+Methodology - 'agent' occurrences:
+  In current frontend:        70
+  In today's backup:          70
+  Files identical?      YES
+
+Predictions - 'agent' occurrences:
+  In current frontend:        68
+  In today's backup:          68
+  Files identical?      YES
+
+What prod actually serves at /methodology (first 200 chars):
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How FieldCheck grades · The methodology</title>
+<meta name="d
+
+=== ISSUE 2: Homepage keywords (case-sensitive test was misleading) ===
+Re-running case-insensitive:
+  Length of homepage HTML:    59061
+  'athletic intelligence' (case-ins): 2
+  'Elite' anywhere:                   4
+  'Cooper Flagg':                      4
+  'See the player':                    1
+  '9.30':                              2
+  'PhD':                               1
+  'Newsroom':                          0
+
+=== ISSUE 3: Photo proxy (wrong sport in my test) ===
+Retesting with correct sports:
+  Caitlin Clark (womens-basketball): 404
+  Faizon Brandon (football):         200
+  Avery Skinner (womens-volleyball): 404
+  AJ Dybantsa (mens-basketball):     200
+
+=== ISSUE 4: Worker /verdict route was 404 (probably wrong route) ===
+Checking what worker routes exist:
+  200  /
+  404  /verdict
+  404  /api/verdict
+  404  /v1/verdict
+  404  /agent
+  200  /agent/stats
+  400  /photo
+  404  /v022
+  404  /lookup
+
+=== ISSUE 5: Composite/score data — what actually appears on verdict page ===
+Fetching /verdict?q=Cooper+Flagg and looking for score data:
+  Length:   581685 chars
+  '9.30' on page:     1
+  'Elite' on page:    11
+  'composite' count:  340
+  'CLOSER DNA':       0
+  'MENTAL':           0
+  'PhD':              0
+  'eval_grid':        5
+
+=== ISSUE 6: Compare specific files yesterday vs today ===
+fieldcheck-verdict.html (today's, in frontend/ now):
+  Size:   584220 bytes
+  Same as today's backup? YES
+
+fieldcheck-sport-mens-basketball.html:
+  Size:    26752 bytes
+  Same as today's backup? YES
+
+=== ISSUE 7: All 40 today files - sizes side-by-side ===
+  MATCH    404.html  (    3189)
+  DIFFER   fieldcheck-about.html  today=    8339  current=    9991
+  MATCH    fieldcheck-agent-transparency.html  (   24772)
+  MATCH    fieldcheck-conf-big12.html  (   11228)
+  MATCH    fieldcheck-conf-bigten.html  (   11151)
+  MATCH    fieldcheck-conf-sec.html  (   12359)
+  MATCH    fieldcheck-coverage.html  (   27056)
+  MATCH    fieldcheck-data-policy.html  (    6510)
+  DIFFER   fieldcheck-deck.html  today=   55789  current=   73459
+  MATCH    fieldcheck-embed.html  (   15175)
+  MATCH    fieldcheck-faq.html  (    9708)
+  MATCH    fieldcheck-glossary.html  (    9427)
+  MATCH    fieldcheck-methodology.html  (   29154)
+  MATCH    fieldcheck-outcomes.html  (   16874)
+  MATCH    fieldcheck-partners.html  (    8515)
+  DIFFER   fieldcheck-pitch.html  today=   19059  current=   33166
+  MATCH    fieldcheck-predictions.html  (   25492)
+  MATCH    fieldcheck-press.html  (    9390)
+  MATCH    fieldcheck-privacy.html  (    7058)
+  MATCH    fieldcheck-roadmap.html  (   44390)
+  MATCH    fieldcheck-security.html  (    6123)
+  MATCH    fieldcheck-sport-baseball.html  (   20124)
+  MATCH    fieldcheck-sport-football.html  (   25939)
+  MATCH    fieldcheck-sport-mens-basketball.html  (   26752)
+  MATCH    fieldcheck-sport-womens-basketball.html  (   21475)
+  MATCH    fieldcheck-sport-womens-volleyball.html  (   20738)
+  MATCH    fieldcheck-terms.html  (    6499)
+  MATCH    fieldcheck-thesis.html  (  106325)
+  MATCH    fieldcheck-velocity.html  (   22302)
+  MATCH    fieldcheck-verdict.html  (  584220)
+  MATCH    fieldcheck-versus.html  (   28878)
+  MATCH    fieldcheck-watchlist.html  (   42016)
+  MATCH    fieldcheck-whats-new.html  (   15594)
+  MATCH    verdict.html  (  584220)
+  MATCH    watchlist.html  (   42016)
+
+=== DONE - log: /Users/sridhar.nallani/Desktop/fieldcheck-proxy/FCBase70_DEEPCHECK_2028.log ===
+]7;file://L19DJL7GKW/Users/sridhar.nallani/Desktop/fieldcheck-proxy]7;file://L19DJL7GKW/Users/sridhar.nallani/Desktop/fieldcheck-proxy]7;file://L19DJL7GKW/Users/sridhar.nallani/Desktop/fieldcheck-proxy]7;file://L19DJL7GKW/Users/sridhar.nallani/Desktop/fieldcheck-proxy]7;file://L19DJL7GKW/Users/sridhar.nallani/Desktop/fieldcheck-proxy===== BUILDING CANONICAL FREEZE: FCBase71_CANONICAL_RESTORED_20260609_2154 =====
+Time: Tue Jun  9 21:54:22 MDT 2026
+
+PHASE 1: PRE-FREEZE STATE
+  frontend/ files:      509
+  worker.js:  3051519 bytes
+
+PHASE 2: BUILD TARBALL (includes EVERYTHING needed for full restore)
+  Including: frontend
+  Including: worker.js
+  Including: wrangler.toml
+  Including: CLAUDE_TENETS.md
+  Including: deploy-prod.sh
+  Including: deploy-dev.sh
+  Including: fc-freeze.sh
+  Including: FC_CANONICAL_STATE_V1.html
+  Including: ROADMAP_V3.md
+  Including: .netlify/state.json

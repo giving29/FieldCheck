@@ -1,0 +1,1335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FieldCheck IQ · The Market &amp; Thesis · v2</title>
+<meta name="description" content="FieldCheck IQ — the athletic intelligence layer that publishes its work. Amateur first. Every sport. Every level. All 15 phases live by EOY 2026." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08080c;--bg-card:rgba(22,22,28,.55);--bg-card-2:rgba(28,28,36,.7);--bg-deep:rgba(0,0,0,.45);
+    --gold:#f0c66e;--gold-soft:rgba(240,198,110,.88);--gold-faint:rgba(240,198,110,.18);--gold-stamp:rgba(240,198,110,.32);
+    --silver:#c8d2eb;--silver-soft:rgba(200,210,235,.8);
+    --warn:rgba(255,140,140,.92);--warn-faint:rgba(255,140,140,.15);
+    --good:rgba(120,220,140,.92);--good-faint:rgba(120,220,140,.12);
+    --info:rgba(150,180,235,.92);--info-faint:rgba(150,180,235,.1);
+    --text:rgba(255,255,255,.92);--text-dim:rgba(255,255,255,.68);--text-faint:rgba(255,255,255,.42);--text-quiet:rgba(255,255,255,.28);
+    --border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.14);--border-gold:rgba(240,198,110,.32);
+    --display:"Big Shoulders Display","Bebas Neue",system-ui,sans-serif;
+    --body:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.65;font-weight:400;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;background-image:radial-gradient(circle at top right,rgba(240,198,110,.04) 0%,transparent 50%),radial-gradient(circle at bottom left,rgba(120,140,200,.03) 0%,transparent 55%);background-attachment:fixed}
+  ::selection{background:var(--gold);color:#000}
+  .container{max-width:980px;margin:0 auto;padding:48px 24px 120px}
+  @media(min-width:780px){.container{padding:88px 56px 140px}}
+
+  /* HERO */
+  .hero{padding:24px 0 80px;border-bottom:1px solid var(--border);margin-bottom:64px;position:relative}
+  .hero::after{content:"";position:absolute;left:0;bottom:-1px;width:80px;height:2px;background:var(--gold)}
+  .hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:24px;display:flex;gap:14px;flex-wrap:wrap}
+  .hero-eyebrow span:first-child::after{content:"·";margin-left:14px;color:var(--text-quiet)}
+  .hero h1{font-family:var(--display);font-size:clamp(54px,9vw,108px);line-height:.92;font-weight:800;letter-spacing:-.025em;margin:0 0 28px;color:#fff}
+  .hero h1 .accent{color:var(--gold);display:block}
+  .hero-lede{font-size:clamp(18px,2.2vw,22px);line-height:1.5;color:var(--text-dim);max-width:740px;font-weight:300;margin:0 0 36px}
+  .hero-meta{display:flex;gap:36px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint)}
+  .hero-meta strong{color:var(--gold);font-weight:600}
+
+  /* TOC */
+  .toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:6px;margin:0 0 80px;padding:0;list-style:none}
+  .toc a{display:block;padding:14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;transition:all .15s ease;line-height:1.3}
+  .toc a:hover{color:var(--gold);border-color:var(--border-gold);background:var(--bg-card-2);transform:translateY(-1px)}
+  .toc a span{display:block;color:var(--text-quiet);font-size:9px;letter-spacing:.18em;margin-bottom:4px}
+
+  /* SECTION */
+  section{margin:80px 0;scroll-margin-top:40px}
+  .sect-tag{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:18px;display:flex;align-items:baseline;gap:14px}
+  .sect-tag::before{content:"";display:inline-block;width:24px;height:1px;background:var(--gold);vertical-align:middle}
+  section h2{font-family:var(--display);font-size:clamp(38px,6vw,68px);line-height:.95;font-weight:700;letter-spacing:-.018em;margin:0 0 36px;color:#fff;max-width:820px}
+  section h2 em{color:var(--gold);font-style:normal}
+  section h3{font-family:var(--display);font-size:clamp(26px,3.5vw,36px);line-height:1.05;font-weight:700;letter-spacing:-.012em;margin:40px 0 18px;color:#fff}
+  section h3 .num{color:var(--gold);margin-right:14px;font-weight:800}
+  .lede{font-size:clamp(17px,1.8vw,20px);line-height:1.55;color:var(--text-dim);margin:0 0 32px;font-weight:300;max-width:780px}
+  p{margin:18px 0;max-width:800px}
+  strong{color:#fff;font-weight:600}
+  em{color:var(--gold-soft);font-style:normal;font-weight:500}
+  a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold-stamp);transition:border-color .2s}
+  a:hover{border-color:var(--gold)}
+
+  /* PULL QUOTE */
+  .pull{margin:36px 0;padding:36px;background:linear-gradient(180deg,var(--bg-card),var(--bg-card-2));border-left:3px solid var(--gold);border-radius:0 14px 14px 0;font-family:var(--display);font-size:clamp(24px,3.4vw,34px);line-height:1.18;color:#fff;font-weight:700;letter-spacing:-.005em;max-width:840px}
+  .pull-cite{display:block;margin-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-soft);font-weight:500}
+
+  /* STAT GRID */
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;margin:32px 0;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  .stat{background:var(--bg);padding:24px 22px;display:flex;flex-direction:column;gap:6px}
+  .stat-num{font-family:var(--display);font-size:42px;line-height:.95;font-weight:700;color:var(--gold);letter-spacing:-.02em}
+  .stat-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint)}
+
+  /* TABLES */
+  .table-wrap{overflow-x:auto;margin:28px 0;border:1px solid var(--border);border-radius:14px;background:var(--bg-card)}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:600px}
+  th,td{text-align:left;padding:16px 20px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-soft);font-weight:600;background:rgba(240,198,110,.04)}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:rgba(240,198,110,.025)}
+  td{color:var(--text-dim);line-height:1.5}
+  td strong{color:#fff;font-weight:600;display:block;margin-bottom:4px;font-size:14.5px}
+  td .meta{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);margin-top:6px;display:block}
+
+  /* CARDS */
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:28px 0}
+  .card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;transition:all .2s;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-stamp),transparent);opacity:0;transition:opacity .2s}
+  .card:hover{border-color:var(--border-gold);background:var(--bg-card-2)}
+  .card:hover::before{opacity:1}
+  .card-num{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:10px}
+  .card-title{font-family:var(--display);font-size:24px;line-height:1.05;font-weight:700;margin:0 0 10px;color:#fff;letter-spacing:-.01em}
+  .card-body{font-size:14.5px;line-height:1.55;color:var(--text-dim)}
+  .card-body strong{color:#fff}
+
+  /* COMPETITOR ROW */
+  .comp{display:grid;grid-template-columns:1fr;gap:0;margin:20px 0;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s}
+  .comp:hover{border-color:var(--border-strong)}
+  @media(min-width:780px){.comp{grid-template-columns:220px 1fr}}
+  .comp-h{padding:24px 26px;border-bottom:1px solid var(--border);background:rgba(0,0,0,.25)}
+  @media(min-width:780px){.comp-h{border-bottom:0;border-right:1px solid var(--border)}}
+  .comp-name{font-family:var(--display);font-size:28px;line-height:1;font-weight:700;color:var(--gold);letter-spacing:-.01em;margin:0 0 8px}
+  .comp-tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);display:block}
+  .comp-body{padding:24px 26px;font-size:14.5px;line-height:1.6;color:var(--text-dim)}
+  .comp-body p{margin:8px 0;max-width:none}
+  .comp-body .label{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);font-weight:600;margin-top:14px;display:block;margin-bottom:4px}
+  .comp-weakness{margin-top:12px;padding:12px 14px;background:var(--warn-faint);border-left:2px solid var(--warn);border-radius:0 6px 6px 0;font-size:13.5px;color:var(--text);line-height:1.5}
+  .comp-weakness::before{content:"WEAKNESS WE EXPLOIT";font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:var(--warn);font-weight:600;display:block;margin-bottom:4px}
+  .comp-win{margin-top:10px;padding:12px 14px;background:var(--good-faint);border-left:2px solid var(--good);border-radius:0 6px 6px 0;font-size:13.5px;color:var(--text);line-height:1.5}
+  .comp-win::before{content:"WHY WE WIN";font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:var(--good);font-weight:600;display:block;margin-bottom:4px}
+
+  /* QUADRANT */
+  .quadrant{font-family:var(--mono);font-size:12.5px;white-space:pre;padding:28px;background:var(--bg-deep);border:1px solid var(--border);border-radius:14px;overflow-x:auto;margin:24px 0;color:var(--text-dim);line-height:1.65}
+  .quadrant b{color:var(--gold);font-weight:600}
+
+  /* FACETS */
+  .facets-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;margin:32px 0;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  .facet{background:var(--bg);padding:22px;display:flex;flex-direction:column;gap:8px}
+  .facet-num{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);font-weight:600}
+  .facet-name{font-family:var(--display);font-size:24px;line-height:1;font-weight:700;color:#fff;letter-spacing:-.01em}
+  .facet-def{font-size:13.5px;line-height:1.5;color:var(--text-dim)}
+
+  /* VOICES */
+  .voices-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin:28px 0}
+  .voice{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;font-size:14px;line-height:1.4;transition:border-color .2s}
+  .voice:hover{border-color:var(--border-gold)}
+  .voice strong{display:block;color:var(--gold);font-family:var(--display);font-size:18px;font-weight:700;margin-bottom:4px;letter-spacing:-.005em}
+  .voice span{color:var(--text-dim);font-size:12.5px;line-height:1.4}
+
+  /* CONSTRAINTS */
+  .constraints{margin:32px 0;padding:0;list-style:none;counter-reset:cs}
+  .constraints li{counter-increment:cs;padding:18px 20px 18px 64px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;position:relative;font-size:15px;line-height:1.55;color:var(--text-dim)}
+  .constraints li::before{content:"0" counter(cs);position:absolute;left:18px;top:18px;font-family:var(--mono);font-size:13px;color:var(--gold);font-weight:700;letter-spacing:.04em}
+  .constraints li strong{color:#fff;display:block;margin-bottom:4px;font-weight:600}
+
+  /* PHASE TIMELINE */
+  .phase{display:grid;grid-template-columns:1fr;gap:0;margin:14px 0;background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--gold-stamp);border-radius:0 12px 12px 0;overflow:hidden;transition:border-left-color .2s,background .2s}
+  .phase:hover{border-left-color:var(--gold);background:var(--bg-card-2)}
+  .phase.is-shipped{border-left-color:var(--gold)}
+  .phase.is-active{border-left-color:var(--gold);background:linear-gradient(90deg,rgba(240,198,110,.06),var(--bg-card-2))}
+  @media(min-width:780px){.phase{grid-template-columns:220px 150px 1fr}}
+  .phase-h{padding:18px 22px}
+  .phase-num{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:4px}
+  .phase-name{font-family:var(--display);font-size:22px;line-height:1;font-weight:700;color:#fff;letter-spacing:-.005em}
+  .phase-date{padding:18px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;display:flex;align-items:center}
+  .phase-date.is-shipped{color:rgba(120,220,140,.95)}
+  .phase-date.is-shipped::before{content:"✓ ";margin-right:6px}
+  .phase-detail{padding:18px 22px;font-size:13.5px;line-height:1.55;color:var(--text-dim)}
+  .phase-detail strong{color:#fff;font-weight:500}
+
+  /* PRICING DRAFT */
+  .draft-banner{margin:20px 0;padding:18px 22px;background:rgba(255,180,80,.06);border:1px dashed rgba(255,180,80,.35);border-radius:10px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,200,120,.95);line-height:1.55}
+  .draft-banner strong{color:rgba(255,220,160,1);font-weight:600}
+  .pricing-tier{margin:14px 0;padding:24px 26px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px}
+  .pricing-tier-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin-bottom:10px}
+  .pricing-tier-name{font-family:var(--display);font-size:26px;line-height:1;font-weight:700;color:#fff;letter-spacing:-.01em}
+  .pricing-tier-price{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--gold);font-weight:600}
+  .pricing-tier-stamp{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;padding:3px 8px;border-radius:4px}
+  .stamp-locked{background:rgba(120,220,140,.12);color:rgba(140,230,160,.95);border:1px solid rgba(120,220,140,.3)}
+  .stamp-draft{background:rgba(255,180,80,.12);color:rgba(255,200,120,.95);border:1px solid rgba(255,180,80,.35)}
+  .stamp-open{background:rgba(150,180,235,.1);color:rgba(170,200,245,.95);border:1px solid rgba(150,180,235,.3)}
+  .pricing-tier-audience{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);margin-bottom:14px}
+  .pricing-tier-incl{font-size:14px;line-height:1.6;color:var(--text-dim)}
+  .pricing-tier-incl strong{color:#fff;font-weight:500}
+  .pricing-tier-open{margin-top:12px;padding:10px 14px;background:var(--info-faint);border-left:2px solid var(--info);border-radius:0 6px 6px 0;font-size:13px;color:var(--text-dim);line-height:1.5;font-style:italic}
+  .pricing-tier-open::before{content:"OPEN FOR INPUT";font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:var(--info);font-weight:600;display:block;margin-bottom:4px;font-style:normal}
+
+  /* USER PERSONA STICKINESS */
+  .persona{margin:22px 0;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  .persona-h{padding:22px 28px 18px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(240,198,110,.04),transparent)}
+  .persona-who{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);font-weight:600;margin-bottom:6px}
+  .persona-name{font-family:var(--display);font-size:30px;line-height:1.05;font-weight:700;color:#fff;letter-spacing:-.012em;margin:0 0 8px}
+  .persona-when{font-size:14px;color:var(--text-dim);font-style:italic;line-height:1.5}
+  .persona-body{padding:18px 28px 24px}
+  .persona-problem{padding:14px 16px;background:var(--bg-deep);border-radius:8px;margin-bottom:16px;font-size:14.5px;line-height:1.5;color:var(--text);font-style:italic}
+  .persona-problem::before{content:"THE PROBLEM";font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:var(--gold-soft);font-weight:600;display:block;margin-bottom:4px;font-style:normal}
+  .hooks{list-style:none;padding:0;margin:0}
+  .hooks li{padding:12px 0 12px 36px;border-bottom:1px solid var(--border);font-size:14.5px;line-height:1.55;color:var(--text-dim);position:relative;counter-increment:hooks}
+  .hooks li::before{content:counter(hooks,decimal-leading-zero);position:absolute;left:0;top:14px;font-family:var(--mono);font-size:10px;color:var(--gold);font-weight:600;letter-spacing:.06em}
+  .hooks li:last-child{border-bottom:0}
+  .hooks li strong{color:#fff;font-weight:600;display:inline}
+  .hooks li .analog{display:inline-block;margin-left:8px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-soft);font-weight:500;border-left:1px solid var(--gold-stamp);padding-left:8px}
+  .hooks{counter-reset:hooks}
+
+  /* MOAT */
+  .moat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:28px 0}
+  .moat{padding:24px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;position:relative;overflow:hidden}
+  .moat-num{position:absolute;top:0;right:0;font-family:var(--display);font-size:80px;line-height:1;font-weight:900;color:var(--gold-faint);letter-spacing:-.04em;pointer-events:none;z-index:0}
+  .moat-name{font-family:var(--display);font-size:22px;line-height:1;font-weight:700;color:#fff;letter-spacing:-.01em;margin:0 0 12px;position:relative;z-index:1}
+  .moat-mech{font-size:13.5px;line-height:1.55;color:var(--text-dim);position:relative;z-index:1;margin-bottom:14px}
+  .moat-compound{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-soft);font-weight:600;position:relative;z-index:1;line-height:1.5}
+
+  /* METRICS */
+  .metric-row{display:grid;grid-template-columns:1fr;gap:0;margin:10px 0;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  @media(min-width:780px){.metric-row{grid-template-columns:180px 1fr 140px}}
+  .metric-row-name{padding:18px 22px;font-family:var(--display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.005em}
+  .metric-row-def{padding:18px 22px;font-size:14px;color:var(--text-dim);line-height:1.5;border-top:1px solid var(--border)}
+  @media(min-width:780px){.metric-row-def{border-top:0;border-left:1px solid var(--border)}}
+  .metric-row-target{padding:18px 22px;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--gold);letter-spacing:.04em;border-top:1px solid var(--border);text-align:left}
+  @media(min-width:780px){.metric-row-target{border-top:0;border-left:1px solid var(--border);text-align:right}}
+
+  /* CLOSER */
+  .closer{margin:96px 0 0;padding:64px 32px 56px;text-align:center;background:radial-gradient(ellipse at top,rgba(240,198,110,.12) 0%,transparent 60%),linear-gradient(180deg,var(--bg-card),var(--bg-card-2));border:1px solid var(--border-gold);border-radius:20px;position:relative;overflow:hidden}
+  .closer::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:140px;height:1px;background:var(--gold)}
+  .closer-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:24px}
+  .closer-line{font-family:var(--display);font-size:clamp(36px,6vw,64px);line-height:1.02;font-weight:800;letter-spacing:-.018em;color:#fff;max-width:780px;margin:0 auto}
+  .closer-line .accent{color:var(--gold)}
+  .closer-sub{font-family:var(--body);font-size:15px;color:var(--text-dim);margin-top:32px;font-weight:300}
+  .closer-sub a{margin:0 6px}
+
+  /* FOOTER */
+  .footer{margin-top:88px;padding:32px 0;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center}
+  .footer a{color:var(--text-dim);border:0}
+  .footer a:hover{color:var(--gold)}
+
+  /* MISC */
+  .divider{height:1px;background:var(--border);margin:48px 0}
+  .ruled{padding-left:18px;border-left:2px solid var(--gold-stamp);margin:24px 0;font-size:15px;color:var(--text-dim);max-width:820px;line-height:1.6}
+  .ruled em{color:var(--gold);font-weight:500}
+  .bullet-list{padding:0;margin:18px 0;list-style:none;max-width:820px}
+  .bullet-list li{padding:10px 0 10px 26px;position:relative;font-size:15px;line-height:1.55;color:var(--text-dim);border-bottom:1px solid var(--border)}
+  .bullet-list li:last-child{border-bottom:0}
+  .bullet-list li::before{content:"";position:absolute;left:0;top:18px;width:8px;height:8px;background:var(--gold);border-radius:50%}
+  .bullet-list li strong{color:#fff;font-weight:600}
+  .callout{margin:28px 0;padding:24px 28px;background:linear-gradient(135deg,rgba(240,198,110,.08),rgba(240,198,110,.02));border:1px solid var(--border-gold);border-radius:12px;font-size:15.5px;line-height:1.6;color:var(--text)}
+  .callout strong{color:var(--gold);font-weight:600}
+  .callout-h{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px;display:block}
+</style>
+</head>
+<body>
+<main class="container">
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <div class="hero-eyebrow">
+    <span>// FieldCheck IQ</span>
+    <span>The Market &amp; Thesis · v2 · June 2026</span>
+  </div>
+  <h1>The athletic intelligence layer<br>that <span class="accent">publishes its work.</span></h1>
+  <p class="hero-lede">Eight million high school athletes in the United States live one question every day — <em>how good am I, really?</em> Every product that claims to answer it is opaque, pay-to-play, or built for someone else. FieldCheck IQ is the verdict layer the amateur tier has never had — <strong>free forever, methodologically open, sport-agnostic, decision-grade</strong> — built in lights-out stealth at solo + small rockstar team + frontier-AI velocity, and engineered to ship every one of fifteen planned phases by the end of 2026.</p>
+  <div class="hero-meta">
+    <span>For: <strong>VC &amp; strategic partners</strong></span>
+    <span>Stage: <strong>Live · 110-athlete proof set</strong></span>
+    <span>Velocity: <strong>~10,000 releases · solo + small team + frontier AI</strong></span>
+    <span>Rollout: <strong>All 15 phases live by EoY 2026</strong></span>
+  </div>
+</header>
+
+<!-- TOC -->
+<nav>
+  <ol class="toc">
+    <li><a href="#problem"><span>01</span>The Problem</a></li>
+    <li><a href="#gap"><span>02</span>The Gap</a></li>
+    <li><a href="#landscape"><span>03</span>The Landscape</a></li>
+    <li><a href="#methodology"><span>04</span>Methodology</a></li>
+    <li><a href="#moat"><span>05</span>The Moat</a></li>
+    <li><a href="#market"><span>06</span>The Market</a></li>
+    <li><a href="#vision"><span>07</span>The Vision</a></li>
+    <li><a href="#sports"><span>08</span>Per-Sport</a></li>
+    <li><a href="#layers"><span>09</span>Per-Layer</a></li>
+    <li><a href="#phases"><span>10</span>The Phases</a></li>
+    <li><a href="#stickiness"><span>11</span>Stickiness</a></li>
+    <li><a href="#metrics"><span>12</span>Metrics</a></li>
+    <li><a href="#pricing"><span>13</span>Pricing · Draft</a></li>
+    <li><a href="#execution"><span>14</span>Execution</a></li>
+    <li><a href="#why-now"><span>15</span>Why Now</a></li>
+    <li><a href="#ask"><span>16</span>The Ask</a></li>
+  </ol>
+</nav>
+
+<!-- ═══ 01 · THE PROBLEM ═══ -->
+<section id="problem">
+  <div class="sect-tag">01 · The Problem</div>
+  <h2>Eight million amateurs. One question. Nobody solving it.</h2>
+
+  <div class="pull">
+    "I don't know how good I really am, where I rank, what I need to do to get noticed by colleges — and every service that claims to tell me costs money my family doesn't have, or is obviously rigged."
+    <span class="pull-cite">— The amateur athlete, every day, in every sport, in every state</span>
+  </div>
+
+  <p class="lede">This is the central problem in amateur athletics. It is one sentence, and the entire industry has chosen not to solve it.</p>
+
+  <p>Eight million US high school athletes live this every day. Twenty-five million parents share the anxiety. Five hundred thousand high school and club coaches work without an objective verdict layer. Tens of thousands of scouts, recruiting coordinators, and NIL agents rely on services they know are gameable. The market is enormous, the pain is total, and the existing solutions are <em>not solving the problem they claim to solve</em>.</p>
+
+  <p>The recruiting media tier (247Sports, Rivals, On3) is structurally incentivized to keep its methodology opaque — <em>opacity is the product</em>. Their flagship outputs (composite rankings, NIL valuations) have been documented as pay-to-play and have suffered methodology rewrites and public retractions inside the last twelve months. The training/tape tier (Hudl, MaxPreps) provides workflow, but produces no decision-grade verdict. The conversion-funnel tier (NCSA, FieldLevel, SportsRecruits, CaptainU) is sales operations dressed as software — optimized for converting anxious parents into memberships, not for telling them the truth.</p>
+
+  <p>FieldCheck IQ exists to do the one thing no incumbent will: publish a free, methodologically open, sport-agnostic, verdict-grade evaluation for <strong>every amateur athlete, in every sport, at every level</strong> — and show our work.</p>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-num">~8M</div><div class="stat-label">US HS athletes</div></div>
+    <div class="stat"><div class="stat-num">~25M</div><div class="stat-label">US HS parents</div></div>
+    <div class="stat"><div class="stat-num">~500K</div><div class="stat-label">HS / club coaches</div></div>
+    <div class="stat"><div class="stat-num">0</div><div class="stat-label">Free verdict layers (today)</div></div>
+  </div>
+
+  <div class="callout">
+    <span class="callout-h">// The structural insight</span>
+    <strong>No incumbent can become a free, methodologically open, verdict-grade product without burning down their own P&amp;L.</strong> Media companies need opacity. Conversion-sales companies need anxious parents. Tape companies need to protect their coach workflow. Profile-page companies have no moat to defend. The amateur verdict layer is the only category in athletics where there is no incumbent — <em>because no incumbent can profitably become it</em>.
+  </div>
+</section>
+
+<!-- Updated June 9 2026 . momentum block . multi-source doctrine + recent shipped -->
+<section class="container" style="padding-top:0;padding-bottom:48px;margin-top:0;border-bottom:1px solid var(--border);margin-bottom:48px;">
+  <div style="font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:18px;">Update · June 9 2026</div>
+  <h2 style="font-family:var(--display);font-size:clamp(40px,6vw,72px);font-weight:800;letter-spacing:-.02em;line-height:.95;margin-bottom:22px;color:#fff;">14 of 15 phases <span style="color:var(--gold);">live</span>.</h2>
+  <p style="font-size:18px;line-height:1.6;color:var(--text-dim);max-width:780px;margin-bottom:30px;">Of the 15 phases written into the original wedge plan, 14 have shipped baselines on the dev/prod stack. <b style="color:var(--gold);">Phase 5</b> (amateur stickiness) and <b style="color:var(--gold);">Phase 6</b> (coach/parent voices) were originally projected for July/August 2026 — both live by June 9. <b style="color:var(--gold);">Phase 9</b> (AI agent) pulled up from Q4. <b style="color:var(--gold);">Phase 14</b> (pricing) intentionally deferred until the prediction-ledger fires its first check-in.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:36px;">
+    <div style="padding:24px;border:1px solid var(--border);border-radius:14px;background:var(--bg-card);">
+      <div style="font-family:var(--display);font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-.02em;line-height:1;">55</div>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);margin-top:8px;">FCBase ships in 31 days</div>
+    </div>
+    <div style="padding:24px;border:1px solid var(--border);border-radius:14px;background:var(--bg-card);">
+      <div style="font-family:var(--display);font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-.02em;line-height:1;">2.4&times;</div>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);margin-top:8px;">faster than projected</div>
+    </div>
+    <div style="padding:24px;border:1px solid var(--border);border-radius:14px;background:var(--bg-card);">
+      <div style="font-family:var(--display);font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-.02em;line-height:1;">9</div>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);margin-top:8px;">phases shipped early</div>
+    </div>
+    <div style="padding:24px;border:1px solid var(--border);border-radius:14px;background:var(--bg-card);">
+      <div style="font-family:var(--display);font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-.02em;line-height:1;">1</div>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);margin-top:8px;">founder + AI</div>
+    </div>
+  </div>
+
+  <div style="margin-top:48px;padding:30px;border-left:3px solid var(--gold);background:var(--gold-faint);border-radius:0 14px 14px 0;">
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Tenet 53 · MULTI-SOURCE FIRST</div>
+    <p style="font-size:17px;line-height:1.55;color:var(--text);margin:0;">For any data lookup — photos, stats, bio, news, NIL — default to many sources with cascade. Never one. Wikipedia is one of many, not the default. The photo cascade alone now hits 247sports, On3, MaxPreps, school athletic sites, ESPN, NBA.com, and Wikipedia in priority order. Same pattern extends to every other data type as we build.</p>
+  </div>
+
+  <div style="margin-top:36px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;">
+    → <a href="/velocity" style="color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold-faint);">Full velocity log</a>
+    &nbsp;&nbsp;
+    → <a href="/methodology" style="color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold-faint);">Methodology</a>
+  </div>
+</section>
+
+
+<!-- ═══ 02 · THE GAP ═══ -->
+<section id="gap">
+<div style="border:1px solid rgba(212,162,76,.35);background:rgba(212,162,76,.08);border-radius:8px;padding:26px 28px;margin:0 0 36px">
+<div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:#EEC067;margin-bottom:12px">JUNE 2026 REFRESH · THE JUDGMENT LAYER</div>
+<p style="margin:0 0 12px">Five layers of sports tech exist — <b>film</b> (Hudl, 300K teams, sells to coaches), <b>stats</b> (MaxPreps), <b>hype</b> (247 + the merged On3/Rivals, top-300, two sports, opaque), <b>biomech</b> (ai.io under HUMAIN, Uplift), <b>attention</b> (Overtime, 100M followers). <b>The judgment layer does not exist.</b> Nobody renders a public, accountable, multi-facet verdict on every athlete at every level — and the incumbents structurally cannot: media sells hype, Hudl sells to its coach customers; accountability would destroy their own product.</p>
+<p style="margin:0 0 12px"><b>Proof from their own pages:</b> the same 2026 receiver sits at No. 23 on 247Sports and No. 214 on Rivals — a 191-spot divergence no mechanism ever scores. 247 explicitly calibrates its five-stars to the 32 first-round NFL picks: a draft-projection product, not athlete evaluation. On3's NIL valuation runs on a proprietary algorithm with a metric literally named Whisper $.</p>
+<p style="margin:0 0 12px"><b>Market forces, June 2026:</b> NIL at ~$2.3B (2024-25, ~9% growth) with the House settlement institutionalizing revenue share; 40+ states permit HS NIL; 8M US high-school athletes, girls at a record 3.54M. Every market that prices assets builds a ratings layer — this one hasn't. We are building it.</p>
+<p style="margin:0"><b>And the dream framing is now product, not thesis:</b> THE PATH ships on every verdict — dream selector (D1 / NIL / Pro), tier ladder with YOU ARE HERE, facet gaps flowing into a live AI coach, and a one-tap 1080×1080 identity card. "Your number moved" is the strongest notification in sports, and only we can send it.</p>
+</div>
+  <div class="sect-tag">02 · The Gap</div>
+  <h2>Six broken layers. Each broken structurally, not by accident.</h2>
+
+  <p class="lede">Every existing layer of the amateur athletics stack is broken in a structurally different way. None of them are coincidence. Each is a logical consequence of the business model behind it. Sunlight does not fix any of them — sunlight kills all of them.</p>
+
+  <div class="card-grid">
+    <article class="card">
+      <div class="card-num">01 · Recruiting media</div>
+      <h3 class="card-title">Opacity is the product</h3>
+      <div class="card-body">247Sports, Rivals, On3. Composite rankings sold as proprietary content. <strong>Opacity is the revenue model</strong> — if they publish methodology, they stop selling subscriptions. Pay-to-play has been documented for years. The On3 Trentyn Flowers December 2025 retraction is one of many cases where speed and engagement incentives broke audit discipline.</div>
+    </article>
+    <article class="card">
+      <div class="card-num">02 · Conversion sales</div>
+      <h3 class="card-title">Anxious parents, not data</h3>
+      <div class="card-body">NCSA, FieldLevel, SportsRecruits, CaptainU. <strong>Software wrapped around sales operations.</strong> 1,100+ "experts" converting anxious parents into MVP+ memberships at $1,000+/year. Unit economics depend on hope and effort, not on athlete decision-quality. The "ranking" is whatever helps the upsell.</div>
+    </article>
+    <article class="card">
+      <div class="card-num">03 · Stats only</div>
+      <h3 class="card-title">Numbers without verdict</h3>
+      <div class="card-body">MaxPreps. Box scores, schedules, season-aggregate stats. <strong>No synthesis. No shape. No path.</strong> Tells you how many points a player scored last week. Does not tell you what tier they belong to, where they're heading, or what they need to improve. Useful as one of our sixteen input voices — not a competitor.</div>
+    </article>
+    <article class="card">
+      <div class="card-num">04 · Tape only</div>
+      <h3 class="card-title">Workflow without intelligence</h3>
+      <div class="card-body">Hudl. The platform of record for tape and game film. <strong>Built for coaches' workflow</strong> — never built an athlete-facing verdict product. Hudl IQ exists, but is football-only, coach-only, and B2B. The athlete cannot see themselves through it.</div>
+    </article>
+    <article class="card">
+      <div class="card-num">05 · Profile pages</div>
+      <h3 class="card-title">LinkedIn for recruiting</h3>
+      <div class="card-body">FieldLevel, SportsRecruits, CaptainU. <strong>Static profile pages, search filters, contact-the-coach buttons.</strong> Utility software with no moat. The athlete fills in their own data and hopes a coach finds it. No verdict. No reasoning. No truth.</div>
+    </article>
+    <article class="card">
+      <div class="card-num">06 · Internal scouting</div>
+      <h3 class="card-title">Private, never productized</h3>
+      <div class="card-body">College programs and pro franchises run private scouting departments with proprietary grading. <strong>None of it is productized for amateurs.</strong> The athlete being graded never sees the grade. The system is closed by definition.</div>
+    </article>
+  </div>
+
+  <p>Stack these six layers and one structural feature emerges: <em>every existing incumbent is unable to become the product the market actually needs.</em> Their business models prevent the pivot. Their incentives erode the discipline. Their installed bases punish the rewrite. This is not a market with strong incumbents we have to displace — it is a market with structurally compromised incumbents we have to walk past.</p>
+</section>
+
+<!-- ═══ 03 · THE LANDSCAPE ═══ -->
+<section id="landscape">
+  <div class="sect-tag">03 · The Landscape</div>
+  <h2>The competitive field — sharp characterization.</h2>
+
+  <p class="lede">Below is the field, characterized the way a professional investor would — what each one actually is, what their hero metric is, what structural weakness we exploit, and why we win against them.</p>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">Hudl IQ</div>
+      <span class="comp-tag">Gold positioning standard</span>
+    </div>
+    <div class="comp-body">
+      <p>Football-only coach intelligence. The clearest positioning sentence in the category: <em>"Anyone can watch the film. Hudl helps you learn from it."</em> Their proof — tagged formations, route trees, trait + performance radars, 10x data, 18-hour turnaround — sells decision-quality to coaches.</p>
+      <span class="label">Hero metric</span><p>Decision-quality output (radars + tagged film) delivered in &lt;24 hours.</p>
+      <div class="comp-weakness">Football-only. Coach-only. No athlete-facing surface. Cannot expand horizontally without abandoning the coach workflow that anchors them. The entire amateur multi-sport athlete-facing quadrant is structurally unavailable to them.</div>
+      <div class="comp-win">We do every sport. We face the athlete first. We publish our methodology. Hudl IQ is the gold standard for B2B football intelligence — we are the gold standard for athlete-facing, multi-sport, public-methodology intelligence. Complementary categories.</div>
+    </div>
+  </article>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">On3</div>
+      <span class="comp-tag">The most dangerous incumbent</span>
+    </div>
+    <div class="comp-body">
+      <p>Media-first wearing a data jacket. 250+ full-time content creators. Stated mission to "connect fans, athletes, schools, and brands." Flagship metric is the On3 NIL Valuation.</p>
+      <span class="label">Hero metric</span><p>On3 NIL Valuation — the most-cited NIL dollar figure in recruiting media. Methodology was rewritten twice (PIE → TPV) inside 18 months.</p>
+      <span class="label">Documented incidents</span><p>December 2025 Trentyn Flowers retraction. PIE → TPV methodology overhaul (2024). Multiple discrepancies between published rankings and recruiting outcomes.</p>
+      <div class="comp-weakness">Engagement incentives erode audit discipline. The structural failure mode of media-first intelligence is: speed wins, audit loses. On3 cannot publish full methodology without exposing how the rankings are produced and where the inputs come from. <em>Our moat is built exactly here.</em></div>
+      <div class="comp-win">We publish the methodology. We show dissent. We do not depend on subscriptions, so we have no incentive to keep readers arguing. We are the citation engine that media companies want and cannot become.</div>
+    </div>
+  </article>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">247Sports</div>
+      <span class="comp-tag">Bloomberg Terminal for fans</span>
+    </div>
+    <div class="comp-body">
+      <p>Owned by CBS Sports. Composite rankings, message boards, insider whispers, subscription gates. Built for the fan who wants to argue, not the athlete who needs to decide.</p>
+      <span class="label">Hero metric</span><p>The 247 Composite — multi-source ranking aggregation. Methodology not published in detail. Inputs and weights opaque.</p>
+      <div class="comp-weakness">Revenue model requires opacity (subscription-locked content). Reader wants opinion not citations (entertainment, not decisions). Forum culture incentivizes loudness over correctness. Cannot pivot to free + methodologically open without losing their subscriber base.</div>
+      <div class="comp-win">Free for athletes. Verdict-grade for coaches. Public methodology for journalists. Three audiences served by one product. 247's audience is one — fans — and the product they need is opinion, not truth.</div>
+    </div>
+  </article>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">Rivals</div>
+      <span class="comp-tag">247's sibling, same playbook</span>
+    </div>
+    <div class="comp-body">
+      <p>Spiritual twin of 247Sports under different ownership. Same fan-engagement subscription model. Same composite-ranking proprietary content. Same structural incentives.</p>
+      <span class="label">Hero metric</span><p>Rivals rating + composite. Same opacity problem as 247.</p>
+      <div class="comp-weakness">Identical structural ceiling. Cannot become an intelligence company without dismantling its revenue model.</div>
+      <div class="comp-win">Same reasoning as 247 — the audience they serve will not pay for truth; the audience we serve cannot afford to pay for anything else.</div>
+    </div>
+  </article>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">NCSA</div>
+      <span class="comp-tag">Sales operation wrapped in software</span>
+    </div>
+    <div class="comp-body">
+      <p>1,100+ "experts," 40,000 coaches in their network, free profile creation with paid MVP+ upsell tiers. <em>Different universe from FieldCheck — not actually a category competitor.</em></p>
+      <span class="label">Hero metric</span><p>Conversion to paid memberships ($1,000+/yr typical). The "expert" is a salesperson.</p>
+      <div class="comp-weakness">Unit economics depend on parental anxiety, not on athlete decision-quality. The product cannot tell the truth ("your kid is a SCOUT, not a STAR") without killing the upsell. Structurally cannot become a verdict product.</div>
+      <div class="comp-win">We tell parents the truth — kindly, with evidence, and with a path. The parent gets the verdict they actually need, not the upsell they bought.</div>
+    </div>
+  </article>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">MaxPreps</div>
+      <span class="comp-tag">Stats infrastructure, no verdict</span>
+    </div>
+    <div class="comp-body">
+      <p>Owned by CBS Sports. The HS box-score and schedule infrastructure. Used by coaches and parents for raw numbers.</p>
+      <span class="label">Hero metric</span><p>Coverage breadth — every HS team, every sport, every game.</p>
+      <div class="comp-weakness">Stats are inputs, not verdicts. No synthesis, no tier, no path, no peer comparison, no methodology. Useful data layer, but not an intelligence product.</div>
+      <div class="comp-win">We read MaxPreps as one of our sixteen voices. They are upstream of us — useful input, not competitive product.</div>
+    </div>
+  </article>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">Hudl (platform)</div>
+      <span class="comp-tag">Tape workflow infrastructure</span>
+    </div>
+    <div class="comp-body">
+      <p>Separate from Hudl IQ. The infrastructure layer for tape capture, sharing, and review across HS, club, and college programs. Embedded in coach workflow — strong switching cost.</p>
+      <span class="label">Hero metric</span><p>Workflow embedding — daily usage by coaches across the season.</p>
+      <div class="comp-weakness">Tape is one input to a verdict, not the verdict itself. Hudl has not built an athlete-facing intelligence layer and likely will not, because doing so requires synthesizing across sources Hudl does not own.</div>
+      <div class="comp-win">Hudl is upstream and complementary. Their tape is our input. Our verdict is their output. There is a partnership available here, not a competition.</div>
+    </div>
+  </article>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">FieldLevel · SportsRecruits · CaptainU</div>
+      <span class="comp-tag">Utility profile pages</span>
+    </div>
+    <div class="comp-body">
+      <p>LinkedIn-for-recruiting. The athlete fills in a profile, uploads tape, and hopes a coach searches and finds it. Profile-fill-out + contact-the-coach workflows.</p>
+      <span class="label">Hero metric</span><p>Profile completion rate and coach contact volume.</p>
+      <div class="comp-weakness">No moat. No verdict. No synthesis. The athlete provides the data they want a coach to see — the system has no opinion of its own. Easily disintermediated by any product that produces a verdict the athlete cannot fake.</div>
+      <div class="comp-win">We tell the truth the athlete cannot author. The verdict cannot be self-edited. The shape on the polygon is what the corpus says, not what the athlete wishes it said.</div>
+    </div>
+  </article>
+
+  <h3><span class="num">»</span> The category map</h3>
+
+  <div class="quadrant">                        Fan / engagement axis
+                                ↑
+                                │
+                  247 ── Rivals ── On3
+                                │
+                                │
+   ◄─── Generic ─────────────────────────── Specific ───►
+                                │
+                                │
+                       NCSA ── SportsRecruits
+                                │
+                                │
+                              Hudl IQ ────── <b>FIELDCHECK IQ</b>
+                                │     (every sport, every level,
+                                │      every athlete — starting amateur)
+                                ↓
+                       Decision / intelligence axis</div>
+
+  <p>The right-bottom quadrant — <em>specific + decision-grade</em> — is essentially one occupant: Hudl IQ. Football-only, coach-only, B2B. <strong>FieldCheck IQ owns the rest of that quadrant uncontested</strong>, because every other competitor's revenue model prevents them from entering it.</p>
+</section>
+
+<!-- ═══ 04 · METHODOLOGY ═══ -->
+<section id="methodology">
+  <div class="sect-tag">04 · Methodology</div>
+  <h2>Eight facets. Sixteen voices. Six constraints. Public.</h2>
+
+  <p class="lede">Every FieldCheck IQ verdict is produced by a single algorithm, the same across every sport and every level. The algorithm has three pillars: a framework of eight facets, a synthesis across sixteen analytical voices, and six structural constraints that govern what the product is allowed to do.</p>
+
+  <h3><span class="num">04.1</span> The 8 canonical facets</h3>
+
+  <p>Every athlete in the corpus is evaluated against the same eight facets. The facets are designed to capture what coaching staffs and scouts already evaluate — formalized, normalized, and made public.</p>
+
+  <div class="facets-grid">
+    <div class="facet"><div class="facet-num">Facet 01</div><div class="facet-name">Character</div><div class="facet-def">Integrity, off-field conduct, work ethic, accountability, leadership outside the lines.</div></div>
+    <div class="facet"><div class="facet-num">Facet 02</div><div class="facet-name">Mindset</div><div class="facet-def">Competitive drive, fearlessness, internal belief, willingness to take the moment.</div></div>
+    <div class="facet"><div class="facet-num">Facet 03</div><div class="facet-name">Mental Strength</div><div class="facet-def">Resilience under pressure, response to adversity, ability to reset, composure in late-game moments.</div></div>
+    <div class="facet"><div class="facet-num">Facet 04</div><div class="facet-name">Talent</div><div class="facet-def">Natural ability, technical ceiling, position-specific skill, the things you cannot teach.</div></div>
+    <div class="facet"><div class="facet-num">Facet 05</div><div class="facet-name">Physical</div><div class="facet-def">Size, athleticism, strength, durability, length, explosiveness, recovery profile.</div></div>
+    <div class="facet"><div class="facet-num">Facet 06</div><div class="facet-name">Mental / IQ</div><div class="facet-def">Court / field awareness, anticipation, decision speed, game intelligence, situational reads.</div></div>
+    <div class="facet"><div class="facet-num">Facet 07</div><div class="facet-name">Coachability</div><div class="facet-def">Response to coaching, growth rate, team fit, capacity to absorb correction and improve.</div></div>
+    <div class="facet"><div class="facet-num">Facet 08</div><div class="facet-name">Competitiveness</div><div class="facet-def">Refusal to lose, killer instinct, response to elite opposition, on-field intensity.</div></div>
+  </div>
+
+  <p>Every facet is scored on a 1–10 scale. The composite (FieldCheck IQ) is the synthesized result across all eight, weighted by sport and position. The polygon visualization on every verdict page is the athlete's unique fingerprint across the eight facets.</p>
+
+  <h3><span class="num">04.2</span> The 16 analytical voices</h3>
+
+  <p>Every verdict is produced by reading the athlete through sixteen analytical voices — the perspectives a real coaching staff already weighs. Each voice contributes evidence, confidence, and explicit dissent if it disagrees with the synthesis.</p>
+
+  <div class="voices-grid">
+    <div class="voice"><strong>Head Coach</strong><span>Strategic fit, system role, leadership read</span></div>
+    <div class="voice"><strong>Position Coach</strong><span>Technical and positional evaluation</span></div>
+    <div class="voice"><strong>Strength &amp; Conditioning</strong><span>Physical profile, durability, athleticism</span></div>
+    <div class="voice"><strong>Mental Performance</strong><span>Psychological profile, pressure response</span></div>
+    <div class="voice"><strong>Recruiting Coordinator</strong><span>Pipeline fit, comparable historical recruits</span></div>
+    <div class="voice"><strong>Pro Scout</strong><span>Translation to professional level</span></div>
+    <div class="voice"><strong>Statistical Analyst</strong><span>Box scores, advanced metrics, efficiency</span></div>
+    <div class="voice"><strong>Film Analyst</strong><span>Tape-level technical evaluation</span></div>
+    <div class="voice"><strong>NIL Analyst</strong><span>Market valuation, brand fit, audience</span></div>
+    <div class="voice"><strong>Academic Evaluator</strong><span>Academic profile, eligibility, fit</span></div>
+    <div class="voice"><strong>Health / Medical</strong><span>Injury history, durability projection</span></div>
+    <div class="voice"><strong>Peer Voice</strong><span>Teammate read, locker-room signal</span></div>
+    <div class="voice"><strong>Opponent Voice</strong><span>How opposing teams game-plan around them</span></div>
+    <div class="voice"><strong>Family / Support Network</strong><span>Stability, support structure, anchor</span></div>
+    <div class="voice"><strong>Historical Comparable</strong><span>Best-fit comparable from prior cohorts</span></div>
+    <div class="voice"><strong>Self-Assessment</strong><span>Athlete's own stated goals and gaps</span></div>
+  </div>
+
+  <p>The synthesis is Bayesian — voices update prior beliefs with new evidence, and disagreement between voices is preserved (not averaged away). Dissent is published on the verdict page alongside consensus. Every reader can see <em>why</em> a composite is what it is, what the voices agreed on, and where they fought.</p>
+
+  <h3><span class="num">04.3</span> The 6 structural constraints</h3>
+
+  <p>Every product decision is bound by six constraints. These are not features. They are <em>guardrails</em> — what FieldCheck IQ is forbidden from doing, because doing those things would compromise the verdict layer the market needs.</p>
+
+  <ol class="constraints">
+    <li><strong>Free forever for athletes.</strong> Every verdict, every facet, every polygon, every trajectory, every peer-compare, every share card is free for athletes and their families. Forever. No paywall on truth.</li>
+    <li><strong>No pay-to-rank.</strong> No athlete, agent, parent, or program can pay to be ranked higher. Composite scores cannot be purchased. Tier flips cannot be funded.</li>
+    <li><strong>Public methodology.</strong> The eight facets are public. The sixteen voices are public. The synthesis rules are public. Anyone can audit a verdict back to its sources.</li>
+    <li><strong>One algorithm, every athlete.</strong> The same algorithm runs across every player, every sport, every level. No special-casing. No private grades for marquee athletes. The math is the math.</li>
+    <li><strong>Sources cited on every verdict.</strong> Every verdict page links to the evidence the synthesis drew from. Readers can disagree with the synthesis — they cannot dispute the inputs.</li>
+    <li><strong>Dissent published, not averaged.</strong> When the sixteen voices disagree, we publish the disagreement. The reader sees consensus <em>and</em> dispute. The synthesis is honest about what it does not know.</li>
+  </ol>
+
+  <div class="callout">
+    <span class="callout-h">// The unifying principle</span>
+    Every constraint above is something the incumbents <em>cannot</em> commit to without burning down their revenue model. That asymmetry — what is impossible for them is foundational for us — <strong>is the methodology moat</strong>.
+  </div>
+</section>
+
+<!-- ═══ 05 · THE MOAT ═══ -->
+<section id="moat">
+  <div class="sect-tag">05 · The Moat</div>
+  <h2>Six moats. All compounding.</h2>
+
+  <p class="lede">Each moat strengthens every other one. Every additional verdict published makes all six harder for an incumbent to attack. None of them are buildable by a media-first company without burning their P&amp;L. None of them are buildable by a sales-first company without exposing the upsell.</p>
+
+  <div class="moat-grid">
+    <article class="moat">
+      <div class="moat-num">01</div>
+      <h3 class="moat-name">Data moat</h3>
+      <p class="moat-mech">Every verdict adds triangulation depth across our sources. Every refinement (PhD panel, draft outcome, contract signing, on-field event) feeds back into the corpus. The model gets sharper with use. Refinement runs as a continuous parallel track, forever.</p>
+      <div class="moat-compound">Compounds with every athlete we publish</div>
+    </article>
+    <article class="moat">
+      <div class="moat-num">02</div>
+      <h3 class="moat-name">Methodology moat</h3>
+      <p class="moat-mech">Our sixteen voices are published. Anyone can read them. <em>But to copy us, an incumbent has to publish their own — and most of them cannot, because their existing methodology cannot survive sunlight.</em> Open methodology is a one-way moat: easy to ship once, impossible to retrofit after a paywalled history.</p>
+      <div class="moat-compound">Compounds with every public document we release</div>
+    </article>
+    <article class="moat">
+      <div class="moat-num">03</div>
+      <h3 class="moat-name">Trust moat</h3>
+      <p class="moat-mech">When a coach trusts us once, they check us forever. When a parent reads a verdict and it matches what they already knew, we become their default. When media cites us and the citation holds up, we become the next default. Trust accrues per accurate verdict and per honest disagreement we publish.</p>
+      <div class="moat-compound">Compounds with every right call we make</div>
+    </article>
+    <article class="moat">
+      <div class="moat-num">04</div>
+      <h3 class="moat-name">Network moat</h3>
+      <p class="moat-mech">Every share brings five more verdict pageviews. Every coach who screenshots a polygon into a groupchat creates discovery downstream. The product is structurally social — the share card is one tap, the polygon is recognizable, the comparison is a meme. Network effects on amateur athletics are stronger than in any consumer category since Strava.</p>
+      <div class="moat-compound">Compounds with every share and every comparison</div>
+    </article>
+    <article class="moat">
+      <div class="moat-num">05</div>
+      <h3 class="moat-name">Refinement moat</h3>
+      <p class="moat-mech">PhD panel + draft outcomes + contract signings + on-field results = a continuous accuracy improvement loop. We are not "done" at any point — refinement runs as a parallel track to execution. Every NIL deal, every draft, every signing day improves the corpus we calibrate against.</p>
+      <div class="moat-compound">Compounds with every signing day, draft, and box score</div>
+    </article>
+    <article class="moat">
+      <div class="moat-num">06</div>
+      <h3 class="moat-name">Brand moat</h3>
+      <p class="moat-mech">"What's your FieldCheck IQ?" becomes a phrase — the way "what's your credit score?" or "what's your Strava heatmap?" did. Once the brand becomes shorthand, the moat is unkillable. A category that has a question of its own has a brand of its own.</p>
+      <div class="moat-compound">Compounds with every cultural reference</div>
+    </article>
+  </div>
+
+  <div class="callout">
+    <span class="callout-h">// The deep insight</span>
+    Media-first competitors cannot become intelligence companies without burning their P&amp;L. On3 needs opacity to sell subscriptions. 247 needs argument-bait to drive forum traffic. NCSA needs hope to sell memberships. We have no incentive to be wrong. They have every incentive to be loud. <strong>That asymmetry is the moat.</strong>
+  </div>
+</section>
+
+<!-- ═══ 06 · THE MARKET ═══ -->
+<section id="market">
+  <div class="sect-tag">06 · The Market</div>
+  <h2>The TAM has no realistic ceiling.</h2>
+
+  <p class="lede">Amateur athletics is the wedge. Every layer above it expands the market by an order of magnitude. International, non-traditional sports, and adjacent verticals expand it again. The market ceiling is not a number — it is a question of execution velocity.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>US Approx.</th><th>Global (rough)</th><th>Phase</th><th>2026 Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>HS athletes</strong><span class="meta">Wedge market</span></td><td>~8M</td><td>~80M+</td><td>Now</td><td>Active</td></tr>
+        <tr><td><strong>HS parents</strong><span class="meta">Secondary surface, same wedge</span></td><td>~25M</td><td>~200M+</td><td>Now</td><td>Active</td></tr>
+        <tr><td><strong>HS / club coaches</strong></td><td>~500K</td><td>~3M+</td><td>Phase 7</td><td>July</td></tr>
+        <tr><td><strong>College athletes (NCAA + NAIA + JUCO)</strong></td><td>~500K</td><td>—</td><td>Phase 14</td><td>October</td></tr>
+        <tr><td><strong>College coaches</strong></td><td>~50K</td><td>—</td><td>Phase 7 B2B</td><td>July</td></tr>
+        <tr><td><strong>Pro / pro-track athletes</strong><span class="meta">Aspirational benchmark + Phase 14 customer</span></td><td>—</td><td>~50K</td><td>Phase 14</td><td>October</td></tr>
+        <tr><td><strong>NIL agents</strong></td><td>~10K</td><td>—</td><td>Phase 7</td><td>July</td></tr>
+        <tr><td><strong>Brand / media partners</strong></td><td>~10K</td><td>~100K+</td><td>Phase 14</td><td>October</td></tr>
+        <tr><td><strong>Franchise / club front offices</strong><span class="meta">Ownership-level analytics</span></td><td>~300</td><td>~3K</td><td>Phase 14+</td><td>November</td></tr>
+        <tr><td><strong>Federations / governing bodies</strong></td><td>~50</td><td>~1K</td><td>Phase 15</td><td>December</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3><span class="num">»</span> The ceiling argument</h3>
+
+  <p>The amateur layer alone is large enough to justify the build. But the structural feature of FieldCheck IQ is that <em>the same algorithm extends, unmodified, to every layer above amateur and to every sport beyond the initial wedge</em>. Once an athletic intelligence layer exists for amateur basketball in the US, the marginal cost of extending it to:</p>
+
+  <ul class="bullet-list">
+    <li><strong>Every other US sport</strong> — football, baseball, volleyball, soccer, hockey, tennis, lacrosse, wrestling, track, swimming. Same framework. Same voices. Same six constraints.</li>
+    <li><strong>Every level above</strong> — college (Phase 14), professional (Phase 14), franchise / club ownership-level analytics (Phase 14+).</li>
+    <li><strong>International amateur</strong> — EU, LATAM, Asia, Africa. Football (soccer) alone is 1B+ amateur participants globally. International cricket is ~125M amateur participants.</li>
+    <li><strong>Non-traditional categories</strong> — esports, action sports, emerging Olympic disciplines, combat sports, motorsports.</li>
+    <li><strong>Adjacent vertical markets</strong> — NIL marketplaces, fantasy sports intelligence, sports betting integrity layers, training-tech personalization, sports-medicine triage.</li>
+  </ul>
+
+  <p>… is incremental, not architectural. <strong>There is no realistic ceiling on this category.</strong> Every layer above is downstream of winning amateur. Every adjacent vertical is downstream of having a verdict layer that exists.</p>
+</section>
+
+<!-- ═══ 07 · THE VISION ═══ -->
+<section id="vision">
+  <div class="sect-tag">07 · The Vision</div>
+  <h2>Five layers. One algorithm. Amateur first.</h2>
+
+  <p class="lede">The model is layered, not staged. The same algorithm runs across all five layers. We start where the gap is most painful and the market is largest — and we earn the right to move up. All five layers launch in calendar 2026.</p>
+
+  <div class="card-grid">
+    <article class="card">
+      <div class="card-num">Layer 1 · NOW</div>
+      <h3 class="card-title">Amateur</h3>
+      <div class="card-body">HS, club, prep, junior college. The wedge. <strong>Every product decision in 2026 asks one question: does this make a 16-year-old hang out at FieldCheck?</strong> If yes, ship. If no, defer.</div>
+    </article>
+    <article class="card">
+      <div class="card-num">Layer 2 · OCT 2026</div>
+      <h3 class="card-title">College</h3>
+      <div class="card-body">NCAA D1 / D2 / D3, NAIA, JUCO. Same algorithm, same voices. Verdicts for collegiate athletes, recruiting overlays for college coaches, transfer-portal intelligence.</div>
+    </article>
+    <article class="card">
+      <div class="card-num">Layer 3 · OCT 2026</div>
+      <h3 class="card-title">Professional</h3>
+      <div class="card-body">Draft prospects, pro rosters, free-agent valuation, contract intelligence. The same eight facets, same sixteen voices, with pro-grade evidence streams added.</div>
+    </article>
+    <article class="card">
+      <div class="card-num">Layer 4 · NOV 2026</div>
+      <h3 class="card-title">Franchise / Club</h3>
+      <div class="card-body">Warriors, Lakers, Knicks, Yankees, Real Madrid. Ownership-level analytics. Roster intelligence, draft-class projection, salary-cap optimization, internal-vs-market valuation gaps.</div>
+    </article>
+    <article class="card">
+      <div class="card-num">Layer 5 · DEC 2026</div>
+      <h3 class="card-title">Global</h3>
+      <div class="card-body">International amateur expansion (EU, LATAM, Asia). Non-traditional sports. Olympic disciplines. White-label for conferences and federations. Public API for partner ecosystems.</div>
+    </article>
+  </div>
+
+  <div class="ruled"><em>Why amateur first.</em> Because that's where the gap is most painful, the volume is largest, the network effects are strongest, the data is most accessible, and the incumbent structural failure is the most visible. Every other layer is downstream of winning amateur — and every other layer ships in 2026 anyway.</div>
+</section>
+
+<!-- ═══ 08 · PER-SPORT COVERAGE ═══ -->
+<section id="sports">
+  <div class="sect-tag">08 · Per-Sport Coverage</div>
+  <h2>Every sport. Same algorithm. 2026.</h2>
+
+  <p class="lede">FieldCheck IQ is sport-agnostic by construction. The same eight facets, the same sixteen voices, the same six constraints apply across sports. Coverage depth varies by adapter maturity; <em>every major US sport reaches deep coverage in 2026</em>.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Sport</th><th>Status</th><th>Deep coverage ship</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Men's basketball</strong></td><td>Live (deep)</td><td>June 2026</td><td>Marquee amateurs (Boozer, Dybantsa, Stokes, Williams, Brandon) live with Hot Reels + verdict</td></tr>
+        <tr><td><strong>Women's basketball</strong></td><td>Active</td><td>July 2026</td><td>Same adapter as men's, separate marquee set</td></tr>
+        <tr><td><strong>Football</strong></td><td>Live (partial)</td><td>August 2026</td><td>Position-specific facets (QB, RB, WR, OL, DL, LB, DB)</td></tr>
+        <tr><td><strong>Volleyball (W)</strong></td><td>Live (partial)</td><td>July 2026</td><td>LOVB cohort, 24 curated verdicts live, expanding to club/HS</td></tr>
+        <tr><td><strong>Volleyball (M)</strong></td><td>Active</td><td>August 2026</td><td>Same adapter, separate marquee set</td></tr>
+        <tr><td><strong>Baseball</strong></td><td>Live (partial)</td><td>August 2026</td><td>HS + travel ball + showcase coverage</td></tr>
+        <tr><td><strong>Soccer (M / W)</strong></td><td>Adapter ready</td><td>September 2026</td><td>Phase 12 launch — largest global amateur sport</td></tr>
+        <tr><td><strong>Tennis (M / W)</strong></td><td>Live (partial)</td><td>September 2026</td><td>Junior circuit + UTR integration</td></tr>
+        <tr><td><strong>Hockey (M / W)</strong></td><td>Adapter ready</td><td>October 2026</td><td>USA Hockey amateur pipeline</td></tr>
+        <tr><td><strong>Lacrosse (M / W)</strong></td><td>Adapter ready</td><td>October 2026</td><td>Club + HS + recruiting</td></tr>
+        <tr><td><strong>Wrestling</strong></td><td>Adapter ready</td><td>October 2026</td><td>State + national tournament coverage</td></tr>
+        <tr><td><strong>Track &amp; Field</strong></td><td>Adapter ready</td><td>October 2026</td><td>Event-specific metrics, multi-event athletes</td></tr>
+        <tr><td><strong>Swimming</strong></td><td>Adapter ready</td><td>November 2026</td><td>USA Swimming time-standard integration</td></tr>
+        <tr><td><strong>Golf (M / W)</strong></td><td>Adapter supported</td><td>November 2026</td><td>Junior circuit + AJGA + national qualifiers</td></tr>
+        <tr><td><strong>Other Olympic / non-traditional</strong></td><td>Phase 15</td><td>December 2026</td><td>Gymnastics, rowing, sailing, etc. as federation partnerships materialize</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>By end of 2026 — <strong>every major US sport at amateur and college tier has deep FieldCheck IQ coverage</strong>. Light coverage extends across 15+ sports total. International sports launch as Phase 15 international expansion begins.</p>
+</section>
+
+<!-- ═══ 09 · PER-LAYER EXPANSION ═══ -->
+<section id="layers">
+  <div class="sect-tag">09 · Per-Layer Expansion</div>
+  <h2>All five layers live in 2026.</h2>
+
+  <p class="lede">The layered expansion plan, mapped to specific 2026 months. Each layer reuses the same algorithm with new evidence streams and new user surfaces.</p>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">Layer 1 · Amateur</div>
+      <span class="comp-tag">Live · deepening through 2026</span>
+    </div>
+    <div class="comp-body">
+      <p><strong>Sub-layers:</strong> HS varsity, HS junior varsity, club / AAU, prep schools, junior colleges.</p>
+      <p><strong>Surfaces:</strong> Athlete verdict (live), polygon + trajectory (live), peer-compare (live), share card (live), schedule + class leaderboard (June), hidden gems (June), watchlist (July), parents overlay (July–August), coaches overlay (July), AI agent (August), mobile (August–September), daily habits (September), video intelligence (September–October).</p>
+      <p><strong>Status by EoY 2026:</strong> Deep coverage across every major US sport, amateur tier saturation, network effects compounding.</p>
+    </div>
+  </article>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">Layer 2 · College</div>
+      <span class="comp-tag">Phase 14 · October 2026</span>
+    </div>
+    <div class="comp-body">
+      <p><strong>Sub-layers:</strong> NCAA Division I (350+ programs across major sports), Division II (~300 programs), Division III (~430 programs), NAIA (~250 programs), NJCAA / JUCO (~500 programs).</p>
+      <p><strong>Surfaces:</strong> Verdicts for collegiate athletes, transfer-portal intelligence, head-to-head comparison across conferences, recruiting class projection, NIL valuation at college tier, eligibility tracking.</p>
+      <p><strong>Status by EoY 2026:</strong> Full college layer live with deep coverage in basketball, football, volleyball, baseball. All other sports follow Q1 2027.</p>
+    </div>
+  </article>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">Layer 3 · Professional</div>
+      <span class="comp-tag">Phase 14 · October 2026</span>
+    </div>
+    <div class="comp-body">
+      <p><strong>Sub-layers:</strong> Major US leagues (NBA, NFL, MLB, NHL, MLS, LOVB, WNBA), minor leagues (G-League, AHL, MiLB), international top-tier (EuroLeague, EPL, La Liga, NPB, KBO, IPL).</p>
+      <p><strong>Surfaces:</strong> Draft prospect verdicts, free-agent valuation, contract intelligence, comp-deal modeling, salary-cap optimization inputs.</p>
+      <p><strong>Status by EoY 2026:</strong> Major US leagues fully covered. International pro layer light coverage, expanding through Q1 2027.</p>
+    </div>
+  </article>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">Layer 4 · Franchise / Club</div>
+      <span class="comp-tag">Phase 14+ · November 2026</span>
+    </div>
+    <div class="comp-body">
+      <p><strong>Sub-layers:</strong> NBA franchises (30), NFL franchises (32), MLB franchises (30), top European football clubs (~200 in top-five leagues), MLS / LOVB / WNBA franchises.</p>
+      <p><strong>Surfaces:</strong> Front-office dashboards, draft-prep tooling, trade-scenario modeling, roster optimization, internal-vs-market valuation gap detection, scouting department API.</p>
+      <p><strong>Status by EoY 2026:</strong> First franchise partnerships signed. Tool live. Pricing as draft enterprise (no fixed commitment).</p>
+    </div>
+  </article>
+
+  <article class="comp">
+    <div class="comp-h">
+      <div class="comp-name">Layer 5 · Global</div>
+      <span class="comp-tag">Phase 15 · December 2026</span>
+    </div>
+    <div class="comp-body">
+      <p><strong>Sub-layers:</strong> International amateur (EU, LATAM, Asia, Oceania, Africa), non-traditional sports (esports, action sports, motorsports), federation white-label, public API ecosystem.</p>
+      <p><strong>Surfaces:</strong> Localized verdict pages (multi-language), federation dashboards, conference-level white-label deployments, public API for partner products, embeddable widgets for media.</p>
+      <p><strong>Status by EoY 2026:</strong> International launch kicked off. First federation partnership signed. Public API live in beta. Q1 2027 = scaling, not new architecture.</p>
+    </div>
+  </article>
+</section>
+
+<!-- ═══ 10 · THE PHASES ═══ -->
+<section id="phases">
+  <div class="sect-tag">10 · The Phases · Aggressive Rollout</div>
+  <h2>All 15 phases. Live by end of 2026.</h2>
+
+  <p class="lede">This is the operating rollout. Two phases per month for half the year. Solo + small rockstar team + frontier-AI velocity makes it possible. Each phase has <em>one job</em> and ships only what serves that job. The previous phase must be unkillable before the next begins.</p>
+
+  <div class="callout">
+    <span class="callout-h">// Zero phases past 2026</span>
+    Every one of the fifteen planned phases ships inside calendar 2026. <strong>Q1 2027 is scale and harden, not new architecture.</strong> Q2 2027+ is international expansion at full velocity, also not new phases. The product is structurally complete by December 2026.
+  </div>
+
+  <div class="phase is-shipped">
+    <div class="phase-h"><div class="phase-num">Phase 0 – 4.9</div><div class="phase-name">Foundation</div></div>
+    <div class="phase-date is-shipped">Done</div>
+    <div class="phase-detail"><strong>Framework, calibration, polygon spec, six constraints, 110-athlete proof set.</strong> The skeleton.</div>
+  </div>
+
+  <div class="phase is-active">
+    <div class="phase-h"><div class="phase-num">Phase 5</div><div class="phase-name">Identity</div></div>
+    <div class="phase-date">June 2026 · live</div>
+    <div class="phase-detail"><strong>Five shipped strikes:</strong> Shareable Verdict Card · 8-Facet Polygon (page + card) · Peer-Compare Dual Polygon · Trajectory + Path-to-Tier. One number, one shape, one path, one comparison, one verdict.</div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-h"><div class="phase-num">Phase 6</div><div class="phase-name">Peers</div></div>
+    <div class="phase-date">June 2026</div>
+    <div class="phase-detail"><strong>Class leaderboards (every position × state × class). Hidden Gem alerts. Watchlist. Daily digest hooks.</strong> Athletes find each other; coaches see clusters.</div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-h"><div class="phase-num">Phase 7</div><div class="phase-name">Recruiters</div></div>
+    <div class="phase-date">July 2026</div>
+    <div class="phase-detail"><strong>Coach roster overlay. Scout exports. Alert subscriptions. CRM-piping API. NIL-agent dashboard.</strong> Recruiters never need another tool.</div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-h"><div class="phase-num">Phase 8</div><div class="phase-name">Parents</div></div>
+    <div class="phase-date">July 2026 (parallel)</div>
+    <div class="phase-detail"><strong>Family overlay. Weekly digest. School-matching algorithm. NIL valuation models. Eligibility tracker.</strong> Parents become daily users.</div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-h"><div class="phase-num">Phase 9</div><div class="phase-name">Intelligence</div></div>
+    <div class="phase-date">August 2026</div>
+    <div class="phase-detail"><strong>AI Agent that chats with any verdict.</strong> "Why is my composite 5.3?" → reasoned answer drawing from the 16 voices. Conversational interface across the full corpus.</div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-h"><div class="phase-num">Phase 10</div><div class="phase-name">Mobile</div></div>
+    <div class="phase-date">August 2026 (parallel)</div>
+    <div class="phase-detail"><strong>Native iOS + Android apps.</strong> Push notifications. Camera integration. Verdict moves from web to pocket.</div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-h"><div class="phase-num">Phase 11</div><div class="phase-name">Daily Habits</div></div>
+    <div class="phase-date">September 2026</div>
+    <div class="phase-detail"><strong>Schedule (game day, signing day, recruiting events). Daily digest push. Weekly trajectory summary. Streak mechanics.</strong> Open-every-day product.</div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-h"><div class="phase-num">Phase 12</div><div class="phase-name">Video Intelligence</div></div>
+    <div class="phase-date">September 2026 (parallel)</div>
+    <div class="phase-detail"><strong>Hot Reels v2 with AI-tagged clips. Gem-discovery surfacing for underdog film. Direct creator tools.</strong> Discovery layer that competes with TikTok for athlete attention.</div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-h"><div class="phase-num">Phase 13</div><div class="phase-name">Network</div></div>
+    <div class="phase-date">October 2026</div>
+    <div class="phase-detail"><strong>Follow graph (athlete → athlete, coach → athlete). Direct messaging. Group views (team feeds). Recommendation engine.</strong> Social graph native to athletic intelligence.</div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-h"><div class="phase-num">Phase 14</div><div class="phase-name">Marketplace + College + Pro</div></div>
+    <div class="phase-date">October 2026</div>
+    <div class="phase-detail"><strong>NIL deal matching. Brand-athlete connections. Agent intro flows. College Layer 2 launches. Pro Layer 3 launches.</strong> Marketplace and two new layers go live in parallel.</div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-h"><div class="phase-num">Phase 15</div><div class="phase-name">Platform · API · Global · Franchise</div></div>
+    <div class="phase-date">November – December 2026</div>
+    <div class="phase-detail"><strong>Public API. Partner integrations (Hudl, MaxPreps, ESPN data feeds). White-label for conferences and federations. International launch (LATAM, EU, Asia). Franchise Layer 4 + Global Layer 5 live.</strong></div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-h"><div class="phase-num">Q1 2027</div><div class="phase-name">Scale + harden</div></div>
+    <div class="phase-date">Jan – Mar 2027</div>
+    <div class="phase-detail"><strong>No new phases.</strong> Harden every layer. Drive scale across the full stack. Calibrate accuracy. Sign next cohort of partners. Q1 2027 is execution depth, not new architecture.</div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-h"><div class="phase-num">Q2 2027+</div><div class="phase-name">Global expansion · verticals</div></div>
+    <div class="phase-date">Apr 2027 onward</div>
+    <div class="phase-detail"><strong>No new phases — expansion of existing phases.</strong> International rollouts at full velocity. Non-traditional sports. Federation partnerships. Esports + action sports + Olympic disciplines.</div>
+  </div>
+
+  <div class="ruled">The rollout is aggressive by design. <em>A solo founder. A small rockstar team in lights-out stealth. The most powerful AI being deployed. One category. Sprint cadence. The velocity asymmetry no enterprise org with a P&amp;L can answer.</em> The market changes overnight; we ship faster than it changes. By December 2026, the product is structurally complete across all fifteen phases. Everything else is scale.</div>
+</section>
+
+<!-- ═══ 11 · STICKINESS ═══ -->
+<section id="stickiness">
+<div style="border-left:3px solid #7C9B6E;background:rgba(124,155,110,.08);border-radius:6px;padding:16px 20px;margin:0 0 28px">
+<span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7C9B6E">STATUS · SHIPPED JUNE 10 2026</span>
+<p style="margin:8px 0 0">The loop below is no longer a plan. THE PATH, the agent coaching hooks, and the shareable verdict card are <b>live on every verdict page</b> (FCBase74–80). Dream choice persists per device. Public build log: /whats-new.</p>
+</div>
+  <div class="sect-tag">11 · Amateur Stickiness Matrix</div>
+  <h2>What makes them hang out.</h2>
+
+  <p class="lede">Five primitives. Five user types. Apple-level problem-solving. Every persona has a specific reason to open FieldCheck again tomorrow.</p>
+
+  <!-- ATHLETE -->
+  <div class="persona">
+    <div class="persona-h">
+      <div class="persona-who">Persona 01</div>
+      <h3 class="persona-name">The Athlete</h3>
+      <div class="persona-when">A 16-year-old. Lunch period at school. Practice break. Saturday morning before a game. The phone is open ten times a day; we want to be open three of them.</div>
+    </div>
+    <div class="persona-body">
+      <div class="persona-problem">"I don't know how good I really am, where I stack, or what to do to get noticed."</div>
+      <ol class="hooks">
+        <li><strong>Their number updates live.</strong> New game, new data, recalculated composite. Every login might show a change. <span class="analog">Spotify "Made For You" daily-refresh</span></li>
+        <li><strong>Their shape is unique and shareable.</strong> Polygon fingerprint they post on IG Story. Friends compare polygons like Pokémon cards. <span class="analog">Strava heatmap</span></li>
+        <li><strong>Their path is personal and actionable.</strong> Trajectory says "0.2 to PROSPECT. Mental Strength +1.2, Coachability +1.0." Not vague encouragement. <span class="analog">Duolingo streak</span></li>
+        <li><strong>Their peers are present.</strong> One tap to compare against Boozer, teammate, rival. Always a head-to-head available. <span class="analog">TikTok algorithmic surface</span></li>
+        <li><strong>Their future is scaffolded.</strong> Schedule, schools that historically recruit your tier, NIL valuation, draft projection if growth continues. <span class="analog">LinkedIn career path</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- COACH -->
+  <div class="persona">
+    <div class="persona-h">
+      <div class="persona-who">Persona 02</div>
+      <h3 class="persona-name">The Coach</h3>
+      <div class="persona-when">A college assistant. Monday morning before recruiting calls. After every game. Every signing day. The recruiting calendar runs through them — we want to run through them too.</div>
+    </div>
+    <div class="persona-body">
+      <div class="persona-problem">"I have a watch list of 200 recruits, and the data I have on them is unreliable, opaque, and behind a paywall."</div>
+      <ol class="hooks">
+        <li><strong>Roster dashboard.</strong> Every recruit they're tracking, sorted by composite, polygon at a glance. <span class="analog">Bloomberg Terminal</span></li>
+        <li><strong>Trending filter.</strong> Who moved up this week? Who's falling? Composite delta over 7 / 30 / 90 days. <span class="analog">Robinhood watchlist</span></li>
+        <li><strong>Objective comparison.</strong> Drag-and-drop two recruits — polygon overlay, head-to-head. <span class="analog">chess.com game analysis</span></li>
+        <li><strong>Alert subscriptions.</strong> Push notification when a watched recruit's composite changes by ≥ 0.3 or a tier flip occurs. <span class="analog">Slack mention</span></li>
+        <li><strong>CRM piping.</strong> API exports verdicts into the program's recruiting CRM. No copy-paste. <span class="analog">Salesforce integration</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- PARENT -->
+  <div class="persona">
+    <div class="persona-h">
+      <div class="persona-who">Persona 03</div>
+      <h3 class="persona-name">The Parent</h3>
+      <div class="persona-when">Saturday morning before a tournament. Sunday night after the games. Every conversation with extended family. Every NIL inquiry. Every recruiting visit.</div>
+    </div>
+    <div class="persona-body">
+      <div class="persona-problem">"I don't know if my kid is actually D1, what schools will look at them, or what they should focus on."</div>
+      <ol class="hooks">
+        <li><strong>Daily digest.</strong> One card: what changed for my kid this week. <span class="analog">Morning Brew</span></li>
+        <li><strong>Peer context.</strong> Where my kid ranks in their class × position × state. <span class="analog">U.S. News rankings</span></li>
+        <li><strong>School matching.</strong> Schools that historically recruit at my kid's tier. With evidence. <span class="analog">Niche college matching</span></li>
+        <li><strong>Family share.</strong> One tap to share the verdict card to grandparents, cousins, family chat. <span class="analog">Apple Photos memories</span></li>
+        <li><strong>NIL valuation.</strong> What my kid is worth in the NIL market today, with methodology shown. <span class="analog">Zillow Zestimate</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- RECRUITER / SCOUT / AGENT -->
+  <div class="persona">
+    <div class="persona-h">
+      <div class="persona-who">Persona 04</div>
+      <h3 class="persona-name">The Recruiter / Scout / Agent</h3>
+      <div class="persona-when">Every day. Their whole job is information arbitrage on athletes. We become the layer underneath every decision they make.</div>
+    </div>
+    <div class="persona-body">
+      <div class="persona-problem">"I need objective, sport-agnostic, methodologically-honest verdicts that I can take to my GM, my client, or the next signing."</div>
+      <ol class="hooks">
+        <li><strong>Class leaderboard.</strong> Every class of 2026 / 27 / 28 by composite × position × state × sport. <span class="analog">Bloomberg cross-asset screen</span></li>
+        <li><strong>Hidden gem alerts.</strong> Underdog players whose composite is climbing fast — before media catches them. <span class="analog">Investor early-stage screen</span></li>
+        <li><strong>Voice dissent view.</strong> See WHY a player's composite is what it is across 16 voices — the actual reasoning trail. <span class="analog">Federal Reserve dot-plot</span></li>
+        <li><strong>Programmatic API.</strong> Pipe verdicts directly into internal systems. Build on top of us. <span class="analog">Plaid for finance</span></li>
+        <li><strong>Cross-sport queries.</strong> "Show me all PROSPECT-tier athletes nationwide whose Character facet is ≥ 8.0." Multi-axis filter. <span class="analog">SQL with a search box</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- MEDIA / BRAND -->
+  <div class="persona">
+    <div class="persona-h">
+      <div class="persona-who">Persona 05</div>
+      <h3 class="persona-name">The Media / Brand</h3>
+      <div class="persona-when">Every story cycle. Every NIL deal. Every quarter. We become the citation engine — the source of record for athletic intelligence in news and brand decisions.</div>
+    </div>
+    <div class="persona-body">
+      <div class="persona-problem">"I need a source I can cite that won't get retracted. I need NIL valuation logic I can defend. I need story angles that aren't recycled."</div>
+      <ol class="hooks">
+        <li><strong>Story angles.</strong> Surge alerts, dissent stories, methodology pieces — pre-baked feature ideas, fully cited. <span class="analog">Reuters wire</span></li>
+        <li><strong>NIL matching.</strong> Brand-athlete fit models with public methodology. Not a number a media company invented. <span class="analog">Moody's rating with the rationale</span></li>
+        <li><strong>Citation patterns.</strong> Every verdict page ships copy-paste citation snippets — make us easy to use. <span class="analog">Wikipedia footnotes</span></li>
+        <li><strong>Embedded charts.</strong> Polygon, trajectory, peer-compare — all embeddable in news stories with one line of HTML. <span class="analog">Flourish / Datawrapper</span></li>
+        <li><strong>API for media intelligence systems.</strong> Pre-built dashboards for newsroom adoption. <span class="analog">Chartbeat for news</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 12 · METRICS & KPIs ═══ -->
+<section id="metrics">
+  <div class="sect-tag">12 · Metrics &amp; KPIs</div>
+  <h2>How we measure. What success looks like.</h2>
+
+  <p class="lede">North-star + tier metrics + quality metrics + phase-by-phase growth targets. Every metric below is a target, not a guarantee — but the trajectory is the case the rollout is built on.</p>
+
+  <h3><span class="num">»</span> North Star</h3>
+
+  <div class="metric-row">
+    <div class="metric-row-name">Verified Athletes</div>
+    <div class="metric-row-def">Athletes with a full verdict published — composite, polygon, trajectory, sources cited, dissent shown.</div>
+    <div class="metric-row-target">500K by EoY 2026</div>
+  </div>
+
+  <h3><span class="num">»</span> Engagement metrics (Free tier)</h3>
+
+  <div class="metric-row">
+    <div class="metric-row-name">Monthly active</div>
+    <div class="metric-row-def">Unique athletes / parents / coaches / fans who view a verdict at least once a month.</div>
+    <div class="metric-row-target">5M+ MAU by EoY 2026</div>
+  </div>
+  <div class="metric-row">
+    <div class="metric-row-name">Return rate</div>
+    <div class="metric-row-def">% of MAU that return within 7 days.</div>
+    <div class="metric-row-target">&gt; 35%</div>
+  </div>
+  <div class="metric-row">
+    <div class="metric-row-name">Share rate</div>
+    <div class="metric-row-def">% of verdict views that trigger a card download or native share.</div>
+    <div class="metric-row-target">&gt; 8%</div>
+  </div>
+  <div class="metric-row">
+    <div class="metric-row-name">Peer-compare events</div>
+    <div class="metric-row-def">Pairs of athletes compared per session.</div>
+    <div class="metric-row-target">2.5+ per session avg</div>
+  </div>
+
+  <h3><span class="num">»</span> Quality metrics</h3>
+
+  <div class="metric-row">
+    <div class="metric-row-name">Composite accuracy</div>
+    <div class="metric-row-def">Correlation between predicted composite and downstream outcome (draft pick, NIL signing, all-conference selection).</div>
+    <div class="metric-row-target">r &gt; 0.85 by EoY 2026</div>
+  </div>
+  <div class="metric-row">
+    <div class="metric-row-name">Source coverage</div>
+    <div class="metric-row-def">Average number of independent voices contributing to each verdict.</div>
+    <div class="metric-row-target">≥ 12 of 16 voices</div>
+  </div>
+  <div class="metric-row">
+    <div class="metric-row-name">Dissent publication rate</div>
+    <div class="metric-row-def">% of verdicts that publish at least one explicit voice-level disagreement.</div>
+    <div class="metric-row-target">≥ 60% (honest disagreement is feature, not bug)</div>
+  </div>
+
+  <h3><span class="num">»</span> Growth trajectory by phase</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Phase</th><th>Window</th><th>Verified Athletes target</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Phase 5 (Identity)</td><td>June 2026</td><td>110 → 500</td></tr>
+        <tr><td>Phase 6 (Peers)</td><td>June 2026</td><td>500 → 2,500</td></tr>
+        <tr><td>Phase 7–8 (Recruiters, Parents)</td><td>July 2026</td><td>2,500 → 15,000</td></tr>
+        <tr><td>Phase 9–10 (Intelligence, Mobile)</td><td>August 2026</td><td>15,000 → 40,000</td></tr>
+        <tr><td>Phase 11–12 (Habits, Video)</td><td>September 2026</td><td>40,000 → 100,000</td></tr>
+        <tr><td>Phase 13–14 (Network, Marketplace + College + Pro)</td><td>October 2026</td><td>100,000 → 250,000</td></tr>
+        <tr><td>Phase 15 (Platform · Global · Franchise)</td><td>November–December 2026</td><td>250,000 → 500,000</td></tr>
+        <tr><td>Q1 2027 (Scale + harden)</td><td>Jan–Mar 2027</td><td>500,000 → 1.5M+</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>These are <em>directionally calibrated targets</em>, not commitments. The shape — exponential through Phase 12, hockey-stick from Phase 13 onward as network effects compound — is the case. The numbers refine as real PLG signal comes in.</p>
+</section>
+
+<!-- ═══ 13 · PRICING · DRAFT ═══ -->
+<section id="pricing">
+  <div class="sect-tag">13 · Pricing · Draft</div>
+  <h2>Free for athletes. Everything else is draft.</h2>
+
+  <div class="draft-banner">
+    <strong>// Draft — open for input.</strong> Every pricing structure below is a working draft, not a commitment. The <strong>only locked principle is free forever for athletes and families.</strong> Every other tier — including the exact dollar amount, the cadence, and the bundle composition — is a hypothesis we will validate with real partners and prospects through 2026. <strong>Nothing here is set in concrete.</strong>
+  </div>
+
+  <p class="lede">Free for athletes is non-negotiable. That's the moat. The day we charge a 16-year-old to see their verdict, On3 wins. Every other tier is a draft hypothesis — open to change, structured to test, and explicitly designed to be re-shaped with partner input.</p>
+
+  <div class="pricing-tier">
+    <div class="pricing-tier-h">
+      <div class="pricing-tier-name">Free</div>
+      <div class="pricing-tier-price">$0 · forever</div>
+      <span class="pricing-tier-stamp stamp-locked">Locked principle</span>
+    </div>
+    <div class="pricing-tier-audience">Athletes · Parents · Fans · Public</div>
+    <div class="pricing-tier-incl">
+      <strong>Everything an athlete needs.</strong> Verdict, composite, polygon, trajectory, peer-compare, share card, schedule, daily digest, mobile app. Public methodology. No paywall, ever. Free is not a tier — <em>it is the product</em>.
+    </div>
+  </div>
+
+  <div class="pricing-tier">
+    <div class="pricing-tier-h">
+      <div class="pricing-tier-name">Coach Pro</div>
+      <div class="pricing-tier-price">~$49 – $99 / month · draft</div>
+      <span class="pricing-tier-stamp stamp-draft">Draft</span>
+    </div>
+    <div class="pricing-tier-audience">HS / college coaches · team-level access</div>
+    <div class="pricing-tier-incl">
+      Roster dashboard, watchlist alerts, polygon overlays, trending filters, recruiting CRM API.
+    </div>
+    <div class="pricing-tier-open">Per-coach or per-program, monthly or annual, à la carte or bundled with the program tier — all to be tested with first cohort of college assistants and HS HCs. Number above is a placeholder.</div>
+  </div>
+
+  <div class="pricing-tier">
+    <div class="pricing-tier-h">
+      <div class="pricing-tier-name">Scout / Agent</div>
+      <div class="pricing-tier-price">~$199 – $499 / month · draft</div>
+      <span class="pricing-tier-stamp stamp-draft">Draft</span>
+    </div>
+    <div class="pricing-tier-audience">Recruiting services · NIL agents · independent scouts</div>
+    <div class="pricing-tier-incl">
+      Cross-sport queries, hidden-gem alerts, API access, programmatic queries, voice dissent views, exports.
+    </div>
+    <div class="pricing-tier-open">Power-user tier. Pricing range above is a hypothesis. Will validate with first 10 paid customers. Could be a usage-based API model rather than seat-based.</div>
+  </div>
+
+  <div class="pricing-tier">
+    <div class="pricing-tier-h">
+      <div class="pricing-tier-name">Program / Conference</div>
+      <div class="pricing-tier-price">Enterprise · draft</div>
+      <span class="pricing-tier-stamp stamp-draft">Draft</span>
+    </div>
+    <div class="pricing-tier-audience">Schools · districts · athletic conferences · sport federations</div>
+    <div class="pricing-tier-incl">
+      White-label deployment, custom reports, conference-wide dashboards, data feeds, methodology customization.
+    </div>
+    <div class="pricing-tier-open">Per-engagement enterprise pricing. No dollar range yet — too early to fix. First three partner engagements will set the structure.</div>
+  </div>
+
+  <div class="pricing-tier">
+    <div class="pricing-tier-h">
+      <div class="pricing-tier-name">Brand / Media</div>
+      <div class="pricing-tier-price">Enterprise + API · draft</div>
+      <span class="pricing-tier-stamp stamp-draft">Draft</span>
+    </div>
+    <div class="pricing-tier-audience">NIL brands · media outlets · newsroom partners</div>
+    <div class="pricing-tier-incl">
+      NIL valuation models, brand-athlete matching, embedded charts, citation tooling, dashboards for newsrooms.
+    </div>
+    <div class="pricing-tier-open">Pricing structured per integration. Subscription, usage-based, or revenue-share — all on the table. Open hypothesis.</div>
+  </div>
+
+  <div class="pricing-tier">
+    <div class="pricing-tier-h">
+      <div class="pricing-tier-name">Franchise / Pro Club</div>
+      <div class="pricing-tier-price">Enterprise · draft</div>
+      <span class="pricing-tier-stamp stamp-draft">Draft</span>
+    </div>
+    <div class="pricing-tier-audience">NBA · NFL · MLB · NHL · MLS · WNBA · LOVB franchises · international top clubs</div>
+    <div class="pricing-tier-incl">
+      Front-office dashboards, draft-prep tooling, trade-scenario modeling, internal-vs-market valuation gap detection, scouting API.
+    </div>
+    <div class="pricing-tier-open">First franchise partnerships in November–December 2026 set the pricing template. Could be flat-fee, performance-share, or hybrid.</div>
+  </div>
+
+  <div class="ruled">
+    <em>The discipline.</em> Pricing is a hypothesis until a prospect signs. We are willing to leave 2026 – 2027 monetization revenue on the table because the moat is unbuildable any other way. Free for athletes is the moat. Every paid tier is downstream of athlete adoption. <strong>All paid tiers above are open for input — we are explicitly seeking partner feedback to refine.</strong>
+  </div>
+</section>
+
+<!-- ═══ 14 · EXECUTION ═══ -->
+<section id="execution">
+  <div class="sect-tag">14 · Execution</div>
+  <h2>Solo founder. Small rockstar team. Frontier AI. 10,000 releases.</h2>
+
+  <p class="lede">FieldCheck IQ ships at a velocity an enterprise organization cannot match. The execution model is the moat we built before the product moat existed.</p>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-num">~10K</div><div class="stat-label">Releases shipped</div></div>
+    <div class="stat"><div class="stat-num">110</div><div class="stat-label">Athletes in proof set</div></div>
+    <div class="stat"><div class="stat-num">17</div><div class="stat-label">Canonical state tabs</div></div>
+    <div class="stat"><div class="stat-num">15</div><div class="stat-label">Phases · all live by EoY 2026</div></div>
+  </div>
+
+  <h3><span class="num">»</span> The model</h3>
+
+  <p><strong>Solo founder operating with a small rockstar team in lights-out stealth — and the most powerful AI being deployed — as the engineering muscle.</strong> Methodology owned end-to-end. No middle layer. No design-by-committee. Every decision compounds in the next ship. The founder reads the canonical state document, frames the next sprint, and the AI agent ships against it — multiple production releases per day, every day, for months.</p>
+
+  <h3><span class="num">»</span> The proof</h3>
+
+  <p>The site you are reading lives at <a href="https://fieldcheck-app.netlify.app">fieldcheck-app.netlify.app</a>. The 110-athlete proof set runs against every release. The deck is at <a href="https://fieldcheck-app.netlify.app/deck">/deck</a>. The methodology is at <a href="https://fieldcheck-app.netlify.app/voices">/voices</a>. The verdict pages are linkable, embeddable, and queryable. <em>Nothing here is a slide — it is live software you can audit.</em></p>
+
+  <h3><span class="num">»</span> The discipline · Never-Lose Doctrine</h3>
+
+  <ul class="bullet-list">
+    <li><strong>Freeze before risky work.</strong> Every shipped feature carries a frozen baseline (FCBase{N}) we can roll back to in seconds.</li>
+    <li><strong>Dev → verify → prod, always.</strong> No shortcut. Production is downstream of verified dev.</li>
+    <li><strong>Surgical edits only.</strong> Never rewrite from memory. Always grep-verify, str_replace, validate.</li>
+    <li><strong>JS-validate after every patch.</strong> Syntax errors die before they touch users.</li>
+    <li><strong>Doc-first, then execute.</strong> Canonical state document is updated before any code ships.</li>
+    <li><strong>Memory is forever, chat is ephemeral.</strong> Operational state lives in persistent memory across sessions.</li>
+  </ul>
+
+  <h3><span class="num">»</span> The asymmetry</h3>
+
+  <p>Incumbents move at quarterly board meetings. We move at sprint cadence — multiple times per day. <strong>The market changes overnight. We ship faster than it changes.</strong> That is the asymmetry no competitor with a P&amp;L can match.</p>
+
+  <p>Memory makes the velocity compound. Every shipped feature is documented in the canonical state document. Every operating tenet is captured. The next session resumes from exactly where the last one ended. There is no "ramp-up" cost between sessions — the AI agent reads the canonical state and ships against it immediately.</p>
+</section>
+
+<!-- ═══ 15 · WHY NOW ═══ -->
+<section id="why-now">
+  <div class="sect-tag">15 · Why Now</div>
+  <h2>The window is open. It closes fast.</h2>
+
+  <p class="lede">Six structural windows are open simultaneously. Each one alone would justify the build. Together, they make the next twelve months the unrepeatable moment to become the brand of record for amateur athletic intelligence.</p>
+
+  <ul class="bullet-list">
+    <li><strong>AI inflection.</strong> Large-scale public data triangulation became economically viable in 2024 – 2025. The cost-to-quality curve crossed the threshold where solo + small team + frontier AI competes with hundred-person enterprises. We are riding that curve directly.</li>
+    <li><strong>Incumbent failure has gone public.</strong> On3's Trentyn Flowers retraction (Dec 2025). NIL Valuation methodology rewritten twice. 247 pay-to-play documented in mainstream press. The incumbents are visibly vulnerable for the first time in a decade — and the public is paying attention.</li>
+    <li><strong>NIL has created a data emergency.</strong> Every amateur athlete is now a small business. Their FieldCheck IQ is also their NIL valuation input. The category did not exist three years ago. We are first into a layer that did not have a market until now.</li>
+    <li><strong>Generational platform shift.</strong> The amateur athlete of 2026 grew up with TikTok, Strava, Spotify Wrapped, and Robinhood. They expect a verdict layer with a polygon, a trajectory, and a share card. They do not expect a paywalled subscription forum. <em>We are building for the platform shift that has already happened to their attention.</em></li>
+    <li><strong>Distribution is structural.</strong> One athlete shares a polygon → five teammates see it → a coach catches a screenshot → a conference catches wind. Network effects are stronger here than in any consumer category since Strava. The product is structurally social.</li>
+    <li><strong>The window closes when an incumbent buys their way in.</strong> Hudl, ESPN, or a private-equity buyer of On3 could fund a copy in 2027. The window to become the brand-of-record for amateur intelligence is <em>now</em>, not next year. Whoever owns the brand in December 2026 owns it forever.</li>
+  </ul>
+</section>
+
+<!-- ═══ 16 · THE ASK ═══ -->
+<section id="ask">
+  <div class="sect-tag">16 · The Ask</div>
+  <h2>The right partner. Few. Right.</h2>
+
+  <p class="lede">We are not looking for a long list of investors. We are looking for the right partner for the amateur layer — capital, distribution, sport-domain network, and operating muscle aligned with an aggressive 2026 rollout.</p>
+
+  <h3><span class="num">»</span> What we want from a partner</h3>
+
+  <ul class="bullet-list">
+    <li><strong>Capital aligned with velocity.</strong> Enough to staff the rollout we have planned and not slow down the cadence that has gotten us here.</li>
+    <li><strong>Sport-domain distribution.</strong> Relationships with conferences, federations, programs, athletic departments, leagues, agents, NIL brands, and media outlets that compress our distribution timeline.</li>
+    <li><strong>Operating muscle for the moments that matter.</strong> Recruiting, partnership negotiation, brand voice, B2B contracting, federation diplomacy — the things a solo founder, a small team, and AI cannot do at scale without help.</li>
+    <li><strong>Long horizon.</strong> The fifteen-phase rollout converges in late 2026. The five-layer expansion completes in 2026. Q1 2027 is scale. The right partner sees that arc and underwrites it.</li>
+    <li><strong>Co-conspirator energy.</strong> The category exists because the incumbents refuse to build it. The right partner enjoys that fight.</li>
+  </ul>
+
+  <h3><span class="num">»</span> Try It Yourself · 6 live verdicts</h3>
+
+  <p>Six polished verdict pages across the tier range. Click any of these and see the live algorithm — polygon, trajectory + path-to-tier, peer-compare overlay, class leaderboard, hot reels, sources — all rendering against current data:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Athlete</th><th>Composite · Tier</th><th>Sport · Position</th><th>Status</th><th>Live verdict</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Cameron Boozer</strong></td><td>7.4 · STAR</td><td>MBB · PF</td><td>Duke (fr)</td><td><a href="https://fieldcheck-app.netlify.app/fieldcheck-verdict.html?q=Cameron+Boozer&amp;sport=mens-basketball">verdict →</a></td></tr>
+        <tr><td><strong>AJ Dybantsa</strong></td><td>7.4 · STAR</td><td>MBB · SF</td><td>BYU (fr)</td><td><a href="https://fieldcheck-app.netlify.app/fieldcheck-verdict.html?q=AJ+Dybantsa&amp;sport=mens-basketball">verdict →</a></td></tr>
+        <tr><td><strong>Tyran Stokes</strong></td><td>5.4 · SCOUT</td><td>MBB · SF</td><td>Kansas signee · '27</td><td><a href="https://fieldcheck-app.netlify.app/fieldcheck-verdict.html?q=Tyran+Stokes&amp;sport=mens-basketball">verdict →</a></td></tr>
+        <tr><td><strong>Faizon Brandon</strong></td><td>5.3 · SCOUT</td><td>Football · QB</td><td>Tennessee signee</td><td><a href="https://fieldcheck-app.netlify.app/fieldcheck-verdict.html?q=Faizon+Brandon&amp;sport=football">verdict →</a></td></tr>
+        <tr><td><strong>Cameron Williams</strong></td><td>5.2 · SCOUT</td><td>MBB · PG</td><td>Duke signee</td><td><a href="https://fieldcheck-app.netlify.app/fieldcheck-verdict.html?q=Cameron+Williams&amp;sport=mens-basketball">verdict →</a></td></tr>
+        <tr><td><strong>Jordan Smith Jr</strong></td><td>5.3 · SCOUT</td><td>MBB · combo G</td><td>Arkansas signee</td><td><a href="https://fieldcheck-app.netlify.app/fieldcheck-verdict.html?q=Jordan+Smith+Jr&amp;sport=mens-basketball">verdict →</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Six live verdicts spanning <em>STAR (D1 freshmen, top NBA pick projections)</em> and <em>SCOUT (HS amateurs)</em>. The composite is a universal 1–10 scale with Tenet-49 tiers — ICON 9.5+ (MJ-tier asymptotic apex) · ELITE+ 9.0–9.4 · ELITE 7.5–8.9 · STAR 7.0–7.4 · PROSPECT 5.5–6.9 · SCOUT 3.5–5.4. D1 amateur cap is 7.4 (Boozer/Dybantsa freshman ceiling), HS amateur cap is 5.4 (Stokes/JSJ ceiling) — earned, not awarded. Phenom criteria can exceed these but require 4-of-4 pro-tier evidence gates. The remaining 104 of the 110-athlete proof set are in active polish through Phase 6.</p>
+
+  <h3><span class="num">»</span> What partners can audit today</h3>
+
+  <ul class="bullet-list">
+    <li>Live product · <a href="https://fieldcheck-app.netlify.app">fieldcheck-app.netlify.app</a></li>
+    <li>Deck · <a href="https://fieldcheck-app.netlify.app/deck">/deck</a></li>
+    <li>110-athlete proof set · <a href="https://fieldcheck-app.netlify.app/fieldcheck-roster-110.html">/fieldcheck-roster-110.html</a></li>
+    <li>Methodology — sixteen voices · <a href="https://fieldcheck-app.netlify.app/voices">/voices</a></li>
+    <li>This thesis document · <a href="https://fieldcheck-app.netlify.app/thesis">/thesis</a></li>
+  </ul>
+
+  <p><strong>Contact:</strong> sridhar.nallani@gmail.com · (925) 487-8476</p>
+</section>
+
+<!-- ═══ CLOSER ═══ -->
+<div class="closer">
+  <div class="closer-eyebrow">// The Tagline</div>
+  <div class="closer-line">Anyone can chase a ranking.<br><span class="accent">FieldCheck shows its work.</span></div>
+  <div class="closer-sub">
+    <a href="https://fieldcheck-app.netlify.app">fieldcheck.ai</a> ·
+    <a href="https://fieldcheck-app.netlify.app/deck">/deck</a> ·
+    <a href="https://fieldcheck-app.netlify.app/voices">/voices</a> ·
+    <a href="https://fieldcheck-app.netlify.app/fieldcheck-roster-110.html">/roster</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div>© 2026 FieldCheck IQ · ThinkDifferent Holdings</div>
+  <div>The Market &amp; Thesis · v2 · June 2026</div>
+</footer>
+
+</main>
+</body>
+</html>

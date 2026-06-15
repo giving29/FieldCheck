@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>About · Who built this · FieldCheck LOVB</title>
+<meta name="description" content="Who built FieldCheck-LOVB and why. An independent platform from ThinkDifferent Holdings, designed to make every player, coach, scout, club, parent more capable.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3891_LOVB_ABOUT">
+<meta property="og:title" content="About · FieldCheck LOVB">
+<meta property="og:description" content="Who built FieldCheck-LOVB and why — an independent capability platform.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:0.75}
+.wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+.fc-nav{padding:24px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:50;backdrop-filter:blur(6px)}
+.fc-logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:0.06em}
+.fc-logo span{color:var(--gold)}
+.fc-nav-links{display:flex;gap:24px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.fc-nav-links a{color:var(--text-2)}
+.fc-nav-links a.active{color:var(--gold)}
+@media(max-width:720px){.fc-nav{flex-direction:column;gap:14px;align-items:flex-start}.fc-nav-links{gap:14px;flex-wrap:wrap}}
+
+.hero{padding:80px 0 56px;border-bottom:1px solid var(--line)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(52px,9vw,120px);line-height:0.92;letter-spacing:-0.024em;margin-bottom:28px;max-width:980px}
+.hero h1 .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.hero-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(20px,2.6vw,28px);line-height:1.4;color:var(--text-2);max-width:840px}
+
+.section{padding:72px 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:none}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.section-num .gold{color:var(--gold)}
+.section-h{font-family:'Anton',sans-serif;font-size:clamp(34px,4.8vw,56px);line-height:1.02;letter-spacing:-0.018em;margin-bottom:20px}
+.section-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+
+.essay{font-family:'Crimson Pro',serif;font-size:17px;line-height:1.7;color:var(--text-2);max-width:780px}
+.essay p{margin-bottom:18px}
+.essay p b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:18px}
+.essay p em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+.essay p a{color:var(--gold);border-bottom:1px solid var(--gold-edge)}
+.essay p a:hover{border-color:var(--gold)}
+
+/* PRINCIPLE BLOCKS */
+.principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:36px}
+.principle{padding:24px 28px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.principle-num{font-family:'Anton',sans-serif;font-size:60px;line-height:0.8;color:var(--gold);letter-spacing:-0.024em;opacity:0.5}
+.principle-name{font-family:'Anton',sans-serif;font-size:24px;line-height:1.05;letter-spacing:-0.012em;color:var(--text);margin-top:-4px}
+.principle-name .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.principle-detail{font-family:'Crimson Pro',serif;font-size:14px;line-height:1.6;color:var(--text-2)}
+.principle-detail b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:14.5px}
+
+.dna-block{padding:36px 40px;background:linear-gradient(180deg,rgba(255,201,74,0.06),rgba(20,17,12,0.4));border:1px solid var(--gold-edge);border-radius:6px;position:relative;overflow:hidden}
+.dna-block::before{content:'';position:absolute;top:-30%;left:-10%;width:50%;height:160%;background:radial-gradient(ellipse,var(--gold-glow) 0%,transparent 60%);opacity:0.06;pointer-events:none}
+.dna-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:14px;position:relative}
+.dna-h{font-family:'Anton',sans-serif;font-size:clamp(28px,3.8vw,42px);line-height:1.05;margin-bottom:20px;position:relative}
+.dna-h .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.dna-body{font-family:'Crimson Pro',serif;font-size:17px;line-height:1.7;color:var(--text-2);position:relative;max-width:780px}
+.dna-body b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:18px}
+.dna-body em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+
+.contact-block{padding:28px 32px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:6px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.contact-text{font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;color:var(--text-2);line-height:1.45;flex:1 1 360px}
+.contact-text b{font-family:'Anton',sans-serif;font-style:normal;font-weight:normal;color:var(--text);font-size:22px}
+.btn{display:inline-block;padding:14px 26px;background:var(--gold);color:var(--bg);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border-radius:3px}
+.btn:hover{box-shadow:0 0 16px var(--gold-glow);opacity:1}
+
+.footer{padding:56px 0 72px;border-top:1px solid var(--line);background:rgba(20,17,12,0.5)}
+.footer-display{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer p{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.65;color:var(--text-2);max-width:780px;margin-bottom:12px}
+.footer-disclaimer{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-4);margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="fc-nav">
+    <div class="fc-logo">Field<span>Check</span></div>
+    <div class="fc-nav-links">
+      <a href="/">// home</a>
+      <a href="/lovb">// lovb hub</a>
+      <a href="/lovb/about" class="active">// about</a>
+      <a href="/lovb/sources">// sources</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">About · Who built this · And why</div>
+    <h1>The platform <span class="italic">behind the platform.</span></h1>
+    <p class="hero-deck">FieldCheck-LOVB is an independent capability layer for the LOVB ecosystem. Built and maintained from the ThinkDifferent Holdings portfolio. Our job is to make every player, coach, scout, club, parent <em>more capable</em> — by making the data layer they navigate clearer, more honest, and free of commercial incentive distortion.</p>
+  </section>
+</div>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">I</span> · The build</div>
+    <h2 class="section-h">A capability platform, <span class="italic">not a check.</span></h2>
+    <div class="essay">
+      <p>FieldCheck started as something narrower — a "trust layer where retail loses to information asymmetry." A check before commitment. It still serves that purpose for other XCheck verticals like <b>RentCheck</b> and <b>JobCheck</b>. <em>For LOVB, it became something else.</em></p>
+      <p>Volleyball doesn't have a trust crisis the way rentals or job offers do. What volleyball has is an <b>information density problem</b>. The pathway is opaque if you're new. The pro league is young. The athletes who anchor the league have stories most fans haven't yet read. The 90-club junior network is sprawling. <a href="/lovb/atlas">The atlas didn't exist yet.</a></p>
+      <p>So we built it. Not as a check on LOVB — as a <em>capability multiplier around it</em>. The premise: <b>everyone who interacts with the LOVB ecosystem becomes more capable when the data layer is clear, free, and source-grounded.</b> Players make better pathway decisions. Coaches benchmark realistically. Scouts find prospects faster. Broadcasters write better pre-game packages. Parents ask sharper questions. Clubs see where they fit. <em>LOVB itself becomes stronger by having an articulate independent ecosystem around it.</em></p>
+      <p>That's the build. Not an audit. Not a critique. A capability layer.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">II</span> · The operating principles</div>
+    <h2 class="section-h">Seven commitments, <span class="italic">in writing.</span></h2>
+    <div class="essay">
+      <p>How a capability layer earns trust over time is by stating the rules and then living them. These are the seven operating principles. They appear on every persona-facing surface, and they govern every backlog decision.</p>
+    </div>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-num">1</div>
+        <div class="principle-name">Public-record <span class="italic">sourcing.</span></div>
+        <div class="principle-detail">Every claim cites a <b>LOVB page, named publication, or public registry</b>. The full source manifest lives at <a href="/lovb/sources">/lovb/sources</a>.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">2</div>
+        <div class="principle-name">CI <span class="italic">on every score.</span></div>
+        <div class="principle-detail">Where we offer probability bands (the Pathway tool), <b>confidence intervals are always visible</b>. Honest uncertainty over inflated confidence.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">3</div>
+        <div class="principle-name">No school <span class="italic">money.</span></div>
+        <div class="principle-detail">No college, no club, no high school pays to be featured or ranked. <b>We don't rank.</b> We don't sell visibility.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">4</div>
+        <div class="principle-name">No affiliate <span class="italic">fees.</span></div>
+        <div class="principle-detail">No commercial relationship with recruiting services, agents, coaching certifications, or any layer in the ecosystem we describe.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">5</div>
+        <div class="principle-name">Walk-away <span class="italic">default.</span></div>
+        <div class="principle-detail">Every recommendation supports <b>declining as a valid choice</b>. We never frame the platform as a "must use" for anyone.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">6</div>
+        <div class="principle-name">LOVB language <span class="italic">stays LOVB's.</span></div>
+        <div class="principle-detail">"Founding Athlete," "Whole Athlete Training," "Coach of Coaches," "Icons" — <b>we cite, we don't claim</b>. The language belongs to LOVB.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">7</div>
+        <div class="principle-name">Athletes own <span class="italic">their profiles.</span></div>
+        <div class="principle-detail">Any athlete profiled here can <b>claim and edit</b> their own card details via the claim flow. Verification by LOVB-confirmed email or social handle.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">III</span> · The architecture</div>
+    <h2 class="section-h">Where this <span class="italic">lives.</span></h2>
+    <div class="essay">
+      <p>FieldCheck-LOVB is one of several verticals under the <b>XCheck portfolio</b>, which sits inside <b>ThinkDifferent Holdings</b>. Other verticals include EdgeCheck (Internet-era commerce), FieldCheck-Sports (the umbrella platform with multi-sport architecture), RentCheck (rental vetting), SchoolCheck (K-12 evaluation), JobCheck (employer vetting). <em>All share the "trust layer where retail loses to information asymmetry" thesis</em> — but LOVB pivoted further toward the capability-layer framing because that's what the data ecosystem there actually needs.</p>
+      <p>The platform runs on a small static-site stack — Netlify for hosting, a Cloudflare Worker for the source-checker proxy. <b>No tracking, no third-party analytics, no email-capture-and-resell pipelines.</b> The Pathway tool runs entirely in the browser; nothing leaves your device unless you choose to submit.</p>
+      <p>The full <a href="/lovb/sources">source manifest</a>, the <a href="/lovb/changelog">change log</a>, and the <a href="/lovb/embed">embed kit</a> together describe everything we ship. There's no hidden tier, no "Pro," no premium content. <em>Everything we publish, we publish freely.</em></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">IV</span> · The relationship with LOVB</div>
+    <h2 class="section-h">Independent. <span class="italic">Aligned.</span></h2>
+
+    <div class="dna-block">
+      <div class="dna-eyebrow">// What "independent" actually means</div>
+      <h3 class="dna-h">We don't take <span class="italic">LOVB money.</span></h3>
+      <p class="dna-body">FieldCheck-LOVB is <b>not commercially affiliated with League One Volleyball Inc.</b> We don't have a sponsorship, partnership, advertising relationship, or any financial flow from LOVB. We don't have a content licensing agreement. We don't have early access to LOVB news. <em>We're cousins, not children.</em></p>
+      <p class="dna-body" style="margin-top:18px">What we are is <b>aligned</b>. We think LOVB's success matters because the broader U.S. women's volleyball ecosystem needs the league it built. <em>If LOVB gets stronger because the data ecosystem around it gets stronger, that's a good outcome — for them, for us, for everyone in volleyball.</em> That's the relationship. Independent in money, aligned in mission.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">V</span> · Contact + corrections</div>
+    <h2 class="section-h">How to <span class="italic">reach us.</span></h2>
+    <div class="essay">
+      <p>If you're an <b>athlete, coach, owner, parent, or scout</b> mentioned anywhere on the platform and you want to claim, correct, or remove content — file a <a href="/dispute">dispute</a>. We honor takedown requests within 48 hours. Corrections inside 24.</p>
+      <p>If you're a <b>journalist or researcher</b> who'd like to source from the platform, everything we publish is <b>CC BY-SA 4.0 licensed</b> — share with attribution. No API key required for the embed kit; details at <a href="/lovb/embed">/lovb/embed</a>.</p>
+      <p>If you're <b>LOVB itself</b> and want to suggest content updates, partnerships, or operational changes — the same dispute link reaches us. We treat LOVB-originated suggestions the same way we treat anyone else's: read fully, respond honestly, action what's warranted.</p>
+    </div>
+
+    <div class="contact-block" style="margin-top:32px">
+      <div class="contact-text"><b>Have an issue? Tell us.</b><br>48-hour takedown SLA. 24-hour correction SLA.</div>
+      <a href="/dispute" class="btn">File a dispute →</a>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-display">About · Independent · Free · Source-Grounded</div>
+    <p>The about page is here so you can decide whether to trust the rest. Read the <a href="/lovb/sources">source manifest</a> to verify our sourcing discipline; read the <a href="/lovb/changelog">changelog</a> to see what's shipped; read the <a href="/lovb/embed">embed terms</a> to see how openly we publish.</p>
+    <p>This platform exists because the ecosystem around LOVB deserves an articulate independent voice. We hope we are useful to you.</p>
+    <div class="footer-disclaimer">Independent and unaffiliated with LOVB. "LOVB" and related marks are properties of League One Volleyball Inc. ThinkDifferent Holdings is the parent entity behind this platform.</div>
+  </div>
+</footer>
+
+</body>
+</html>

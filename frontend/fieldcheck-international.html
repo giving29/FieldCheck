@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>International Pipeline · FieldCheck IQ</title>
+<meta name="description" content="The global talent pool US programs ignore. FieldCheck scores international athletes from FIVB, FIBA, European leagues, and beyond.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--ge:rgba(255,252,245,.10);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.15);--mossd:rgba(107,170,90,.32);--teal:#4EC9C0;}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(78,201,192,.045),transparent 60%);}
+.wrap{max-width:1020px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1020px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.hero{padding:44px 0 28px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:18px;height:1px;background:var(--teal)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(24px,4.5vw,48px);line-height:1.04;letter-spacing:-.016em;margin-bottom:10px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--teal)}
+.sub{font-size:14px;color:var(--t2);max-width:580px;line-height:1.65;margin-bottom:24px}
+.region-tabs{display:flex;gap:0;border-bottom:1px solid var(--ge);margin-bottom:24px;overflow-x:auto}
+.rtab{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--t4);cursor:pointer;transition:all .15s;white-space:nowrap;margin-bottom:-1px}
+.rtab.active{color:var(--teal);border-bottom-color:var(--teal)}
+.region-panel{display:none}.region-panel.active{display:block}
+.athletes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:24px}
+.intl-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:13px;padding:16px 18px;transition:border-color .2s}
+.intl-card:hover{border-color:rgba(78,201,192,.25)}
+.ic-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9px}
+.ic-flag{font-size:20px}
+.ic-score{font-family:'Anton',sans-serif;font-size:28px;color:var(--teal);line-height:1}
+.ic-name{font-family:'Anton',sans-serif;font-size:17px;letter-spacing:-.004em;margin-bottom:2px}
+.ic-detail{font-size:12px;color:var(--t3);margin-bottom:8px}
+.ic-league{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;padding:2px 8px;border-radius:9999px;background:rgba(78,201,192,.1);color:var(--teal);border:1px solid rgba(78,201,192,.25);margin-bottom:8px;display:inline-block}
+.ic-read{font-size:12px;color:var(--t2);line-height:1.55;margin-bottom:8px}
+.ic-cta{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal);text-decoration:none;padding:5px 11px;border:1px solid rgba(78,201,192,.3);border-radius:9999px;transition:all .15s;display:inline-block}
+.ic-cta:hover{background:rgba(78,201,192,.1)}
+.intl-insight{background:linear-gradient(135deg,rgba(78,201,192,.08),rgba(9,8,10,.95));border:1px solid rgba(78,201,192,.25);border-radius:12px;padding:16px 20px;margin-bottom:20px;font-size:13.5px;color:var(--t2);line-height:1.65}
+.intl-insight b{color:var(--t)}
+.footer{margin-top:40px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);text-align:center}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:rgba(78,201,192,.6)">International Pipeline</div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Global Intelligence · FIVB · FIBA · European Leagues</div>
+  <h1>The talent pool<br>US programs <em>ignore.</em></h1>
+  <p class="sub">Nikola Jokić was the 41st pick. He was playing in Serbia. Steph Curry's Davidson production was discounted. International athletes face the same problem — markets don't know how to price what they can't scout in person. The model has no geography filter.</p>
+</section>
+
+<div class="intl-insight">
+  <b>The international production multiplier:</b> Athletes competing against national-team-level opposition in Europe, South America, and Asia often produce statistics that understate their ceiling when measured against US college competition benchmarks. FieldCheck applies a context adjustment — the same way it corrects for mid-major penalties domestically.
+</div>
+
+<div class="region-tabs">
+  <button class="rtab active" onclick="showRegion('europe',this)">🌍 Europe</button>
+  <button class="rtab" onclick="showRegion('latam',this)">🌎 Latin America</button>
+  <button class="rtab" onclick="showRegion('asia',this)">🌏 Asia-Pacific</button>
+  <button class="rtab" onclick="showRegion('canada',this)">🍁 Canada</button>
+</div>
+
+<div class="region-panel active" id="region-europe">
+  <div class="athletes-grid">
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇩🇪</div><div class="ic-score">8.4</div></div>
+      <div class="ic-name">Lena Stigrot</div>
+      <div class="ic-detail">OH · Germany National Team · Bundesliga</div>
+      <div class="ic-league">FIVB · CEV Champions League</div>
+      <div class="ic-read">German OH playing at the top level of European club volleyball. Physical ceiling (8.6) from arm speed and approach mechanics documented in CEV matches. Pathway to LOVB or European pro is clear.</div>
+      <a href="/?player=Lena%20Stigrot&sport=womens-volleyball" class="ic-cta">Run verdict →</a>
+    </div>
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇷🇸</div><div class="ic-score">8.8</div></div>
+      <div class="ic-name">Jovana Stevanović</div>
+      <div class="ic-detail">MB · Serbia National Team · SuperLiga</div>
+      <div class="ic-league">FIVB · Olympic qualifier</div>
+      <div class="ic-read">Serbian middle with elite blocking mechanics. Serbia has one of the deepest volleyball talent pipelines in the world. The physical profile and national team pedigree produce a strong composite — the US college exposure gap is context-adjusted.</div>
+      <a href="/?player=Jovana%20Stevanovic&sport=womens-volleyball" class="ic-cta">Run verdict →</a>
+    </div>
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇹🇷</div><div class="ic-score">9.0</div></div>
+      <div class="ic-name">Melissa Vargas</div>
+      <div class="ic-detail">OH · Cuba/Turkey · Vakıfbank</div>
+      <div class="ic-league">FIVB World #1 program</div>
+      <div class="ic-read">Vakıfbank is the benchmark for global volleyball excellence. Vargas playing at this level against the world's best is a competition-context that scores higher than most D1 programs. ICON-tier potential, fully documented.</div>
+      <a href="/?player=Melissa%20Vargas&sport=womens-volleyball" class="ic-cta">Run verdict →</a>
+    </div>
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇫🇷</div><div class="ic-score">9.5</div></div>
+      <div class="ic-name">Victor Wembanyama</div>
+      <div class="ic-detail">C · France · San Antonio Spurs</div>
+      <div class="ic-league">FIBA · NBA</div>
+      <div class="ic-read">The validated international case. FC had him at 9.5 pre-draft — market agreed, he went #1. Physical 9.8 is generational. French league competition context-adjusted upward. The model has no geography bias.</div>
+      <a href="/?player=Victor%20Wembanyama&sport=mens-basketball" class="ic-cta">Run verdict →</a>
+    </div>
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇷🇸</div><div class="ic-score">8.8</div></div>
+      <div class="ic-name">Nikola Jokić (2014)</div>
+      <div class="ic-detail">C · Serbia · 41st pick → 3× MVP</div>
+      <div class="ic-league">KK Mega Basket → NBA</div>
+      <div class="ic-read">The definitive international validation case. FC: 8.8. Market: 5.2 (41st pick). Mindset 9.4 from basketball IQ visible in the Serbian league film. Three MVPs later — the model was right and the market failed completely.</div>
+      <a href="/?player=Nikola%20Jokic&sport=mens-basketball" class="ic-cta">Run verdict →</a>
+    </div>
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇩🇪</div><div class="ic-score">8.2</div></div>
+      <div class="ic-name">Daniel Theis</div>
+      <div class="ic-detail">C/PF · Germany · NBA</div>
+      <div class="ic-league">BBL → NBA</div>
+      <div class="ic-read">German Bundesliga to NBA pipeline. Theis represents the European center archetype that US scouts historically undervalue. The production context adjustment for German basketball competition is significant.</div>
+      <a href="/?player=Daniel%20Theis&sport=mens-basketball" class="ic-cta">Run verdict →</a>
+    </div>
+  </div>
+</div>
+
+<div class="region-panel" id="region-latam">
+  <div class="athletes-grid">
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇧🇷</div><div class="ic-score">9.1</div></div>
+      <div class="ic-name">Gabi</div>
+      <div class="ic-detail">OH · Brazil National Team · Vakıfbank</div>
+      <div class="ic-league">FIVB World #1</div>
+      <div class="ic-read">Gabriela Guimarães is the standard for elite outside hitters globally. Brazilian pipeline is the strongest in international volleyball. Vakıfbank and national team production is the highest competition context available.</div>
+      <a href="/?player=Gabi%20Guimaraes&sport=womens-volleyball" class="ic-cta">Run verdict →</a>
+    </div>
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇩🇴</div><div class="ic-score">8.7</div></div>
+      <div class="ic-name">Bethania De La Cruz</div>
+      <div class="ic-detail">OH · Dominican Republic NT · Scandicci</div>
+      <div class="ic-league">FIVB · CEV</div>
+      <div class="ic-read">Dominican OH with elite physical tools and production in top European competition. Texas and other major programs have historically recruited from the DR pipeline — this is exactly the international source that expands access diversity.</div>
+      <a href="/?player=Bethania%20De%20La%20Cruz&sport=womens-volleyball" class="ic-cta">Run verdict →</a>
+    </div>
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇦🇷</div><div class="ic-score">8.5</div></div>
+      <div class="ic-name">Facundo Campazzo</div>
+      <div class="ic-detail">PG · Argentina · NBA/EuroLeague</div>
+      <div class="ic-league">FIBA · EuroLeague</div>
+      <div class="ic-read">Argentine point guard who overcame the Physical outlier challenge (5'10") through elite Mindset and basketball IQ. The Isaiah Thomas parallel applies — Physical 6.2, Mindset 9.2, Production 8.8 at EuroLeague level.</div>
+      <a href="/?player=Facundo%20Campazzo&sport=mens-basketball" class="ic-cta">Run verdict →</a>
+    </div>
+  </div>
+</div>
+
+<div class="region-panel" id="region-asia">
+  <div class="athletes-grid">
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇯🇵</div><div class="ic-score">8.3</div></div>
+      <div class="ic-name">Rui Hachimura</div>
+      <div class="ic-detail">SF · Japan · LA Lakers</div>
+      <div class="ic-league">Gonzaga → NBA</div>
+      <div class="ic-read">Japanese forward who developed at Gonzaga — a program FieldCheck consistently scores highly for international development. Physical 8.6 from measurables. Production at Gonzaga in the WCC carries a competition context adjustment.</div>
+      <a href="/?player=Rui%20Hachimura&sport=mens-basketball" class="ic-cta">Run verdict →</a>
+    </div>
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇦🇺</div><div class="ic-score">9.2</div></div>
+      <div class="ic-name">Ben Simmons</div>
+      <div class="ic-detail">PG/SF · Australia · NBA</div>
+      <div class="ic-league">LSU → #1 pick</div>
+      <div class="ic-read">Australian-born, LSU-developed. #1 pick. Physical 9.4 was universally recognized. The Mindset signals in the public record created the widest CI in the model's history — the physical ceiling is real, the rest is documented complexity.</div>
+      <a href="/?player=Ben%20Simmons&sport=mens-basketball" class="ic-cta">Run verdict →</a>
+    </div>
+  </div>
+</div>
+
+<div class="region-panel" id="region-canada">
+  <div class="athletes-grid">
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇨🇦</div><div class="ic-score">9.3</div></div>
+      <div class="ic-name">Shai Gilgeous-Alexander</div>
+      <div class="ic-detail">PG · Canada · Oklahoma City</div>
+      <div class="ic-league">Kentucky → NBA</div>
+      <div class="ic-read">Canadian guard who may be the best player in the NBA right now. Kentucky development validated. Production arc from college to MVP-level is the trajectory model's most compelling active data point. FC had him at 9.3 out of Kentucky.</div>
+      <a href="/?player=Shai%20Gilgeous-Alexander&sport=mens-basketball" class="ic-cta">Run verdict →</a>
+    </div>
+    <div class="intl-card">
+      <div class="ic-top"><div class="ic-flag">🇨🇦</div><div class="ic-score">9.1</div></div>
+      <div class="ic-name">Jamal Murray</div>
+      <div class="ic-detail">PG · Canada · Denver Nuggets</div>
+      <div class="ic-league">Kentucky → NBA</div>
+      <div class="ic-read">Injury recovery arc is the key Mindset data point — Murray came back better post-ACL, a signal the model weights significantly. Canadian pipeline to Kentucky to NBA is a validated pathway. Played alongside Jokić — team context adds to the model.</div>
+      <a href="/?player=Jamal%20Murray&sport=mens-basketball" class="ic-cta">Run verdict →</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">© 2026 ThinkDifferent Holdings · FieldCheck IQ · International Pipeline</div>
+</div>
+<script>
+function showRegion(id, btn) {
+  document.querySelectorAll('.region-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.rtab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('region-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

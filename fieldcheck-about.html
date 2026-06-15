@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About · FieldCheck IQ</title>
+<meta name="description" content="Why FieldCheck exists. What it will never do. Who it's for.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.7;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:760px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.hero{padding:52px 0 36px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:18px}.ey::before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(32px,5vw,58px);line-height:1.04;letter-spacing:-.016em;margin-bottom:20px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.lede{font-size:17px;color:var(--t2);line-height:1.75;margin-bottom:32px;max-width:640px}
+
+.body-section{margin-bottom:36px}
+h2{font-family:'Anton',sans-serif;font-size:clamp(18px,3vw,26px);letter-spacing:-.006em;margin-bottom:14px;color:var(--t)}
+h2 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+p{font-size:15px;color:var(--t2);line-height:1.78;margin-bottom:14px}
+p strong{color:var(--t);font-weight:600}
+
+.six-things{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.six-things li{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;background:var(--bg1);border:1px solid var(--ge2);border-radius:10px;font-size:14px;color:var(--t2);line-height:1.55}
+.six-things li::before{content:"✗";font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:rgba(255,92,58,.8);flex-shrink:0;margin-top:1px}
+
+.moat-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.moat-list li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--t2);line-height:1.55;padding:8px 0;border-bottom:1px solid var(--ge2)}
+.moat-list li:last-child{border-bottom:none}
+.moat-list li::before{content:"→";font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);flex-shrink:0;margin-top:2px}
+
+.holding-co{display:flex;align-items:center;gap:14px;padding:18px 20px;background:var(--bg1);border:1px solid var(--ge);border-radius:12px;margin-bottom:16px}
+.hco-logo{font-family:'Anton',sans-serif;font-size:22px;color:var(--gold);flex-shrink:0}
+.hco-text{font-size:14px;color:var(--t2);line-height:1.6}
+.hco-text strong{color:var(--t)}
+
+.divider{height:1px;background:var(--ge2);margin:32px 0}
+
+.contact-box{padding:20px 22px;background:var(--bg1);border:1px solid var(--ge);border-radius:12px}
+.cb-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.cb-links{display:flex;gap:14px;flex-wrap:wrap}
+.cb-link{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:8px 14px;border-radius:8px;border:1px solid var(--ge);color:var(--t3);text-decoration:none;transition:all .15s}
+.cb-link:hover{border-color:var(--goldl);color:var(--gold)}
+
+.footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer a{color:var(--t4);text-decoration:none}.footer a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:rgba(245,241,232,.45)">About</div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">About FieldCheck</div>
+  <h1>Built for the<br>kid who doesn't<br>get <em>seen.</em></h1>
+  <p class="lede">College recruiting is a market. Markets have information asymmetry. The athletes with the best access to information — coaches, trainers, club networks, private college counselors — win that market. FieldCheck is the other side of that trade.</p>
+</section>
+
+<div class="body-section">
+  <h2>Why this <em>exists.</em></h2>
+  <p>Every year, hundreds of Division I athletes are misread. Undersized players with elite Mindset scores don't get offers because a scout saw one bad practice. First-generation athletes from rural states don't get callbacks because no one in their family knows how to navigate the process. Transfer portal prospects get dismissed because their production numbers look thin on a stat sheet that doesn't account for what system they were running in.</p>
+  <p>FieldCheck runs the public record through a five-layer model that doesn't care about your club pedigree or your AAU circuit. It cares about what the evidence says. The polygon doesn't lie. The shape is either there or it isn't.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="body-section">
+  <h2>Six things FieldCheck<br>will <em>never</em> do.</h2>
+  <p>The recruiting industry runs on conflicts of interest. FieldCheck is designed around what we refuse to build.</p>
+  <ul class="six-things">
+    <li>Charge athletes to see their own verdict</li>
+    <li>Sell placement services, college counseling, or "guaranteed exposure" packages</li>
+    <li>Accept advertising from programs, agencies, or recruiting services that would bias the model</li>
+    <li>Share athlete data with third parties without explicit consent</li>
+    <li>Inflate scores for premium subscribers or partner programs</li>
+    <li>Build a ranking that treats potential as synonymous with pedigree</li>
+  </ul>
+  <p style="font-size:13px;color:var(--t3)">These six constraints are logged in the codebase, the roadmap, and this page. If you ever see FieldCheck violating one of them, that's the moment to stop trusting it.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="body-section">
+  <h2>What makes the<br>model <em>different.</em></h2>
+  <ul class="moat-list">
+    <li>Five-layer scoring across every sport — Physical, Mindset, Production, Defense, Pathway. Not a composite ranking system. A shape.</li>
+    <li>Opportunity-context adjustment — a walk-on from rural Mississippi with equal production to a 5-star California recruit is a different story. The model accounts for it.</li>
+    <li>Longitudinal trajectory — scores accumulate over time. A player trending from 7.5 to 8.8 over two seasons is more interesting than a static 8.5 with no movement.</li>
+    <li>Athlete voice layer — athletes can submit their own context. Not to override the model — to add what the public record can't see.</li>
+    <li>Calibration-first — 36 case anchors, 88% accuracy on verified historical outcomes, 96% accuracy when the model diverges from consensus. The calibration dashboard is public.</li>
+    <li>Honest caveats — every verdict surfaces what the model doesn't know. Thin data is labeled thin data, not dressed up as insight.</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="body-section">
+  <h2>Who built it.</h2>
+  <div class="holding-co">
+    <div class="hco-logo">TDH</div>
+    <div class="hco-text"><strong>ThinkDifferent Holdings</strong> — a solo-founder AI product studio. FieldCheck is one of several tools in the XCheck portfolio built around a single thesis: trust layers where retail loses to information asymmetry. EdgeCheck, FieldCheck, RentCheck, SchoolCheck. Same framework. Different markets.</div>
+  </div>
+  <p>FieldCheck was built by a single founder using AI tools — no traditional development team. The moat isn't the code. The moat is the data layer, the calibration corpus, the scoring philosophy, and the six constraints above. The code is open to examination. The calibration is public. The methodology is documented.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="contact-box">
+  <div class="cb-label">// Get in touch</div>
+  <div class="cb-links">
+    <a href="mailto:hello@fieldcheck.ai" class="cb-link">hello@fieldcheck.ai</a>
+    <a href="/methodology" class="cb-link">Methodology →</a>
+    <a href="/calibration" class="cb-link">Calibration →</a>
+    <a href="/moat" class="cb-link">The six constraints →</a>
+    <a href="/" class="cb-link">Run a verdict →</a>
+  </div>
+</div>
+
+<div class="footer">
+  <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ</span>
+  <span><a href="/methodology">Methodology</a> · <a href="/pricing">Pricing</a> · <a href="/calibration">Calibration</a></span>
+</div>
+</div>
+</body>
+</html>

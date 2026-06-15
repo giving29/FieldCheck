@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Market dossier · FieldCheck LOVB</title>
+<meta name="description" content="A deep single-page dossier for a LOVB Pro market — ownership, founding athletes, 2026 performance, affiliated juniors, coach. Broadcaster-grade.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3892_LOVB_MARKET_DOSSIER">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:0.75}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+.fc-nav{padding:24px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:50;backdrop-filter:blur(6px)}
+.fc-logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:0.06em}
+.fc-logo span{color:var(--gold)}
+.fc-nav-links{display:flex;gap:24px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.fc-nav-links a{color:var(--text-2)}
+.fc-nav-links a.active{color:var(--gold)}
+@media(max-width:720px){.fc-nav{flex-direction:column;gap:14px;align-items:flex-start}.fc-nav-links{gap:14px;flex-wrap:wrap}}
+
+.hero{padding:72px 0 56px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30%;right:-10%;width:60%;height:160%;background:radial-gradient(ellipse,var(--gold-glow) 0%,transparent 60%);opacity:0.07;pointer-events:none}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:14px;position:relative}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.market-name{font-family:'Anton',sans-serif;font-size:clamp(56px,10vw,144px);line-height:0.9;letter-spacing:-0.026em;margin-bottom:18px;position:relative}
+.market-name .city{color:var(--text)}
+.market-name .lovb{color:var(--gold);font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;display:block;font-size:0.6em;line-height:1.1;margin-bottom:8px;letter-spacing:-0.014em}
+.market-tagline{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(20px,2.4vw,28px);line-height:1.4;color:var(--text-2);max-width:840px;position:relative}
+
+.summary-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.summary-cell{padding:24px 24px;border-right:1px solid var(--line)}
+.summary-cell:last-child{border-right:none}
+.summary-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.summary-val{font-family:'Anton',sans-serif;font-size:clamp(22px,2.8vw,32px);color:var(--gold);letter-spacing:-0.014em;line-height:1.05}
+.summary-val .small{font-size:14px;color:var(--text);font-weight:normal;letter-spacing:0.02em;font-family:'JetBrains Mono',monospace;display:block;margin-top:6px}
+.summary-sub{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-2);margin-top:6px;line-height:1.4}
+@media(max-width:640px){.summary-bar{grid-template-columns:repeat(2,1fr)}.summary-cell:nth-child(2n){border-right:none}.summary-cell:nth-child(n+3){border-top:1px solid var(--line)}}
+
+.section{padding:56px 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:none}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.section-num .gold{color:var(--gold)}
+.section-h{font-family:'Anton',sans-serif;font-size:clamp(30px,4.2vw,48px);line-height:1.02;letter-spacing:-0.016em;margin-bottom:18px}
+.section-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.section-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;line-height:1.45;color:var(--text-2);max-width:780px;margin-bottom:28px}
+
+/* OWNERSHIP CARD */
+.ownership{padding:32px 36px;background:linear-gradient(180deg,rgba(255,201,74,0.04),rgba(20,17,12,0.4));border:1px solid var(--gold-edge);border-radius:6px;display:grid;grid-template-columns:1fr 1fr;gap:32px}
+@media(max-width:780px){.ownership{grid-template-columns:1fr;gap:18px}}
+.own-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:8px}
+.own-group{font-family:'Anton',sans-serif;font-size:28px;line-height:1.05;letter-spacing:-0.012em;color:var(--text);margin-bottom:8px}
+.own-detail{font-family:'Crimson Pro',serif;font-size:14.5px;line-height:1.6;color:var(--text-2)}
+.own-detail b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:15px}
+
+/* ROSTER GRID */
+.athletes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.athlete{padding:18px 22px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.athlete-name{font-family:'Anton',sans-serif;font-size:18px;line-height:1.05;letter-spacing:-0.008em;color:var(--text);margin-bottom:4px}
+.athlete-pos{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:6px}
+.athlete-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;padding:2px 6px;border-radius:2px;background:var(--gold-soft);color:var(--gold);border:1px solid var(--gold-edge);display:inline-block;margin-top:4px}
+.athlete-tag.icon{background:rgba(255,201,74,0.18)}
+.athlete-tag.founding{background:rgba(212,74,74,0.14);color:var(--crimson);border-color:rgba(212,74,74,0.4)}
+
+/* CLUBS ROW */
+.clubs-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.club-chip{padding:14px 16px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:4px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--text-2);line-height:1.4;transition:all .2s}
+.club-chip:hover{border-color:var(--gold-edge)}
+.club-chip b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:14.5px;display:block;margin-bottom:3px}
+
+/* COACH BLOCK */
+.coach-block{padding:24px 28px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:6px;display:grid;grid-template-columns:1fr 2fr;gap:24px;align-items:start}
+@media(max-width:780px){.coach-block{grid-template-columns:1fr;gap:12px}}
+.coach-side .coach-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:6px}
+.coach-side .coach-name{font-family:'Anton',sans-serif;font-size:26px;line-height:1.05;letter-spacing:-0.012em;color:var(--text);margin-bottom:4px}
+.coach-side .coach-from{font-family:'Crimson Pro',serif;font-style:italic;font-size:13.5px;color:var(--text-2);line-height:1.4}
+.coach-bio{font-family:'Crimson Pro',serif;font-size:14.5px;line-height:1.6;color:var(--text-2)}
+.coach-bio b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:15px}
+
+/* STAT LEADERS */
+.stat-row{display:grid;grid-template-columns:60px 1fr 100px 100px;gap:18px;padding:14px 18px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:4px;align-items:center;margin-bottom:8px}
+@media(max-width:640px){.stat-row{grid-template-columns:50px 1fr 80px;gap:12px}.stat-row .league-rank-cell{display:none}}
+.stat-rank{font-family:'Anton',sans-serif;font-size:22px;color:var(--gold);letter-spacing:-0.012em;line-height:1}
+.stat-name{font-family:'Anton',sans-serif;font-size:16px;letter-spacing:-0.005em;color:var(--text);line-height:1.1}
+.stat-name-meta{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--text-3);letter-spacing:1.2px;font-weight:700;margin-top:3px;text-transform:uppercase}
+.stat-val{font-family:'Anton',sans-serif;font-size:18px;color:var(--text);letter-spacing:-0.005em;text-align:right;line-height:1}
+.stat-val .small{font-size:10px;color:var(--text-3);font-family:'JetBrains Mono',monospace;letter-spacing:1.2px;text-transform:uppercase;display:block;margin-top:3px}
+.league-rank{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:1.2px;font-weight:700;text-transform:uppercase;text-align:center}
+
+/* NARRATIVE BLOCK */
+.narrative{padding:28px 32px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:5px}
+.narrative-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:12px}
+.narrative-body{font-family:'Crimson Pro',serif;font-size:16px;line-height:1.7;color:var(--text-2)}
+.narrative-body b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:17px}
+.narrative-body em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+
+/* MARKET-SWITCHER ROW */
+.switcher{padding:18px 0;border-bottom:1px solid var(--line);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.switcher-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-right:8px}
+.switcher-chip{padding:7px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--text-3);background:rgba(20,17,12,0.6);border:1px solid var(--line-2);border-radius:3px;text-decoration:none;transition:all .2s}
+.switcher-chip:hover{border-color:var(--gold-edge);color:var(--text);opacity:1}
+.switcher-chip.active{background:var(--gold);color:var(--bg);border-color:var(--gold);box-shadow:0 0 8px var(--gold-glow)}
+
+.footer{padding:56px 0 72px;border-top:1px solid var(--line);background:rgba(20,17,12,0.5)}
+.footer-display{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer p{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.65;color:var(--text-2);max-width:780px;margin-bottom:12px}
+.footer-disclaimer{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-4);margin-top:18px}
+
+.empty-state{padding:80px 24px;text-align:center;color:var(--text-3)}
+.empty-glyph{font-family:'Instrument Serif',serif;font-style:italic;font-size:80px;color:var(--gold-edge);line-height:1;margin-bottom:20px}
+.empty-text{font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;color:var(--text-2);max-width:480px;margin:0 auto}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="fc-nav">
+    <div class="fc-logo">Field<span>Check</span></div>
+    <div class="fc-nav-links">
+      <a href="/">// home</a>
+      <a href="/lovb">// lovb hub</a>
+      <a href="/lovb/markets">// markets</a>
+      <a href="" id="navMarket" class="active">// dossier</a>
+    </div>
+  </nav>
+</div>
+
+<div id="content"></div>
+
+<script src="/fc-lovb-data.js"></script>
+<script>
+// Per-market narrative copy
+const NARRATIVES = {
+  atl: {
+    tagline: 'A founding market built on the deepest junior pipeline in the SEC. 2025 finalist, 2026 in the playoff hunt.',
+    headline_narrative: 'Atlanta is the <b>SEC-region anchor</b>. Affiliated with <a href="/lovb/clubs">A5 Volleyball</a>, one of the country\'s most consistent junior pipelines. Kelsey Cook — Atlanta\'s Founding OPP — won 2025 inaugural Season MVP. The franchise lost the 2025 final to Austin, 3-1, but established itself as a permanent championship-tier program. <em>The question for 2026:</em> can a new ownership group accelerate what the founding-athlete core started?'
+  },
+  atx: {
+    tagline: 'The defending champion. Founding Athletes Eggleston and Lloyd anchor a back-to-back contender.',
+    headline_narrative: 'Austin is the <b>defending LOVB champion</b>. The 2025 inaugural title — Austin 3, Atlanta 1 — established the franchise template: Founding Athletes <b>Logan Eggleston</b> (OH · 2018 Texas) and <b>Carli Lloyd</b> (S · USA national team), with head coach Erin Virtue running a system-first program. Sold to <b>Spurs entities + Bolt + G9</b> in June 2025; Joshua Blitzer, Blake Griffin, and Peter Holt are principals. <em>2026 question:</em> does Austin become the league\'s first dynasty?'
+  },
+  htx: {
+    tagline: '#1 seed in 2026. The McNair-family ownership brings NFL-scale operational expertise to a roster anchored by three Founding Athletes.',
+    headline_narrative: 'Houston is the <b>2026 #1 seed</b>. The roster — <b>Jordan Thompson</b> (OPP · MVP candidate), <b>Micha Hancock</b> (S · USA), <b>Justine Wong-Orantes</b> (L · USA) — represents three Founding Athletes anchoring a championship-tier program. <b>Lone Star Sports & Entertainment</b> (McNair family / Houston Texans ownership) acquired the market in November 2025, layering NFL-grade operations on top of an already elite roster. <em>2026 question:</em> can the Texas market deliver the franchise its first championship?'
+  },
+  mad: {
+    tagline: 'The Big Ten regional flagship. Founding Athletes Carlini and Akinradewo Gunderson anchor a Wisconsin Volleyball Club pipeline.',
+    headline_narrative: 'Madison is the <b>Big Ten regional flagship</b>. Founding Athletes <b>Lauren Carlini</b> (S · USA national team) and <b>Foluke Akinradewo Gunderson</b> (MB · 2x Olympic medalist) anchor the program. Head coach <b>Mike Hebert</b> brings AVCA Hall of Fame NCAA pedigree. Affiliated with <b>Wisconsin Volleyball Club</b>, the upper Midwest\'s deepest junior pipeline. <em>2026 question:</em> does Madison emerge as the consistent Big Ten-rooted championship contender LOVB\'s structure rewards?'
+  },
+  neb: {
+    tagline: 'State of Legends. Jordan Larson — Founding Athlete and co-owner — anchors Nebraska volleyball heritage.',
+    headline_narrative: 'Nebraska is the <b>"State of Legends"</b> market — strategically positioned as the state with the deepest U.S. volleyball heritage. Founding Athlete <b>Jordan Larson</b> (OH · 2x Olympic silver medalist) also holds <em>ownership equity</em> in the market. Rebranded from LOVB Omaha in August 2025 when <b>JE Dunn Construction</b> joined ownership. Head coach <b>Dani Busboom Kelly</b> (AVCA COY 2022) brought NCAA-elite credentials. <em>2026 question:</em> can the Nebraska brand consolidate fan loyalty across the state\'s legendary volleyball culture?'
+  },
+  sl: {
+    tagline: 'The cross-gender tactical experiment. Sullivan brings men\'s-VB pace; three Founding Athletes anchor the roster.',
+    headline_narrative: 'Salt Lake is LOVB\'s <b>cross-gender tactical experiment</b>. Head coach <b>Charlie Sullivan</b> brings Springfield College men\'s-volleyball legend pedigree to the women\'s pro game — a tactical bet on pace and defensive systems. Founding Athletes <b>Haleigh Washington</b> (MB · USA), <b>Lauren Poulter</b> (S), and <b>Megan Kojima</b> (L) anchor a roster with USA-national-team depth at every level. Sold to <b>Synergy Sports Capital</b> in March 2026 — Terrence C. Murphy Sr. and Reggie Bush as principals. <em>2026 question:</em> does the cross-gender tactical bet translate into playoff results?'
+  }
+};
+
+const MARKET_CODES = ['atl','atx','htx','mad','neb','sl'];
+
+function render(){
+  const D = window.LOVB || window.FC_LOVB || window.LOVB_DATA;
+  if(!D){
+    document.getElementById('content').innerHTML = '<div class="wrap"><div class="empty-state"><div class="empty-glyph">◇</div><div class="empty-text">Data layer not loaded yet. Please refresh.</div></div></div>';
+    return;
+  }
+
+  // Read market code from query OR pathname (Netlify rewrites preserve source URL)
+  const params = new URLSearchParams(window.location.search);
+  let code = params.get('m');
+  if(!code){
+    const pathMatch = window.location.pathname.match(/\/markets\/([a-z]+)/i);
+    if(pathMatch) code = pathMatch[1].toLowerCase();
+  }
+  if(!code) code = 'htx';
+  const market = D.markets.find(m => m.code === code);
+  if(!market){
+    document.getElementById('content').innerHTML = '<div class="wrap"><div class="empty-state"><div class="empty-glyph">◇</div><div class="empty-text">Unknown market code. Try ?m=atl, atx, htx, mad, neb, or sl.</div></div></div>';
+    return;
+  }
+
+  const narr = NARRATIVES[code] || { tagline:'', headline_narrative:'' };
+  document.title = `${market.name} · Market Dossier · FieldCheck LOVB`;
+  const navMarket = document.getElementById('navMarket');
+  navMarket.textContent = '// ' + market.name.toLowerCase().replace('lovb ','');
+  navMarket.href = '/lovb/markets/' + code;
+
+  const allAthletes = [];
+  if(D.foundingAthletes) D.foundingAthletes.filter(a => a.team === market.name).forEach(a => allAthletes.push({...a, kind:'founding'}));
+  const icons = D.helpers && D.helpers.getIconsByMarket ? D.helpers.getIconsByMarket(code) : [];
+  icons.forEach(i => {
+    if(!allAthletes.find(a => a.name === i.name)){
+      allAthletes.push({ ...i, kind:'icon' });
+    } else {
+      // mark existing as also icon
+      const ex = allAthletes.find(a => a.name === i.name);
+      ex.alsoIcon = true;
+    }
+  });
+
+  // Stat leaders for this market
+  const teamStatLeaders = (D.statLeaders2026 || []).filter(s => s.team === market.name);
+
+  // Affiliated clubs
+  const affiliates = (market.affiliatedJuniorClubs || []);
+
+  // Ownership info
+  const sold = market.ownership && market.ownership.status === 'Sold';
+
+  // Coach info — embedded narrative copy
+  const COACH_BY_MARKET = {
+    atl: { name:'Tayyiba Haneef-Park', from:'2x Olympic silver medalist · USA Volleyball', bio:'Three-time U.S. Olympian (2004, 2008, 2012). Brings the country\'s deepest active-roster experience to the head-coaching seat. <b>Culture and tactical depth</b> both flow from the international background.' },
+    atx: { name:'Erin Virtue', from:'USA Volleyball / NCAA assistant pedigree', bio:'2025 inaugural champion. <b>System-first program builder.</b> Built around Founding Athletes Carli Lloyd (S) and Logan Eggleston (OH); roster continuity is the strategic anchor heading into 2026.' },
+    htx: { name:'Margie Fitzpatrick', from:'NCAA assistant coaching depth', bio:'2026 #1 seed. <b>Defensive efficiency and roster depth</b> as the strategic identity. Three Founding Athletes in the rotation — Thompson, Hancock, Wong-Orantes — give the staff every position covered.' },
+    mad: { name:'Mike Hebert', from:'AVCA Hall of Fame NCAA head coach', bio:'<b>Decades of NCAA-elite program experience.</b> System-focused, structured-game philosophy. The discipline anchor among the six LOVB Pro head coaches. Roster led by Founding Athletes Carlini and Akinradewo Gunderson.' },
+    neb: { name:'Dani Busboom Kelly', from:'Louisville · AVCA COY 2022', bio:'<b>Former Louisville NCAA head coach.</b> Most decorated coaching hire in LOVB Pro history at signing — first move from NCAA-elite head coach to LOVB Pro level. Roster anchored by Founding Athlete and co-owner Jordan Larson.' },
+    sl: { name:'Charlie Sullivan', from:'Springfield College men\'s VB · D-III legend', bio:'<b>Cross-gender tactical pedigree.</b> Brings men\'s-VB pace and defensive systems to the women\'s pro game. Anchored by Founding Athletes Washington, Poulter, Kojima — USA national team depth across the roster.' }
+  };
+  const coach = COACH_BY_MARKET[code];
+
+  document.getElementById('content').innerHTML = `
+    <div class="wrap">
+      <div class="switcher">
+        <span class="switcher-label">Switch market</span>
+        ${MARKET_CODES.map(c => `<a href="/lovb/markets/${c}" class="switcher-chip ${c===code?'active':''}">${c}</a>`).join('')}
+      </div>
+    </div>
+    <div class="wrap">
+      <section class="hero">
+        <div class="hero-eyebrow">Market Dossier · ${market.code.toUpperCase()} · 2026 Season</div>
+        <h1 class="market-name"><span class="lovb">LOVB</span><span class="city">${market.city||market.name.replace('LOVB ','')}</span></h1>
+        <p class="market-tagline">${narr.tagline}</p>
+      </section>
+    </div>
+
+    <div class="wrap">
+      <div class="summary-bar">
+        <div class="summary-cell">
+          <div class="summary-label">2026 Standing</div>
+          <div class="summary-val">#${market.standing_2026?.rank || '—'}<span class="small">${market.standing_2026?.record || '—'}</span></div>
+        </div>
+        <div class="summary-cell">
+          <div class="summary-label">Founded</div>
+          <div class="summary-val">${market.foundedYear || '2024'}<span class="small">Inaugural 2025</span></div>
+        </div>
+        <div class="summary-cell">
+          <div class="summary-label">Founding Athletes</div>
+          <div class="summary-val">${(market.founderAthletes || []).length}<span class="small">${(market.founderAthletes || []).slice(0,2).join(', ')}${(market.founderAthletes||[]).length>2?'…':''}</span></div>
+        </div>
+        <div class="summary-cell">
+          <div class="summary-label">Junior Affiliates</div>
+          <div class="summary-val">${(market.affiliatedJuniorClubs || []).length}<span class="small">across the network</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <section class="section">
+        <div class="section-num">§ <span class="gold">I</span> · The 2026 narrative</div>
+        <h2 class="section-h">Where the franchise <span class="italic">sits.</span></h2>
+        <div class="narrative">
+          <div class="narrative-eyebrow">// 2026 Season frame · Independent read</div>
+          <div class="narrative-body">${narr.headline_narrative}</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-num">§ <span class="gold">II</span> · Ownership group</div>
+        <h2 class="section-h">Who <span class="italic">owns the market.</span></h2>
+        <div class="ownership">
+          <div>
+            <div class="own-label">// Ownership · ${sold ? 'Outside group · LOVB equity tied' : 'LOVB-owned'}</div>
+            <div class="own-group">${sold ? (market.ownership.group || '').split(' (')[0] : 'League One Volleyball Inc.'}</div>
+            <div class="own-detail">${sold ? `<b>Acquired ${market.ownership.soldDate || ''}.</b> ${market.ownership.principals ? 'Principals: '+market.ownership.principals : ''} ${market.ownership.valuation ? '<br>Valuation: '+market.ownership.valuation : ''}` : 'Direct LOVB ownership; pending future market acquisition. League equity remains tied to all six markets.'}</div>
+          </div>
+          <div>
+            <div class="own-label">// Strategic context</div>
+            <div class="own-detail">${market.ownership_strategic_context || 'The ownership decision shapes operational scale and capital-market access. Each ownership-sale layered onto LOVB Pro brings outside expertise — NFL operations, NBA marketing, sports-finance scaffolding — while preserving league-level equity.'}</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-num">§ <span class="gold">III</span> · Roster spotlights</div>
+        <h2 class="section-h">The <span class="italic">athletes</span> in the rotation.</h2>
+        <p class="section-deck">Founding Athletes (Founder status), 2026 Icons First/Second Team selections, and Pro-level rotation depth visible from publicly published roster data.</p>
+        <div class="athletes-grid">
+          ${allAthletes.length === 0 ? '<div class="athlete"><div class="athlete-name">— No athlete data —</div><div class="athlete-pos">Check data layer</div></div>' : allAthletes.map(a => `
+            <div class="athlete">
+              <div class="athlete-name">${a.name}</div>
+              <div class="athlete-pos">${a.position || a.pos || ''}</div>
+              ${a.kind === 'founding' ? '<span class="athlete-tag founding">FOUNDING ATHLETE</span>' : ''}
+              ${a.kind === 'icon' ? `<span class="athlete-tag icon">2026 ICON${a.unanimous?' · UNANIMOUS':''}</span>` : ''}
+              ${a.alsoIcon ? '<span class="athlete-tag icon">+ ICON</span>' : ''}
+            </div>
+          `).join('')}
+        </div>
+      </section>
+
+      ${teamStatLeaders.length > 0 ? `
+      <section class="section">
+        <div class="section-num">§ <span class="gold">IV</span> · 2026 stat leaders</div>
+        <h2 class="section-h">League-ranked <span class="italic">stat leaders.</span></h2>
+        <p class="section-deck">Athletes from this market currently ranked in the top six in any individual stat category, 2026 season.</p>
+        <div>
+          ${teamStatLeaders.map(s => `
+            <div class="stat-row">
+              <div class="stat-rank">${s.rank || '—'}</div>
+              <div>
+                <div class="stat-name">${s.name}</div>
+                <div class="stat-name-meta">${s.position || s.pos || ''} · ${s.team || ''}</div>
+              </div>
+              <div class="league-rank league-rank-cell">League #${s.rank}</div>
+              <div class="stat-val">${s.pts || s.val || '—'}<span class="small">PTS · Season</span></div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+      ` : ''}
+
+      ${coach ? `
+      <section class="section">
+        <div class="section-num">§ <span class="gold">V</span> · Head coach</div>
+        <h2 class="section-h">Who <span class="italic">runs the program.</span></h2>
+        <div class="coach-block">
+          <div class="coach-side">
+            <div class="coach-label">// Head Coach</div>
+            <div class="coach-name">${coach.name}</div>
+            <div class="coach-from">${coach.from}</div>
+          </div>
+          <div class="coach-bio">${coach.bio}</div>
+        </div>
+      </section>
+      ` : ''}
+
+      ${affiliates.length > 0 ? `
+      <section class="section">
+        <div class="section-num">§ <span class="gold">VI</span> · Affiliated junior clubs</div>
+        <h2 class="section-h">The <span class="italic">development pipeline.</span></h2>
+        <p class="section-deck">LOVB junior clubs directly affiliated with this market. Pipeline depth into the Pro Academies, scholarship channels, alumni outcomes.</p>
+        <div class="clubs-row">
+          ${affiliates.map(c => `
+            <div class="club-chip">
+              <b>${c}</b>
+              <span style="font-style:italic">LOVB ${market.name.replace('LOVB ','')} affiliate</span>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+      ` : ''}
+
+      ${(market.championships || []).length > 0 ? `
+      <section class="section">
+        <div class="section-num">§ <span class="gold">VII</span> · Hardware</div>
+        <h2 class="section-h">Championships <span class="italic">won.</span></h2>
+        <p class="section-deck">${market.championships.map(y => `<b style="color:var(--gold);font-family:Anton,sans-serif">${y} Champion</b>`).join(' · ')}</p>
+      </section>
+      ` : ''}
+    </div>
+
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-display">${market.name} · Market Dossier · Independent · May 2026</div>
+        <p>This dossier auto-renders from <code>fc-lovb-data.js</code>. As ownership, roster, or season data updates, the page reflects it on next data sync (logged at <a href="/lovb/changelog">/lovb/changelog</a>).</p>
+        <p>Compare with other markets: ${MARKET_CODES.filter(c => c !== code).map(c => `<a href="/lovb/markets/${c}">${c.toUpperCase()}</a>`).join(' · ')}</p>
+        <div class="footer-disclaimer">Independent and unaffiliated with LOVB. All data sourced from <a href="https://www.lovb.com">lovb.com</a> and named publications.</div>
+      </div>
+    </footer>
+  `;
+}
+
+document.addEventListener('DOMContentLoaded', render);
+</script>
+</body>
+</html>

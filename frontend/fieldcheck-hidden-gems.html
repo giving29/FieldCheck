@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hidden Gems — FieldCheck IQ</title>
+<meta name="description" content="Athletes the world hasn't noticed yet. The model did.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07060A;--bg1:#100F14;--bg2:#181620;
+  --ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);
+  --t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);
+  --gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);
+  --moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.30);
+  --teal:#4EC9C0;--red:#FF5C3A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;overflow-x:hidden;min-height:100vh}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:90;background:rgba(7,6,10,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1400px;margin:0 auto;padding:0 28px;height:58px;display:flex;align-items:center;gap:14px}
+.brand{text-decoration:none;display:flex;align-items:baseline;margin-right:14px}
+.brand-fc{font-family:'Anton',sans-serif;font-size:clamp(26px,2.2vw,34px);letter-spacing:-.012em;color:var(--t)}
+.brand-fc b{color:var(--gold)}
+.brand-iq{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:5px}
+.nav-back{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);text-decoration:none;padding:8px 14px;border-radius:8px;transition:all .15s}
+.nav-back:hover{color:var(--t);background:rgba(255,255,255,.04)}
+
+/* ── HERO ── */
+.hg-hero{padding:64px 28px 32px;text-align:center;max-width:1100px;margin:0 auto}
+.hg-ey{font-family:'JetBrains Mono',monospace;font-size:clamp(11px,1.2vw,14px);font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:rgba(245,184,0,.85);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:14px}
+.hg-ey::before,.hg-ey::after{content:'';width:36px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.hg-ey::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.hg-h1{font-family:'Anton',sans-serif;font-size:clamp(48px,8.5vw,118px);line-height:.94;letter-spacing:-.024em;color:var(--t);margin-bottom:18px}
+.hg-h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);letter-spacing:-.02em}
+.hg-tag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,2.2vw,26px);color:var(--t2);max-width:780px;margin:0 auto;line-height:1.5}
+.hg-tag em{color:var(--gold);font-style:normal}
+.hg-meta{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);margin-top:24px}
+
+/* ── FILTERS ── */
+.hg-filters{max-width:1400px;margin:32px auto 24px;padding:0 28px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.hf{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;padding:8px 16px;border-radius:9999px;background:rgba(255,255,255,.04);border:1px solid var(--ge);color:var(--t3);cursor:pointer;transition:all .15s;white-space:nowrap}
+.hf:hover{color:var(--t);border-color:var(--goldl)}
+.hf.active{background:rgba(245,184,0,.16);color:var(--gold);border-color:rgba(245,184,0,.4)}
+.hf .count{margin-left:6px;font-size:10px;opacity:.65}
+
+/* ── GEMS GRID ── */
+.gems{max-width:1400px;margin:0 auto;padding:0 28px 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:24px}
+
+.gem{background:linear-gradient(180deg,rgba(16,15,20,.92),rgba(7,6,10,.96));border:1px solid var(--ge);border-radius:18px;overflow:hidden;transition:transform .2s ease, border-color .2s ease;display:flex;flex-direction:column}
+.gem:hover{transform:translateY(-3px);border-color:var(--goldl)}
+
+/* Embedded YouTube video */
+.gem-video{position:relative;width:100%;aspect-ratio:16/9;background:#000;overflow:hidden}
+.gem-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.gem-poster{position:absolute;inset:0;background-size:cover;background-position:center;cursor:pointer;display:flex;align-items:center;justify-content:center;background-color:#0A0810}
+.gem-poster::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,6,10,.05) 0%,rgba(7,6,10,.55) 100%);pointer-events:none}
+.gem-play{position:relative;z-index:1;width:64px;height:64px;border-radius:50%;background:rgba(245,184,0,.92);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#07060A;font-size:24px;transition:all .15s}
+.gem-play:hover{transform:scale(1.08);background:var(--gold)}
+.gem-play::before{content:'▶';margin-left:4px}
+
+/* Composite badge */
+.gem-score-badge{position:absolute;top:12px;right:12px;background:rgba(7,6,10,.86);backdrop-filter:blur(10px);border:1px solid rgba(245,184,0,.4);border-radius:12px;padding:8px 14px;z-index:2}
+.gsb-score{font-family:'Anton',sans-serif;font-size:24px;line-height:.9;color:var(--gold);letter-spacing:-.01em}
+.gsb-tier{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(245,184,0,.78);margin-top:3px}
+
+/* Card body */
+.gem-body{padding:20px 22px 22px;flex:1;display:flex;flex-direction:column}
+.gem-sport-pill{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 10px;border-radius:9999px;background:var(--mossl);color:var(--moss);border:1px solid var(--mossd);align-self:flex-start;margin-bottom:12px}
+.gem-name{font-family:'Anton',sans-serif;font-size:clamp(26px,2.6vw,32px);letter-spacing:-.012em;line-height:1.02;margin-bottom:6px;color:var(--t)}
+.gem-ctx{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:rgba(245,184,0,.72);margin-bottom:14px}
+.gem-meta-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t4);letter-spacing:.6px}
+.gem-meta-row span{padding:3px 9px;border-radius:9999px;background:rgba(255,255,255,.03);border:1px solid var(--ge2)}
+.gem-foot{margin-top:auto;display:flex;align-items:center;gap:10px;padding-top:14px;border-top:1px solid var(--ge2)}
+.gem-verdict-link{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:var(--gold);text-decoration:none;flex:1;padding:8px 0;transition:opacity .15s}
+.gem-verdict-link:hover{opacity:.82}
+.gem-discovered{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);letter-spacing:.7px}
+
+/* ── EMPTY + LOADING STATES ── */
+.hg-state{max-width:780px;margin:40px auto;padding:48px 28px;text-align:center}
+.hg-state-icon{font-size:64px;margin-bottom:24px;opacity:.4}
+.hg-state-h{font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,44px);letter-spacing:-.016em;color:var(--t);margin-bottom:14px}
+.hg-state-p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--t2);line-height:1.55;margin-bottom:24px}
+.hg-state-meta{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4)}
+
+.skel{background:linear-gradient(180deg,rgba(16,15,20,.92),rgba(7,6,10,.96));border:1px solid var(--ge);border-radius:18px;overflow:hidden;height:520px}
+.skel-video{height:56.25%;background:linear-gradient(90deg,rgba(255,255,255,.02) 0%,rgba(255,255,255,.05) 50%,rgba(255,255,255,.02) 100%);background-size:200% 100%;animation:shimmer 1.8s infinite}
+.skel-body{padding:20px 22px}
+.skel-line{height:14px;background:linear-gradient(90deg,rgba(255,255,255,.02),rgba(255,255,255,.06),rgba(255,255,255,.02));background-size:200% 100%;border-radius:6px;margin-bottom:10px;animation:shimmer 1.8s infinite}
+.skel-line.lg{height:24px;width:65%}
+.skel-line.md{width:80%}
+.skel-line.sm{width:50%;height:10px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+footer{max-width:1400px;margin:80px auto 60px;padding:48px 28px;border-top:1px solid var(--ge);text-align:center}
+.foot-h{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--t2);margin-bottom:14px}
+.foot-h em{color:var(--gold)}
+.foot-p{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--t4)}
+
+@media (max-width:768px){
+  .gems{grid-template-columns:1fr;gap:18px}
+  .hg-hero{padding:40px 24px 24px}
+  .hg-h1{font-size:clamp(40px,11vw,72px)}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-i">
+    <a class="brand" href="/"><span class="brand-fc"><b>F</b>ieldCheck</span><span class="brand-iq">IQ</span></a>
+    <a class="nav-back" href="/">← Home</a>
+  </div>
+</nav>
+
+<section class="hg-hero">
+  <div class="hg-ey">// Discover · Athletes you haven't heard of yet</div>
+  <h1 class="hg-h1">Hidden <em>Gems.</em></h1>
+  <p class="hg-tag">Athletes the world hasn't noticed yet.<br>The model <em>did.</em></p>
+  <div class="hg-meta">Crawled every 6 hours · classified by FieldCheck IQ · published when the model scores ELITE+</div>
+</section>
+
+<div class="hg-filters" id="hgFilters">
+  <button class="hf active" data-sport="all">All Sports <span class="count" id="cnt-all">0</span></button>
+  <button class="hf" data-sport="basketball">Basketball <span class="count" id="cnt-basketball">0</span></button>
+  <button class="hf" data-sport="football">Football <span class="count" id="cnt-football">0</span></button>
+  <button class="hf" data-sport="baseball">Baseball <span class="count" id="cnt-baseball">0</span></button>
+  <button class="hf" data-sport="volleyball">Volleyball <span class="count" id="cnt-volleyball">0</span></button>
+  <button class="hf" data-sport="soccer">Soccer <span class="count" id="cnt-soccer">0</span></button>
+  <button class="hf" data-sport="track">Track <span class="count" id="cnt-track">0</span></button>
+  <button class="hf" data-sport="other">Other <span class="count" id="cnt-other">0</span></button>
+</div>
+
+<div class="gems" id="gemsGrid">
+  <div class="skel"><div class="skel-video"></div><div class="skel-body"><div class="skel-line sm"></div><div class="skel-line lg"></div><div class="skel-line md"></div><div class="skel-line"></div></div></div>
+  <div class="skel"><div class="skel-video"></div><div class="skel-body"><div class="skel-line sm"></div><div class="skel-line lg"></div><div class="skel-line md"></div><div class="skel-line"></div></div></div>
+  <div class="skel"><div class="skel-video"></div><div class="skel-body"><div class="skel-line sm"></div><div class="skel-line lg"></div><div class="skel-line md"></div><div class="skel-line"></div></div></div>
+</div>
+
+<footer>
+  <div class="foot-h">Every overlooked kid in every small town <em>deserves better.</em></div>
+  <div class="foot-p">FieldCheck IQ · See the player. Before the world does. · Free forever · No payola</div>
+</footer>
+
+<script>
+// ── Configuration — UPDATE THIS AFTER DEPLOYING THE DISCOVERY WORKER ──
+const DISCOVERY_WORKER_URL = 'https://fieldcheck-discovery-worker.sridhar-nallani.workers.dev';
+
+const GRID = document.getElementById('gemsGrid');
+const FILTERS = document.getElementById('hgFilters');
+let ALL_GEMS = [];
+let CURRENT_SPORT = 'all';
+
+async function loadGems(){
+  try {
+    const r = await fetch(`${DISCOVERY_WORKER_URL}/__published`);
+    if(!r.ok) throw new Error(`HTTP ${r.status}`);
+    const data = await r.json();
+    ALL_GEMS = data.items || [];
+    updateCounts();
+    renderGems();
+  } catch(err) {
+    showEmptyState('⚠️', 'Discovery service offline', 
+      `Could not reach ${DISCOVERY_WORKER_URL}. Make sure the worker is deployed and the URL is correct in this page's script.`);
+  }
+}
+
+function updateCounts(){
+  const counts = { all: ALL_GEMS.length };
+  for(const g of ALL_GEMS){
+    const s = g.classified?.sport || 'other';
+    counts[s] = (counts[s] || 0) + 1;
+  }
+  document.querySelectorAll('.hf').forEach(btn => {
+    const sport = btn.dataset.sport;
+    const el = btn.querySelector('.count');
+    if(el) el.textContent = counts[sport] || 0;
+  });
+}
+
+function renderGems(){
+  const filtered = CURRENT_SPORT === 'all' 
+    ? ALL_GEMS 
+    : ALL_GEMS.filter(g => (g.classified?.sport || 'other') === CURRENT_SPORT);
+  
+  if(filtered.length === 0){
+    if(ALL_GEMS.length === 0){
+      showEmptyState('🎯', 'Hunting for gems…',
+        'The crawler runs every 6 hours. Published discoveries appear here after you approve them in Slack.');
+    } else {
+      showEmptyState('🔍', `No ${CURRENT_SPORT} gems yet`,
+        `Try a different sport, or check back as the crawler discovers more.`);
+    }
+    return;
+  }
+  
+  GRID.innerHTML = filtered.map(renderGemCard).join('');
+}
+
+function renderGemCard(g){
+  const c = g.classified || {};
+  const s = g.scored || {};
+  const composite = (s.composite || 0).toFixed(1);
+  const tier = s.tier || 'ELITE+';
+  const sport = c.sport || 'unknown';
+  const athleteName = c.athleteName || 'Unknown athlete';
+  const position = c.position || '';
+  const school = c.schoolGuess || '';
+  const discoveredDate = g.discoveredAt ? new Date(g.discoveredAt).toLocaleDateString('en-US', {month:'short', day:'numeric'}) : '';
+  const videoId = g.videoId;
+  const thumbnailUrl = g.thumbnailUrl || `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+  const ctxParts = [position, school].filter(Boolean).join(' · ');
+  const verdictUrl = `/fieldcheck-verdict.html?name=${encodeURIComponent(athleteName)}&sport=${encodeURIComponent(sport)}&from=hidden-gems`;
+  const views = g.viewCount?.toLocaleString() || '?';
+  
+  return `
+    <div class="gem" data-video-id="${videoId}">
+      <div class="gem-video">
+        <div class="gem-poster" style="background-image:url('${thumbnailUrl}')" onclick="playVideo('${videoId}', this)">
+          <button class="gem-play" aria-label="Play"></button>
+        </div>
+        <div class="gem-score-badge">
+          <div class="gsb-score">${composite}</div>
+          <div class="gsb-tier">${tier}</div>
+        </div>
+      </div>
+      <div class="gem-body">
+        <div class="gem-sport-pill">${sport}</div>
+        <div class="gem-name">${escapeHtml(athleteName)}</div>
+        ${ctxParts ? `<div class="gem-ctx">${escapeHtml(ctxParts)}</div>` : ''}
+        <div class="gem-meta-row">
+          <span>${views} views</span>
+          ${c.ageGuess ? `<span>Age ~${c.ageGuess}</span>` : ''}
+          ${c.confidence ? `<span>Conf ${(c.confidence*100).toFixed(0)}%</span>` : ''}
+        </div>
+        <div class="gem-foot">
+          <a href="${verdictUrl}" class="gem-verdict-link">See FieldCheck verdict →</a>
+          <span class="gem-discovered">${discoveredDate}</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+window.playVideo = function(videoId, posterEl){
+  const wrap = posterEl.closest('.gem-video');
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0`;
+  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+  iframe.allowFullscreen = true;
+  posterEl.remove();
+  wrap.appendChild(iframe);
+};
+
+function showEmptyState(icon, h, p){
+  GRID.innerHTML = `
+    <div class="hg-state" style="grid-column:1/-1">
+      <div class="hg-state-icon">${icon}</div>
+      <div class="hg-state-h">${h}</div>
+      <div class="hg-state-p">${p}</div>
+      <div class="hg-state-meta">Crawler runs every 6 hours · Slack approval required to publish</div>
+    </div>
+  `;
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+FILTERS.addEventListener('click', e => {
+  const btn = e.target.closest('.hf');
+  if(!btn) return;
+  document.querySelectorAll('.hf').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  CURRENT_SPORT = btn.dataset.sport;
+  renderGems();
+});
+
+loadGems();
+</script>
+
+</body>
+</html>

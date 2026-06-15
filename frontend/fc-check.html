@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Look up · FieldCheck</title>
+<meta name="description" content="Search FieldCheck. Find a player, a team, a market, a tool.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--ink:#f5f1e8;--mute:#8a847a;--dim:#4a443c;--gold:#ffc94a;--teal:#b5e2c2;--line:rgba(245,241,232,.10);--line-strong:rgba(245,241,232,.22);--card:rgba(245,241,232,.03);--card-hover:rgba(245,241,232,.06);--display:'Anton',sans-serif;--serif:'Instrument Serif',serif;--body:'Crimson Pro',Georgia,serif;--mono:'JetBrains Mono',monospace;--maxw:1240px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none;transition:all .2s}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.nav{position:sticky;top:0;z-index:100;background:rgba(10,9,8,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 32px;display:flex;align-items:center;height:60px}
+.nav-brand{font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);font-weight:500;margin-right:auto}
+.nav-brand b{color:var(--gold);font-weight:500}
+.nav-cta{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--line);color:var(--mute);border-radius:2px}
+.nav-cta:hover{border-color:var(--ink);color:var(--ink)}
+
+.shell{min-height:calc(100vh - 60px);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:80px 32px 60px;max-width:760px;margin:0 auto;text-align:center}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:28px}
+h1{font-family:var(--display);font-size:clamp(48px,8vw,96px);line-height:.88;letter-spacing:-.02em;text-transform:uppercase;margin-bottom:24px}
+h1 em{font-family:var(--serif);font-style:italic;text-transform:none;color:var(--teal);font-weight:400}
+.lead{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--mute);margin-bottom:48px;line-height:1.4}
+
+.search-frame{width:100%;max-width:600px;margin-bottom:64px}
+.search-frame input{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line-strong);font-family:var(--display);font-size:clamp(28px,4vw,40px);line-height:1.1;color:var(--ink);padding:18px 0;outline:none;text-transform:uppercase;text-align:center;letter-spacing:-.01em}
+.search-frame input::placeholder{color:var(--dim)}
+.search-frame input:focus{border-bottom-color:var(--gold)}
+.search-hint{margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+
+.suggestions{width:100%;max-width:680px;text-align:left}
+.suggestions h5{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.sugg-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:680px){.sugg-grid{grid-template-columns:1fr}}
+.sugg{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px 20px;display:flex;flex-direction:column;text-decoration:none}
+.sugg:hover{border-color:var(--gold)}
+.sugg strong{font-family:var(--body);font-size:15px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.sugg span{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--mute);line-height:1.3}
+
+footer{padding:30px 32px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+footer a{color:var(--mute)}
+footer a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">Field<b>Check</b></a>
+    <a href="/" class="nav-cta">← Home</a>
+  </div>
+</nav>
+
+<div class="shell">
+  <div class="eyebrow">Look someone up</div>
+  <h1>Search <em>FieldCheck.</em></h1>
+  <p class="lead" id="lead">Type a player, program, market, or tool. We'll route you to the deepest answer.</p>
+
+  <div class="search-frame">
+    <input type="text" id="q" placeholder="e.g. Tori Dilfer · Madison · Pro Fit Score" autocomplete="off" autofocus>
+    <div class="search-hint">Press Enter to run · Esc to cancel</div>
+  </div>
+
+  <div class="suggestions">
+    <h5>Quick paths</h5>
+    <div class="sugg-grid">
+      <a href="/lovb/projection" class="sugg"><strong>Pro Fit Score</strong><span>Project any player into LOVB Pro</span></a>
+      <a href="/lovb/match" class="sugg"><strong>FA Match</strong><span>Find the Founding Athlete comp</span></a>
+      <a href="/lovb/fit" class="sugg"><strong>Market Fit</strong><span>Score all six LOVB markets</span></a>
+      <a href="/lovb/roster" class="sugg"><strong>Roster Analyzer</strong><span>Grade any LOVB team</span></a>
+      <a href="/lovb" class="sugg"><strong>LOVB Hub</strong><span>All tools + this week's state</span></a>
+      <a href="/lovb/archive" class="sugg"><strong>Archive</strong><span>40+ reference surfaces</span></a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="/">Back to FieldCheck</a> · Independent · Cited
+</footer>
+
+<script>
+// Read q param from URL if arriving from homepage search modal
+const params = new URLSearchParams(window.location.search);
+const q = params.get('q');
+const input = document.getElementById('q');
+const lead = document.getElementById('lead');
+if(q){
+  input.value = q;
+  lead.innerHTML = `Searching for <em style="color:var(--gold);font-family:var(--serif)">"${q}"</em> — full search engine coming next iteration. Pick a tool below to continue.`;
+}
+
+input.addEventListener('keydown', e => {
+  if(e.key === 'Enter' && input.value.trim()){
+    // Until search backend is wired, route LOVB-relevant queries to projection tool
+    const v = input.value.trim();
+    window.location.href = '/lovb/projection?prospect=' + encodeURIComponent(v);
+  }
+  if(e.key === 'Escape'){ window.location.href = '/'; }
+});
+</script>
+
+</body>
+</html>

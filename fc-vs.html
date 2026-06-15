@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FieldCheck IQ vs. the rankings · Independent athlete intelligence</title>
+  <meta name="description" content="247Sports tells you a star rating. FieldCheck IQ tells you the reasoning, the citations, the confidence interval, and the comparable. The difference, side by side.">
+  <meta property="og:title" content="FieldCheck IQ vs. the rankings">
+  <meta property="og:description" content="Rankings are an opinion you have to trust. FieldCheck IQ is a verdict you can audit.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #0d0d0d; --bg-2: #161616; --bg-3: #1d1d1d;
+  --text: #ededed; --text-2: #b8b8b8; --text-3: #888; --text-4: #555;
+  --gold: #d4af37; --gold-2: #f5b800;
+  --border: rgba(255,255,255,0.08); --glass: rgba(255,255,255,0.03); --glass-edge: rgba(255,255,255,0.1);
+  --rust: #c45132; --sage: #6a9c89; --moss: #95d5b2;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+.nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.nav-primary:hover { color: #ffc94a; }
+.nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.nav-more-wrap { position: relative; display: inline-block; }
+.nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-wrap { display: none; }
+.nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.nav-more-chev { transform: rotate(180deg); }
+.nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.nav-more-group { padding: 6px 4px; }
+.nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+.fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+.fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+.fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+.fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.fc-canonical-nav .nav-more-wrap { display: none; }
+
+
+/* ───  vs page styles ─── */
+.vs-hero {
+  padding: 90px 32px 40px;
+  max-width: 980px;
+  margin: 0 auto;
+  text-align: center;
+}
+.vs-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+.vs-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(46px, 7vw, 84px);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  margin-bottom: 22px;
+  color: var(--text);
+}
+.vs-title .vs-vs {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 400;
+}
+.vs-sub {
+  font-size: 19px;
+  color: var(--text-2);
+  max-width: 720px;
+  margin: 0 auto 16px;
+  line-height: 1.55;
+}
+.vs-sub-italic {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--gold);
+  font-size: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.vs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  padding: 36px 32px 24px;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+.vs-col {
+  padding: 36px 32px;
+  border-radius: 16px;
+  position: relative;
+}
+.vs-col-them {
+  background: linear-gradient(135deg, rgba(196, 81, 50, 0.04), rgba(20, 17, 12, 0.4));
+  border: 1px solid rgba(196, 81, 50, 0.22);
+}
+.vs-col-us {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.06), rgba(20, 17, 12, 0.4));
+  border: 1px solid rgba(212, 175, 55, 0.35);
+}
+.vs-col-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.vs-col-them .vs-col-label { color: var(--rust); }
+.vs-col-us .vs-col-label { color: var(--gold); }
+
+.vs-col-output {
+  font-family: 'Anton', sans-serif;
+  font-size: 34px;
+  line-height: 1.1;
+  margin-bottom: 22px;
+  letter-spacing: -0.005em;
+}
+.vs-col-them .vs-col-output { color: var(--text-2); }
+.vs-col-us .vs-col-output { color: var(--text); }
+.vs-col-us .vs-col-output strong { color: var(--gold); font-weight: 400; }
+
+.vs-col-points {
+  list-style: none;
+  padding: 0;
+}
+.vs-col-points li {
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--text-2);
+  padding-left: 22px;
+  position: relative;
+}
+.vs-col-points li::before {
+  position: absolute;
+  left: 0;
+  top: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+}
+.vs-col-them .vs-col-points li::before { content: "✕"; color: var(--rust); }
+.vs-col-us .vs-col-points li::before { content: "✓"; color: var(--gold); }
+
+.vs-summary {
+  padding: 44px 32px;
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+}
+.vs-summary-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+.vs-summary-body {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.4;
+  color: var(--text);
+  max-width: 760px;
+  margin: 0 auto;
+}
+.vs-summary-body strong {
+  font-style: normal;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.vs-cta {
+  text-align: center;
+  padding: 16px 32px 80px;
+}
+.vs-cta-btn {
+  display: inline-block;
+  padding: 16px 32px;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 1.8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+.vs-cta-btn:hover { transform: translateY(-1px); }
+
+.vs-coda {
+  padding: 32px;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--text-3);
+  font-size: 13px;
+  line-height: 1.6;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 720px) {
+  .vs-grid { grid-template-columns: 1fr; gap: 14px; padding: 24px 18px; }
+  .vs-col { padding: 24px 22px; }
+  .vs-hero { padding: 64px 22px 24px; }
+}
+  </style>
+</head>
+<body>
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="vs-hero">
+  <div class="vs-eyebrow">// FIELDCHECK IQ</div>
+  <h1 class="vs-title">FieldCheck IQ <span class="vs-vs">vs.</span> the rankings.</h1>
+  <p class="vs-sub">Same player. Two reads. One you can actually act on.</p>
+  <p class="vs-sub-italic">Take a verbatim example. The rankings give you an opinion. FieldCheck IQ gives you the reasoning behind the verdict.</p>
+</section>
+
+<section class="vs-grid">
+  <div class="vs-col vs-col-them">
+    <div class="vs-col-label">// 247SPORTS TELLS YOU</div>
+    <div class="vs-col-output">"4-star"</div>
+    <ul class="vs-col-points">
+      <li>One number. One star rating.</li>
+      <li>Methodology behind it: proprietary, undisclosed.</li>
+      <li>Comparable player: not shown.</li>
+      <li>How to improve: not addressed.</li>
+      <li>Confidence interval: none.</li>
+      <li>Audit trail: not available.</li>
+    </ul>
+  </div>
+  <div class="vs-col vs-col-us">
+    <div class="vs-col-label">// FIELDCHECK IQ TELLS YOU</div>
+    <div class="vs-col-output">IQ Score <strong>84 ± 6</strong></div>
+    <ul class="vs-col-points">
+      <li>12 cited inputs. Every claim sourced to public record.</li>
+      <li>Comparable founding athlete: Andrea Drews · ATL (87% match).</li>
+      <li>Reasoning trace: visible. Methodology open.</li>
+      <li>Three things that would move the score: shown.</li>
+      <li>Confidence interval: ±6. Math published.</li>
+      <li>Audit trail: SHA-256 signed JSON. Reproducible.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="vs-summary">
+  <div class="vs-summary-eyebrow">// THE DIFFERENCE</div>
+  <div class="vs-summary-body">
+    Rankings are an opinion you have to trust.<br>
+    <strong>FieldCheck IQ is a verdict you can audit.</strong>
+  </div>
+</section>
+
+<section class="vs-cta">
+  <a href="/#player" class="vs-cta-btn">Run an IQ verdict →</a>
+</section>
+
+<div class="vs-coda">
+  FieldCheck · ThinkDifferent Holdings · © 2026 · Built on the TD Trust Engine · v0.30.5.2259 · FCBase14_V001
+</div>
+
+<script>
+function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+</body>
+</html>

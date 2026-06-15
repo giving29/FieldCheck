@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recruiting Class Analyzer · FieldCheck IQ</title>
+<meta name="description" content="Score an entire recruiting class. Drop the roster, get a composite read on the class strength and where each player lands.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);--red:#FF5C3A;}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:900px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.hero{padding:48px 0 32px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(26px,4.5vw,52px);line-height:1.04;letter-spacing:-.014em;margin-bottom:12px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--t2);line-height:1.7;max-width:620px;margin-bottom:24px}
+
+.setup-card{background:var(--bg1);border:1px solid var(--ge);border-radius:14px;padding:24px 26px;margin-bottom:20px}
+.sc-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.sc-row{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.sc-row input,.sc-row select{flex:1;min-width:160px;padding:10px 14px;background:var(--bg2);border:1px solid var(--ge);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--t);outline:none}
+.sc-row input:focus,.sc-row select:focus{border-color:var(--goldl)}
+.sc-row select option{background:var(--bg2)}
+
+.player-inputs{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.player-row{display:flex;gap:8px;align-items:center}
+.player-row input{flex:1;padding:9px 12px;background:var(--bg2);border:1px solid var(--ge);border-radius:7px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t);outline:none}
+.player-row input:focus{border-color:var(--goldl)}
+.player-row-num{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);width:20px;text-align:right;flex-shrink:0}
+.add-player-btn{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:8px 14px;border-radius:7px;border:1px solid var(--ge);color:var(--t3);background:transparent;cursor:pointer;transition:all .15s}
+.add-player-btn:hover{border-color:var(--goldl);color:var(--gold)}
+
+.analyze-btn{width:100%;padding:13px;background:var(--gold);color:#09080A;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;border:none;border-radius:10px;cursor:pointer;transition:opacity .15s}
+.analyze-btn:hover{opacity:.88}.analyze-btn:disabled{opacity:.5;cursor:not-allowed}
+
+.progress-bar{height:3px;background:var(--ge2);border-radius:9999px;margin:12px 0;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:9999px;transition:width .3s;width:0}
+.progress-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);margin-bottom:8px}
+
+.class-summary{background:linear-gradient(135deg,rgba(245,184,0,.08),rgba(16,15,18,.8));border:1px solid var(--goldl);border-radius:14px;padding:22px 24px;margin-bottom:20px}
+.cs-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.cs-prog{font-family:'Anton',sans-serif;font-size:24px;letter-spacing:-.007em}
+.cs-year{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);margin-top:3px}
+.cs-grade{text-align:right}
+.cs-grade-val{font-family:'Anton',sans-serif;font-size:40px;color:var(--gold);line-height:1}
+.cs-grade-label{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t4);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.cs-grade-tier{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 9px;border-radius:9999px;margin-top:5px;display:inline-block}
+.cs-grade-tier.elite{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.cs-grade-tier.icon{background:var(--golds);color:var(--gold);border:1px solid var(--goldl)}
+
+.class-roster{display:flex;flex-direction:column;gap:6px}
+.cr-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg1);border:1px solid var(--ge2);border-radius:8px}
+.cr-rank{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);width:22px;text-align:right;flex-shrink:0}
+.cr-name{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:-.003em;flex:1}
+.cr-score{font-family:'Anton',sans-serif;font-size:18px}
+.cr-tier{font-family:'JetBrains Mono',monospace;font-size:7.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;padding:2px 7px;border-radius:9999px}
+.cr-tier.icon{background:var(--golds);color:var(--gold);border:1px solid var(--goldl)}
+.cr-tier.elite{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.cr-tier.high{background:var(--ge2);color:var(--t2);border:1px solid var(--ge)}
+.cr-tier.verify{background:rgba(255,92,58,.1);color:var(--red);border:1px solid rgba(255,92,58,.25)}
+.cr-run-link{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--t4);text-decoration:none;transition:color .15s}
+.cr-run-link:hover{color:var(--gold)}
+
+.footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer a{color:var(--t4);text-decoration:none}.footer a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:rgba(245,241,232,.45)">Recruiting Class</div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Recruiting Class Analyzer</div>
+  <h1>Score the whole<br><em>class.</em></h1>
+  <p class="hero-sub">Drop in a recruiting class roster. FieldCheck runs a full verdict on every player and gives you the class composite, tier breakdown, and who the model thinks is underrated or overrated relative to their ranking.</p>
+</section>
+
+<div class="setup-card">
+  <div class="sc-label">// Class setup</div>
+  <div class="sc-row">
+    <input id="classProgram" placeholder="Program (e.g. Nebraska)">
+    <select id="classSport">
+      <option value="womens-volleyball">Women's Volleyball</option>
+      <option value="mens-basketball">Men's Basketball</option>
+      <option value="womens-basketball">Women's Basketball</option>
+      <option value="football">Football</option>
+      <option value="baseball">Baseball</option>
+      <option value="tennis">Tennis</option>
+      <option value="mens-soccer">Men's Soccer</option>
+    </select>
+    <input id="classYear" placeholder="Year (e.g. 2026)" type="number" value="2026">
+  </div>
+
+  <div class="sc-label" style="margin-top:8px">// Players (enter names, one per row)</div>
+  <div class="player-inputs" id="playerInputs">
+    <div class="player-row"><div class="player-row-num">1</div><input placeholder="Player 1 name"></div>
+    <div class="player-row"><div class="player-row-num">2</div><input placeholder="Player 2 name"></div>
+    <div class="player-row"><div class="player-row-num">3</div><input placeholder="Player 3 name"></div>
+    <div class="player-row"><div class="player-row-num">4</div><input placeholder="Player 4 name"></div>
+    <div class="player-row"><div class="player-row-num">5</div><input placeholder="Player 5 name"></div>
+  </div>
+  <button class="add-player-btn" onclick="addPlayerRow()">+ Add player</button>
+</div>
+
+<button class="analyze-btn" id="analyzeBtn" onclick="analyzeClass()">Analyze recruiting class →</button>
+
+<div style="margin:14px 0;display:none" id="progressWrap">
+  <div class="progress-label" id="progressLabel">Running verdicts…</div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<div id="classResult" style="margin-top:20px"></div>
+
+<div class="footer">
+  <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ · Recruiting Class Analyzer</span>
+  <span><a href="/coaches">Coach encyclopedia →</a> · <a href="/portal">Portal intelligence →</a></span>
+</div>
+</div>
+
+<script>
+const W = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+
+function addPlayerRow() {
+  const inputs = document.getElementById('playerInputs');
+  const n = inputs.children.length + 1;
+  const div = document.createElement('div');
+  div.className = 'player-row';
+  div.innerHTML = `<div class="player-row-num">${n}</div><input placeholder="Player ${n} name">`;
+  inputs.appendChild(div);
+  div.querySelector('input').focus();
+}
+
+function lc(v){return v>=9?'#F5B800':v>=8?'#6BAA5A':v>=7?'#A89F8C':'#FF5C3A'}
+function tierOf(v){return v>=9?'icon':v>=8?'elite':v>=7?'high':'verify'}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+async function runVerdictForPlayer(name, sport, program) {
+  const r = await fetch(W + '/verdict/player', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, sport, schoolHint: program || '' })
+  });
+  const d = await r.json();
+  const og = d.encyclopedia?.eval_grid?.overall_grade || {};
+  return { name, composite: og.composite, verdict: d.verdict, error: d.error };
+}
+
+async function analyzeClass() {
+  const program = document.getElementById('classProgram').value.trim();
+  const sport = document.getElementById('classSport').value;
+  const year = document.getElementById('classYear').value || '2026';
+  const rows = document.querySelectorAll('#playerInputs .player-row input');
+  const players = Array.from(rows).map(i => i.value.trim()).filter(Boolean);
+
+  if (!program || players.length === 0) {
+    alert('Enter a program name and at least one player.');
+    return;
+  }
+
+  const btn = document.getElementById('analyzeBtn');
+  const progressWrap = document.getElementById('progressWrap');
+  const progressFill = document.getElementById('progressFill');
+  const progressLabel = document.getElementById('progressLabel');
+  const result = document.getElementById('classResult');
+
+  btn.disabled = true; btn.textContent = 'Analyzing…';
+  progressWrap.style.display = 'block';
+  result.innerHTML = '';
+
+  const results = [];
+  for (let i = 0; i < players.length; i++) {
+    progressLabel.textContent = `Scoring ${players[i]}… (${i+1}/${players.length})`;
+    progressFill.style.width = `${((i+1)/players.length)*100}%`;
+    try {
+      const r = await runVerdictForPlayer(players[i], sport, program);
+      results.push(r);
+    } catch(e) {
+      results.push({ name: players[i], composite: null, error: String(e) });
+    }
+  }
+
+  progressWrap.style.display = 'none';
+  btn.disabled = false; btn.textContent = 'Analyze recruiting class →';
+
+  // Sort by composite
+  const scored = results.filter(r => r.composite != null).sort((a,b) => (b.composite||0) - (a.composite||0));
+  const unscored = results.filter(r => r.composite == null);
+
+  const avg = scored.length ? scored.reduce((s,r) => s + (r.composite||0), 0) / scored.length : 0;
+  const avgFmt = avg ? avg.toFixed(1) : '—';
+  const classTier = avg >= 9 ? 'ICON class' : avg >= 8.5 ? 'ELITE+ class' : avg >= 8 ? 'ELITE class' : avg >= 7 ? 'HIGH class' : 'Building';
+  const tierCls = avg >= 8.5 ? 'icon' : 'elite';
+
+  const rosterHtml = scored.map((r, i) => {
+    const col = lc(r.composite);
+    const tier = tierOf(r.composite);
+    const runUrl = `/?run=${encodeURIComponent(JSON.stringify({track:'player',name:r.name,sport,schoolHint:program}))}`;
+    return `<div class="cr-item">
+      <div class="cr-rank">#${i+1}</div>
+      <div class="cr-name">${esc(r.name)}</div>
+      <div class="cr-score" style="color:${col}">${Number(r.composite).toFixed(1)}</div>
+      <div class="cr-tier ${tier}">${tier.toUpperCase()}</div>
+      <a href="${runUrl}" class="cr-run-link">Full verdict →</a>
+    </div>`;
+  }).join('');
+
+  const unscoredHtml = unscored.length ? `<div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t4);margin-top:10px">No data found: ${unscored.map(r=>esc(r.name)).join(', ')}</div>` : '';
+
+  result.innerHTML = `
+    <div class="class-summary">
+      <div class="cs-header">
+        <div>
+          <div class="cs-prog">${esc(program)} ${year} Class</div>
+          <div class="cs-year">${esc(sport.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()))} · ${scored.length} players scored</div>
+        </div>
+        <div class="cs-grade">
+          <div class="cs-grade-val">${avgFmt}</div>
+          <div class="cs-grade-label">Class composite</div>
+          <div class="cs-grade-tier ${tierCls}">${classTier}</div>
+        </div>
+      </div>
+      <div class="class-roster">${rosterHtml}</div>
+      ${unscoredHtml}
+    </div>
+    <div style="font-size:12.5px;color:var(--t3);line-height:1.65;max-width:560px;padding-bottom:16px">
+      Each verdict runs against the public record at time of analysis. Early-enrollment commits may have limited data — FieldCheck will flag thin-data cases. Scores improve as the player's collegiate record develops.
+    </div>
+  `;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your Voice · FieldCheck IQ</title>
+<meta name="description" content="Tell your own story. Add context the public record misses. FieldCheck surfaces your self-assessment alongside the model's read.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:780px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:780px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.hero{padding:48px 0 36px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(28px,4.5vw,50px);line-height:1.04;letter-spacing:-.014em;margin-bottom:12px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--t2);line-height:1.7;max-width:580px;margin-bottom:8px}
+.principle{padding:14px 18px;background:var(--golds);border:1px solid var(--goldl);border-radius:10px;font-size:13px;color:var(--t);line-height:1.65;margin-bottom:32px}
+.principle b{color:var(--gold)}
+
+.form-card{background:var(--bg1);border:1px solid var(--ge);border-radius:16px;padding:28px 32px;margin-bottom:20px}
+.form-section-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--ge2)}
+.field-group{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.field-group.single{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t3)}
+.field input,.field select,.field textarea{background:var(--bg2);border:1px solid var(--ge);border-radius:8px;padding:10px 14px;font-family:'Inter',sans-serif;font-size:14px;color:var(--t);outline:none;width:100%;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--goldl)}
+.field select option{background:var(--bg2)}
+.field textarea{resize:vertical;min-height:90px;line-height:1.6}
+.field .hint{font-size:11.5px;color:var(--t4);line-height:1.5}
+
+.video-add{display:flex;gap:10px;align-items:flex-start}
+.video-add input{flex:1}
+.video-add-btn{padding:10px 16px;background:transparent;border:1px solid var(--ge);border-radius:8px;color:var(--t3);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:all .15s}
+.video-add-btn:hover{border-color:var(--goldl);color:var(--gold)}
+.video-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.video-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2)}
+.video-item-remove{background:none;border:none;color:var(--t4);cursor:pointer;font-size:14px;padding:2px 6px}
+
+.self-score{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:6px}
+.self-score-dim{display:flex;flex-direction:column;align-items:center;gap:5px}
+.self-score-dim label{font-family:'JetBrains Mono',monospace;font-size:7.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--t4);text-align:center}
+.self-score-dim input[type=range]{width:100%;accent-color:var(--gold)}
+.self-score-dim .sv{font-family:'Anton',sans-serif;font-size:18px;color:var(--gold);text-align:center}
+
+.submit-btn{width:100%;padding:14px;background:var(--gold);color:#09080A;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;border:none;border-radius:10px;cursor:pointer;transition:opacity .15s;margin-top:8px}
+.submit-btn:hover{opacity:.88}
+.success-box{display:none;padding:18px;background:var(--mossl);border:1px solid var(--mossd);border-radius:10px;font-size:14px;color:var(--t);line-height:1.6;margin-top:14px}
+
+.privacy-note{font-size:12px;color:var(--t4);line-height:1.65;text-align:center;padding:12px 0}
+.footer{margin-top:40px;padding:18px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);text-align:center}
+@media(max-width:560px){.field-group{grid-template-columns:1fr}.self-score{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:rgba(245,241,232,.45)">Your Voice</div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Phase 3 · Athlete Voice</div>
+  <h1>Your story.<br>Your <em>context.</em></h1>
+  <p class="hero-sub">The public record doesn't know you were playing out of position. It doesn't know you started two years ago, or that your team didn't have video. Give the model what the stats can't say.</p>
+  <div class="principle">
+    <b>What happens to your submission:</b> Your self-assessment is stored alongside the model's verdict. When a coach, scout, or parent runs your FieldCheck, both reads are shown — the model's take from the public record, and your own words. You are not overwriting the model. You are adding the layer it can't see.
+  </div>
+</section>
+
+<div class="form-card">
+  <div class="form-section-title">// Who you are</div>
+  <div class="field-group">
+    <div class="field"><label>Full name *</label><input id="av-name" placeholder="Your full name" autocomplete="off"></div>
+    <div class="field"><label>Sport *</label>
+      <select id="av-sport">
+        <option value="">Select sport</option>
+        <option>Women's Volleyball</option><option>Men's Volleyball</option>
+        <option>Women's Basketball</option><option>Men's Basketball</option>
+        <option>Football</option><option>Baseball</option>
+        <option>Tennis</option><option>Men's Soccer</option><option>Women's Soccer</option>
+      </select>
+    </div>
+  </div>
+  <div class="field-group">
+    <div class="field"><label>School / Program</label><input id="av-school" placeholder="University of Nebraska"></div>
+    <div class="field"><label>Position</label><input id="av-position" placeholder="Outside Hitter, Quarterback…"></div>
+  </div>
+  <div class="field-group">
+    <div class="field"><label>Class year</label>
+      <select id="av-class">
+        <option value="">Select</option>
+        <option>Freshman</option><option>Sophomore</option><option>Junior</option>
+        <option>Senior</option><option>Graduate / 5th year</option><option>Pro</option>
+      </select>
+    </div>
+    <div class="field"><label>Hometown / State</label><input id="av-hometown" placeholder="Ann Arbor, MI"></div>
+  </div>
+</div>
+
+<div class="form-card">
+  <div class="form-section-title">// Your context — what stats can't say</div>
+  <div class="field-group single">
+    <div class="field">
+      <label>Anything the model might be missing *</label>
+      <textarea id="av-context" placeholder="e.g. I averaged 4 assists last season but was playing out of position. I'm a setter playing OH because of injuries on our roster. Started volleyball two years ago, no club background, but I've gone from JV to starting D1 in 18 months."></textarea>
+      <div class="hint">No right answer. Tell the model what the public record doesn't show. This is your microphone.</div>
+    </div>
+  </div>
+  <div class="field-group single">
+    <div class="field">
+      <label>Access context (optional)</label>
+      <textarea id="av-access" placeholder="e.g. No club volleyball in my area growing up. Went to a small rural high school with limited varsity competition. First in my family to play a college sport." style="min-height:70px"></textarea>
+      <div class="hint">Geographic, economic, or structural gaps that affect how production numbers should be read.</div>
+    </div>
+  </div>
+  <div class="field-group single">
+    <div class="field">
+      <label>What you're working on right now</label>
+      <textarea id="av-working" placeholder="e.g. Improving my serve-receive under pressure. Working with a private coach on approach timing. Building back from a hamstring strain." style="min-height:70px"></textarea>
+    </div>
+  </div>
+  <div class="field-group single">
+    <div class="field">
+      <label>Your ceiling, in your words</label>
+      <textarea id="av-ceiling" placeholder="e.g. I want to play professionally in Europe after college. I'm chasing the national team. I see myself as a LOVB player within 3 years." style="min-height:70px"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="form-card">
+  <div class="form-section-title">// Your self-assessment (optional — 1 to 10)</div>
+  <div class="self-score" id="selfScores">
+    <div class="self-score-dim"><label>Physical</label><input type="range" min="1" max="10" step="0.5" value="7" oninput="updateSV(this,'sv-ph')"><div class="sv" id="sv-ph">7.0</div></div>
+    <div class="self-score-dim"><label>Mindset</label><input type="range" min="1" max="10" step="0.5" value="7" oninput="updateSV(this,'sv-mi')"><div class="sv" id="sv-mi">7.0</div></div>
+    <div class="self-score-dim"><label>Production</label><input type="range" min="1" max="10" step="0.5" value="7" oninput="updateSV(this,'sv-pr')"><div class="sv" id="sv-pr">7.0</div></div>
+    <div class="self-score-dim"><label>Defense</label><input type="range" min="1" max="10" step="0.5" value="7" oninput="updateSV(this,'sv-de')"><div class="sv" id="sv-de">7.0</div></div>
+    <div class="self-score-dim"><label>Pathway</label><input type="range" min="1" max="10" step="0.5" value="7" oninput="updateSV(this,'sv-pa')"><div class="sv" id="sv-pa">7.0</div></div>
+  </div>
+  <div style="font-size:11px;color:rgba(245,241,232,.3);margin-top:8px">These are your own reads — they sit alongside the model's, not above it. Both show to coaches.</div>
+</div>
+
+<div class="form-card">
+  <div class="form-section-title">// Video (optional)</div>
+  <div class="video-add">
+    <input id="vid-in" placeholder="YouTube, Hudl, or direct link to game film / highlight reel" style="background:var(--bg2);border:1px solid var(--ge);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--t);outline:none;width:100%">
+    <button class="video-add-btn" onclick="addVideo()">Add</button>
+  </div>
+  <div class="video-list" id="videoList"></div>
+  <div class="hint" style="margin-top:10px">Film links are not embedded or republished — they're referenced when a coach runs your verdict. Highlight reels, full-game film, practice clips all welcome.</div>
+</div>
+
+<button class="submit-btn" onclick="submitVoice()">Submit your profile →</button>
+<div class="success-box" id="successBox">
+  <strong style="color:var(--moss)">✓ Profile submitted.</strong><br>
+  Your self-assessment will appear alongside FieldCheck's verdict the next time someone searches your name. You can update this any time — just re-submit. The model's read and your words both show.
+</div>
+<div class="privacy-note">Your submission is not sold. Not shared with recruiting services. It surfaces when your name is searched on FieldCheck — that's it. <a href="/methodology" style="color:rgba(245,184,0,.7);text-decoration:none">How verdicts work →</a></div>
+<div class="footer">© 2026 ThinkDifferent Holdings · FieldCheck IQ · Athlete Voice · Phase 3</div>
+</div>
+
+<script>
+const W = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+const videos = [];
+
+function updateSV(el, id) {
+  document.getElementById(id).textContent = Number(el.value).toFixed(1);
+}
+
+function addVideo() {
+  const v = document.getElementById('vid-in').value.trim();
+  if (!v) return;
+  if (!v.startsWith('http')) { alert('Please enter a full URL starting with http'); return; }
+  videos.push(v);
+  document.getElementById('vid-in').value = '';
+  renderVideos();
+}
+
+function removeVideo(i) { videos.splice(i, 1); renderVideos(); }
+
+function renderVideos() {
+  document.getElementById('videoList').innerHTML = videos.map((v, i) =>
+    `<div class="video-item">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(245,241,232,.5)">Film ${i+1}:</span>
+      <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${v}</span>
+      <button class="video-item-remove" onclick="removeVideo(${i})">×</button>
+    </div>`
+  ).join('');
+}
+
+function getSelfScores() {
+  return {
+    physical:   parseFloat(document.querySelector('#selfScores input:nth-child(1), #sv-ph').previousElementSibling?.value || document.querySelectorAll('#selfScores input[type=range]')[0]?.value || 7),
+    mindset:    parseFloat(document.querySelectorAll('#selfScores input[type=range]')[1]?.value || 7),
+    production: parseFloat(document.querySelectorAll('#selfScores input[type=range]')[2]?.value || 7),
+    defense:    parseFloat(document.querySelectorAll('#selfScores input[type=range]')[3]?.value || 7),
+    pathway:    parseFloat(document.querySelectorAll('#selfScores input[type=range]')[4]?.value || 7),
+  };
+}
+
+async function submitVoice() {
+  const name = document.getElementById('av-name').value.trim();
+  const sport = document.getElementById('av-sport').value;
+  const context = document.getElementById('av-context').value.trim();
+  if (!name || !sport || !context) {
+    alert('Please fill in your name, sport, and context (the three required fields).'); return;
+  }
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = 'Submitting…'; btn.disabled = true;
+
+  const payload = {
+    player: name,
+    sport,
+    school: document.getElementById('av-school').value.trim() || null,
+    position: document.getElementById('av-position').value.trim() || null,
+    class_year: document.getElementById('av-class').value || null,
+    hometown: document.getElementById('av-hometown').value.trim() || null,
+    context_note: context,
+    access_context: document.getElementById('av-access').value.trim() || null,
+    working_on: document.getElementById('av-working').value.trim() || null,
+    ceiling: document.getElementById('av-ceiling').value.trim() || null,
+    self_scores: getSelfScores(),
+    videos: videos.length > 0 ? videos : null,
+    submitted_at: new Date().toISOString()
+  };
+
+  try {
+    const r = await fetch(W + '/api/athlete-voice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const d = await r.json();
+    if (d.ok || d.accepted) {
+      document.getElementById('successBox').style.display = 'block';
+      btn.textContent = '✓ Submitted';
+    } else {
+      btn.textContent = 'Submit your profile →';
+      btn.disabled = false;
+      alert('Submission error: ' + (d.error || 'Unknown'));
+    }
+  } catch(e) {
+    btn.textContent = 'Submit your profile →';
+    btn.disabled = false;
+    alert('Network error — check your connection and try again.');
+  }
+}
+
+// Populate from URL params
+const params = new URLSearchParams(location.search);
+if (params.get('name')) document.getElementById('av-name').value = params.get('name');
+if (params.get('sport')) {
+  const sportMap = {'womens-volleyball':"Women's Volleyball",'mens-volleyball':"Men's Volleyball",'football':'Football'};
+  const disp = sportMap[params.get('sport')] || params.get('sport');
+  const sel = document.getElementById('av-sport');
+  for (let o of sel.options) { if (o.value === disp || o.text === disp) { sel.value = o.value; break; } }
+}
+if (params.get('school')) document.getElementById('av-school').value = params.get('school');
+</script>
+</body>
+</html>

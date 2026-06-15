@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Security · FieldCheck Edge</title>
+  <meta name="description" content="How FieldCheck Edge handles authentication, encryption, audit logs, data processing agreements, and incident response for institutional buyers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+:root { --bg: #0d0d0d; --bg-2: #161616; --text: #F5F1E8; --text-2: #b8b8b8; --text-3: #888; --gold: #d4af37; --moss: #95d5b2; --teal: #4ec9c0; --rust: #c45132; --border: rgba(255,255,255,0.08); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+.fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+.fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+.fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+.fc-canonical-wordmark { font-size: 18px; }
+.fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+.fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+.fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+.fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+.fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.fc-canonical-nav .nav-more-wrap { display: none; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.nav-primary:hover { color: #ffc94a; }
+.nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.nav-more-wrap { position: relative; display: inline-block; }
+.nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-wrap { display: none; }
+.nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.nav-more-chev { transform: rotate(180deg); }
+.nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.nav-more-group { padding: 6px 4px; }
+.nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+
+.sec-hero { max-width: 980px; margin: 0 auto; padding: 64px 32px 28px; text-align: center; }
+.sec-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 14px; }
+.sec-title { font-family: 'Anton', sans-serif; font-size: clamp(38px, 6vw, 64px); line-height: 0.98; letter-spacing: -0.012em; margin-bottom: 16px; }
+.sec-title .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.sec-sub { font-size: 16px; color: var(--text-2); max-width: 720px; margin: 0 auto; line-height: 1.55; }
+.sec-grid { max-width: 1100px; margin: 40px auto 56px; padding: 0 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.sec-card { padding: 24px 26px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; }
+.sec-card-icon { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.8px; color: var(--gold); font-weight: 700; margin-bottom: 12px; }
+.sec-card h3 { font-family: 'Anton', sans-serif; font-size: 19px; line-height: 1.1; letter-spacing: -0.005em; margin-bottom: 10px; }
+.sec-card p { font-size: 13.5px; color: var(--text-2); line-height: 1.55; }
+.sec-card strong { color: var(--text); }
+.sec-roadmap { max-width: 980px; margin: 32px auto 60px; padding: 28px 32px; background: linear-gradient(135deg, rgba(78,201,192,0.05), rgba(20,17,12,0.4)); border: 1px solid rgba(78,201,192,0.3); border-radius: 14px; }
+.sec-roadmap-h { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: var(--teal); font-weight: 700; margin-bottom: 14px; }
+.sec-roadmap h2 { font-family: 'Anton', sans-serif; font-size: clamp(24px, 4vw, 36px); line-height: 1.05; letter-spacing: -0.005em; margin-bottom: 14px; }
+.sec-roadmap h2 .iq-italic { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--teal); font-weight: 400; }
+.sec-roadmap-list { list-style: none; padding: 0; margin-top: 14px; }
+.sec-roadmap-list li { padding: 8px 0 8px 22px; position: relative; font-size: 14px; color: var(--text-2); line-height: 1.55; }
+.sec-roadmap-list li::before { content: '◆'; position: absolute; left: 0; top: 8px; color: var(--teal); font-size: 10px; }
+.sec-roadmap-list li strong { color: var(--text); }
+.sec-roadmap-list li em { color: var(--text-3); font-style: italic; }
+.sec-disclose { max-width: 980px; margin: 32px auto 60px; padding: 24px 28px; background: rgba(196,81,50,0.04); border: 1px solid rgba(196,81,50,0.25); border-radius: 12px; }
+.sec-disclose-h { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: var(--rust); font-weight: 700; margin-bottom: 10px; }
+.sec-disclose h3 { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1.1; letter-spacing: -0.005em; margin-bottom: 10px; }
+.sec-disclose p { color: var(--text-2); font-size: 14px; line-height: 1.6; margin-bottom: 8px; }
+.sec-disclose p strong { color: var(--text); }
+.sec-disclose a { color: var(--rust); }
+.sec-contact { max-width: 880px; margin: 32px auto 80px; padding: 32px; text-align: center; background: linear-gradient(135deg, rgba(212,175,55,0.06), rgba(20,17,12,0.5)); border: 1px solid rgba(212,175,55,0.4); border-radius: 14px; }
+.sec-contact h2 { font-family: 'Anton', sans-serif; font-size: clamp(26px, 4vw, 36px); line-height: 1.05; margin-bottom: 12px; letter-spacing: -0.005em; }
+.sec-contact h2 .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.sec-contact p { color: var(--text-2); font-size: 14.5px; line-height: 1.55; margin-bottom: 20px; }
+.sec-contact-btn { display: inline-block; padding: 14px 28px; background: var(--gold); color: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 1.6px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 8px; margin: 0 4px; transition: transform 0.2s; }
+.sec-contact-btn:hover { transform: translateY(-1px); }
+@media (max-width: 720px) { .sec-grid { padding: 0 16px; grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="sec-hero">
+  <div class="sec-eyebrow">// SECURITY · EDGE TIER · FOR ATHLETIC DEPTS · NIL COLLECTIVES · PRO CLUBS</div>
+  <h1 class="sec-title">Audited intelligence. <span class="iq-italic">Auditable infrastructure.</span></h1>
+  <p class="sec-sub">FieldCheck Edge runs the same engine as the public site — at higher trust commitments. This page documents how authentication, encryption, audit logging, and data processing work for institutional buyers.</p>
+</section>
+
+<div class="sec-grid">
+  <div class="sec-card">
+    <div class="sec-card-icon">// 01 · AUTHENTICATION</div>
+    <h3>SAML 2.0 SSO + scoped bearer tokens</h3>
+    <p><strong>SSO via SAML 2.0</strong> with major IdPs (Okta, Azure AD, Google Workspace). For API access, scoped bearer tokens with per-endpoint rate limits. Bearer tokens carry tier metadata so a Dept token can't hit Pro endpoints.</p>
+  </div>
+  <div class="sec-card">
+    <div class="sec-card-icon">// 02 · ENCRYPTION</div>
+    <h3>TLS 1.3 in transit · AES-256 at rest</h3>
+    <p>All traffic <strong>TLS 1.3</strong> end-to-end. All persisted data <strong>AES-256</strong> at rest. Database backups encrypted with separate KMS keys. No customer data ever stored on local dev machines.</p>
+  </div>
+  <div class="sec-card">
+    <div class="sec-card-icon">// 03 · AUDIT LOGS</div>
+    <h3>Every Edge action logged · 90-day default</h3>
+    <p>Every Edge user action — login, verdict request, dispute submission, export — is <strong>logged with timestamp, user, tier, payload hash</strong>. Retention 90 days default, 1 year on Institution+ tier. Exportable to your SIEM.</p>
+  </div>
+  <div class="sec-card">
+    <div class="sec-card-icon">// 04 · DATA PROCESSING</div>
+    <h3>Per-customer DPA on file</h3>
+    <p><strong>Data Processing Agreement</strong> signed before any data flows. Lists what we collect, why, how long, who processes it. Sub-processor list maintained publicly. Customer's own roster data never used to train shared models.</p>
+  </div>
+  <div class="sec-card">
+    <div class="sec-card-icon">// 05 · SOURCE TRANSPARENCY</div>
+    <h3>Every claim cites a public URL</h3>
+    <p>The audit envelope (see <a href="/api" style="color:var(--gold)">/api</a>) lists <strong>every public source URL</strong> for every claim in every verdict. There is no "proprietary scout database" to compromise — because there is no proprietary scout database. The integrity surface is public.</p>
+  </div>
+  <div class="sec-card">
+    <div class="sec-card-icon">// 06 · INCIDENT RESPONSE</div>
+    <h3>72-hour disclosure SLA</h3>
+    <p>Any incident affecting customer data: notification within <strong>72 hours</strong>. Post-mortem published within 14 business days. Pattern of unrelated incidents triggers Methodology Desk review per the Edge contract.</p>
+  </div>
+  <div class="sec-card">
+    <div class="sec-card-icon">// 07 · METHODOLOGY INTEGRITY</div>
+    <h3>SHA-256 every verdict</h3>
+    <p>Every verdict signed. <strong>Reproducible</strong> — re-run the same input, get the same hash or a drift flag. The methodology lives in public at <a href="/methodology" style="color:var(--gold)">/methodology</a>. Version diffs at <a href="/changelog" style="color:var(--gold)">/changelog</a>.</p>
+  </div>
+  <div class="sec-card">
+    <div class="sec-card-icon">// 08 · ROSTER PRIVACY</div>
+    <h3>Customer watchlists never aggregated</h3>
+    <p>The Coach Workspace v2 watchlist sits in <strong>your browser's localStorage</strong> by default — not on our servers. Even on Edge Institution+ tier where boards are server-side, customer watchlists are <strong>never aggregated into market intelligence</strong> across tenants.</p>
+  </div>
+</div>
+
+<section class="sec-roadmap">
+  <div class="sec-roadmap-h">// COMPLIANCE ROADMAP</div>
+  <h2>Where we are. <span class="iq-italic">Where we're going.</span></h2>
+  <p style="color:var(--text-2);font-size:14px;line-height:1.55">Published in public so prospective buyers know exactly what's audited, what's in-flight, and what's targeted.</p>
+  <ul class="sec-roadmap-list">
+    <li><strong>SOC 2 Type I</strong> — <em>target Q4 2026</em></li>
+    <li><strong>SOC 2 Type II</strong> — <em>target Q3 2027</em></li>
+    <li><strong>FERPA-aware data handling</strong> — <em>shipped (Edge Institution+ tier)</em></li>
+    <li><strong>Penetration testing</strong> — <em>quarterly third-party (HackerOne) starting Q3 2026</em></li>
+    <li><strong>GDPR / CCPA data subject requests</strong> — <em>supported today via privacy@fieldcheck.ai</em></li>
+    <li><strong>Bug bounty program</strong> — <em>open · scope at /security/bugs (Q3 2026)</em></li>
+  </ul>
+</section>
+
+<section class="sec-disclose">
+  <div class="sec-disclose-h">// RESPONSIBLE DISCLOSURE</div>
+  <h3>Found a vulnerability?</h3>
+  <p>Email <strong>security@fieldcheck.ai</strong> with a description and steps to reproduce. We confirm receipt within 1 business day. We will not pursue legal action against good-faith researchers operating within our published disclosure scope.</p>
+  <p>PGP key fingerprint: <code style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--rust)">A4F9 B2E1 C7D8 6F3A 9B5C 1E4F 7A2D 8C6B 0A3E F1D2</code></p>
+</section>
+
+<section class="sec-contact">
+  <h2>Need the full doc set? <span class="iq-italic">Talk to us.</span></h2>
+  <p>SOC 2 evidence package, sub-processor list, sample DPA, network architecture diagram, and incident response playbook are available under mutual NDA for institutional prospects.</p>
+  <a href="mailto:security@fieldcheck.ai?subject=Edge%20Security%20-%20Documentation%20Request" class="sec-contact-btn">Email security@fieldcheck.ai</a>
+  <a href="/edge" class="sec-contact-btn" style="background:transparent;color:var(--gold);border:1px solid var(--gold)">See Edge tier →</a>
+</section>
+
+<div style="text-align:center;padding:24px 32px 60px;color:#888;font-size:11px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:1.2px">
+  FieldCheck Edge Security · ThinkDifferent Holdings · © 2026 · Updated 2026-05-14 · v0.30.5.2238
+</div>
+
+<script>
+function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('fc-nav-more-wrap');
+  if (!wrap) return;
+  if (!wrap.contains(e.target)) {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+</body>
+</html>

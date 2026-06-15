@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldCheck Index · Curated Marquee Database</title>
+<meta name="description" content="Browse FieldCheck's curated marquee profiles by sport, tier, position, class year, and composite. The opposite of search — discover instead of look up.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%96%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=General+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08090b; --bg-1: #0e1014; --bg-2: #14171c;
+  --text: #e9e9ec; --text-2: #b8bbc2; --text-3: #8b8f97; --text-4: #5b5f67;
+  --gold: #f5b800; --moss: #6baa5a; --rust: #c0503c; --accent: #ff5c3a;
+  --glass: rgba(255,255,255,0.02);
+  --glass-edge: rgba(255,255,255,0.06);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { box-sizing: border-box; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "General Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.55;
+}
+a { color: var(--gold); text-decoration: none; transition: opacity 0.15s ease; }
+a:hover { opacity: 0.75; }
+.nav-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 32px; border-bottom: 1px solid var(--glass-edge);
+  position: sticky; top: 0; background: rgba(8,9,11,0.92); backdrop-filter: blur(16px); z-index: 100;
+}
+.nav-bar-logo {
+  font-family: "Anton", sans-serif; font-size: 20px; letter-spacing: 0.02em; color: var(--text);
+}
+.nav-bar-logo a { color: var(--text); }
+.nav-bar-links {
+  display: flex; gap: 24px; font-family: "General Sans"; font-size: 14px;
+}
+.nav-bar-links a { color: var(--text-3); }
+.nav-bar-links a:hover { color: var(--text); }
+.nav-bar-links a.is-active { color: var(--gold); font-weight: 600; }
+@media (max-width: 720px) {
+  .nav-bar { padding: 14px 18px; }
+  .nav-bar-links { gap: 14px; font-size: 13px; }
+}
+
+main { max-width: 1100px; margin: 0 auto; padding: 56px 32px 96px; }
+.hero-eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 14px;
+}
+.hero-h {
+  font-family: "Anton", sans-serif;
+  font-size: clamp(36px, 5vw, 60px);
+  letter-spacing: -0.005em;
+  line-height: 1.05;
+  margin: 0 0 18px 0;
+  color: var(--text);
+}
+.hero-sub {
+  font-family: "Marcellus", serif;
+  font-style: italic;
+  font-size: clamp(17px, 1.7vw, 21px);
+  color: var(--gold);
+  margin: 0 0 36px 0;
+  max-width: 720px;
+}
+.hero-sub-body {
+  font-family: "General Sans";
+  font-size: 15px;
+  color: var(--text-2);
+  max-width: 720px;
+  margin: 0 0 36px 0;
+}
+
+.filter-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin: 0 0 28px 0;
+  padding: 22px 24px;
+  background: var(--bg-1);
+  border: 1px solid var(--glass-edge);
+  border-radius: 14px;
+}
+.filter-group {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.filter-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-4);
+}
+.filter-select, .filter-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: "General Sans", sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--glass-edge);
+  border-radius: 8px;
+  appearance: none;
+  cursor: pointer;
+}
+.filter-select:focus, .filter-input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+.filter-actions {
+  display: flex; align-items: end; gap: 10px;
+}
+.filter-apply {
+  flex: 1;
+  padding: 10px 14px;
+  font-family: "General Sans"; font-weight: 600; font-size: 13px;
+  letter-spacing: 0.04em;
+  background: var(--gold);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.filter-apply:hover { opacity: 0.88; }
+.filter-clear {
+  padding: 10px 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  background: transparent;
+  color: var(--text-3);
+  border: 1px solid var(--glass-edge);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.filter-clear:hover { border-color: var(--text-3); color: var(--text); }
+
+.results-meta {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px;
+  margin: 0 0 16px 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.results-meta-count {
+  font-family: "Anton", sans-serif;
+  font-size: 22px;
+  color: var(--gold);
+  letter-spacing: 0;
+}
+
+.results-list {
+  display: grid;
+  gap: 12px;
+}
+.result-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  background: var(--bg-1);
+  border: 1px solid var(--glass-edge);
+  border-radius: 12px;
+  transition: all 0.2s var(--ease-out);
+  cursor: pointer;
+  text-decoration: none;
+}
+.result-card:hover {
+  border-color: rgba(245,184,0,0.30);
+  background: rgba(245,184,0,0.02);
+  transform: translateX(2px);
+}
+.result-card-name {
+  font-family: "Anton", sans-serif;
+  font-size: 20px;
+  letter-spacing: -0.005em;
+  color: var(--text);
+  margin: 0 0 4px 0;
+}
+.result-card-meta {
+  display: flex; flex-wrap: wrap; gap: 6px 14px;
+  font-family: "General Sans"; font-size: 13.5px;
+  color: var(--text-3);
+}
+.result-card-meta-item {}
+.result-card-right {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+}
+.result-card-composite {
+  font-family: "Anton", sans-serif;
+  font-size: 28px;
+  color: var(--gold);
+  letter-spacing: 0;
+  line-height: 1;
+}
+.result-card-composite-denom {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--text-4);
+  margin-left: 2px;
+}
+.result-card-tier {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  padding: 3px 8px;
+  background: rgba(245,184,0,0.08);
+  border: 1px solid rgba(245,184,0,0.25);
+  border-radius: 4px;
+}
+
+.empty-state {
+  padding: 60px 24px;
+  text-align: center;
+  font-family: "General Sans";
+  color: var(--text-3);
+  border: 1px dashed var(--glass-edge);
+  border-radius: 12px;
+}
+.empty-state-h {
+  font-family: "Anton", sans-serif;
+  font-size: 24px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.loading-state {
+  padding: 40px 24px;
+  text-align: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.loading-state-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  margin: 0 2px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: dot-pulse 1.2s ease-in-out infinite;
+}
+.loading-state-dot:nth-child(2) { animation-delay: 0.15s; }
+.loading-state-dot:nth-child(3) { animation-delay: 0.30s; }
+@keyframes dot-pulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.85); }
+  40% { opacity: 1; transform: scale(1.1); }
+}
+
+@media (max-width: 640px) {
+  .result-card { grid-template-columns: 1fr; }
+  .result-card-right { align-items: flex-start; flex-direction: row; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+<main>
+  <div class="hero-eyebrow">// The Inverse Search · v0.30.5.109</div>
+  <h1 class="hero-h">Browse the curated DB.</h1>
+  <p class="hero-sub">Search you already know. <em>This is what you didn't know to ask for.</em></p>
+  <p class="hero-sub-body">
+    Filter the FieldCheck curated marquee database by sport, tier, position, class year, and composite floor. Built for journalists, scouts, and parents who want to see the landscape — not just look up a name.
+  </p>
+
+  <section class="filter-bar" id="filters">
+    <div class="filter-group">
+      <label class="filter-label">Sport</label>
+      <select class="filter-select" id="filter-sport">
+        <option value="">Any</option>
+        <option value="football">Football</option>
+        <option value="mens-basketball">Men's Basketball</option>
+        <option value="womens-basketball">Women's Basketball</option>
+        <option value="baseball">Baseball</option>
+        <option value="womens-volleyball">Women's Volleyball</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Tier</label>
+      <select class="filter-select" id="filter-tier">
+        <option value="">Any</option>
+        <option value="ICON">ICON</option>
+        <option value="ELITE">ELITE</option>
+        <option value="TOP_PROSPECT">TOP_PROSPECT</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Position</label>
+      <input class="filter-input" id="filter-position" placeholder="QB, OH, SS…" autocomplete="off">
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Class Year</label>
+      <select class="filter-select" id="filter-class">
+        <option value="">Any</option>
+        <option value="Freshman">Freshman</option>
+        <option value="Sophomore">Sophomore</option>
+        <option value="Junior">Junior</option>
+        <option value="Senior">Senior</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Min Composite</label>
+      <input class="filter-input" id="filter-composite" type="number" step="0.1" min="0" max="10" placeholder="7.5">
+    </div>
+    <div class="filter-actions">
+      <button class="filter-apply" id="apply-btn">Apply</button>
+      <button class="filter-clear" id="clear-btn">Clear</button>
+    </div>
+  </section>
+
+  <div class="results-meta" id="results-meta">
+    <span class="results-meta-count" id="results-count">0</span>
+    <span>matches across the curated DB</span>
+  </div>
+
+  <div id="results-container">
+    <div class="loading-state">
+      <span>Loading the curated index</span>
+      <span class="loading-state-dot"></span><span class="loading-state-dot"></span><span class="loading-state-dot"></span>
+    </div>
+  </div>
+</main>
+
+<script>
+const PROXY = window.FIELDCHECK_PROXY_URL || 'https://fieldcheck-proxy.sridhar-nallani.workers.dev/api';
+
+async function loadResults() {
+  const sport = document.getElementById('filter-sport').value;
+  const tier = document.getElementById('filter-tier').value;
+  const position = document.getElementById('filter-position').value;
+  const classYear = document.getElementById('filter-class').value;
+  const minComposite = document.getElementById('filter-composite').value;
+
+  const params = new URLSearchParams();
+  if (sport) params.set('sport', sport);
+  if (tier) params.set('tier', tier);
+  if (position) params.set('position', position);
+  if (classYear) params.set('class_year', classYear);
+  if (minComposite) params.set('min_composite', minComposite);
+  params.set('max', '60');
+
+  const container = document.getElementById('results-container');
+  container.innerHTML = '<div class="loading-state"><span>Querying the curated index</span><span class="loading-state-dot"></span><span class="loading-state-dot"></span><span class="loading-state-dot"></span></div>';
+
+  try {
+    const r = await fetch(PROXY + '/inverse-search?' + params.toString());
+    const data = await r.json();
+    document.getElementById('results-count').textContent = data.matched_count || 0;
+
+    if (!data.matches || data.matches.length === 0) {
+      container.innerHTML = '<div class="empty-state"><div class="empty-state-h">No matches</div><div>Try widening the filters — drop a constraint, lower the composite floor, or pick "Any" sport.</div></div>';
+      return;
+    }
+
+    const html = data.matches.map(m => {
+      const composite = (typeof m.composite === 'number') ? m.composite.toFixed(1) : '—';
+      const tier = m.tier || '';
+      const runUrl = '/?run=' + encodeURIComponent(JSON.stringify({
+        track: 'player',
+        name: m.name,
+        sport: m.sport,
+        school: m.school || ''
+      }));
+      return '<a class="result-card" href="' + runUrl + '">' +
+        '<div class="result-card-left">' +
+          '<h3 class="result-card-name">' + escapeHtml(m.name) + '</h3>' +
+          '<div class="result-card-meta">' +
+            (m.sport ? '<span class="result-card-meta-item">' + escapeHtml(formatSport(m.sport)) + '</span>' : '') +
+            (m.position ? '<span class="result-card-meta-item">' + escapeHtml(m.position) + '</span>' : '') +
+            (m.school ? '<span class="result-card-meta-item">' + escapeHtml(m.school) + '</span>' : '') +
+            (m.class_year ? '<span class="result-card-meta-item">' + escapeHtml(m.class_year) + '</span>' : '') +
+          '</div>' +
+        '</div>' +
+        '<div class="result-card-right">' +
+          '<div class="result-card-composite">' + composite + '<span class="result-card-composite-denom">/10</span></div>' +
+          (tier ? '<div class="result-card-tier">' + escapeHtml(tier) + '</div>' : '') +
+        '</div>' +
+      '</a>';
+    }).join('');
+
+    container.innerHTML = '<div class="results-list">' + html + '</div>';
+  } catch (e) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-h">Index unreachable</div><div>Could not query the curated DB. Try again in a moment.</div></div>';
+  }
+}
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function formatSport(s) {
+  return ({
+    'football': 'Football',
+    'mens-basketball': "Men's Basketball",
+    'womens-basketball': "Women's Basketball",
+    'baseball': 'Baseball',
+    'womens-volleyball': "Women's Volleyball",
+    'mens-volleyball': "Men's Volleyball",
+    'mens-soccer': "Men's Soccer",
+    'tennis': 'Tennis'
+  })[s] || s;
+}
+
+document.getElementById('apply-btn').addEventListener('click', loadResults);
+document.getElementById('clear-btn').addEventListener('click', () => {
+  document.getElementById('filter-sport').value = '';
+  document.getElementById('filter-tier').value = '';
+  document.getElementById('filter-position').value = '';
+  document.getElementById('filter-class').value = '';
+  document.getElementById('filter-composite').value = '';
+  loadResults();
+});
+
+// Enter to apply on inputs
+['filter-position', 'filter-composite'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') loadResults();
+  });
+});
+
+loadResults();
+</script>
+
+</body>
+</html>

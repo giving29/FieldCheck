@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cooper Flagg · FieldCheck Verdict · Player Thesis v1.7</title>
+<meta name="description" content="FieldCheck IQ verdict for Cooper Flagg — composite 9.30, 95% CI 8.46–9.95, HOF Lock tier. 8-facet polygon with Bayesian credible interval bands.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06050A;--bg1:#0D0C12;--bg2:#15131C;
+  --ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);
+  --t:#F5F1E8;--t2:rgba(245,241,232,.74);--t3:rgba(245,241,232,.46);--t4:rgba(245,241,232,.24);
+  --gold:#F5B800;--goldb:#FFD24A;--golds:rgba(245,184,0,.09);--goldl:rgba(245,184,0,.28);--goldd:rgba(245,184,0,.58);
+  --moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.30);
+  --teal:#4EC9C0;--teall:rgba(78,201,192,.3);
+  --red:#FF5C3A;--redl:rgba(255,92,58,.14);--redd:rgba(255,92,58,.4);
+  --violet:#8B5CF6;
+  --shadow-gold:0 0 32px rgba(245,184,0,.22);
+  --shadow-deep:0 8px 32px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;background:var(--bg)}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;min-height:100vh;line-height:1.6;overflow-x:hidden}
+
+/* ── BACKGROUND ── */
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-fx::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 35% at 50% 0%,rgba(245,184,0,.055) 0%,transparent 65%),radial-gradient(ellipse 60% 50% at 100% 100%,rgba(107,170,90,.03) 0%,transparent 60%),radial-gradient(ellipse 80% 30% at 0% 60%,rgba(78,201,192,.025) 0%,transparent 60%)}
+.bg-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,252,245,.025) 1px,transparent 1px);background-size:32px 32px;opacity:.6;mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%)}
+.bg-scan{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(245,184,0,.6),transparent);animation:scan 8s infinite linear;opacity:.4}
+@keyframes scan{0%{transform:translateY(0)}100%{transform:translateY(100vh)}}
+
+/* ── HEADER ── */
+.hdr{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--ge);background:rgba(6,5,10,.86);backdrop-filter:blur(24px) saturate(140%)}
+.hdr-i{max-width:1320px;margin:0 auto;padding:18px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.brand{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:-.012em;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(245,184,0,.5)}50%{box-shadow:0 0 0 8px rgba(245,184,0,0)}}
+.live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 1.8s infinite,pulseGlow 2.4s infinite;margin-right:6px;vertical-align:middle}
+
+.dpill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 10px;border-radius:9999px;background:rgba(245,184,0,.10);border:1px solid var(--goldl);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:all .18s}
+.dpill:hover{background:rgba(245,184,0,.18);border-color:var(--goldd)}
+
+.hdr-spacer{flex:1}
+.hdr-share{display:flex;gap:8px}
+.hdr-btn{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:var(--t3);background:none;border:1px solid var(--ge);padding:7px 13px;border-radius:9999px;cursor:pointer;transition:all .18s;text-decoration:none}
+.hdr-btn:hover{color:var(--t);border-color:var(--t3)}
+
+/* ── HERO WRAP ── */
+.wrap{max-width:1320px;margin:0 auto;padding:50px 28px 90px;position:relative;z-index:1}
+
+/* ── INTRO ANIMATION ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes drawIn{from{stroke-dashoffset:1600}to{stroke-dashoffset:0}}
+@keyframes growUp{from{transform:scaleY(0);transform-origin:bottom}to{transform:scaleY(1);transform-origin:bottom}}
+@keyframes barFill{from{width:0!important}}
+.anim-up{animation:fadeUp .6s cubic-bezier(.2,.7,.3,1) both}
+.anim-up-1{animation-delay:.05s}
+.anim-up-2{animation-delay:.15s}
+.anim-up-3{animation-delay:.25s}
+.anim-up-4{animation-delay:.35s}
+.anim-up-5{animation-delay:.5s}
+.anim-up-6{animation-delay:.7s}
+
+/* ── PLAYER HERO ── */
+.player-hero{display:grid;grid-template-columns:1.4fr 1fr;gap:34px;align-items:start;margin-bottom:34px;padding-bottom:28px;border-bottom:1px solid var(--ge)}
+@media(max-width:880px){.player-hero{grid-template-columns:1fr;gap:24px}}
+
+.player-info{min-width:0}
+.player-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--t3);margin-bottom:10px;display:flex;align-items:center}
+.player-eyebrow::before{content:"";display:inline-block;width:18px;height:1px;background:var(--gold);margin-right:10px}
+.player-name{font-family:'Anton',sans-serif;font-size:clamp(46px,5.8vw,76px);letter-spacing:-.018em;line-height:.94;margin-bottom:8px;background:linear-gradient(180deg,var(--t) 30%,rgba(245,241,232,.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.player-name b{background:linear-gradient(180deg,var(--goldb) 0%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 18px rgba(245,184,0,.25))}
+.player-meta{display:flex;gap:0;flex-wrap:wrap;margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);letter-spacing:.5px}
+.player-meta .m{padding:0 16px 0 0;display:flex;align-items:center;gap:4px}
+.player-meta .m + .m{border-left:1px solid var(--ge);padding-left:16px}
+.player-meta .m b{color:var(--t);font-weight:600}
+.player-tags{margin-top:18px;display:flex;gap:8px;flex-wrap:wrap}
+.tag-chip{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:5px 10px;border-radius:9999px;background:rgba(107,170,90,.10);color:var(--moss);border:1px solid var(--mossd)}
+.tag-chip.gold{background:var(--golds);color:var(--gold);border-color:var(--goldl)}
+.tag-chip.teal{background:rgba(78,201,192,.10);color:var(--teal);border-color:var(--teall)}
+
+/* ── COMPOSITE PANEL ── */
+.composite{position:relative;padding:28px 30px;background:linear-gradient(140deg,rgba(245,184,0,.10) 0%,rgba(245,184,0,.03) 100%);border:1px solid var(--goldl);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-deep)}
+.composite::before{content:"";position:absolute;top:-50%;right:-30%;width:300px;height:300px;background:radial-gradient(circle,rgba(245,184,0,.18) 0%,transparent 70%);pointer-events:none}
+.comp-l{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;position:relative}
+.comp-num{font-family:'Anton',sans-serif;font-size:88px;color:var(--gold);letter-spacing:-.022em;line-height:.85;margin-bottom:10px;text-shadow:0 0 32px rgba(245,184,0,.32);position:relative}
+.comp-num .frac{font-size:38px;color:var(--t3);margin-left:6px;font-weight:400}
+.comp-tier{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t);margin-bottom:18px;position:relative}
+.comp-tier .arrow{color:var(--gold);margin:0 8px}
+.comp-bar{height:4px;background:rgba(255,252,245,.06);border-radius:9999px;position:relative;margin-bottom:8px;overflow:hidden}
+.comp-bar-fill{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,rgba(245,184,0,.4) 0%,var(--gold) 50%,var(--goldb) 100%);border-radius:9999px;animation:barFill 1s .4s both;width:93%}
+.comp-bar-mean{position:absolute;left:93%;top:-3px;width:2px;height:10px;background:var(--goldb);border-radius:2px;box-shadow:0 0 8px var(--gold)}
+.comp-ci-row{display:flex;align-items:center;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t2);position:relative;margin-bottom:18px}
+.comp-ci-row .lo{color:var(--t3)}
+.comp-ci-row .hi{color:var(--t3)}
+.comp-ci-row .ci-l{font-weight:700;color:var(--t)}
+.comp-pred{display:flex;align-items:center;gap:8px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--t2);position:relative;padding-top:14px;border-top:1px solid rgba(245,184,0,.18)}
+.comp-pred .star{color:var(--moss);font-style:normal;font-size:13px}
+
+/* ── TIER DISTRIBUTION ── */
+.tier-dist{margin-bottom:42px;padding:24px 28px;background:rgba(13,12,18,.6);border:1px solid var(--ge);border-radius:16px;backdrop-filter:blur(8px)}
+.tier-dist-h{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.tier-dist-h .live-dot{width:7px;height:7px;margin-right:0}
+.tier-row{display:flex;align-items:center;gap:14px;padding:7px 0}
+.tier-label{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--t2);width:170px;flex-shrink:0;letter-spacing:.4px;font-weight:500}
+.tier-row.most-likely .tier-label{color:var(--gold);font-weight:700}
+.tier-bar{flex:1;height:7px;background:rgba(255,252,245,.04);border-radius:9999px;overflow:hidden;position:relative}
+.tier-bar-fill{height:100%;background:linear-gradient(90deg,rgba(245,184,0,.55) 0%,var(--gold) 100%);border-radius:9999px;animation:barFill 1.1s both;animation-delay:calc(.6s + var(--bar-delay,0s));position:relative}
+.tier-bar-fill.dim{background:linear-gradient(90deg,rgba(245,241,232,.18) 0%,var(--t3) 100%)}
+.tier-row.most-likely .tier-bar-fill{box-shadow:0 0 14px rgba(245,184,0,.4)}
+.tier-pct{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;color:var(--gold);width:50px;text-align:right;letter-spacing:.4px}
+.tier-pct.dim{color:var(--t3)}
+
+/* ── POLYGON SECTION ── */
+.poly-section{display:grid;grid-template-columns:1fr 340px;gap:32px;margin-bottom:48px;align-items:start}
+@media(max-width:1040px){.poly-section{grid-template-columns:1fr}}
+
+.poly-main{background:rgba(13,12,18,.55);border:1px solid var(--ge);border-radius:20px;padding:32px 30px;position:relative;overflow:hidden;backdrop-filter:blur(8px)}
+.poly-main::before{content:"";position:absolute;top:50%;left:50%;width:600px;height:600px;background:radial-gradient(circle,rgba(245,184,0,.06) 0%,transparent 65%);transform:translate(-50%,-50%);pointer-events:none}
+.poly-h{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t4);margin-bottom:6px;position:relative}
+.poly-title{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.01em;margin-bottom:6px;position:relative}
+.poly-title b{color:var(--gold)}
+.poly-caption{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t3);margin-bottom:20px;position:relative}
+
+.poly-svg{width:100%;height:auto;display:block;max-width:760px;margin:0 auto;position:relative;filter:drop-shadow(0 8px 32px rgba(0,0,0,.4))}
+
+/* ── POLYGON SVG STYLES ── */
+.axis-line{stroke:rgba(255,252,245,.08);stroke-width:1}
+.axis-line.apex{stroke:rgba(245,184,0,.18);stroke-width:1.4}
+.scale-ring{fill:none;stroke:rgba(255,252,245,.04);stroke-width:1}
+.scale-ring.outer{stroke:rgba(255,252,245,.14)}
+.scale-label{font-family:'JetBrains Mono',monospace;font-size:9px;fill:rgba(245,241,232,.32);font-weight:600;letter-spacing:.5px}
+
+.axis-label{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:.5px;fill:var(--t);text-transform:uppercase;font-weight:400;transition:fill .2s}
+.axis-label.apex{fill:var(--gold);font-size:16px;letter-spacing:.7px;cursor:pointer}
+.axis-label.apex:hover{fill:var(--goldb)}
+.axis-value{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;fill:var(--gold);letter-spacing:.3px}
+.axis-value.apex{font-size:13px}
+
+.ci-band{fill:url(#ci-gradient);stroke:none;opacity:0;animation:fadeIn 1s .8s both}
+.mean-polygon{fill:rgba(245,184,0,.10);stroke:url(#mean-gradient);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 0 12px rgba(245,184,0,.3));stroke-dasharray:1600;animation:drawIn 1.6s .3s both,fadeIn .6s .3s both}
+.mean-vertex{fill:var(--gold);stroke:var(--bg);stroke-width:2.5;opacity:0;animation:fadeIn .5s both}
+.mean-vertex:hover{r:7;cursor:pointer}
+
+.ghost-lebron{fill:rgba(245,184,0,.03);stroke:rgba(245,184,0,.55);stroke-width:1.5;stroke-dasharray:5 4;stroke-linejoin:round;pointer-events:none;opacity:0;transition:opacity .4s}
+.ghost-lebron.visible{opacity:1}
+.ghost-wiggins{fill:rgba(255,92,58,.03);stroke:rgba(255,92,58,.7);stroke-width:1.5;stroke-dasharray:5 4;stroke-linejoin:round;pointer-events:none;opacity:0;transition:opacity .4s}
+.ghost-wiggins.visible{opacity:1}
+
+.refine-icon{cursor:help;transition:transform .2s}
+.refine-icon:hover{transform:scale(1.2)}
+
+/* ── HOVER TOOLTIP ── */
+.tooltip{position:fixed;background:rgba(6,5,10,.96);backdrop-filter:blur(16px);border:1px solid var(--goldl);border-radius:10px;padding:14px 18px;font-family:'Inter',sans-serif;font-size:12.5px;color:var(--t);box-shadow:var(--shadow-deep),0 0 24px rgba(245,184,0,.15);pointer-events:none;z-index:100;max-width:280px;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s}
+.tooltip.visible{opacity:1;transform:translateY(0)}
+.tooltip-name{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:-.005em;margin-bottom:6px;color:var(--gold)}
+.tooltip-row{display:flex;justify-content:space-between;gap:14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t2);padding:3px 0}
+.tooltip-row b{color:var(--t)}
+.tooltip-refine{margin-top:8px;padding-top:8px;border-top:1px solid var(--ge);font-size:11.5px;color:var(--t3);line-height:1.5}
+.tooltip-refine .icon{margin-right:4px}
+
+/* ── RIGHT-SIDE CONTROLS ── */
+.controls{display:flex;flex-direction:column;gap:14px}
+.ctrl-card{background:rgba(13,12,18,.55);border:1px solid var(--ge);border-radius:14px;padding:20px 22px;backdrop-filter:blur(8px)}
+.ctrl-h{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ctrl-h .live{color:var(--moss);font-size:9px;letter-spacing:1.2px}
+.ctrl-h .live::before{content:"●";margin-right:5px;color:var(--moss);animation:pulse 1.8s infinite}
+
+.refine-list{display:flex;flex-direction:column;gap:7px}
+.refine-row{display:flex;align-items:center;gap:11px;padding:9px 12px;background:rgba(0,0,0,.28);border-radius:9px;border-left:2px solid var(--goldl);transition:all .15s}
+.refine-row:hover{background:rgba(245,184,0,.06);border-left-color:var(--gold);transform:translateX(2px)}
+.refine-row.inactive{opacity:.42;border-left-color:var(--ge)}
+.refine-row.inactive:hover{transform:none;background:rgba(0,0,0,.28)}
+.refine-row .icon{font-size:15px;width:22px;text-align:center}
+.refine-row .info{flex:1;min-width:0}
+.refine-row .id{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--gold);text-transform:uppercase}
+.refine-row.inactive .id{color:var(--t3)}
+.refine-row .desc{font-size:11px;color:var(--t2);line-height:1.45;margin-top:1px}
+
+.compare-list{display:flex;flex-direction:column;gap:8px}
+.compare-btn{display:flex;align-items:center;gap:11px;padding:11px 14px;background:rgba(13,12,18,.4);border:1px solid var(--ge);border-radius:10px;cursor:pointer;text-align:left;color:var(--t2);font-family:'Inter',sans-serif;font-size:13px;transition:all .2s;font-weight:500;width:100%}
+.compare-btn:hover{border-color:var(--t3);color:var(--t);transform:translateY(-1px)}
+.compare-btn.active{border-color:var(--gold);background:rgba(245,184,0,.08);color:var(--t);box-shadow:0 0 16px rgba(245,184,0,.15)}
+.compare-btn.active.wiggins{border-color:var(--red);background:rgba(255,92,58,.08);box-shadow:0 0 16px rgba(255,92,58,.15)}
+.compare-btn .swatch{width:14px;height:14px;border-radius:50%;flex-shrink:0;border:2px solid transparent}
+.compare-btn .swatch.lebron{border-color:var(--gold);border-style:dashed}
+.compare-btn .swatch.wiggins{border-color:var(--red);border-style:dashed}
+.compare-btn .swatch.gold-solid{background:var(--gold);border-color:var(--gold)}
+.compare-btn .meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t4);margin-left:auto}
+
+/* ── CHARACTER DRILL-IN ── */
+.drill{margin-bottom:42px;background:rgba(13,12,18,.55);border:1px solid var(--ge);border-radius:20px;padding:32px;display:none;backdrop-filter:blur(8px);position:relative;overflow:hidden}
+.drill::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.4}
+.drill.open{display:block;animation:fadeUp .45s cubic-bezier(.2,.7,.3,1) both}
+.drill-h-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:14px}
+.drill-h{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:-.011em;display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+.drill-h b{color:var(--gold)}
+.drill-close{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t3);padding:7px 14px;border:1px solid var(--ge);border-radius:9999px;background:none;cursor:pointer;transition:all .18s}
+.drill-close:hover{color:var(--t);border-color:var(--t3)}
+.drill-min{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);padding:5px 10px;background:var(--golds);border:1px solid var(--goldl);border-radius:9999px}
+
+.drill-body{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+@media(max-width:820px){.drill-body{grid-template-columns:1fr}}
+.drill-svg{width:100%;max-width:380px;margin:0 auto;display:block;filter:drop-shadow(0 4px 20px rgba(0,0,0,.4))}
+.drill-list{display:flex;flex-direction:column;gap:10px}
+.subdim-row{display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(0,0,0,.32);border-radius:11px;border-left:3px solid var(--moss);transition:transform .15s}
+.subdim-row:hover{transform:translateX(3px)}
+.subdim-row.warn{border-left-color:var(--gold)}
+.subdim-row.warn-strong{border-left-color:var(--red)}
+.subdim-name{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--t2);width:104px;flex-shrink:0;text-transform:uppercase}
+.subdim-bar{flex:1;height:6px;background:rgba(255,252,245,.05);border-radius:9999px;overflow:hidden;min-width:60px}
+.subdim-bar-fill{height:100%;background:var(--moss);border-radius:9999px;animation:barFill .9s both}
+.subdim-row.warn .subdim-bar-fill{background:var(--gold)}
+.subdim-row.warn-strong .subdim-bar-fill{background:var(--red)}
+.subdim-score{font-family:'Anton',sans-serif;font-size:22px;color:var(--t);width:38px;text-align:right;letter-spacing:-.005em}
+.subdim-conf{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--t3);min-width:46px;text-align:right;letter-spacing:.3px}
+.subdim-flag{font-size:14px;width:22px;text-align:center}
+
+.drill-note{margin-top:26px;padding:18px 22px;background:rgba(245,184,0,.06);border-left:2px solid var(--gold);border-radius:0 10px 10px 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--t2);line-height:1.55}
+.drill-note b{color:var(--gold);font-style:normal;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
+
+/* ── CONFIDENCE DISCLOSURE ── */
+.confidence{margin-bottom:42px}
+.conf-h{font-family:'Anton',sans-serif;font-size:30px;letter-spacing:-.011em;margin-bottom:4px}
+.conf-h b{color:var(--gold)}
+.conf-sub{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-bottom:22px}
+.conf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.conf-card{background:rgba(13,12,18,.55);border:1px solid var(--ge);border-radius:14px;padding:20px 22px;border-top:3px solid var(--moss);transition:transform .18s,border-color .18s;backdrop-filter:blur(8px)}
+.conf-card:hover{transform:translateY(-2px);border-color:var(--t3)}
+.conf-card.warn{border-top-color:var(--gold)}
+.conf-card.delta{border-top-color:var(--teal)}
+.conf-card-h{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--moss);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.conf-card.warn .conf-card-h{color:var(--gold)}
+.conf-card.delta .conf-card-h{color:var(--teal)}
+.conf-card ul{list-style:none;padding-left:0}
+.conf-card li{font-size:13px;color:var(--t2);padding:5px 0;line-height:1.6;position:relative;padding-left:14px}
+.conf-card li::before{content:"·";position:absolute;left:2px;color:var(--moss);font-weight:700}
+.conf-card.warn li::before{color:var(--gold)}
+.conf-card.delta li::before{color:var(--teal)}
+
+/* ── CONTINUOUS LEARNING INDICATOR ── */
+.cl-indicator{margin-top:50px;padding:20px 26px;background:linear-gradient(90deg,rgba(107,170,90,.06),rgba(107,170,90,.02));border:1px solid var(--mossd);border-radius:14px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.cl-dot{width:9px;height:9px;border-radius:50%;background:var(--moss);animation:pulse 2.4s infinite;flex-shrink:0;box-shadow:0 0 12px var(--moss)}
+.cl-text{flex:1;min-width:240px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t2);line-height:1.7}
+.cl-text b{color:var(--moss);font-weight:700;letter-spacing:.5px}
+.cl-text code{color:var(--moss);font-weight:700;background:rgba(107,170,90,.08);padding:1px 5px;border-radius:3px;font-size:10.5px}
+.cl-link{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--moss);text-decoration:none;padding:8px 14px;border:1px solid var(--mossd);border-radius:9999px;transition:all .18s;white-space:nowrap}
+.cl-link:hover{background:var(--mossl);border-color:var(--moss);transform:translateY(-1px)}
+
+/* ── FOOTER ── */
+.ftr{margin-top:80px;padding-top:36px;border-top:1px solid var(--ge);text-align:center}
+.ftr-l{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t4);margin-bottom:10px}
+.ftr-b{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--t3);max-width:560px;margin:0 auto;line-height:1.5}
+
+@media(max-width:560px){
+  .wrap{padding:32px 18px 70px}
+  .player-name{font-size:42px}
+  .composite{padding:22px 22px}
+  .comp-num{font-size:68px}
+  .poly-main{padding:20px}
+  .drill{padding:22px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-fx">
+  <div class="bg-dots"></div>
+  <div class="bg-scan"></div>
+</div>
+
+<header class="hdr">
+  <div class="hdr-i">
+    <a href="/" class="brand">Field<b>Check</b><span class="iq">IQ</span></a>
+    <a href="/nba-draft" class="dpill"><span class="live-dot"></span>Live Call · June 23</a>
+    <div class="hdr-spacer"></div>
+    <div class="hdr-share">
+      <button class="hdr-btn" onclick="window.print()">Print</button>
+      <button class="hdr-btn" onclick="navigator.clipboard?.writeText(location.href);this.textContent='Copied ✓';setTimeout(()=>this.textContent='Share link',1800)">Share link</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ── PLAYER HERO ── -->
+  <div class="player-hero">
+    <div class="player-info anim-up anim-up-1">
+      <div class="player-eyebrow">// FieldCheck Verdict · Player Thesis v1.7</div>
+      <h1 class="player-name">Cooper <b>Flagg</b></h1>
+      <div class="player-meta">
+        <div class="m"><b>Forward</b></div>
+        <div class="m"><b>Dallas Mavericks</b></div>
+        <div class="m">Age <b>19</b></div>
+      </div>
+      <div class="player-tags">
+        <span class="tag-chip gold">★ Pre-registered Prediction</span>
+        <span class="tag-chip">v1.7 Posterior</span>
+        <span class="tag-chip teal">8-Facet Polygon</span>
+      </div>
+    </div>
+
+    <div class="composite anim-up anim-up-2">
+      <div class="comp-l">Composite Posterior</div>
+      <div class="comp-num">9.30<span class="frac">/10</span></div>
+      <div class="comp-tier">HOF Lock <span class="arrow">→</span> near Inner-Circle</div>
+      <div class="comp-bar">
+        <div class="comp-bar-fill"></div>
+        <div class="comp-bar-mean"></div>
+      </div>
+      <div class="comp-ci-row">
+        <span class="lo">0</span>
+        <span class="ci-l">95% CI · 8.46 – 9.95</span>
+        <span class="hi">10</span>
+      </div>
+      <div class="comp-pred">
+        <span class="star">★</span>
+        Locked May 17, 2026 · next check-in Aug 15, 2028
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TIER DISTRIBUTION ── -->
+  <div class="tier-dist anim-up anim-up-3">
+    <div class="tier-dist-h"><span class="live-dot"></span>Outcome distribution · posterior probability over career tier</div>
+    <div class="tier-row">
+      <div class="tier-label">Pantheon</div>
+      <div class="tier-bar"><div class="tier-bar-fill" style="width:22%;--bar-delay:0s"></div></div>
+      <div class="tier-pct">22%</div>
+    </div>
+    <div class="tier-row most-likely">
+      <div class="tier-label">Inner-Circle HOF</div>
+      <div class="tier-bar"><div class="tier-bar-fill" style="width:34%;--bar-delay:.08s"></div></div>
+      <div class="tier-pct">34%</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-label">HOF Lock</div>
+      <div class="tier-bar"><div class="tier-bar-fill" style="width:30%;--bar-delay:.16s"></div></div>
+      <div class="tier-pct">30%</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-label">Multi-All-Star</div>
+      <div class="tier-bar"><div class="tier-bar-fill dim" style="width:11%;--bar-delay:.24s"></div></div>
+      <div class="tier-pct dim">11%</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-label">Solid Starter</div>
+      <div class="tier-bar"><div class="tier-bar-fill dim" style="width:3%;--bar-delay:.32s"></div></div>
+      <div class="tier-pct dim">3%</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-label">Below</div>
+      <div class="tier-bar"><div class="tier-bar-fill dim" style="width:1%;--bar-delay:.4s"></div></div>
+      <div class="tier-pct dim">&lt;1%</div>
+    </div>
+  </div>
+
+  <!-- ── POLYGON + CONTROLS ── -->
+  <div class="poly-section anim-up anim-up-4">
+
+    <div class="poly-main">
+      <div class="poly-h">// Profile across 8 facets · shaded 95% credible interval bands</div>
+      <div class="poly-title">The <b>Polygon</b></div>
+      <div class="poly-caption">Click "Character" at the apex to drill into the 5 sub-dimensions · hover any vertex for detail</div>
+
+      <svg class="poly-svg" viewBox="0 0 760 760" xmlns="http://www.w3.org/2000/svg" id="polygon-svg">
+        <defs>
+          <radialGradient id="ci-gradient" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(245,184,0,0.06)"/>
+            <stop offset="100%" stop-color="rgba(245,184,0,0.18)"/>
+          </radialGradient>
+          <linearGradient id="mean-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFD24A"/>
+            <stop offset="100%" stop-color="#F5B800"/>
+          </linearGradient>
+        </defs>
+
+        <g id="scale-rings"></g>
+        <g id="axes"></g>
+
+        <!-- Ghost overlays (toggleable) -->
+        <polygon id="ghost-lebron" class="ghost-lebron"/>
+        <polygon id="ghost-wiggins" class="ghost-wiggins"/>
+
+        <!-- CI band -->
+        <path id="ci-band" class="ci-band" fill-rule="evenodd"/>
+
+        <!-- Mean polygon -->
+        <polygon id="mean-polygon" class="mean-polygon"/>
+
+        <!-- Interactive vertex hover targets -->
+        <g id="vertices"></g>
+
+        <!-- Axis labels + values -->
+        <g id="axis-labels"></g>
+
+        <!-- Refinement icons on axes -->
+        <g id="refine-axis-icons"></g>
+      </svg>
+    </div>
+
+    <div class="controls">
+
+      <div class="ctrl-card anim-up anim-up-5">
+        <div class="ctrl-h"><span>Active refinements</span><span class="live">R1 · R4 · R5</span></div>
+        <div class="refine-list">
+          <div class="refine-row">
+            <div class="icon">🩹</div>
+            <div class="info">
+              <div class="id">R1 · Physical</div>
+              <div class="desc">Injury risk applied · effective = substrate × (1 − risk)</div>
+            </div>
+          </div>
+          <div class="refine-row inactive">
+            <div class="icon">⚖️</div>
+            <div class="info">
+              <div class="id">R2 · Mental Strength</div>
+              <div class="desc">Pressure factor · not active (no pre-draft context)</div>
+            </div>
+          </div>
+          <div class="refine-row inactive">
+            <div class="icon">🔄</div>
+            <div class="info">
+              <div class="id">R3 · Talent × Physical</div>
+              <div class="desc">Interaction · not active (Talent ≈ Physical)</div>
+            </div>
+          </div>
+          <div class="refine-row">
+            <div class="icon">🎯</div>
+            <div class="info">
+              <div class="id">R4 · Coachability</div>
+              <div class="desc">Bias-corrected (coach quotes vs independent observers)</div>
+            </div>
+          </div>
+          <div class="refine-row">
+            <div class="icon">📍</div>
+            <div class="info">
+              <div class="id">R5 · Context risk</div>
+              <div class="desc">CI widened on Harm-avoidance · adult-stress untested</div>
+            </div>
+          </div>
+          <div class="refine-row inactive">
+            <div class="icon">⚖️</div>
+            <div class="info">
+              <div class="id">R6 · Gravity softening</div>
+              <div class="desc">Not active · Character above mid-zone (&gt;7)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ctrl-card anim-up anim-up-5" style="animation-delay:.55s">
+        <div class="ctrl-h">Comparable trajectories<span style="color:var(--t4);font-weight:400;letter-spacing:.2px;text-transform:none">at age 19</span></div>
+        <div class="compare-list">
+          <button class="compare-btn" id="btn-lebron" onclick="toggleGhost('lebron')">
+            <div class="swatch lebron"></div>
+            LeBron James 2003
+            <span class="meta">9.95 career</span>
+          </button>
+          <button class="compare-btn wiggins" id="btn-wiggins" onclick="toggleGhost('wiggins')">
+            <div class="swatch wiggins"></div>
+            Andrew Wiggins 2014
+            <span class="meta">7.40 career</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="ctrl-card anim-up anim-up-5" style="animation-delay:.65s">
+        <div class="ctrl-h">Character drill-in</div>
+        <button class="compare-btn" onclick="toggleDrill()" id="drill-btn">
+          <div class="swatch gold-solid"></div>
+          5 sub-dims · MIN function
+          <span class="meta">click apex →</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── CHARACTER DRILL-IN ── -->
+  <div class="drill" id="drill">
+    <div class="drill-h-row">
+      <div>
+        <div class="poly-h">// Apex axis · sub-dim composition · weight 0.18 · MIN function</div>
+        <div class="drill-h">Character <b>profile</b><span class="drill-min">MIN 8.5</span></div>
+      </div>
+      <button class="drill-close" onclick="toggleDrill()">close ✕</button>
+    </div>
+
+    <div class="drill-body">
+      <svg class="drill-svg" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" id="drill-svg">
+        <g id="drill-rings"></g>
+        <g id="drill-axes"></g>
+        <polygon id="drill-mean" fill="rgba(245,184,0,.12)" stroke="url(#mean-gradient)" stroke-width="2" stroke-linejoin="round" style="filter:drop-shadow(0 0 12px rgba(245,184,0,.25))"/>
+        <g id="drill-vertices"></g>
+        <g id="drill-labels"></g>
+      </svg>
+
+      <div class="drill-list">
+        <div class="subdim-row">
+          <div class="subdim-name">Honesty</div>
+          <div class="subdim-bar"><div class="subdim-bar-fill" style="width:85%"></div></div>
+          <div class="subdim-score">8.5</div>
+          <div class="subdim-conf">75% conf</div>
+          <div class="subdim-flag" style="color:var(--moss)">✓</div>
+        </div>
+        <div class="subdim-row warn-strong">
+          <div class="subdim-name">Harm-avoid</div>
+          <div class="subdim-bar"><div class="subdim-bar-fill" style="width:85%"></div></div>
+          <div class="subdim-score">8.5</div>
+          <div class="subdim-conf">65% conf</div>
+          <div class="subdim-flag" style="color:var(--red)">⚠</div>
+        </div>
+        <div class="subdim-row">
+          <div class="subdim-name">Reliability</div>
+          <div class="subdim-bar"><div class="subdim-bar-fill" style="width:95%"></div></div>
+          <div class="subdim-score">9.5</div>
+          <div class="subdim-conf">90% conf</div>
+          <div class="subdim-flag" style="color:var(--moss)">✓✓</div>
+        </div>
+        <div class="subdim-row">
+          <div class="subdim-name">Loyalty</div>
+          <div class="subdim-bar"><div class="subdim-bar-fill" style="width:90%"></div></div>
+          <div class="subdim-score">9.0</div>
+          <div class="subdim-conf">75% conf</div>
+          <div class="subdim-flag" style="color:var(--moss)">✓</div>
+        </div>
+        <div class="subdim-row">
+          <div class="subdim-name">Composure</div>
+          <div class="subdim-bar"><div class="subdim-bar-fill" style="width:93%"></div></div>
+          <div class="subdim-score">9.3</div>
+          <div class="subdim-conf">80% conf</div>
+          <div class="subdim-flag" style="color:var(--moss)">✓</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drill-note">
+      <b>Yamamoto mandate</b> · Character pillar uses MIN function, not average. Harm-avoidance is the limiting factor at 8.5 — flagged because the sub-dim is untested in adult-stress contexts. There is a 10% probability this dim drops below 7 within 5 years. Categorical events (none documented for Flagg) display separately and never blend into the score.
+    </div>
+  </div>
+
+  <!-- ── CONFIDENCE DISCLOSURE ── -->
+  <div class="confidence anim-up anim-up-6">
+    <div class="conf-h">Confidence <b>disclosure</b></div>
+    <div class="conf-sub">// What we know · what we don't · what would change the verdict</div>
+
+    <div class="conf-grid">
+      <div class="conf-card">
+        <div class="conf-card-h">✓ Confident about</div>
+        <ul>
+          <li>Elite Mindset · Mental Strength · Competitiveness · Talent</li>
+          <li>Reliability — 70/70 games as rookie pro</li>
+          <li>Year-over-year trajectory consistent</li>
+          <li>Coach culture fit (Mavericks system)</li>
+        </ul>
+      </div>
+
+      <div class="conf-card warn">
+        <div class="conf-card-h">⚠ Not yet confident about</div>
+        <ul>
+          <li>Harm-avoidance — no adult stress test (Yamamoto flag)</li>
+          <li>Long-term Coachability — only 1 season data</li>
+          <li>Cascade susceptibility under future pressure events</li>
+          <li>Off-court conduct under sustained spotlight</li>
+        </ul>
+      </div>
+
+      <div class="conf-card delta">
+        <div class="conf-card-h">Δ What would change this</div>
+        <ul>
+          <li>↓ Character event → composite drops 1–3 points</li>
+          <li>↓ Major injury → tighten projection, lower Physical</li>
+          <li>↑ Sustained All-NBA (3+ seasons) → lift toward Pantheon</li>
+          <li>↑ Adult-stress test passed → CI tightens, Harm-avoid confirms</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTINUOUS LEARNING INDICATOR ── -->
+  <div class="cl-indicator anim-up anim-up-6" style="animation-delay:.85s">
+    <div class="cl-dot"></div>
+    <div class="cl-text">
+      <b>Continuous learning loop active.</b><br>
+      Last refinement: <code>2026-05-17</code> (v1.6 LOCK · 24/25 PhD consensus) · Next check-in: <code>2028-08-15</code> · Weekly outcome ingestion · Monthly PhD review · Quarterly weight updates.
+    </div>
+    <a href="/methodology" class="cl-link">Methodology →</a>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="ftr">
+    <div class="ftr-l">FieldCheck IQ · The Honest Read · ThinkDifferent Holdings</div>
+    <div class="ftr-b">"See the player. Before the world does."</div>
+  </footer>
+
+</div>
+
+<!-- ── HOVER TOOLTIP ── -->
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-name" id="tt-name"></div>
+  <div class="tooltip-row"><span>Posterior mean</span><b id="tt-mean"></b></div>
+  <div class="tooltip-row"><span>95% credible</span><b id="tt-ci"></b></div>
+  <div class="tooltip-row"><span>Confidence</span><b id="tt-conf"></b></div>
+  <div class="tooltip-refine" id="tt-refine" style="display:none"></div>
+</div>
+
+<script>
+// ── POLYGON RENDERING ──────────────────────────────────────────
+
+const cx = 380, cy = 380, maxR = 260;
+
+const axes = [
+  { key:'character',    label:'Character',       angle:0,   value:8.5, sd:0.45, conf:0.72,
+    refinement:null, apex:true,
+    note:"MIN of 5 sub-dims · weight 0.18 · Yamamoto multidim treatment" },
+  { key:'mindset',      label:'Mindset',         angle:45,  value:9.5, sd:0.22, conf:0.91,
+    refinement:null,
+    note:"Elite competitive drive · consistent across observers" },
+  { key:'mental_str',   label:'Mental Strength', angle:90,  value:9.4, sd:0.28, conf:0.88,
+    refinement:null,
+    note:"Pressure response strong · 1 season pro data" },
+  { key:'talent',       label:'Talent',          angle:135, value:9.7, sd:0.20, conf:0.93,
+    refinement:null,
+    note:"Elite athleticism · feel for the game · scout consensus" },
+  { key:'physical',     label:'Physical',        angle:180, value:9.3, sd:0.32, conf:0.85,
+    refinement:'🩹',
+    refineDetail:"R1 active · injury risk coefficient applied to substrate (9.5 → 9.3 effective)" },
+  { key:'mental_iq',    label:'Mental / IQ',     angle:225, value:9.4, sd:0.25, conf:0.89,
+    refinement:null,
+    note:"High BBIQ · pattern recognition elite · game reads" },
+  { key:'coachability', label:'Coachability',    angle:270, value:9.0, sd:0.42, conf:0.78,
+    refinement:'🎯',
+    refineDetail:"R4 active · weighted blend of coach quotes (8.5) + anonymous teammates (8.8) + independent observers (9.4)" },
+  { key:'competitive',  label:'Competitiveness', angle:315, value:9.7, sd:0.20, conf:0.92,
+    refinement:null,
+    note:"Elite engine · sustained intensity across game contexts" }
+];
+
+function pointAt(angleDeg, value) {
+  const rad = (angleDeg - 90) * Math.PI / 180;
+  const r = (value / 10) * maxR;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+const SVG_NS = 'http://www.w3.org/2000/svg';
+function svg(tag, attrs) {
+  const el = document.createElementNS(SVG_NS, tag);
+  for (const [k,v] of Object.entries(attrs || {})) el.setAttribute(k, v);
+  return el;
+}
+
+// ── SCALE RINGS
+const ringsG = document.getElementById('scale-rings');
+[2,4,6,8,10].forEach(v => {
+  const r = (v/10) * maxR;
+  ringsG.appendChild(svg('circle', {cx, cy, r, class:'scale-ring' + (v===10 ? ' outer' : '')}));
+  if (v === 4 || v === 8 || v === 10) {
+    const p = pointAt(0, v);
+    const lbl = svg('text', {x:p.x + 7, y:p.y + 3, class:'scale-label'});
+    lbl.textContent = v;
+    ringsG.appendChild(lbl);
+  }
+});
+
+// ── AXIS LINES
+const axesG = document.getElementById('axes');
+axes.forEach(a => {
+  const p = pointAt(a.angle, 10);
+  axesG.appendChild(svg('line', {
+    x1:cx, y1:cy, x2:p.x, y2:p.y,
+    class: 'axis-line' + (a.apex ? ' apex' : '')
+  }));
+});
+
+// ── CI BAND
+function ciCoords(direction) {
+  return axes.map(a => {
+    let v = a.value + direction * 1.96 * a.sd;
+    v = Math.max(0, Math.min(10, v));
+    const p = pointAt(a.angle, v);
+    return [p.x.toFixed(1), p.y.toFixed(1)];
+  });
+}
+const outerCI = ciCoords(+1);
+const innerCI = ciCoords(-1);
+const ciD = `M ${outerCI.map(p=>p.join(',')).join(' L ')} Z M ${innerCI.map(p=>p.join(',')).join(' L ')} Z`;
+document.getElementById('ci-band').setAttribute('d', ciD);
+
+// ── MEAN POLYGON
+const meanPoints = axes.map(a => {
+  const p = pointAt(a.angle, a.value);
+  return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+}).join(' ');
+document.getElementById('mean-polygon').setAttribute('points', meanPoints);
+
+// ── VERTICES (interactive hover)
+const vertG = document.getElementById('vertices');
+axes.forEach((a, i) => {
+  const p = pointAt(a.angle, a.value);
+  // Wider hit area
+  const hit = svg('circle', {cx:p.x, cy:p.y, r:18, fill:'transparent', style:'cursor:pointer'});
+  hit.addEventListener('mouseenter', e => showTooltip(e, a));
+  hit.addEventListener('mousemove', moveTooltip);
+  hit.addEventListener('mouseleave', hideTooltip);
+  if (a.apex) hit.addEventListener('click', toggleDrill);
+  vertG.appendChild(hit);
+  // Visible dot
+  const dot = svg('circle', {
+    cx:p.x, cy:p.y, r:5.5, class:'mean-vertex',
+    style:`animation-delay:${1 + i*0.06}s;pointer-events:none`
+  });
+  vertG.appendChild(dot);
+});
+
+// ── AXIS LABELS + VALUES + REFINEMENT ICONS
+const labelG = document.getElementById('axis-labels');
+const refineAxisG = document.getElementById('refine-axis-icons');
+axes.forEach((a, i) => {
+  const lblP = pointAt(a.angle, 11.6);
+  const txt = svg('text', {
+    x:lblP.x, y:lblP.y,
+    'text-anchor':'middle', 'dominant-baseline':'middle',
+    class:'axis-label' + (a.apex ? ' apex' : ''),
+    style:`opacity:0;animation:fadeIn .5s ${1.2 + i*0.05}s both`
+  });
+  if (a.apex) txt.addEventListener('click', toggleDrill);
+  txt.textContent = a.label;
+  labelG.appendChild(txt);
+
+  const valOffset = (a.angle > 90 && a.angle < 270) ? 16 : -14;
+  const valP = pointAt(a.angle, 10.6);
+  const val = svg('text', {
+    x:valP.x, y:valP.y + valOffset,
+    'text-anchor':'middle', 'dominant-baseline':'middle',
+    class:'axis-value' + (a.apex ? ' apex' : ''),
+    style:`opacity:0;animation:fadeIn .5s ${1.4 + i*0.05}s both`
+  });
+  val.textContent = a.value.toFixed(1);
+  labelG.appendChild(val);
+
+  if (a.refinement) {
+    const refP = pointAt(a.angle, 12.7);
+    const refTxt = svg('text', {
+      x:refP.x, y:refP.y,
+      'text-anchor':'middle', 'dominant-baseline':'middle',
+      'font-size':'17', class:'refine-icon',
+      style:`opacity:0;animation:fadeIn .5s ${1.6 + i*0.05}s both`
+    });
+    refTxt.textContent = a.refinement;
+    refTxt.addEventListener('mouseenter', e => showTooltip(e, a));
+    refTxt.addEventListener('mousemove', moveTooltip);
+    refTxt.addEventListener('mouseleave', hideTooltip);
+    refineAxisG.appendChild(refTxt);
+  }
+});
+
+// ── TOOLTIP
+const tt = document.getElementById('tooltip');
+function showTooltip(e, a) {
+  document.getElementById('tt-name').textContent = a.label;
+  document.getElementById('tt-mean').textContent = a.value.toFixed(2);
+  const lo = Math.max(0, a.value - 1.96*a.sd).toFixed(2);
+  const hi = Math.min(10, a.value + 1.96*a.sd).toFixed(2);
+  document.getElementById('tt-ci').textContent = `${lo} – ${hi}`;
+  document.getElementById('tt-conf').textContent = (a.conf*100).toFixed(0) + '%';
+  const ref = document.getElementById('tt-refine');
+  if (a.refineDetail) {
+    ref.innerHTML = `<span class="icon">${a.refinement}</span>${a.refineDetail}`;
+    ref.style.display = 'block';
+  } else if (a.note) {
+    ref.innerHTML = a.note;
+    ref.style.display = 'block';
+  } else {
+    ref.style.display = 'none';
+  }
+  moveTooltip(e);
+  tt.classList.add('visible');
+}
+function moveTooltip(e) {
+  const x = e.clientX + 16;
+  const y = e.clientY + 16;
+  const maxX = window.innerWidth - 300;
+  const maxY = window.innerHeight - 180;
+  tt.style.left = Math.min(x, maxX) + 'px';
+  tt.style.top = Math.min(y, maxY) + 'px';
+}
+function hideTooltip() { tt.classList.remove('visible'); }
+
+// ── GHOST OVERLAYS
+const lebron = {character:9.0, mindset:9.5, mental_str:9.7, talent:9.9, physical:9.8, mental_iq:9.6, coachability:9.0, competitive:9.8};
+const wiggins = {character:7.5, mindset:6.8, mental_str:6.5, talent:9.2, physical:9.0, mental_iq:7.0, coachability:7.5, competitive:6.5};
+
+function ghostPoints(p) {
+  return axes.map(a => {
+    const pt = pointAt(a.angle, p[a.key]);
+    return `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`;
+  }).join(' ');
+}
+document.getElementById('ghost-lebron').setAttribute('points', ghostPoints(lebron));
+document.getElementById('ghost-wiggins').setAttribute('points', ghostPoints(wiggins));
+
+function toggleGhost(which) {
+  const el = document.getElementById('ghost-' + which);
+  const btn = document.getElementById('btn-' + which);
+  el.classList.toggle('visible');
+  btn.classList.toggle('active');
+}
+
+// ── DRILL-IN
+const drillCx = 210, drillCy = 210, drillMaxR = 155;
+const subDims = [
+  { key:'honesty',        label:'Honesty',     angle:0,   value:8.5 },
+  { key:'harm_avoidance', label:'Harm-avoid',  angle:72,  value:8.5, warn:true },
+  { key:'reliability',    label:'Reliability', angle:144, value:9.5 },
+  { key:'loyalty',        label:'Loyalty',     angle:216, value:9.0 },
+  { key:'composure',      label:'Composure',   angle:288, value:9.3 }
+];
+
+function drillPoint(angleDeg, value) {
+  const rad = (angleDeg - 90) * Math.PI / 180;
+  const r = (value / 10) * drillMaxR;
+  return { x: drillCx + r * Math.cos(rad), y: drillCy + r * Math.sin(rad) };
+}
+
+const drillRingsG = document.getElementById('drill-rings');
+[2,4,6,8,10].forEach(v => {
+  const r = (v/10) * drillMaxR;
+  drillRingsG.appendChild(svg('circle', {cx:drillCx, cy:drillCy, r, class:'scale-ring' + (v===10 ? ' outer' : '')}));
+});
+
+const drillAxesG = document.getElementById('drill-axes');
+subDims.forEach(s => {
+  const p = drillPoint(s.angle, 10);
+  drillAxesG.appendChild(svg('line', {x1:drillCx, y1:drillCy, x2:p.x, y2:p.y, class:'axis-line'}));
+});
+
+const drillMeanPts = subDims.map(s => {
+  const p = drillPoint(s.angle, s.value);
+  return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+}).join(' ');
+document.getElementById('drill-mean').setAttribute('points', drillMeanPts);
+
+const drillVertG = document.getElementById('drill-vertices');
+subDims.forEach(s => {
+  const p = drillPoint(s.angle, s.value);
+  const c = svg('circle', {cx:p.x, cy:p.y, r:4.5, class:'mean-vertex', style:'animation-delay:.3s'});
+  if (s.warn) c.setAttribute('fill', 'var(--red)');
+  drillVertG.appendChild(c);
+});
+
+const drillLabelsG = document.getElementById('drill-labels');
+subDims.forEach(s => {
+  const lblP = drillPoint(s.angle, 12);
+  const txt = svg('text', {
+    x:lblP.x, y:lblP.y,
+    'text-anchor':'middle', 'dominant-baseline':'middle',
+    class:'axis-label', style:'font-size:11px'
+  });
+  if (s.warn) txt.setAttribute('fill', 'var(--red)');
+  txt.textContent = s.label + (s.warn ? ' ⚠' : '');
+  drillLabelsG.appendChild(txt);
+});
+
+function toggleDrill() {
+  const drill = document.getElementById('drill');
+  drill.classList.toggle('open');
+  if (drill.classList.contains('open')) {
+    setTimeout(() => drill.scrollIntoView({behavior:'smooth', block:'start'}), 100);
+  }
+}
+</script>
+
+</body>
+</html>

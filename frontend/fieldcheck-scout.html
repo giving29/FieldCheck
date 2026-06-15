@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scout View · FieldCheck IQ</title>
+<meta name="description" content="Evaluate 20 players in 2 minutes. Paste a list. Get composites, key flags, and copy-ready audit packets.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--ge:rgba(255,252,245,.10);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.15);--mossd:rgba(107,170,90,.32);--red:#FF5C3A;}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1060px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.hero{padding:44px 0 28px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(24px,4.5vw,48px);line-height:1.04;letter-spacing:-.016em;margin-bottom:10px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.sub{font-size:14px;color:var(--t2);max-width:560px;line-height:1.65;margin-bottom:24px}
+
+/* INPUT */
+.input-zone{background:var(--bg1);border:1px solid var(--ge);border-radius:14px;padding:22px 24px;margin-bottom:16px}
+.iz-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.iz-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.iz-textarea{width:100%;padding:13px 15px;background:var(--bg2);border:1px solid var(--ge);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--t);outline:none;resize:vertical;min-height:100px;line-height:1.6;margin-bottom:10px;transition:border-color .15s}
+.iz-textarea:focus{border-color:var(--goldl)}
+.iz-row-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.iz-select{padding:11px 13px;background:var(--bg2);border:1px solid var(--ge);border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t);outline:none}
+.iz-btn{padding:11px 22px;background:var(--gold);color:#09080A;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:9px;cursor:pointer;transition:opacity .15s}
+.iz-btn:hover{opacity:.88}
+.iz-hint{font-size:12px;color:var(--t4)}
+
+/* PROGRESS */
+.progress-bar{height:3px;background:var(--bg2);border-radius:9999px;overflow:hidden;margin-bottom:12px}
+.progress-fill{height:100%;background:var(--gold);border-radius:9999px;transition:width .3s}
+
+/* TABLE */
+.scout-table{width:100%;border-collapse:collapse;margin-bottom:20px}
+.scout-table th{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t4);padding:10px 12px;text-align:left;border-bottom:1px solid var(--ge);white-space:nowrap}
+.scout-table td{padding:11px 12px;border-bottom:1px solid var(--ge2);vertical-align:middle}
+.scout-table tr:hover td{background:rgba(255,255,255,.015)}
+.td-name{font-family:'Anton',sans-serif;font-size:16px;letter-spacing:-.004em}
+.td-score{font-family:'Anton',sans-serif;font-size:22px}
+.td-tier{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 9px;border-radius:9999px;white-space:nowrap}
+.tier-icon{background:rgba(245,184,0,.12);color:var(--gold);border:1px solid rgba(245,184,0,.28)}
+.tier-elite{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.tier-high{background:var(--ge2);color:var(--t3);border:1px solid var(--ge)}
+.tier-verify{background:rgba(255,92,58,.08);color:var(--red);border:1px solid rgba(255,92,58,.2)}
+.td-flag{font-size:12px;color:var(--t2);max-width:260px;line-height:1.45}
+.td-action{text-align:right}
+.td-link{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--gold);text-decoration:none;padding:5px 10px;border:1px solid var(--goldl);border-radius:9999px;transition:all .15s;white-space:nowrap}
+.td-link:hover{background:var(--golds)}
+.loading-row td{color:var(--t4);font-family:'JetBrains Mono',monospace;font-size:11px}
+
+/* Export */
+.export-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.exp-btn{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:9px 16px;border-radius:9999px;border:1px solid var(--ge);color:var(--t3);background:transparent;cursor:pointer;transition:all .15s}
+.exp-btn:hover{border-color:var(--goldl);color:var(--gold)}
+
+.footer{margin-top:40px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);text-align:center}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:rgba(245,241,232,.35)">Scout View</div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Scout View · Bulk Evaluation</div>
+  <h1>20 players.<br><em>2 minutes.</em></h1>
+  <p class="sub">Paste a list of names. One per line. The model runs all of them in parallel — composite, tier, top flag, and a link to the full verdict. Copy the whole table for your report.</p>
+</section>
+
+<div class="input-zone">
+  <div class="iz-label">// Paste player names (one per line)</div>
+  <textarea class="iz-textarea" id="playerList" placeholder="Harper Murray&#10;Jordan Larson&#10;Dana Rettke&#10;Avery Skinner&#10;Destinee Hooker"></textarea>
+  <div class="iz-row-controls">
+    <select class="iz-select" id="bulkSport">
+      <option value="womens-volleyball">Women's Volleyball</option>
+      <option value="mens-basketball">Men's Basketball</option>
+      <option value="womens-basketball">Women's Basketball</option>
+      <option value="football">Football</option>
+      <option value="baseball">Baseball</option>
+    </select>
+    <button class="iz-btn" onclick="runBulk()">Run all →</button>
+    <span class="iz-hint">Up to 20 players · Runs in parallel · Results rank by composite</span>
+  </div>
+</div>
+
+<div class="progress-bar" id="progressBar" style="display:none">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<div id="exportBar" style="display:none" class="export-bar">
+  <button class="exp-btn" onclick="exportCSV()">⬇ Export CSV</button>
+  <button class="exp-btn" onclick="copyTable()">⬡ Copy report</button>
+  <button class="exp-btn" onclick="document.getElementById('playerList').value='';document.getElementById('scoutTable').innerHTML='';document.getElementById('exportBar').style.display='none'">✕ Clear</button>
+</div>
+
+<table class="scout-table" id="scoutTable">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Player</th>
+      <th>FC IQ</th>
+      <th>Tier</th>
+      <th>Top signal</th>
+      <th>Verdict</th>
+    </tr>
+  </thead>
+  <tbody id="scoutBody"></tbody>
+</table>
+
+<div class="footer">© 2026 ThinkDifferent Holdings · FieldCheck IQ · Scout View · Edge tier feature</div>
+</div>
+
+<script>
+const W='https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+let results=[];
+
+function tierLabel(v){return v>=9?'ICON':v>=8.5?'ELITE+':v>=8?'ELITE':v>=7?'HIGH':'VERIFY';}
+function tierClass(v){return v>=9?'tier-icon':v>=8.5?'tier-elite':v>=8?'tier-elite':v>=7?'tier-high':'tier-verify';}
+function scoreColor(v){return v>=9?'#F5B800':v>=8?'#6BAA5A':v>=7?'#A89F8C':'#FF5C3A';}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function setProgress(done,total){
+  const pct=total?Math.round(done/total*100):0;
+  document.getElementById('progressFill').style.width=pct+'%';
+}
+
+async function fetchOne(name,sport,idx,total){
+  const tbody=document.getElementById('scoutBody');
+  const existing=tbody.querySelector(`[data-idx="${idx}"]`);
+  if(existing) existing.querySelector('.loading-row td').textContent='Reading…';
+
+  try{
+    const r=await fetch(`${W}/verdict/player`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name,sport})
+    });
+    const d=await r.json();
+    const og=d.encyclopedia?.eval_grid?.overall_grade||{};
+    const composite=Number(og.composite||7);
+    const dims=og.dimensions||{};
+    // Top signal = highest-scoring layer
+    const topLayer=Object.entries(dims).sort((a,b)=>b[1]?.score-a[1]?.score)[0];
+    const topSignal=topLayer?`${topLayer[0].charAt(0).toUpperCase()+topLayer[0].slice(1)}: ${Number(topLayer[1]?.score||7).toFixed(1)}`:'—';
+    const flag=og.top_flag||og.summary||topSignal;
+    return {name,composite,flag,sport,ok:true};
+  }catch(e){
+    return {name,composite:0,flag:'Could not fetch',sport,ok:false};
+  }
+}
+
+async function runBulk(){
+  const raw=document.getElementById('playerList').value.trim();
+  const sport=document.getElementById('bulkSport').value;
+  const names=raw.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,20);
+  if(!names.length) return;
+
+  const tbody=document.getElementById('scoutBody');
+  tbody.innerHTML='';
+  results=[];
+  document.getElementById('progressBar').style.display='block';
+  document.getElementById('exportBar').style.display='none';
+  setProgress(0,names.length);
+
+  // Seed loading rows
+  names.forEach((name,i)=>{
+    const tr=document.createElement('tr');
+    tr.setAttribute('data-idx',i);
+    tr.innerHTML=`<td class="loading-row" colspan="6"><td>${i+1}</td><td>${esc(name)}</td><td colspan="4" style="color:var(--t4);font-family:'JetBrains Mono',monospace;font-size:10px">Queued…</td></tr>`;
+    tbody.appendChild(tr);
+  });
+
+  // Run in batches of 4 (parallel, not overwhelming the worker)
+  const BATCH=4;
+  let done=0;
+  const allResults=new Array(names.length);
+
+  for(let i=0;i<names.length;i+=BATCH){
+    const batch=names.slice(i,i+BATCH);
+    const batchResults=await Promise.all(batch.map((name,j)=>fetchOne(name,sport,i+j,names.length)));
+    batchResults.forEach((res,j)=>{allResults[i+j]=res;});
+    done+=batch.length;
+    setProgress(done,names.length);
+
+    // Update rows as they come in
+    batchResults.forEach((res,j)=>{
+      const idx=i+j;
+      const tr=tbody.querySelector(`[data-idx="${idx}"]`);
+      if(!tr)return;
+      const comp=Number(res.composite).toFixed(1);
+      tr.innerHTML=`
+        <td style="color:var(--t4);font-family:'JetBrains Mono',monospace;font-size:10px">${idx+1}</td>
+        <td><div class="td-name">${esc(res.name)}</div></td>
+        <td><div class="td-score" style="color:${scoreColor(res.composite)}">${res.ok?comp:'—'}</div></td>
+        <td>${res.ok?`<span class="td-tier ${tierClass(res.composite)}">${tierLabel(res.composite)}</span>`:'<span style="color:var(--red);font-size:11px">Error</span>'}</td>
+        <td><div class="td-flag">${esc(String(res.flag||'').slice(0,80))}${String(res.flag||'').length>80?'…':''}</div></td>
+        <td class="td-action"><a href="/?player=${encodeURIComponent(res.name)}&sport=${encodeURIComponent(sport)}" class="td-link" target="_blank">Verdict →</a></td>`;
+    });
+  }
+
+  // Sort by composite
+  const rows=Array.from(tbody.querySelectorAll('tr[data-idx]'));
+  rows.sort((a,b)=>{
+    const sa=parseFloat(a.querySelector('.td-score')?.textContent)||0;
+    const sb=parseFloat(b.querySelector('.td-score')?.textContent)||0;
+    return sb-sa;
+  });
+  rows.forEach((r,i)=>{
+    tbody.appendChild(r);
+    const numCell=r.querySelector('td:first-child');
+    if(numCell)numCell.textContent=i+1;
+  });
+
+  results=allResults.filter(r=>r?.ok).sort((a,b)=>b.composite-a.composite);
+  document.getElementById('progressBar').style.display='none';
+  document.getElementById('exportBar').style.display='flex';
+}
+
+function exportCSV(){
+  const sport=document.getElementById('bulkSport').value;
+  const header='Rank,Player,FC Composite,Tier,Top Signal,Sport,Verdict URL\n';
+  const rows=results.map((r,i)=>{
+    const comp=Number(r.composite).toFixed(1);
+    const url=`https://fieldcheck-app.netlify.app/?player=${encodeURIComponent(r.name)}&sport=${encodeURIComponent(sport)}`;
+    return `${i+1},"${r.name}",${comp},${tierLabel(r.composite)},"${String(r.flag||'').replace(/"/g,"'")}",${sport},${url}`;
+  });
+  const csv=header+rows.join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='fieldcheck-scout-report.csv';
+  a.click();
+}
+
+function copyTable(){
+  const sport=document.getElementById('bulkSport').value;
+  const lines=['FieldCheck IQ — Scout Report','='.repeat(50),''];
+  results.forEach((r,i)=>{
+    const comp=Number(r.composite).toFixed(1);
+    lines.push(`${i+1}. ${r.name} · ${comp} (${tierLabel(r.composite)})`);
+    if(r.flag) lines.push(`   ${r.flag}`);
+    lines.push(`   fieldcheck-app.netlify.app/?player=${encodeURIComponent(r.name)}&sport=${encodeURIComponent(sport)}`);
+    lines.push('');
+  });
+  lines.push('Generated by FieldCheck IQ · fieldcheck-app.netlify.app');
+  navigator.clipboard.writeText(lines.join('\n')).then(()=>{
+    const btn=document.querySelectorAll('.exp-btn')[1];
+    btn.textContent='✓ Copied!';
+    setTimeout(()=>{btn.textContent='⬡ Copy report';},2000);
+  });
+}
+</script>
+</body>
+</html>

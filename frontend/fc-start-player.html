@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I'm a Player · FieldCheck</title>
+<meta name="description" content="Find your projection, your fit, your comparable. Pick your sport.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--ink:#f5f1e8;--mute:#8a847a;--dim:#4a443c;--gold:#ffc94a;--teal:#b5e2c2;--line:rgba(245,241,232,.10);--line-strong:rgba(245,241,232,.22);--card:rgba(245,241,232,.03);--card-hover:rgba(245,241,232,.06);--display:'Anton',sans-serif;--serif:'Instrument Serif',serif;--body:'Crimson Pro',Georgia,serif;--mono:'JetBrains Mono',monospace;--maxw:1240px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none;transition:all .2s}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.nav{position:sticky;top:0;z-index:100;background:rgba(10,9,8,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 32px;display:flex;align-items:center;height:60px}
+.nav-brand{font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);font-weight:500;margin-right:auto}
+.nav-brand b{color:var(--gold);font-weight:500}
+.nav-main{display:flex;align-items:center}
+.nav-item{position:relative}
+.nav-link{display:flex;align-items:center;gap:6px;padding:0 20px;height:60px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.nav-link:hover,.nav-link.open{color:var(--ink)}
+.caret{font-size:7px;opacity:.6;transition:transform .2s}
+.nav-link.open .caret{transform:rotate(180deg)}
+.nav-cta{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--gold);color:var(--gold);border-radius:2px;margin-left:18px}
+.nav-cta:hover{background:var(--gold);color:#0a0908}
+.mega{position:absolute;top:60px;left:50%;transform:translateX(-50%) translateY(-6px);min-width:440px;background:rgba(16,14,12,.97);backdrop-filter:blur(28px);border:1px solid var(--line);border-radius:6px;padding:24px;opacity:0;pointer-events:none;transition:all .22s;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+.nav-item.open .mega{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.mega-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 22px}
+.mega-col-head{grid-column:span 2;font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.mega-link{display:flex;flex-direction:column;padding:9px 10px;border-radius:3px}
+.mega-link strong{font-family:var(--body);font-size:15px;font-weight:500;color:var(--ink)}
+.mega-link span{font-family:var(--serif);font-style:italic;font-size:12.5px;color:var(--mute);margin-top:1px;line-height:1.3}
+.mega-link:hover{background:var(--card-hover)}
+.mega-link:hover strong{color:var(--gold)}
+@media(max-width:880px){.nav-main,.nav-cta{display:none}}
+
+.hero{padding:80px 32px 60px;max-width:var(--maxw);margin:0 auto}
+.crumbs{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-bottom:36px}
+.crumbs a{color:var(--mute)}
+.crumbs a:hover{color:var(--gold)}
+.crumbs span{margin:0 8px;opacity:.5}
+.hero h1{font-family:var(--display);font-size:clamp(56px,9vw,120px);line-height:.88;letter-spacing:-.025em;text-transform:uppercase;margin-bottom:28px}
+.hero h1 em{font-family:var(--serif);font-style:italic;text-transform:none;color:var(--teal);font-weight:400}
+.hero-sub{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.3vw,26px);line-height:1.4;color:var(--ink);opacity:.82;max-width:780px;margin-bottom:24px}
+.section{padding:60px 32px 100px;max-width:var(--maxw);margin:0 auto}
+.section-head{margin-bottom:48px}
+.section-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.section-title{font-family:var(--display);font-size:clamp(34px,4.4vw,52px);line-height:.95;letter-spacing:-.015em;text-transform:uppercase}
+.section-title em{font-family:var(--serif);font-style:italic;text-transform:none;color:var(--teal);font-weight:400}
+.sports{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+@media(max-width:780px){.sports{grid-template-columns:1fr}}
+.sport{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:40px 36px;display:flex;flex-direction:column;min-height:300px}
+.sport:hover{border-color:var(--gold);transform:translateY(-3px)}
+.sport-tag{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;display:flex;align-items:center;gap:8px}
+.sport-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--mute)}
+.sport-tag.live{color:var(--teal)}
+.sport-tag.live .dot{background:var(--teal);box-shadow:0 0 8px var(--teal)}
+.sport-tag.beta .dot{background:var(--gold);opacity:.6}
+.sport-name{font-family:var(--display);font-size:44px;line-height:.95;letter-spacing:-.015em;text-transform:uppercase;margin-bottom:14px}
+.sport-desc{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--mute);line-height:1.45;margin-bottom:auto}
+.sport-cta-row{margin-top:32px;display:flex;flex-wrap:wrap;gap:14px}
+.sport-cta{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding:10px 16px;border:1px solid var(--gold);border-radius:2px}
+.sport-cta:hover{background:var(--gold);color:#0a0908}
+.sport-cta.muted{border-color:var(--line);color:var(--mute)}
+.sport-cta.muted:hover{border-color:var(--ink);color:var(--ink);background:transparent}
+
+footer{border-top:1px solid var(--line);padding:50px 32px 40px;max-width:var(--maxw);margin:0 auto;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer a{color:var(--mute)}
+footer a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">Field<b>Check</b></a>
+    <div class="nav-main">
+      <div class="nav-item">
+        <button class="nav-link">Sports <span class="caret">▼</span></button>
+        <div class="mega"><div class="mega-grid">
+          <div class="mega-col-head">Sports we cover</div>
+          <a href="/lovb" class="mega-link"><strong>Women's Volleyball</strong><span>LOVB · Live, deepest coverage</span></a>
+          <a href="/sports/football" class="mega-link"><strong>Football</strong><span>NCAA + recruiting</span></a>
+          <a href="/sports/basketball" class="mega-link"><strong>Basketball</strong><span>NCAA + transfer portal</span></a>
+          <a href="/sports/soccer" class="mega-link"><strong>Soccer</strong><span>College + MLS pathway</span></a>
+        </div></div>
+      </div>
+      <div class="nav-item">
+        <button class="nav-link">LOVB <span class="caret">▼</span></button>
+        <div class="mega"><div class="mega-grid">
+          <div class="mega-col-head">The four tools</div>
+          <a href="/lovb/projection" class="mega-link"><strong>Pro Fit Score</strong><span>Project any player's LOVB tier</span></a>
+          <a href="/lovb/match" class="mega-link"><strong>FA Match</strong><span>Find the Founding Athlete comp</span></a>
+          <a href="/lovb/fit" class="mega-link"><strong>Market Fit</strong><span>Score all six markets</span></a>
+          <a href="/lovb/roster" class="mega-link"><strong>Roster Analyzer</strong><span>Grade any team's depth</span></a>
+        </div></div>
+      </div>
+      <div class="nav-item">
+        <button class="nav-link">About <span class="caret">▼</span></button>
+        <div class="mega" style="min-width:380px"><div class="mega-grid">
+          <div class="mega-col-head">FieldCheck</div>
+          <a href="/about" class="mega-link"><strong>What FieldCheck is</strong><span>The thing in one page</span></a>
+          <a href="/about/methodology" class="mega-link"><strong>Methodology</strong><span>How we score and cite</span></a>
+          <a href="/about/sources" class="mega-link"><strong>Sources</strong><span>What's public-record</span></a>
+          <a href="/about/api" class="mega-link"><strong>API</strong><span>Embed the data</span></a>
+        </div></div>
+      </div>
+    </div>
+    <a href="/" class="nav-cta">Home →</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="crumbs"><a href="/">FieldCheck</a><span>›</span>I'm a Player</div>
+  <h1>Find your<br><em>projection.</em></h1>
+  <p class="hero-sub">See where you project, who you compare to, and what would move the score. Pick the sport you play — we'll route you to the deepest tools available.</p>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div class="section-eyebrow">Step one of one</div>
+    <h2 class="section-title">Which <em>sport</em> do you play?</h2>
+  </div>
+  <div class="sports">
+    <a href="/lovb/projection" class="sport">
+      <div class="sport-tag live"><span class="dot"></span>Live · deepest tools</div>
+      <div class="sport-name">Women's<br>Volleyball</div>
+      <div class="sport-desc">Full LOVB projection engine. Pro Fit Score, Founding-Athlete comp, market fit ranking. All free at base.</div>
+      <div class="sport-cta-row">
+        <span class="sport-cta">Get my Pro Fit Score →</span>
+        <a href="/lovb" class="sport-cta muted">Browse LOVB</a>
+      </div>
+    </a>
+    <a href="/sports/football" class="sport">
+      <div class="sport-tag beta"><span class="dot"></span>Beta · expanding</div>
+      <div class="sport-name">Football</div>
+      <div class="sport-desc">Recruiting projection, NIL fit, transfer-portal landing reads. Public-record sourced.</div>
+      <div class="sport-cta-row">
+        <span class="sport-cta">Get my projection →</span>
+      </div>
+    </a>
+    <a href="/sports/basketball" class="sport">
+      <div class="sport-tag beta"><span class="dot"></span>Beta · expanding</div>
+      <div class="sport-name">Basketball</div>
+      <div class="sport-desc">College pathway, portal value, pro projection. Men's and women's.</div>
+      <div class="sport-cta-row">
+        <span class="sport-cta">Get my projection →</span>
+      </div>
+    </a>
+    <a href="/sports/soccer" class="sport">
+      <div class="sport-tag beta"><span class="dot"></span>Beta · expanding</div>
+      <div class="sport-name">Soccer</div>
+      <div class="sport-desc">College, MLS / NWSL projection, international pathways.</div>
+      <div class="sport-cta-row">
+        <span class="sport-cta">Get my projection →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <a href="/">← Back to FieldCheck</a>
+  <span>Independent · Public-record · Cited</span>
+</footer>
+
+<script>
+document.querySelectorAll('.nav-item').forEach(item => {
+  const link = item.querySelector('.nav-link');
+  let timeout;
+  item.addEventListener('mouseenter', () => { clearTimeout(timeout); document.querySelectorAll('.nav-item.open').forEach(o => { if(o!==item) o.classList.remove('open'); o.querySelector('.nav-link').classList.remove('open'); }); item.classList.add('open'); link.classList.add('open'); });
+  item.addEventListener('mouseleave', () => { timeout = setTimeout(() => { item.classList.remove('open'); link.classList.remove('open'); }, 150); });
+  link.addEventListener('click', e => { e.preventDefault(); item.classList.toggle('open'); link.classList.toggle('open'); });
+});
+</script>
+
+</body>
+</html>

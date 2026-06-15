@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Gap - FieldCheck IQ Market Brief</title>
+<meta name="description" content="Five layers of sports tech exist. The judgment layer does not. FieldCheck IQ market opportunity and moat brief.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0908;--rule:rgba(248,244,237,.12);--t:#F5F1E8;--t2:rgba(245,241,232,.74);--t3:rgba(245,241,232,.46);--gold:#D4A24C;--gold-hi:#EEC067;--golds:rgba(212,162,76,.10);--goldl:rgba(212,162,76,.30);--moss:#7C9B6E;--red:#A33B2A}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;background:var(--ink)}
+body{background:var(--ink);color:var(--t);font-family:'Inter',sans-serif;line-height:1.65;background-image:radial-gradient(ellipse 60% 30% at 10% 5%,rgba(212,162,76,.05) 0%,transparent 60%)}
+a{color:var(--gold);text-decoration:none}
+.wrap{max-width:860px;margin:0 auto;padding:0 28px}
+.mast{border-bottom:1px solid var(--rule);padding:20px 0}
+.mast-i{display:flex;justify-content:space-between;align-items:baseline}
+.brand{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--t)}
+.brand .check{color:var(--gold)}
+.tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--t3)}
+.hero{padding:64px 0 40px}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,58px);font-weight:500;line-height:1.08}
+h1 em{font-style:italic;color:var(--gold-hi)}
+.lede{font-size:17px;color:var(--t2);max-width:640px;margin-top:22px;font-weight:300}
+h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;margin:64px 0 8px}
+.sec-k{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold)}
+p{color:var(--t2);font-weight:300;font-size:15px;margin:14px 0}
+strong{color:var(--t);font-weight:600}
+.layers{margin:28px 0;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.layer{display:grid;grid-template-columns:150px 1fr 1fr;border-bottom:1px solid var(--rule);padding:16px 20px;gap:16px;align-items:baseline}
+.layer:last-child{border-bottom:none}
+.layer.gap-row{background:var(--golds);border-left:3px solid var(--gold)}
+@media(max-width:640px){.layer{grid-template-columns:1fr}}
+.layer .ln{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--t)}
+.layer.gap-row .ln{color:var(--gold-hi)}
+.layer .who{font-size:13px;color:var(--t2)}
+.layer .miss{font-size:12.5px;color:var(--t3);font-style:italic}
+.layer.gap-row .miss{color:var(--gold);font-style:normal;font-weight:500}
+.proof{border-left:2px solid var(--goldl);padding:6px 0 6px 20px;margin:22px 0}
+.proof p{font-size:14px;margin:8px 0}
+.proof .src{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t3)}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:28px 0}
+@media(max-width:640px){.nums{grid-template-columns:1fr}}
+.num{border:1px solid var(--rule);border-radius:6px;padding:20px}
+.num .v{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;color:var(--gold-hi);line-height:1.1}
+.num .l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--t3);margin-top:8px;line-height:1.5}
+.moat{margin:24px 0;display:grid;gap:12px}
+.moat-i{border:1px solid var(--rule);border-radius:6px;padding:18px 20px}
+.moat-i .mh{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.moat-i p{font-size:13.5px;margin:0}
+.loop{border:1px solid var(--goldl);background:var(--golds);border-radius:6px;padding:26px 24px;margin:28px 0}
+.loop .lh{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--gold-hi);margin-bottom:14px}
+.loop ol{margin:0 0 0 20px;color:var(--t2);font-weight:300;font-size:14.5px}
+.loop li{margin:8px 0}
+.loop li b{color:var(--t)}
+.punch{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4vw,34px);font-weight:500;font-style:italic;color:var(--gold-hi);text-align:center;padding:56px 0;line-height:1.3}
+.foot{border-top:1px solid var(--rule);padding:26px 0 60px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="mast"><div class="wrap mast-i"><a class="brand" href="/">Field<span class="check">Check</span> IQ</a><span class="tag">Market Brief - June 2026</span></div></div>
+<div class="wrap">
+
+<div class="hero">
+<div class="kicker">The Gap</div>
+<h1>Five layers of sports tech exist.<br>The <em>judgment layer</em> does not.</h1>
+<p class="lede">Billions of dollars now price young athletes - NIL deals, transfer portal decisions, roster spend. Every one of those prices rests on an evaluation. And the evaluation layer is opaque, unaccountable, two sports deep, and ignores 99 percent of athletes. That is the gap.</p>
+</div>
+
+<div class="sec-k">01 - The Market Forces</div>
+<h2>NIL turned every evaluation into a financial event.</h2>
+<p>Since 2021, college sports has become a structured talent economy. The NIL market reached roughly <strong>$2.3 billion in 2024-25</strong>, growing toward $2.5B+ with the House Settlement institutionalizing direct revenue sharing. Over <strong>40 states</strong> now permit high school NIL. Athletic departments make recruiting decisions that carry six and seven figure consequences per athlete.</p>
+<div class="nums">
+<div class="num"><div class="v">$2.3B</div><div class="l">NIL market 2024-25, ~9% annual growth</div></div>
+<div class="num"><div class="v">8M</div><div class="l">US high school athletes - girls at record 3.54M</div></div>
+<div class="num"><div class="v">40+</div><div class="l">States permitting high school NIL</div></div>
+</div>
+<p>Every market that prices assets eventually builds a ratings layer - equities got S&amp;P, credit got FICO, bonds got Moody's. The athlete economy is pricing teenagers <strong>with no accountable rating infrastructure at all</strong>. The question every family, coach, collective, and GM now asks - "what is this athlete actually worth, and why?" - has no honest answer on the market.</p>
+
+<div class="sec-k">02 - The Landscape</div>
+<h2>Everyone owns one layer. No one owns judgment.</h2>
+<div class="layers">
+<div class="layer"><div class="ln">Film layer</div><div class="who">Hudl - 300K teams, Elite 11 exclusive data, FastModel, Wyscout 600K player DB</div><div class="miss">Shows what happened. Renders no verdict. Athletes upload and wait.</div></div>
+<div class="layer"><div class="ln">Stats layer</div><div class="who">MaxPreps (CBS) - box scores and leaderboards across HS sports</div><div class="miss">Counts production. Explains nothing about the athlete behind it.</div></div>
+<div class="layer"><div class="ln">Hype layer</div><div class="who">247Sports (CBS), On3 + Rivals (merged 2025, Yahoo stake) - star ratings, NIL valuations</div><div class="miss">Top ~300 only. Football and basketball only. Opaque. Never graded on outcomes.</div></div>
+<div class="layer"><div class="ln">Biomech layer</div><div class="who">ai.io / aiScout (HUMAIN), Uplift Labs - phone-video motion capture</div><div class="miss">Measures the body. Silent on character, mindset, coachability, IQ.</div></div>
+<div class="layer"><div class="ln">Attention layer</div><div class="who">Overtime - 100M+ followers, 80M daily views, athlete-as-character media</div><div class="miss">Owns Gen Z attention. Produces zero evaluative intelligence.</div></div>
+<div class="layer gap-row"><div class="ln">Judgment layer</div><div class="who">FieldCheck IQ - 8 facets, 6 tiers, 7 sports, every level HS through pro</div><div class="miss">Public, accountable, athletic intelligence on every athlete. Nobody else is here.</div></div>
+</div>
+
+<div class="sec-k">03 - Proof the incumbent layer is broken</div>
+<h2>The evidence is on their own pages.</h2>
+<div class="proof">
+<p>The same 2026 wide receiver is ranked <strong>No. 23 in the nation by 247Sports and No. 214 by Rivals</strong> - a 191-spot divergence on one athlete, with no facet-level explanation from either side and no mechanism that ever scores which one was right.</p>
+<p class="src">Calvin Russell III, 2026 class - Nov 2025 rankings refresh</p>
+</div>
+<div class="proof">
+<p>247Sports states its system plainly: 32 five-stars to mirror 32 first-round NFL picks. The entire apparatus is a <strong>pro-draft projection for the top of two sports</strong> - not an evaluation framework for athletes. A D3 point guard, a JUCO pitcher, a volleyball outside hitter: structurally invisible, forever.</p>
+<p class="src">247Sports rankings methodology FAQ</p>
+</div>
+<div class="proof">
+<p>On3's NIL Valuation is a "proprietary algorithm" with a companion metric literally called <strong>Whisper $</strong> - sourced from unnamed insiders. Opacity is not a flaw of the hype layer. It is the product.</p>
+<p class="src">On3 NIL Valuation methodology page</p>
+</div>
+<p>And the structural reason incumbents cannot close the gap: <strong>their business models forbid it.</strong> Media companies (247, On3, Rivals) sell access and fan hope - public accountability for wrong calls destroys subscription value. Hudl sells to teams and coaches - publicly grading those coaches' athletes against each other threatens its own customers. The judgment layer can only be built by someone whose entire product IS the accountable judgment.</p>
+
+<div class="sec-k">04 - The Moat</div>
+<h2>Accountability compounds. Hype does not.</h2>
+<div class="moat">
+<div class="moat-i"><div class="mh">Sealed predictions</div><p>50 predictions locked May 17, 2026. Public check-in August 15, 2028. No incumbent has ever pre-registered a single call.</p></div>
+<div class="moat-i"><div class="mh">Public outcomes ledger</div><p>Retrospective grades published - hits AND misses, permanently. The misses are the credibility engine.</p></div>
+<div class="moat-i"><div class="mh">Open machinery</div><p>Every AI system prompt public. Live usage and cost on the page. Methodology fully documented. Audit us, please.</p></div>
+<div class="moat-i"><div class="mh">8-facet verdict architecture</div><p>Character, Mindset, Mental Strength, Talent, Physical, Mental IQ, Coachability, Competitiveness - same lens HS through pro, 7 sports. Star ratings collapse an athlete to one number; the polygon shows a shape.</p></div>
+<div class="moat-i"><div class="mh">The 110 calibration battery</div><p>110 athletes across 11 buckets - HS, D1, D2, D3, JUCO, pro regression checks - re-run against every release. Evaluation quality as engineering discipline, not editorial opinion.</p></div>
+<div class="moat-i"><div class="mh">Continuous learning loop</div><p>PhD panel + case studies + draft outcomes + contract signings + on-field events feed back into the engine. Every season of results widens the gap behind us.</p></div>
+</div>
+
+<div class="sec-k">05 - The Wedge</div>
+<h2>Amateur first. Because that is where nobody is.</h2>
+<p>The incumbents fight over the same 300 names. Below them sit <strong>8 million high school athletes, plus D2, D3, JUCO and non-revenue D1</strong> - athletes who have never been evaluated by anyone, ever. For them, FieldCheck is not a better ranking. It is the <strong>first verdict of their life</strong>: a number, a shape, a tier, and a path - with the same lens used on Cooper Flagg.</p>
+<p>NIL is moving down-market into high school faster than any infrastructure can follow. The family of a 16-year-old weighing offers, transfers, and brand deals has exactly zero honest instruments today. The amateur layer is both the largest unserved population and the place where the verdict matters most.</p>
+
+<div class="sec-k">06 - What The Athlete Is Actually Buying</div>
+<h2>The dream has a ladder. We are its GPS.</h2>
+<p>Be precise about what a young athlete wants. A top program is not the dream - it is a <strong>means to the dream</strong>: the NIL contract, the draft night, the pro career. Every athlete is running the same mental loop a thousand times a week: <em>where am I really, what does the next rung require, and what exactly do I work on tomorrow?</em></p>
+<p>Today that loop has no instrument. Stars do not answer it (you either have them or you are invisible). Film does not answer it (it shows, it never tells). Stats do not answer it (points do not explain why the offer has not come). <strong>FieldCheck is the first product built to answer the loop itself:</strong></p>
+<div class="moat">
+<div class="moat-i"><div class="mh">Position - where you are</div><p>Your composite, your tier, your 8-facet shape. Not a guess, not a star, not silence - a verdict with reasoning attached.</p></div>
+<div class="moat-i"><div class="mh">Destination - what the rung requires</div><p>Each tier maps to real outcomes: D1 roster conversations, conference-level NIL, high-major offers, draft-board territory. The ladder is explicit, public, and the same for everyone.</p></div>
+<div class="moat-i"><div class="mh">Route - what to work on tomorrow</div><p>The gap is named at the facet level: "Mental IQ and Coachability are what separate you from STAR." The agent turns every verdict into a development conversation. Evaluation becomes a roadmap.</p></div>
+</div>
+<p>This is why the amateur athlete comes back after every game: <strong>the product tracks progress toward their actual dream, in their own numbers.</strong> Nobody else can offer that, because nobody else has graded them at all.</p>
+
+<div class="sec-k">07 - The Other Side of the Market</div>
+<h2>For coaches: the championship engine.</h2>
+<p>A coach's dream has the same structure: find talent nobody else found, develop it visibly, win, and rise. FieldCheck serves it directly - <strong>a graded pipeline of athletes the hype layer never looked at</strong>: the 8.1 at a D3 school, the JUCO guard with an ELITE compete facet, the volleyball OH whose shape fits your system. Program-fit, position pools, hidden-gem alerts - the recruiting edge is literally athletes who exist only in our index. And every athlete a coach discovers through FieldCheck pulls more athletes in: a two-sided flywheel where each side is the other side's reason to stay.</p>
+
+<div class="sec-k">08 - The Stickiness Engine</div>
+<h2>Dopamine with substance.</h2>
+<p>Overtime proved the playbook for this generation: follow <strong>players, not teams</strong>; short loops; identity; genuine two-way engagement (they answer 250K DMs a year). We apply the same psychology - but where Overtime's dopamine is watching someone else, ours is personal:</p>
+<div class="loop">
+<div class="lh">The loop - why an athlete never leaves</div>
+<ol>
+<li><b>The Path:</b> your dream, instrumented - current tier, target rung, and the named facet gaps in between. Checking your path becomes a daily habit, like checking a portfolio.</li>
+<li><b>Identity:</b> your verdict polygon IS your athletic identity - a shareable card no other platform can issue, because no one else grades you at all.</li>
+<li><b>Investment:</b> watchlists, peer-compare, program fit - the more you build, the more it knows your world.</li>
+<li><b>Variable reward:</b> tier-jump alerts, facet movement after games, trajectory updates - "your number moved" is the strongest notification in sports.</li>
+<li><b>Conversation:</b> the agent answers "why am I a PROSPECT and not a STAR?" - and shows exactly which facets close the gap. Evaluation becomes a development roadmap.</li>
+<li><b>Status:</b> climbing a public, honest ladder that coaches and scouts actually read. Sharing the card recruits the next athlete. The loop compounds.</li>
+</ol>
+</div>
+<p>YouTube and TikTok give a dopamine hit about the world. <strong>FieldCheck gives a dopamine hit about yourself, attached to a real path forward.</strong> That is the difference between entertainment and identity - and identity is what athletes never leave.</p>
+
+<div class="sec-k">09 - Capability Implications - What We Ship Next</div>
+<h2>Every feature serves the loop.</h2>
+<div class="moat">
+<div class="moat-i"><div class="mh">The Path block</div><p>On every verdict: dream selector (D1 / NIL / PRO), tier ladder with you-are-here, facet gaps ranked by leverage, agent hooks per gap.</p></div>
+<div class="moat-i"><div class="mh">Verdict identity card</div><p>Shareable polygon card - the athlete's badge for Instagram, X, group chats. Every share recruits the next athlete.</p></div>
+<div class="moat-i"><div class="mh">Movement alerts</div><p>Tier-jump and facet-movement notifications after games. "Your number moved" - the strongest push notification in sports.</p></div>
+<div class="moat-i"><div class="mh">Coach pipeline view</div><p>Graded discovery across D2/D3/JUCO/HS - position pools, program fit, hidden-gem triggers. The talent only we have indexed.</p></div>
+</div>
+
+<div class="sec-k">10 - The Articulation</div>
+<div class="punch">"Hudl shows the film. MaxPreps counts the stats.<br>247 ranks the famous. Nobody judges.<br>We are the verdict - public, accountable, for every athlete."</div>
+<p style="text-align:center;max-width:600px;margin:0 auto"><strong>FieldCheck IQ is the ratings layer of the athlete economy</strong> - the honest instrument a multi-billion-dollar talent market is missing. For the market, we are the verdict. <strong>For the athlete, we are the GPS to the dream</strong> - position, destination, route - starting where the field is empty and the need is greatest: the amateur layer.</p>
+<div style="display:flex;gap:12px;justify-content:center;margin-top:30px;flex-wrap:wrap">
+<a href="/fieldcheck-verdict.html?q=Carlos+Medlock+Jr&sport=mens-basketball" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#0A0908;background:#D4A24C;padding:13px 22px;border-radius:3px;text-decoration:none">Live demo: THE PATH</a>
+<a href="/receipts" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:rgba(245,241,232,.74);border:1px solid rgba(248,244,237,.12);padding:12px 20px;border-radius:3px;text-decoration:none">The receipts</a>
+<a href="/dream" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:rgba(245,241,232,.74);border:1px solid rgba(248,244,237,.12);padding:12px 20px;border-radius:3px;text-decoration:none">For athletes: /dream</a>
+</div>
+
+</div>
+<div class="foot">FieldCheck IQ - ThinkDifferent Holdings - We do not write anyone off</div>
+</body>
+</html>

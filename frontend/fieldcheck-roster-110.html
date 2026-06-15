@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The 110 · FieldCheck IQ amateur proof set</title>
+<meta name="description" content="The 110-athlete calibration battery — every level, one framework. High school through D3, JUCO, and pro regression checks.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='28' fill='%23D4A24C'/></svg>">
+<style>
+:root {
+  --ink: #07060A;
+  --ink-2: #0F0C09;
+  --ink-3: #14110D;
+  --t: #F3EFE7;
+  --t2: #BFB6A4;
+  --t3: #8B8475;
+  --t4: #5C574D;
+  --gold: #D4A24C;
+  --gold-hi: #E8BC6C;
+  --gold-dim: rgba(212, 162, 76, 0.18);
+  --gold-soft: rgba(212, 162, 76, 0.06);
+  --teal: #5BA8A0;
+  --moss: #6B8A5F;
+  --rose: #C4665A;
+  --rule: rgba(255, 253, 247, 0.10);
+  --rule-2: rgba(255, 253, 247, 0.05);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--ink); color: var(--t); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.55; }
+body { min-height: 100vh; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 32px 28px 80px; }
+header.topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 28px; border-bottom: 1px solid var(--rule); max-width: 1200px; margin: 0 auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.05em; }
+.brand { color: var(--gold); font-weight: 700; }
+.brand a { color: inherit; text-decoration: none; }
+.nav { color: var(--t3); }
+.nav a { color: var(--t3); text-decoration: none; margin-left: 24px; }
+.nav a:hover { color: var(--t); }
+
+.hero { padding: 72px 0 48px; border-bottom: 1px solid var(--rule); }
+.hero-eyebrow { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 18px; }
+.hero h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(40px, 6vw, 72px); line-height: 1.05; margin: 0 0 24px; letter-spacing: -0.01em; }
+.hero h1 em { color: var(--gold); font-style: italic; }
+.hero p.lede { color: var(--t2); font-size: 18px; max-width: 720px; line-height: 1.65; margin: 0 0 32px; }
+
+.stats-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 20px; padding: 32px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: 40px; }
+.stat { text-align: center; }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 38px; color: var(--gold); font-weight: 400; line-height: 1; }
+.stat-lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--t3); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 8px; }
+
+.intro-note { margin: 56px 0 24px; padding: 24px 28px; background: var(--gold-soft); border-left: 3px solid var(--gold); font-size: 14.5px; color: var(--t2); line-height: 1.7; }
+.intro-note strong { color: var(--t); }
+
+.bucket { margin: 64px 0 0; }
+.bucket-h { margin-bottom: 24px; }
+.bucket-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--t3); letter-spacing: 0.14em; margin-bottom: 10px; }
+.bucket-title { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 28px; color: var(--t); margin: 0 0 8px; letter-spacing: -0.005em; }
+.bucket-desc { color: var(--t3); font-size: 14px; margin: 0 0 14px; max-width: 720px; line-height: 1.65; }
+.bucket-count { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--t4); letter-spacing: 0.1em; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 14px; }
+.card { display: block; padding: 20px 18px 16px; background: var(--ink-2); border: 1px solid var(--rule-2); border-radius: 10px; text-decoration: none; color: var(--t); transition: all 0.16s ease; }
+.card:hover { background: var(--ink-3); border-color: var(--gold-dim); transform: translateY(-1px); }
+.card-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: var(--t); margin: 0 0 6px; line-height: 1.2; }
+.card-meta { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--t3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.card-school { font-size: 13px; color: var(--t2); margin-bottom: 6px; font-style: italic; }
+.cmt { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--moss); margin-bottom: 8px; letter-spacing: 0.04em; }
+.card-foot { display: flex; gap: 8px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--rule-2); }
+.band-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; padding: 3px 7px; border-radius: 3px; letter-spacing: 0.08em; }
+.pool-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; padding: 3px 7px; border-radius: 3px; letter-spacing: 0.08em; background: rgba(255,253,247,0.04); color: var(--t3); }
+.adv-flag { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: var(--rose); margin-left: 8px; letter-spacing: 0.06em; }
+
+.band-great .band-tag { background: rgba(212, 162, 76, 0.16); color: var(--gold); }
+.band-great .card-name { color: var(--gold-hi); }
+.band-good .band-tag { background: rgba(91, 168, 160, 0.12); color: var(--teal); }
+.band-avg .band-tag { background: rgba(255,253,247,0.06); color: var(--t2); }
+.band-below .band-tag { background: rgba(196, 102, 90, 0.10); color: var(--rose); }
+.band-sparse .band-tag { background: rgba(255,253,247,0.03); color: var(--t4); }
+.band-sparse .card-name { color: var(--t3); }
+
+footer { margin-top: 96px; padding: 32px 28px; border-top: 1px solid var(--rule); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--t4); letter-spacing: 0.05em; max-width: 1200px; margin-left: auto; margin-right: auto; }
+footer a { color: var(--t3); text-decoration: none; }
+footer a:hover { color: var(--gold); }
+
+@media (max-width: 600px) {
+  header.topbar { flex-direction: column; gap: 12px; align-items: flex-start; }
+  .nav a { margin-left: 0; margin-right: 18px; }
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><a href="/">FieldCheck IQ</a></div>
+  <nav class="nav">
+    <a href="/">← All players</a>
+    <a href="/deck">Deck</a>
+    <a href="/methodology">Methodology</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="hero-eyebrow">★ THE 110 · AMATEUR PROOF SET</div>
+    <h1>Every athlete.<br><em>One framework.</em></h1>
+    <p class="lede">110 athletes across 11 buckets — high school through D3, JUCO, and a small pro-regression check. The calibration battery FieldCheck IQ runs against every release. Each name resolves to a live verdict using the same 8 facets, the same 16 voices, the same shape.</p>
+    <p class="lede" style="color: var(--t3); font-size: 15px;">This is the proof set. Click any name to run their verdict.</p>
+
+    <div class="stats-strip">
+      <div class="stat"><div class="stat-num">53</div><div class="stat-lbl">HS amateur</div></div>
+      <div class="stat"><div class="stat-num">18</div><div class="stat-lbl">D1</div></div>
+      <div class="stat"><div class="stat-num">15</div><div class="stat-lbl">D2</div></div>
+      <div class="stat"><div class="stat-num">11</div><div class="stat-lbl">D3</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">JUCO</div></div>
+      <div class="stat"><div class="stat-num">9</div><div class="stat-lbl">Pro check</div></div>
+      <div class="stat"><div class="stat-num">110</div><div class="stat-lbl">Total</div></div>
+    </div>
+  </section>
+
+  <div class="intro-note">
+    <strong>How to read this page.</strong> Every athlete here was hand-picked for a specific reason — to test a specific edge of the framework. The <em>Elite HS</em> buckets prove top-tier amateurs surface correctly. The <em>Mid-tier / Off-radar</em> buckets test the framework's honesty about thin data. The <em>Invisible D1</em> bucket proves the model gives the same shape to mid-major starters that it gives to All-Americans. The <em>Adversarial</em> bucket exists to test identity resolution — Tim Duncan vs. Tim Duncan. <em>Same lens. Every level.</em>
+  </div>
+
+  
+    <section class="bucket">
+      <div class="bucket-h">
+        <div class="bucket-eyebrow">// B01_ELITE_HS_MBB</div>
+        <h2 class="bucket-title">Elite HS Boys Basketball · top 10 nationally</h2>
+        <p class="bucket-desc">Top 10 high school boys basketball recruits in the 2026 class. The cohort everyone reads.</p>
+        <div class="bucket-count">10 athletes</div>
+      </div>
+      <div class="grid">
+    <a class='card band-great' href='/fieldcheck-verdict?q=Tyran+Stokes&sport=mens-basketball'>
+      <div class="card-name">Tyran Stokes</div>
+      <div class="card-meta">SF · MENS BASKETBALL</div>
+      <div class="card-school">Notre Dame HS (CA)</div>
+      <div class="cmt">→ Kansas</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Cameron+Williams&sport=mens-basketball'>
+      <div class="card-name">Cameron Williams<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">C · MENS BASKETBALL</div>
+      <div class="card-school">Rainier Beach (WA)</div>
+      <div class="cmt">→ Duke</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Jordan+Smith+Jr.&sport=mens-basketball'>
+      <div class="card-name">Jordan Smith Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Paul VI (VA)</div>
+      <div class="cmt">→ Arkansas</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Jason+Crowe&sport=mens-basketball'>
+      <div class="card-name">Jason Crowe<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">PG · MENS BASKETBALL</div>
+      <div class="card-school">Inglewood (CA) / Eastside Christian</div>
+      <div class="cmt">→ Missouri</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Caleb+Holt&sport=mens-basketball'>
+      <div class="card-name">Caleb Holt<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">SG · MENS BASKETBALL</div>
+      <div class="card-school">Prolific Prep (FL)</div>
+      <div class="cmt">→ Arizona</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Babatunde+Oladotun&sport=mens-basketball'>
+      <div class="card-name">Babatunde Oladotun<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">varies (reclassified up)</div>
+      <div class="cmt">→ Maryland</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Bruce+Branch+III&sport=mens-basketball'>
+      <div class="card-name">Bruce Branch III<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ Uncommitted (as of last report)</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Alijah+Arenas&sport=mens-basketball'>
+      <div class="card-name">Alijah Arenas<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Chatsworth (CA) / multiple</div>
+      <div class="cmt">→ USC (committed June 2024)</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Caleb+Gaskins&sport=mens-basketball'>
+      <div class="card-name">Caleb Gaskins<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">PF · MENS BASKETBALL</div>
+      <div class="card-school">Montverde Academy (FL)</div>
+      <div class="cmt">→ Miami</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Deron+Rippey+Jr.&sport=mens-basketball'>
+      <div class="card-name">Deron Rippey Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">PG · MENS BASKETBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ Duke</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a></div>
+    </section>
+    <section class="bucket">
+      <div class="bucket-h">
+        <div class="bucket-eyebrow">// B02_ELITE_HS_WBB</div>
+        <h2 class="bucket-title">Elite HS Girls Basketball · top 10 nationally</h2>
+        <p class="bucket-desc">Top high school girls basketball — where Juju and Hidalgo emerged.</p>
+        <div class="bucket-count">10 athletes</div>
+      </div>
+      <div class="grid">
+    <a class='card band-great' href='/fieldcheck-verdict?q=Saniyah+Hall&sport=womens-basketball'>
+      <div class="card-name">Saniyah Hall<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · WOMENS BASKETBALL</div>
+      <div class="card-school">Spire Academy (OH)</div>
+      <div class="cmt">→ USC</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Oliviyah+Edwards&sport=womens-basketball'>
+      <div class="card-name">Oliviyah Edwards<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · WOMENS BASKETBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ Tennessee</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Olivia+Vukosa&sport=womens-basketball'>
+      <div class="card-name">Olivia Vukosa<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · WOMENS BASKETBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ uncommitted-at-pull-time</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Kate+Harpring&sport=womens-basketball'>
+      <div class="card-name">Kate Harpring<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G/F · WOMENS BASKETBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ North Carolina</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Jordyn+Jackson&sport=womens-basketball'>
+      <div class="card-name">Jordyn Jackson<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · WOMENS BASKETBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ Maryland</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Maddyn+Greenway&sport=womens-basketball'>
+      <div class="card-name">Maddyn Greenway<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">PG · WOMENS BASKETBALL</div>
+      <div class="card-school">Minnesota</div>
+      <div class="cmt">→ Maryland (per Kenny Brooks haul)</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Libby+Fandel&sport=womens-basketball'>
+      <div class="card-name">Libby Fandel<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G/W · WOMENS BASKETBALL</div>
+      <div class="card-school">Xavier HS (Iowa)</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Danielle+Osho&sport=womens-basketball'>
+      <div class="card-name">Danielle Osho<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · WOMENS BASKETBALL</div>
+      <div class="card-school">Hebron Christian (GA)</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Manuella+Fernandez&sport=womens-basketball'>
+      <div class="card-name">Manuella Fernandez<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">PF · WOMENS BASKETBALL</div>
+      <div class="card-school">Central Pointe Christian (FL)</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Emily+McDonald&sport=womens-basketball'>
+      <div class="card-name">Emily McDonald<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · WOMENS BASKETBALL</div>
+      <div class="card-school">Kentucky</div>
+      <div class="cmt">→ Kentucky</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a></div>
+    </section>
+    <section class="bucket">
+      <div class="bucket-h">
+        <div class="bucket-eyebrow">// B03_ELITE_HS_FB</div>
+        <h2 class="bucket-title">Elite HS Football · top 10 nationally</h2>
+        <p class="bucket-desc">Top high school football. The 5-stars before they become Saturday names.</p>
+        <div class="bucket-count">10 athletes</div>
+      </div>
+      <div class="grid">
+    <a class='card band-great' href='/fieldcheck-verdict?q=Faizon+Brandon&sport=football'>
+      <div class="card-name">Faizon Brandon<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">QB · FOOTBALL</div>
+      <div class="card-school">Grimsley HS (NC)</div>
+      <div class="cmt">→ Tennessee</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Chris+Henry+Jr.&sport=football'>
+      <div class="card-name">Chris Henry Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">WR · FOOTBALL</div>
+      <div class="card-school">Mater Dei (CA)</div>
+      <div class="cmt">→ Ohio State</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Keisean+Henderson&sport=football'>
+      <div class="card-name">Keisean Henderson<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">QB · FOOTBALL</div>
+      <div class="card-school">Legacy School of Sport Sciences (TX)</div>
+      <div class="cmt">→ Houston</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Lamar+Brown&sport=football'>
+      <div class="card-name">Lamar Brown<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">DL · FOOTBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ LSU</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Jared+Curtis&sport=football'>
+      <div class="card-name">Jared Curtis<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">QB · FOOTBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ Georgia</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Dia+Bell&sport=football'>
+      <div class="card-name">Dia Bell<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">QB · FOOTBALL</div>
+      <div class="card-school">Florida HS</div>
+      <div class="cmt">→ Alabama</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Jett+Washington&sport=football'>
+      <div class="card-name">Jett Washington<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">S · FOOTBALL</div>
+      <div class="card-school">Nevada HS</div>
+      <div class="cmt">→ Texas</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Xavier+Griffin&sport=football'>
+      <div class="card-name">Xavier Griffin<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">LB · FOOTBALL</div>
+      <div class="card-school">Georgia HS</div>
+      <div class="cmt">→ Tennessee</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Jalen+Brewster&sport=football'>
+      <div class="card-name">Jalen Brewster<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">DL · FOOTBALL</div>
+      <div class="card-school">Cedar Hill (TX)</div>
+      <div class="cmt">→ uncommitted</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=John+Meredith&sport=football'>
+      <div class="card-name">John Meredith<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">CB · FOOTBALL</div>
+      <div class="card-school">North Crowley (TX)</div>
+      <div class="cmt">→ split (78% / 19%)</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a></div>
+    </section>
+    <section class="bucket">
+      <div class="bucket-h">
+        <div class="bucket-eyebrow">// B04_ELITE_HS_BASEBALL</div>
+        <h2 class="bucket-title">Elite HS Baseball · top 2026 MLB Draft prospects</h2>
+        <p class="bucket-desc">2026 MLB Draft prep prospects — the HS players going early in June.</p>
+        <div class="bucket-count">5 athletes</div>
+      </div>
+      <div class="grid">
+    <a class='card band-great' href='/fieldcheck-verdict?q=Grady+Emerson&sport=baseball'>
+      <div class="card-name">Grady Emerson<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">SS · BASEBALL</div>
+      <div class="card-school">Fort Worth Christian (TX)</div>
+      <div class="cmt">→ Texas</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Jacob+Lombard&sport=baseball'>
+      <div class="card-name">Jacob Lombard<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">SS · BASEBALL</div>
+      <div class="card-school">Gulliver Schools (FL)</div>
+      <div class="cmt">→ Miami</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Eric+Booth+Jr.&sport=baseball'>
+      <div class="card-name">Eric Booth Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">OF · BASEBALL</div>
+      <div class="card-school">Oak Grove HS (MS)</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Trevor+Condon&sport=baseball'>
+      <div class="card-name">Trevor Condon<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">INF · BASEBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Brody+Bumila&sport=baseball'>
+      <div class="card-name">Brody Bumila<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">LHP · BASEBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a></div>
+    </section>
+    <section class="bucket">
+      <div class="bucket-h">
+        <div class="bucket-eyebrow">// B05_MID_TIER_HS</div>
+        <h2 class="bucket-title">Mid-tier HS · ranked 50-150 nationally · mixed sports</h2>
+        <p class="bucket-desc">Ranked 50–150 nationally. Where the algorithm earns its keep — same shape, less media.</p>
+        <div class="bucket-count">15 athletes</div>
+      </div>
+      <div class="grid">
+    <a class='card band-good' href='/fieldcheck-verdict?q=Carlos+Medlock+Jr.&sport=mens-basketball'>
+      <div class="card-name">Carlos Medlock Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">PG · MENS BASKETBALL</div>
+      <div class="card-school">Link Academy (Branson, MO)</div>
+      <div class="cmt">→ Michigan State</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Brandon+Bass+Jr.&sport=mens-basketball'>
+      <div class="card-name">Brandon Bass Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Windermere Prep (FL)</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Fred+Smith+Jr.&sport=mens-basketball'>
+      <div class="card-name">Fred Smith Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Briarcrest Christian (TN)</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Austin+Goosby&sport=mens-basketball'>
+      <div class="card-name">Austin Goosby<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ Texas</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Bo+Ogden&sport=mens-basketball'>
+      <div class="card-name">Bo Ogden<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ Texas</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Anthony+Brown+Jr.&sport=mens-basketball'>
+      <div class="card-name">Anthony Brown Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Jasiah+Jervis&sport=mens-basketball'>
+      <div class="card-name">Jasiah Jervis<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">varies</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=CJ+Bronaugh&sport=football'>
+      <div class="card-name">CJ Bronaugh<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">CB · FOOTBALL</div>
+      <div class="card-school">Windermere HS (FL)</div>
+      <div class="cmt">→ Nebraska</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Jamarion+Vincent&sport=football'>
+      <div class="card-name">Jamarion Vincent<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">CB · FOOTBALL</div>
+      <div class="card-school">Waco Connally (TX)</div>
+      <div class="cmt">→ Baylor</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Valdin+Sone&sport=football'>
+      <div class="card-name">Valdin Sone<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">DL · FOOTBALL</div>
+      <div class="card-school">Sweden / US prep</div>
+      <div class="cmt">→ Auburn</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Quentin+Coleman&sport=mens-basketball'>
+      <div class="card-name">Quentin Coleman<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Principia School (St. Louis, MO)</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Obinna+Ekezie+Jr.&sport=mens-basketball'>
+      <div class="card-name">Obinna Ekezie Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">C · MENS BASKETBALL</div>
+      <div class="card-school">Southeastern Prep (Orlando, FL)</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Luke+Ertel&sport=mens-basketball'>
+      <div class="card-name">Luke Ertel<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Mt. Vernon (Fortville, IN)</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Christopher+Washington+Jr.&sport=mens-basketball'>
+      <div class="card-name">Christopher Washington Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Providence Christian Academy (Murfreesboro, TN)</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Julius+Price&sport=mens-basketball'>
+      <div class="card-name">Julius Price<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">St. Joseph (Santa Maria, CA)</div>
+      <div class="cmt">→ varies</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">HS</span></div>
+    </a></div>
+    </section>
+    <section class="bucket">
+      <div class="bucket-h">
+        <div class="bucket-eyebrow">// B06_OFF_RADAR_HS</div>
+        <h2 class="bucket-title">Off-radar HS · ranked or unranked but committed · sparse media</h2>
+        <p class="bucket-desc">Committed but sparsely covered. Thin data; the verdict must be honest about uncertainty.</p>
+        <div class="bucket-count">10 athletes</div>
+      </div>
+      <div class="grid">
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Cedric+Tomes&sport=mens-basketball'>
+      <div class="card-name">Cedric Tomes<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">East Ridge HS (TN)</div>
+      <div class="cmt">→ unknown</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Donovan+Dent&sport=mens-basketball'>
+      <div class="card-name">Donovan Dent<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">UCLA</div>
+      <div class="cmt">→ UCLA (current)</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-below' href='/fieldcheck-verdict?q=Antwan+Kimmons&sport=mens-basketball'>
+      <div class="card-name">Antwan Kimmons<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Concordia-St. Paul (D2)</div>
+      <div class="cmt">→ Concordia-St. Paul</div>
+      <div class="card-foot"><span class="band-tag">BELOW</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Jeremy+Dent-Smith&sport=mens-basketball'>
+      <div class="card-name">Jeremy Dent-Smith<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Cal State Dominguez Hills (D2)</div>
+      <div class="cmt">→ Cal State Dominguez Hills</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Tate+Ivanyo&sport=mens-basketball'>
+      <div class="card-name">Tate Ivanyo<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Anderson University (D3)</div>
+      <div class="cmt">→ Anderson University (HCAC)</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D3</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Andre+Woods&sport=football'>
+      <div class="card-name">Andre Woods<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">IOL · FOOTBALL</div>
+      <div class="card-school">East Central C.C. (Decatur, MS)</div>
+      <div class="cmt">→ TBD post-JUCO</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">JUCO</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Joshua+Davis&sport=football'>
+      <div class="card-name">Joshua Davis<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">DL · FOOTBALL</div>
+      <div class="card-school">Copiah-Lincoln C.C. (Wesson, MS)</div>
+      <div class="cmt">→ TBD post-JUCO</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">JUCO</span></div>
+    </a>
+
+    <a class='card band-below' href='/fieldcheck-verdict?q=Naol+Andarge&sport=football'>
+      <div class="card-name">Naol Andarge<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">OT · FOOTBALL</div>
+      <div class="card-school">Garden City C.C. (Garden City, KS)</div>
+      <div class="cmt">→ TBD post-JUCO</div>
+      <div class="card-foot"><span class="band-tag">BELOW</span><span class="pool-tag">JUCO</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Dieunerst+Collin&sport=football'>
+      <div class="card-name">Dieunerst Collin<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">OL · FOOTBALL</div>
+      <div class="card-school">Lake Erie College (D2)</div>
+      <div class="cmt">→ Lake Erie College</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Noah+Gulden&sport=mens-soccer'>
+      <div class="card-name">Noah Gulden<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">MF · MENS SOCCER</div>
+      <div class="card-school">Lipscomb (was D1 ASUN)</div>
+      <div class="cmt">→ Lipscomb (alumnus)</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D1</span></div>
+    </a></div>
+    </section>
+    <section class="bucket">
+      <div class="bucket-h">
+        <div class="bucket-eyebrow">// B07_INVISIBLE_D1</div>
+        <h2 class="bucket-title">Current D1 starters · mid-major non-marquee · 'invisible D1'</h2>
+        <p class="bucket-desc">Current D1 starters at mid-majors. Invisible to the national media; visible to the framework.</p>
+        <div class="bucket-count">12 athletes</div>
+      </div>
+      <div class="grid">
+    <a class='card band-great' href='/fieldcheck-verdict?q=Robbie+Avila&sport=mens-basketball'>
+      <div class="card-name">Robbie Avila<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Saint Louis</div>
+      <div class="cmt">→ Saint Louis (current)</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=DeJour+Reaves&sport=mens-basketball'>
+      <div class="card-name">DeJour Reaves<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Fordham</div>
+      <div class="cmt">→ Fordham (current)</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Terrence+Hill+Jr.&sport=mens-basketball'>
+      <div class="card-name">Terrence Hill Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">VCU</div>
+      <div class="cmt">→ VCU (current)</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Jack+Karasinski&sport=mens-basketball'>
+      <div class="card-name">Jack Karasinski<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Bellarmine</div>
+      <div class="cmt">→ Bellarmine (current)</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Malcolm+Noel&sport=mens-basketball'>
+      <div class="card-name">Malcolm Noel<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">PG · MENS BASKETBALL</div>
+      <div class="card-school">West Georgia</div>
+      <div class="cmt">→ West Georgia (current)</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Cole+McCormick&sport=mens-basketball'>
+      <div class="card-name">Cole McCormick<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Central Arkansas</div>
+      <div class="cmt">→ Central Arkansas</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Javar+Daniel&sport=mens-basketball'>
+      <div class="card-name">Javar Daniel<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">West Georgia</div>
+      <div class="cmt">→ West Georgia</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Kenyon+Goodin&sport=mens-basketball'>
+      <div class="card-name">Kenyon Goodin<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Bellarmine</div>
+      <div class="cmt">→ Bellarmine</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Kamrin+Orioland&sport=mens-basketball'>
+      <div class="card-name">Kamrin Orioland<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">North Florida</div>
+      <div class="cmt">→ North Florida</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Javion+Guy-King&sport=mens-basketball'>
+      <div class="card-name">Javion Guy-King<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Central Arkansas</div>
+      <div class="cmt">→ Central Arkansas</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Kent+Jackson&sport=mens-basketball'>
+      <div class="card-name">Kent Jackson<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">North Florida</div>
+      <div class="cmt">→ North Florida</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Kenneth+Chime&sport=mens-basketball'>
+      <div class="card-name">Kenneth Chime<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">West Georgia</div>
+      <div class="cmt">→ West Georgia</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">D1</span></div>
+    </a></div>
+    </section>
+    <section class="bucket">
+      <div class="bucket-h">
+        <div class="bucket-eyebrow">// B08_TOP_D1_REGRESSION_CHECK</div>
+        <h2 class="bucket-title">Current D1 elite All-Americans 2026 · regression check (must STILL work after V022.30)</h2>
+        <p class="bucket-desc">D1 All-Americans + recent pros — regression check (must STILL work after V022.30).</p>
+        <div class="bucket-count">6 athletes</div>
+      </div>
+      <div class="grid">
+    <a class='card band-great' href='/fieldcheck-verdict?q=Cameron+Boozer&sport=mens-basketball'>
+      <div class="card-name">Cameron Boozer<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Duke</div>
+      <div class="cmt">→ Duke</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=AJ+Dybantsa&sport=mens-basketball'>
+      <div class="card-name">AJ Dybantsa<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">BYU</div>
+      <div class="cmt">→ BYU</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=JT+Toppin&sport=mens-basketball'>
+      <div class="card-name">JT Toppin<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Texas Tech</div>
+      <div class="cmt">→ Texas Tech</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Jeremy+Fears+Jr.&sport=mens-basketball'>
+      <div class="card-name">Jeremy Fears Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">PG · MENS BASKETBALL</div>
+      <div class="card-school">Michigan State</div>
+      <div class="cmt">→ Michigan State</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">D1</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Cooper+Flagg&sport=mens-basketball'>
+      <div class="card-name">Cooper Flagg<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Dallas Mavericks (NBA)</div>
+      <div class="cmt">→ Dallas Mavericks</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">PRO</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Caitlin+Clark&sport=mens-basketball'>
+      <div class="card-name">Caitlin Clark<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Indiana Fever (WNBA)</div>
+      <div class="cmt">→ Indiana Fever</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">PRO</span></div>
+    </a></div>
+    </section>
+    <section class="bucket">
+      <div class="bucket-h">
+        <div class="bucket-eyebrow">// B09_D2_BEVO_FRANCIS</div>
+        <h2 class="bucket-title">Current D2 standouts · 2026 Bevo Francis watchlist</h2>
+        <p class="bucket-desc">Division II standouts. The Bevo Francis Award watchlist. Same lens.</p>
+        <div class="bucket-count">12 athletes</div>
+      </div>
+      <div class="grid">
+    <a class='card band-good' href='/fieldcheck-verdict?q=Dillon+Claussen&sport=mens-basketball'>
+      <div class="card-name">Dillon Claussen<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Washburn</div>
+      <div class="cmt">→ Washburn</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Jack+Bachelor&sport=mens-basketball'>
+      <div class="card-name">Jack Bachelor<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Washburn</div>
+      <div class="cmt">→ Washburn</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Jaquay+Randolph&sport=mens-basketball'>
+      <div class="card-name">Jaquay Randolph<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Southern Wesleyan</div>
+      <div class="cmt">→ Southern Wesleyan</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Boubacar+Djigo&sport=mens-basketball'>
+      <div class="card-name">Boubacar Djigo<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Concord (WV)</div>
+      <div class="cmt">→ Concord (WV)</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Tristan+Harcourt&sport=mens-basketball'>
+      <div class="card-name">Tristan Harcourt<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Felician</div>
+      <div class="cmt">→ Felician</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Dallas+Graziani&sport=mens-basketball'>
+      <div class="card-name">Dallas Graziani<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Nova Southeastern</div>
+      <div class="cmt">→ Nova Southeastern</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Ross+Reeves&sport=mens-basketball'>
+      <div class="card-name">Ross Reeves<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Nova Southeastern</div>
+      <div class="cmt">→ Nova Southeastern</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Amondo+Miller+Jr.&sport=mens-basketball'>
+      <div class="card-name">Amondo Miller Jr.<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Lubbock Christian</div>
+      <div class="cmt">→ Lubbock Christian</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Antonio+Pusateri&sport=mens-basketball'>
+      <div class="card-name">Antonio Pusateri<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Lubbock Christian</div>
+      <div class="cmt">→ Lubbock Christian</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Jalen+Brown&sport=mens-basketball'>
+      <div class="card-name">Jalen Brown<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Cal State Dominguez Hills</div>
+      <div class="cmt">→ Cal State Dominguez Hills</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Elyjah+Freeman&sport=mens-basketball'>
+      <div class="card-name">Elyjah Freeman<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Lincoln Memorial</div>
+      <div class="cmt">→ Lincoln Memorial</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D2</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Benjamin+Bill&sport=mens-basketball'>
+      <div class="card-name">Benjamin Bill<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Daemen</div>
+      <div class="cmt">→ Daemen</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D2</span></div>
+    </a></div>
+    </section>
+    <section class="bucket">
+      <div class="bucket-h">
+        <div class="bucket-eyebrow">// B10_D3_JOSTENS</div>
+        <h2 class="bucket-title">Current D3 standouts · 2026 Jostens Trophy finalists</h2>
+        <p class="bucket-desc">Division III — 2026 Jostens Trophy finalists. Smallest stage; same framework.</p>
+        <div class="bucket-count">10 athletes</div>
+      </div>
+      <div class="grid">
+    <a class='card band-great' href='/fieldcheck-verdict?q=Ben+Pearce&sport=mens-basketball'>
+      <div class="card-name">Ben Pearce<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Emory</div>
+      <div class="cmt">→ Emory</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">D3</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Mary+Schleusner&sport=mens-basketball'>
+      <div class="card-name">Mary Schleusner<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Washington and Lee</div>
+      <div class="cmt">→ Washington and Lee</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">D3</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Chris+Bryant&sport=mens-basketball'>
+      <div class="card-name">Chris Bryant<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Hardin-Simmons (TX)</div>
+      <div class="cmt">→ Hardin-Simmons</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D3</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Brady+Burman&sport=mens-basketball'>
+      <div class="card-name">Brady Burman<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Sarah Lawrence</div>
+      <div class="cmt">→ Sarah Lawrence</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D3</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Mason+Dopirak&sport=mens-basketball'>
+      <div class="card-name">Mason Dopirak<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Milwaukee School of Engineering (MSOE)</div>
+      <div class="cmt">→ MSOE</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D3</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Sam+Grieger&sport=mens-basketball'>
+      <div class="card-name">Sam Grieger<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Wisconsin-La Crosse</div>
+      <div class="cmt">→ UW-La Crosse</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D3</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Scott+Gyimesi&sport=mens-basketball'>
+      <div class="card-name">Scott Gyimesi<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Tufts</div>
+      <div class="cmt">→ Tufts</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D3</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Jack+Plesser&sport=mens-basketball'>
+      <div class="card-name">Jack Plesser<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Union College</div>
+      <div class="cmt">→ Union College</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">D3</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Kevin+Nowoswiat&sport=mens-basketball'>
+      <div class="card-name">Kevin Nowoswiat<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Franklin & Marshall</div>
+      <div class="cmt">→ Franklin & Marshall</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">D3</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Kaci+Kranson&sport=mens-basketball'>
+      <div class="card-name">Kaci Kranson<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Scranton</div>
+      <div class="cmt">→ Scranton</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">D3</span></div>
+    </a></div>
+    </section>
+    <section class="bucket">
+      <div class="bucket-h">
+        <div class="bucket-eyebrow">// B11_ADVERSARIAL_NAME_COLLISION</div>
+        <h2 class="bucket-title">Adversarial · designed to test the V022.30 fix · name collisions with famous pros</h2>
+        <p class="bucket-desc">Designed to test identity resolution. Tim Duncan vs. Tim Duncan. LeBron vs. Bronny vs. Bryce.</p>
+        <div class="bucket-count">10 athletes</div>
+      </div>
+      <div class="grid">
+    <a class='card band-sparse' href='/fieldcheck-verdict?q=John+Smith&sport=mens-basketball'>
+      <div class="card-name">John Smith<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">— · MENS BASKETBALL</div>
+      <div class="card-school">common name test</div>
+      <div class="cmt">→ N/A</div>
+      <div class="card-foot"><span class="band-tag">SPARSE</span><span class="pool-tag">VARIES</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Tim+Duncan&sport=mens-basketball'>
+      <div class="card-name">Tim Duncan<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">C/F · MENS BASKETBALL</div>
+      <div class="card-school">Adversarial test - the actual NBA HOFer</div>
+      <div class="cmt">→ N/A retired</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">PRO</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=LeBron+James&sport=mens-basketball'>
+      <div class="card-name">LeBron James<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Los Angeles Lakers</div>
+      <div class="cmt">→ N/A pro</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">PRO</span></div>
+    </a>
+
+    <a class='card band-avg' href='/fieldcheck-verdict?q=Bronny+James&sport=mens-basketball'>
+      <div class="card-name">Bronny James<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">LeBron's son</div>
+      <div class="cmt">→ Los Angeles Lakers</div>
+      <div class="card-foot"><span class="band-tag">AVERAGE</span><span class="pool-tag">PRO</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Bryce+James&sport=mens-basketball'>
+      <div class="card-name">Bryce James<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Sierra Canyon HS / Arizona commit</div>
+      <div class="cmt">→ Arizona</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">HS</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Brandon+Bass&sport=mens-basketball'>
+      <div class="card-name">Brandon Bass<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">F · MENS BASKETBALL</div>
+      <div class="card-school">Adversarial - the NBA Brandon Bass</div>
+      <div class="cmt">→ N/A retired</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">PRO</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Cameron+Williams&sport=mens-basketball'>
+      <div class="card-name">Cameron Williams<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">OT · MENS BASKETBALL</div>
+      <div class="card-school">Adversarial - NFL Cameron Williams</div>
+      <div class="cmt">→ N/A pro</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">PRO</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Chris+Henry&sport=mens-basketball'>
+      <div class="card-name">Chris Henry<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">WR · MENS BASKETBALL</div>
+      <div class="card-school">Adversarial - deceased Cincinnati Bengals WR (NOT Jr.)</div>
+      <div class="cmt">→ N/A</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">PRO</span></div>
+    </a>
+
+    <a class='card band-good' href='/fieldcheck-verdict?q=Gilbert+Arenas&sport=mens-basketball'>
+      <div class="card-name">Gilbert Arenas<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Retired NBA</div>
+      <div class="cmt">→ N/A retired</div>
+      <div class="card-foot"><span class="band-tag">GOOD</span><span class="pool-tag">PRO</span></div>
+    </a>
+
+    <a class='card band-great' href='/fieldcheck-verdict?q=Alijah+Arenas&sport=mens-basketball'>
+      <div class="card-name">Alijah Arenas<span class="adv-flag">⚠ ADVERSARIAL</span></div>
+      <div class="card-meta">G · MENS BASKETBALL</div>
+      <div class="card-school">Chatsworth (CA)</div>
+      <div class="cmt">→ USC</div>
+      <div class="card-foot"><span class="band-tag">GREAT</span><span class="pool-tag">HS</span></div>
+    </a></div>
+    </section>
+
+</div>
+
+<footer>
+  © 2026 ThinkDifferent Holdings · FieldCheck IQ — 110-athlete calibration battery · roster v022.30 · last reconciled 2026-06-05
+</footer>
+
+</body>
+</html>

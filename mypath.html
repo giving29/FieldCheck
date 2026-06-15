@@ -1,0 +1,2258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>My Path — FieldCheck</title>
+<meta name="description" content="Your path to the cut. Track milestones, monitor watchlists, see exactly what it takes — built for players, parents, and coaches.">
+<meta name="theme-color" content="#0A0908">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0A0908; --bg-1: #110F0D; --bg-2: #1A1715;
+  --glass: rgba(255, 252, 245, 0.04);
+  --glass-2: rgba(255, 252, 245, 0.08);
+  --glass-edge: rgba(255, 252, 245, 0.14);
+  --glass-edge-2: rgba(255, 252, 245, 0.22);
+  --text: #F5F1E8;
+  --text-2: rgba(245, 241, 232, 0.72);
+  --text-3: rgba(245, 241, 232, 0.50);
+  --text-4: rgba(245, 241, 232, 0.30);
+  --accent: #FF5C3A;
+  --gold: #F5B800;
+  --moss: #6BAA5A;
+  --r-1: 8px; --r-2: 12px; --r-3: 18px; --r-4: 24px; --r-pill: 9999px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: "General Sans", -apple-system, sans-serif;
+  font-size: 15px; line-height: 1.5;
+  letter-spacing: -0.005em;
+  min-height: 100vh; overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+
+.masthead {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.6));
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+.wordmark {
+  font-family: "Anton"; font-size: 28px;
+  letter-spacing: -0.005em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 4px;
+}
+.dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; display: inline-block; box-shadow: 0 0 12px var(--accent); }
+.serif { font-family: "Instrument Serif", Georgia, serif; font-style: italic; color: var(--accent); font-size: 32px; line-height: 0; vertical-align: -3px; }
+.nav { display: flex; align-items: center; gap: 22px; font-family: "JetBrains Mono"; font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); }
+.nav a { transition: color 0.18s; }
+.nav a:hover { color: var(--accent); }
+.nav-version { color: var(--text-4); font-size: 10px; padding-left: 14px; border-left: 1px solid var(--glass-edge); }
+.nav-user {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  color: var(--text-3); padding: 6px 12px;
+  border: 1px solid var(--glass-edge); border-radius: var(--r-pill);
+  cursor: pointer; transition: all 0.18s;
+}
+.nav-user:hover { border-color: var(--accent); color: var(--accent); }
+
+@media (max-width: 740px) {
+  .masthead { padding: 12px 18px; gap: 8px; }
+  .wordmark { font-size: 22px; }
+  .nav { gap: 12px; font-size: 10px; }
+  .nav a:not(.nav-user) { display: none; }
+  .nav-version { display: none; }
+}
+
+/* ───────────── AUTH GATE ───────────── */
+.auth-gate {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 100px 24px 60px;
+}
+.auth-card {
+  width: 100%; max-width: 460px;
+  background: var(--bg-1);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-3);
+  padding: 40px 36px;
+  position: relative;
+}
+.auth-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--moss) 100%);
+  border-radius: var(--r-3) var(--r-3) 0 0;
+}
+.auth-eyebrow {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 14px;
+}
+.auth-h {
+  font-family: "Anton"; font-size: 38px;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px; line-height: 1;
+}
+.auth-h .serif-accent {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic; color: var(--moss);
+}
+.auth-sub {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic; font-size: 16px;
+  color: var(--text-3); margin-bottom: 28px; line-height: 1.5;
+}
+.auth-field {
+  margin-bottom: 18px;
+}
+.auth-field label {
+  display: block;
+  font-family: "JetBrains Mono"; font-size: 10.5px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-4); margin-bottom: 6px;
+}
+.auth-field input {
+  width: 100%;
+  padding: 13px 14px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-2);
+  color: var(--text); font-size: 15px;
+  transition: border-color 0.2s;
+}
+.auth-field input:focus {
+  outline: none; border-color: var(--accent);
+}
+.role-pick {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.role-btn {
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-2);
+  padding: 14px 10px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  text-align: center;
+}
+.role-btn:hover { border-color: var(--glass-edge-2); }
+.role-btn.active {
+  border-color: var(--accent);
+  background: rgba(255, 92, 58, 0.10);
+}
+.role-btn-icon {
+  font-size: 22px; display: block; margin-bottom: 4px;
+}
+.role-btn-name {
+  font-family: "Anton"; font-size: 14px;
+  letter-spacing: 0.005em;
+}
+.role-btn-sub {
+  font-family: "JetBrains Mono"; font-size: 9.5px;
+  color: var(--text-4); letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+.auth-cta {
+  display: block; width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  color: var(--bg);
+  border: 0;
+  border-radius: var(--r-2);
+  font-family: "Anton"; font-size: 15px;
+  letter-spacing: 0.02em; text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+}
+.auth-cta:hover {
+  background: #ff7855;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(255, 92, 58, 0.35);
+}
+.auth-cta:disabled { opacity: 0.5; cursor: wait; }
+.auth-honest {
+  margin-top: 20px;
+  padding: 12px 14px;
+  background: rgba(245, 184, 0, 0.06);
+  border: 1px solid rgba(245, 184, 0, 0.20);
+  border-radius: var(--r-2);
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+.auth-honest strong { color: var(--gold); font-weight: 600; }
+
+/* ───────────── DASHBOARD ───────────── */
+.dash {
+  display: none;
+  min-height: 100vh;
+  padding: 100px 24px 60px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.dash.active { display: block; }
+
+.dash-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--glass-edge);
+}
+.dash-greeting-eyebrow {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--moss); margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.dash-greeting-eyebrow::before {
+  content: ''; width: 7px; height: 7px;
+  background: var(--moss); border-radius: 50%;
+  box-shadow: 0 0 10px var(--moss);
+}
+.dash-greeting {
+  font-family: "Anton";
+  font-size: clamp(34px, 5vw, 54px);
+  letter-spacing: -0.01em; line-height: 1;
+}
+.dash-greeting .serif-accent {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic; color: var(--moss);
+}
+.dash-role-tag {
+  font-family: "JetBrains Mono"; font-size: 11.5px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-2);
+  padding: 8px 14px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.dash-role-tag:hover { border-color: var(--accent); color: var(--accent); }
+.dash-role-tag::after {
+  content: '⇅'; font-size: 11px; opacity: 0.5;
+}
+.role-switcher-modal {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center;
+  z-index: 100; padding: 24px;
+}
+.role-switcher-modal.open { display: flex; }
+.role-switcher-card {
+  background: var(--bg-2);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-3);
+  padding: 32px; max-width: 480px; width: 100%;
+}
+.role-switcher-h {
+  font-family: "Anton", Impact, sans-serif;
+  font-size: 28px; letter-spacing: -0.005em;
+  margin-bottom: 8px;
+}
+.role-switcher-sub {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic; font-size: 15px;
+  color: var(--text-3); margin-bottom: 24px;
+}
+.role-option {
+  display: block; width: 100%; text-align: left;
+  padding: 16px 18px; margin-bottom: 10px;
+  background: var(--bg-3);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-2);
+  cursor: pointer; transition: all 0.15s ease;
+  color: var(--text);
+}
+.role-option:hover { border-color: var(--accent); }
+.role-option.active { border-color: var(--moss); background: rgba(107, 170, 90, 0.08); }
+.role-option-name {
+  font-family: "Anton", Impact, sans-serif;
+  font-size: 18px; letter-spacing: -0.005em;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.role-option-desc {
+  font-size: 12.5px; color: var(--text-3);
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+@media (max-width: 880px) { .dash-grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--bg-1);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-3);
+  padding: 28px;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--glass-edge-2); }
+.card-h {
+  font-family: "Anton"; font-size: 22px;
+  letter-spacing: -0.005em; margin-bottom: 4px;
+}
+.card-sub {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic; font-size: 14px;
+  color: var(--text-3); margin-bottom: 20px;
+}
+.card-eyebrow {
+  font-family: "JetBrains Mono"; font-size: 10.5px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 10px;
+}
+
+/* MakeTheCut score card */
+.mtc-card {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, rgba(255, 92, 58, 0.07) 0%, rgba(107, 170, 90, 0.04) 100%);
+  border-color: rgba(255, 92, 58, 0.30);
+  position: relative;
+  overflow: hidden;
+}
+.mtc-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--gold) 50%, var(--moss) 100%);
+}
+.mtc-empty {
+  text-align: center;
+  padding: 32px 20px;
+  color: var(--text-3);
+}
+.mtc-empty p { font-style: italic; font-family: "Instrument Serif"; font-size: 17px; margin-bottom: 18px; }
+.mtc-empty .btn { display: inline-block; padding: 10px 18px; background: var(--accent); color: var(--bg); border-radius: var(--r-2); font-family: "Anton"; font-size: 13px; letter-spacing: 0.02em; text-transform: uppercase; }
+
+.mtc-display {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (max-width: 720px) { .mtc-display { grid-template-columns: 1fr; gap: 24px; } }
+.mtc-score-ring {
+  position: relative;
+  width: 200px; height: 200px;
+  margin: 0 auto;
+}
+.mtc-score-ring svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+.mtc-score-ring-bg { fill: none; stroke: var(--glass-edge); stroke-width: 12; }
+.mtc-score-ring-fg { fill: none; stroke: var(--accent); stroke-width: 12; stroke-linecap: round; transition: stroke-dashoffset 1s var(--ease-out), stroke 0.4s; }
+.mtc-score-ring.tier-cut_likely .mtc-score-ring-fg { stroke: var(--moss); }
+.mtc-score-ring.tier-building .mtc-score-ring-fg { stroke: var(--gold); }
+.mtc-score-ring.tier-gap_real .mtc-score-ring-fg { stroke: var(--accent); }
+.mtc-score-ring.tier-long_path .mtc-score-ring-fg { stroke: var(--text-3); }
+.mtc-score-ring.tier-at_the_cut .mtc-score-ring-fg { stroke: var(--moss); }
+.mtc-score-num {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: "Anton"; font-size: 56px;
+  letter-spacing: -0.02em; line-height: 1;
+}
+.mtc-score-suffix {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  color: var(--text-4); letter-spacing: 0.06em;
+  text-transform: uppercase; margin-top: 2px;
+}
+.mtc-tier {
+  display: inline-block;
+  padding: 5px 12px;
+  font-family: "JetBrains Mono"; font-size: 10.5px;
+  font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  background: var(--accent); color: var(--bg);
+  margin-bottom: 14px;
+}
+.mtc-tier.tier-cut_likely, .mtc-tier.tier-at_the_cut { background: var(--moss); color: #052e16; }
+.mtc-tier.tier-building { background: var(--gold); color: #2a1f00; }
+.mtc-tier.tier-gap_real { background: var(--accent); color: var(--bg); }
+.mtc-tier.tier-long_path { background: var(--glass-2); color: var(--text-2); border: 1px solid var(--glass-edge-2); }
+.mtc-tier.tier-insufficient_data { background: var(--glass); color: var(--text-3); border: 1px dashed var(--glass-edge-2); }
+
+.mtc-explain {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic; font-size: 16px;
+  color: var(--text-2); line-height: 1.55;
+  margin-bottom: 18px;
+}
+.mtc-actions {
+  list-style: none; padding: 0;
+}
+.mtc-actions li {
+  padding: 10px 0 10px 22px;
+  position: relative;
+  border-top: 1px solid var(--glass-edge);
+  font-size: 14px; color: var(--text-2);
+  line-height: 1.5;
+}
+.mtc-actions li:first-child { border-top: 0; padding-top: 4px; }
+.mtc-actions li::before {
+  content: '→'; position: absolute; left: 0; top: 10px;
+  color: var(--accent); font-weight: 700;
+}
+.mtc-methodology {
+  margin-top: 16px; padding-top: 14px;
+  border-top: 1px dashed var(--glass-edge);
+  font-family: "JetBrains Mono"; font-size: 10.5px;
+  letter-spacing: 0.04em; color: var(--text-4);
+}
+
+/* Watchlist */
+.watchlist-card .item {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--glass-edge);
+}
+.watchlist-card .item:last-child { border-bottom: none; }
+.watchlist-card .item-main { flex: 1; min-width: 0; }
+.watchlist-card .item-name {
+  font-family: "Anton"; font-size: 17px;
+  letter-spacing: -0.005em; margin-bottom: 2px;
+}
+.watchlist-card .item-meta {
+  font-family: "JetBrains Mono"; font-size: 10.5px;
+  letter-spacing: 0.04em; color: var(--text-4);
+  text-transform: uppercase;
+}
+.watchlist-card .item-actions {
+  display: flex; gap: 6px;
+}
+.btn-icon {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--glass); border: 1px solid var(--glass-edge);
+  border-radius: var(--r-2); color: var(--text-3);
+  cursor: pointer; font-size: 14px;
+  transition: all 0.18s;
+}
+.btn-icon:hover { color: var(--accent); border-color: var(--accent); }
+.btn-icon.danger:hover { color: var(--accent); border-color: var(--accent); }
+.empty-state {
+  padding: 28px 12px; text-align: center;
+  color: var(--text-3);
+}
+.empty-state p {
+  font-family: "Instrument Serif"; font-style: italic;
+  font-size: 15px; margin-bottom: 14px;
+}
+
+/* Add buttons + forms */
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  background: var(--glass-2);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-2);
+  color: var(--text); cursor: pointer;
+  font-family: "Anton"; font-size: 13px;
+  letter-spacing: 0.02em; text-transform: uppercase;
+  transition: all 0.18s var(--ease-out);
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn-primary {
+  background: var(--accent); color: var(--bg); border-color: var(--accent);
+}
+.btn-primary:hover {
+  background: #ff7855; color: var(--bg); border-color: #ff7855;
+  box-shadow: 0 4px 16px rgba(255, 92, 58, 0.3);
+}
+.btn-row {
+  display: flex; gap: 8px;
+  margin-top: 16px;
+}
+
+.add-form {
+  display: none;
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--bg-2);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-2);
+}
+.add-form.show { display: block; }
+.add-form input, .add-form select {
+  width: 100%;
+  padding: 10px 12px; margin-bottom: 10px;
+  background: var(--bg);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-1);
+  color: var(--text); font-size: 13.5px;
+  font-family: inherit;
+}
+.add-form input:focus, .add-form select:focus {
+  outline: none; border-color: var(--accent);
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 8px;
+}
+
+/* Milestones */
+.ms-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--glass-edge);
+}
+.ms-item:last-child { border-bottom: none; }
+.ms-check {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--glass-edge-2);
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.18s;
+  display: flex; align-items: center; justify-content: center;
+  color: transparent;
+  font-size: 14px;
+  font-weight: 700;
+}
+.ms-check:hover { border-color: var(--moss); }
+.ms-check.achieved {
+  background: var(--moss); border-color: var(--moss);
+  color: #052e16;
+}
+.ms-content { flex: 1; min-width: 0; }
+.ms-text {
+  font-size: 14.5px; line-height: 1.45;
+  color: var(--text); margin-bottom: 2px;
+}
+.ms-item.achieved-row .ms-text {
+  color: var(--text-3); text-decoration: line-through;
+}
+.ms-meta {
+  font-family: "JetBrains Mono"; font-size: 10.5px;
+  letter-spacing: 0.04em; color: var(--text-4);
+  text-transform: uppercase;
+}
+.ms-progress {
+  font-size: 12.5px; color: var(--text-3);
+  margin-top: 4px;
+}
+
+/* Role-specific section */
+.role-toolkit {
+  margin-top: 24px;
+  padding: 28px;
+  background: var(--bg-1);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-3);
+}
+.role-toolkit-h {
+  font-family: "Anton"; font-size: 22px;
+  letter-spacing: -0.005em; margin-bottom: 4px;
+}
+.role-toolkit-sub {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic; font-size: 14px;
+  color: var(--text-3); margin-bottom: 22px;
+}
+.toolkit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+.toolkit-tile {
+  display: block;
+  padding: 18px 20px;
+  background: var(--bg-2);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-2);
+  transition: all 0.2s var(--ease-out);
+  cursor: pointer;
+}
+.toolkit-tile:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+.toolkit-tile-name {
+  font-family: "Anton"; font-size: 16px;
+  letter-spacing: -0.005em; margin-bottom: 4px;
+}
+.toolkit-tile-desc {
+  font-size: 13px; color: var(--text-3);
+  line-height: 1.45;
+}
+.toolkit-tile-status {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: "JetBrains Mono"; font-size: 9.5px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 2px 8px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: 4px;
+  color: var(--text-4);
+}
+.toolkit-tile-status.live { color: var(--moss); border-color: rgba(107,170,90,0.4); }
+.toolkit-tile-status.soon { color: var(--gold); border-color: rgba(245,184,0,0.4); }
+
+/* Footer */
+.footer {
+  background: var(--bg-1);
+  border-top: 1px solid var(--glass-edge);
+  padding: 40px 24px 30px;
+  margin-top: 80px;
+}
+.footer-inner {
+  max-width: 1280px; margin: 0 auto;
+  text-align: center;
+}
+.footer-tagline {
+  font-family: "Instrument Serif"; font-style: italic;
+  font-size: 14px; color: var(--text-3);
+  max-width: 640px; margin: 0 auto 14px;
+}
+.colophon {
+  font-family: "JetBrains Mono"; font-size: 10.5px;
+  letter-spacing: 0.06em; color: var(--text-4);
+}
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+  padding: 14px 22px;
+  background: var(--bg-1);
+  border: 1px solid var(--moss);
+  border-radius: var(--r-2);
+  color: var(--text);
+  font-size: 13.5px;
+  z-index: 1000;
+  transition: transform 0.4s var(--ease-out);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  max-width: 90vw;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.error { border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a href="/" class="wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/wire">Wire</a>
+    <a href="/pricing">Pricing</a>
+    <span id="nav-user-display" class="nav-user" style="display:none" onclick="signOut()">Sign out</span>
+    <span class="nav-version">v0.19</span>
+  </nav>
+</header>
+
+<!-- ════ AUTH GATE ════ -->
+<section class="auth-gate" id="auth-gate">
+  <div class="auth-card">
+    <div class="auth-eyebrow">// MyPath · sign in</div>
+    <h1 class="auth-h">See the<br><span class="serif-accent">path forward.</span></h1>
+    <p class="auth-sub">
+      Track milestones. Watch up to 3 players. See the MakeTheCut score and exactly what it takes. Built for the people who care about a player making it.
+    </p>
+
+    <div class="auth-field">
+      <label>Email</label>
+      <input type="email" id="auth-email" placeholder="you@example.com" autocomplete="email">
+    </div>
+
+    <div class="auth-field">
+      <label>Display name (optional)</label>
+      <input type="text" id="auth-name" placeholder="What should we call you?" autocomplete="name">
+    </div>
+
+    <div class="auth-field">
+      <label>Your role</label>
+      <div class="role-pick" id="role-pick">
+        <button class="role-btn" data-role="player" onclick="pickRole('player')">
+          <span class="role-btn-icon">⚡</span>
+          <div class="role-btn-name">Player</div>
+          <div class="role-btn-sub">It's me</div>
+        </button>
+        <button class="role-btn" data-role="parent" onclick="pickRole('parent')">
+          <span class="role-btn-icon">★</span>
+          <div class="role-btn-name">Parent</div>
+          <div class="role-btn-sub">My kid</div>
+        </button>
+        <button class="role-btn" data-role="coach" onclick="pickRole('coach')">
+          <span class="role-btn-icon">▲</span>
+          <div class="role-btn-name">Coach</div>
+          <div class="role-btn-sub">My team</div>
+        </button>
+      </div>
+    </div>
+
+    <button class="auth-cta" id="auth-cta" onclick="handleAuth()" disabled>Get on the path →</button>
+
+    <div class="auth-honest">
+      <strong>Honest framing:</strong> This is a demo-grade sign-in (email only, no password) for the v0.19 preview. Your data is stored real on FieldCheck's database, so when full accounts ship in v0.20 your watchlists and milestones migrate cleanly. Don't enter sensitive info.
+    </div>
+  </div>
+</section>
+
+<!-- ════ DASHBOARD ════ -->
+<section class="dash" id="dash">
+
+  <div class="dash-header">
+    <div>
+      <div class="dash-greeting-eyebrow" id="greeting-eyebrow">// Welcome back</div>
+      <h1 class="dash-greeting" id="greeting">Hey, <span class="serif-accent">friend.</span></h1>
+    </div>
+    <div class="dash-role-tag" id="role-tag" onclick="openRoleSwitcher()">Player</div>
+  </div>
+
+  <!-- v0.25: Role switcher modal -->
+  <div class="role-switcher-modal" id="role-switcher-modal" onclick="if(event.target===this)closeRoleSwitcher()">
+    <div class="role-switcher-card">
+      <div class="role-switcher-h">Switch role</div>
+      <div class="role-switcher-sub">Switch context without re-signing in. Your watchlist + milestones travel with you.</div>
+      <button class="role-option" id="role-opt-player" onclick="switchRole('player')">
+        <div class="role-option-name">Player</div>
+        <div class="role-option-desc">You are the athlete. Your verdict, your path.</div>
+      </button>
+      <button class="role-option" id="role-opt-parent" onclick="switchRole('parent')">
+        <div class="role-option-name">Parent</div>
+        <div class="role-option-desc">You're tracking your kid's path. Honest tools for the people who matter most.</div>
+      </button>
+      <button class="role-option" id="role-opt-coach" onclick="switchRole('coach')">
+        <div class="role-option-name">Coach</div>
+        <div class="role-option-desc">Roster eval, who's ready, scout outreach. Scout-grade tools.</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- MakeTheCut score -->
+  <div class="card mtc-card">
+    <div class="card-eyebrow">// MakeTheCut score · rules-based v1</div>
+    <h2 class="card-h">Where you stand today</h2>
+    <p class="card-sub">A composite read across eval grid + position playbook + LOVB roster medians. ML upgrade ships when the corpus reaches outcome-mapped scale — until then, this is honest, explainable, and direct.</p>
+    <div id="mtc-display"></div>
+  </div>
+
+  <div class="dash-grid">
+
+    <!-- Watchlist -->
+    <div class="card watchlist-card">
+      <div class="card-eyebrow">// Watchlist</div>
+      <h2 class="card-h" id="watchlist-h">Players you follow</h2>
+      <p class="card-sub" id="watchlist-sub">Up to 3 on the Family tier. Pro and Edge unlock more.</p>
+      <div id="watchlist-items"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="toggleAddForm('add-watch-form')">+ Add player</button>
+      </div>
+      <div class="add-form" id="add-watch-form">
+        <input type="text" id="wf-name" placeholder="Player name (e.g. Lexi Rodriguez)">
+        <div class="form-row">
+          <input type="text" id="wf-school" placeholder="School (e.g. Nebraska)">
+          <select id="wf-sport">
+            <option value="womens-volleyball">Women's Volleyball</option>
+            <option value="mens-volleyball">Men's Volleyball</option>
+            <option value="football">Football</option>
+            <option value="mens-basketball">Men's Basketball</option>
+            <option value="womens-basketball">Women's Basketball</option>
+            <option value="baseball">Baseball</option>
+            <option value="mens-soccer">Men's Soccer</option>
+            <option value="tennis">Tennis</option>
+          </select>
+        </div>
+        <input type="text" id="wf-notes" placeholder="Notes (optional)">
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="addWatchItem()">Add to watchlist</button>
+          <button class="btn" onclick="toggleAddForm('add-watch-form')">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Milestones -->
+    <div class="card">
+      <div class="card-eyebrow">// Milestones</div>
+      <h2 class="card-h" id="ms-h">The path forward</h2>
+      <p class="card-sub" id="ms-sub">Each one is a real signal — production targets, recognition, decision levers. Check them off as they happen.</p>
+      <div id="ms-items"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="toggleAddForm('add-ms-form')">+ Add milestone</button>
+        <button class="btn" onclick="seedDefaultMilestones()" id="seed-btn">⚡ Suggest milestones</button>
+      </div>
+      <div class="add-form" id="add-ms-form">
+        <input type="text" id="msf-text" placeholder="Milestone (e.g. Hit 4.0+ kills/set as a senior)">
+        <div class="form-row">
+          <select id="msf-category">
+            <option value="production">Production</option>
+            <option value="physical">Physical</option>
+            <option value="recognition">Recognition</option>
+            <option value="decision">Decision lever</option>
+            <option value="health">Health / durability</option>
+          </select>
+          <input type="text" id="msf-target" placeholder="Target (e.g. 4.0 K/S)">
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="addMilestone()">Add milestone</button>
+          <button class="btn" onclick="toggleAddForm('add-ms-form')">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Role-specific toolkit -->
+  <div class="role-toolkit">
+    <div class="card-eyebrow" id="rt-eyebrow">// Player toolkit</div>
+    <h2 class="role-toolkit-h" id="rt-h">Built for you</h2>
+    <p class="role-toolkit-sub" id="rt-sub">Role-specific tools that solve the real problem.</p>
+    <div class="toolkit-grid" id="rt-grid"></div>
+  </div>
+
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p class="footer-tagline">We exist so one day a player reading this hits their milestones — and a year later makes the cut. That's the win.</p>
+    <div class="colophon">FieldCheck · MyPath · v0.19 · 2026</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PROXY = window.FIELDCHECK_PROXY_URL || 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+const STORAGE_KEY = 'fieldcheck_mypath_session';
+
+let session = null;  // { email, role, displayName }
+let state = {
+  watchlist: [],
+  milestones: [],
+  selectedPlayer: null,  // for MakeTheCut card
+  mtcResult: null
+};
+let pickedRole = null;
+
+// ─── Toast ───
+function toast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('error', !!isError);
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ─── Auth ───
+function pickRole(role) {
+  pickedRole = role;
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.toggle('active', b.dataset.role === role));
+  validateAuth();
+}
+function validateAuth() {
+  const email = document.getElementById('auth-email').value.trim();
+  const valid = email.length > 3 && email.includes('@') && pickedRole;
+  document.getElementById('auth-cta').disabled = !valid;
+}
+async function handleAuth() {
+  const email = document.getElementById('auth-email').value.trim().toLowerCase();
+  const displayName = document.getElementById('auth-name').value.trim() || null;
+  if (!email || !pickedRole) return;
+
+  const cta = document.getElementById('auth-cta');
+  cta.disabled = true; cta.textContent = 'Sending sign-in link…';
+
+  // v0.21: try real magic-link auth first; fall back to legacy fake auth on error.
+  try {
+    const r = await fetch(PROXY + '/auth/magic-link/request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, role: pickedRole })
+    });
+    const data = await r.json();
+
+    if (r.ok && data.ok) {
+      // Also init the user row for legacy compat (so dashboard data has a user)
+      try {
+        await fetch(PROXY + '/mypath/init', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, role: pickedRole, displayName })
+        });
+      } catch {}
+
+      if (data.dev_mode && data.dev_link) {
+        // Dev mode — auto-follow the link
+        toast('Dev mode: signing in directly');
+        window.location.href = data.dev_link;
+        return;
+      }
+      // Real magic-link sent — show waiting screen
+      document.querySelector('.auth-card').innerHTML =
+        '<div class="auth-eyebrow">// Check your email</div>' +
+        '<h1 class="auth-h">Sign-in link <span class="serif-accent">sent.</span></h1>' +
+        '<p class="auth-sub">We sent a one-time sign-in link to <strong style="color:var(--text)">' + escapeHtml(email) + '</strong>. Click it to sign in. Expires in 15 minutes.</p>' +
+        '<div class="auth-honest"><strong>Tip:</strong> Check spam if not in inbox in 30 seconds. Link works once and only on the device you click it from.</div>';
+      return;
+    }
+
+    // Fall back to legacy fake-auth path
+    throw new Error('magic_link_unavailable');
+  } catch (e) {
+    // Legacy fake-auth fallback
+    try {
+      const r = await fetch(PROXY + '/mypath/init', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, role: pickedRole, displayName })
+      });
+      const data = await r.json();
+      if (!r.ok || !data.ok) throw new Error(data.error || 'init_failed');
+
+      session = { email, role: pickedRole, displayName };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
+      toast('Welcome to MyPath');
+      enterDashboard();
+    } catch (e2) {
+      toast('Sign-in failed: ' + (e2.message || 'unknown'), true);
+      cta.disabled = false; cta.textContent = 'Get on the path →';
+    }
+  }
+}
+
+// v0.21: handle ?token=... callback from magic-link emails
+async function handleMagicLinkCallback() {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+  if (!token) return false;
+
+  try {
+    const r = await fetch(PROXY + '/auth/magic-link/verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || 'verify_failed');
+
+    session = {
+      email: data.email,
+      role: data.role || 'player',
+      displayName: null,
+      sessionToken: data.sessionToken
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
+    // Clean URL
+    window.history.replaceState({}, '', '/mypath');
+    toast('Signed in!');
+    enterDashboard();
+    return true;
+  } catch (e) {
+    toast('Sign-in link expired or invalid. Try again.', true);
+    return false;
+  }
+}
+
+function signOut() {
+  if (!confirm('Sign out of MyPath?')) return;
+  // If we have a session token, invalidate it server-side
+  if (session && session.sessionToken) {
+    try {
+      fetch(PROXY + '/auth/signout', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + session.sessionToken }
+      });
+    } catch {}
+  }
+  localStorage.removeItem(STORAGE_KEY);
+  session = null;
+  state = { watchlist: [], milestones: [], selectedPlayer: null, mtcResult: null };
+  document.getElementById('dash').classList.remove('active');
+  document.getElementById('auth-gate').style.display = 'flex';
+  document.getElementById('nav-user-display').style.display = 'none';
+  // Reload to reset auth-card UI
+  setTimeout(() => window.location.reload(), 600);
+  toast('Signed out');
+}
+
+// ─── Dashboard load ───
+async function enterDashboard() {
+  document.getElementById('auth-gate').style.display = 'none';
+  document.getElementById('dash').classList.add('active');
+  document.getElementById('nav-user-display').style.display = 'inline-block';
+
+  // Greeting
+  const name = session.displayName || session.email.split('@')[0];
+  const roleLabel = { player: 'Player', parent: 'Parent', coach: 'Coach' }[session.role] || 'You';
+  document.getElementById('greeting').innerHTML = 'Hey, <span class="serif-accent">' + escapeHtml(name) + '.</span>';
+  document.getElementById('role-tag').textContent = roleLabel;
+
+  // Adjust copy by role
+  if (session.role === 'parent') {
+    document.getElementById('watchlist-h').textContent = 'Players you watch';
+    document.getElementById('watchlist-sub').textContent = 'Track up to 3 — your kid, your niece, prospects you care about.';
+    document.getElementById('ms-h').textContent = 'What it takes for them';
+    document.getElementById('ms-sub').textContent = 'Concrete milestones on the path forward. The honest read, not the hype.';
+  } else if (session.role === 'coach') {
+    document.getElementById('watchlist-h').textContent = 'Your roster';
+    document.getElementById('watchlist-sub').textContent = 'Track players you coach. See who is ready, who is building, who needs the next jump.';
+    document.getElementById('ms-h').textContent = 'Team milestones';
+    document.getElementById('ms-sub').textContent = 'Set development targets for individual players. Track what hits.';
+  }
+
+  renderRoleToolkit();
+  await loadProfile();
+}
+
+// v0.25: Role switcher — change context mid-session without re-signing in
+function openRoleSwitcher() {
+  const modal = document.getElementById('role-switcher-modal');
+  if (!modal) return;
+  // Highlight active
+  ['player', 'parent', 'coach'].forEach(r => {
+    const opt = document.getElementById('role-opt-' + r);
+    if (opt) opt.classList.toggle('active', session.role === r);
+  });
+  modal.classList.add('open');
+}
+function closeRoleSwitcher() {
+  const modal = document.getElementById('role-switcher-modal');
+  if (modal) modal.classList.remove('open');
+}
+async function switchRole(newRole) {
+  if (!['player', 'parent', 'coach'].includes(newRole)) return;
+  if (session.role === newRole) { closeRoleSwitcher(); return; }
+
+  // Persist to backend (uses /mypath/init which upserts the role)
+  try {
+    await fetch(PROXY + '/mypath/init', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: session.email,
+        role: newRole,
+        displayName: session.displayName || null
+      })
+    });
+  } catch (e) {
+    toast('Could not save role change to server, but switched locally', false);
+  }
+
+  // Update local session + storage
+  session.role = newRole;
+  try {
+    localStorage.setItem('fc_session', JSON.stringify(session));
+  } catch {}
+
+  closeRoleSwitcher();
+  toast('Switched to ' + newRole + ' view', false);
+
+  // Re-render dashboard with new role
+  const roleLabel = { player: 'Player', parent: 'Parent', coach: 'Coach' }[newRole] || 'You';
+  document.getElementById('role-tag').textContent = roleLabel;
+
+  // Reset the per-role copy
+  const copyByRole = {
+    player: { wH: 'Your watchlist', wSub: 'Track up to 3 players you care about — your own path or anyone you study.', mH: 'What it takes', mSub: 'Concrete milestones on the path forward. The honest read, not the hype.' },
+    parent: { wH: 'Players you watch', wSub: 'Track up to 3 — your kid, your niece, prospects you care about.', mH: 'What it takes for them', mSub: 'Concrete milestones on the path forward. The honest read, not the hype.' },
+    coach: { wH: 'Your roster', wSub: 'Track players you coach. See who is ready, who is building, who needs the next jump.', mH: 'Team milestones', mSub: 'Set development targets for individual players. Track what hits.' }
+  }[newRole];
+  if (copyByRole) {
+    document.getElementById('watchlist-h').textContent = copyByRole.wH;
+    document.getElementById('watchlist-sub').textContent = copyByRole.wSub;
+    document.getElementById('ms-h').textContent = copyByRole.mH;
+    document.getElementById('ms-sub').textContent = copyByRole.mSub;
+  }
+
+  renderRoleToolkit();
+}
+
+async function loadProfile() {
+  try {
+    const r = await fetch(PROXY + '/mypath/profile?email=' + encodeURIComponent(session.email));
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || 'load_failed');
+
+    state.watchlist = data.watchlist || [];
+    state.milestones = data.milestones || [];
+
+    renderWatchlist();
+    renderMilestones();
+    renderMakeTheCut();
+  } catch (e) {
+    toast('Could not load your profile: ' + (e.message || 'unknown'), true);
+  }
+}
+
+// ─── Watchlist ───
+function renderWatchlist() {
+  const wrap = document.getElementById('watchlist-items');
+  if (state.watchlist.length === 0) {
+    wrap.innerHTML = '<div class="empty-state"><p>No players on your watchlist yet. Add one to get started.</p></div>';
+    return;
+  }
+  wrap.innerHTML = state.watchlist.map(w => `
+    <div class="item">
+      <div class="item-main" onclick="selectPlayer('${escapeAttr(w.player_name)}','${escapeAttr(w.sport)}','${escapeAttr(w.school || '')}')">
+        <div class="item-name">${escapeHtml(w.player_name)}</div>
+        <div class="item-meta">${escapeHtml(w.school || '—')} · ${escapeHtml(formatSport(w.sport))}${w.notes ? ' · ' + escapeHtml(w.notes) : ''}</div>
+      </div>
+      <div class="item-actions">
+        <button class="btn-icon" title="View on FieldCheck" onclick="viewVerdict('${escapeAttr(w.player_name)}','${escapeAttr(w.sport)}','${escapeAttr(w.school || '')}')">↗</button>
+        <button class="btn-icon danger" title="Remove" onclick="removeWatch('${escapeAttr(w.id)}')">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+async function addWatchItem() {
+  const playerName = document.getElementById('wf-name').value.trim();
+  const school = document.getElementById('wf-school').value.trim();
+  const sport = document.getElementById('wf-sport').value;
+  const notes = document.getElementById('wf-notes').value.trim();
+  if (!playerName) return toast('Player name required', true);
+
+  try {
+    const r = await fetch(PROXY + '/mypath/watchlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: session.email, playerName, sport, school: school || null, notes: notes || null })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || 'add_failed');
+
+    document.getElementById('wf-name').value = '';
+    document.getElementById('wf-school').value = '';
+    document.getElementById('wf-notes').value = '';
+    toggleAddForm('add-watch-form');
+    toast('Added to watchlist');
+    await loadProfile();
+  } catch (e) { toast('Add failed: ' + (e.message || 'unknown'), true); }
+}
+async function removeWatch(id) {
+  if (!confirm('Remove from watchlist?')) return;
+  try {
+    const r = await fetch(PROXY + '/mypath/watchlist/' + id + '?email=' + encodeURIComponent(session.email), { method: 'DELETE' });
+    if (!r.ok) throw new Error('delete_failed');
+    toast('Removed');
+    await loadProfile();
+  } catch (e) { toast('Could not remove', true); }
+}
+function viewVerdict(playerName, sport, school) {
+  // Open the main FieldCheck site with this prefilled
+  const url = '/?run=' + encodeURIComponent(JSON.stringify({ track: 'player', name: playerName, sport, school }));
+  window.open(url, '_blank');
+}
+function selectPlayer(name, sport, school) {
+  state.selectedPlayer = { name, sport, school };
+  renderMakeTheCut();
+}
+
+// ─── Milestones ───
+function renderMilestones() {
+  const wrap = document.getElementById('ms-items');
+  if (state.milestones.length === 0) {
+    wrap.innerHTML = '<div class="empty-state"><p>No milestones yet. Add one or click Suggest to seed position-specific defaults.</p></div>';
+    return;
+  }
+  wrap.innerHTML = state.milestones.map(m => `
+    <div class="ms-item ${m.achieved ? 'achieved-row' : ''}">
+      <button class="ms-check ${m.achieved ? 'achieved' : ''}" onclick="toggleMilestone('${escapeAttr(m.id)}', ${m.achieved ? 'false' : 'true'})">${m.achieved ? '✓' : ''}</button>
+      <div class="ms-content">
+        <div class="ms-text">${escapeHtml(m.milestone_text)}</div>
+        <div class="ms-meta">${m.category ? escapeHtml(m.category) + ' · ' : ''}${m.player_name ? escapeHtml(m.player_name) : ''}</div>
+        ${(m.target_value || m.current_value) ? `<div class="ms-progress">${m.current_value ? 'Current: ' + escapeHtml(m.current_value) + ' · ' : ''}${m.target_value ? 'Target: ' + escapeHtml(m.target_value) : ''}</div>` : ''}
+      </div>
+      <button class="btn-icon danger" title="Remove" onclick="removeMilestone('${escapeAttr(m.id)}')">✕</button>
+    </div>
+  `).join('');
+}
+async function addMilestone() {
+  const text = document.getElementById('msf-text').value.trim();
+  const category = document.getElementById('msf-category').value;
+  const target = document.getElementById('msf-target').value.trim();
+  if (!text) return toast('Milestone text required', true);
+
+  // Use first watchlist player as default association
+  const playerName = state.selectedPlayer?.name || (state.watchlist[0]?.player_name) || 'My player';
+
+  try {
+    const r = await fetch(PROXY + '/mypath/milestones', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: session.email, playerName, milestoneText: text, category, targetValue: target || null })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || 'add_failed');
+
+    document.getElementById('msf-text').value = '';
+    document.getElementById('msf-target').value = '';
+    toggleAddForm('add-ms-form');
+    toast('Milestone added');
+    await loadProfile();
+  } catch (e) { toast('Add failed: ' + (e.message || 'unknown'), true); }
+}
+async function toggleMilestone(id, achievedStr) {
+  const achieved = achievedStr === 'true' || achievedStr === true;
+  try {
+    const r = await fetch(PROXY + '/mypath/milestones/' + id, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: session.email, achieved })
+    });
+    if (!r.ok) throw new Error('update_failed');
+    toast(achieved ? 'Milestone achieved! 🏐' : 'Milestone reset');
+    await loadProfile();
+
+    // v0.21: offer to share the moment
+    if (achieved) {
+      const milestone = state.milestones.find(m => m.id === id);
+      if (milestone && confirm('Share this moment? Generates a shareable card for TikTok / Twitter / FB.')) {
+        await shareMilestone(milestone.milestone_text, milestone.player_name || 'Your player');
+      }
+    }
+  } catch (e) { toast('Could not update', true); }
+}
+async function removeMilestone(id) {
+  if (!confirm('Remove this milestone?')) return;
+  try {
+    const r = await fetch(PROXY + '/mypath/milestones/' + id + '?email=' + encodeURIComponent(session.email), { method: 'DELETE' });
+    if (!r.ok) throw new Error('delete_failed');
+    await loadProfile();
+  } catch (e) { toast('Could not remove', true); }
+}
+
+// Suggest position-specific defaults based on first watchlist player
+async function seedDefaultMilestones() {
+  if (state.watchlist.length === 0) {
+    toast('Add a player to your watchlist first', true);
+    return;
+  }
+  const player = state.watchlist[0];
+  const playerName = player.player_name;
+  const sport = player.sport;
+
+  // Generic but useful defaults for volleyball libero / OH (Lexi-style)
+  // For non-volleyball, generic position-agnostic defaults
+  let defaults = [];
+  if (sport === 'womens-volleyball' || sport === 'mens-volleyball') {
+    defaults = [
+      { milestoneText: 'Hit 4.0+ digs/set this season (libero) or 3.5+ kills/set (OH)', category: 'production', targetValue: '4.0 D/S or 3.5 K/S' },
+      { milestoneText: 'Hitting % above .250 senior year', category: 'production', targetValue: '.250+' },
+      { milestoneText: 'AVCA All-Region recognition', category: 'recognition', targetValue: 'All-Region' },
+      { milestoneText: 'NCAA tournament Sweet 16+ run', category: 'recognition', targetValue: 'Sweet 16' },
+      { milestoneText: 'U.S. Collegiate National Team invite', category: 'decision', targetValue: 'USCNT camp' },
+      { milestoneText: 'Full season healthy — no missed matches', category: 'health', targetValue: '0 missed' }
+    ];
+  } else if (sport === 'football') {
+    defaults = [
+      { milestoneText: 'Earn starting role by spring camp', category: 'recognition', targetValue: 'Starter' },
+      { milestoneText: 'All-Conference recognition', category: 'recognition', targetValue: 'All-Conference' },
+      { milestoneText: 'Hit position-specific production threshold', category: 'production', targetValue: 'Top-25 in conf' },
+      { milestoneText: 'Senior Bowl / East-West Shrine invite', category: 'decision', targetValue: 'All-Star invite' },
+      { milestoneText: 'Combine measurable thresholds (40, vert, bench)', category: 'physical', targetValue: 'Position-elite' }
+    ];
+  } else if (sport === 'mens-basketball' || sport === 'womens-basketball') {
+    defaults = [
+      { milestoneText: 'Conference Player of the Year nomination', category: 'recognition', targetValue: 'POY nom' },
+      { milestoneText: 'Top-50 NET in advanced metrics', category: 'production', targetValue: 'Top 50' },
+      { milestoneText: 'NCAA tournament Elite Eight run', category: 'recognition', targetValue: 'Elite Eight' },
+      { milestoneText: 'Pre-draft combine invite', category: 'decision', targetValue: 'Combine' },
+      { milestoneText: 'Full season healthy', category: 'health', targetValue: '0 games missed' }
+    ];
+  } else {
+    defaults = [
+      { milestoneText: 'Earn starting role this season', category: 'recognition', targetValue: 'Starter' },
+      { milestoneText: 'All-Conference recognition', category: 'recognition', targetValue: 'All-Conference' },
+      { milestoneText: 'Hit position-specific production threshold', category: 'production' },
+      { milestoneText: 'Stay healthy — full season available', category: 'health' }
+    ];
+  }
+
+  let added = 0;
+  for (const d of defaults) {
+    try {
+      const r = await fetch(PROXY + '/mypath/milestones', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: session.email, playerName, ...d })
+      });
+      if (r.ok) added++;
+    } catch {}
+  }
+  toast('Added ' + added + ' suggested milestones for ' + playerName);
+  await loadProfile();
+}
+
+// ─── MakeTheCut ───
+async function renderMakeTheCut() {
+  const wrap = document.getElementById('mtc-display');
+
+  if (state.watchlist.length === 0) {
+    wrap.innerHTML = `<div class="mtc-empty">
+      <p>Add a player to your watchlist to see their MakeTheCut score and what it takes to climb the path.</p>
+      <a class="btn" onclick="toggleAddForm('add-watch-form')">+ Add a player</a>
+    </div>`;
+    return;
+  }
+
+  // Pick selected player or first in watchlist
+  const player = state.selectedPlayer
+    ? state.watchlist.find(w => w.player_name === state.selectedPlayer.name) || state.watchlist[0]
+    : state.watchlist[0];
+
+  // Compute MakeTheCut. Honest framing: if no eval grid available we surface that.
+  // For demo without a verdict run yet, we show a helpful empty state.
+  wrap.innerHTML = `<div class="mtc-empty">
+    <p>Showing MakeTheCut for <strong style="color:var(--text)">${escapeHtml(player.player_name)}</strong>. The score uses the eval grid + LOVB roster medians from FieldCheck. Run a verdict on this player to populate the grid.</p>
+    <a class="btn btn-primary" onclick="viewVerdict('${escapeAttr(player.player_name)}','${escapeAttr(player.sport)}','${escapeAttr(player.school || '')}')">Run FieldCheck verdict →</a>
+  </div>`;
+
+  // For volleyball with verified LOVB roster names, we can short-circuit to AT_THE_CUT immediately
+  // (the worker's resolveLOVBPathway handles this when called)
+  // Hard-coded check for demo: known LOVB rostered names
+  const knownLOVB = ['lexi rodriguez','sarah franklin','jordan larson','madisen skinner','logan eggleston',
+    'haleigh washington','jordyn poulter','justine wong-orantes','dana rettke','andrea drews','annie drews',
+    'merritt beason','asjia oneal','kelsey cook','khalia lanier','lexi sun','lauren carlini','sydney hilley',
+    'kennedi orr','mikayla robinson','jess schaben','sami hill','kennedy eubanks','dani drews','madison kingdon',
+    'macall peed','micaya white','jenna wenaas','leketor membermeneh','tiana dockery','anna smrek','molly haggerty',
+    'devyn robinson','rachael fara','alyssa jensen','yanlis feliz','whitney rich','madisen lydon','kennedy catholic',
+    'roberta purcell','roni jonesperry','lauren forte','lily justine','madelyn cole','kayla caffey','madi kingdon'];
+  const norm = (player.player_name || '').toLowerCase().replace(/[^\w\s]/g,'').replace(/\s+/g,' ').trim();
+  const isLOVB = (player.sport === 'womens-volleyball') && knownLOVB.some(n => norm.includes(n) || n.includes(norm.split(' ').pop()));
+
+  if (isLOVB) {
+    // Render an "AT_THE_CUT" demo state
+    wrap.innerHTML = renderMTCRing({
+      score: 100,
+      tier: 'AT_THE_CUT',
+      tier_label: 'Already at the cut',
+      explanation: `${player.player_name} is currently rostered on a LOVB Pro team. The cut has been made. Focus shifts to year-1 starting role and year-2 retention.`,
+      next_actions: [
+        'Track year-1 starter role: minutes per set above league median',
+        'Year-1 health gate: full training camp + first 5 matches healthy',
+        'Year-2 international offer monitoring (Italian Serie A1 / Turkish retention pressure)'
+      ]
+    }, player);
+  }
+}
+
+function renderMTCRing(result, player) {
+  const score = result.score == null ? 0 : result.score;
+  const tierClass = (result.tier || '').toLowerCase();
+  // Circumference: 2 * π * r where r=85 → ~534
+  const C = 2 * Math.PI * 85;
+  const dash = C;
+  const offset = C * (1 - score / 100);
+
+  return `<div class="mtc-display">
+    <div class="mtc-score-ring tier-${tierClass}">
+      <svg viewBox="0 0 200 200">
+        <circle class="mtc-score-ring-bg" cx="100" cy="100" r="85"></circle>
+        <circle class="mtc-score-ring-fg" cx="100" cy="100" r="85"
+          stroke-dasharray="${dash}" stroke-dashoffset="${offset}"></circle>
+      </svg>
+      <div class="mtc-score-num">
+        ${result.score == null ? '—' : result.score}
+        <div class="mtc-score-suffix">/ 100</div>
+      </div>
+    </div>
+    <div>
+      <div class="mtc-tier tier-${tierClass}">${escapeHtml(result.tier_label || result.tier || '—')}</div>
+      <div class="mtc-explain">${escapeHtml(result.explanation || '')}</div>
+      <ul class="mtc-actions">
+        ${(result.next_actions || []).map(a => '<li>' + escapeHtml(a) + '</li>').join('')}
+      </ul>
+      <div class="mtc-methodology">// Methodology: rules-based v1 · ML upgrade ships when corpus reaches outcome-mapped scale · this projection is bounded by eval grid quality + position playbook calibration</div>
+    </div>
+  </div>`;
+}
+
+// ─── Role-specific toolkit ───
+function renderRoleToolkit() {
+  const role = session.role;
+  const grid = document.getElementById('rt-grid');
+  const eyebrow = document.getElementById('rt-eyebrow');
+  const h = document.getElementById('rt-h');
+  const sub = document.getElementById('rt-sub');
+
+  let tools = [];
+  if (role === 'player') {
+    eyebrow.textContent = '// Player toolkit';
+    h.textContent = 'Built for the kid making the climb';
+    sub.textContent = 'The honest tools that actually move the needle. No hype.';
+    tools = [
+      { name: 'NIL Valuation', desc: 'Estimated NIL range + the exact levers that move the number. Build a fine-tuning plan.', status: 'live', action: 'showNIL' },
+      { name: 'Total Comp', desc: 'Scholarship + NIL = real annual value. The number that actually matters when you negotiate.', status: 'live', action: 'showTotalComp' },
+      { name: 'Weekly check-in', desc: 'Log this week\'s stats. See where you moved on the path.', status: 'live', action: 'weeklyCheckin' },
+      { name: 'Comp library', desc: 'Verified-outcome players who match your profile. The path they walked is the path to study.', status: 'live', action: 'showComps' },
+      { name: 'Position benchmarks', desc: 'See LOVB / D1 starter medians for your exact position. Know the bar.', status: 'live', action: 'showBenchmarks' },
+      { name: 'Recruiting calendar', desc: 'When scouts open windows, when awards drop, when portal windows move. Per sport.', status: 'live', action: 'showCalendar' },
+      { name: 'Add my video', desc: 'Drop your highlight reel link. It flows into your verdict and is shareable to TikTok / Twitter / FB.', status: 'live', action: 'addVideo' }
+    ];
+  } else if (role === 'parent') {
+    eyebrow.textContent = '// Parent toolkit';
+    h.textContent = 'The honest read for the people who matter most';
+    sub.textContent = 'No agency angle, no NIL collective markup, no hype. Just the truth and the path.';
+    tools = [
+      { name: 'NIL Valuation', desc: 'What is your kid actually worth in the public NIL market? Real range. Real levers. No collective markup.', status: 'live', action: 'showNIL' },
+      { name: 'Total Comp', desc: 'Scholarship + NIL = real annual value. The conversation parents actually need to have.', status: 'live', action: 'showTotalComp' },
+      { name: 'Honest probability', desc: 'The real read on signing odds. Not what coaches tell you. Not what showcases sell.', status: 'live', action: 'honestRead' },
+      { name: 'Recruiting calendar', desc: 'Critical dates: contact periods, evaluation windows, official visit windows.', status: 'live', action: 'showCalendar' },
+      { name: 'Add their video', desc: 'Drop your kid\'s highlight reel link. Coaches looking at the verdict will see it.', status: 'live', action: 'addVideo' },
+      { name: 'Cost transparency', desc: 'What NIL deals, agents, training, and showcases actually cost. Real numbers.', status: 'soon' },
+      { name: 'Coach conversation prompts', desc: 'What to ask the head coach. What red flags look like. What good answers sound like.', status: 'soon' }
+    ];
+  } else if (role === 'coach') {
+    eyebrow.textContent = '// Coach toolkit';
+    h.textContent = 'Get your players to the cut';
+    sub.textContent = 'Scout-grade tools to see who\'s ready, who\'s building, and who needs the next jump.';
+    tools = [
+      { name: 'Roster eval grid', desc: 'Drop your team — get full eval grids back, sorted by MakeTheCut tier. 30 players max per run.', status: 'live', action: 'rosterEval' },
+      { name: 'Who\'s ready', desc: 'Filter your roster to just the players who cleared CUT_LIKELY / BUILDING tier. The shortlist that matters.', status: 'live', action: 'whosReady' },
+      { name: 'Scout outreach templates', desc: 'Per-sport intro emails for LOVB scouts, college coaches, agents, pro teams. Honest framing, zero fluff.', status: 'live', action: 'scoutOutreach' },
+      { name: 'NIL Valuation', desc: 'See estimated NIL range for any player on your radar. Levers + fine-tuning plan included.', status: 'live', action: 'showNIL' },
+      { name: 'Recruiting calendar', desc: 'Conference, region, and national event dates with eligibility windows.', status: 'live', action: 'showCalendar' },
+      { name: 'Comparison engine', desc: 'Your player vs. current roster medians at their position. Side-by-side.', status: 'live', action: 'showCompare' },
+      { name: 'Progress reports', desc: 'Auto-generated PDFs to send parents. Pro/Edge tier.', status: 'soon' }
+    ];
+  }
+
+  grid.innerHTML = tools.map(t => {
+    const onclickAttr = t.action ? t.action + '()' : "comingSoon()";
+    return '<div class="toolkit-tile" onclick="' + onclickAttr + '">' +
+      '<div class="toolkit-tile-name">' + escapeHtml(t.name) + '</div>' +
+      '<div class="toolkit-tile-desc">' + escapeHtml(t.desc) + '</div>' +
+      '<div class="toolkit-tile-status ' + t.status + '">' + (t.status === 'live' ? 'Live' : 'Coming v0.20') + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function comingSoon() {
+  toast('Coming in v0.20 — building this now');
+}
+
+// Toolkit actions (live ones)
+function weeklyCheckin() {
+  if (state.watchlist.length === 0) return toast('Add a player to your watchlist first', true);
+  const player = state.watchlist[0];
+  const stats = prompt('Quick check-in for ' + player.player_name + '. Enter this week\'s key stat (e.g. "4.2 D/S, 0 errors"):');
+  if (!stats) return;
+  const note = prompt('Anything else worth noting? (optional)') || '';
+  const weekOf = new Date().toISOString().slice(0, 10);
+  fetch(PROXY + '/mypath/checkin', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: session.email, playerName: player.player_name, weekOf, stats: { raw: stats }, note })
+  }).then(r => r.json()).then(data => {
+    if (data.ok) toast('Check-in logged for week of ' + weekOf);
+    else toast('Could not log check-in', true);
+  }).catch(() => toast('Could not log check-in', true));
+}
+function showBenchmarks() {
+  if (state.watchlist.length === 0) return toast('Add a player to your watchlist first', true);
+  const player = state.watchlist[0];
+  const sport = player.sport;
+  let benchmarks = '';
+  if (sport === 'womens-volleyball') {
+    benchmarks = 'LOVB Pro signing thresholds (rough medians):\n\n' +
+      'Outside hitter (OH):\n  • 3.5+ kills/set\n  • Hitting % .250+\n  • 2.0+ digs/set (6-rotation)\n  • Approach reach 9\'10"+\n\n' +
+      'Middle blocker (MB):\n  • Hitting % .320+\n  • 1.2+ blocks/set\n  • Block touch 10\'2"+\n\n' +
+      'Setter (S):\n  • Team hitting % .280+ under your distribution\n  • Service ace rate 0.4/set+\n\n' +
+      'Libero (L):\n  • 4.5+ digs/set\n  • Reception grade 2.40+ (3.0 scale)\n\n' +
+      'Opposite (OPP):\n  • 3.8+ kills/set\n  • Hitting % .280+\n  • Frame 6\'1"+';
+  } else {
+    benchmarks = 'Position benchmarks for ' + formatSport(sport) + ' coming in v0.20. For now run a FieldCheck verdict on the player to see position-specific eval grid scoring against playbook medians.';
+  }
+  alert(benchmarks);
+}
+function honestRead() {
+  if (state.watchlist.length === 0) return toast('Add your kid to watchlist first', true);
+  const player = state.watchlist[0];
+  alert(
+    'Honest read for ' + player.player_name + ':\n\n' +
+    'Run a FieldCheck verdict to populate the eval grid. Then this view shows you:\n\n' +
+    '• MakeTheCut score (0-100, rules-based v1, honest about it)\n' +
+    '• Probability bands (likely, building, gap)\n' +
+    '• What scouts actually weight at this position\n' +
+    '• What\'s changed in the last 30 days\n\n' +
+    'No hype. No agency angle. The honest read.\n\n' +
+    'Click "Run FieldCheck verdict" on your watchlist item to populate.'
+  );
+}
+function showCompare() {
+  if (state.watchlist.length === 0) return toast('Add a player to your roster first', true);
+  toast('Comparison engine demo: pick a player, see their grid vs. roster medians at their position. Full version v0.20.');
+}
+
+// v0.21: Recruiting calendar viewer
+async function showCalendar() {
+  const sport = state.watchlist[0]?.sport || 'all';
+  const wrap = document.getElementById('mtc-display');
+  wrap.innerHTML = '<div class="mtc-empty"><p>Loading recruiting calendar…</p></div>';
+
+  try {
+    const r = await fetch(PROXY + '/calendar?sport=' + encodeURIComponent(sport) + '&horizon=180');
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || 'calendar_failed');
+
+    const events = data.events || [];
+    if (events.length === 0) {
+      wrap.innerHTML = '<div class="mtc-empty"><p>No events on the calendar in the next 180 days for ' + escapeHtml(sport) + '.</p>' +
+        '<a class="btn" onclick="renderMakeTheCut()">← Back</a></div>';
+      return;
+    }
+
+    const importanceColor = { critical: 'var(--accent)', high: 'var(--gold)', medium: 'var(--text-3)' };
+    const eventsHtml = events.slice(0, 12).map(e => {
+      const dt = new Date(e.date);
+      const dateStr = dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+      const color = importanceColor[e.importance] || 'var(--text-3)';
+      return '<div style="padding:14px 0;border-bottom:1px solid var(--glass-edge)">' +
+        '<div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:4px">' +
+          '<span style="font-family:JetBrains Mono;font-size:12px;color:' + color + ';font-weight:600">' + dateStr + '</span>' +
+          '<span style="font-family:JetBrains Mono;font-size:9.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-4);padding:1px 6px;background:var(--glass);border-radius:3px">' + escapeHtml(e.type.replace(/_/g,' ')) + '</span>' +
+        '</div>' +
+        '<div style="font-family:Anton;font-size:15px;letter-spacing:-0.005em;color:var(--text);margin-bottom:3px">' + escapeHtml(e.title) + '</div>' +
+        '<div style="font-family:Instrument Serif;font-style:italic;font-size:13.5px;color:var(--text-2);line-height:1.45">' + escapeHtml(e.detail) + '</div>' +
+      '</div>';
+    }).join('');
+
+    wrap.innerHTML =
+      '<div style="padding:4px 0">' +
+        '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);margin-bottom:8px">// Recruiting calendar · ' + escapeHtml(sport) + ' · next 180 days</div>' +
+        '<h3 style="font-family:Anton;font-size:22px;letter-spacing:-0.005em;margin-bottom:6px">' + events.length + ' events ahead</h3>' +
+        '<p style="font-family:Instrument Serif;font-style:italic;font-size:14px;color:var(--text-3);margin-bottom:18px">Critical dates only. Updated quarterly. Last reviewed ' + (data.last_reviewed || 'recently') + '.</p>' +
+        eventsHtml +
+        '<div style="margin-top:14px"><a class="btn" onclick="renderMakeTheCut()">← Back to MakeTheCut</a></div>' +
+      '</div>';
+  } catch (e) {
+    wrap.innerHTML = '<div class="mtc-empty"><p>Could not load calendar: ' + escapeHtml(e.message || 'unknown') + '</p>' +
+      '<a class="btn" onclick="renderMakeTheCut()">← Back</a></div>';
+  }
+}
+
+// v0.21: Add player video — drop a highlight link, flows into verdicts + shareable
+async function addVideo() {
+  if (state.watchlist.length === 0) return toast('Add a player to your watchlist first', true);
+
+  const wrap = document.getElementById('mtc-display');
+  const playerOptions = state.watchlist.map((p, i) =>
+    '<option value="' + i + '">' + escapeHtml(p.player_name) + ' · ' + escapeHtml(p.sport) + '</option>'
+  ).join('');
+
+  wrap.innerHTML =
+    '<div style="padding:4px 0">' +
+      '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px">// Add a highlight reel</div>' +
+      '<h3 style="font-family:Anton;font-size:24px;letter-spacing:-0.005em;margin-bottom:16px">Your footage, your verdict</h3>' +
+      '<p style="font-family:Instrument Serif;font-style:italic;font-size:14px;color:var(--text-3);margin-bottom:24px">When this player\'s verdict loads, your video shows first — before any auto-fetched YouTube. Make sure it\'s the reel you want scouts to see.</p>' +
+
+      '<div style="margin-bottom:18px">' +
+        '<label style="display:block;font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px">For player</label>' +
+        '<select id="vid-player" style="width:100%;padding:10px 12px;background:var(--bg-2);border:1px solid var(--glass-edge);border-radius:6px;color:var(--text);font-size:14px">' + playerOptions + '</select>' +
+      '</div>' +
+
+      '<div style="margin-bottom:18px">' +
+        '<label style="display:block;font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px">Video URL</label>' +
+        '<input type="url" id="vid-url" placeholder="YouTube, Hudl, Instagram, TikTok, or direct .mp4" oninput="vidPreview()" style="width:100%;padding:10px 12px;background:var(--bg-2);border:1px solid var(--glass-edge);border-radius:6px;color:var(--text);font-size:14px;font-family:JetBrains Mono">' +
+        '<div id="vid-source-detect" style="font-family:JetBrains Mono;font-size:10px;letter-spacing:0.06em;color:var(--text-4);margin-top:6px;text-transform:uppercase"></div>' +
+      '</div>' +
+
+      '<div id="vid-preview-wrap" style="margin-bottom:18px;display:none">' +
+        '<label style="display:block;font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px">Preview</label>' +
+        '<div id="vid-preview" style="aspect-ratio:16/9;background:var(--bg-3);border:1px solid var(--glass-edge);border-radius:6px;overflow:hidden;position:relative"></div>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">' +
+        '<div>' +
+          '<label style="display:block;font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px">Title</label>' +
+          '<input type="text" id="vid-title" placeholder="Spring 2026 highlights" style="width:100%;padding:10px 12px;background:var(--bg-2);border:1px solid var(--glass-edge);border-radius:6px;color:var(--text);font-size:14px">' +
+        '</div>' +
+        '<div>' +
+          '<label style="display:block;font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px">Season</label>' +
+          '<input type="text" id="vid-season" placeholder="2026" style="width:100%;padding:10px 12px;background:var(--bg-2);border:1px solid var(--glass-edge);border-radius:6px;color:var(--text);font-size:14px">' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="margin-bottom:24px">' +
+        '<label style="display:block;font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px">Visibility</label>' +
+        '<div style="display:flex;gap:8px">' +
+          '<label style="flex:1;padding:10px 12px;background:var(--bg-2);border:1px solid var(--moss);border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:8px">' +
+            '<input type="radio" name="vid-vis" value="public" checked style="margin:0">' +
+            '<div><div style="font-size:13px;font-weight:600">Public</div><div style="font-size:11px;color:var(--text-3)">Shows in verdict + searchable</div></div>' +
+          '</label>' +
+          '<label style="flex:1;padding:10px 12px;background:var(--bg-2);border:1px solid var(--glass-edge);border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:8px">' +
+            '<input type="radio" name="vid-vis" value="unlisted" style="margin:0">' +
+            '<div><div style="font-size:13px;font-weight:600">Unlisted</div><div style="font-size:11px;color:var(--text-3)">Only via direct verdict link</div></div>' +
+          '</label>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="display:flex;gap:8px">' +
+        '<button class="btn btn-primary" onclick="submitVideo()">Add video</button>' +
+        '<button class="btn" onclick="renderMakeTheCut()">Cancel</button>' +
+      '</div>' +
+    '</div>';
+}
+
+// v0.26: live preview when YouTube URL pasted
+function vidPreview() {
+  const url = document.getElementById('vid-url')?.value || '';
+  const detect = document.getElementById('vid-source-detect');
+  const previewWrap = document.getElementById('vid-preview-wrap');
+  const preview = document.getElementById('vid-preview');
+  if (!url) {
+    if (detect) detect.textContent = '';
+    if (previewWrap) previewWrap.style.display = 'none';
+    return;
+  }
+
+  let source = 'direct';
+  if (url.includes('youtube.com') || url.includes('youtu.be')) source = 'youtube';
+  else if (url.includes('hudl.com')) source = 'hudl';
+  else if (url.includes('instagram.com')) source = 'instagram';
+  else if (url.includes('tiktok.com')) source = 'tiktok';
+  else if (url.includes('vimeo.com')) source = 'vimeo';
+
+  if (detect) detect.textContent = 'DETECTED · ' + source.toUpperCase();
+
+  // YouTube preview
+  if (source === 'youtube' && previewWrap && preview) {
+    const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?#]+)/);
+    if (m) {
+      preview.innerHTML = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' + m[1] + '" frameborder="0" allowfullscreen style="display:block"></iframe>';
+      previewWrap.style.display = '';
+      return;
+    }
+  }
+  // Other sources — placeholder
+  if (previewWrap && preview) {
+    preview.innerHTML = '<div style="height:100%;display:flex;align-items:center;justify-content:center;color:var(--text-4);font-family:Anton;font-size:24px;letter-spacing:0.1em">' + source.toUpperCase() + ' VIDEO</div>';
+    previewWrap.style.display = '';
+  }
+}
+
+// v0.26: submit video form
+async function submitVideo() {
+  const playerIdx = parseInt(document.getElementById('vid-player')?.value || '0', 10);
+  const player = state.watchlist[playerIdx];
+  if (!player) return toast('Player not found', true);
+  const url = (document.getElementById('vid-url')?.value || '').trim();
+  if (!url) return toast('URL is required', true);
+  const title = (document.getElementById('vid-title')?.value || '').trim() || null;
+  const season = (document.getElementById('vid-season')?.value || '').trim() || null;
+  const visEl = document.querySelector('input[name="vid-vis"]:checked');
+  const visibility = visEl ? visEl.value : 'public';
+
+  let source = 'direct';
+  if (url.includes('youtube.com') || url.includes('youtu.be')) source = 'youtube';
+  else if (url.includes('hudl.com')) source = 'hudl';
+  else if (url.includes('instagram.com')) source = 'instagram';
+  else if (url.includes('tiktok.com')) source = 'tiktok';
+  else if (url.includes('vimeo.com')) source = 'vimeo';
+
+  try {
+    const r = await fetch(PROXY + '/social/video', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: session.email,
+        playerName: player.player_name,
+        sport: player.sport,
+        source, url, title, season, visibility
+      })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || 'add_failed');
+    toast('Video added! Flows into ' + player.player_name + '\'s verdict.');
+    renderMakeTheCut();
+  } catch (e) {
+    toast('Add failed: ' + (e.message || 'unknown'), true);
+  }
+}
+
+// v0.27: Total Compensation panel — scholarship + NIL = real annual value
+async function showTotalComp() {
+  if (state.watchlist.length === 0) return toast('Add a player to your watchlist first', true);
+  const player = state.selectedPlayer
+    ? state.watchlist.find(w => w.player_name === state.selectedPlayer.name) || state.watchlist[0]
+    : state.watchlist[0];
+
+  const wrap = document.getElementById('mtc-display');
+  wrap.innerHTML = '<div class="mtc-empty"><p>Computing total compensation for ' + escapeHtml(player.player_name) + '…</p></div>';
+
+  try {
+    // First grab verdict for eval grid + pathway
+    let verdict;
+    try {
+      const v = await fetch(PROXY + '/verdict/player/quick', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: player.player_name, sport: player.sport, schoolHint: player.school })
+      });
+      verdict = await v.json();
+    } catch {}
+
+    const r = await fetch(PROXY + '/total-comp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sport: player.sport,
+        school: player.school,
+        position: verdict?.position || verdict?.encyclopedia?.bio?.position,
+        evalGrid: verdict?.encyclopedia?.eval_grid,
+        lovbPathway: verdict?.encyclopedia?.lovb_pathway || verdict?.lovb_pathway
+      })
+    });
+    const tc = await r.json();
+    if (!r.ok || !tc.ok) throw new Error(tc.error || 'failed');
+
+    const fmt = (n) => '$' + (n || 0).toLocaleString();
+
+    wrap.innerHTML =
+      '<div style="padding:4px 0">' +
+        '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">// Total compensation · Estimated</div>' +
+        '<h3 style="font-family:Anton;font-size:24px;letter-spacing:-0.005em;margin-bottom:6px">' + escapeHtml(player.player_name) + '</h3>' +
+        '<p style="font-family:Instrument Serif;font-style:italic;font-size:14px;color:var(--text-3);margin-bottom:24px">' + escapeHtml(player.school || 'School TBD') + ' · ' + escapeHtml(player.sport.replace('mens-', "Men's ").replace('womens-', "Women's ").replace('-', ' ')) + '</p>' +
+
+        // BIG TOTAL BANNER
+        '<div style="padding:24px 20px;background:linear-gradient(135deg,rgba(245,184,0,0.08),rgba(107,170,90,0.06));border:1px solid rgba(245,184,0,0.3);border-radius:10px;margin-bottom:22px;text-align:center">' +
+          '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">// Total annual value</div>' +
+          '<div style="font-family:Anton;font-size:42px;letter-spacing:-0.01em;color:var(--gold);line-height:1;margin-bottom:6px">' + fmt(tc.total_annual.estimated_low) + ' – ' + fmt(tc.total_annual.estimated_high) + '</div>' +
+          '<div style="font-family:Instrument Serif;font-style:italic;font-size:14px;color:var(--text-3)">midpoint ' + fmt(tc.total_annual.estimated_midpoint) + '</div>' +
+        '</div>' +
+
+        // BREAKDOWN
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px">' +
+          '<div style="padding:18px;background:var(--bg-2);border:1px solid var(--glass-edge);border-radius:8px">' +
+            '<div style="font-family:JetBrains Mono;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--moss);margin-bottom:8px">Scholarship</div>' +
+            '<div style="font-family:Anton;font-size:24px;letter-spacing:-0.005em;color:var(--text)">' + fmt(tc.scholarship.estimated_low) + ' – ' + fmt(tc.scholarship.estimated_high) + '</div>' +
+            '<div style="font-family:JetBrains Mono;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-4);margin-top:6px">' + escapeHtml(tc.scholarship.type) + '</div>' +
+          '</div>' +
+          '<div style="padding:18px;background:var(--bg-2);border:1px solid var(--glass-edge);border-radius:8px">' +
+            '<div style="font-family:JetBrains Mono;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">NIL</div>' +
+            '<div style="font-family:Anton;font-size:24px;letter-spacing:-0.005em;color:var(--text)">' + fmt(tc.nil.estimated_low) + ' – ' + fmt(tc.nil.estimated_high) + '</div>' +
+            '<div style="font-family:JetBrains Mono;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-4);margin-top:6px">' + escapeHtml(tc.nil.tier || 'unknown') + ' tier' + (tc.nil.calibration_applied ? ' · calibrated' : '') + '</div>' +
+          '</div>' +
+        '</div>' +
+
+        // SCHOLARSHIP CONTEXT
+        '<div style="padding:14px 16px;background:rgba(107,170,90,0.04);border:1px solid rgba(107,170,90,0.2);border-radius:8px;margin-bottom:14px">' +
+          '<div style="font-family:JetBrains Mono;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--moss);margin-bottom:6px">Scholarship reality</div>' +
+          '<div style="font-family:Instrument Serif;font-style:italic;font-size:13.5px;line-height:1.5;color:var(--text)">' + escapeHtml(tc.scholarship.note) + '</div>' +
+        '</div>' +
+
+        // HONEST CAVEATS
+        '<div style="font-size:12px;color:var(--text-3);line-height:1.55;padding:14px 16px;background:rgba(245,184,0,0.04);border:1px solid rgba(245,184,0,0.15);border-radius:8px;margin-bottom:14px">' +
+          '<div style="font-family:JetBrains Mono;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Honest scope</div>' +
+          '<ul style="margin:0;padding-left:18px">' +
+            (tc.honest_caveats || []).map(c => '<li style="margin-bottom:4px">' + escapeHtml(c) + '</li>').join('') +
+          '</ul>' +
+        '</div>' +
+
+        '<div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">' +
+          '<button class="btn" onclick="showNIL()">Drill into NIL →</button>' +
+          '<button class="btn" onclick="renderMakeTheCut()">← Back to MakeTheCut</button>' +
+        '</div>' +
+      '</div>';
+  } catch (e) {
+    wrap.innerHTML = '<div class="mtc-empty"><p>Could not compute: ' + escapeHtml(e.message || 'unknown') + '</p>' +
+      '<a class="btn" onclick="renderMakeTheCut()">← Back</a></div>';
+  }
+}
+
+// v0.22: NIL Valuation panel — uses verdict data to compute & render NIL estimate
+async function showNIL() {
+  if (state.watchlist.length === 0) return toast('Add a player to your watchlist first', true);
+  const player = state.selectedPlayer
+    ? state.watchlist.find(w => w.player_name === state.selectedPlayer.name) || state.watchlist[0]
+    : state.watchlist[0];
+
+  const wrap = document.getElementById('mtc-display');
+  wrap.innerHTML = '<div class="mtc-empty"><p>Computing NIL estimate for ' + escapeHtml(player.player_name) + '…</p></div>';
+
+  try {
+    // First need a verdict for eval grid + pathway. Use cached if available via quick path.
+    let verdict;
+    try {
+      const v = await fetch(PROXY + '/verdict/player/quick', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: player.player_name, sport: player.sport, schoolHint: player.school })
+      });
+      verdict = await v.json();
+    } catch {}
+
+    // Compute NIL estimate using whatever data we have
+    const nilBody = {
+      sport: player.sport,
+      school: player.school,
+      position: verdict?.position || verdict?.encyclopedia?.bio?.position,
+      evalGrid: verdict?.encyclopedia?.eval_grid,
+      lovbPathway: verdict?.encyclopedia?.lovb_pathway || verdict?.lovb_pathway
+    };
+    const r = await fetch(PROXY + '/nil/estimate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(nilBody)
+    });
+    const nil = await r.json();
+    if (!r.ok || !nil.ok) throw new Error(nil.error || 'nil_failed');
+    if (nil.estimated_low == null) throw new Error('insufficient_data');
+
+    const fmt = (n) => '$' + (n || 0).toLocaleString();
+    const tierColors = { SUPERSTAR: '#FFD700', STAR: '#FF5C3A', STARTER_PLUS: '#6BAA5A', STARTER: '#6BAA5A', EMERGING: '#7c7c7c' };
+    const tierColor = tierColors[nil.tier] || '#7c7c7c';
+
+    const leversHtml = (nil.levers || []).map(l =>
+      '<div style="padding:12px 14px;margin-bottom:8px;background:var(--bg-2);border-left:3px solid var(--accent);border-radius:8px">' +
+        '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px">' + escapeHtml(l.lever) + '</div>' +
+        '<div style="font-size:12px;color:var(--text-3);margin-bottom:4px">Current: ' + escapeHtml(l.current) + '</div>' +
+        '<div style="font-family:Instrument Serif;font-style:italic;font-size:14px;line-height:1.45">' + escapeHtml(l.action) + '</div>' +
+      '</div>'
+    ).join('');
+
+    wrap.innerHTML =
+      '<div style="padding:4px 0">' +
+        '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">// NIL Valuation · Estimated</div>' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:20px">' +
+          '<div>' +
+            '<div style="font-family:Anton;font-size:36px;letter-spacing:-0.01em;color:var(--gold);line-height:1">' + fmt(nil.estimated_low) + ' – ' + fmt(nil.estimated_high) + '</div>' +
+            '<div style="font-family:JetBrains Mono;font-size:11px;color:var(--text-3);letter-spacing:0.04em;margin-top:6px">Annual NIL valuation range · ' + escapeHtml(player.player_name) + '</div>' +
+          '</div>' +
+          '<div style="padding:6px 14px;font-family:JetBrains Mono;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;border:1.5px solid ' + tierColor + ';color:' + tierColor + ';border-radius:4px">' + escapeHtml(nil.tier_label || nil.tier) + '</div>' +
+        '</div>' +
+        '<div style="margin-bottom:18px">' +
+          '<div style="font-family:Anton;font-size:18px;text-transform:uppercase;margin-bottom:14px">Top levers to grow this</div>' +
+          leversHtml +
+        '</div>' +
+        '<div style="text-align:center;padding:20px 0;border-top:1px dashed var(--glass-edge);border-bottom:1px dashed var(--glass-edge);margin-bottom:14px">' +
+          '<button class="btn btn-primary" onclick="growNIL(\'' + escapeAttr(JSON.stringify(nil)) + '\')">Build my fine-tuning plan →</button>' +
+          '<p style="font-family:Instrument Serif;font-style:italic;font-size:13px;color:var(--text-3);margin-top:10px">5-step plan to climb tiers. Free.</p>' +
+        '</div>' +
+        '<div style="font-size:12px;color:var(--text-3);line-height:1.55;padding:12px 14px;background:rgba(245,184,0,0.04);border:1px solid rgba(245,184,0,0.15);border-radius:8px;margin-bottom:14px">' +
+          '<strong style="color:var(--gold)">Honest scope:</strong> Rules-based estimate from public-record proxies. Real deals depend on social audience, agent quality, market timing. Use as directional benchmark, not contract figure.' +
+        '</div>' +
+        '<div style="margin-top:14px"><a class="btn" onclick="renderMakeTheCut()">← Back to MakeTheCut</a></div>' +
+      '</div>';
+  } catch (e) {
+    wrap.innerHTML = '<div class="mtc-empty"><p>NIL estimate not available: ' + escapeHtml(e.message || 'unknown') + '. Try running a FieldCheck verdict on this player first.</p>' +
+      '<a class="btn" onclick="renderMakeTheCut()">← Back</a></div>';
+  }
+}
+
+// v0.22: NIL fine-tuning plan generator
+async function growNIL(currentEstimateJson) {
+  let currentEstimate;
+  try { currentEstimate = JSON.parse(currentEstimateJson); }
+  catch { return toast('Invalid estimate data', true); }
+
+  const targetTier = prompt('Target NIL tier?\n\nSTARTER = baseline starter\nSTARTER_PLUS = solid starter\nSTAR = star player\nSUPERSTAR = elite NIL territory\n\nCurrent: ' + currentEstimate.tier, 'STAR');
+  if (!targetTier) return;
+
+  const wrap = document.getElementById('mtc-display');
+  wrap.innerHTML = '<div class="mtc-empty"><p>Generating fine-tuning plan…</p></div>';
+
+  try {
+    const r = await fetch(PROXY + '/nil/fine-tune', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ currentEstimate, targetTier: targetTier.toUpperCase().replace(/[^A-Z_]/g, '') })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok || !data.plan) throw new Error(data.error || 'plan_failed');
+    const p = data.plan;
+
+    const fmt = (n) => '$' + (n || 0).toLocaleString();
+    const actionsHtml = p.actions.map(a =>
+      '<div style="padding:14px 16px;margin-bottom:10px;background:var(--bg-2);border-radius:8px">' +
+        '<div style="font-family:Anton;font-size:15px;letter-spacing:-0.005em;margin-bottom:6px">' + escapeHtml(a.lever) + '</div>' +
+        '<div style="font-size:12.5px;color:var(--text-3);margin-bottom:4px">Now: ' + escapeHtml(a.current) + '</div>' +
+        '<div style="font-family:Instrument Serif;font-style:italic;font-size:14px;line-height:1.45;margin-bottom:6px">' + escapeHtml(a.do_this) + '</div>' +
+        '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.06em;color:var(--moss);text-transform:uppercase">Impact: ' + escapeHtml(a.estimated_impact) + '</div>' +
+      '</div>'
+    ).join('');
+    const seqHtml = p.sequence.map(s =>
+      '<div style="display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--glass-edge)">' +
+        '<div style="font-family:Anton;font-size:24px;color:var(--accent);min-width:32px">#' + s.rank + '</div>' +
+        '<div>' +
+          '<div style="font-family:Anton;font-size:14px;letter-spacing:-0.005em;text-transform:uppercase;margin-bottom:3px">' + escapeHtml(s.focus) + '</div>' +
+          '<div style="font-family:Instrument Serif;font-style:italic;font-size:13px;color:var(--text-2);line-height:1.45">' + escapeHtml(s.why) + '</div>' +
+        '</div>' +
+      '</div>'
+    ).join('');
+
+    wrap.innerHTML =
+      '<div style="padding:4px 0">' +
+        '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">// Fine-tuning plan · ' + escapeHtml(p.current_tier) + ' → ' + escapeHtml(p.target_tier) + '</div>' +
+        '<h3 style="font-family:Anton;font-size:24px;letter-spacing:-0.005em;margin-bottom:8px">Climb the ladder</h3>' +
+        '<p style="font-family:Instrument Serif;font-style:italic;font-size:15px;color:var(--text-2);margin-bottom:24px">Gap: ' + fmt(p.gap_dollar_amount) + ' (' + (p.multiplier_needed === 'N/A' ? 'requires baseline' : p.multiplier_needed + 'x current valuation') + ')</p>' +
+        '<div style="margin-bottom:24px">' +
+          '<div style="font-family:Anton;font-size:18px;text-transform:uppercase;margin-bottom:14px">Sequence — attack in order</div>' +
+          seqHtml +
+        '</div>' +
+        '<div style="margin-bottom:24px">' +
+          '<div style="font-family:Anton;font-size:18px;text-transform:uppercase;margin-bottom:14px">Actions you can take now</div>' +
+          actionsHtml +
+        '</div>' +
+        '<div style="margin-top:14px"><a class="btn" onclick="showNIL()">← Back to NIL valuation</a> <a class="btn" onclick="renderMakeTheCut()">MakeTheCut</a></div>' +
+      '</div>';
+  } catch (e) {
+    wrap.innerHTML = '<div class="mtc-empty"><p>Could not generate plan: ' + escapeHtml(e.message || 'unknown') + '</p>' +
+      '<a class="btn" onclick="showNIL()">← Back</a></div>';
+  }
+}
+
+// v0.23: Who's ready — filters roster to top tiers only
+async function whosReady() {
+  const namesRaw = prompt('Paste player names, one per line (max 30):\n\nWill filter to just CUT_LIKELY / AT_THE_CUT / BUILDING tiers.');
+  if (!namesRaw) return;
+  const names = namesRaw.split('\n').map(n => n.trim()).filter(Boolean).slice(0, 30);
+  if (names.length === 0) return;
+
+  const sport = prompt('Sport (womens-volleyball, mens-volleyball, football, mens-basketball, womens-basketball, baseball, mens-soccer, tennis):', 'womens-volleyball');
+  if (!sport) return;
+  const school = prompt('School (optional, applies to all):') || null;
+
+  const wrap = document.getElementById('mtc-display');
+  wrap.innerHTML = '<div class="mtc-empty"><p>Filtering ' + names.length + ' players to ready-tier only…</p></div>';
+
+  try {
+    const r = await fetch(PROXY + '/coach/whos-ready', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: session.email, sport, players: names.map(n => ({ name: n, school })) })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || 'failed');
+
+    const tierColor = { CUT_LIKELY: 'var(--moss)', AT_THE_CUT: 'var(--moss)', BUILDING: 'var(--gold)' };
+    const playersHtml = data.players.length === 0
+      ? '<div style="padding:24px 12px;text-align:center;color:var(--text-3);font-style:italic">None of these players are at ready-tier yet. Run full Roster Eval to see where they stand.</div>'
+      : data.players.map(p => {
+        const color = tierColor[p.maketc_tier] || 'var(--text-3)';
+        return '<div style="padding:14px 0;border-bottom:1px solid var(--glass-edge);display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center">' +
+          '<div>' +
+            '<div style="font-family:Anton;font-size:16px;letter-spacing:-0.005em">' + escapeHtml(p.name) + '</div>' +
+            '<div style="font-family:JetBrains Mono;font-size:10px;color:var(--text-4);letter-spacing:0.06em;text-transform:uppercase">' + escapeHtml((p.position || '—') + ' · ' + (p.school || '—')) + '</div>' +
+          '</div>' +
+          '<div style="font-family:Anton;font-size:18px;color:' + color + '">' + (p.maketc_score == null ? '—' : p.maketc_score) + '</div>' +
+          '<button class="btn" style="font-size:11px;padding:6px 10px" onclick="scoutOutreachFor(\'' + escapeAttr(p.name) + '\',\'' + escapeAttr(p.school || '') + '\',\'' + escapeAttr(sport) + '\',\'' + escapeAttr(p.position || '') + '\',\'' + escapeAttr(p.maketc_tier) + '\',' + (p.composite || 'null') + ')">Outreach</button>' +
+        '</div>';
+      }).join('');
+
+    wrap.innerHTML =
+      '<div style="padding:4px 0">' +
+        '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);margin-bottom:8px">// Who\'s ready · ' + data.ready_count + ' of ' + data.total_evaluated + ' (' + data.ready_pct + '%)</div>' +
+        '<h3 style="font-family:Anton;font-size:22px;letter-spacing:-0.005em;margin-bottom:14px">The shortlist</h3>' +
+        '<p style="font-family:Instrument Serif;font-style:italic;font-size:14px;color:var(--text-3);margin-bottom:18px">Players whose grids cleared CUT_LIKELY / AT_THE_CUT / BUILDING tier. Sorted by score.</p>' +
+        playersHtml +
+        '<div style="margin-top:14px"><a class="btn" onclick="renderMakeTheCut()">← Back to MakeTheCut</a></div>' +
+      '</div>';
+  } catch (e) {
+    wrap.innerHTML = '<div class="mtc-empty"><p>Failed: ' + escapeHtml(e.message || 'unknown') + '</p>' +
+      '<a class="btn" onclick="renderMakeTheCut()">← Back</a></div>';
+  }
+}
+
+// v0.23: Scout outreach template generator (standalone)
+async function scoutOutreach() {
+  const playerName = prompt('Player name:');
+  if (!playerName) return;
+  const school = prompt('School (optional):') || null;
+  const sport = prompt('Sport (womens-volleyball, football, mens-basketball, etc.):', 'womens-volleyball');
+  if (!sport) return;
+  const position = prompt('Position (optional):') || null;
+  const recipientType = prompt('Recipient type (lovb, college, agent, pro_team, aau):', 'college');
+  const recipientName = prompt('Recipient name (optional, e.g. "Coach John"):') || null;
+  await scoutOutreachFor(playerName, school || '', sport, position || '', null, null, recipientType, recipientName);
+}
+
+// v0.23: Scout outreach for a specific player (called from Who's-ready row)
+async function scoutOutreachFor(playerName, school, sport, position, maketcTier, composite, recipientType, recipientName) {
+  const wrap = document.getElementById('mtc-display');
+  wrap.innerHTML = '<div class="mtc-empty"><p>Generating outreach template for ' + escapeHtml(playerName) + '…</p></div>';
+
+  try {
+    const r = await fetch(PROXY + '/coach/scout-outreach', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        playerName, school: school || null, sport,
+        position: position || null,
+        maketcTier: maketcTier || null,
+        composite: composite || null,
+        recipientType: recipientType || 'college',
+        recipientName: recipientName || null
+      })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok || !data.template) throw new Error(data.error || 'failed');
+    const t = data.template;
+
+    wrap.innerHTML =
+      '<div style="padding:4px 0">' +
+        '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);margin-bottom:8px">// Scout outreach · ' + escapeHtml(t.recipient_type) + '</div>' +
+        '<h3 style="font-family:Anton;font-size:22px;letter-spacing:-0.005em;margin-bottom:14px">' + escapeHtml(playerName) + '</h3>' +
+        '<div style="background:var(--bg-2);border:1px solid var(--glass-edge);border-radius:8px;padding:18px;margin-bottom:14px">' +
+          '<div style="font-family:JetBrains Mono;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-4);margin-bottom:6px">Subject</div>' +
+          '<div style="font-family:Anton;font-size:16px;letter-spacing:-0.005em;margin-bottom:14px">' + escapeHtml(t.subject) + '</div>' +
+          '<div style="font-family:JetBrains Mono;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-4);margin-bottom:6px">Body</div>' +
+          '<pre style="font-family:inherit;font-size:13.5px;line-height:1.55;color:var(--text);white-space:pre-wrap;margin:0">' + escapeHtml(t.body) + '</pre>' +
+        '</div>' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+          '<button class="btn btn-primary" onclick="copyToClipboard(\'' + escapeAttr(t.subject + '\\n\\n' + t.body) + '\')">Copy email</button>' +
+          '<a class="btn" href="mailto:?subject=' + encodeURIComponent(t.subject) + '&body=' + encodeURIComponent(t.body) + '">Open in mail app</a>' +
+          '<a class="btn" onclick="renderMakeTheCut()">← Back</a>' +
+        '</div>' +
+        '<div style="margin-top:14px;font-family:Instrument Serif;font-style:italic;font-size:13px;color:var(--text-3)">' + escapeHtml(t.note) + '</div>' +
+      '</div>';
+  } catch (e) {
+    wrap.innerHTML = '<div class="mtc-empty"><p>Failed: ' + escapeHtml(e.message || 'unknown') + '</p>' +
+      '<a class="btn" onclick="renderMakeTheCut()">← Back</a></div>';
+  }
+}
+
+// v0.21: Coach roster bulk eval
+async function rosterEval() {
+  const namesRaw = prompt('Paste player names, one per line (max 30):\n\nExample:\nLexi Rodriguez\nHarper Murray\nBergen Reilly');
+  if (!namesRaw) return;
+  const names = namesRaw.split('\n').map(n => n.trim()).filter(Boolean).slice(0, 30);
+  if (names.length === 0) return;
+
+  const sport = prompt('Sport for this roster (womens-volleyball, mens-volleyball, football, mens-basketball, womens-basketball, baseball, mens-soccer, tennis):', 'womens-volleyball');
+  if (!sport) return;
+  const school = prompt('School (optional, applies to all):') || null;
+  const rosterName = prompt('Name this roster:', 'My Team') || 'My Team';
+
+  const wrap = document.getElementById('mtc-display');
+  wrap.innerHTML = '<div class="mtc-empty"><p>Running eval grid for ' + names.length + ' players… This takes a minute. Cached players load instantly; cold players ~30s each.</p></div>';
+
+  try {
+    const r = await fetch(PROXY + '/coach/roster/eval', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: session.email, sport, rosterName,
+        players: names.map(n => ({ name: n, school }))
+      })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || 'eval_failed');
+
+    const tierColor = { CUT_LIKELY: 'var(--moss)', AT_THE_CUT: 'var(--moss)', BUILDING: 'var(--gold)', GAP_REAL: 'var(--accent)', LONG_PATH: 'var(--text-3)', EARLY_LOOK: 'var(--text-4)', INSUFFICIENT_DATA: 'var(--text-4)' };
+
+    const playersHtml = data.players.map(p => {
+      if (p.status === 'error') {
+        return '<div style="padding:12px 0;border-bottom:1px solid var(--glass-edge);display:flex;justify-content:space-between"><span>' + escapeHtml(p.name || '?') + '</span><span style="color:var(--text-4);font-family:JetBrains Mono;font-size:11px">error</span></div>';
+      }
+      const color = tierColor[p.maketc_tier] || 'var(--text-3)';
+      return '<div style="padding:14px 0;border-bottom:1px solid var(--glass-edge);display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center">' +
+        '<div>' +
+          '<div style="font-family:Anton;font-size:15px;letter-spacing:-0.005em">' + escapeHtml(p.name) + '</div>' +
+          '<div style="font-family:JetBrains Mono;font-size:10px;color:var(--text-4);letter-spacing:0.06em;text-transform:uppercase">' + escapeHtml((p.position || '—') + ' · ' + (p.school || '—')) + '</div>' +
+        '</div>' +
+        '<div style="font-family:Anton;font-size:18px;color:' + color + '">' + (p.maketc_score == null ? '—' : p.maketc_score) + '</div>' +
+        '<div style="font-family:JetBrains Mono;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:' + color + ';padding:3px 8px;border:1px solid ' + color + ';border-radius:3px">' + escapeHtml(p.maketc_tier || '—') + '</div>' +
+      '</div>';
+    }).join('');
+
+    const summary = data.tier_summary;
+    wrap.innerHTML =
+      '<div style="padding:4px 0">' +
+        '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);margin-bottom:8px">// Roster eval · ' + escapeHtml(rosterName) + '</div>' +
+        '<h3 style="font-family:Anton;font-size:22px;letter-spacing:-0.005em;margin-bottom:14px">' + data.players_count + ' players · sorted by MakeTheCut</h3>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase">' +
+          '<span style="padding:4px 10px;background:rgba(107,170,90,0.15);color:var(--moss);border-radius:3px">' + summary.cut_likely + ' Cut/At-cut</span>' +
+          '<span style="padding:4px 10px;background:rgba(245,184,0,0.15);color:var(--gold);border-radius:3px">' + summary.building + ' Building</span>' +
+          '<span style="padding:4px 10px;background:rgba(255,92,58,0.15);color:var(--accent);border-radius:3px">' + summary.gap_real + ' Gap real</span>' +
+          '<span style="padding:4px 10px;background:var(--glass);color:var(--text-3);border-radius:3px">' + summary.long_path + ' Long path</span>' +
+          '<span style="padding:4px 10px;background:var(--glass);color:var(--text-4);border-radius:3px">' + summary.early_look + ' Early look</span>' +
+        '</div>' +
+        playersHtml +
+        '<div style="margin-top:14px"><a class="btn" onclick="renderMakeTheCut()">← Back to MakeTheCut</a></div>' +
+      '</div>';
+  } catch (e) {
+    wrap.innerHTML = '<div class="mtc-empty"><p>Roster eval failed: ' + escapeHtml(e.message || 'unknown') + '</p>' +
+      '<a class="btn" onclick="renderMakeTheCut()">← Back</a></div>';
+  }
+}
+
+// v0.21: Share milestone — when achieving, generate a shareable card
+async function shareMilestone(milestoneText, playerName) {
+  try {
+    const r = await fetch(PROXY + '/social/share-moment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: session.email,
+        momentType: 'milestone',
+        headline: playerName + ' just hit: ' + milestoneText,
+        subtext: 'Milestone tracked on FieldCheck',
+        ctaText: 'See the path',
+        ctaUrl: 'https://fieldcheck-app.netlify.app/mypath',
+        theme: 'milestone'
+      })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || 'share_failed');
+
+    // Open share menu
+    const wrap = document.getElementById('mtc-display');
+    wrap.innerHTML =
+      '<div style="text-align:center;padding:24px 12px">' +
+        '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);margin-bottom:8px">// Share moment</div>' +
+        '<h3 style="font-family:Anton;font-size:24px;margin-bottom:12px">' + escapeHtml(playerName) + ' just hit a milestone</h3>' +
+        '<p style="font-family:Instrument Serif;font-style:italic;color:var(--text-2);margin-bottom:24px">' + escapeHtml(milestoneText) + '</p>' +
+        '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">' +
+          '<a class="btn btn-primary" href="' + escapeAttr(data.shares.twitter) + '" target="_blank">Twitter / X</a>' +
+          '<a class="btn" href="' + escapeAttr(data.shares.facebook) + '" target="_blank">Facebook</a>' +
+          '<a class="btn" href="' + escapeAttr(data.shares.linkedin) + '" target="_blank">LinkedIn</a>' +
+          '<button class="btn" onclick="copyToClipboard(\'' + escapeAttr(data.shares.tiktok_copy) + '\')">Copy for TikTok</button>' +
+        '</div>' +
+        '<div style="margin-top:14px;font-family:JetBrains Mono;font-size:10.5px;color:var(--text-4)">Moment ID: ' + data.id + ' · viewable at ' + data.moment_url + '</div>' +
+        '<div style="margin-top:14px"><a class="btn" onclick="renderMakeTheCut()">← Back</a></div>' +
+      '</div>';
+  } catch (e) {
+    toast('Could not generate share moment', true);
+  }
+}
+
+function copyToClipboard(text) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => toast('Copied to clipboard'));
+  } else {
+    const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); toast('Copied'); } catch { toast('Copy failed', true); }
+    document.body.removeChild(t);
+  }
+}
+
+// v0.20: Comp library — pulls verified-outcome comps from worker
+async function showComps() {
+  if (state.watchlist.length === 0) return toast('Add a player to your watchlist first', true);
+  const player = state.selectedPlayer
+    ? state.watchlist.find(w => w.player_name === state.selectedPlayer.name) || state.watchlist[0]
+    : state.watchlist[0];
+
+  const wrap = document.getElementById('mtc-display');
+  wrap.innerHTML = '<div class="mtc-empty"><p>Loading comps for ' + escapeHtml(player.player_name) + '…</p></div>';
+
+  try {
+    const r = await fetch(PROXY + '/comps/find', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sport: player.sport,
+        school: player.school || null
+      })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || 'comp_failed');
+
+    if (!data.comps || data.comps.length === 0) {
+      wrap.innerHTML = '<div class="mtc-empty"><p>' + escapeHtml(data.note || 'No comps available yet for this sport.') + '</p>' +
+        '<a class="btn" onclick="renderMakeTheCut()">← Back to MakeTheCut</a></div>';
+      return;
+    }
+
+    const compsHtml = data.comps.map(c =>
+      '<div style="padding:14px 0;border-bottom:1px solid var(--glass-edge)">' +
+        '<div style="font-family:Anton;font-size:17px;letter-spacing:-0.005em;margin-bottom:2px">' +
+          escapeHtml(c.name) +
+          (c.olympian ? ' <span style="color:var(--gold);font-size:11px;font-family:JetBrains Mono;letter-spacing:0.08em">OLYMPIAN</span>' : '') +
+        '</div>' +
+        '<div style="font-family:Instrument Serif;font-style:italic;font-size:14.5px;color:var(--text-2);line-height:1.45">' +
+          escapeHtml(c.pathway_one_liner) +
+        '</div>' +
+      '</div>'
+    ).join('');
+
+    wrap.innerHTML =
+      '<div style="padding:4px 0">' +
+        '<div style="font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);margin-bottom:8px">// Verified-outcome comps · ' + (data.position || 'all positions') + '</div>' +
+        '<h3 style="font-family:Anton;font-size:22px;letter-spacing:-0.005em;margin-bottom:6px">Players who walked the path</h3>' +
+        '<p style="font-family:Instrument Serif;font-style:italic;font-size:14.5px;color:var(--text-3);margin-bottom:18px">' + escapeHtml(data.note || '') + '</p>' +
+        compsHtml +
+        '<div style="margin-top:18px;padding-top:14px;border-top:1px dashed var(--glass-edge);font-family:JetBrains Mono;font-size:10.5px;letter-spacing:0.04em;color:var(--text-4)">' +
+          '// Methodology: ' + escapeHtml(data.methodology || 'verified_outcomes_v1') + ' · matched on position' + (data.school_filter ? ' + school priority' : '') + ' · expanding as the corpus grows' +
+        '</div>' +
+        '<div style="margin-top:14px"><a class="btn" onclick="renderMakeTheCut()">← Back to MakeTheCut</a></div>' +
+      '</div>';
+  } catch (e) {
+    wrap.innerHTML = '<div class="mtc-empty"><p>Could not load comps: ' + escapeHtml(e.message || 'unknown') + '</p>' +
+      '<a class="btn" onclick="renderMakeTheCut()">← Back</a></div>';
+  }
+}
+
+// ─── Helpers ───
+function toggleAddForm(id) {
+  document.getElementById(id).classList.toggle('show');
+}
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function escapeAttr(s) {
+  return escapeHtml(s).replace(/'/g, '&#39;');
+}
+function formatSport(s) {
+  return ({
+    'womens-volleyball': "Women's Volleyball",
+    'mens-volleyball': "Men's Volleyball",
+    'football': 'Football',
+    'mens-basketball': "Men's Basketball",
+    'womens-basketball': "Women's Basketball",
+    'baseball': 'Baseball',
+    'mens-soccer': "Men's Soccer",
+    'tennis': 'Tennis'
+  })[s] || s;
+}
+
+// ─── Init ───
+document.getElementById('auth-email').addEventListener('input', validateAuth);
+
+window.addEventListener('DOMContentLoaded', async () => {
+  // v0.21: handle magic-link ?token=... first
+  if (window.location.search.includes('token=')) {
+    const handled = await handleMagicLinkCallback();
+    if (handled) return;
+  }
+
+  // Restore session
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      session = JSON.parse(stored);
+      if (session && session.email && session.role) {
+        enterDashboard();
+        return;
+      }
+    }
+  } catch {}
+  // No default — user picks role
+});
+</script>
+
+</body>
+</html>

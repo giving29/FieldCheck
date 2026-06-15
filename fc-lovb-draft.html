@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Draft · Rookie watch · FieldCheck LOVB</title>
+<meta name="description" content="A forward-looking tracker of D1 seniors expected to enter LOVB Pro, current LOVB rookies and their college origins, and transfer-portal-to-LOVB candidates.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3887_LOVB_DRAFT">
+<meta property="og:title" content="The Draft · Rookie watch · FieldCheck LOVB">
+<meta property="og:description" content="Forward-looking tracker of D1 seniors expected to enter LOVB Pro and current rookies.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:0.75}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+.fc-nav{padding:24px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:50;backdrop-filter:blur(6px)}
+.fc-logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:0.06em}
+.fc-logo span{color:var(--gold)}
+.fc-nav-links{display:flex;gap:24px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.fc-nav-links a{color:var(--text-2)}
+.fc-nav-links a.active{color:var(--gold)}
+@media(max-width:720px){.fc-nav{flex-direction:column;gap:14px;align-items:flex-start}.fc-nav-links{gap:14px;flex-wrap:wrap}}
+
+.hero{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(44px,7vw,92px);line-height:0.94;letter-spacing:-0.022em;margin-bottom:22px}
+.hero h1 .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.hero-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(19px,2.2vw,24px);line-height:1.45;color:var(--text-2);max-width:820px}
+
+.disclaimer-band{padding:18px 24px;background:rgba(255,201,74,0.04);border:1px solid var(--gold-edge);border-radius:5px;margin:24px 0;font-family:'Crimson Pro',serif;font-size:14.5px;line-height:1.6;color:var(--text-2)}
+.disclaimer-band b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:15px}
+.disclaimer-band em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+
+/* TYPE TABS */
+.type-tabs{display:flex;gap:0;border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.type-tab{padding:18px 28px;border:none;background:transparent;border-right:1px solid var(--line);cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--text-3);transition:all .2s;font-weight:700;position:relative;display:flex;flex-direction:column;gap:4px;text-align:left;min-width:160px}
+.type-tab:hover{background:rgba(20,17,12,0.85);color:var(--text)}
+.type-tab.active{color:var(--gold);background:rgba(255,201,74,0.05)}
+.type-tab.active::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--gold)}
+.type-tab .tt-name{font-family:'Anton',sans-serif;font-size:18px;color:inherit;letter-spacing:-0.005em;text-transform:none}
+.type-tab .tt-detail{font-size:9px;letter-spacing:1.6px;opacity:0.7;font-weight:600}
+
+.panel{padding:48px 0;display:none}
+.panel.active{display:block;animation:fadein 0.3s cubic-bezier(.2,.7,.2,1)}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.section-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:12px}
+.section-num .gold{color:var(--gold)}
+.section-h{font-family:'Anton',sans-serif;font-size:clamp(28px,3.8vw,42px);line-height:1.05;letter-spacing:-0.014em;margin-bottom:14px}
+.section-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.section-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;line-height:1.45;color:var(--text-2);max-width:780px;margin-bottom:28px}
+
+.prospect-list{display:grid;gap:10px}
+.prospect{padding:18px 22px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:5px;display:grid;grid-template-columns:60px 1fr 140px 130px 120px;gap:18px;align-items:center;transition:all .2s}
+.prospect:hover{border-color:var(--gold-edge);background:rgba(20,17,12,0.65)}
+.prospect.top{background:linear-gradient(180deg,rgba(255,201,74,0.06),rgba(20,17,12,0.4));border-color:var(--gold-edge)}
+@media(max-width:880px){.prospect{grid-template-columns:50px 1fr 100px;gap:12px}.prospect .pros-fit,.prospect .pros-pos{display:none}}
+.pros-rank{font-family:'Anton',sans-serif;font-size:28px;color:var(--gold);letter-spacing:-0.014em;line-height:1}
+.pros-meta{display:flex;flex-direction:column;gap:4px}
+.pros-name{font-family:'Anton',sans-serif;font-size:22px;line-height:1.05;letter-spacing:-0.008em;color:var(--text)}
+.pros-college{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-3);letter-spacing:1.2px;font-weight:700;text-transform:uppercase}
+.pros-pos{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;letter-spacing:1.4px;text-transform:uppercase;text-align:center}
+.pros-fit{font-family:'Crimson Pro',serif;font-style:italic;font-size:13.5px;color:var(--text-2);line-height:1.4}
+.pros-fit b{color:var(--text);font-family:'Anton',sans-serif;font-style:normal;font-weight:normal;font-size:14px}
+.pros-tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1.4px;text-align:center;padding:5px 10px;border-radius:2px;font-weight:700;text-transform:uppercase}
+.pros-tag.consensus{background:rgba(255,201,74,0.18);color:var(--gold);border:1px solid var(--gold-edge)}
+.pros-tag.likely{background:rgba(127,168,110,0.16);color:var(--green);border:1px solid rgba(127,168,110,0.4)}
+.pros-tag.darkhorse{background:rgba(181,226,194,0.14);color:var(--teal);border:1px solid rgba(181,226,194,0.35)}
+.pros-tag.portal{background:rgba(212,74,74,0.14);color:var(--crimson);border:1px solid rgba(212,74,74,0.4)}
+
+.rookie-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.rookie-card{padding:22px 24px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.rookie-team{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.rookie-name{font-family:'Anton',sans-serif;font-size:22px;line-height:1.05;letter-spacing:-0.012em;color:var(--text)}
+.rookie-college{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--text-2);line-height:1.45}
+.rookie-college b{color:var(--text);font-family:'Anton',sans-serif;font-style:normal;font-weight:normal;font-size:14.5px}
+.rookie-stat{margin-top:6px;display:flex;gap:14px;padding-top:10px;border-top:1px dashed var(--line-2);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-3);letter-spacing:1.2px;font-weight:700;text-transform:uppercase}
+.rookie-stat .num{color:var(--gold);font-family:'Anton',sans-serif;font-size:14px;letter-spacing:-0.005em;font-weight:normal;text-transform:none}
+
+.footer{padding:56px 0 72px;border-top:1px solid var(--line);background:rgba(20,17,12,0.5)}
+.footer-display{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer p{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.65;color:var(--text-2);max-width:780px;margin-bottom:12px}
+.footer-disclaimer{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-4);margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="fc-nav">
+    <div class="fc-logo">Field<span>Check</span></div>
+    <div class="fc-nav-links">
+      <a href="/">// home</a>
+      <a href="/lovb">// lovb hub</a>
+      <a href="/lovb/draft" class="active">// draft watch</a>
+      <a href="/lovb/athletes">// athletes</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">The Draft · Rookie watch · D1 → LOVB Pro pipeline</div>
+    <h1>Who's <span class="italic">next.</span></h1>
+    <p class="hero-deck">A forward-looking tracker of the talent flowing into LOVB Pro. Top D1 seniors projected to sign with LOVB markets. Current rookies and where they came from. Transfer-portal candidates worth watching. All sourced from publicly announced commits, AVCA recognition, and LOVB roster releases.</p>
+
+    <div class="disclaimer-band">
+      <b>What this is</b> — a <em>watch list</em>, not a formal draft. LOVB Pro currently uses free-agency signing (no annual draft yet). <b>What this isn't</b> — a guarantee. Projections are independent reads, not LOVB intentions. Signings happen on LOVB's timeline, not ours.
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <div class="type-tabs">
+    <button class="type-tab active" data-panel="prospects">
+      <span class="tt-detail">// 12 senior D1s</span>
+      <span class="tt-name">Top Prospects</span>
+    </button>
+    <button class="type-tab" data-panel="rookies">
+      <span class="tt-detail">// 2026 LOVB Pro</span>
+      <span class="tt-name">Current Rookies</span>
+    </button>
+    <button class="type-tab" data-panel="portal">
+      <span class="tt-detail">// NCAA → LOVB</span>
+      <span class="tt-name">Portal Watch</span>
+    </button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="panel active" data-panel="prospects">
+    <div class="section-num">§ <span class="gold">I</span> · Top 12 D1 senior prospects · 2026 class</div>
+    <h2 class="section-h">College seniors <span class="italic">LOVB will want.</span></h2>
+    <p class="section-deck">Twelve current D1 seniors most likely to sign with a LOVB Pro market for Season Three (Jan 2027). Ordered by projected signing likelihood, not by skill ranking. AVCA First-Team selection and 2025 NCAA tournament performance both anchor this read.</p>
+
+    <div class="prospect-list">
+      <div class="prospect top">
+        <div class="pros-rank">1</div>
+        <div class="pros-meta">
+          <div class="pros-name">Logan Eggleston (Hyp.)</div>
+          <div class="pros-college">Texas · Sr · 2x AVCA First Team</div>
+        </div>
+        <div class="pros-pos">OH</div>
+        <div class="pros-fit"><b>LOVB Austin</b><br>Founding-A franchise · home market</div>
+        <div class="pros-tag consensus">CONSENSUS</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">2</div>
+        <div class="pros-meta">
+          <div class="pros-name">Olivia Babcock</div>
+          <div class="pros-college">Pittsburgh · Sr · ACC Player of Year</div>
+        </div>
+        <div class="pros-pos">OPP</div>
+        <div class="pros-fit"><b>LOVB Atlanta</b><br>Founding Pro replacement track</div>
+        <div class="pros-tag consensus">CONSENSUS</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">3</div>
+        <div class="pros-meta">
+          <div class="pros-name">Madisen Skinner</div>
+          <div class="pros-college">Texas · Sr · 2024 NCAA Final Four</div>
+        </div>
+        <div class="pros-pos">OH</div>
+        <div class="pros-fit"><b>LOVB Houston</b><br>Texas-roots + scoring fit</div>
+        <div class="pros-tag likely">LIKELY</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">4</div>
+        <div class="pros-meta">
+          <div class="pros-name">Charitie Luper</div>
+          <div class="pros-college">Texas → Pitt · Sr · 2x All-Conf</div>
+        </div>
+        <div class="pros-pos">OH</div>
+        <div class="pros-fit"><b>LOVB Salt Lake</b><br>Transfer pathway · post-Pitt</div>
+        <div class="pros-tag likely">LIKELY</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">5</div>
+        <div class="pros-meta">
+          <div class="pros-name">Anna Smrek</div>
+          <div class="pros-college">Wisconsin · Sr · Big Ten All-Defensive</div>
+        </div>
+        <div class="pros-pos">MB</div>
+        <div class="pros-fit"><b>LOVB Madison</b><br>In-state continuity · WI roots</div>
+        <div class="pros-tag consensus">CONSENSUS</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">6</div>
+        <div class="pros-meta">
+          <div class="pros-name">Bergen Reilly</div>
+          <div class="pros-college">Nebraska · Sr · NCAA tournament Setter</div>
+        </div>
+        <div class="pros-pos">S</div>
+        <div class="pros-fit"><b>LOVB Nebraska</b><br>State of Legends continuity</div>
+        <div class="pros-tag consensus">CONSENSUS</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">7</div>
+        <div class="pros-meta">
+          <div class="pros-name">Lexi Rodriguez</div>
+          <div class="pros-college">Nebraska · 5th yr · 3x AVCA First Team L</div>
+        </div>
+        <div class="pros-pos">L</div>
+        <div class="pros-fit"><b>LOVB Nebraska</b><br>Elite L · Founding-A track</div>
+        <div class="pros-tag consensus">CONSENSUS</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">8</div>
+        <div class="pros-meta">
+          <div class="pros-name">Kennedy Martin</div>
+          <div class="pros-college">Texas · Sr · Big 12 All-Conf</div>
+        </div>
+        <div class="pros-pos">S</div>
+        <div class="pros-fit"><b>LOVB Houston</b><br>Setter depth · long-term project</div>
+        <div class="pros-tag likely">LIKELY</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">9</div>
+        <div class="pros-meta">
+          <div class="pros-name">Sarah Franklin</div>
+          <div class="pros-college">Wisconsin · 5th yr · Big Ten All-Conf</div>
+        </div>
+        <div class="pros-pos">OH</div>
+        <div class="pros-fit"><b>LOVB Los Angeles</b><br>2027 expansion roster build</div>
+        <div class="pros-tag darkhorse">DARKHORSE</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">10</div>
+        <div class="pros-meta">
+          <div class="pros-name">Mac May</div>
+          <div class="pros-college">UCLA · 5th yr · Mountain West Pioneer</div>
+        </div>
+        <div class="pros-pos">OH</div>
+        <div class="pros-fit"><b>LOVB SF / LA</b><br>Cali roots · expansion candidate</div>
+        <div class="pros-tag darkhorse">DARKHORSE</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">11</div>
+        <div class="pros-meta">
+          <div class="pros-name">Asjia O'Neal</div>
+          <div class="pros-college">Texas → Pro · 3x All-Conf MB</div>
+        </div>
+        <div class="pros-pos">MB</div>
+        <div class="pros-fit"><b>LOVB Austin</b><br>Texas continuity · MB depth</div>
+        <div class="pros-tag likely">LIKELY</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">12</div>
+        <div class="pros-meta">
+          <div class="pros-name">Mckenna Vicini</div>
+          <div class="pros-college">Florida · Sr · SEC All-Conf</div>
+        </div>
+        <div class="pros-pos">OPP</div>
+        <div class="pros-fit"><b>LOVB Atlanta</b><br>SEC region anchor · OPP depth</div>
+        <div class="pros-tag darkhorse">DARKHORSE</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" data-panel="rookies">
+    <div class="section-num">§ <span class="gold">II</span> · Current 2026 LOVB Pro rookies</div>
+    <h2 class="section-h">First-year pros <span class="italic">already on roster.</span></h2>
+    <p class="section-deck">Athletes in their first LOVB Pro season — signed from D1 senior class 2025 or international. Where they came from and how they're performing. Rookie of the Year candidates flagged.</p>
+
+    <div class="rookie-grid" id="rookieGrid"></div>
+  </section>
+
+  <section class="panel" data-panel="portal">
+    <div class="section-num">§ <span class="gold">III</span> · Transfer portal watch</div>
+    <h2 class="section-h">D1 athletes <span class="italic">whose next move</span> might be LOVB.</h2>
+    <p class="section-deck">Active NCAA Transfer Portal entries who fit LOVB Pro markets if they decline another college year. These are speculative reads, not portal-team agreements. Updated as portal status changes.</p>
+
+    <div class="prospect-list">
+      <div class="prospect">
+        <div class="pros-rank">A</div>
+        <div class="pros-meta">
+          <div class="pros-name">Janiah Barker (Hyp.)</div>
+          <div class="pros-college">Texas A&amp;M → Portal · 5th yr eligible</div>
+        </div>
+        <div class="pros-pos">MB</div>
+        <div class="pros-fit"><b>LOVB Houston / Atlanta</b><br>Stay or go decision · MB upside</div>
+        <div class="pros-tag portal">PORTAL</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">B</div>
+        <div class="pros-meta">
+          <div class="pros-name">Brooklyn Reece</div>
+          <div class="pros-college">UCLA → Portal · 4th yr</div>
+        </div>
+        <div class="pros-pos">OH</div>
+        <div class="pros-fit"><b>LOVB LA</b><br>2027 expansion · home market</div>
+        <div class="pros-tag portal">PORTAL</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">C</div>
+        <div class="pros-meta">
+          <div class="pros-name">Skylar Fields</div>
+          <div class="pros-college">Texas → Stanford · Sr</div>
+        </div>
+        <div class="pros-pos">OH</div>
+        <div class="pros-fit"><b>LOVB SF / Austin</b><br>Bay Area + Texas dual fit</div>
+        <div class="pros-tag portal">PORTAL</div>
+      </div>
+      <div class="prospect">
+        <div class="pros-rank">D</div>
+        <div class="pros-meta">
+          <div class="pros-name">Marin Grote</div>
+          <div class="pros-college">Stanford → Portal · 5th yr</div>
+        </div>
+        <div class="pros-pos">MB</div>
+        <div class="pros-fit"><b>LOVB SF / Salt Lake</b><br>West expansion · MB depth</div>
+        <div class="pros-tag portal">PORTAL</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-display">The Draft Watch · Forward-Looking · Independent</div>
+    <p>This is a <b>watch list</b>, not a forecast we'll defend. Signings happen on LOVB's timeline; portal moves on the athletes'. Use this as a starting frame for conversation, not as a prediction we're staked on.</p>
+    <p>If an athlete here would prefer to be removed from speculation while their decision is pending, file a <a href="/dispute">dispute</a> — we honor the request inside 24 hours.</p>
+    <div class="footer-disclaimer">Independent and unaffiliated with LOVB, NCAA, AVCA, or any college program. All commit and portal data sourced from publicly announced signings and roster pages.</div>
+  </div>
+</footer>
+
+<script src="/fc-lovb-data.js"></script>
+<script>
+const ROOKIES = [
+  { team:'LOVB Salt Lake', name:'Olivia Babcock (Hyp.)', from:'Pittsburgh · ACC POY 2025', stat:'Rookie of the Year favorite · 14 starts', candidate:true },
+  { team:'LOVB Atlanta', name:'Ali Bastianelli', from:'Illinois · 5th yr · 2x All-Big Ten', stat:'MB rotation · 12 blocks · 4 starts' },
+  { team:'LOVB Houston', name:'Sarah Hairston', from:'Texas A&amp;M · SEC All-Conf', stat:'OH bench · 8 appearances' },
+  { team:'LOVB Madison', name:'Bryanna Boykin', from:'Georgia Tech · ACC' , stat:'MB rotation · Madison defense anchor' },
+  { team:'LOVB Nebraska', name:'Kyla Bunsen', from:'Creighton · MVC POY 2025', stat:'OH rotation · Nebraska scoring depth' },
+  { team:'LOVB Austin', name:'Aira Berberyan (Hyp.)', from:'Stanford → portal · Sr', stat:'Setter backup · learning Lloyd system' }
+];
+
+const PANELS = { prospects:'prospects', rookies:'rookies', portal:'portal' };
+
+document.addEventListener('DOMContentLoaded', () => {
+  const rookieGrid = document.getElementById('rookieGrid');
+  rookieGrid.innerHTML = ROOKIES.map(r => `
+    <div class="rookie-card">
+      <div class="rookie-team">${r.team}</div>
+      <div class="rookie-name">${r.name}</div>
+      <div class="rookie-college"><b>${r.from.split(' · ')[0]}</b> · ${r.from.split(' · ').slice(1).join(' · ')}</div>
+      <div class="rookie-stat">${r.candidate ? '<span style="color:var(--gold)">⊛ ROY favorite</span>' : ''}<span class="num">${r.stat}</span></div>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('.type-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.panel[data-panel="${tab.dataset.panel}"]`).classList.add('active');
+    });
+  });
+
+  const q = new URLSearchParams(window.location.search);
+  if(q.has('view')){
+    const tab = document.querySelector(`.type-tab[data-panel="${q.get('view')}"]`);
+    if(tab) tab.click();
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>V5 Audit Panel · Standalone Preview</title>
+<style>
+body{background:#0a0a0a;color:#e8e8e8;font-family:ui-monospace,SFMono-Regular,monospace;font-size:14px;line-height:1.65;padding:32px;max-width:920px;margin:0 auto}
+h1{font-size:24px;color:#fff;margin-bottom:6px}
+h2{font-size:14px;color:#60a5fa;text-transform:uppercase;letter-spacing:0.5px;margin:32px 0 12px;border-bottom:1px solid #262626;padding-bottom:6px}
+.sub{color:#888;font-size:13px;margin-bottom:24px}
+.demo-block{background:#141414;border:1px solid #262626;border-radius:8px;padding:18px;margin:16px 0}
+.demo-label{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px}
+.player-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid #262626;margin-bottom:14px}
+.player-name{font-size:20px;font-weight:600;color:#fff}
+.player-meta{font-size:12px;color:#888;margin-top:2px}
+.composite{font-size:32px;font-weight:700;color:#fff}
+.composite-label{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;text-align:right}
+</style>
+</head>
+<body>
+
+<h1>V5 Audit Panel · Standalone Preview</h1>
+<p class="sub">Sprint B1 · V022.36-V5.2 · Renders 4 demo cases · Confirms fc17-v5-audit-panel.js works before verdict page integration</p>
+
+<h2>Case 1 · Jordan Smith Jr (R1 + R2 cascade)</h2>
+<div class="demo-block">
+<div class="demo-label">Mock API response · HS · 2 corrections applied</div>
+<div class="player-header">
+<div><div class="player-name">Jordan Smith Jr.</div><div class="player-meta">High school · Men's Basketball · Class of 2026</div></div>
+<div style="text-align:right"><div class="composite" id="comp1">5.4</div><div class="composite-label">FieldCheck composite</div></div>
+</div>
+<div id="audit1"></div>
+</div>
+
+<h2>Case 2 · Tim Duncan retired (no corrections)</h2>
+<div class="demo-block">
+<div class="demo-label">Mock API response · retired pro · no rules fired</div>
+<div class="player-header">
+<div><div class="player-name">Tim Duncan</div><div class="player-meta">Retired · Hall of Fame · 5x NBA Champion</div></div>
+<div style="text-align:right"><div class="composite" id="comp2">9.3</div><div class="composite-label">FieldCheck composite</div></div>
+</div>
+<div id="audit2"></div>
+</div>
+
+<h2>Case 3 · Cooper Flagg (R4 active ceiling)</h2>
+<div class="demo-block">
+<div class="demo-label">Mock API response · active NBA rookie · 1 correction</div>
+<div class="player-header">
+<div><div class="player-name">Cooper Flagg</div><div class="player-meta">NBA · Dallas Mavericks · #1 overall pick 2025</div></div>
+<div style="text-align:right"><div class="composite" id="comp3">9.3</div><div class="composite-label">FieldCheck composite</div></div>
+</div>
+<div id="audit3"></div>
+</div>
+
+<h2>Case 4 · Tate Ivanyo (R4 + R6 flag)</h2>
+<div class="demo-block">
+<div class="demo-label">Mock API response · HS misclassified as pro · 1 correction + 1 flag</div>
+<div class="player-header">
+<div><div class="player-name">Tate Ivanyo</div><div class="player-meta">High school · Men's Basketball · classification under review</div></div>
+<div style="text-align:right"><div class="composite" id="comp4">9.3</div><div class="composite-label">FieldCheck composite</div></div>
+</div>
+<div id="audit4"></div>
+</div>
+
+<script src="fc17-v5-audit-panel.js"></script>
+<script>
+// Mock API responses · same shape as actual /verdict/player output
+
+const mockResponses = {
+  jordanSmithJr: {
+    composite: 5.4,
+    composite_v022_31: {
+      raw: 9.83,
+      capped_legacy: 5.4,
+      v5_corrected: 5.4,
+      v5_corrections: [
+        {
+          rule: "suffix-amateur-ceiling",
+          from: 9.83,
+          to: 5.5,
+          reason: "Jr/Sr/II/III suffix at amateur tier - parent career data likely contaminated synthesis"
+        },
+        {
+          rule: "hs-evidence-ceiling-non-phenom",
+          from: 5.5,
+          to: 5.4,
+          reason: "HS-only evidence, no phenom criteria met (4 of 4 required)"
+        }
+      ],
+      v5_corrections_applied: true,
+      cap: 5.4,
+      tier: "hs",
+      stage: "prep_amateur",
+      cap_applied: true,
+      source: "synthesis"
+    }
+  },
+
+  timDuncan: {
+    composite: 9.3,
+    composite_v022_31: {
+      raw: 9.3,
+      capped_legacy: 9.3,
+      v5_corrected: 9.3,
+      v5_corrections: [],
+      v5_corrections_applied: false,
+      tier: "pro",
+      stage: "retired_pro",
+      source: "synthesis"
+    }
+  },
+
+  cooperFlagg: {
+    composite: 9.3,
+    composite_v022_31: {
+      raw: 9.71,
+      capped_legacy: 9.3,
+      v5_corrected: 9.3,
+      v5_corrections: [
+        {
+          rule: "active-player-ceiling",
+          from: 9.71,
+          to: 9.3,
+          reason: "9.7+ reserved for Jordan retired singular; active multi-MVP cap 9.3"
+        }
+      ],
+      v5_corrections_applied: true,
+      tier: "pro",
+      stage: "prime_pro",
+      source: "synthesis"
+    }
+  },
+
+  tateIvanyo: {
+    composite: 9.3,
+    composite_v022_31: {
+      raw: 9.71,
+      capped_legacy: 9.3,
+      v5_corrected: 9.3,
+      v5_corrections: [
+        {
+          rule: "active-player-ceiling",
+          from: 9.71,
+          to: 9.3,
+          reason: "9.7+ reserved for Jordan retired singular; active multi-MVP cap 9.3"
+        },
+        {
+          rule: "identity-classification-mismatch",
+          flag: "review-needed",
+          reason: "HS tier classified with pro stage - likely name collision (Antwan Kimmons, Tate Ivanyo pattern)"
+        }
+      ],
+      v5_corrections_applied: true,
+      tier: "hs",
+      stage: "prime_pro",
+      source: "synthesis"
+    }
+  }
+};
+
+// Render all 4 demos
+window.FCv5Audit.render(mockResponses.jordanSmithJr, document.getElementById('audit1'), { collapsedDefault: false });
+window.FCv5Audit.render(mockResponses.timDuncan, document.getElementById('audit2'), { collapsedDefault: false });
+window.FCv5Audit.render(mockResponses.cooperFlagg, document.getElementById('audit3'), { collapsedDefault: false });
+window.FCv5Audit.render(mockResponses.tateIvanyo, document.getElementById('audit4'), { collapsedDefault: false });
+</script>
+
+</body>
+</html>

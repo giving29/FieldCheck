@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SEC Athletic Intelligence · FieldCheck IQ</title>
+<meta name="description" content="SEC athletic intelligence: Alabama, Georgia, Tennessee, LSU, Texas, Oklahoma. Roster composites, recruit class composites, tier-jump alerts.">
+<meta property="og:title" content="SEC · FieldCheck IQ">
+<meta property="og:description" content="SEC athletic intelligence: Alabama, Georgia, Tennessee, LSU, Texas, Oklahoma. Roster composites, recruit class composites, tier-jump alerts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060A;--bg1:#100F14;--ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);--t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);--moss:#6BAA5A;--teal:#4EC9C0;--violet:#8B5CF6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 30% at 50% 0%,rgba(245,184,0,.04) 0%,transparent 60%),linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+.wrap{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding:60px 30px 100px}
+.brand-row{display:flex;align-items:center;gap:18px;margin-bottom:40px}
+.brand{font-family:'Anton',sans-serif;font-size:22px;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none}
+.back:hover{color:var(--gold)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(50px,7vw,92px);letter-spacing:-.014em;line-height:.95;margin-bottom:18px}
+h1 .em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--gold)}
+.lede{font-size:18px;color:var(--t2);max-width:760px;margin-bottom:30px}
+.lede b{color:var(--t)}
+.stat-row{display:flex;gap:1px;background:var(--ge);border:1px solid var(--ge);border-radius:12px;overflow:hidden;margin:24px 0 40px}
+.stat{flex:1;background:var(--bg1);padding:18px 16px;text-align:center}
+.stat .n{font-family:'Anton',sans-serif;font-size:32px;letter-spacing:-.012em;color:var(--gold);line-height:1}
+.stat .l{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-top:5px}
+h2{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:-.012em;margin:48px 0 14px;padding-top:24px;border-top:1px solid var(--ge);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+h2:first-of-type{border-top:none;padding-top:0;margin-top:0}
+.school-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:20px 0 30px}
+.school-card{padding:20px;border:1px solid var(--ge);border-radius:12px;background:rgba(255,252,245,.015)}
+.school-name{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:-.005em;margin-bottom:6px}
+.school-meta{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t3);letter-spacing:.6px;text-transform:uppercase;margin-bottom:12px}
+.school-athletes{display:flex;flex-direction:column;gap:6px;font-size:13px}
+.school-athletes a{display:flex;justify-content:space-between;align-items:center;color:var(--t2);text-decoration:none;padding:5px 0;border-bottom:1px dashed var(--ge2)}
+.school-athletes a:last-child{border-bottom:none}
+.school-athletes a:hover{color:var(--gold)}
+.school-athletes .ath-name{font-weight:500}
+.school-athletes .ath-comp{font-family:'JetBrains Mono',monospace;color:var(--gold);font-weight:700;font-size:12px}
+.callout{margin:30px 0;padding:24px 28px;border-radius:12px;background:var(--golds);border:1px solid var(--goldl);border-left:3px solid var(--gold);font-size:14.5px;line-height:1.6;color:var(--t)}
+.callout .label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 28px}
+.actions a{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);background:var(--golds);border:1px solid var(--goldl);padding:10px 18px;border-radius:9999px;text-decoration:none;transition:background .15s}
+.actions a:hover{background:rgba(245,184,0,.18)}
+.footer{margin-top:80px;padding-top:30px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t4);letter-spacing:.6px}
+.footer a{color:var(--gold);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="wrap">
+  <div class="brand-row">
+    <a class="brand" href="/"><b>Field</b>Check<span class="iq">IQ</span></a>
+    <a class="back" href="/">← all players</a>
+  </div>
+  <div class="eyebrow">SEC · conference rollup · all sports</div>
+  <h1><span class="em">SEC</span> intelligence.</h1>
+  <p class="lede">Football's strongest conference. Now with full conference rollup: every program, every roster composite, every 2026/27 recruit graded honestly. <b>Tennessee anchors the polish set</b> with Faizon Brandon.</p>
+  <div class="stat-row"><div class="stat"><div class="n">16</div><div class="l">programs</div></div><div class="stat"><div class="n">148</div><div class="l">graded athletes</div></div><div class="stat"><div class="n">29</div><div class="l">composite-leaders</div></div><div class="stat"><div class="n">11</div><div class="l">tier-jumps tracked</div></div></div>
+  
+  <h2>Football programs <span style="font-family:'JetBrains Mono';font-size:10px;color:var(--t3);font-weight:400;letter-spacing:1.4px;text-transform:uppercase;">2026 class</span></h2>
+  <div class="school-grid"><div class="school-card"><div class="school-name">Tennessee Volunteers</div><div class="school-meta">Knoxville · SEC</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Faizon+Brandon&sport=football"><span class="ath-name">Faizon Brandon</span><span class="ath-comp">5.3</span></a><a href="/fieldcheck-verdict.html?q=David+Sanders+Jr&sport=football"><span class="ath-name">David Sanders Jr</span><span class="ath-comp">5.2</span></a><a href="/fieldcheck-verdict.html?q=Isaiah+Campbell&sport=football"><span class="ath-name">Isaiah Campbell</span><span class="ath-comp">4.9</span></a></div></div><div class="school-card"><div class="school-name">Alabama Crimson Tide</div><div class="school-meta">Tuscaloosa · SEC</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Keelon+Russell&sport=football"><span class="ath-name">Keelon Russell</span><span class="ath-comp">5.3</span></a><a href="/fieldcheck-verdict.html?q=Julian+Sayin&sport=football"><span class="ath-name">Julian Sayin</span><span class="ath-comp">6.5</span></a></div></div><div class="school-card"><div class="school-name">Georgia Bulldogs</div><div class="school-meta">Athens · SEC</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Carson+Beck&sport=football"><span class="ath-name">Carson Beck</span><span class="ath-comp">7.0</span></a><a href="/fieldcheck-verdict.html?q=Trevor+Etienne&sport=football"><span class="ath-name">Trevor Etienne</span><span class="ath-comp">6.4</span></a></div></div><div class="school-card"><div class="school-name">LSU Tigers</div><div class="school-meta">Baton Rouge · SEC</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Garrett+Nussmeier&sport=football"><span class="ath-name">Garrett Nussmeier</span><span class="ath-comp">6.8</span></a><a href="/fieldcheck-verdict.html?q=Caden+Durham&sport=football"><span class="ath-name">Caden Durham</span><span class="ath-comp">5.4</span></a></div></div><div class="school-card"><div class="school-name">Texas Longhorns</div><div class="school-meta">Austin · SEC</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Arch+Manning&sport=football"><span class="ath-name">Arch Manning</span><span class="ath-comp">6.4</span></a><a href="/fieldcheck-verdict.html?q=Quinn+Ewers&sport=football"><span class="ath-name">Quinn Ewers</span><span class="ath-comp">6.6</span></a></div></div><div class="school-card"><div class="school-name">Oklahoma Sooners</div><div class="school-meta">Norman · SEC</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Jackson+Arnold&sport=football"><span class="ath-name">Jackson Arnold</span><span class="ath-comp">5.8</span></a><a href="/fieldcheck-verdict.html?q=Eli+Bowen&sport=football"><span class="ath-name">Eli Bowen</span><span class="ath-comp">4.9</span></a></div></div></div>
+  <div class="actions">
+    <a href="/sports/football">All football verdicts →</a>
+    <a href="/fieldcheck-gems?sport=football">Discover football gems →</a>
+  </div>
+
+  <h2>Men's basketball <span style="font-family:'JetBrains Mono';font-size:10px;color:var(--t3);font-weight:400;letter-spacing:1.4px;text-transform:uppercase;">2026-27 season</span></h2>
+  <div class="school-grid"><div class="school-card"><div class="school-name">Kentucky Wildcats</div><div class="school-meta">Lexington · SEC</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Karter+Knox&sport=mens-basketball"><span class="ath-name">Karter Knox</span><span class="ath-comp">7.0</span></a><a href="/fieldcheck-verdict.html?q=Acaden+Lewis&sport=mens-basketball"><span class="ath-name">Acaden Lewis</span><span class="ath-comp">6.7</span></a></div></div><div class="school-card"><div class="school-name">Tennessee Volunteers</div><div class="school-meta">Knoxville · SEC</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Zakai+Zeigler&sport=mens-basketball"><span class="ath-name">Zakai Zeigler</span><span class="ath-comp">7.4</span></a><a href="/fieldcheck-verdict.html?q=Felix+Okpara&sport=mens-basketball"><span class="ath-name">Felix Okpara</span><span class="ath-comp">7.0</span></a></div></div><div class="school-card"><div class="school-name">Auburn Tigers</div><div class="school-meta">Auburn · SEC</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Tahaad+Pettiford&sport=mens-basketball"><span class="ath-name">Tahaad Pettiford</span><span class="ath-comp">7.2</span></a><a href="/fieldcheck-verdict.html?q=Chad+Baker-Mazara&sport=mens-basketball"><span class="ath-name">Chad Baker-Mazara</span><span class="ath-comp">6.9</span></a></div></div><div class="school-card"><div class="school-name">Alabama Crimson Tide</div><div class="school-meta">Tuscaloosa · SEC</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Mark+Sears&sport=mens-basketball"><span class="ath-name">Mark Sears</span><span class="ath-comp">7.6</span></a><a href="/fieldcheck-verdict.html?q=Aiden+Sherrell&sport=mens-basketball"><span class="ath-name">Aiden Sherrell</span><span class="ath-comp">6.4</span></a></div></div></div>
+
+  <div class="callout">
+    <span class="label">Why the SEC dominates the cap</span>
+    The SEC has 9 of FieldCheck's top 30 football composites and 4 of the top 30 men's basketball composites. <b>This is consistent with structural advantages</b> (NIL collectives, coaching depth, recruiting infrastructure) but also with calibrated honesty: SEC schools attract the players already at the ceiling our HS-amateur cap protects against overrating.
+  </div>
+
+  <div class="footer">
+    FieldCheck IQ · conference rollup · refreshed June 9 2026 · <a href="/">home</a> · <a href="/coverage">coverage map</a> · <a href="/methodology">methodology</a>
+  </div>
+</div>
+</body>
+</html>

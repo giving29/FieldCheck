@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FieldCheck Artifacts · Publications Archive</title>
+<meta name="theme-color" content="#0A0908">
+<meta name="description" content="The publications archive for FieldCheck. Strategic frameworks, methodology papers, and reference documents — public, citable, versioned.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0908;
+    --bg-2: #14110c;
+    --text: #fbf6ea;
+    --text-2: rgba(251,246,234,0.78);
+    --text-3: rgba(212,200,173,0.65);
+    --text-4: rgba(212,200,173,0.42);
+    --gold: #ffc94a;
+    --gold-dim: rgba(255,201,74,0.55);
+    --rule: rgba(255,201,74,0.16);
+    --rule-faint: rgba(255,201,74,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--gold); color: var(--bg); }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 100;
+    mix-blend-mode: overlay;
+  }
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(12px);
+    background: rgba(10,9,8,0.85);
+    border-bottom: 1px solid var(--rule-faint);
+    padding: 16px 36px;
+    display: flex; align-items: center; gap: 26px;
+  }
+  nav .wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+  nav .wordmark .gold { color: var(--gold); }
+  nav a { color: var(--text-3); text-decoration: none; font-family: 'Crimson Pro', serif; font-size: 15px; }
+  nav a:hover { color: var(--gold); }
+  nav .meta-tag {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--text-4);
+  }
+
+  .hero {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 100px 36px 60px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(62px, 9vw, 120px);
+    line-height: 0.94;
+    letter-spacing: -0.012em;
+    margin-bottom: 24px;
+  }
+  .hero .lede {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(22px, 2.8vw, 32px);
+    line-height: 1.25;
+    color: var(--gold);
+    max-width: 780px;
+    margin-bottom: 30px;
+  }
+  .hero .desc {
+    color: var(--text-2);
+    max-width: 720px;
+    font-size: 17.5px;
+    line-height: 1.55;
+  }
+
+  .archive {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 60px 36px 100px;
+  }
+  .archive-section { margin-bottom: 70px; }
+  .archive-section-h {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .pub {
+    display: grid;
+    grid-template-columns: 130px 1fr 130px;
+    gap: 32px;
+    padding: 28px 0 28px;
+    border-bottom: 1px solid var(--rule-faint);
+    align-items: start;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .pub:hover { background: linear-gradient(90deg, rgba(255,201,74,0.04), transparent 40%); padding-left: 16px; margin-left: -16px; }
+  .pub:hover .pub-h { color: var(--gold); }
+  .pub-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 2px;
+    color: var(--text-4);
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+  .pub-h {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    letter-spacing: -0.005em;
+    line-height: 1.08;
+    margin-bottom: 10px;
+    color: var(--text);
+    transition: color 0.2s ease;
+  }
+  .pub-sub {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--gold-dim);
+    font-size: 17px;
+    line-height: 1.35;
+    margin-bottom: 12px;
+  }
+  .pub-desc {
+    color: var(--text-3);
+    font-size: 15.5px;
+    line-height: 1.55;
+  }
+  .pub-meta {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text-4);
+    text-transform: uppercase;
+    line-height: 1.6;
+    padding-top: 6px;
+  }
+  .pub-meta .status-pub { color: var(--gold); font-weight: 700; }
+  .pub-meta .status-draft { color: rgba(180,180,170,0.6); }
+  .pub-meta .status-forth { color: rgba(180,180,170,0.45); }
+
+  .pub.forthcoming { opacity: 0.62; }
+  .pub.forthcoming:hover { opacity: 0.95; }
+
+  .pub-empty {
+    padding: 26px 0;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--text-4);
+    font-size: 17px;
+  }
+
+  /* About block */
+  .about {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 36px 100px;
+    border-top: 1px solid var(--rule);
+  }
+  .about-h {
+    font-family: 'Anton', sans-serif;
+    font-size: 36px;
+    letter-spacing: -0.005em;
+    margin-bottom: 18px;
+  }
+  .about-h .italic {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+  .about p { color: var(--text-2); margin-bottom: 1em; font-size: 17.5px; line-height: 1.6; }
+  .about p:last-child { margin-bottom: 0; }
+  .about a { color: var(--gold); text-decoration: none; }
+  .about a:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 22px; gap: 12px; }
+    nav a:not(.wordmark) { display: none; }
+    .hero { padding: 70px 22px 50px; }
+    .archive { padding: 50px 22px 80px; }
+    .about { padding: 60px 22px 80px; }
+    .pub { grid-template-columns: 1fr; gap: 10px; }
+    .pub-meta { text-align: left; padding-top: 0; }
+    body { font-size: 16.5px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="wordmark">FIELD<span class="gold">CHECK</span></a>
+  <a href="/strategic-framework">Strategic Framework</a>
+  <a href="/papers/fieldcheck-tier">FC Tier Paper</a>
+  <a href="/voices">Voices</a>
+  <span class="meta-tag">// ARTIFACTS · v1.0</span>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="eyebrow">// Artifacts · The Publications Archive</div>
+  <h1>The Record.</h1>
+  <p class="lede">Strategic frameworks, methodology papers, and reference documents — public, citable, versioned.</p>
+  <p class="desc">This archive is the public record of FieldCheck's thinking. Every document is published with a stable URL, a reference ID, and a versioning convention. Methodology papers carry the FC-METH- prefix. Strategic documents carry FC-STRAT-. Annual list publications carry FC-LIST-. The archive is the surface through which our work becomes citable, reproducible, and — over time — the standard.</p>
+</header>
+
+<!-- ARCHIVE -->
+<div class="archive">
+
+  <section class="archive-section">
+    <div class="archive-section-h">// Strategic Frameworks</div>
+
+    <a href="/strategic-framework" class="pub">
+      <div class="pub-id">FC-STRAT-001</div>
+      <div>
+        <div class="pub-h">FieldCheck Strategic Framework</div>
+        <div class="pub-sub">A trust layer where retail loses to information asymmetry — and a reference standard the industry has no choice but to adopt.</div>
+        <div class="pub-desc">The full strategic framework for FieldCheck. Vision, the three lies of the recruiting industry, the three-layer architecture (Voices, Brains, Surface), the aggressive Y1 multi-sport arc (W-VB → Football → MBB → Baseball), the FieldCheck Tier introduction, the three list formats (FC100, Greatness Path, Position-Fit Apex), and the five strategic artifacts.</div>
+      </div>
+      <div class="pub-meta">
+        v1.0<br>
+        May 14, 2026<br>
+        <span class="status-pub">● Published</span>
+      </div>
+    </a>
+  </section>
+
+  <section class="archive-section">
+    <div class="archive-section-h">// Methodology Papers</div>
+
+    <a href="/papers/fieldcheck-tier" class="pub">
+      <div class="pub-id">FC-METH-001</div>
+      <div>
+        <div class="pub-h">The FieldCheck Tier</div>
+        <div class="pub-sub">A public methodology for athlete trajectory classification — a frame, not a list, defended by Voice attribution and traceable reasoning.</div>
+        <div class="pub-desc">The formal methodology for the four-band FieldCheck Tier system (ICON, ELITE, STAR, PROSPECT). Eight dimensions, five non-negotiable requirements (Voice attribution, reasoning trace, public-record sourcing, confidence interval, comp library), calibration process, dispute procedure, citation format. CC BY-SA 4.0 licensed.</div>
+      </div>
+      <div class="pub-meta">
+        v1.0<br>
+        May 14, 2026<br>
+        <span class="status-pub">● Published</span>
+      </div>
+    </a>
+
+    <div class="pub forthcoming">
+      <div class="pub-id">FC-METH-001-WVB</div>
+      <div>
+        <div class="pub-h">FC Tier · Women's Volleyball Supplement</div>
+        <div class="pub-sub">Sport-specific threshold supplement to FC-METH-001.</div>
+        <div class="pub-desc">Position-specific calibration thresholds for the four bands within women's volleyball. Apex profile examples by position. Voice attribution density for the W-VB Voice council.</div>
+      </div>
+      <div class="pub-meta">
+        v1.0 (draft)<br>
+        Q2 2026<br>
+        <span class="status-forth">● Forthcoming</span>
+      </div>
+    </div>
+
+    <div class="pub forthcoming">
+      <div class="pub-id">FC-METH-001-FB</div>
+      <div>
+        <div class="pub-h">FC Tier · Football Supplement</div>
+        <div class="pub-sub">Sport-specific threshold supplement to FC-METH-001.</div>
+        <div class="pub-desc">Position-specific calibration thresholds for the four bands within football. Apex profile examples by position. Voice attribution density for the football Voice council.</div>
+      </div>
+      <div class="pub-meta">
+        v1.0 (draft)<br>
+        Q2 2026<br>
+        <span class="status-forth">● Forthcoming</span>
+      </div>
+    </div>
+
+    <div class="pub forthcoming">
+      <div class="pub-id">FC-METH-001-MBB</div>
+      <div>
+        <div class="pub-h">FC Tier · Men's Basketball Supplement</div>
+        <div class="pub-sub">Sport-specific threshold supplement to FC-METH-001.</div>
+        <div class="pub-desc">Position-specific calibration thresholds, apex profile examples, Voice attribution density for the men's basketball Voice council.</div>
+      </div>
+      <div class="pub-meta">
+        v1.0 (draft)<br>
+        Q3 2026<br>
+        <span class="status-forth">● Forthcoming</span>
+      </div>
+    </div>
+
+    <div class="pub forthcoming">
+      <div class="pub-id">FC-METH-001-BSB</div>
+      <div>
+        <div class="pub-h">FC Tier · Baseball Supplement</div>
+        <div class="pub-sub">Sport-specific threshold supplement to FC-METH-001.</div>
+        <div class="pub-desc">Position-specific calibration thresholds, apex profile examples, Voice attribution density for the baseball Voice council.</div>
+      </div>
+      <div class="pub-meta">
+        v1.0 (draft)<br>
+        Q3 2026<br>
+        <span class="status-forth">● Forthcoming</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="archive-section">
+    <div class="archive-section-h">// List Publications</div>
+
+    <div class="pub forthcoming">
+      <div class="pub-id">FC-LIST-FC100-2026</div>
+      <div>
+        <div class="pub-h">The FieldCheck 100 · 2026 Edition</div>
+        <div class="pub-sub">The flagship annual cohort — clustered in tiers, not ranked 1 through 100.</div>
+        <div class="pub-desc">The first annual FC100 publication. Top 100 athletes across all FieldCheck-active sports, classified by FieldCheck Tier. Full methodology, every Voice quoted, every reasoning trace, every confidence interval. The reference cohort that the industry learns to anticipate.</div>
+      </div>
+      <div class="pub-meta">
+        2026 edition<br>
+        Q4 2026<br>
+        <span class="status-forth">● Forthcoming</span>
+      </div>
+    </div>
+
+    <div class="pub forthcoming">
+      <div class="pub-id">FC-LIST-PFA-2026</div>
+      <div>
+        <div class="pub-h">Position-Fit Apex · 2026 Reference Atlas</div>
+        <div class="pub-sub">The canonical apex case at each FieldCheck Tier in each position in each sport.</div>
+        <div class="pub-desc">Reference architecture, not a leaderboard. The named apex case ("Madisen Skinner is the W-VB OH ICON for 2025") at each band, position, and sport. Used by coaches to set recruit-facing tier expectations.</div>
+      </div>
+      <div class="pub-meta">
+        2026 edition<br>
+        Q3 2026<br>
+        <span class="status-forth">● Forthcoming</span>
+      </div>
+    </div>
+
+    <div class="pub forthcoming">
+      <div class="pub-id">FC-LIST-GP</div>
+      <div>
+        <div class="pub-h">The Greatness Path · Ongoing Designation Register</div>
+        <div class="pub-sub">A named cohort that travels with the athlete.</div>
+        <div class="pub-desc">Not a list. A continuously-maintained register of athletes whose FieldCheck Tier and trajectory have crossed the Greatness Path threshold. A status that travels with the athlete from high school through college through pro.</div>
+      </div>
+      <div class="pub-meta">
+        Ongoing<br>
+        Launch Q3 2026<br>
+        <span class="status-forth">● Forthcoming</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ABOUT -->
+<div class="about">
+  <h2 class="about-h">About this archive. <span class="italic">And why it matters.</span></h2>
+  <p>The archive is the publication surface for FieldCheck's strategic and methodological work. Every document is versioned, stably-URL'd, and citable. The CC BY-SA 4.0 license makes adoption — by coaches, media, college programs, academic researchers — explicitly unimpeded.</p>
+  <p>The strategic premise: when a methodology is published, defended, and used by enough independent parties, it becomes infrastructure. Bloomberg Terminal energy, not blog energy. Standards are the deepest moat in any information business.</p>
+  <p>Disputes, comments, or citation queries: <a href="mailto:methodology@fieldcheck.ai">methodology@fieldcheck.ai</a>.</p>
+</div>
+
+</body>
+</html>

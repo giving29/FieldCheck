@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 · FieldCheck IQ</title>
+<meta name="description" content="Page not found. Try a player search.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060A;--bg1:#100F14;--t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--gold:#F5B800;--ge:rgba(255,252,245,.09)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 20px;line-height:1.55}
+.brand{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:-.01em;margin-bottom:24px;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.glyph{font-family:'Anton',sans-serif;font-size:clamp(80px,16vw,180px);color:var(--gold);letter-spacing:-.02em;line-height:1;margin:30px 0 12px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,42px);letter-spacing:-.012em;margin-bottom:14px}
+p{color:var(--t2);font-size:15px;max-width:480px;margin:0 auto 28px}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.actions a{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);background:rgba(245,184,0,.08);border:1px solid rgba(245,184,0,.3);padding:10px 18px;border-radius:9999px;text-decoration:none;transition:background .15s}
+.actions a:hover{background:rgba(245,184,0,.18)}
+.search{margin:24px auto 0;max-width:420px}
+.search input{width:100%;padding:14px 18px;border-radius:9999px;border:1px solid var(--ge);background:rgba(255,252,245,.04);color:var(--t);font-size:14px;font-family:inherit}
+.search input:focus{outline:none;border-color:rgba(245,184,0,.4)}
+.foot{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--t3);margin-top:48px;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div>
+  <div class="brand"><b>Field</b>Check<span class="iq">IQ</span></div>
+  <div class="glyph">404</div>
+  <h1>Not in the registry.</h1>
+  <p>The page you're looking for isn't here. Either the URL is wrong or the athlete isn't yet in our curated marquee set. Try a search or visit one of the entry points below.</p>
+  <form class="search" action="/" method="get" role="search">
+    <input type="search" name="q" placeholder="Search a player or program..." autofocus aria-label="Search FieldCheck">
+  </form>
+  <div class="actions" style="margin-top:30px">
+    <a href="/">All players</a>
+    <a href="/fieldcheck-gems">Discover gems</a>
+    <a href="/methodology">How it works</a>
+    <a href="/velocity">Velocity</a>
+  </div>
+  <div class="foot">FieldCheck IQ · 8 facets · 25 PhD reviewers · 50 pre-registered predictions</div>
+</div>
+</body>
+</html>

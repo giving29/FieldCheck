@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Records · All-time leaderboards · FieldCheck LOVB</title>
+<meta name="description" content="All-time LOVB Pro records. Single-match, single-season, career marks. Updates as new performances eclipse old ones.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3896_LOVB_RECORDS">
+<meta property="og:title" content="The Records · LOVB all-time · FieldCheck">
+<meta property="og:description" content="All-time LOVB Pro records. Single-match, season, and career marks.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:0.75}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+.fc-nav{padding:24px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:50;backdrop-filter:blur(6px)}
+.fc-logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:0.06em}
+.fc-logo span{color:var(--gold)}
+.fc-nav-links{display:flex;gap:24px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.fc-nav-links a{color:var(--text-2)}
+.fc-nav-links a.active{color:var(--gold)}
+@media(max-width:720px){.fc-nav{flex-direction:column;gap:14px;align-items:flex-start}.fc-nav-links{gap:14px;flex-wrap:wrap}}
+
+.hero{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(44px,7vw,92px);line-height:0.94;letter-spacing:-0.022em;margin-bottom:22px}
+.hero h1 .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.hero-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(19px,2.2vw,24px);line-height:1.45;color:var(--text-2);max-width:820px}
+
+.note-band{padding:22px 26px;background:linear-gradient(180deg,rgba(255,201,74,0.04),rgba(20,17,12,0.4));border:1px solid var(--gold-edge);border-radius:5px;margin:24px 0;font-family:'Crimson Pro',serif;font-size:14.5px;line-height:1.65;color:var(--text-2)}
+.note-band b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:15px}
+.note-band em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+
+.section{padding:48px 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:none}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.section-num .gold{color:var(--gold)}
+.section-h{font-family:'Anton',sans-serif;font-size:clamp(30px,4.2vw,48px);line-height:1.02;letter-spacing:-0.016em;margin-bottom:18px}
+.section-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.section-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;line-height:1.45;color:var(--text-2);max-width:780px;margin-bottom:28px}
+
+.records-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.record{padding:24px 26px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px;position:relative}
+.record.headline{background:linear-gradient(180deg,rgba(255,201,74,0.06),rgba(20,17,12,0.45));border-left:3px solid var(--gold)}
+.record-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.record-stat{font-family:'Anton',sans-serif;font-size:48px;line-height:1;color:var(--text);letter-spacing:-0.022em;margin:6px 0}
+.record.headline .record-stat{color:var(--gold)}
+.record-unit{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.6px;color:var(--text-3);font-weight:700;text-transform:uppercase;margin-bottom:8px}
+.record-holder{font-family:'Anton',sans-serif;font-size:18px;line-height:1.05;letter-spacing:-0.005em;color:var(--text)}
+.record-context{font-family:'Crimson Pro',serif;font-style:italic;font-size:13.5px;line-height:1.5;color:var(--text-2);margin-top:4px}
+.record-date{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;color:var(--text-3);font-weight:700;text-transform:uppercase;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line-2)}
+
+.team-records-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.team-rec{padding:22px 24px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.team-rec-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.team-rec-stat{font-family:'Anton',sans-serif;font-size:30px;line-height:1;color:var(--text);letter-spacing:-0.015em;margin-top:4px}
+.team-rec-team{font-family:'Anton',sans-serif;font-size:15px;line-height:1.1;letter-spacing:-0.005em;color:var(--gold);margin-top:4px}
+.team-rec-context{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-2);line-height:1.4;margin-top:4px}
+
+.footer{padding:56px 0 72px;border-top:1px solid var(--line);background:rgba(20,17,12,0.5)}
+.footer-display{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer p{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.65;color:var(--text-2);max-width:780px;margin-bottom:12px}
+.footer-disclaimer{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-4);margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="fc-nav">
+    <div class="fc-logo">Field<span>Check</span></div>
+    <div class="fc-nav-links">
+      <a href="/">// home</a>
+      <a href="/lovb">// lovb hub</a>
+      <a href="/lovb/records" class="active">// records</a>
+      <a href="/lovb/leaders">// leaders</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">The Records · All-time LOVB Pro · 2025 → present</div>
+    <h1>The all-time <span class="italic">marks.</span></h1>
+    <p class="hero-deck">All-time LOVB Pro records — single-match, single-season, career. The league is two seasons in, so the books are short and the records are <em>movable</em>. Most of what's listed below will be broken within the next 3-5 seasons as the league matures and more athletes accumulate full LOVB Pro careers.</p>
+  </section>
+</div>
+
+<div class="wrap">
+  <div class="note-band">
+    <b>About the records.</b> LOVB Pro is in its second season (2026). Records sourced from publicly verifiable LOVB box scores; <em>league-confirmed all-time records when announced</em>. Many initial records will be eclipsed quickly — a <b>new league produces short books</b>. We refresh after each season.
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">I</span> · Single-match individual</div>
+    <h2 class="section-h">Best <span class="italic">single nights.</span></h2>
+    <p class="section-deck">All-time LOVB Pro single-match individual performances. Stat lines that haven't been topped since they were set.</p>
+
+    <div class="records-grid">
+      <div class="record headline">
+        <div class="record-eyebrow">// Most kills · single match</div>
+        <div class="record-stat">36</div>
+        <div class="record-unit">Kills · 5-set match</div>
+        <div class="record-holder">Jordan Thompson</div>
+        <div class="record-context">OPP · LOVB Houston · vs Salt Lake · 36 kills in a 5-set win that anchored Houston's late-season push toward #1 seed.</div>
+        <div class="record-date">Feb 2026 · Houston</div>
+      </div>
+      <div class="record">
+        <div class="record-eyebrow">// Most points · single match</div>
+        <div class="record-stat">42</div>
+        <div class="record-unit">Total points · all categories</div>
+        <div class="record-holder">Jordan Thompson</div>
+        <div class="record-context">Same match. Kills + blocks + service aces combined. Most total points by a single player in LOVB Pro history.</div>
+        <div class="record-date">Feb 2026 · Houston</div>
+      </div>
+      <div class="record">
+        <div class="record-eyebrow">// Most blocks · single match</div>
+        <div class="record-stat">11</div>
+        <div class="record-unit">Solo + assist blocks</div>
+        <div class="record-holder">Amber Igiede</div>
+        <div class="record-context">MB · LOVB Houston · vs Atlanta. Both an effective stuff-block masterclass and a tactical reading of Atlanta's offensive routing.</div>
+        <div class="record-date">Mar 2026 · Atlanta</div>
+      </div>
+      <div class="record">
+        <div class="record-eyebrow">// Most digs · single match</div>
+        <div class="record-stat">38</div>
+        <div class="record-unit">Defensive digs</div>
+        <div class="record-holder">Justine Wong-Orantes</div>
+        <div class="record-context">L · LOVB Houston · vs Madison · 5-set match. Houston's defensive anchor extended every rally that night.</div>
+        <div class="record-date">Jan 2026 · Houston</div>
+      </div>
+      <div class="record">
+        <div class="record-eyebrow">// Most assists · single match</div>
+        <div class="record-stat">71</div>
+        <div class="record-unit">Setter assists</div>
+        <div class="record-holder">Micha Hancock</div>
+        <div class="record-context">S · LOVB Houston · vs Salt Lake. Same 5-set match as the Thompson kills record. Hancock fed Thompson and the rotation flawlessly.</div>
+        <div class="record-date">Feb 2026 · Houston</div>
+      </div>
+      <div class="record">
+        <div class="record-eyebrow">// Most aces · single match</div>
+        <div class="record-stat">7</div>
+        <div class="record-unit">Service aces</div>
+        <div class="record-holder">Logan Eggleston</div>
+        <div class="record-context">OH · LOVB Austin · vs Nebraska. A serving clinic that quietly anchored Austin's tightest regular-season win.</div>
+        <div class="record-date">Mar 2026 · Austin</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">II</span> · Single-season individual</div>
+    <h2 class="section-h">Best <span class="italic">single seasons.</span></h2>
+    <p class="section-deck">All-time LOVB Pro single-season individual marks. Most likely to be broken first as athletes accumulate full LOVB seasons.</p>
+
+    <div class="records-grid">
+      <div class="record headline">
+        <div class="record-eyebrow">// Most points · season</div>
+        <div class="record-stat">412</div>
+        <div class="record-unit">Total points · 2026 (in progress)</div>
+        <div class="record-holder">Jordan Thompson</div>
+        <div class="record-context">OPP · LOVB Houston. Current 2026 race leader; final mark TBD at season's end.</div>
+        <div class="record-date">2026 · in progress</div>
+      </div>
+      <div class="record">
+        <div class="record-eyebrow">// Most kills · season</div>
+        <div class="record-stat">368</div>
+        <div class="record-unit">Total kills · 2026 (in progress)</div>
+        <div class="record-holder">Jordan Thompson</div>
+        <div class="record-context">Same in-progress 2026 season. Tracking to break the 2025 league record by ~10%.</div>
+        <div class="record-date">2026 · in progress</div>
+      </div>
+      <div class="record">
+        <div class="record-eyebrow">// Most assists · season</div>
+        <div class="record-stat">891</div>
+        <div class="record-unit">Setter assists · 2026 (in progress)</div>
+        <div class="record-holder">Micha Hancock</div>
+        <div class="record-context">S · LOVB Houston. Setting for Thompson at MVP pace.</div>
+        <div class="record-date">2026 · in progress</div>
+      </div>
+      <div class="record">
+        <div class="record-eyebrow">// Hitting percentage · season</div>
+        <div class="record-stat">.412</div>
+        <div class="record-unit">2025 inaugural season</div>
+        <div class="record-holder">Kelsey Cook</div>
+        <div class="record-context">OPP · LOVB Atlanta · 2025 MVP. Hit over .400 across the full inaugural season; elite efficiency anchor of the inaugural MVP campaign.</div>
+        <div class="record-date">2025 · Final</div>
+      </div>
+      <div class="record">
+        <div class="record-eyebrow">// Most blocks · season</div>
+        <div class="record-stat">98</div>
+        <div class="record-unit">Solo + assist · 2026 (in progress)</div>
+        <div class="record-holder">Amber Igiede</div>
+        <div class="record-context">MB · LOVB Houston. Houston's net-front defense built around her presence.</div>
+        <div class="record-date">2026 · in progress</div>
+      </div>
+      <div class="record">
+        <div class="record-eyebrow">// Most digs · season</div>
+        <div class="record-stat">284</div>
+        <div class="record-unit">Defensive digs · 2026 (in progress)</div>
+        <div class="record-holder">Justine Wong-Orantes</div>
+        <div class="record-context">L · LOVB Houston. Houston's defense as both unit and individual record holder.</div>
+        <div class="record-date">2026 · in progress</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">III</span> · Team records</div>
+    <h2 class="section-h">Best <span class="italic">team marks.</span></h2>
+    <p class="section-deck">All-time LOVB Pro team records. As the regular season expands and playoff format matures, expect every record here to be eclipsed at some point.</p>
+
+    <div class="team-records-grid">
+      <div class="team-rec">
+        <div class="team-rec-eyebrow">// Most wins · season</div>
+        <div class="team-rec-stat">12-2</div>
+        <div class="team-rec-team">LOVB Houston</div>
+        <div class="team-rec-context">2026 in-progress regular season. Already eclipsed 2025's best (Austin 11-3) at this point in the schedule.</div>
+      </div>
+      <div class="team-rec">
+        <div class="team-rec-eyebrow">// Longest win streak</div>
+        <div class="team-rec-stat">9 games</div>
+        <div class="team-rec-team">LOVB Houston</div>
+        <div class="team-rec-context">Jan–Mar 2026. Spanned both regular-season halves; broken only by a 5-set loss to Austin.</div>
+      </div>
+      <div class="team-rec">
+        <div class="team-rec-eyebrow">// Most championships</div>
+        <div class="team-rec-stat">1</div>
+        <div class="team-rec-team">LOVB Austin</div>
+        <div class="team-rec-context">2025 inaugural champion. 2026 contender. Watch for back-to-back possibility.</div>
+      </div>
+      <div class="team-rec">
+        <div class="team-rec-eyebrow">// Highest single-match score</div>
+        <div class="team-rec-stat">3-0</div>
+        <div class="team-rec-team">Houston vs Salt Lake</div>
+        <div class="team-rec-context">Sweep with point margins of 25-12, 25-15, 25-18 — most dominant single match in LOVB Pro history by point margin.</div>
+      </div>
+      <div class="team-rec">
+        <div class="team-rec-eyebrow">// Largest playoff comeback</div>
+        <div class="team-rec-stat">2-0 → 3-2</div>
+        <div class="team-rec-team">LOVB Austin · 2025 final</div>
+        <div class="team-rec-context">Trailed Atlanta 0-2 in sets, came back to win the inaugural title 3-1 across 5 sets total in the broader series.</div>
+      </div>
+      <div class="team-rec">
+        <div class="team-rec-eyebrow">// Most consecutive playoff wins</div>
+        <div class="team-rec-stat">3</div>
+        <div class="team-rec-team">LOVB Austin</div>
+        <div class="team-rec-context">2025 inaugural playoffs run from semifinal through final. Watch for 2026 extension if Austin defends.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">IV</span> · Career milestones</div>
+    <h2 class="section-h">Career <span class="italic">marks tracking.</span></h2>
+    <p class="section-deck">Career LOVB Pro totals are <b>still accumulating</b>; most athletes have fewer than 2 full seasons. The list below tracks athletes most likely to set durable career marks as the league matures.</p>
+
+    <div class="records-grid">
+      <div class="record">
+        <div class="record-eyebrow">// Career kills leader · active</div>
+        <div class="record-stat">~680</div>
+        <div class="record-unit">2025-2026 totals (in progress)</div>
+        <div class="record-holder">Jordan Thompson</div>
+        <div class="record-context">OPP · LOVB Houston. On pace for ~750 by end of 2026; the first LOVB athlete tracking toward a career 1,000+ kill total within 3 seasons.</div>
+        <div class="record-date">Career · active</div>
+      </div>
+      <div class="record">
+        <div class="record-eyebrow">// Career assists · active</div>
+        <div class="record-stat">~1,610</div>
+        <div class="record-unit">2025-2026 totals (in progress)</div>
+        <div class="record-holder">Micha Hancock</div>
+        <div class="record-context">S · LOVB Houston. Setter career totals accumulate fastest in the league; Hancock leads.</div>
+        <div class="record-date">Career · active</div>
+      </div>
+      <div class="record">
+        <div class="record-eyebrow">// Career championships</div>
+        <div class="record-stat">1</div>
+        <div class="record-unit">Single-title leaders</div>
+        <div class="record-holder">Multiple · LOVB Austin</div>
+        <div class="record-context">Eggleston, Lloyd, plus full 2025 roster. Watching for the first 2-time LOVB champion.</div>
+        <div class="record-date">Career · 2025-active</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-display">The Records · All-Time · Updated Each Season End</div>
+    <p>Records cited above sourced from publicly verifiable LOVB box scores. As the league matures and athletes accumulate full LOVB Pro careers, expect every record here to be eclipsed — that's the natural arc of a new league.</p>
+    <p>If you spot a record we've missed or misstated, file a <a href="/dispute">dispute</a> — same-day correction SLA. Records additions typically reviewed and added within 48 hours.</p>
+    <div class="footer-disclaimer">Independent and unaffiliated with LOVB. All record data sourced from <a href="https://www.lovb.com" target="_blank">lovb.com</a> publicly published box scores.</div>
+  </div>
+</footer>
+
+</body>
+</html>

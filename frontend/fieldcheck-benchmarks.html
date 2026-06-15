@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Position Benchmarks · FieldCheck IQ</title>
+<meta name="description" content="What does 8.5 Physical mean for a D1 Outside Hitter? Position-specific benchmarks make every verdict interpretable.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--bg3:#201D2A;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);--red:#FF5C3A;}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1060px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.nav-links{display:flex;gap:18px;flex:1}.nav-links a{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .15s}.nav-links a:hover,.nav-links a.on{color:var(--gold)}
+.hero{padding:48px 0 32px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(26px,4vw,52px);line-height:1.04;letter-spacing:-.014em;margin-bottom:12px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--t2);line-height:1.7;max-width:640px;margin-bottom:24px}
+
+.sport-tabs{display:flex;gap:0;border-bottom:1px solid var(--ge);margin-bottom:24px;overflow-x:auto}
+.sport-tabs::-webkit-scrollbar{display:none}
+.sport-tab{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--t3);cursor:pointer;transition:all .15s;white-space:nowrap;margin-bottom:-1px}
+.sport-tab:hover{color:var(--t2)}.sport-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+.sport-panel{display:none}.sport-panel.active{display:block}
+.positions-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:20px}
+.pos-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:14px;padding:18px 20px}
+.pos-card-header{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--ge2)}
+.pos-name{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:-.005em;margin-bottom:4px}
+.pos-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:.5px}
+
+.tier-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--ge2)}
+.tier-row:last-child{border-bottom:none}
+.tier-badge{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 8px;border-radius:9999px;white-space:nowrap;flex-shrink:0;width:64px;text-align:center}
+.tier-badge.icon{background:var(--golds);color:var(--gold);border:1px solid var(--goldl)}
+.tier-badge.elite{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.tier-badge.high{background:var(--ge2);color:var(--t2);border:1px solid var(--ge)}
+.tier-badge.verify{background:rgba(255,92,58,.1);color:var(--red);border:1px solid rgba(255,92,58,.25)}
+.tier-range{font-family:'Anton',sans-serif;font-size:15px;color:var(--gold);width:42px;flex-shrink:0}
+.tier-desc{font-size:12px;color:var(--t3);line-height:1.45;flex:1}
+.tier-anchor{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);white-space:nowrap;flex-shrink:0}
+
+.layer-benchmarks{margin-top:14px;padding-top:12px;border-top:1px solid var(--ge2)}
+.lb-title{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t4);margin-bottom:8px}
+.lb-row{display:flex;justify-content:space-between;margin-bottom:6px;align-items:center}
+.lb-name{font-size:12px;color:var(--t2);font-weight:500}
+.lb-vals{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3)}
+.lb-vals span{color:var(--gold)}
+
+.footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer a{color:var(--t4);text-decoration:none}.footer a:hover{color:var(--gold)}
+@media(max-width:660px){.positions-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div class="nav-links"><a href="/">Player</a><a href="/methodology">Methodology</a><a href="/calibration">Calibration</a></div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Position Benchmarks · Reference Standards</div>
+  <h1>What <em>8.5</em> means.<br>At your position.</h1>
+  <p class="hero-sub">The score only means something if you know the reference class. What does an 8.5 Physical score mean for a D1 Outside Hitter? For a D1 Quarterback? The pool sizes are different, the physical demands are different, and the ICON threshold shifts. These are the anchors.</p>
+</section>
+
+<div class="sport-tabs">
+  <button class="sport-tab active" onclick="showSport('vb',this)">Women's Volleyball</button>
+  <button class="sport-tab" onclick="showSport('fb',this)">Football</button>
+  <button class="sport-tab" onclick="showSport('bb',this)">Basketball</button>
+  <button class="sport-tab" onclick="showSport('bsb',this)">Baseball</button>
+  <button class="sport-tab" onclick="showSport('soc',this)">Soccer</button>
+  <button class="sport-tab" onclick="showSport('ten',this)">Tennis</button>
+</div>
+
+<!-- WOMEN'S VOLLEYBALL -->
+<div class="sport-panel active" id="sp-vb">
+  <div class="positions-grid">
+    <div class="pos-card">
+      <div class="pos-card-header">
+        <div class="pos-name">Outside Hitter (OH)</div>
+        <div class="pos-meta">Pool: ~400 D1 OH starters · Pro pathway: LOVB → International</div>
+      </div>
+      <div class="tier-row"><div class="tier-badge icon">ICON</div><div class="tier-range">9.0+</div><div class="tier-desc">AVCA-POY conversation. LOVB franchise player. USA national team rotation. Madisen Skinner tier.</div><div class="tier-anchor">~14/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE+</div><div class="tier-range">8.5–9.0</div><div class="tier-desc">AVCA All-American First Team. LOVB Pro starter. International offer likely. Harper Murray tier.</div><div class="tier-anchor">~35/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE</div><div class="tier-range">8.0–8.5</div><div class="tier-desc">AVCA All-American Second/Third Team. LOVB roster consideration. Conference Player of Year.</div><div class="tier-anchor">~60/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge high">HIGH</div><div class="tier-range">7.0–8.0</div><div class="tier-desc">D1 starter at power conference. Overseas pro possible. Strong program contributor.</div><div class="tier-anchor">~150/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge verify">VERIFY</div><div class="tier-range">&lt;7.0</div><div class="tier-desc">Development player or thin data. Pro pathway uncertain. Significant improvement required.</div><div class="tier-anchor">broad</div></div>
+      <div class="layer-benchmarks">
+        <div class="lb-title">// OH layer benchmarks</div>
+        <div class="lb-row"><div class="lb-name">Physical (ICON)</div><div class="lb-vals"><span>9.0+</span> = 6'2"+ / 10'3"+ reach / power athletic</div></div>
+        <div class="lb-row"><div class="lb-name">Production (ICON)</div><div class="lb-vals"><span>9.0+</span> = 4.0+ K/S, .310+ hit%, 6-rotation</div></div>
+        <div class="lb-row"><div class="lb-name">Pathway (ICON)</div><div class="lb-vals"><span>9.0+</span> = AVCA POY / LOVB contract / USA team</div></div>
+      </div>
+    </div>
+    <div class="pos-card">
+      <div class="pos-card-header">
+        <div class="pos-name">Setter (S)</div>
+        <div class="pos-meta">Pool: ~200 D1 setters · Brain position — IQ multiplies measurables</div>
+      </div>
+      <div class="tier-row"><div class="tier-badge icon">ICON</div><div class="tier-range">9.0+</div><div class="tier-desc">AVCA Setter of Year. USA national team. LOVB starting setter. Jordyn Poulter / Micha Hancock tier.</div><div class="tier-anchor">~6/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE+</div><div class="tier-range">8.5–9.0</div><div class="tier-desc">AVCA All-American setter. LOVB roster. Smart, fast, consistent — the system runs through them.</div><div class="tier-anchor">~15/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE</div><div class="tier-range">8.0–8.5</div><div class="tier-desc">Power conference starter. Conference setter award. Pro pathway credible with development.</div><div class="tier-anchor">~30/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge high">HIGH</div><div class="tier-range">7.0–8.0</div><div class="tier-desc">D1 starter. Good decision-making, room to grow. Backup role at elite program.</div><div class="tier-anchor">~80/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge verify">VERIFY</div><div class="tier-range">&lt;7.0</div><div class="tier-desc">Developmental or insufficient data. Setter position requires more evidence than other positions.</div><div class="tier-anchor">broad</div></div>
+      <div class="layer-benchmarks">
+        <div class="lb-title">// Setter layer benchmarks</div>
+        <div class="lb-row"><div class="lb-name">Mindset (ICON)</div><div class="lb-vals"><span>9.0+</span> = Composure under pressure, never rattled</div></div>
+        <div class="lb-row"><div class="lb-name">Production (ICON)</div><div class="lb-vals"><span>9.0+</span> = 12+ assists/set, .950+ setting %</div></div>
+        <div class="lb-row"><div class="lb-name">Defense (ICON)</div><div class="lb-vals"><span>9.0+</span> = Backcourt threat, elite serve-receive</div></div>
+      </div>
+    </div>
+    <div class="pos-card">
+      <div class="pos-card-header">
+        <div class="pos-name">Libero (L)</div>
+        <div class="pos-meta">Pool: ~200 D1 liberos · Defense-first — Physical matters less than IQ</div>
+      </div>
+      <div class="tier-row"><div class="tier-badge icon">ICON</div><div class="tier-range">9.0+</div><div class="tier-desc">AVCA Libero of Year. USA national team. LOVB anchor. Justine Wong-Orantes tier.</div><div class="tier-anchor">~5/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE+</div><div class="tier-range">8.5–9.0</div><div class="tier-desc">AVCA All-American. LOVB roster. Pass rating 2.5+. Backcourt stabilizer at elite program.</div><div class="tier-anchor">~12/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE</div><div class="tier-range">8.0–8.5</div><div class="tier-desc">Power conference starter libero. Conference defensive award. Strong serve-receive.</div><div class="tier-anchor">~25/cycle</div></div>
+      <div class="layer-benchmarks">
+        <div class="lb-title">// Libero note</div>
+        <div class="lb-row"><div class="lb-name">Physical weight</div><div class="lb-vals">Lower than OH/MB — <span>quickness > height</span></div></div>
+        <div class="lb-row"><div class="lb-name">Defense weight</div><div class="lb-vals"><span>Highest</span> of any VB position in FC model</div></div>
+      </div>
+    </div>
+    <div class="pos-card">
+      <div class="pos-card-header">
+        <div class="pos-name">Middle Blocker (MB)</div>
+        <div class="pos-meta">Pool: ~350 D1 MBs · Height mandatory — Physical floor is high</div>
+      </div>
+      <div class="tier-row"><div class="tier-badge icon">ICON</div><div class="tier-range">9.0+</div><div class="tier-desc">AVCA MB of Year. Block leader nationally. LOVB starter. USA team consideration.</div><div class="tier-anchor">~10/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE+</div><div class="tier-range">8.5–9.0</div><div class="tier-desc">AVCA All-American MB. 6'3"+ with elite blocking + attacking combo. LOVB interest.</div><div class="tier-anchor">~22/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE</div><div class="tier-range">8.0–8.5</div><div class="tier-desc">Power conference MB starter. Block ≥1.0/set. First-team All-Conference level.</div><div class="tier-anchor">~45/cycle</div></div>
+      <div class="layer-benchmarks">
+        <div class="lb-title">// MB note</div>
+        <div class="lb-row"><div class="lb-name">Physical floor</div><div class="lb-vals"><span>6'3"</span> minimum to reach ELITE tier at MB</div></div>
+        <div class="lb-row"><div class="lb-name">Defense weight</div><div class="lb-vals">Blocking = primary — <span>block/set is the key stat</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTBALL -->
+<div class="sport-panel" id="sp-fb">
+  <div class="positions-grid">
+    <div class="pos-card">
+      <div class="pos-card-header">
+        <div class="pos-name">Quarterback (QB)</div>
+        <div class="pos-meta">Pool: ~130 D1 starting QBs · Mindset is the dominant layer</div>
+      </div>
+      <div class="tier-row"><div class="tier-badge icon">ICON</div><div class="tier-range">9.0+</div><div class="tier-desc">NFL franchise QB. Mahomes / Manning tier. Every layer elite. Mindset ≥ 9.3 is non-negotiable.</div><div class="tier-anchor">~4/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE+</div><div class="tier-range">8.5–9.0</div><div class="tier-desc">NFL Day 1–2 pick. High starter probability. Rodgers (before NFL) / Prescott territory.</div><div class="tier-anchor">~10/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE</div><div class="tier-range">8.0–8.5</div><div class="tier-desc">NFL Day 2–3 pick. Backup-to-starter arc. Strong college career, one question mark.</div><div class="tier-anchor">~20/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge high">HIGH</div><div class="tier-range">7.0–8.0</div><div class="tier-desc">D1 FBS starter. Camp arm in NFL. Development player or late bloomer profile.</div><div class="tier-anchor">~50/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge verify">VERIFY</div><div class="tier-range">&lt;7.0</div><div class="tier-desc">Bust signal present. Mindset &lt; 6.0 is the key flag — three historical QBs at this tier all washed out.</div><div class="tier-anchor">rare</div></div>
+      <div class="layer-benchmarks">
+        <div class="lb-title">// QB layer benchmarks (V2 weights: Mindset 32%, Pathway 24%)</div>
+        <div class="lb-row"><div class="lb-name">Mindset (ICON)</div><div class="lb-vals"><span>9.3+</span> = Manning, Mahomes, Rodgers character signal</div></div>
+        <div class="lb-row"><div class="lb-name">Physical (ICON)</div><div class="lb-vals"><span>8.5+</span> = Size + arm strength + mobility</div></div>
+        <div class="lb-row"><div class="lb-name">Bust signal</div><div class="lb-vals">Mindset <span>&lt;6.0</span> = force VERIFY regardless of Physical</div></div>
+      </div>
+    </div>
+    <div class="pos-card">
+      <div class="pos-card-header">
+        <div class="pos-name">EDGE Rusher</div>
+        <div class="pos-meta">Pool: ~200 D1 EDGE rushers · Physical and Defense are co-dominant</div>
+      </div>
+      <div class="tier-row"><div class="tier-badge icon">ICON</div><div class="tier-range">9.0+</div><div class="tier-desc">Top-5 NFL pick. 10+ sack potential immediately. David Bailey (2026 #2 pick) tier.</div><div class="tier-anchor">~6/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE+</div><div class="tier-range">8.5–9.0</div><div class="tier-desc">NFL Day 1 selection. Pro-ready pass rusher with elite athletic profile.</div><div class="tier-anchor">~15/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE</div><div class="tier-range">8.0–8.5</div><div class="tier-desc">NFL Day 2 selection. Starter upside, one technique question.</div><div class="tier-anchor">~30/cycle</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BASKETBALL -->
+<div class="sport-panel" id="sp-bb">
+  <div class="positions-grid">
+    <div class="pos-card">
+      <div class="pos-card-header">
+        <div class="pos-name">Point Guard (PG)</div>
+        <div class="pos-meta">Pool: ~350 D1 PG starters · Mindset and Defense are dominant layers</div>
+      </div>
+      <div class="tier-row"><div class="tier-badge icon">ICON</div><div class="tier-range">9.0+</div><div class="tier-desc">Lottery pick. Franchise PG. Curry tier — Physical penalty overridden if Mindset 9.0+ + Production 8.5+.</div><div class="tier-anchor">~4/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE+</div><div class="tier-range">8.5–9.0</div><div class="tier-desc">Top-15 NBA pick. Starter immediately. Elite creation + two-way conviction.</div><div class="tier-anchor">~10/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE</div><div class="tier-range">8.0–8.5</div><div class="tier-desc">First-round NBA pick. Role starter, ceiling question. Isaiah Thomas tier (undersized Physical rule).</div><div class="tier-anchor">~20/cycle</div></div>
+      <div class="layer-benchmarks">
+        <div class="lb-title">// Brady/Curry floor rule (R1)</div>
+        <div class="lb-row"><div class="lb-name">If Physical &lt;7.0</div><div class="lb-vals">AND Mindset ≥9.0 AND Production ≥8.5 → <span>floor 8.5</span></div></div>
+        <div class="lb-row"><div class="lb-name">Isaiah Thomas</div><div class="lb-vals">Ph 5.5, Mi 9.8, Pr 9.4 → composite <span>8.1</span> (not penalized)</div></div>
+      </div>
+    </div>
+    <div class="pos-card">
+      <div class="pos-card-header">
+        <div class="pos-name">Center (C)</div>
+        <div class="pos-meta">Pool: ~250 D1 centers · Durability is the critical risk layer</div>
+      </div>
+      <div class="tier-row"><div class="tier-badge icon">ICON</div><div class="tier-range">9.0+</div><div class="tier-desc">Lottery pick franchise C. Jokić / AD tier. Defense + Physical co-dominant. Durability check mandatory.</div><div class="tier-anchor">~3/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge elite">ELITE+</div><div class="tier-range">8.5–9.0</div><div class="tier-desc">Top-20 NBA pick. Starting center. Two-way impact + rim protection.</div><div class="tier-anchor">~8/cycle</div></div>
+      <div class="tier-row"><div class="tier-badge verify">VERIFY</div><div class="tier-range">any</div><div class="tier-desc">Pre-draft injury documented → Durability rule applies (Physical × 0.80). Sam Bowie, Greg Oden pattern.</div><div class="tier-anchor">mandatory check</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BASEBALL, SOCCER, TENNIS — abbreviated -->
+<div class="sport-panel" id="sp-bsb">
+  <div style="padding:24px;background:var(--bg1);border:1px solid var(--ge2);border-radius:12px;color:var(--t2);font-size:14px;line-height:1.7">
+    <strong style="color:var(--t)">Baseball benchmarks — expanding.</strong> The calibration corpus for baseball is currently 3 cases deep (Skenes + 2 historical). ICON = top-5 draft pick / ace starter. ELITE+ = Day 1 selection. Pitching and hitting have separate Physical profiles. Full benchmark table ships when corpus reaches 15+ cases.
+  </div>
+</div>
+<div class="sport-panel" id="sp-soc">
+  <div style="padding:24px;background:var(--bg1);border:1px solid var(--ge2);border-radius:12px;color:var(--t2);font-size:14px;line-height:1.7">
+    <strong style="color:var(--t)">Soccer benchmarks — expanding.</strong> Men's and women's soccer pathway is mapped but calibration corpus is limited. MLS / NWSL next = ELITE+ floor. USA national team conversation = ICON floor. Full table ships with corpus expansion.
+  </div>
+</div>
+<div class="sport-panel" id="sp-ten">
+  <div style="padding:24px;background:var(--bg1);border:1px solid var(--ge2);border-radius:12px;color:var(--t2);font-size:14px;line-height:1.7">
+    <strong style="color:var(--t)">Tennis benchmarks — expanding.</strong> ITA Top-10 = ELITE. ATP/WTA Tour regular = ICON. UTR 14+ = high ELITE. Corpus expanding with ITA + UTR data integration. Full position table ships with corpus.
+  </div>
+</div>
+
+<div class="footer">
+  <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ · Position Benchmarks</span>
+  <span><a href="/methodology">Methodology →</a> · <a href="/calibration">Calibration →</a> · <a href="/">Run a verdict →</a></span>
+</div>
+</div>
+
+<script>
+function showSport(id, btn) {
+  document.querySelectorAll('.sport-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sport-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('sp-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

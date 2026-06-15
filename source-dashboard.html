@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FieldCheck IQ · Source Breadth Dashboard</title>
+<style>
+:root{--g:#0a0a0a;--g2:#141414;--t:#f8f4ed;--t2:#bbb;--t3:#888;--t4:#555;--gold:#f5b800;--moss:#6baa5a;--violet:#a37ee0;--red:#e07e7e;--bd:#333}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,system-ui,sans-serif;background:var(--g);color:var(--t);min-height:100vh;padding:24px 16px;font-size:14px}
+.wrap{max-width:1400px;margin:0 auto}
+h1{font-family:'Anton','Inter',sans-serif;font-size:32px;letter-spacing:-.4px;margin-bottom:6px}
+.sub{color:var(--t3);font-size:12px;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:24px}
+.ctrl{background:var(--g2);border:1px solid var(--bd);border-radius:10px;padding:18px;margin-bottom:18px;display:flex;gap:14px;align-items:end;flex-wrap:wrap}
+.fld{flex:1;min-width:140px}
+.fld label{display:block;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-bottom:4px}
+select{background:rgba(0,0,0,.4);border:1px solid var(--bd);border-radius:6px;padding:9px 12px;color:var(--t);font-size:13px;width:100%}
+button{background:var(--gold);color:#111;border:none;padding:11px 22px;font-weight:700;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;border-radius:6px;cursor:pointer}
+button:hover{background:#ffce4d} button:disabled{background:#444;color:#777;cursor:not-allowed}
+.status{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-bottom:14px;min-height:18px;letter-spacing:.5px}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.stat{background:var(--g2);border:1px solid var(--bd);border-radius:8px;padding:14px}
+.stat-l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--t4);margin-bottom:8px}
+.stat-v{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:-.01em;line-height:1;color:var(--t)}
+.stat-d{font-size:10px;color:var(--t3);margin-top:6px}
+.stat.g{border-color:rgba(245,184,0,.3)}.stat.g .stat-l{color:var(--gold)}
+.stat.m{border-color:rgba(107,170,90,.3)}.stat.m .stat-l{color:var(--moss)}
+table{width:100%;border-collapse:collapse;background:var(--g2);border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+th{text-align:left;padding:10px 12px;font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);background:#0a0a0a;border-bottom:1px solid var(--bd);white-space:nowrap}
+td{padding:10px 12px;font-size:12.5px;border-bottom:1px solid #1f1f1f;vertical-align:middle}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;border:1px solid;margin-right:2px}
+.dot-on{background:var(--moss);border-color:var(--moss);box-shadow:0 0 4px rgba(107,170,90,.4)}
+.dot-off{background:rgba(255,255,255,.05);border-color:#333}
+.dot-partial{background:var(--gold);border-color:var(--gold);box-shadow:0 0 4px rgba(245,184,0,.3)}
+.legend{display:flex;gap:24px;margin:14px 0 8px;font-size:11px;color:var(--t3);align-items:center}
+.legend-i{display:flex;align-items:center;gap:6px}
+.tier{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;letter-spacing:.8px;font-family:'JetBrains Mono',monospace;text-transform:uppercase}
+.tier-elite,.tier-greatness{background:rgba(245,184,0,.15);color:var(--gold)}
+.tier-star{background:rgba(107,170,90,.15);color:var(--moss)}
+.tier-prospect,.tier-reasonable{background:rgba(163,126,224,.15);color:var(--violet)}
+.tier-tracked{background:rgba(190,190,190,.1);color:var(--t2)}
+.tier-edge{background:rgba(245,184,0,.25);color:var(--gold)}
+.tier-insuf{background:rgba(224,126,126,.15);color:var(--red)}
+</style></head>
+<body>
+<div class="wrap">
+  <h1>FieldCheck IQ · <span style="color:var(--gold)">Source Dashboard</span></h1>
+  <div class="sub">// per-athlete source-hit metrics · which dossier sources fire across the watchlist</div>
+
+  <div class="ctrl">
+    <div class="fld">
+      <label>Worker</label>
+      <select id="worker">
+        <option value="https://fieldcheck-proxy.sridhar-nallani.workers.dev">PROD</option>
+        <option value="https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev">DEV</option>
+      </select>
+    </div>
+    <div class="fld">
+      <label>Watchlist</label>
+      <select id="wl">
+        <option value="5">5-athlete (canonical MOAT proof)</option>
+        <option value="10">10-athlete (expanded V021.5)</option>
+        <option value="20" selected>20-athlete (V021.7 sweep)</option>
+        <option value="25">25-athlete (5×5 tier matrix)</option>
+      </select>
+    </div>
+    <div class="fld">
+      <label>Concurrency</label>
+      <select id="conc">
+        <option value="1">1 (slowest, safest)</option>
+        <option value="2" selected>2</option>
+        <option value="3">3 (faster, may rate-limit)</option>
+      </select>
+    </div>
+    <button id="go">Run Dashboard</button>
+  </div>
+  <div class="status" id="status">Ready · click "Run Dashboard" to sweep watchlist</div>
+  <div class="summary" id="summary"></div>
+
+  <div class="legend">
+    <div class="legend-i"><span class="dot dot-on"></span>Source produced pages</div>
+    <div class="legend-i"><span class="dot dot-partial"></span>Source tried but no pages</div>
+    <div class="legend-i"><span class="dot dot-off"></span>Source skipped/not applicable</div>
+  </div>
+
+  <table id="tbl">
+    <thead><tr>
+      <th>Tier</th><th>Athlete</th><th>Verdict</th><th>Comp</th><th>School</th>
+      <th>Wiki</th><th>Web</th><th>Conf</th><th>NABC</th><th>StHS</th><th>SR</th><th>News</th><th>Scout</th>
+      <th>Anchors</th>
+    </tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<script>
+const WATCHLISTS = {
+  '5': [
+    ['HS','Cedric Tomes','mens-basketball','East Ridge HS'],
+    ['D3','Tate Ivanyo','mens-basketball','Anderson University'],
+    ['D2','Antwan Kimmons','mens-basketball','Concordia-St. Paul'],
+    ['D2','Jeremy Dent-Smith','mens-basketball','Cal State Dominguez Hills'],
+    ['D1-mid','Donovan Dent','mens-basketball','New Mexico'],
+  ],
+  '10': [
+    ['HS','Cedric Tomes','mens-basketball','East Ridge HS'],
+    ['HS','AJ Dybantsa','mens-basketball','Utah Prep Academy'],
+    ['D3','Tate Ivanyo','mens-basketball','Anderson University'],
+    ['D3','Cole Buchanan','mens-basketball','Williams College'],
+    ['D2','Antwan Kimmons','mens-basketball','Concordia-St. Paul'],
+    ['D2','Jeremy Dent-Smith','mens-basketball','Cal State Dominguez Hills'],
+    ['D1-mid','Donovan Dent','mens-basketball','New Mexico'],
+    ['D1-mid','Drew Pember','mens-basketball','UNC Asheville'],
+    ['D1-P5','Cooper Flagg','mens-basketball','Duke'],
+    ['D1-P5','Caitlin Clark','womens-basketball','Iowa'],
+  ],
+  '20': [
+    ['HS','Cedric Tomes','mens-basketball','East Ridge HS'],
+    ['HS','AJ Dybantsa','mens-basketball','Utah Prep Academy'],
+    ['HS','Cameron Boozer','mens-basketball','Columbus High School'],
+    ['HS','Bryson Tucker','mens-basketball','IMG Academy'],
+    ['D3','Tate Ivanyo','mens-basketball','Anderson University'],
+    ['D3','Cole Buchanan','mens-basketball','Williams College'],
+    ['D3','Cooper Klages','mens-basketball','Hope College'],
+    ['D3','Jaden Akins','mens-basketball','Michigan State'],
+    ['D2','Antwan Kimmons','mens-basketball','Concordia-St. Paul'],
+    ['D2','Jeremy Dent-Smith','mens-basketball','Cal State Dominguez Hills'],
+    ['D2','Cameron Reaves','mens-basketball','West Texas A&M'],
+    ['D2','Jaxson Robinson','mens-basketball','Arkansas-Fort Smith'],
+    ['D1-mid','Donovan Dent','mens-basketball','New Mexico'],
+    ['D1-mid','Drew Pember','mens-basketball','UNC Asheville'],
+    ['D1-mid','RJ Davis','mens-basketball','UNC'],
+    ['D1-mid','Joel Soriano','mens-basketball','St. Johns'],
+    ['D1-P5','Cooper Flagg','mens-basketball','Duke'],
+    ['D1-P5','Caitlin Clark','womens-basketball','Iowa'],
+    ['D1-P5','Bronny James','mens-basketball','USC'],
+    ['D1-P5','Hunter Sallis','mens-basketball','Wake Forest'],
+  ],
+  '25': null, // built dynamically from 20 + 5 extras
+};
+WATCHLISTS['25'] = [...WATCHLISTS['20'],
+  ['HS','Mikey Lewis','mens-basketball','Sierra Canyon'],
+  ['D3','Sam Mitchell','mens-basketball','Carleton College'],
+  ['D2','Cole Strebel','mens-basketball','Truman State'],
+  ['D1-mid','Trayce Jackson-Davis','mens-basketball','Indiana'],
+  ['D1-P5','AJ Dybantsa','mens-basketball','BYU'],
+];
+
+const tierClass = v => {
+  v = (v||'').toLowerCase();
+  if (v.includes('elite')) return 'tier-elite';
+  if (v.includes('greatness')) return 'tier-greatness';
+  if (v.includes('star')) return 'tier-star';
+  if (v.includes('prospect')) return 'tier-prospect';
+  if (v.includes('tracked')) return 'tier-tracked';
+  if (v.includes('edge')) return 'tier-edge';
+  if (v.includes('reasonable')) return 'tier-reasonable';
+  return 'tier-insuf';
+};
+
+const dot = (state) => {
+  if (state === 'on') return '<span class="dot dot-on" title="produced pages"></span>';
+  if (state === 'partial') return '<span class="dot dot-partial" title="tried but no pages"></span>';
+  return '<span class="dot dot-off" title="not applicable"></span>';
+};
+
+async function fetchOne(worker, payload) {
+  const r = await fetch(worker + '/verdict/player', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+  return await r.json();
+}
+
+function srcState(src) {
+  if (!src) return 'off';
+  if (src.ok === true || src.pages_fetched > 0) return 'on';
+  if (src.status === 'not_hs_hint' || src.status === 'sport_not_basketball' || src.status === 'no_school_hint') return 'off';
+  return 'partial';
+}
+
+async function runDashboard() {
+  const worker = document.getElementById('worker').value;
+  const wl = WATCHLISTS[document.getElementById('wl').value];
+  const conc = parseInt(document.getElementById('conc').value);
+  const btn = document.getElementById('go');
+  btn.disabled = true;
+  const status = document.getElementById('status');
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  status.textContent = `⏳ Sweeping ${wl.length} athletes at concurrency ${conc} · ETA ~${Math.ceil(wl.length / conc * 25)}s minimum...`;
+  let stats = {total:wl.length, pass:0, sources: {wiki:0, web:0, conf:0, nabc:0, state_hs:0, sr:0, news:0, scout:0}};
+  const queue = [...wl];
+  const inFlight = new Set();
+  const next = async () => {
+    while (queue.length > 0 && inFlight.size < conc) {
+      const row = queue.shift();
+      const [tier, name, sport, school] = row;
+      const promise = fetchOne(worker, {name, sport, schoolHint: school, skipCache: false}).then(d => {
+        const eg = (d.encyclopedia?.eval_grid)||{};
+        const f = (d.encyclopedia?.facts?.identity)||{};
+        const anchors = d.decision_anchors || [];
+        const verdict = d.verdict || 'ERR';
+        const decisionWorthy = ['ELITE_PATH','STAR_TRAJECTORY','PROSPECT_PATH','TRACKED','GREATNESS_PATH','EDGE_DETECTED','REASONABLE_ADD'].includes(verdict);
+        if (decisionWorthy) stats.pass++;
+        const wiki = srcState(d.sources?.wikipedia ? {ok: !!(d.sources.wikipedia.extract||d.sources.wikipedia.title)} : null);
+        const web = srcState(d.sources?.open_web);
+        const conf = srcState(d.sources?.conference);
+        const nabc = srcState(d.sources?.nabc);
+        const sths = srcState(d.sources?.state_hs);
+        const sr = srcState(d.sources?.sports_reference);
+        const news = srcState(d.recent_news_mentions?.length > 0 ? {ok:true,pages_fetched:1} : null);
+        const scout = srcState(d.sources?.scout_dossier?.meta?.success_count > 0 ? {ok:true,pages_fetched:1} : null);
+        if (wiki==='on') stats.sources.wiki++;
+        if (web==='on') stats.sources.web++;
+        if (conf==='on') stats.sources.conf++;
+        if (nabc==='on') stats.sources.nabc++;
+        if (sths==='on') stats.sources.state_hs++;
+        if (sr==='on') stats.sources.sr++;
+        if (news==='on') stats.sources.news++;
+        if (scout==='on') stats.sources.scout++;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${tier}</td><td><b>${name}</b></td>
+          <td><span class="tier ${tierClass(verdict)}">${verdict}</span></td>
+          <td>${eg.composite??'—'}</td><td>${(f.current_school||'—').slice(0,28)}</td>
+          <td>${dot(wiki)}</td><td>${dot(web)}</td><td>${dot(conf)}</td><td>${dot(nabc)}</td>
+          <td>${dot(sths)}</td><td>${dot(sr)}</td><td>${dot(news)}</td><td>${dot(scout)}</td>
+          <td>${anchors.length}</td>`;
+        tbody.appendChild(tr);
+      }).catch(e => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${tier}</td><td><b>${name}</b></td><td colspan="12" style="color:var(--red)">error: ${String(e).slice(0,80)}</td>`;
+        tbody.appendChild(tr);
+      }).finally(() => {
+        inFlight.delete(promise);
+        const done = wl.length - queue.length - inFlight.size;
+        status.textContent = `⏳ ${done}/${wl.length} resolved · ${queue.length} queued · ${inFlight.size} in flight`;
+        next();
+      });
+      inFlight.add(promise);
+    }
+    if (queue.length === 0 && inFlight.size === 0) {
+      status.textContent = `✓ Sweep complete · ${stats.pass}/${stats.total} PASS · ${new Date().toLocaleTimeString()}`;
+      renderSummary(stats);
+      btn.disabled = false;
+    }
+  };
+  next();
+}
+
+function renderSummary(s) {
+  const sum = document.getElementById('summary');
+  const pct = n => Math.round(n / s.total * 100) + '%';
+  sum.innerHTML = `
+    <div class="stat g"><div class="stat-l">Decision-worthy</div><div class="stat-v">${s.pass}/${s.total}</div><div class="stat-d">${pct(s.pass)}</div></div>
+    <div class="stat"><div class="stat-l">Wikipedia</div><div class="stat-v">${s.sources.wiki}</div><div class="stat-d">${pct(s.sources.wiki)}</div></div>
+    <div class="stat"><div class="stat-l">Open Web</div><div class="stat-v">${s.sources.web}</div><div class="stat-d">${pct(s.sources.web)}</div></div>
+    <div class="stat m"><div class="stat-l">Conference</div><div class="stat-v">${s.sources.conf}</div><div class="stat-d">${pct(s.sources.conf)}</div></div>
+    <div class="stat m"><div class="stat-l">NABC</div><div class="stat-v">${s.sources.nabc}</div><div class="stat-d">${pct(s.sources.nabc)}</div></div>
+    <div class="stat m"><div class="stat-l">State HS</div><div class="stat-v">${s.sources.state_hs}</div><div class="stat-d">${pct(s.sources.state_hs)}</div></div>
+    <div class="stat"><div class="stat-l">Sports Ref</div><div class="stat-v">${s.sources.sr}</div><div class="stat-d">${pct(s.sources.sr)}</div></div>
+    <div class="stat"><div class="stat-l">News</div><div class="stat-v">${s.sources.news}</div><div class="stat-d">${pct(s.sources.news)}</div></div>
+    <div class="stat"><div class="stat-l">Scout Dossier</div><div class="stat-v">${s.sources.scout}</div><div class="stat-d">${pct(s.sources.scout)}</div></div>
+  `;
+}
+
+document.getElementById('go').addEventListener('click', runDashboard);
+</script>
+</body></html>

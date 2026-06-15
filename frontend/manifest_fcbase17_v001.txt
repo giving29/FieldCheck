@@ -1,0 +1,43 @@
+FieldCheck Baseline: FCBase17_V001
+Frozen: 20260524_173704
+Prior baseline: FCBase16_V001.tar.gz (V013 = current PROD as of freeze)
+
+Worker version marker:
+// FIELDCHECK_WORKER_VERSION = V021.22 · sport preflight DDG snippet fallback · when Wikipedia fails (HS recruits, true freshmen w/o Wiki page), DDG-search '{name} football basketball baseball' and score sport keywords across snippet text · gender-refined · handles Hayden Lowe-class athletes from name alone · sha=1e929e4c
+
+Files captured (16):
+  worker.js
+  wrangler.toml
+  _redirects
+  index.html
+  fieldcheck-verdict.html
+  fieldcheck-roadmap.html
+  fieldcheck-gems.html
+  fieldcheck-video-iq.html
+  fieldcheck-versus.html
+  fieldcheck-class.html
+  fieldcheck-features.html
+  fieldcheck-fit.html
+  fieldcheck-field-report.html
+  for-players.html
+  for-coaches.html
+  for-franchises.html
+
+Rollback usage:
+  mkdir -p $HOME/Desktop/fieldcheck-proxy/restore_workspace
+  tar xzf FCBase17_V001.tar.gz -C $HOME/Desktop/fieldcheck-proxy/restore_workspace/
+
+Sprint state at freeze:
+  V020.4 = 5/5 MOAT proof on dev
+    Tate Ivanyo:       ELITE_PATH 7.6 · Anderson University (D3)
+    Antwan Kimmons:    STAR · Concordia-St. Paul · schoolHint_override (D2)
+    Jeremy Dent-Smith: PROSPECT 5.2 · Cal State Dominguez Hills · Stanford REJECTED (D2)
+    Cedric Tomes:      PROSPECT 5.5 · East Ridge (HS)
+    Donovan Dent:      PROSPECT · UCLA · source_anchored_with_proximity (D1-mid)
+
+  All five with correct schools + decision_anchors + provenance
+
+Next sprint (V021.0):
+  D2/D3 conference site fetchers (NSIC, HCAC, CCAA)
+  Lifts source coverage 1-2/9 to 4-5/9 per amateur
+  Reduces composite variance on borderline athletes

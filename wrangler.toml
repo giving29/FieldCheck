@@ -1,0 +1,39 @@
+name = "fieldcheck-proxy"
+main = "worker.js"
+compatibility_date = "2025-09-01"
+
+[[kv_namespaces]]
+binding = "FIELDCHECK_KV"
+id = "02b386ac64534c0c9e18fa37fedc80c3"
+
+[[d1_databases]]
+binding = "FIELDCHECK_DB"
+database_name = "fieldcheck_db"
+database_id = "5e8ff85e-edb0-4866-a9a6-5842be84b04f"
+
+[triggers]
+crons = ["*/30 * * * *", "0 9 * * 1"]
+
+[observability]
+enabled = true
+
+# ─── DEV ENVIRONMENT ────────────────────────────────────────────────
+# Deploy: wrangler deploy --env dev
+# URL:    https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev
+# Shares prod KV + D1 (safe for logic/adapter changes like V018+)
+# No crons — avoids double-triggering the news pulse
+
+[env.dev]
+name = "fieldcheck-proxy-dev"
+
+[env.dev.triggers]
+crons = []
+
+[[env.dev.kv_namespaces]]
+binding = "FIELDCHECK_KV"
+id = "02b386ac64534c0c9e18fa37fedc80c3"
+
+[[env.dev.d1_databases]]
+binding = "FIELDCHECK_DB"
+database_name = "fieldcheck_db"
+database_id = "5e8ff85e-edb0-4866-a9a6-5842be84b04f"

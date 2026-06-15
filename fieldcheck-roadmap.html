@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FieldCheck IQ · Roadmap Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07060A;--bg1:#100F14;--bg2:#181620;
+  --ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);
+  --t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);
+  --gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);
+  --moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.30);
+  --teal:#4EC9C0;--red:#FF5C3A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* ── ATMOSPHERE ── */
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 30% at 50% 0%,rgba(245,184,0,.06) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 100% 100%,rgba(107,170,90,.04) 0%,transparent 60%),
+    linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+
+/* ── HEADER ── */
+.hdr{position:relative;z-index:2;border-bottom:1px solid var(--ge);background:rgba(7,6,10,.86);backdrop-filter:blur(20px)}
+.hdr-i{max-width:1240px;margin:0 auto;padding:22px 28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.brand{font-family:'Anton',sans-serif;font-size:30px;letter-spacing:-.012em}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.hdr-tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);padding:5px 12px;border-radius:9999px;background:var(--mossl);border:1px solid var(--mossd);color:var(--moss)}
+.hdr-meta{flex:1;text-align:right;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);letter-spacing:.5px}
+
+/* ── TABS ── */
+.tabs{position:sticky;top:0;z-index:5;background:rgba(7,6,10,.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--ge)}
+.tabs-i{max-width:1240px;margin:0 auto;padding:0 28px;display:flex;gap:2px;overflow-x:auto}
+.tab{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--t3);padding:18px 22px;cursor:pointer;border:none;background:none;transition:all .18s;white-space:nowrap;border-bottom:2px solid transparent;position:relative}
+.tab:hover{color:var(--t)}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab .num{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);margin-right:6px}
+.tab.active .num{color:rgba(245,184,0,.5)}
+
+/* ── PANE ── */
+.pane{display:none;position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:44px 28px 80px;animation:fadein .25s ease}
+.pane.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+.pane-h{font-family:'Anton',sans-serif;font-size:clamp(38px,4.4vw,58px);letter-spacing:-.014em;line-height:1;margin-bottom:8px}
+.pane-h b{color:var(--gold)}
+.pane-sub{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-bottom:36px}
+
+/* ── SECTIONS ── */
+.sec{margin-bottom:48px}
+.sec-h{font-family:'Anton',sans-serif;font-size:24px;letter-spacing:-.009em;margin-bottom:6px;display:flex;align-items:center;gap:14px}
+.sec-h .pin{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.3px;text-transform:uppercase;color:var(--gold);padding:3px 8px;border-radius:9999px;background:var(--golds);border:1px solid var(--goldl);font-weight:700}
+.sec-desc{font-size:13.5px;color:var(--t3);line-height:1.65;margin-bottom:18px;max-width:780px}
+
+/* ── TENET CARDS ── */
+.tn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.tn{background:rgba(14,13,20,.7);border:1px solid var(--ge);border-radius:14px;padding:20px 22px;transition:all .2s}
+.tn:hover{border-color:var(--goldl);transform:translateY(-2px)}
+.tn-n{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.tn-h{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:-.005em;margin-bottom:10px}
+.tn-b{font-size:13px;color:var(--t2);line-height:1.62}
+.tn-b b{color:var(--t)}
+.tn-b code{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 6px;border-radius:4px}
+.tn.new{border-color:var(--mossd);background:rgba(107,170,90,.04)}
+.tn.new .tn-n{color:var(--moss)}
+
+/* ── PHASE TABLE ── */
+.ph-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.ph-tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);padding:14px 16px;border-bottom:1px solid var(--ge)}
+.ph-tbl td{padding:16px;border-bottom:1px solid var(--ge2);color:var(--t2);vertical-align:top}
+.ph-tbl tr:hover td{background:rgba(255,252,245,.015)}
+.ph-tbl .ph-num{font-family:'JetBrains Mono',monospace;color:var(--gold);font-weight:700;font-size:13.5px;letter-spacing:.4px;width:88px}
+.ph-tbl .ph-name{font-family:'Anton',sans-serif;color:var(--t);font-size:17px;letter-spacing:-.005em;width:280px}
+.ph-tbl .ph-status{width:140px}
+.ph-tbl .ph-detail{font-size:12.5px;color:var(--t3);line-height:1.6}
+.st{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 9px;border-radius:9999px;display:inline-block;white-space:nowrap}
+.st.done{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.st.mix{background:rgba(245,184,0,.10);color:var(--gold);border:1px solid var(--goldl)}
+.st.q{background:rgba(78,201,192,.10);color:var(--teal);border:1px solid rgba(78,201,192,.3)}
+.st.park{background:rgba(245,241,232,.05);color:var(--t3);border:1px solid var(--ge)}
+.st.now{background:var(--gold);color:#07060A;border:1px solid var(--gold);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+/* ── BLOCK CARDS ── */
+.bl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}
+.bl{background:rgba(14,13,20,.7);border:1px solid var(--ge);border-radius:14px;padding:22px 24px}
+.bl-tag{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.bl-h{font-family:'Anton',sans-serif;font-size:21px;letter-spacing:-.009em;margin-bottom:10px}
+.bl-b{font-size:12.5px;color:var(--t2);line-height:1.65;margin-bottom:10px}
+.bl-spec{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);background:rgba(0,0,0,.3);padding:10px 12px;border-radius:8px;line-height:1.65;border-left:2px solid var(--moss)}
+
+/* ── SPRINT TIMELINE ── */
+.tl{position:relative;padding-left:24px;border-left:2px solid var(--ge)}
+.tl-i{position:relative;padding:0 0 28px 24px}
+.tl-i::before{content:"";position:absolute;left:-30px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--t3);border:2px solid var(--bg)}
+.tl-i.now::before{background:var(--gold);box-shadow:0 0 0 4px rgba(245,184,0,.15);animation:pulse 1.8s infinite}
+.tl-i.done::before{background:var(--moss)}
+.tl-i.park::before{background:var(--t4)}
+.tl-d{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--t4);margin-bottom:4px}
+.tl-h{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:-.009em;margin-bottom:6px}
+.tl-b{font-size:12.5px;color:var(--t2);line-height:1.65}
+.tl-b code{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px}
+
+/* ── DELTA CALLOUT ── */
+.dlt{background:linear-gradient(135deg,rgba(245,184,0,.06),rgba(7,6,10,.6));border:1px solid var(--goldl);border-radius:14px;padding:24px 26px;margin-bottom:32px}
+.dlt-l{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.dlt-l .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 1.8s infinite}
+.dlt-h{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:-.009em;margin-bottom:8px}
+.dlt-stat{display:flex;gap:24px;margin-top:14px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--ge)}
+.dlt-stat-i{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3)}
+.dlt-stat-i b{font-family:'Anton',sans-serif;color:var(--t);font-size:24px;letter-spacing:-.009em;display:block;line-height:1.05;margin-bottom:2px}
+.dlt-stat-i .pos{color:var(--moss)}
+.dlt-stat-i .neg{color:var(--red)}
+
+/* ── DOCTRINE CALLOUT ── */
+.doc{padding:22px 26px;background:rgba(7,6,10,.5);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;margin-bottom:18px}
+.doc-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--t);line-height:1.5;margin-bottom:8px}
+.doc-a{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--t4)}
+
+/* ── FOOTER ── */
+.ftr{margin-top:60px;padding:32px 28px;background:rgba(7,6,10,.7);border-top:1px solid var(--ge);text-align:center}
+.ftr-l{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t4);margin-bottom:8px}
+.ftr-b{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--t2)}
+
+@media(max-width:720px){
+  .pane-h{font-size:32px}
+  .ph-tbl thead{display:none}
+  .ph-tbl,.ph-tbl tbody,.ph-tbl tr,.ph-tbl td{display:block;width:100%}
+  .ph-tbl td{padding:8px 0;border:none}
+  .ph-tbl tr{padding:18px 0;border-bottom:1px solid var(--ge)}
+  .ph-tbl .ph-num{display:inline-block;margin-right:14px}
+  .ph-tbl .ph-name{display:inline-block;width:auto}
+  .hdr-meta{text-align:left;width:100%}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-fx"></div>
+
+<header class="hdr">
+  <div class="hdr-i">
+    <div class="brand">Field<b>Check</b><span class="iq">IQ</span></div>
+    <div class="hdr-tag">Roadmap Hub · Internal</div>
+    <div class="hdr-meta">Last published: Jun 5, 2026 · Baseline: FCBase19_LAUNCH (prod) · V022.36 / canonical V5.35</div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-i">
+    <button class="tab active" data-pane="state"><span class="num">01</span>Current State</button>
+    <button class="tab" data-pane="phases"><span class="num">02</span>Roadmap V3 · Phases</button>
+    <button class="tab" data-pane="blocks"><span class="num">03</span>Block Specs</button>
+    <button class="tab" data-pane="playbook"><span class="num">04</span>Release Playbook</button>
+    <button class="tab" data-pane="tenets"><span class="num">05</span>Tenets</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PANE 1: CURRENT STATE                                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="pane active" id="pane-state">
+
+  <div class="pane-h">Current <b>State</b></div>
+  <div class="pane-sub">// What just shipped · what's queued · what's parked</div>
+
+  <div class="dlt" style="border:2px solid var(--moss);background:linear-gradient(135deg,var(--mossl),rgba(7,6,10,.6))">
+    <div class="dlt-l" style="color:var(--moss)"><span class="dot" style="background:var(--moss)"></span>Just shipped to PROD · Jun 4, 2026</div>
+    <div class="dlt-h" style="color:var(--moss)">FCBase19_LAUNCH · externally pitchable · the deck is live</div>
+    <div class="bl-b"><b>FCBase19_LAUNCH on PROD:</b> First baseline that's externally pitchable. <code style="font-family:'JetBrains Mono',monospace;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px">/deck</code> live with 5 Principles Charter, ESPN/Bloomberg HORIZON vision block, PRIME TIME 2027 gold banner, and 12-month wedge-to-default framing. Netlify Forms contact modal wired (form 6a21c98bafa5eb0008e1f8c3). Routes shipping: <code style="font-family:'JetBrains Mono',monospace;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px">/deck</code> &middot; <code style="font-family:'JetBrains Mono',monospace;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px">/pitch</code> &middot; <code style="font-family:'JetBrains Mono',monospace;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px">/voices</code> &middot; <code style="font-family:'JetBrains Mono',monospace;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px">/shape</code> &middot; <code style="font-family:'JetBrains Mono',monospace;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px">/drop</code>. <b>First cold reply LANDED:</b> Kevin Wong (LOVB co-founder &middot; Olympic medalist &middot; Emmy NBC broadcaster) responded positively. <b>Outreach loaded:</b> Sam Vecenie (The Athletic), Vasu Kulkarni (Courtside), Rohn Malhotra (Match Berlin), Arthur Bernard (Athletico Paris) — all sent Jun 4&ndash;5. Baseline <code style="font-family:'JetBrains Mono',monospace;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px">FCBase19_LAUNCH</code> frozen.<br><br><b>Next &mdash; Amateur-Precision Track + curated News/Video for verdict pages</b> (Phase 5 + 4.5-Bonus). A1&ndash;A3 amateur calibration continues. Curated <code style="font-family:'JetBrains Mono',monospace;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px">curated_videos[]</code> + <code style="font-family:'JetBrains Mono',monospace;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px">curated_news[]</code> schema added to PLAYER_PROFILES so the News &amp; Video tab on every verdict page renders consistent quality, not luck-of-the-fetch. <i>(Canonical FC_CANONICAL_STATE_V1.html remains the full state-of-record; this hub is the strategic-altitude view.)</i></div>
+  </div>
+
+  <div class="dlt">
+    <div class="dlt-l"><span class="dot"></span>Just shipped to DEV</div>
+    <div class="dlt-h">Curated News &amp; Video schema · 4 marquee profiles verified · Jun 5, 2026</div>
+    <div class="bl-b">Worker patch + data merge in flight. Schema additions: <code style="font-family:'JetBrains Mono',monospace;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px">curated_videos[]</code> + <code style="font-family:'JetBrains Mono',monospace;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px">curated_news[]</code> arrays on PLAYER_PROFILES entries. Worker reads these in mergedVideos / recentNewsMentions assembly with dedupe-by-URL. Tier 1 fully verified via web search: AJ Dybantsa, Cameron Boozer, Cooper Flagg, Caitlin Clark (14 video URLs, 17 news items). Tier 2 (remaining 266 profiles) fall back to existing dynamic YouTube search + Google News + Wikipedia / school-roster link grid in verdict.html — no empty states. <i>Dev verify in progress; prod promotion is Sridhar's decision on Sridhar's clock.</i></div>
+    <div class="dlt-stat">
+      <div class="dlt-stat-i"><b>4</b>marquee profiles curated</div>
+      <div class="dlt-stat-i"><b>14</b>verified video URLs</div>
+      <div class="dlt-stat-i"><b>17</b>news items</div>
+      <div class="dlt-stat-i"><b>+13.6 KB</b>worker delta</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-h">Sprint Timeline <span class="pin">FC16</span></div>
+    <div class="tl">
+
+      <div class="tl-i now">
+        <div class="tl-d">May 18, 2026 · DEV LIVE · awaiting prod decision</div>
+        <div class="tl-h">FC16.S13 Phase A · Homepage declutter</div>
+        <div class="tl-b">3 surgical removals shipped to dev. Prod promotion is Sridhar's decision on Sridhar's clock — no proactive deploy-prod prompts from Claude.</div>
+      </div>
+
+      <div class="tl-i">
+        <div class="tl-d">Queued · awaiting variant pick</div>
+        <div class="tl-h">FC16.S13 Phase B · Draft bar → Pulse pill</div>
+        <div class="tl-b">Prototype shipped: <code>fc16-s13-pulse-pill-prototype.html</code> with 3 variants — A (centered) · B (top-right corner) · C (inline-in-nav). Tenet 17 prototype-first complete; integration blocked on Sridhar's pick.</div>
+      </div>
+
+      <div class="tl-i park">
+        <div class="tl-d">Parked · downstream of index.html</div>
+        <div class="tl-h">FC16.S13 Phase C · Programs door freeze</div>
+        <div class="tl-b">Root cause is NOT in <code>index.html</code> — the Programs door is a plain anchor (<code>&lt;a href="/coaches"&gt;</code>) with zero JS handler. Freeze lives downstream: <code>_redirects</code> config, <code>/coaches</code> route, or SPA catch-all re-running heavy init. Needs dedicated debug session with <code>_redirects</code> + DevTools console/network capture.</div>
+      </div>
+
+      <div class="tl-i park">
+        <div class="tl-d">Parked · dedicated research session needed</div>
+        <div class="tl-h">FC16.S12 · Real amateur photos for 15 cinematic players</div>
+        <div class="tl-b">Wikimedia Commons rarely has true amateur-era photos for pro athletes (NCAA/HS imagery is mostly AP/Getty/school-photographer copyrighted). Research grind for 15 players is hour+ with low yield. Belongs in a focused photo-hunt session.</div>
+      </div>
+
+      <div class="tl-i">
+        <div class="tl-d">Next up · pre-spec'd · Phase 5 backend</div>
+        <div class="tl-h">Block 10 · YouTube Discovery Crawler</div>
+        <div class="tl-b">Biggest IP unlock per memory. Architecture pre-spec'd: YouTube Data API v3 → views&lt;50K + recent 90d filter → Claude Haiku classify → existing <code>/api/video-iq</code> scoring → gate composite&gt;7.5 → KV → Slack → manual approve → publish to <code>/hidden-gems</code>. Cost &lt;$20/mo for 30K videos. Cron 6h. Worker code to be written next.</div>
+      </div>
+
+      <div class="tl-i">
+        <div class="tl-d">Queued</div>
+        <div class="tl-h">FC16.S14 · Mobile responsiveness audit</div>
+        <div class="tl-b">Cinema stage scaling, divergence panel, hero MOAT row, touch targets. Test iOS Safari + Chrome Android. Must-do before any production traffic push.</div>
+      </div>
+
+      <div class="tl-i done">
+        <div class="tl-d">May 18, 2026 · 8:14 PM PT</div>
+        <div class="tl-h">Freeze locked · FCBase16_V001_20260518_2014</div>
+        <div class="tl-b">Pre-S13 baseline freeze. Tier 1 rollback target. Prod state at time of freeze remains the canonical safe state.</div>
+      </div>
+
+      <div class="tl-i done">
+        <div class="tl-d">May 17, 2026</div>
+        <div class="tl-h">FCBase17_V001 · Tier 1 baseline</div>
+        <div class="tl-b">Sub-tabs + label fixes + polygon sizing. Verdict file 342,696 bytes. FCBase16_V001 (May 15) demoted to Tier 2 rollback.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-h">Backlog · Polygon &amp; Verdict Rework <span class="pin">Phase 4.x</span></div>
+    <div class="bl-grid">
+      <div class="bl">
+        <div class="bl-tag">Bug · reported May 18 on dev verify</div>
+        <div class="bl-h">Mahomes Player search broken</div>
+        <div class="bl-b">Some things in Player search for Mahomes aren't working. Fold into next polygon rework cycle, not a standalone fix.</div>
+      </div>
+      <div class="bl">
+        <div class="bl-tag">Tenet · Player Thesis Moat</div>
+        <div class="bl-h">Continuous learning loop</div>
+        <div class="bl-b">PhD team + case studies + draft outcomes + contract signings + on-field events form an infinite continuous learning loop refining the algorithm daily. Refinement is never "complete" — it IS the engine. Runs as parallel track alongside execution work.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-h">Documentation TODOs <span class="pin">EOD pending</span></div>
+    <ul style="list-style:none;padding-left:0">
+      <li style="padding:12px 16px;background:rgba(14,13,20,.5);border-radius:10px;margin-bottom:10px;border-left:2px solid var(--gold);font-size:13.5px;color:var(--t2);line-height:1.65">
+        <b style="color:var(--t)">Paid Infra &amp; Scale Opportunities</b> — first line: YouTube Data API v3 at $20/mo. Brainstorm rest: ML model API costs, vector DBs, scale tiers, data sources (Hudl, On3 Pro, Synergy), monitoring, CDN. Goes in this hub, Phase 5/6 area.
+      </li>
+      <li style="padding:12px 16px;background:rgba(14,13,20,.5);border-radius:10px;margin-bottom:10px;border-left:2px solid var(--gold);font-size:13.5px;color:var(--t2);line-height:1.65">
+        <b style="color:var(--t)">Hudl.com exhaustive site review</b> — structured pass on messaging clarity, font choices, animation timing, layout density. Lift what fits FieldCheck's aesthetic. Add as Phase 6 sub-task.
+      </li>
+      <li style="padding:12px 16px;background:rgba(14,13,20,.5);border-radius:10px;margin-bottom:10px;border-left:2px solid var(--gold);font-size:13.5px;color:var(--t2);line-height:1.65">
+        <b style="color:var(--t)">New dedicated FieldCheck Mac migration playbook</b> — capture environment setup, deploy scripts, credentials handoff, file inventory.
+      </li>
+    </ul>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PANE 2: ROADMAP V3 · PHASES                                   -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="pane" id="pane-phases">
+
+  <div class="pane-h">Roadmap <b>V3</b></div>
+  <div class="pane-sub">// 15 phases · canonical · single source of truth</div>
+
+  <div class="doc">
+    <div class="doc-q">"Build methodically phase-by-phase. Surgical. No jumping ahead. Video Intelligence is intentionally far — don't skip."</div>
+    <div class="doc-a">— Operating doctrine, ROADMAP_V3.md</div>
+  </div>
+
+  <table class="ph-tbl">
+    <thead>
+      <tr>
+        <th>Phase</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Detail</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="ph-num">0 – 4.6</td><td class="ph-name">Foundation</td><td class="ph-status"><span class="st done">Complete</span></td><td class="ph-detail">Five-layer verdict model, polygon, 16 voices, search, hero, 4-doors, footer, dev/prod infra, _redirects, worker proxy, KV/D1 bindings.</td></tr>
+      <tr><td class="ph-num">4.5-Bonus</td><td class="ph-name">Verdict Moat Expansion</td><td class="ph-status"><span class="st done">On verdict page</span></td><td class="ph-detail">Pre-Consensus Read · Pedigree · Coach Voices · Coach Culture · Hidden Gem section · 16 Voices Deep Dive · Eval Grid TOC · Position Pool Heatmap · Watch List Triggers · Career Calendar · Snapshot Card · Voice Cluster · Outcome Ledger · NIL Stress Test. <b style="color:var(--t)">Bonus blocks · do NOT consume canonical slots.</b></td></tr>
+      <tr><td class="ph-num">5</td><td class="ph-name">Crawler / Video IQ</td><td class="ph-status"><span class="st mix">FE ✅ · BE pending</span></td><td class="ph-detail">Frontend ready (Hidden Gems / Video IQ section). Backend = Block 10 crawler — biggest IP unlock. Architecture pre-spec'd. <span style="color:var(--gold)">Next up.</span></td></tr>
+      <tr><td class="ph-num">6</td><td class="ph-name">Trust &amp; Coverage</td><td class="ph-status"><span class="st mix">Mixed</span></td><td class="ph-detail">Block 13 ✅ · Block 14 nav redesign pre-decided (see Block Specs tab) · Block 15 content gaps · Block 16 sport parity (8 sports). Hudl site review goes here as Phase 6 sub-task.</td></tr>
+      <tr><td class="ph-num">7 – 8</td><td class="ph-name">Backend Expansion</td><td class="ph-status"><span class="st q">Queued</span></td><td class="ph-detail">Auth + Pro/Edge tier gating, billing (Stripe), KV/D1 scale, API rate limits.</td></tr>
+      <tr><td class="ph-num">9</td><td class="ph-name">Pricing Activation</td><td class="ph-status"><span class="st q">Queued</span></td><td class="ph-detail">$29 Pro / $99 Edge live. Free permanent. Walk-away default. Six constraints unchanged.</td></tr>
+      <tr><td class="ph-num">10</td><td class="ph-name">Club / Franchise Tier</td><td class="ph-status"><span class="st q">Queued</span></td><td class="ph-detail">Club = amateur orgs (HS programs, AAU). Franchise = Warriors, Lakers, Knicks. Same 5-layer model, franchise-level rollups.</td></tr>
+      <tr><td class="ph-num">11</td><td class="ph-name">Mobile Native</td><td class="ph-status"><span class="st q">Queued</span></td><td class="ph-detail">iOS + Android. PWA route as bridge. Touch-first verdict experience.</td></tr>
+      <tr><td class="ph-num">12</td><td class="ph-name">International / Soccer</td><td class="ph-status"><span class="st q">Queued</span></td><td class="ph-detail">Football (soccer) data ingestion, La Liga / Premier League / MLS coverage, multilingual hero.</td></tr>
+      <tr><td class="ph-num">13</td><td class="ph-name">AI Agent Layer</td><td class="ph-status"><span class="st q">Queued</span></td><td class="ph-detail">Conversational verdict interface. "Ask FieldCheck IQ anything about any athlete." Tool use over the verdict moat.</td></tr>
+      <tr><td class="ph-num">14</td><td class="ph-name">Public API</td><td class="ph-status"><span class="st q">Queued</span></td><td class="ph-detail">FieldCheck IQ as developer platform. Outcome-based pricing, rate-limited free tier.</td></tr>
+      <tr><td class="ph-num">15</td><td class="ph-name">Industry Partnerships</td><td class="ph-status"><span class="st q">Queued</span></td><td class="ph-detail">Front offices, agencies, programs. White-label option. Data licensing.</td></tr>
+    </tbody>
+  </table>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PANE 3: BLOCK SPECS                                            -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="pane" id="pane-blocks">
+
+  <div class="pane-h">Block <b>Specs</b></div>
+  <div class="pane-sub">// Pre-decided architectures · ready to execute when greenlit</div>
+
+  <div class="sec">
+    <div class="sec-h">Block 10 · YouTube Discovery Crawler <span class="pin">Phase 5 · Next up</span></div>
+    <div class="sec-desc">Biggest IP unlock in the roadmap. Frontend section already exists on <code style="font-family:'JetBrains Mono',monospace;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px">/hidden-gems</code>. Backend is the missing half. Pipeline pre-spec'd May 16, ready to write worker code.</div>
+
+    <div class="bl-grid">
+      <div class="bl">
+        <div class="bl-tag">Data In</div>
+        <div class="bl-h">Source &amp; Filter</div>
+        <div class="bl-b"><b>YouTube Data API v3</b> · search.list endpoint · query by sport/position keywords. Filter at fetch time: views &lt; 50K, published in last 90 days, duration 30s–10min.</div>
+        <div class="bl-spec">budget: 30,000 videos/month<br>cost: &lt;$20/mo<br>cron: every 6h via Cloudflare Workers Cron Triggers</div>
+      </div>
+      <div class="bl">
+        <div class="bl-tag">Classify</div>
+        <div class="bl-h">Identify the athlete</div>
+        <div class="bl-b">Claude <b>Haiku</b> classifies each result: player name, sport, school, position, level (HS / college / pro). Cheap, fast, structured JSON output.</div>
+        <div class="bl-spec">model: claude-haiku-4-5-20251001<br>output: {player, sport, school, position, level, confidence}</div>
+      </div>
+      <div class="bl">
+        <div class="bl-tag">Score</div>
+        <div class="bl-h">Run the verdict</div>
+        <div class="bl-b">Pipe classified candidates into the existing <code>/api/video-iq</code> scoring endpoint. Returns composite (5-layer model). Gate at composite &gt; 7.5.</div>
+        <div class="bl-spec">endpoint: /api/video-iq<br>gate: composite &gt; 7.5<br>fall-back: drop silently, no notification</div>
+      </div>
+      <div class="bl">
+        <div class="bl-tag">Persist &amp; Notify</div>
+        <div class="bl-h">KV → Slack → Manual approve</div>
+        <div class="bl-b">Persist gate-passers to KV as <code>discoveries:pending:&#123;id&#125;</code>. Fire Slack webhook to Sridhar with candidate card. Sridhar approves manually.</div>
+        <div class="bl-spec">kv: FIELDCHECK_KV<br>key: discoveries:pending:{id}<br>webhook: Slack incoming-webhook<br>ttl: 30 days pending → auto-expire</div>
+      </div>
+      <div class="bl">
+        <div class="bl-tag">Publish</div>
+        <div class="bl-h">Go-live on /hidden-gems</div>
+        <div class="bl-b">On approve: move from <code>discoveries:pending</code> to <code>discoveries:published</code>. Frontend <code>/hidden-gems</code> reads from published bucket and renders. Block 14.9.1 image resilience handles missing/broken thumbnails.</div>
+        <div class="bl-spec">published key: discoveries:published:{id}<br>frontend: /hidden-gems (already wired)<br>image: thumbnail or initials fallback</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-h">Block 14 · Nav Redesign <span class="pin">Phase 6 · Pre-decided</span></div>
+    <div class="sec-desc">Decisions locked. Awaiting integration sprint.</div>
+    <div class="bl-grid">
+      <div class="bl">
+        <div class="bl-tag">Naming &amp; Hierarchy</div>
+        <div class="bl-h">VERDICT as primary noun</div>
+        <div class="bl-b">"Player" → "Verdict". Programs / Franchise / Club merge into a single PROGRAMS bucket. Trust moves to footer + secondary "How it works" slot. <code>/voices</code> wins (merge <code>/voice</code>).</div>
+      </div>
+      <div class="bl">
+        <div class="bl-tag">Final top nav</div>
+        <div class="bl-h">5 items + search</div>
+        <div class="bl-b" style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.4px"><b style="color:var(--gold)">VERDICT</b> · <b style="color:var(--moss)">PROGRAMS</b> · <b style="color:var(--gold)">DRAFT</b> · <b style="color:var(--teal)">DISCOVER</b> · How-it-works · 🔍</div>
+      </div>
+      <div class="bl">
+        <div class="bl-tag">Search behavior</div>
+        <div class="bl-h">Desktop vs mobile</div>
+        <div class="bl-b">Desktop: always-visible search field in nav. Mobile: CMD+K modal (keyboard) / search icon → full-screen modal (touch). Hamburger on mobile for the rest.</div>
+      </div>
+      <div class="bl">
+        <div class="bl-tag">Bucket: DISCOVER</div>
+        <div class="bl-h">Video IQ + /add-me both live here</div>
+        <div class="bl-b">Discover is the umbrella for community-driven and crawler-driven discovery. Hidden Gems (Block 10 output) lives here. <code>/add-me</code> link for athletes to submit themselves.</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PANE 4: RELEASE PLAYBOOK                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="pane" id="pane-playbook">
+
+  <div class="pane-h">Release <b>Playbook</b></div>
+  <div class="pane-sub">// Never-lose doctrine · ship discipline</div>
+
+  <div class="doc">
+    <div class="doc-q">"Memory is forever. Chat is ephemeral. Doctrine is what carries between sessions."</div>
+    <div class="doc-a">— Never-lose doctrine, rule 9</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-h">Never-Lose Doctrine <span class="pin">10 rules</span></div>
+    <div class="tn-grid">
+      <div class="tn"><div class="tn-n">Rule 01</div><div class="tn-h">Freeze before risk</div><div class="tn-b">Run <code>fc-freeze.sh</code> BEFORE any risky work. Tarball is the rollback insurance.</div></div>
+      <div class="tn"><div class="tn-n">Rule 02</div><div class="tn-h">Dev → Verify → Prod</div><div class="tn-b">Always. Never skip. <b>Promotion is Sridhar's decision on Sridhar's clock.</b> Claude never proactively suggests <code>./deploy-prod.sh</code>.</div></div>
+      <div class="tn"><div class="tn-n">Rule 03</div><div class="tn-h">JS-validate after every patch</div><div class="tn-b">Syntax check before deploy. <code>node --check</code> or equivalent on every modified script.</div></div>
+      <div class="tn"><div class="tn-n">Rule 04</div><div class="tn-h">Patch guards</div><div class="tn-b">Before applying a patch, check if it's already applied. Idempotent or skip.</div></div>
+      <div class="tn"><div class="tn-n">Rule 05</div><div class="tn-h">Audit before assuming</div><div class="tn-b">Read the actual current state of the file/route/endpoint. Don't assume memory matches reality.</div></div>
+      <div class="tn"><div class="tn-n">Rule 06</div><div class="tn-h">Surgical str_replace</div><div class="tn-b">Never rewrite a whole file when one block needs to change. <code>str_replace</code> the minimum, leave the rest untouched.</div></div>
+      <div class="tn"><div class="tn-n">Rule 07</div><div class="tn-h">Doc FIRST, then execute</div><div class="tn-b">Update the canonical doc / hub BEFORE patching code. Strategy → tactics, never tactics chasing strategy.</div></div>
+      <div class="tn"><div class="tn-n">Rule 08</div><div class="tn-h">Bonus blocks tagged</div><div class="tn-b">Phase 4.5-Bonus moat blocks ship as features. They do NOT consume canonical block slots.</div></div>
+      <div class="tn"><div class="tn-n">Rule 09</div><div class="tn-h">Memory = forever, chat = ephemeral</div><div class="tn-b">If it matters across sessions, it goes in memory. If it's a working draft, chat is fine.</div></div>
+      <div class="tn"><div class="tn-n">Rule 10</div><div class="tn-h">Claude counsels proactively</div><div class="tn-b">Claude flags tenet conflicts, missing pre-flight items, and risks <em>before</em> Sridhar has to ask.</div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-h">Release Numbering</div>
+    <div class="bl-grid">
+      <div class="bl">
+        <div class="bl-tag">Baseline (frozen good)</div>
+        <div class="bl-h">FCBase{N}_V{nnn}</div>
+        <div class="bl-b">Rollback target. Current: <code>FCBase16_V001_20260518_2014</code> (prod). Tier 1: <code>FCBase17_V001</code> (May 17). Tier 2: <code>FCBase16_V001</code> (May 15).</div>
+      </div>
+      <div class="bl">
+        <div class="bl-tag">Sprint (incremental)</div>
+        <div class="bl-h">FC{N}.S{n}</div>
+        <div class="bl-b">Between baselines. Sprint counter resets when a new baseline freezes. Promote to new baseline after 3–5 clean ships.</div>
+      </div>
+      <div class="bl">
+        <div class="bl-tag">Canonical work item</div>
+        <div class="bl-h">Block X.Y.Z</div>
+        <div class="bl-b">Maps to a numbered item in ROADMAP_V3. Every shipped sprint references the Block(s) it advances.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-h">Pre-flight Checklist <span class="pin">Claude runs proactively</span></div>
+    <div class="bl-grid">
+      <div class="bl">
+        <div class="bl-tag">Before patch</div>
+        <div class="bl-h">5 questions</div>
+        <div class="bl-b">Doc updated? · Guard-protected? · Audited (Tenet 15)? · Risky → freeze first? · JS validated?</div>
+      </div>
+      <div class="bl">
+        <div class="bl-tag">Before deploy</div>
+        <div class="bl-h">5 questions</div>
+        <div class="bl-b">Sprint# assigned? · Test cases written? · <code>deploy-dev.sh</code> first? · Dev verified visually? · Memory current?</div>
+      </div>
+      <div class="bl">
+        <div class="bl-tag">After prod</div>
+        <div class="bl-h">3 questions</div>
+        <div class="bl-b">Roadmap marked ✅? · At 3–5 sprints → freeze new baseline? · New lessons → update playbook + tenets?</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PANE 5: TENETS                                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="pane" id="pane-tenets">
+
+  <div class="pane-h">Tenets <b>11 – 18</b></div>
+  <div class="pane-sub">// Codified lessons · added per session · binding</div>
+
+  <div class="doc">
+    <div class="doc-q">"Each tenet was paid for in burned sprints. Re-read before every session."</div>
+    <div class="doc-a">— Operating principle</div>
+  </div>
+
+  <div class="tn-grid">
+
+    <div class="tn">
+      <div class="tn-n">Tenet 11 · Downloads hygiene</div>
+      <div class="tn-h">Clean ~/Downloads after every cp</div>
+      <div class="tn-b">After every sprint, delete session HTML/patch files from <code>~/Downloads</code> after <code>cp</code> into <code>~/Desktop/fieldcheck-proxy/</code>. Keep baseline tarballs (<code>FCBase*_*.tar.gz</code>) — never delete. Prevents wrong-version drift.</div>
+    </div>
+
+    <div class="tn">
+      <div class="tn-n">Tenet 12 · Pre-deploy size check</div>
+      <div class="tn-h">ls -la + grep before deploy-dev</div>
+      <div class="tn-b">Before <code>deploy-dev.sh</code>: <code>ls -la</code> to confirm size matches expected sprint output. Grep for a known sprint feature. Mismatch = STOP, re-download. <code>cp</code> can succeed silently with the wrong source file.</div>
+    </div>
+
+    <div class="tn">
+      <div class="tn-n">Tenet 15 · Audit before patching</div>
+      <div class="tn-h">Grep selectors &amp; function names</div>
+      <div class="tn-b">Verify CSS classes and function names against actual render code BEFORE patching. Before targeting <code>.foo</code>, grep <code>class="foo"</code>. Before patching <code>barFn()</code>, grep its call sites. Codified after 4 burned sprints on <code>.tl-stage</code> (never existed) and <code>buildMiniRadar</code> (actual fn is <code>biggerMiniRadar</code>).</div>
+    </div>
+
+    <div class="tn new">
+      <div class="tn-n">Tenet 15.1 · Satellite-class sweep <span style="color:var(--moss);font-weight:700">NEW</span></div>
+      <div class="tn-h">List ALL classes, not just the wrapper</div>
+      <div class="tn-b">When removing a themed block, list every class used by that block's HTML and grep each. Ticker used <code>.ticker</code> AND <code>.ti</code> / <code>.ti b</code> / <code>.ti .g</code> / <code>.ti .m</code> / <code>.ti .c</code>. Searching only "ticker" missed all of them on first pass — caught on retry. Always grep: wrapper class · child classes · utility classes · keyframes referenced.</div>
+    </div>
+
+    <div class="tn">
+      <div class="tn-n">Tenet 16 · Doc rebuild after freeze</div>
+      <div class="tn-h">Update 3 MDs + rebuild HTML hub</div>
+      <div class="tn-b">Update all 3 markdown files (RELEASE_PLAYBOOK, ROADMAP_V3, GAME_PLAN) AND rebuild <code>fieldcheck-roadmap.html</code> after every baseline freeze. Announce per-doc changes in chat so Sridhar knows when to review the live URL.</div>
+    </div>
+
+    <div class="tn">
+      <div class="tn-n">Tenet 17 · Prototype before integrate</div>
+      <div class="tn-h">Standalone HTML for UX changes</div>
+      <div class="tn-b">For UX/CX changes — especially anything with animation, layout, or visual flow — build a standalone prototype HTML FIRST. Sridhar previews, picks, then integrate into the real page. Avoids deploying changes that don't visually match intent. FC16.S1–S5 cycle would have been 1–2 sprints instead of 5 with this rule.</div>
+    </div>
+
+    <div class="tn new">
+      <div class="tn-n">Tenet 18 · Click-freeze diagnosis hierarchy <span style="color:var(--moss);font-weight:700">NEW</span></div>
+      <div class="tn-h">Don't chase a freeze in the wrong file</div>
+      <div class="tn-b">Before debugging a click-freeze in the calling file, check the element for a JS handler. Plain anchor with no <code>onclick</code> = freeze lives downstream. Diagnose in this order: (1) handler exists → debug here · (2) plain anchor → check <code>_redirects</code> for that route · (3) route resolves to a file → debug that file's init · (4) SPA fallback (<code>/* /index.html 200</code>) → re-running homepage init may be the freeze itself.</div>
+    </div>
+
+    <div class="tn">
+      <div class="tn-n">Tenet · HTML-first output</div>
+      <div class="tn-h">Sridhar reads HTML, not MD</div>
+      <div class="tn-b">All roadmap / strategy / progress / changes updates go into existing HTML files — <code>fieldcheck-roadmap.html</code> for canonical hub, <code>PLAYER_THESIS_V1_6_HUB.html</code> for player thesis. Do NOT create new MD docs for content that belongs in existing HTML. Always present file after HTML update.</div>
+    </div>
+
+    <div class="tn">
+      <div class="tn-n">Tenet · Player Thesis Moat</div>
+      <div class="tn-h">Continuous learning loop</div>
+      <div class="tn-b">Moat = everyone trusting our player score. PhD team + case studies + draft outcomes + contract signings + on-field events form an infinite continuous learning loop refining the algorithm daily. Refinement is never "complete" — it IS the engine. Runs as parallel track alongside execution work. Never push Sridhar out of this loop.</div>
+    </div>
+
+    <div class="tn">
+      <div class="tn-n">Tenet · Jobs Doctrine</div>
+      <div class="tn-h">Einstein inside · Apple outside</div>
+      <div class="tn-b"><b>Two layers.</b> INSIDE = Einstein-grade depth (verdict moat, polygon, 16 voices — never simplify substance). OUTSIDE = Apple-simple UX (a 10-year-old could use it untaught). Four GOLD principles: (1) one mental model · (2) no dead ends · (3) implementation details invisible until needed · (4) self-healing state. Test: could a 10yo use this? If no, strip a layer.</div>
+    </div>
+
+  </div>
+
+</section>
+
+<footer class="ftr">
+  <div class="ftr-l">FieldCheck IQ · Internal Roadmap Hub · ThinkDifferent Holdings</div>
+  <div class="ftr-b">See the player. Before the world does.</div>
+</footer>
+
+<script>
+const tabs = document.querySelectorAll('.tab');
+const panes = document.querySelectorAll('.pane');
+tabs.forEach(t => {
+  t.addEventListener('click', () => {
+    const target = t.dataset.pane;
+    tabs.forEach(x => x.classList.remove('active'));
+    panes.forEach(p => p.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('pane-' + target).classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+});
+</script>
+
+</body>
+</html>

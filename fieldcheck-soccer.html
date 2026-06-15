@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Soccer · If there's a gap · FieldCheck Sports</title>
+<meta name="description" content="Soccer on the platform — if and when a meaningful gap appears. NWSL ecosystem is already well-served. U.S. youth-to-NWSL focus is the most likely angle.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3890_SPORTS_SOCCER">
+<meta property="og:title" content="Soccer · If there's a gap · FieldCheck Sports">
+<meta property="og:description" content="Soccer scaffold. Only ship if a specific U.S. youth-to-NWSL gap appears.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:0.75}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+.nav-global{position:sticky;top:0;z-index:100;background:rgba(10,9,8,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--line)}
+.nav-global-inner{max-width:1240px;margin:0 auto;padding:0 32px;display:flex;align-items:center;height:60px}
+.nav-global-brand{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--text);font-weight:500;margin-right:auto;text-decoration:none;display:flex;align-items:center;gap:6px}
+.nav-global-brand b{color:var(--gold);font-weight:500}
+.nav-global-brand .sep{color:var(--text-3);margin:0 2px}
+.nav-global-brand .ctx{color:var(--teal)}
+.nav-global-main{display:flex;align-items:center}
+.nav-global-item{position:relative}
+.nav-global-link{display:flex;align-items:center;gap:6px;padding:0 20px;height:60px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-2);background:none;border:0;cursor:pointer;transition:color .2s}
+.nav-global-link:hover,.nav-global-link.open{color:var(--text)}
+.nav-global-caret{font-size:7px;opacity:.6;transition:transform .2s}
+.nav-global-link.open .nav-global-caret{transform:rotate(180deg)}
+.nav-global-cta{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--gold);color:var(--gold);border-radius:2px;margin-left:18px;text-decoration:none;transition:all .2s}
+.nav-global-cta:hover{background:var(--gold);color:var(--bg)}
+.nav-global-mega{position:absolute;top:60px;left:50%;transform:translateX(-50%) translateY(-6px);min-width:440px;background:rgba(16,14,12,.97);backdrop-filter:blur(28px);border:1px solid var(--line);border-radius:6px;padding:24px;opacity:0;pointer-events:none;transition:all .22s;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+.nav-global-item.open .nav-global-mega{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nav-global-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 22px}
+.nav-global-col-head{grid-column:span 2;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.nav-global-mega a{display:flex;flex-direction:column;padding:9px 10px;border-radius:3px;text-decoration:none}
+.nav-global-mega a strong{font-family:'Crimson Pro',serif;font-size:15px;font-weight:500;color:var(--text)}
+.nav-global-mega a span{font-family:'Instrument Serif',serif;font-style:italic;font-size:12.5px;color:var(--text-2);margin-top:1px;line-height:1.3}
+.nav-global-mega a:hover{background:rgba(245,241,232,.06)}
+.nav-global-mega a:hover strong{color:var(--gold)}
+@media(max-width:880px){.nav-global-main,.nav-global-cta{display:none}}
+
+.hero{padding:64px 0 48px;border-bottom:1px solid var(--line)}
+.hero-status{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(212,200,173,0.08);border:1px solid var(--line-2);border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.8px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:18px}
+.hero-status::before{content:'○';color:var(--text-3)}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(48px,8vw,108px);line-height:0.94;letter-spacing:-0.022em;margin-bottom:24px;max-width:1080px}
+.hero h1 .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.hero-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(20px,2.4vw,28px);line-height:1.4;color:var(--text-2);max-width:880px}
+
+.section{padding:56px 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:none}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.section-num .gold{color:var(--gold)}
+.section-h{font-family:'Anton',sans-serif;font-size:clamp(30px,4.2vw,48px);line-height:1.02;letter-spacing:-0.016em;margin-bottom:16px}
+.section-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.section-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;line-height:1.45;color:var(--text-2);max-width:780px;margin-bottom:28px}
+
+.honesty{padding:32px 36px;background:linear-gradient(180deg,rgba(212,74,74,0.04),rgba(20,17,12,0.4));border:1px solid rgba(212,74,74,0.25);border-radius:6px;border-left:3px solid var(--crimson)}
+.honesty-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--crimson);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.honesty-h{font-family:'Anton',sans-serif;font-size:clamp(26px,3.4vw,38px);line-height:1.05;margin-bottom:14px}
+.honesty-h .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.honesty-body{font-family:'Crimson Pro',serif;font-size:16px;line-height:1.65;color:var(--text-2);max-width:780px}
+.honesty-body b{color:var(--text)}
+.honesty-body em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+
+.eco-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.eco-cell{padding:22px 24px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.eco-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.eco-name{font-family:'Anton',sans-serif;font-size:20px;line-height:1.05;letter-spacing:-0.008em;color:var(--text)}
+.eco-detail{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2)}
+.eco-detail b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:14px}
+
+.pitch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:14px}
+.pitch-cell{padding:20px 18px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center}
+.pitch-pos{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1.8px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:6px}
+.pitch-num{font-family:'Anton',sans-serif;font-size:36px;line-height:1;color:var(--text);letter-spacing:-0.018em;margin-bottom:6px}
+.pitch-name{font-family:'Anton',sans-serif;font-size:14px;line-height:1.1;color:var(--text);letter-spacing:-0.005em;margin-bottom:6px}
+.pitch-detail{font-family:'Crimson Pro',serif;font-style:italic;font-size:11.5px;color:var(--text-2);line-height:1.4}
+
+.condition-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.cond-cell{padding:24px 26px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cond-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:8px}
+.cond-name{font-family:'Anton',sans-serif;font-size:20px;line-height:1.05;letter-spacing:-0.008em;color:var(--text);margin-bottom:8px}
+.cond-name .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.cond-detail{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2)}
+.cond-detail b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:14px}
+
+.notify-block{padding:32px 36px;background:linear-gradient(180deg,rgba(255,201,74,0.04),rgba(20,17,12,0.4));border:1px solid var(--gold-edge);border-radius:6px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.notify-text{font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;color:var(--text-2);line-height:1.45;flex:1 1 360px}
+.notify-text b{font-family:'Anton',sans-serif;font-style:normal;font-weight:normal;color:var(--text);font-size:22px}
+.notify-form{display:flex;gap:8px;flex-wrap:wrap}
+.notify-input{padding:13px 16px;background:var(--bg-2);border:1px solid var(--line-2);border-radius:3px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--text);min-width:220px}
+.notify-input:focus{outline:none;border-color:var(--gold)}
+.notify-btn{padding:13px 20px;background:var(--gold);color:var(--bg);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border-radius:3px;border:none;cursor:pointer}
+.notify-btn:hover{box-shadow:0 0 16px var(--gold-glow)}
+
+.footer{padding:56px 0 72px;border-top:1px solid var(--line);background:rgba(20,17,12,0.5)}
+.footer-display{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer p{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.65;color:var(--text-2);max-width:780px;margin-bottom:12px}
+.footer-disclaimer{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-4);margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav-global">
+  <div class="nav-global-inner">
+    <a href="/" class="nav-global-brand">Field<b>Check</b><span class="sep">·</span><span class="ctx">Soccer</span></a>
+    <div class="nav-global-main">
+      <div class="nav-global-item">
+        <button class="nav-global-link">Sports <span class="nav-global-caret">▼</span></button>
+        <div class="nav-global-mega"><div class="nav-global-grid">
+          <div class="nav-global-col-head">Sports we cover</div>
+          <a href="/lovb"><strong>Women's Volleyball</strong><span>LOVB · Live, deepest coverage</span></a>
+          <a href="/sports/football"><strong>Football</strong><span>NCAA + recruiting</span></a>
+          <a href="/sports/basketball"><strong>Basketball</strong><span>NCAA + transfer portal</span></a>
+          <a href="/sports/soccer"><strong>Soccer</strong><span>College + MLS pathway</span></a>
+        </div></div>
+      </div>
+      <div class="nav-global-item">
+        <button class="nav-global-link">LOVB <span class="nav-global-caret">▼</span></button>
+        <div class="nav-global-mega"><div class="nav-global-grid">
+          <div class="nav-global-col-head">The four tools</div>
+          <a href="/lovb/projection"><strong>Pro Fit Score</strong><span>Project any player's LOVB tier</span></a>
+          <a href="/lovb/match"><strong>FA Match</strong><span>Find the Founding Athlete comp</span></a>
+          <a href="/lovb/fit"><strong>Market Fit</strong><span>Score all six markets</span></a>
+          <a href="/lovb/roster"><strong>Roster Analyzer</strong><span>Grade any team's depth</span></a>
+          <div class="nav-global-col-head" style="margin-top:14px">Explore</div>
+          <a href="/lovb"><strong>The Hub</strong><span>Overview, this week, the league</span></a>
+          <a href="/lovb/archive"><strong>Archive</strong><span>40+ reference surfaces</span></a>
+        </div></div>
+      </div>
+      <div class="nav-global-item">
+        <button class="nav-global-link">About <span class="nav-global-caret">▼</span></button>
+        <div class="nav-global-mega" style="min-width:380px"><div class="nav-global-grid">
+          <div class="nav-global-col-head">FieldCheck</div>
+          <a href="/about"><strong>What FieldCheck is</strong><span>The thing in one page</span></a>
+          <a href="/about/methodology"><strong>Methodology</strong><span>How we score and cite</span></a>
+          <a href="/about/sources"><strong>Sources</strong><span>What's public-record</span></a>
+          <a href="/about/api"><strong>API</strong><span>Embed the data</span></a>
+        </div></div>
+      </div>
+    </div>
+    <a href="/lovb/projection" class="nav-global-cta">Try the tools →</a>
+  </div>
+</nav>
+
+  <section class="hero">
+    <div class="hero-status">QUEUED · LOWEST PRIORITY</div>
+    <h1>Soccer, <span class="italic">if there's a gap.</span></h1>
+    <p class="hero-deck">Soccer queues lowest among the four sports. The NWSL ecosystem is already well-served by existing data providers and journalism — we'd only build soccer if a specific gap appears that current tools don't address. <em>This page is honesty, not a sales pitch.</em></p>
+  </section>
+</div>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">I</span> · Why we're cautious</div>
+    <h2 class="section-h">Soccer is <span class="italic">already well-served.</span></h2>
+    <p class="section-deck">Unlike volleyball — where we found a real information gap that the platform fills — soccer's data ecosystem is mature. Building here would be redundant unless we identify something specific the existing tools miss.</p>
+
+    <div class="honesty">
+      <div class="honesty-eyebrow">// The honest assessment</div>
+      <h3 class="honesty-h">Capability layers <span class="italic">should fill real gaps.</span></h3>
+      <p class="honesty-body">Soccer data is mature. <b>FBref, Soccerway, Transfermarkt, Wyscout, StatsBomb</b> already serve professional data needs. <b>The Athletic, ESPN FC, and dedicated NWSL journalism</b> serve narrative needs. <b>U.S. Soccer's national team programs</b> already track development from youth onward. <em>If we build soccer, it has to add something none of these provide</em> — and after looking, we haven't yet found that gap. The honest answer is: we don't build for completeness, we build for usefulness.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">II</span> · The existing ecosystem</div>
+    <h2 class="section-h">Who already <span class="italic">does this well.</span></h2>
+    <p class="section-deck">A non-exhaustive map of current soccer-data players. If you're researching the NWSL or U.S. soccer pathway, these are the names that come up.</p>
+
+    <div class="eco-grid">
+      <div class="eco-cell">
+        <div class="eco-eyebrow">// DATA · PRO</div>
+        <div class="eco-name">FBref, Transfermarkt</div>
+        <div class="eco-detail">Free comprehensive stats for NWSL, European leagues, national teams. <b>Probably the best free soccer data layer in the world.</b></div>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-eyebrow">// DATA · CLUB-LEVEL</div>
+        <div class="eco-name">Wyscout, Opta, StatsBomb</div>
+        <div class="eco-detail">Paid professional scouting tools. <b>NWSL clubs already subscribe</b>; scouts use them. The market is filled.</div>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-eyebrow">// JOURNALISM · NWSL</div>
+        <div class="eco-name">The Athletic, ESPN FC</div>
+        <div class="eco-detail"><b>Mature NWSL journalism layer.</b> Multiple full-time reporters. Per-team beat reporters. Sourcing is well-established.</div>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-eyebrow">// PIPELINE · YOUTH</div>
+        <div class="eco-name">ECNL, GA, U.S. Soccer DA</div>
+        <div class="eco-detail">U.S. youth pathway tracked by <b>ECNL national rankings, GA leagues, U.S. Soccer Development Academy</b>. Aggregation already exists.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">III</span> · Position taxonomy</div>
+    <h2 class="section-h">Eleven positions, <span class="italic">three lines.</span></h2>
+    <p class="section-deck">Soccer's taxonomy is well-defined. If we ever build, this is the spine — but the more interesting variation is <em>formation context</em> rather than position label.</p>
+
+    <div class="pitch-grid">
+      <div class="pitch-cell">
+        <div class="pitch-pos">// 1</div>
+        <div class="pitch-num">GK</div>
+        <div class="pitch-name">Goalkeeper</div>
+        <div class="pitch-detail">Shot-stopper · distribution</div>
+      </div>
+      <div class="pitch-cell">
+        <div class="pitch-pos">// 2-5</div>
+        <div class="pitch-num">DF</div>
+        <div class="pitch-name">Defender</div>
+        <div class="pitch-detail">CB · LB · RB · WB</div>
+      </div>
+      <div class="pitch-cell">
+        <div class="pitch-pos">// 6-8</div>
+        <div class="pitch-num">MF</div>
+        <div class="pitch-name">Midfielder</div>
+        <div class="pitch-detail">CDM · CM · CAM · WM</div>
+      </div>
+      <div class="pitch-cell">
+        <div class="pitch-pos">// 9-11</div>
+        <div class="pitch-num">FW</div>
+        <div class="pitch-name">Forward</div>
+        <div class="pitch-detail">ST · CF · LW · RW</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">IV</span> · If we build, when?</div>
+    <h2 class="section-h">The <span class="italic">trigger conditions.</span></h2>
+    <p class="section-deck">We'd build soccer only if one of the following conditions emerges. These are the questions we ask before greenlighting any new sport.</p>
+
+    <div class="condition-grid">
+      <div class="cond-cell">
+        <div class="cond-eyebrow">// CONDITION 1 · PARENT NEED</div>
+        <div class="cond-name">A pathway <span class="italic">honesty gap.</span></div>
+        <div class="cond-detail">If parents navigating ECNL → DA → NCAA → NWSL find <b>the existing recruiting services as opaque as volleyball's once were</b>, that's a real signal. Honest pathway probabilities are our specialty.</div>
+      </div>
+      <div class="cond-cell">
+        <div class="cond-eyebrow">// CONDITION 2 · NWSL CHANGE</div>
+        <div class="cond-name">A league <span class="italic">structural shift.</span></div>
+        <div class="cond-detail">If the NWSL <b>adopts equity-for-founding-athletes</b> like LOVB did, or restructures its junior pipeline integration, that's the kind of platform-relevant moment that justifies us building.</div>
+      </div>
+      <div class="cond-cell">
+        <div class="cond-eyebrow">// CONDITION 3 · COACH GAP</div>
+        <div class="cond-name">A coach-development <span class="italic">vacuum.</span></div>
+        <div class="cond-detail">If <b>NWSL or U.S. Soccer launches anything resembling LOVB's "Coach of Coaches"</b> framework, we'd want to surface it independently. That's the kind of integration story we describe well.</div>
+      </div>
+      <div class="cond-cell">
+        <div class="cond-eyebrow">// CONDITION 4 · USER ASK</div>
+        <div class="cond-name">Direct <span class="italic">request volume.</span></div>
+        <div class="cond-detail">If enough volleyball platform users say <b>"I'd use this for soccer too,"</b> we'd reconsider. Currently the volume is low. But it's a real possible trigger.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">V</span> · Tell us your trigger</div>
+    <h2 class="section-h">Let us know <span class="italic">what's missing.</span></h2>
+    <p class="section-deck">If you're working in U.S. soccer — coaching, scouting, parenting, journalism — and you see a specific gap our framework could fill, we want to hear about it. That's the input that triggers a real build.</p>
+
+    <div class="notify-block">
+      <div class="notify-text"><b>Tell us the gap.</b> If you see one, we'll listen. <a href="/dispute">File a dispute with the suggestion</a>.</div>
+      <div class="notify-form">
+        <input type="email" class="notify-input" placeholder="your@email.com">
+        <button class="notify-btn" onclick="alert('Noted. We\\'ll keep you posted on the soccer track.')">Notify if we build</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-display">Soccer · Queued Lowest · Honest About It</div>
+    <p>Why a scaffold page for a sport we may never build? <b>Honesty about our priorities matters</b>. The "what we do" story isn't complete without the "what we won't" story.</p>
+    <p><a href="/lovb">See the volleyball platform</a> for the kind of execution that would happen if soccer ever ships.</p>
+    <div class="footer-disclaimer">Independent platform. NWSL, U.S. Soccer, ECNL, GA references are descriptive; marks belong to their respective owners.</div>
+  </div>
+</footer>
+
+
+<script>
+document.querySelectorAll('.nav-global-item').forEach(item => {
+  const link = item.querySelector('.nav-global-link');
+  let timeout;
+  item.addEventListener('mouseenter', () => { clearTimeout(timeout); document.querySelectorAll('.nav-global-item.open').forEach(o => { if(o!==item) o.classList.remove('open'); o.querySelector('.nav-global-link').classList.remove('open'); }); item.classList.add('open'); link.classList.add('open'); });
+  item.addEventListener('mouseleave', () => { timeout = setTimeout(() => { item.classList.remove('open'); link.classList.remove('open'); }, 150); });
+  link.addEventListener('click', e => { e.preventDefault(); item.classList.toggle('open'); link.classList.toggle('open'); });
+});
+</script>
+</body>
+</html>

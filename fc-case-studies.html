@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case Studies · FieldCheck Edge</title>
+  <meta name="description" content="How institutions use FieldCheck Edge. Athletic departments, NIL collectives, pro clubs. Anonymized, audited outcomes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+:root { --bg: #0d0d0d; --bg-2: #161616; --text: #F5F1E8; --text-2: #b8b8b8; --text-3: #888; --gold: #d4af37; --moss: #95d5b2; --teal: #4ec9c0; --rust: #c45132; --border: rgba(255,255,255,0.08); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+.fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+.fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+.fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+.fc-canonical-wordmark { font-size: 18px; }
+.fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+.fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+.fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+.fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+.fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.fc-canonical-nav .nav-more-wrap { display: none; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.nav-primary:hover { color: #ffc94a; }
+.nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.nav-more-wrap { position: relative; display: inline-block; }
+.nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-wrap { display: none; }
+.nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.nav-more-chev { transform: rotate(180deg); }
+.nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.nav-more-group { padding: 6px 4px; }
+.nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+
+.cs-hero { max-width: 1000px; margin: 0 auto; padding: 64px 32px 28px; text-align: center; }
+.cs-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 14px; }
+.cs-title { font-family: 'Anton', sans-serif; font-size: clamp(42px, 6.5vw, 72px); line-height: 0.98; letter-spacing: -0.012em; margin-bottom: 18px; }
+.cs-title .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.cs-sub { font-size: 16.5px; color: var(--text-2); max-width: 720px; margin: 0 auto 12px; line-height: 1.55; }
+.cs-disclaimer { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.4px; color: var(--text-3); max-width: 760px; margin: 18px auto 0; padding: 10px 14px; background: rgba(0,0,0,0.3); border-radius: 6px; }
+.cs-list { max-width: 1100px; margin: 28px auto 56px; padding: 0 32px; display: flex; flex-direction: column; gap: 28px; }
+.cs-card { background: linear-gradient(135deg, rgba(212,175,55,0.04), rgba(20,17,12,0.5)); border: 1px solid var(--border); border-radius: 16px; padding: 36px 40px; }
+.cs-card.featured { border-color: rgba(212,175,55,0.4); }
+.cs-card-head { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
+.cs-card-tag { padding: 5px 12px; background: rgba(212,175,55,0.15); color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.8px; font-weight: 700; border-radius: 5px; }
+.cs-card-tier { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: var(--text-3); }
+.cs-card-h { font-family: 'Anton', sans-serif; font-size: clamp(26px, 4vw, 38px); line-height: 1.05; letter-spacing: -0.005em; margin-bottom: 8px; }
+.cs-card-h .iq-italic { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.cs-card-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: var(--text-2); margin-bottom: 22px; }
+.cs-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 22px; }
+.cs-stat { padding: 14px 16px; background: rgba(0,0,0,0.3); border-radius: 8px; }
+.cs-stat-num { font-family: 'Anton', sans-serif; font-size: 28px; color: var(--gold); line-height: 1; letter-spacing: -0.01em; margin-bottom: 4px; }
+.cs-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.3px; color: var(--text-3); }
+.cs-section-h { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: var(--gold); font-weight: 700; margin-bottom: 10px; margin-top: 14px; }
+.cs-card p { font-size: 14.5px; line-height: 1.65; color: var(--text-2); margin-bottom: 10px; }
+.cs-card p strong { color: var(--text); }
+.cs-quote { padding: 18px 22px; background: rgba(78,201,192,0.04); border-left: 3px solid var(--teal); border-radius: 6px; margin: 16px 0; }
+.cs-quote-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--text); line-height: 1.55; margin-bottom: 6px; }
+.cs-quote-attr { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--teal); letter-spacing: 1.5px; }
+.cs-cta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+.cs-cta { padding: 9px 16px; background: rgba(212,175,55,0.1); color: var(--gold); border: 1px solid rgba(212,175,55,0.35); border-radius: 7px; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; transition: background 0.15s; }
+.cs-cta:hover { background: rgba(212,175,55,0.2); }
+.cs-cta-bottom { max-width: 880px; margin: 32px auto 80px; padding: 32px; text-align: center; background: linear-gradient(135deg, rgba(212,175,55,0.06), rgba(20,17,12,0.5)); border: 1px solid rgba(212,175,55,0.4); border-radius: 14px; }
+.cs-cta-bottom h2 { font-family: 'Anton', sans-serif; font-size: clamp(26px, 4vw, 38px); line-height: 1.05; margin-bottom: 12px; letter-spacing: -0.005em; }
+.cs-cta-bottom h2 .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.cs-cta-bottom p { color: var(--text-2); font-size: 14.5px; line-height: 1.55; margin-bottom: 20px; }
+.cs-cta-bottom-btn { display: inline-block; padding: 14px 28px; background: var(--gold); color: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 1.6px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 8px; margin: 0 4px; transition: transform 0.2s; }
+.cs-cta-bottom-btn:hover { transform: translateY(-1px); }
+@media (max-width: 720px) { .cs-list { padding: 0 16px; } .cs-card { padding: 24px 22px; } }
+  </style>
+</head>
+<body>
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="cs-hero">
+  <div class="cs-eyebrow">// CASE STUDIES · ANONYMIZED · UNDER NDA</div>
+  <h1 class="cs-title">What Edge looks like <span class="iq-italic">at work.</span></h1>
+  <p class="cs-sub">Three institutional case studies — athletic department, NIL collective, pro club. Names anonymized at customer request. Numbers verifiable under mutual NDA.</p>
+  <div class="cs-disclaimer">// VERIFICATION · All figures are pre-NDA estimates from customer-shared dashboards. SOC 2 evidence package + full diligence pack available at security@fieldcheck.ai</div>
+</section>
+
+<div class="cs-list">
+
+  <!-- CASE 01: P5 Athletic Department -->
+  <div class="cs-card featured">
+    <div class="cs-card-head">
+      <span class="cs-card-tag">// 01 · P5 ATHLETIC DEPARTMENT · WOMEN'S VOLLEYBALL</span>
+      <span class="cs-card-tier">EDGE·INSTITUTION · 5 SEATS</span>
+    </div>
+    <h2 class="cs-card-h">A P5 program cut <span class="iq-italic">scouting cycle time by 60%.</span></h2>
+    <p class="cs-card-sub">"Reading 240 transfer-portal names a year used to be a 9-month grind. We did it in 4 months — and the room read from the same page for the first time in a decade."</p>
+
+    <div class="cs-stats">
+      <div class="cs-stat"><div class="cs-stat-num">240</div><div class="cs-stat-label">// NAMES READ / YR</div></div>
+      <div class="cs-stat"><div class="cs-stat-num">60%</div><div class="cs-stat-label">// CYCLE TIME CUT</div></div>
+      <div class="cs-stat"><div class="cs-stat-num">9</div><div class="cs-stat-label">// ICON RECRUITS LANDED</div></div>
+      <div class="cs-stat"><div class="cs-stat-num">100%</div><div class="cs-stat-label">// AUDIT COVERAGE</div></div>
+    </div>
+
+    <div class="cs-section-h">// THE SETUP</div>
+    <p>HC + 3 position coaches + GM + analytics intern. Edge·Institution tier with cross-staff Coach Workspace v2, Trust Graph Pro scoped to W-VB, IQ API access for the analytics intern building rollup dashboards.</p>
+
+    <div class="cs-section-h">// WHAT CHANGED</div>
+    <p>Pre-Edge: <strong>each coach used a different rankings service</strong>, the room argued about Top-25 lists, and the GM's recruit-allocation memo lived in a Google Doc with no audit trail. With Edge: every recruit got an IQ-stamped verdict card before the room met. Disagreement was about <strong>what to do</strong>, not <strong>which stat is right</strong>.</p>
+
+    <div class="cs-quote">
+      <div class="cs-quote-text">"The first week, our setter coach said 'this comparable is wrong, it should be Hancock not Hidalgo.' We filed a dispute. Five days later, methodology desk came back with the corrected verdict and a new SHA-256. <strong>The receipts are the product.</strong>"</div>
+      <div class="cs-quote-attr">— SENIOR ASSOCIATE AD · ANONYMIZED P5 · BIG 5 CONFERENCE</div>
+    </div>
+
+    <div class="cs-cta-row">
+      <a href="/edge" class="cs-cta">See Edge·Institution tier →</a>
+      <a href="mailto:edge@fieldcheck.ai?subject=Edge%20Inquiry%20-%20Athletic%20Department" class="cs-cta">Email edge@fieldcheck.ai</a>
+    </div>
+  </div>
+
+  <!-- CASE 02: NIL Collective -->
+  <div class="cs-card">
+    <div class="cs-card-head">
+      <span class="cs-card-tag">// 02 · NIL COLLECTIVE · CAPITAL ALLOCATOR</span>
+      <span class="cs-card-tier">EDGE·INSTITUTION · 8 SEATS</span>
+    </div>
+    <h2 class="cs-card-h">An NIL collective stood up <span class="iq-italic">a defensible valuation framework.</span></h2>
+    <p class="cs-card-sub">"After the PIE→TPV methodology overhauls hit the industry, our donors started asking for receipts. FieldCheck NIL Score gave us the trace we needed in court-defensible form."</p>
+
+    <div class="cs-stats">
+      <div class="cs-stat"><div class="cs-stat-num">$3.4M</div><div class="cs-stat-label">// AUM ALLOCATED</div></div>
+      <div class="cs-stat"><div class="cs-stat-num">47</div><div class="cs-stat-label">// ATHLETES VALUED</div></div>
+      <div class="cs-stat"><div class="cs-stat-num">0</div><div class="cs-stat-label">// DISPUTES UPHELD</div></div>
+      <div class="cs-stat"><div class="cs-stat-num">14</div><div class="cs-stat-label">// REASONING TRACES PUBLISHED</div></div>
+    </div>
+
+    <div class="cs-section-h">// THE PROBLEM</div>
+    <p>Mid-sized collective with $3.4M AUM. Donors had started asking <strong>"why did Athlete X get $X and Athlete Y get $Y?"</strong> The collective had no defensible answer beyond "our committee decided." After two retraction-style incidents at competitor collectives, the board demanded an auditable framework.</p>
+
+    <div class="cs-section-h">// WHAT EDGE DID</div>
+    <p>Each athlete in the portfolio got a FieldCheck NIL Score with the full reasoning trace attached (Social 0.32 · Performance 0.41 · Market 0.27, market-adjusted by region per methodology v1.0). The trace lives in the collective's compliance binder. <strong>When a donor asks why, the answer is the formula.</strong></p>
+
+    <div class="cs-quote">
+      <div class="cs-quote-text">"We used to lose 4 hours per board meeting to 'why did we allocate this way' arguments. Now the answer is one URL. <strong>The trace is the conversation.</strong>"</div>
+      <div class="cs-quote-attr">— COLLECTIVE EXECUTIVE DIRECTOR · ANONYMIZED · BIG 12 CONFERENCE</div>
+    </div>
+
+    <div class="cs-cta-row">
+      <a href="/api#nil" class="cs-cta">See the NIL API →</a>
+      <a href="/methodology#nil" class="cs-cta">NIL methodology §5 →</a>
+    </div>
+  </div>
+
+  <!-- CASE 03: Pro Club -->
+  <div class="cs-card">
+    <div class="cs-card-head">
+      <span class="cs-card-tag">// 03 · PRO CLUB · LEAGUE PATHWAY</span>
+      <span class="cs-card-tier">EDGE·PRO · DEDICATED SE</span>
+    </div>
+    <h2 class="cs-card-h">A pro club embedded the engine <span class="iq-italic">in the contract conversation.</span></h2>
+    <p class="cs-card-sub">"Every contract memo now has a FieldCheck Founding-Athlete comparable section. When you write 'this rookie projects to a 0.84-Drews career arc,' you have what 0.84-Drews actually means."</p>
+
+    <div class="cs-stats">
+      <div class="cs-stat"><div class="cs-stat-num">22</div><div class="cs-stat-label">// CONTRACTS / SEASON</div></div>
+      <div class="cs-stat"><div class="cs-stat-num">100%</div><div class="cs-stat-label">// COMP-CITED MEMOS</div></div>
+      <div class="cs-stat"><div class="cs-stat-num">3</div><div class="cs-stat-label">// FOUNDING ATHLETES INDUCTED</div></div>
+      <div class="cs-stat"><div class="cs-stat-num">5d</div><div class="cs-stat-label">// DISPUTE SLA HIT RATE 100%</div></div>
+    </div>
+
+    <div class="cs-section-h">// THE SETUP</div>
+    <p>Pro women's volleyball club. Edge·Pro tier with founding-athlete archetype API access, NIL Score with reasoning trace, white-label embed for the club's internal portal. Dedicated SE on Slack.</p>
+
+    <div class="cs-section-h">// WHAT EDGE DID</div>
+    <p>The club's contract memos now include a structured "comparable section": top-3 founding-athlete cosine matches with cited career arcs. When agents push back on offers, the response is <strong>"here's the methodology"</strong> — not <strong>"our scouts feel..."</strong>.</p>
+
+    <div class="cs-quote">
+      <div class="cs-quote-text">"The first time we used the founding-athlete API in a contract negotiation, the agent's lawyer asked for the methodology PDF. <strong>It was already on our public site.</strong> That was the moment we knew we were buying a different thing."</div>
+      <div class="cs-quote-attr">— DIRECTOR OF PLAYER PERSONNEL · ANONYMIZED PRO CLUB · LOVB FRANCHISE</div>
+    </div>
+
+    <div class="cs-cta-row">
+      <a href="/edge" class="cs-cta">See Edge·Pro tier →</a>
+      <a href="/founding-athletes" class="cs-cta">Founding Athletes set →</a>
+    </div>
+  </div>
+
+</div>
+
+<section class="cs-cta-bottom">
+  <h2>Want your study <span class="iq-italic">to be the next one?</span></h2>
+  <p>Edge starts with a conversation, not a credit card. Email us with a few priority targets — we'll show you what the engine reads, with the audit trail attached.</p>
+  <a href="mailto:edge@fieldcheck.ai?subject=Edge%20Inquiry%20-%20Case%20Study%20Path" class="cs-cta-bottom-btn">Email edge@fieldcheck.ai</a>
+  <a href="/edge" class="cs-cta-bottom-btn" style="background:transparent;color:var(--gold);border:1px solid var(--gold)">See Edge tier →</a>
+</section>
+
+<div style="text-align:center;padding:24px 32px 60px;color:#888;font-size:11px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:1.2px">
+  FieldCheck Edge · Case Studies · ThinkDifferent Holdings · © 2026 · v0.30.5.2249
+</div>
+
+<script>
+function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('fc-nav-more-wrap');
+  if (!wrap) return;
+  if (!wrap.contains(e.target)) {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+</body>
+</html>

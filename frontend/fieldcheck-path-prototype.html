@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Path - FieldCheck IQ Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0908;--rule:rgba(248,244,237,.12);--t:#F5F1E8;--t2:rgba(245,241,232,.74);--t3:rgba(245,241,232,.46);--gold:#D4A24C;--gold-hi:#EEC067;--golds:rgba(212,162,76,.10);--goldl:rgba(212,162,76,.30);--moss:#7C9B6E;--mossl:rgba(124,155,110,.25)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;background:var(--ink)}
+body{background:var(--ink);color:var(--t);font-family:'Inter',sans-serif;line-height:1.6}
+.proto{background:var(--golds);border-bottom:1px solid var(--goldl);padding:8px 0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--gold)}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+.hdr{padding:36px 0 8px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px}
+.who .nm{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;line-height:1.1}
+.who .meta{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--t3);margin-top:6px}
+.score{text-align:right}
+.score .v{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:600;color:var(--gold-hi);line-height:1}
+.score .tier{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);border:1px solid var(--goldl);background:var(--golds);border-radius:3px;padding:4px 10px;display:inline-block;margin-top:8px}
+.path-h{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.8px;text-transform:uppercase;color:var(--gold);margin:40px 0 6px}
+h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500;margin-bottom:18px}
+h2 em{font-style:italic;color:var(--gold-hi)}
+.dreams{display:flex;gap:8px;margin-bottom:26px;flex-wrap:wrap}
+.dream{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;padding:11px 18px;border:1px solid var(--rule);border-radius:3px;color:var(--t2);cursor:pointer;background:transparent;transition:all .15s}
+.dream:hover{border-color:var(--goldl)}
+.dream.on{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.ladder{border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:26px}
+.rung{display:flex;align-items:center;gap:16px;padding:15px 20px;border-bottom:1px solid var(--rule);position:relative}
+.rung:last-child{border-bottom:none}
+.rung .rt{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;width:92px;flex-shrink:0}
+.rung .rr{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);width:74px;flex-shrink:0}
+.rung .rd{font-size:13px;color:var(--t2);font-weight:300}
+.rung.done{opacity:.45}
+.rung.done .rt{color:var(--moss)}
+.rung.here{background:var(--golds);border-left:3px solid var(--gold)}
+.rung.here .rt{color:var(--gold-hi)}
+.rung.here .badge{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1.6px;background:var(--gold);color:var(--ink);border-radius:2px;padding:2px 7px;margin-left:auto;flex-shrink:0}
+.rung.next .rt{color:var(--t)}
+.rung.up{opacity:.6}
+.gapbox{border:1px solid var(--goldl);background:var(--golds);border-radius:6px;padding:22px;margin-bottom:26px}
+.gapbox .gh{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold-hi);margin-bottom:4px}
+.gapbox .gd{font-size:14px;color:var(--t2);font-weight:300;margin-bottom:16px}
+.fgap{display:flex;align-items:center;gap:14px;padding:11px 0;border-top:1px solid var(--rule)}
+.fgap .fn{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;width:128px;flex-shrink:0}
+.bar{flex:1;height:5px;background:rgba(248,244,237,.08);border-radius:3px;position:relative}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;background:var(--t3);border-radius:3px}
+.bar .need{position:absolute;top:-3px;width:2px;height:11px;background:var(--gold-hi)}
+.fgap .fv{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t2);width:86px;text-align:right;flex-shrink:0}
+.fgap .fv b{color:var(--gold-hi)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.chip{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:1px;padding:9px 14px;border:1px solid var(--goldl);border-radius:99px;color:var(--gold);cursor:pointer;background:transparent;transition:all .15s}
+.chip:hover{background:var(--gold);color:var(--ink)}
+.note{font-size:12.5px;color:var(--t3);font-style:italic;padding:8px 0 60px}
+.pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--moss);box-shadow:0 0 0 3px var(--mossl);margin-right:8px;animation:p 2s infinite}
+@keyframes p{0%,100%{transform:scale(1)}50%{transform:scale(1.25);opacity:.6}}
+</style>
+</head>
+<body>
+<div class="proto">Prototype - The Path - illustrative data · <a href="/fieldcheck-verdict.html?q=Carlos+Medlock+Jr&sport=mens-basketball" style="color:#EEC067;text-decoration:underline">see it LIVE on a real verdict →</a></div>
+<div class="wrap">
+<div class="hdr">
+<div class="who"><div class="nm">Carlos Medlock Jr</div><div class="meta">PG - Link Academy (MO) - Mens Basketball - Class of 2026</div></div>
+<div class="score"><div class="v">6.8</div><div class="tier">PROSPECT</div></div>
+</div>
+
+<div class="path-h"><span class="pulse"></span>The Path</div>
+<h2>Where you are. Where the dream is. <em>What closes the gap.</em></h2>
+
+<div class="dreams">
+<button class="dream on" data-d="d1">Dream: D1 Roster</button>
+<button class="dream" data-d="nil">Dream: Real NIL</button>
+<button class="dream" data-d="pro">Dream: Pro Radar</button>
+</div>
+
+<div class="ladder" id="ladder"></div>
+
+<div class="gapbox">
+<div class="gh" id="gapTitle"></div>
+<div class="gd" id="gapDesc"></div>
+<div id="gaps"></div>
+<div class="chips" id="chips"></div>
+</div>
+
+<p class="note">Facet thresholds shown are illustrative for prototype review. Production thresholds derive from the 110-battery calibration set and tier-outcome mapping.</p>
+</div>
+
+<script>
+var FACETS = {
+  "COMPETE": 7.9, "MINDSET": 7.2, "TALENT": 6.9, "PHYSICAL": 6.6,
+  "CHARACTER": 7.0, "COACHABILITY": 6.1, "MENTAL IQ": 5.9, "MENTAL STRENGTH": 6.4
+};
+var DREAMS = {
+  d1: {
+    title: "Gap to STAR - the D1-roster tier",
+    desc: "Composite 7.0+ puts you in D1 roster conversations. You are 0.2 away. Two facets carry the most leverage:",
+    needs: { "MENTAL IQ": 6.8, "COACHABILITY": 6.8 },
+    ladder: [
+      ["done","SCOUT","3.5-5.4","Building the base. Getting on film."],
+      ["here","PROSPECT","5.5-6.9","On the radar - D3, D2, low-D1 walk-on conversations."],
+      ["next","STAR","7.0-7.4","D1 roster realistic. Conference-level NIL begins."],
+      ["up","ELITE","7.5-8.9","High-major target. Real NIL market. Pro pathway visible."],
+      ["up","ELITE+","9.0-9.4","National name. Draft-board territory."]
+    ],
+    chips: ["Why is my Mental IQ 5.9?","What do STAR point guards do differently?","Build my 90-day plan"]
+  },
+  nil: {
+    title: "Gap to ELITE - where the NIL market gets real",
+    desc: "Conference NIL starts at STAR, but the real market prices ELITE (7.5+). The route runs through three facets:",
+    needs: { "MENTAL IQ": 7.4, "COACHABILITY": 7.2, "PHYSICAL": 7.2 },
+    ladder: [
+      ["done","SCOUT","3.5-5.4","Building the base."],
+      ["here","PROSPECT","5.5-6.9","Local deals at best. Brands price tiers, not followers."],
+      ["next","STAR","7.0-7.4","Conference-level NIL begins. Collectives start calling."],
+      ["next","ELITE","7.5-8.9","The real NIL market. Six figures in revenue sports."],
+      ["up","ELITE+","9.0-9.4","Seven-figure territory. National brands."]
+    ],
+    chips: ["What is my NIL stress test?","Which ELITE guards share my shape?","Build my 90-day plan"]
+  },
+  pro: {
+    title: "Gap to ELITE+ - draft-board territory",
+    desc: "Pro radars track 9.0+. That is a multi-year climb measured one facet at a time - and the ledger tracks every step:",
+    needs: { "MENTAL IQ": 8.2, "TALENT": 8.5, "PHYSICAL": 8.2, "COACHABILITY": 8.0 },
+    ladder: [
+      ["done","SCOUT","3.5-5.4","Building the base."],
+      ["here","PROSPECT","5.5-6.9","Years from the radar - but the path is the same path."],
+      ["next","STAR","7.0-7.4","D1 floor. The proving ground."],
+      ["next","ELITE","7.5-8.9","Pro pathway visible. Scouts subscribe to this tier."],
+      ["next","ELITE+","9.0-9.4","Draft board. 50 sealed predictions live here."]
+    ],
+    chips: ["Who climbed from PROSPECT to the draft?","What kills pro projections?","Build my 90-day plan"]
+  }
+};
+function render(key){
+  var d = DREAMS[key];
+  var lh = "";
+  d.ladder.forEach(function(r){
+    lh += '<div class="rung '+r[0]+'"><div class="rt">'+r[1]+'</div><div class="rr">'+r[2]+'</div><div class="rd">'+r[3]+'</div>'+(r[0]==="here"?'<div class="badge">YOU ARE HERE</div>':'')+'</div>';
+  });
+  document.getElementById("ladder").innerHTML = lh;
+  document.getElementById("gapTitle").textContent = d.title;
+  document.getElementById("gapDesc").textContent = d.desc;
+  var gh = "";
+  Object.keys(d.needs).forEach(function(f){
+    var cur = FACETS[f], need = d.needs[f];
+    var cp = Math.min(cur/10*100,100), np = Math.min(need/10*100,100);
+    gh += '<div class="fgap"><div class="fn">'+f+'</div><div class="bar"><div class="fill" style="width:'+cp+'%"></div><div class="need" style="left:'+np+'%"></div></div><div class="fv">'+cur.toFixed(1)+' &rarr; <b>'+need.toFixed(1)+'</b></div></div>';
+  });
+  document.getElementById("gaps").innerHTML = gh;
+  var ch = "";
+  d.chips.forEach(function(c){ ch += '<button class="chip">'+c+' &rarr;</button>'; });
+  document.getElementById("chips").innerHTML = ch;
+}
+document.querySelectorAll(".dream").forEach(function(b){
+  b.addEventListener("click", function(){
+    document.querySelectorAll(".dream").forEach(function(x){x.classList.remove("on")});
+    b.classList.add("on");
+    render(b.dataset.d);
+  });
+});
+render("d1");
+</script>
+</body>
+</html>

@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add Yourself · FieldCheck</title>
+  <meta name="description" content="The recruiting industry hides you. FieldCheck inverts that. Add yourself to the corpus. Become findable by your archetype, not your ranking.">
+  <meta property="og:title" content="Add Yourself · FieldCheck">
+  <meta property="og:description" content="Be in the corpus. Be findable. No ranking required.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #0d0d0d; --bg-2: #161616; --bg-3: #1d1d1d;
+  --text: #ededed; --text-2: #b8b8b8; --text-3: #888; --text-4: #555;
+  --gold: #d4af37; --gold-2: #f5b800;
+  --border: rgba(255,255,255,0.08); --glass: rgba(255,255,255,0.03); --glass-edge: rgba(255,255,255,0.1);
+  --rust: #c45132; --sage: #6a9c89;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+a { color: inherit; }
+.nav { padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-links a { color: var(--text-2); text-decoration: none; margin-left: 28px; font-size: 13px; transition: color 0.2s ease; }
+.nav-links a:hover { color: var(--gold); }
+
+.hero { padding: 72px 40px 40px; max-width: 880px; margin: 0 auto; }
+.hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); margin-bottom: 18px; font-weight: 600; }
+.hero h1 { font-family: 'Anton', sans-serif; font-size: clamp(46px, 7vw, 84px); line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 22px; }
+.hero h1 .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; color: var(--gold); }
+.hero-sub { font-size: 18px; color: var(--text-2); max-width: 720px; line-height: 1.55; margin-bottom: 22px; }
+.voice-attribution {
+  display: inline-flex; align-items: flex-start; gap: 12px;
+  padding: 14px 18px;
+  background: rgba(212,175,55,0.06);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  max-width: 720px;
+  margin-bottom: 24px;
+}
+.voice-attribution-icon { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--gold); font-weight: 600; padding-top: 2px; flex-shrink: 0; }
+.voice-attribution-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--text); line-height: 1.5; }
+.voice-attribution-text strong { font-style: normal; font-family: 'Inter', sans-serif; font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: 0.5px; }
+
+.principles {
+  max-width: 880px;
+  margin: 0 auto 32px;
+  padding: 0 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.principle {
+  padding: 18px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: 12px;
+}
+.principle-icon {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 1.5px;
+  color: var(--gold); font-weight: 600;
+  margin-bottom: 6px;
+}
+.principle-text {
+  font-size: 13px; color: var(--text-2); line-height: 1.55;
+}
+.principle-text strong { color: var(--text); font-weight: 600; }
+
+/* Form */
+.submit-card {
+  max-width: 880px;
+  margin: 0 auto 56px;
+  padding: 40px;
+  background: linear-gradient(180deg, var(--glass) 0%, rgba(20,20,20,0.4) 100%);
+  border: 1px solid var(--glass-edge);
+  border-radius: 20px;
+}
+
+.step-progress {
+  display: flex; gap: 8px;
+  margin-bottom: 32px;
+}
+.step-pill {
+  flex: 1;
+  padding: 10px 14px;
+  background: var(--bg-2);
+  border: 1px solid var(--glass-edge);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 1.2px;
+  color: var(--text-3); font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.step-pill.active {
+  background: rgba(212,175,55,0.1);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.step-pill.done {
+  background: rgba(106,156,137,0.08);
+  border-color: rgba(106,156,137,0.4);
+  color: var(--sage);
+}
+
+.step-panel { display: none; }
+.step-panel.active { display: block; animation: panel-in 0.3s ease; }
+@keyframes panel-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.step-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--gold); font-weight: 600; margin-bottom: 6px; }
+.step-h { font-family: 'Anton', sans-serif; font-size: 32px; line-height: 1.05; margin-bottom: 8px; }
+.step-h .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.step-help { font-size: 14px; color: var(--text-3); font-style: italic; margin-bottom: 20px; }
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.field-grid.cols-1 { grid-template-columns: 1fr; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-full { grid-column: 1 / -1; }
+.field label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 1.5px;
+  color: var(--text-2); font-weight: 600; text-transform: uppercase;
+}
+.field input, .field select, .field textarea {
+  padding: 14px 16px;
+  background: var(--bg-2);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  border-radius: 10px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--text-4); }
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: rgba(212,175,55,0.04);
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
+}
+.field select {
+  cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3e%3cpath d='M1 1L6 6L11 1' stroke='%23d4af37' stroke-width='1.5' stroke-linecap='round'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+.field-hint { font-size: 11px; color: var(--text-4); margin-top: -2px; }
+.required { color: var(--gold); }
+
+.step-actions {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--glass-edge);
+  display: flex; gap: 12px; justify-content: space-between; align-items: center;
+}
+.btn-back, .btn-next, .btn-submit {
+  padding: 14px 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; letter-spacing: 1.5px; font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-back {
+  background: var(--bg-2);
+  color: var(--text-2);
+  border: 1px solid var(--glass-edge);
+}
+.btn-back:hover { color: var(--gold); border-color: var(--gold); }
+.btn-back.hidden { visibility: hidden; }
+.btn-next, .btn-submit {
+  background: var(--gold);
+  color: #0a0a0a;
+  margin-left: auto;
+}
+.btn-next:hover, .btn-submit:hover {
+  background: var(--gold-2);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(212,175,55,0.25);
+}
+.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.msg {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  display: none;
+  line-height: 1.5;
+}
+.msg.show { display: block; }
+.msg.error { background: rgba(196,81,50,0.12); border-left: 2px solid var(--rust); color: var(--rust); }
+.msg.info { background: rgba(136,136,136,0.08); border-left: 2px solid var(--text-3); color: var(--text-2); }
+
+/* Success state */
+.success-card {
+  max-width: 880px;
+  margin: 56px auto;
+  padding: 56px 40px;
+  background: linear-gradient(135deg, rgba(106,156,137,0.12) 0%, rgba(20,20,20,0.4) 100%);
+  border: 1px solid var(--sage);
+  border-radius: 20px;
+  text-align: center;
+  display: none;
+}
+.success-card.show { display: block; animation: result-in 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes result-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.success-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 2.5px;
+  color: var(--sage); font-weight: 600;
+  margin-bottom: 18px;
+}
+.success-h {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1; margin-bottom: 14px;
+}
+.success-h .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.success-sub { font-size: 17px; color: var(--text-2); max-width: 540px; margin: 0 auto 28px; line-height: 1.6; }
+.success-slug-card {
+  display: inline-block;
+  padding: 18px 28px;
+  background: rgba(0,0,0,0.4);
+  border: 1px dashed var(--gold);
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+.success-slug-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--text-3); margin-bottom: 6px; }
+.success-slug-url {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--gold);
+  word-break: break-all;
+}
+.success-status {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--text-2);
+  margin: 16px 0;
+  line-height: 1.55;
+}
+.success-status strong { color: var(--gold); font-style: normal; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+.voice-match-card {
+  margin: 24px auto;
+  padding: 20px 24px;
+  background: rgba(212,175,55,0.06);
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: 12px;
+  max-width: 580px;
+  text-align: left;
+}
+.voice-match-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--gold); margin-bottom: 8px; font-weight: 600; }
+.voice-match-text { font-size: 14px; color: var(--text); line-height: 1.55; margin-bottom: 6px; }
+.voice-match-why { font-size: 12px; color: var(--text-3); font-style: italic; line-height: 1.5; }
+
+.success-actions {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 32px;
+}
+.success-action {
+  padding: 14px 28px;
+  background: var(--bg-2);
+  color: var(--text);
+  border: 1px solid var(--glass-edge);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 1.5px; font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+.success-action:hover { border-color: var(--gold); color: var(--gold); }
+.success-action.primary { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
+.success-action.primary:hover { background: var(--gold-2); }
+
+footer { padding: 40px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-4); letter-spacing: 1px; border-top: 1px solid var(--border); }
+footer a { color: var(--text-3); text-decoration: none; }
+footer a:hover { color: var(--gold); }
+
+@media (max-width: 720px) {
+  .nav { padding: 18px 20px; }
+  .nav-links a { margin-left: 14px; font-size: 12px; }
+  .hero { padding: 40px 20px 24px; }
+  .principles { padding: 0 20px; grid-template-columns: 1fr; }
+  .submit-card { margin-left: 20px; margin-right: 20px; padding: 24px 20px; }
+  .field-grid { grid-template-columns: 1fr; gap: 12px; }
+  .step-actions { flex-direction: column-reverse; }
+  .btn-back, .btn-next, .btn-submit { width: 100%; }
+  .success-card { margin: 32px 20px; padding: 36px 24px; }
+  .step-pill { font-size: 9px; padding: 8px 4px; }
+  .voice-attribution { flex-direction: column; gap: 6px; }
+}
+  </style>
+<script>
+// FieldCheck i18n loader · v0.30.5.2210 · shared across /voices, /position-fit, /add-me
+(function() {
+  const PROXY = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev/api';
+  const SUPPORTED = ['en', 'es'];
+
+  function getLang() {
+    try {
+      const stored = sessionStorage.getItem('fc_lang');
+      if (stored && SUPPORTED.includes(stored)) return stored;
+    } catch (_) {}
+    const browser = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    return SUPPORTED.includes(browser) ? browser : 'en';
+  }
+
+  function setLang(lang) {
+    if (!SUPPORTED.includes(lang)) return;
+    try { sessionStorage.setItem('fc_lang', lang); } catch (_) {}
+    location.reload();
+  }
+
+  async function fetchStrings(lang, ns) {
+    try {
+      const cacheKey = `fc_i18n_${lang}_${ns}`;
+      try {
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) return JSON.parse(cached);
+      } catch (_) {}
+      const r = await fetch(`${PROXY}/i18n/strings?lang=${encodeURIComponent(lang)}&ns=${encodeURIComponent(ns)}`);
+      const data = await r.json();
+      if (data && data.ok && data.strings) {
+        try { sessionStorage.setItem(cacheKey, JSON.stringify(data.strings)); } catch (_) {}
+        return data.strings;
+      }
+    } catch (_) {}
+    return {};
+  }
+
+  function applyStrings(strings) {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (strings[key] != null) el.textContent = strings[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (strings[key] != null) el.placeholder = strings[key];
+    });
+  }
+
+  function renderToggle(currentLang) {
+    let toggle = document.getElementById('fc-lang-toggle');
+    if (toggle) return;
+    toggle = document.createElement('div');
+    toggle.id = 'fc-lang-toggle';
+    toggle.style.cssText = 'position:fixed;top:18px;right:18px;z-index:1000;display:flex;gap:0;background:rgba(20,20,20,0.85);border:1px solid rgba(212,175,55,0.3);border-radius:99px;padding:3px;font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:1.5px;backdrop-filter:blur(8px)';
+    toggle.innerHTML = `
+      <button data-lang="en" style="background:${currentLang==='en'?'rgba(212,175,55,0.25)':'transparent'};color:${currentLang==='en'?'#e8b948':'#888'};border:none;padding:6px 12px;border-radius:99px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:inherit;font-weight:700">EN</button>
+      <button data-lang="es" style="background:${currentLang==='es'?'rgba(212,175,55,0.25)':'transparent'};color:${currentLang==='es'?'#e8b948':'#888'};border:none;padding:6px 12px;border-radius:99px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:inherit;font-weight:700">ES</button>
+    `;
+    toggle.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
+    });
+    document.body.appendChild(toggle);
+  }
+
+  window.FieldCheckI18n = {
+    init: async function(namespace) {
+      const lang = getLang();
+      document.documentElement.lang = lang;
+      renderToggle(lang);
+      const commonStrings = await fetchStrings(lang, 'common');
+      const nsStrings = namespace ? await fetchStrings(lang, namespace) : {};
+      applyStrings(Object.assign({}, commonStrings, nsStrings));
+      return { lang, strings: Object.assign({}, commonStrings, nsStrings) };
+    },
+    getLang: getLang,
+    setLang: setLang
+  };
+})();
+</script>
+<script>
+// FieldCheck CX library · Apple-grade polish · v1770
+// Loading states, empty states, success moments, error states, toast notifications
+(function() {
+  // Inject base styles once
+  if (document.getElementById('fc-cx-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'fc-cx-styles';
+  style.textContent = `
+    /* Loading skeleton */
+    .fc-skeleton {
+      display: inline-block;
+      background: linear-gradient(90deg, rgba(255,201,74,0.04) 0%, rgba(255,201,74,0.10) 50%, rgba(255,201,74,0.04) 100%);
+      background-size: 200% 100%;
+      animation: fc-skeleton-shimmer 1.4s ease-in-out infinite;
+      border-radius: 6px;
+      height: 1em;
+      min-width: 60px;
+    }
+    @keyframes fc-skeleton-shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .fc-skeleton-block { display: block; height: 1em; margin-bottom: 8px; }
+    .fc-skeleton-block:last-child { width: 60%; }
+
+    /* Empty state */
+    .fc-empty {
+      padding: 60px 32px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(255,201,74,0.03), transparent);
+      border: 1px dashed rgba(255,201,74,0.25);
+      border-radius: 16px;
+    }
+    .fc-empty-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: rgba(255,201,74,0.6);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .fc-empty-h {
+      font-family: 'Anton', sans-serif;
+      font-size: 26px;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      color: #f4ead5;
+    }
+    .fc-empty-body {
+      font-size: 15px;
+      color: rgba(244,234,213,0.7);
+      max-width: 480px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+    }
+    .fc-empty-cta {
+      display: inline-block;
+      padding: 12px 22px;
+      background: #e8b948;
+      color: #1a1410;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .fc-empty-cta:hover { background: #f5c950; transform: translateY(-1px); }
+
+    /* Toast */
+    .fc-toast-stack {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+      max-width: calc(100vw - 32px);
+    }
+    .fc-toast {
+      padding: 14px 22px;
+      background: rgba(20,17,12,0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,201,74,0.30);
+      border-left: 3px solid #e8b948;
+      border-radius: 12px;
+      color: #f4ead5;
+      font-size: 14px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      pointer-events: auto;
+      animation: fc-toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      max-width: 480px;
+    }
+    .fc-toast.success { border-left-color: #95d5b2; }
+    .fc-toast.error { border-left-color: #ff8c52; }
+    .fc-toast.info { border-left-color: #8ec4e8; }
+    .fc-toast.out { animation: fc-toast-out 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes fc-toast-in {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fc-toast-out {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+
+    /* Spinner */
+    .fc-spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,201,74,0.2);
+      border-top-color: #e8b948;
+      border-radius: 50%;
+      animation: fc-spin 0.7s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes fc-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Page transition */
+    body.fc-fade-in { animation: fc-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes fc-fade-in {
+      0% { opacity: 0; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Focus ring (accessibility) */
+    *:focus-visible {
+      outline: 2px solid #e8b948;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      .fc-skeleton, .fc-toast, .fc-spinner, body.fc-fade-in { animation: none !important; }
+      * { transition-duration: 0.01ms !important; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Toast API
+  function ensureToastStack() {
+    let stack = document.getElementById('fc-toast-stack');
+    if (!stack) {
+      stack = document.createElement('div');
+      stack.id = 'fc-toast-stack';
+      stack.className = 'fc-toast-stack';
+      document.body.appendChild(stack);
+    }
+    return stack;
+  }
+
+  function toast(message, opts) {
+    opts = opts || {};
+    const variant = opts.variant || 'info';
+    const duration = opts.duration || 3500;
+    const stack = ensureToastStack();
+    const t = document.createElement('div');
+    t.className = 'fc-toast ' + variant;
+    t.textContent = message;
+    stack.appendChild(t);
+    setTimeout(() => {
+      t.classList.add('out');
+      setTimeout(() => t.remove(), 280);
+    }, duration);
+    return t;
+  }
+
+  // Skeleton helper
+  function skeleton(target, lines) {
+    if (typeof target === 'string') target = document.querySelector(target);
+    if (!target) return;
+    lines = lines || 3;
+    const blocks = Array.from({ length: lines }, () => '<span class="fc-skeleton fc-skeleton-block"></span>').join('');
+    target.innerHTML = blocks;
+  }
+
+  // Empty state helper
+  function emptyState(target, opts) {
+    if (typeof target === 'string') target = document.querySelector(target);
+    if (!target) return;
+    opts = opts || {};
+    target.innerHTML = `
+      <div class="fc-empty">
+        <div class="fc-empty-icon">${opts.icon || '// NOTHING HERE YET'}</div>
+        <div class="fc-empty-h">${opts.title || 'Nothing yet.'}</div>
+        <div class="fc-empty-body">${opts.body || ''}</div>
+        ${opts.ctaText ? `<a href="${opts.ctaHref || '#'}" class="fc-empty-cta">${opts.ctaText}</a>` : ''}
+      </div>
+    `;
+  }
+
+  // Spinner helper
+  function spinner(text) {
+    return `<span class="fc-spinner"></span>${text ? ' ' + text : ''}`;
+  }
+
+  // Fade-in on body
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('fc-fade-in');
+  });
+
+  window.FieldCheckCX = { toast, skeleton, emptyState, spinner };
+})();
+</script>
+</head>
+<body>
+  <!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+  <section class="hero">
+    <div class="hero-eyebrow">// DISCOVERY INVERSION</div>
+    <h1>Be in the corpus. <span class="serif">Be findable.</span></h1>
+    <p class="hero-sub">The recruiting industry hides you behind paywalls and ranking gates. FieldCheck inverts that — add yourself to the corpus, get a public profile, become discoverable by your archetype.</p>
+
+    <div class="voice-attribution">
+      <span class="voice-attribution-icon">// VOICE ASK</span>
+      <span class="voice-attribution-text">
+        <strong>KAYLA WILLIAMS · Player PROSPECT</strong><br>
+        <em>"I'm an unknown but real player. There's no way for me to add myself. I don't see myself in it yet."</em>
+      </span>
+    </div>
+  </section>
+
+  <div class="principles">
+    <div class="principle">
+      <div class="principle-icon">// NO RANKING REQUIRED</div>
+      <div class="principle-text"><strong>You don't have to be ranked</strong> to be here. Add yourself; we don't gate by stars.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">// PUBLIC PROFILE</div>
+      <div class="principle-text"><strong>You get a shareable URL</strong> at <code>/m/your-slug</code> — coaches and scouts can find you.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">// MODERATED, NOT GATED</div>
+      <div class="principle-text"><strong>Light moderation for spam</strong>, no editorial gatekeeping. Clean submissions auto-publish within 24h.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">// FREE FOREVER</div>
+      <div class="principle-text"><strong>Player submission stays free.</strong> The discovery inversion is the ethical play, not the revenue play.</div>
+    </div>
+  </div>
+
+  <div class="submit-card" id="form-card">
+    <div class="step-progress">
+      <div class="step-pill active" id="pill-1">1 · BASICS</div>
+      <div class="step-pill" id="pill-2">2 · MEASURABLES</div>
+      <div class="step-pill" id="pill-3">3 · LINKS</div>
+      <div class="step-pill" id="pill-4">4 · REVIEW</div>
+    </div>
+
+    <!-- STEP 1: BASICS -->
+    <div class="step-panel active" id="step-1">
+      <div class="step-eyebrow">// STEP 1</div>
+      <h2 class="step-h">Who are you, and <span class="serif">where do you play?</span></h2>
+      <p class="step-help">Required fields marked with <span class="required">●</span>. Everything else can be added later.</p>
+      <div class="field-grid">
+        <div class="field field-full">
+          <label data-i18n="name_label">Name <span class="required">●</span></label>
+          <input type="text" id="name" placeholder="Your full name" maxlength="80" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label data-i18n="sport_label">Sport <span class="required">●</span></label>
+          <select id="sport">
+            <option value="womens-volleyball">Women's Volleyball</option>
+            <option value="mens-volleyball">Men's Volleyball</option>
+            <option value="football">Football</option>
+            <option value="womens-basketball">Women's Basketball</option>
+            <option value="mens-basketball">Men's Basketball</option>
+            <option value="baseball">Baseball</option>
+            <option value="softball">Softball</option>
+            <option value="womens-soccer">Women's Soccer</option>
+            <option value="mens-soccer">Men's Soccer</option>
+            <option value="tennis">Tennis</option>
+            <option value="field-hockey">Field Hockey</option>
+            <option value="lacrosse">Lacrosse</option>
+            <option value="track-and-field">Track &amp; Field</option>
+            <option value="swimming">Swimming &amp; Diving</option>
+            <option value="golf">Golf</option>
+            <option value="wrestling">Wrestling</option>
+            <option value="gymnastics">Gymnastics</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label data-i18n="position_label">Position <span class="required">●</span></label>
+          <select id="position-select">
+            <!-- Populated dynamically by sport selection -->
+          </select>
+          <input type="text" id="position-custom" placeholder="Specify your position" maxlength="40" style="display:none;margin-top:8px" autocomplete="off">
+          <input type="hidden" id="position">
+        </div>
+        <div class="field field-full">
+          <label data-i18n="school_label">School <span class="required">●</span></label>
+          <input type="text" id="school" placeholder="High school, club, or college you currently play for" autocomplete="organization">
+        </div>
+        <div class="field">
+          <label data-i18n="grad_label">Graduation year</label>
+          <input type="number" id="grad-year" placeholder="2027" min="2023" max="2032" autocomplete="off" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label data-i18n="club_label">Club (optional)</label>
+          <input type="text" id="club" placeholder="If you play club / travel" autocomplete="off">
+        </div>
+        <div class="field field-full">
+          <label data-i18n="location_label">Location</label>
+          <input type="text" id="location" placeholder="City, State (e.g. Round Rock, TX)" autocomplete="address-level2">
+        </div>
+      </div>
+
+<script>
+// v2280: Sport-specific position dictionary. When user changes sport, position
+// dropdown rebuilds with appropriate options. "Other" lets them type their own.
+const SPORT_POSITIONS = {
+  'womens-volleyball': ['Outside Hitter (OH)', 'Opposite (OPP)', 'Middle Blocker (MB)', 'Setter (S)', 'Libero (L)', 'Defensive Specialist (DS)', 'Right Side (RS)'],
+  'mens-volleyball':   ['Outside Hitter (OH)', 'Opposite (OPP)', 'Middle Blocker (MB)', 'Setter (S)', 'Libero (L)', 'Defensive Specialist (DS)'],
+  'football':          ['Quarterback (QB)', 'Running Back (RB)', 'Wide Receiver (WR)', 'Tight End (TE)', 'Offensive Line (OL)', 'Defensive Line (DL)', 'Linebacker (LB)', 'Cornerback (CB)', 'Safety (S)', 'Kicker (K)', 'Punter (P)', 'Long Snapper (LS)', 'Athlete (ATH)'],
+  'womens-basketball': ['Point Guard (PG)', 'Shooting Guard (SG)', 'Small Forward (SF)', 'Power Forward (PF)', 'Center (C)', 'Wing', 'Combo Guard', 'Stretch Four'],
+  'mens-basketball':   ['Point Guard (PG)', 'Shooting Guard (SG)', 'Small Forward (SF)', 'Power Forward (PF)', 'Center (C)', 'Wing', 'Combo Guard', 'Stretch Four'],
+  'baseball':          ['Pitcher (P)', 'Catcher (C)', 'First Base (1B)', 'Second Base (2B)', 'Third Base (3B)', 'Shortstop (SS)', 'Left Field (LF)', 'Center Field (CF)', 'Right Field (RF)', 'Designated Hitter (DH)', 'Utility'],
+  'softball':          ['Pitcher (P)', 'Catcher (C)', 'First Base (1B)', 'Second Base (2B)', 'Third Base (3B)', 'Shortstop (SS)', 'Left Field (LF)', 'Center Field (CF)', 'Right Field (RF)', 'Designated Player (DP)', 'Utility'],
+  'womens-soccer':     ['Goalkeeper (GK)', 'Center Back (CB)', 'Fullback (FB)', 'Wingback (WB)', 'Defensive Mid (CDM)', 'Center Mid (CM)', 'Attacking Mid (CAM)', 'Winger (W)', 'Forward (F)', 'Striker (ST)'],
+  'mens-soccer':       ['Goalkeeper (GK)', 'Center Back (CB)', 'Fullback (FB)', 'Wingback (WB)', 'Defensive Mid (CDM)', 'Center Mid (CM)', 'Attacking Mid (CAM)', 'Winger (W)', 'Forward (F)', 'Striker (ST)'],
+  'tennis':            ['Singles', 'Doubles', 'Singles + Doubles'],
+  'field-hockey':      ['Goalkeeper', 'Defender', 'Midfielder', 'Forward', 'Sweeper'],
+  'lacrosse':          ['Attack', 'Midfield', 'Defense', 'Goalie', 'Faceoff Specialist (FOGO)', 'Long Stick Midfielder (LSM)'],
+  'track-and-field':   ['Sprints (100m / 200m)', '400m', 'Mid-distance (800m / 1500m)', 'Distance (5K / 10K)', 'Hurdles', 'Jumps (LJ / TJ / HJ / PV)', 'Throws (SP / DT / HT / JT)', 'Multi-event (Hept / Decath)', 'Relay Specialist'],
+  'swimming':          ['Freestyle Sprint (50 / 100)', 'Freestyle Distance (200 / 500 / 1650)', 'Backstroke', 'Breaststroke', 'Butterfly', 'IM (200 / 400)', 'Diving (1m / 3m / Platform)', 'Relay Specialist'],
+  'golf':              ['Individual'],
+  'wrestling':         ['125 lbs', '133 lbs', '141 lbs', '149 lbs', '157 lbs', '165 lbs', '174 lbs', '184 lbs', '197 lbs', '285 lbs (HWT)'],
+  'gymnastics':        ['All-Around', 'Vault', 'Uneven Bars', 'Balance Beam', 'Floor Exercise', 'Pommel Horse', 'Still Rings', 'Parallel Bars', 'High Bar', 'Rhythmic'],
+  'other':             ['Specify below']
+};
+
+function rebuildPositions() {
+  const sport = document.getElementById('sport').value;
+  const select = document.getElementById('position-select');
+  const customInput = document.getElementById('position-custom');
+  const hidden = document.getElementById('position');
+  const positions = SPORT_POSITIONS[sport] || ['Specify below'];
+  select.innerHTML = '<option value="">— pick your position —</option>' +
+    positions.map(p => '<option value="' + p.replace(/"/g, '&quot;') + '">' + p + '</option>').join('') +
+    '<option value="__other__">Other / not listed</option>';
+  customInput.style.display = 'none';
+  customInput.value = '';
+  hidden.value = '';
+}
+function syncPositionValue() {
+  const select = document.getElementById('position-select');
+  const customInput = document.getElementById('position-custom');
+  const hidden = document.getElementById('position');
+  if (select.value === '__other__') {
+    customInput.style.display = 'block';
+    customInput.focus();
+    hidden.value = customInput.value.trim();
+  } else {
+    customInput.style.display = 'none';
+    hidden.value = select.value;
+  }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  rebuildPositions();
+  document.getElementById('sport').addEventListener('change', rebuildPositions);
+  document.getElementById('position-select').addEventListener('change', syncPositionValue);
+  document.getElementById('position-custom').addEventListener('input', () => {
+    document.getElementById('position').value = document.getElementById('position-custom').value.trim();
+  });
+  // v2290: URL-param pre-fill. Coach shares link with ?sport=football&school=X
+  // and form starts pre-populated. Used by /for-coaches deep-links.
+  const params = new URLSearchParams(window.location.search);
+  ['sport', 'school', 'name', 'club', 'location'].forEach(k => {
+    const val = params.get(k);
+    if (val) {
+      const el = document.getElementById(k);
+      if (el) el.value = val;
+    }
+  });
+  if (params.get('sport')) rebuildPositions();
+  const pos = params.get('position');
+  if (pos) {
+    document.getElementById('position-custom').style.display = 'block';
+    document.getElementById('position-custom').value = pos;
+    document.getElementById('position').value = pos;
+    document.getElementById('position-select').value = '__other__';
+  }
+});
+</script>
+      <div class="step-actions">
+        <button class="btn-back hidden">← Back</button>
+        <button class="btn-next" onclick="goToStep(2)">Next: Measurables →</button>
+      </div>
+      <div class="msg" id="msg-1"></div>
+    </div>
+
+    <!-- STEP 2: MEASURABLES -->
+    <div class="step-panel" id="step-2">
+      <div class="step-eyebrow">// STEP 2</div>
+      <h2 class="step-h">The <span class="serif">numbers.</span></h2>
+      <p class="step-help">All optional. Each one helps coaches and scouts find players who match their archetype needs.</p>
+      <div class="field-grid">
+        <div class="field">
+          <label>Height (inches)</label>
+          <input type="number" id="height" placeholder="71" min="48" max="90" step="0.5">
+          <span class="field-hint">71" = 5'11"</span>
+        </div>
+        <div class="field">
+          <label>Weight (lbs)</label>
+          <input type="number" id="weight" placeholder="155" min="80" max="350">
+        </div>
+      </div>
+      <div class="step-actions">
+        <button class="btn-back" onclick="goToStep(1)">← Back</button>
+        <button class="btn-next" onclick="goToStep(3)">Next: Links →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: LINKS -->
+    <div class="step-panel" id="step-3">
+      <div class="step-eyebrow">// STEP 3</div>
+      <h2 class="step-h">Where can <span class="serif">they see you play?</span></h2>
+      <p class="step-help">Links are the biggest signal of all. Hudl, MaxPreps, and Instagram make you findable.</p>
+      <div class="field-grid cols-1">
+        <div class="field">
+          <label>Hudl URL</label>
+          <input type="url" id="hudl" placeholder="https://www.hudl.com/profile/...">
+        </div>
+        <div class="field">
+          <label>MaxPreps URL</label>
+          <input type="url" id="maxpreps" placeholder="https://www.maxpreps.com/...">
+        </div>
+        <div class="field">
+          <label>Instagram URL</label>
+          <input type="url" id="instagram" placeholder="https://www.instagram.com/your-handle">
+        </div>
+        <div class="field">
+          <label>Other (one URL)</label>
+          <input type="url" id="other" placeholder="Personal site, news article, etc.">
+        </div>
+      </div>
+      <div class="step-actions">
+        <button class="btn-back" onclick="goToStep(2)">← Back</button>
+        <button class="btn-next" onclick="goToStep(4)">Next: Review →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: REVIEW + SUBMIT -->
+    <div class="step-panel" id="step-4">
+      <div class="step-eyebrow">// STEP 4</div>
+      <h2 class="step-h">Review and <span class="serif">submit.</span></h2>
+      <p class="step-help">Check the summary, then submit. You'll get a shareable URL within seconds (publish in 24h after light review).</p>
+      <div id="review-summary" style="margin-bottom: 24px; padding: 24px; background: var(--bg-2); border-radius: 12px; font-size: 14px; line-height: 1.7;"></div>
+      <div class="step-actions">
+        <button class="btn-back" onclick="goToStep(3)">← Back</button>
+        <button class="btn-submit" id="submit-btn" onclick="submitProfile()">+ ADD ME TO THE CORPUS</button>
+      </div>
+      <div class="msg" id="msg-4"></div>
+    </div>
+  </div>
+
+  <!-- SUCCESS CARD -->
+  <div class="success-card" id="success-card">
+    <div class="success-eyebrow">// YOU'RE IN THE CORPUS</div>
+    <h2 class="success-h">Welcome, <span class="serif">name placeholder</span></h2>
+    <p class="success-sub">Your profile is queued. The recruiting industry doesn't get to decide if you matter — you do.</p>
+    <div class="success-slug-card">
+      <div class="success-slug-label">YOUR PUBLIC URL</div>
+      <div class="success-slug-url" id="success-url"></div>
+    </div>
+    <div class="success-status" id="success-status"></div>
+    <div class="voice-match-card" id="voice-match-card" style="display: none;">
+      <div class="voice-match-eyebrow">// CLOSEST VOICE PROFILE</div>
+      <div class="voice-match-text" id="voice-match-text"></div>
+      <div class="voice-match-why" id="voice-match-why"></div>
+    </div>
+
+    <!-- v2235: Coach Voice Note share callout -->
+    <div id="coach-feedback-callout" style="display:none;margin-top:24px;padding:24px 26px;background:linear-gradient(135deg,rgba(255,201,74,0.10),rgba(20,17,12,0.6));border:1px solid rgba(255,201,74,0.30);border-radius:16px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2px;color:var(--gold);font-weight:700;margin-bottom:10px">// NEW · COACH VOICE NOTE</div>
+      <div style="font-family:'Anton',sans-serif;font-size:24px;line-height:1.1;color:var(--text);margin-bottom:8px;letter-spacing:-0.005em">Want a coach to vouch for you?</div>
+      <p style="font-size:14.5px;color:var(--text-2);line-height:1.6;margin-bottom:16px">Share this link with any coach who knows your game. They tap it, record a 30-second voice note, and it lives on your profile forever. No login. No app. Three taps.</p>
+      <div style="display:flex;gap:8px;align-items:center;padding:11px 13px;background:rgba(10,9,8,0.65);border:1px solid rgba(255,201,74,0.18);border-radius:10px;margin-bottom:12px">
+        <div style="flex:1;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="coach-feedback-url"></div>
+        <button type="button" id="coach-feedback-copy" style="padding:7px 14px;background:var(--gold);color:#1a1410;border:none;border-radius:7px;font-family:'Inter',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:0.5px;cursor:pointer">COPY</button>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a href="#" id="coach-feedback-sms" style="flex:1;min-width:140px;padding:11px 14px;background:rgba(255,201,74,0.10);color:var(--text);border:1px solid rgba(255,201,74,0.30);border-radius:10px;text-decoration:none;font-size:13px;font-weight:600;text-align:center">📱 Text to coach</a>
+        <a href="#" id="coach-feedback-open" style="flex:1;min-width:140px;padding:11px 14px;background:transparent;color:var(--text-2);border:1px solid rgba(255,255,255,0.10);border-radius:10px;text-decoration:none;font-size:13px;font-weight:600;text-align:center">Preview the page →</a>
+      </div>
+    </div>
+
+    <div class="success-actions">
+      <a href="/voices" class="success-action primary">READ THE VOICES →</a>
+      <a href="/position-fit" class="success-action">RUN POSITION-FIT ORACLE →</a>
+      <a href="/pathway" class="success-action">BUILD MY PATHWAY →</a>
+    </div>
+  </div>
+
+  <footer>Build <span id="build-stamp">v0.30.5.2210</span> · <a href="/">Home</a> · <a href="/voices">Voices</a> · <a href="/position-fit">Position-Fit</a> · <a href="/pathway">Pathway</a></footer>
+
+<script>
+const PROXY = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev/api';
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+let currentStep = 1;
+
+function goToStep(n) {
+  if (n === 2 || n === 3 || n === 4) {
+    // Validate step 1 before leaving
+    if (currentStep === 1) {
+      const name = document.getElementById('name').value.trim();
+      const position = document.getElementById('position').value.trim();
+      const school = document.getElementById('school').value.trim();
+      const msg = document.getElementById('msg-1');
+      if (!name || name.length < 2) { msg.textContent = 'Name is required (at least 2 characters).'; msg.className = 'msg show error'; return; }
+      if (!position) { msg.textContent = 'Position is required.'; msg.className = 'msg show error'; return; }
+      if (!school || school.length < 2) { msg.textContent = 'School is required.'; msg.className = 'msg show error'; return; }
+      msg.className = 'msg';
+    }
+  }
+
+  // Update pills
+  for (let i = 1; i <= 4; i++) {
+    const pill = document.getElementById('pill-' + i);
+    pill.classList.remove('active', 'done');
+    if (i < n) pill.classList.add('done');
+    if (i === n) pill.classList.add('active');
+  }
+
+  // Update panels
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById('step-' + i).classList.remove('active');
+  }
+  document.getElementById('step-' + n).classList.add('active');
+  currentStep = n;
+
+  // Build review on step 4
+  if (n === 4) buildReview();
+
+  window.scrollTo({ top: document.querySelector('.submit-card').offsetTop - 24, behavior: 'smooth' });
+}
+
+function buildReview() {
+  const summary = document.getElementById('review-summary');
+  const links = {
+    hudl: document.getElementById('hudl').value.trim(),
+    maxpreps: document.getElementById('maxpreps').value.trim(),
+    instagram: document.getElementById('instagram').value.trim(),
+    other: document.getElementById('other').value.trim()
+  };
+  const linkCount = Object.values(links).filter(l => l).length;
+
+  summary.innerHTML = `
+    <div style="margin-bottom: 14px;"><strong style="color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px;">BASICS</strong></div>
+    <div><strong>Name:</strong> ${esc(document.getElementById('name').value)}</div>
+    <div><strong>Sport:</strong> ${esc(document.getElementById('sport').value.replace(/-/g, ' '))}</div>
+    <div><strong>Position:</strong> ${esc(document.getElementById('position').value)}</div>
+    <div><strong>School:</strong> ${esc(document.getElementById('school').value)}</div>
+    <div><strong>Graduation:</strong> ${esc(document.getElementById('grad-year').value || 'not specified')}</div>
+    <div><strong>Club:</strong> ${esc(document.getElementById('club').value || 'not specified')}</div>
+    <div><strong>Location:</strong> ${esc(document.getElementById('location').value || 'not specified')}</div>
+    <div style="margin: 14px 0; height: 1px; background: var(--glass-edge);"></div>
+    <div style="margin-bottom: 14px;"><strong style="color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px;">MEASURABLES</strong></div>
+    <div><strong>Height:</strong> ${esc(document.getElementById('height').value || 'not specified')}${document.getElementById('height').value ? ' in' : ''}</div>
+    <div><strong>Weight:</strong> ${esc(document.getElementById('weight').value || 'not specified')}${document.getElementById('weight').value ? ' lb' : ''}</div>
+    <div style="margin: 14px 0; height: 1px; background: var(--glass-edge);"></div>
+    <div style="margin-bottom: 14px;"><strong style="color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px;">LINKS (${linkCount})</strong></div>
+    ${linkCount === 0 ? '<div style="color: var(--text-3); font-style: italic;">No links provided — adding links significantly increases discoverability.</div>' : Object.entries(links).filter(([k, v]) => v).map(([k, v]) => `<div><strong>${k}:</strong> <span style="word-break: break-all; color: var(--gold);">${esc(v)}</span></div>`).join('')}
+  `;
+}
+
+async function submitProfile() {
+  const btn = document.getElementById('submit-btn');
+  const msg = document.getElementById('msg-4');
+  btn.disabled = true;
+  btn.textContent = 'SUBMITTING…';
+  msg.className = 'msg show info';
+  msg.textContent = 'Adding you to the corpus…';
+
+  const body = {
+    name: document.getElementById('name').value.trim(),
+    sport: document.getElementById('sport').value,
+    position: document.getElementById('position').value.trim(),
+    school: document.getElementById('school').value.trim(),
+    height_inches: parseFloat(document.getElementById('height').value) || null,
+    weight_lbs: parseFloat(document.getElementById('weight').value) || null,
+    graduation_year: parseInt(document.getElementById('grad-year').value, 10) || null,
+    club: document.getElementById('club').value.trim() || null,
+    location: document.getElementById('location').value.trim() || null,
+    links: {
+      hudl: document.getElementById('hudl').value.trim() || undefined,
+      maxpreps: document.getElementById('maxpreps').value.trim() || undefined,
+      instagram: document.getElementById('instagram').value.trim() || undefined,
+      other: document.getElementById('other').value.trim() || undefined
+    }
+  };
+
+  try {
+    const r = await fetch(`${PROXY}/players/submit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const d = await r.json();
+
+    if (!d.ok) {
+      msg.className = 'msg show error';
+      msg.textContent = 'Submission error: ' + (d.error || d.note || 'unknown');
+      btn.disabled = false;
+      btn.textContent = '+ ADD ME TO THE CORPUS';
+      return;
+    }
+
+    // Success
+    document.getElementById('form-card').style.display = 'none';
+    const card = document.getElementById('success-card');
+    card.querySelector('.success-h .serif').textContent = body.name;
+    document.getElementById('success-url').textContent = window.location.origin + d.public_url;
+    document.getElementById('success-status').innerHTML = `
+      <strong>STATUS:</strong> ${esc(d.status.replace(/_/g, ' ').toUpperCase())}<br>
+      ${esc(d.next_steps || '')}
+    `;
+
+    if (d.your_voice_match) {
+      const matchCard = document.getElementById('voice-match-card');
+      matchCard.style.display = 'block';
+      document.getElementById('voice-match-text').textContent = 'You most resemble ' + d.your_voice_match.voice_id.replace(/-/g, ' ');
+      document.getElementById('voice-match-why').textContent = d.your_voice_match.why;
+    }
+
+    // v2235: Coach feedback share-link callout
+    try {
+      const slug = (d.public_url || '').split('/').pop() || '';
+      if (slug) {
+        const callout = document.getElementById('coach-feedback-callout');
+        const coachUrl = window.location.origin + '/coach-feedback?slug=' + encodeURIComponent(slug);
+        document.getElementById('coach-feedback-url').textContent = coachUrl;
+        document.getElementById('coach-feedback-open').href = coachUrl;
+        const smsBody = encodeURIComponent('Hey Coach — I just added myself to FieldCheck. Could you leave me a quick voice note? Takes 30 seconds, no login: ' + coachUrl);
+        document.getElementById('coach-feedback-sms').href = 'sms:?&body=' + smsBody;
+        document.getElementById('coach-feedback-copy').addEventListener('click', async () => {
+          const btn = document.getElementById('coach-feedback-copy');
+          const orig = btn.textContent;
+          try {
+            await navigator.clipboard.writeText(coachUrl);
+            btn.textContent = '✓ COPIED';
+            setTimeout(() => { btn.textContent = orig; }, 2200);
+          } catch (e) {
+            btn.textContent = 'COPY FAILED';
+            setTimeout(() => { btn.textContent = orig; }, 2200);
+          }
+        });
+        callout.style.display = 'block';
+      }
+    } catch (e) { console.error('coach-feedback callout error:', e); }
+
+    card.classList.add('show');
+    setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  } catch (e) {
+    msg.className = 'msg show error';
+    msg.textContent = 'Network error: ' + e.message;
+    btn.disabled = false;
+    btn.textContent = '+ ADD ME TO THE CORPUS';
+  }
+}
+</script>
+<script>document.addEventListener("DOMContentLoaded",()=>{window.FieldCheckI18n&&window.FieldCheckI18n.init("add-me");});</script>
+</body>
+</html>

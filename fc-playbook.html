@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playbook · FieldCheck IQ</title>
+  <meta name="description" content="Your first 10 minutes with FieldCheck IQ — by role. Coach playbook, parent playbook, scout playbook, AD playbook.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+:root { --bg: #0d0d0d; --bg-2: #161616; --text: #F5F1E8; --text-2: #b8b8b8; --text-3: #888; --gold: #d4af37; --moss: #95d5b2; --teal: #4ec9c0; --rust: #c45132; --border: rgba(255,255,255,0.08); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+.fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+.fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+.fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+.fc-canonical-wordmark { font-size: 18px; }
+.fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+.fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+.fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+.fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+.fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.fc-canonical-nav .nav-more-wrap { display: none; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.nav-primary:hover { color: #ffc94a; }
+.nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.nav-more-wrap { position: relative; display: inline-block; }
+.nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-wrap { display: none; }
+.nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.nav-more-chev { transform: rotate(180deg); }
+.nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.nav-more-group { padding: 6px 4px; }
+.nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+
+.pb-hero { max-width: 980px; margin: 0 auto; padding: 64px 32px 28px; text-align: center; }
+.pb-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 14px; }
+.pb-title { font-family: 'Anton', sans-serif; font-size: clamp(40px, 6.5vw, 72px); line-height: 0.98; letter-spacing: -0.012em; margin-bottom: 16px; }
+.pb-title .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.pb-sub { font-size: 16px; color: var(--text-2); max-width: 720px; margin: 0 auto; line-height: 1.55; }
+.pb-tabs { max-width: 1100px; margin: 32px auto 24px; padding: 0 32px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.pb-tab { padding: 10px 18px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-2); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; border-radius: 8px; cursor: pointer; transition: all 0.15s; font-weight: 600; }
+.pb-tab.active { background: rgba(212,175,55,0.12); border-color: var(--gold); color: var(--gold); }
+.pb-tab:hover { color: var(--text); }
+.pb-panel { max-width: 1100px; margin: 0 auto 60px; padding: 0 32px; display: none; }
+.pb-panel.active { display: block; animation: pb-fade 0.3s ease; }
+@keyframes pb-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.pb-panel-intro { padding: 24px 28px; background: linear-gradient(135deg, rgba(212,175,55,0.04), rgba(20,17,12,0.4)); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; margin-bottom: 24px; }
+.pb-panel-intro h2 { font-family: 'Anton', sans-serif; font-size: clamp(26px, 4vw, 38px); line-height: 1.05; letter-spacing: -0.005em; margin-bottom: 10px; }
+.pb-panel-intro h2 .iq-italic { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.pb-panel-intro p { color: var(--text-2); font-size: 14.5px; line-height: 1.6; }
+.pb-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.pb-step { padding: 22px 24px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; position: relative; }
+.pb-step-num { position: absolute; top: -10px; left: 18px; padding: 4px 12px; background: var(--gold); color: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; font-weight: 700; border-radius: 5px; }
+.pb-step-time { display: inline-block; padding: 3px 8px; background: rgba(78,201,192,0.12); color: var(--teal); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.2px; border-radius: 4px; margin-bottom: 10px; font-weight: 700; }
+.pb-step h3 { font-family: 'Anton', sans-serif; font-size: 19px; line-height: 1.1; letter-spacing: -0.005em; margin-bottom: 8px; }
+.pb-step p { color: var(--text-2); font-size: 13.5px; line-height: 1.55; margin-bottom: 10px; }
+.pb-step-cta { display: inline-block; padding: 7px 12px; background: rgba(212,175,55,0.1); color: var(--gold); border: 1px solid rgba(212,175,55,0.35); border-radius: 6px; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.4px; font-weight: 700; text-transform: uppercase; transition: background 0.15s; }
+.pb-step-cta:hover { background: rgba(212,175,55,0.2); }
+.pb-coda { padding: 22px 26px; background: linear-gradient(135deg, rgba(78,201,192,0.05), rgba(20,17,12,0.4)); border: 1px solid rgba(78,201,192,0.28); border-radius: 12px; margin-top: 20px; }
+.pb-coda-h { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: var(--teal); font-weight: 700; margin-bottom: 10px; }
+.pb-coda p { color: var(--text-2); font-size: 14px; line-height: 1.6; }
+.pb-coda p strong { color: var(--text); }
+@media (max-width: 720px) { .pb-tabs, .pb-panel { padding: 0 16px; } .pb-steps { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="pb-hero">
+  <div class="pb-eyebrow">// PLAYBOOK · YOUR FIRST 10 MINUTES · BY ROLE</div>
+  <h1 class="pb-title">Don't read the docs. <span class="iq-italic">Run the play.</span></h1>
+  <p class="pb-sub">Four roles. Each with a 10-minute path through FieldCheck IQ. No setup. No login. Just the verdicts.</p>
+</section>
+
+<div class="pb-tabs">
+  <button class="pb-tab active" data-role="coach" onclick="pbShow('coach', this)">COACH</button>
+  <button class="pb-tab" data-role="parent" onclick="pbShow('parent', this)">PARENT</button>
+  <button class="pb-tab" data-role="scout" onclick="pbShow('scout', this)">SCOUT</button>
+  <button class="pb-tab" data-role="ad" onclick="pbShow('ad', this)">AD / GM</button>
+</div>
+
+<!-- COACH PANEL -->
+<div class="pb-panel active" id="pb-coach">
+  <div class="pb-panel-intro">
+    <h2>For the coach: <span class="iq-italic">build the watchlist, vet at light speed.</span></h2>
+    <p>You're a head coach or position coach. You have 30 names on the board this week. Most ranking sites won't tell you why. FieldCheck IQ will — with citations.</p>
+  </div>
+  <div class="pb-steps">
+    <div class="pb-step"><div class="pb-step-num">01</div><div class="pb-step-time">~1 min</div>
+      <h3>Open the Workspace</h3>
+      <p>Hit <code style="color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:12px">/coach</code> — no login, no email, no signup. Your Watchlist lives on your device.</p>
+      <a href="/coach" class="pb-step-cta">Open /coach →</a>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">02</div><div class="pb-step-time">~3 min</div>
+      <h3>Add your top 5 targets</h3>
+      <p>Name + sport + school. Press Enter after each. They auto-enrich with live IQ Score in the background.</p>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">03</div><div class="pb-step-time">~2 min</div>
+      <h3>Compare side-by-side</h3>
+      <p>Check 2–3 boxes → Compare →. See the 5-layer moat overlaid. Read the comparable. Decide who fits the gap.</p>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">04</div><div class="pb-step-time">~2 min</div>
+      <h3>Export the verdict card</h3>
+      <p>⬇ Export → Print or Download SVG. Send to your AD or HC. IQ-stamped, audit-trailed, one page.</p>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">05</div><div class="pb-step-time">~2 min</div>
+      <h3>Walk the Trust Graph</h3>
+      <p>Whose alumni land where? Whose programs feed yours? <a href="/trust-graph" style="color:var(--gold)">/trust-graph</a> shows the relationships, with every edge cited.</p>
+    </div>
+  </div>
+  <div class="pb-coda">
+    <div class="pb-coda-h">// THE COACH PROMISE</div>
+    <p><strong>Watchlist stays on your device.</strong> Comparable names stay actionable. Audit trail stays attached. <strong>You stay in control.</strong></p>
+  </div>
+</div>
+
+<!-- PARENT PANEL -->
+<div class="pb-panel" id="pb-parent">
+  <div class="pb-panel-intro">
+    <h2>For the parent: <span class="iq-italic">read the ground truth, not the marketing.</span></h2>
+    <p>Your kid is being recruited (or recruiting themselves). You're getting pitched by ranking services that want hundreds of dollars to tell you what an "exposure" score means. FieldCheck IQ tells you what the engine reads — for free.</p>
+  </div>
+  <div class="pb-steps">
+    <div class="pb-step"><div class="pb-step-num">01</div><div class="pb-step-time">~1 min</div>
+      <h3>Run a verdict on your kid</h3>
+      <p>Hit the homepage, type their name, sport, school. The verdict comes back with score, tier, and the 5-layer breakdown.</p>
+      <a href="/" class="pb-step-cta">Start at home →</a>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">02</div><div class="pb-step-time">~3 min</div>
+      <h3>Read the audit envelope</h3>
+      <p>Click "show audit" — see exactly which public-record sources fed the score. Every claim is sourced. No black box.</p>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">03</div><div class="pb-step-time">~2 min</div>
+      <h3>Find the comparable</h3>
+      <p>The Comparable section names a Founding Athlete with a similar archetype + career arc. <a href="/founding-athletes" style="color:var(--gold)">/founding-athletes</a> shows you who that is.</p>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">04</div><div class="pb-step-time">~2 min</div>
+      <h3>Start the journal</h3>
+      <p>Log a checkpoint every month — vertical jump, hit %, GPA, attitude milestone. <a href="/pathway" style="color:var(--gold)">/pathway</a> tracks the shape over time.</p>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">05</div><div class="pb-step-time">~2 min</div>
+      <h3>Dispute anything you disagree with</h3>
+      <p>If the verdict misses something — bad stat, wrong position, outdated film — email <code style="color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:12px">dispute@fieldcheck.ai</code>. 5-business-day SLA.</p>
+    </div>
+  </div>
+  <div class="pb-coda">
+    <div class="pb-coda-h">// THE PARENT PROMISE</div>
+    <p><strong>Never paid.</strong> Never gamified. Never sold to. The audit is the product.</p>
+  </div>
+</div>
+
+<!-- SCOUT PANEL -->
+<div class="pb-panel" id="pb-scout">
+  <div class="pb-panel-intro">
+    <h2>For the scout: <span class="iq-italic">cite your work, defend your read.</span></h2>
+    <p>You're a private scout or club director. You write reports that have to stand up to scrutiny. FieldCheck IQ is the substrate — your read, with the receipts.</p>
+  </div>
+  <div class="pb-steps">
+    <div class="pb-step"><div class="pb-step-num">01</div><div class="pb-step-time">~1 min</div>
+      <h3>Build a sport-specific board</h3>
+      <p>Watchlist on /coach handles up to your daily flow. Position-filter on the way. Today's read: which names need a fresh look?</p>
+      <a href="/coach" class="pb-step-cta">Open /coach →</a>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">02</div><div class="pb-step-time">~2 min</div>
+      <h3>Find a near-comparable</h3>
+      <p>Hit <a href="/founding-athletes" style="color:var(--gold)">/founding-athletes</a> — filter to your sport. When you write "she's a 78%-Andrea-Drews type," you can point to what Andrea is.</p>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">03</div><div class="pb-step-time">~3 min</div>
+      <h3>Stress-test your read against the engine</h3>
+      <p>Where do you and the IQ disagree? Why? Disagreement is data — your edge is whatever you see that the engine doesn't.</p>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">04</div><div class="pb-step-time">~2 min</div>
+      <h3>Export the receipt</h3>
+      <p>For every report you write, generate an IQ-stamped card and staple it to your scout note. The SHA-256 is the receipt.</p>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">05</div><div class="pb-step-time">~2 min</div>
+      <h3>Audit the methodology</h3>
+      <p>Read <a href="/methodology" style="color:var(--gold)">/methodology</a>. Know the weights. When a client asks "why this score" — you'll have the answer that no other scouting service can give.</p>
+    </div>
+  </div>
+  <div class="pb-coda">
+    <div class="pb-coda-h">// THE SCOUT PROMISE</div>
+    <p>FieldCheck IQ <strong>doesn't replace your read</strong>. It <strong>defends it</strong>. Your edge is what you see beyond the citations. The citations are the floor.</p>
+  </div>
+</div>
+
+<!-- AD / GM PANEL -->
+<div class="pb-panel" id="pb-ad">
+  <div class="pb-panel-intro">
+    <h2>For the AD or GM: <span class="iq-italic">the room reads from one page.</span></h2>
+    <p>You allocate capital. You manage the room. You need a defensible intelligence layer that head coach + position coaches + GM + compliance can read off of. That's Edge.</p>
+  </div>
+  <div class="pb-steps">
+    <div class="pb-step"><div class="pb-step-num">01</div><div class="pb-step-time">~2 min</div>
+      <h3>Read the institutional pitch</h3>
+      <p>Hit <a href="/edge" style="color:var(--gold)">/edge</a> — 4 buyer cards (ADs, NIL collectives, pro clubs, networks), 6 platform features, 3 tiers (Dept $99/mo, Institution $36K/yr, Pro $96K/yr).</p>
+      <a href="/edge" class="pb-step-cta">Open /edge →</a>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">02</div><div class="pb-step-time">~3 min</div>
+      <h3>Read the methodology</h3>
+      <p><a href="/methodology" style="color:var(--gold)">/methodology</a> — the math, in public. Weights, thresholds, cosine formula, NIL Score. Your compliance team will want this on file before signature.</p>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">03</div><div class="pb-step-time">~3 min</div>
+      <h3>Verify the security posture</h3>
+      <p><a href="/security" style="color:var(--gold)">/security</a> — SSO, encryption, audit logs, DPA, incident SLA, compliance roadmap. Read the responsible-disclosure scope before you give a token to anyone.</p>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">04</div><div class="pb-step-time">~2 min</div>
+      <h3>Walk the API surface</h3>
+      <p><a href="/api" style="color:var(--gold)">/api</a> — Hudl-style docs. 5 endpoints. Curl + JS samples. Audit envelope on every response. SHA-256 signed.</p>
+    </div>
+    <div class="pb-step"><div class="pb-step-num">05</div><div class="pb-step-time">~Email</div>
+      <h3>Start the conversation</h3>
+      <p>Email <code style="color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:12px">edge@fieldcheck.ai</code> — we open with a sandbox bearer and a few of your priority targets. No CC required.</p>
+    </div>
+  </div>
+  <div class="pb-coda">
+    <div class="pb-coda-h">// THE AD/GM PROMISE</div>
+    <p><strong>Read 400 athletes a season. Audit every read.</strong> One workspace, one methodology, one audit envelope per decision. Defensible to boosters, donors, and counsel.</p>
+  </div>
+</div>
+
+<div style="text-align:center;padding:24px 32px 60px;color:#888;font-size:11px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:1.2px">
+  FieldCheck Playbook · ThinkDifferent Holdings · © 2026 · v0.30.5.2239
+</div>
+
+<script>
+function pbShow(role, btn) {
+  document.querySelectorAll('.pb-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.pb-panel').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('pb-' + role);
+  if (target) target.classList.add('active');
+}
+function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('fc-nav-more-wrap');
+  if (!wrap) return;
+  if (!wrap.contains(e.target)) {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+</body>
+</html>

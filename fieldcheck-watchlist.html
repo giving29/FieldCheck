@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watchlist · FieldCheck</title>
+<meta name="description" content="Your watched athletes — track verdict changes, last-visit history, and discover updates across your follow list.">
+<!-- FCBase42 . Phase 5 close-out . Standalone Watchlist Page (2026-06-08) . closes FCBase40 watchlist v2 banner dead-end UX -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Big+Shoulders+Display:wght@400;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07060a;
+    --bg2: #11101a;
+    --bg3: #1a1825;
+    --gold: #f0c66e;
+    --gold-d: #d4a24c;
+    --gold-soft: rgba(240, 198, 110, 0.12);
+    --gold-line: rgba(240, 198, 110, 0.22);
+    --t1: #ffffff;
+    --t2: rgba(255, 255, 255, 0.78);
+    --t3: rgba(255, 255, 255, 0.5);
+    --t4: rgba(255, 255, 255, 0.32);
+    --ge: rgba(255, 255, 255, 0.08);
+    --icon: #fbbf24;
+    --elite-plus: #93c5fd;
+    --elite: #c4b5fd;
+    --star: #86efac;
+    --prospect: #fde68a;
+    --scout: #fca5a5;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--t1); font-family: "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { min-height: 100vh; padding: 28px 20px 80px; }
+
+  .wrap { max-width: 1200px; margin: 0 auto; }
+
+  /* Top nav */
+  .topnav { display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; margin-bottom: 26px; border-bottom: 1px solid var(--ge); }
+  .topnav a.brand { font-family: "Big Shoulders Display", "Anton", sans-serif; font-weight: 900; font-size: 22px; letter-spacing: 0.04em; color: var(--gold); text-decoration: none; }
+  .topnav a.brand:hover { color: #fff; }
+  .topnav .nav-right { display: flex; gap: 16px; align-items: center; }
+  .topnav .nav-right a { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--t3); text-decoration: none; text-transform: uppercase; transition: color 0.18s ease; }
+  .topnav .nav-right a:hover { color: var(--gold); }
+
+  /* Header */
+  .hdr { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 30px; }
+  .hdr-l { flex: 1; min-width: 280px; }
+  .hdr-eyebrow { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; letter-spacing: 0.18em; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+  .hdr-title { font-family: "Big Shoulders Display", "Anton", sans-serif; font-weight: 900; font-size: clamp(42px, 7vw, 72px); line-height: 0.92; letter-spacing: -0.01em; margin: 0; color: var(--t1); }
+  .hdr-sub { margin-top: 12px; color: var(--t2); font-size: 14.5px; line-height: 1.5; max-width: 560px; }
+  .hdr-r { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .pill { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; background: rgba(255,255,255,0.04); border: 1px solid var(--ge); border-radius: 999px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--t2); }
+  .pill strong { color: var(--gold); font-weight: 700; }
+  .sort-btn { background: transparent; border: 1px solid var(--gold-line); color: var(--gold); padding: 8px 14px; border-radius: 8px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.18s ease; }
+  .sort-btn:hover { background: var(--gold-soft); }
+
+  /* Grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+
+  /* Card */
+  .card { background: linear-gradient(180deg, var(--bg2) 0%, var(--bg3) 100%); border: 1px solid var(--ge); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; transition: all 0.22s ease; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold) 0%, transparent 100%); opacity: 0; transition: opacity 0.22s ease; }
+  .card:hover { border-color: var(--gold-line); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(0,0,0,0.4); }
+  .card:hover::before { opacity: 1; }
+  .card-top { display: flex; gap: 14px; align-items: flex-start; }
+  .card-photo { width: 72px; height: 72px; border-radius: 50%; background: var(--bg2); border: 2px solid var(--gold-line); flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: "Anton", sans-serif; font-size: 30px; color: var(--t4); }
+  .card-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .card-ident { flex: 1; min-width: 0; }
+  .card-name { font-family: "Big Shoulders Display", "Anton", sans-serif; font-weight: 700; font-size: 22px; line-height: 1.1; color: var(--t1); margin: 0 0 4px; letter-spacing: -0.005em; word-break: break-word; }
+  .card-meta { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; color: var(--t3); letter-spacing: 0.04em; line-height: 1.5; }
+  .card-meta strong { color: var(--t2); font-weight: 600; }
+
+  .card-stats { display: flex; gap: 8px; align-items: center; }
+  .composite-chip { display: inline-flex; align-items: baseline; gap: 6px; padding: 6px 11px; background: rgba(240,198,110,0.06); border: 1px solid var(--gold-line); border-radius: 8px; }
+  .composite-chip .num { font-family: "Big Shoulders Display", "Bebas Neue", system-ui, sans-serif; font-size: 22px; font-weight: 900; color: var(--gold); line-height: 1; }
+  .composite-chip .lbl { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9px; color: var(--t3); letter-spacing: 0.12em; text-transform: uppercase; }
+  .tier-pill { display: inline-flex; padding: 5px 9px; border-radius: 4px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  .tier-pill[data-tier="ICON"] { background: rgba(251,191,36,0.10); color: var(--icon); border: 1px solid rgba(251,191,36,0.30); }
+  .tier-pill[data-tier="ELITE+"] { background: rgba(147,197,253,0.08); color: var(--elite-plus); border: 1px solid rgba(147,197,253,0.28); }
+  .tier-pill[data-tier="ELITE"] { background: rgba(196,181,253,0.08); color: var(--elite); border: 1px solid rgba(196,181,253,0.28); }
+  .tier-pill[data-tier="STAR"] { background: rgba(134,239,172,0.08); color: var(--star); border: 1px solid rgba(134,239,172,0.28); }
+  .tier-pill[data-tier="PROSPECT"] { background: rgba(253,230,138,0.08); color: var(--prospect); border: 1px solid rgba(253,230,138,0.28); }
+  .tier-pill[data-tier="SCOUT"] { background: rgba(252,165,165,0.08); color: var(--scout); border: 1px solid rgba(252,165,165,0.28); }
+
+  .card-visit { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; color: var(--t3); padding-top: 12px; border-top: 1px solid var(--ge); display: flex; align-items: center; gap: 8px; }
+  .card-visit.fresh { color: var(--star); }
+  .card-visit.stale { color: var(--scout); }
+  .card-visit-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--t4); flex-shrink: 0; }
+  .card-visit.fresh .card-visit-dot { background: var(--star); box-shadow: 0 0 8px var(--star); }
+  .card-visit.stale .card-visit-dot { background: var(--scout); }
+
+  .card-actions { display: flex; gap: 8px; }
+  .card-action { flex: 1; padding: 9px 12px; border-radius: 8px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.18s ease; border: 1px solid; }
+  .card-action.primary { background: var(--gold-soft); border-color: var(--gold-line); color: var(--gold); }
+  .card-action.primary:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+  .card-action.secondary { background: transparent; border-color: var(--ge); color: var(--t3); flex: 0 0 auto; padding: 9px 13px; }
+  .card-action.secondary:hover { background: rgba(252,165,165,0.08); border-color: rgba(252,165,165,0.30); color: var(--scout); }
+
+  /* Empty state */
+  .empty { text-align: center; padding: 80px 20px; max-width: 480px; margin: 40px auto; }
+  .empty-icon { font-size: 56px; color: var(--gold); opacity: 0.6; margin-bottom: 20px; line-height: 1; }
+  .empty-title { font-family: "Big Shoulders Display", "Anton", sans-serif; font-weight: 700; font-size: 32px; color: var(--t1); margin: 0 0 12px; }
+  .empty-body { color: var(--t2); font-size: 15px; line-height: 1.6; margin-bottom: 28px; }
+  .empty-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 22px; background: var(--gold); color: var(--bg); border-radius: 999px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; text-decoration: none; transition: all 0.2s ease; }
+  .empty-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(240,198,110,0.30); }
+
+  /* Footer */
+  .foot { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--ge); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; color: var(--t4); letter-spacing: 0.06em; }
+  .foot button.danger { background: transparent; border: 1px solid rgba(252,165,165,0.30); color: var(--scout); padding: 8px 14px; border-radius: 8px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; letter-spacing: 0.10em; text-transform: uppercase; cursor: pointer; transition: all 0.18s ease; }
+  .foot button.danger:hover { background: rgba(252,165,165,0.10); }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    body { padding: 20px 14px 60px; }
+    .topnav { margin-bottom: 20px; }
+    .grid { grid-template-columns: 1fr; gap: 14px; }
+    .card { padding: 16px; }
+    .card-photo { width: 60px; height: 60px; font-size: 26px; }
+    .card-name { font-size: 19px; }
+    .composite-chip .num { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<!-- FCBase47 . shared resolver for watchlist (same source list as verdict) -->
+<script>
+(function(){
+  if (window._fcPhotoResolver) return;
+  var INDEX = {
+    'Cameron Boozer|mens-basketball': { direct: 'https://dxbhsrqyrr690.cloudfront.net/sidearm.nextgen.sites/goduke.com/images/2025/9/15/Headshots_4x6_Boozer__Cameron_bCXS6.jpg', wikiSlug: 'Cameron_Boozer' },
+    'Cooper Flagg|mens-basketball':   { espnId: '5041939', espnSport: 'nba', wikiSlug: 'Cooper_Flagg' },
+    'LeBron James|mens-basketball':   { espnId: '1966',    espnSport: 'nba', wikiSlug: 'LeBron_James' },
+    'Stephen Curry|mens-basketball':  { espnId: '3975',    espnSport: 'nba', wikiSlug: 'Stephen_Curry' },
+    'Kevin Durant|mens-basketball':   { espnId: '3202',    espnSport: 'nba', wikiSlug: 'Kevin_Durant' },
+    'Jayson Tatum|mens-basketball':   { espnId: '4065648', espnSport: 'nba', wikiSlug: 'Jayson_Tatum' },
+    'Anthony Davis|mens-basketball':  { espnId: '6583',    espnSport: 'nba', wikiSlug: 'Anthony_Davis' },
+    'Tom Brady|football':             { espnId: '2330',    espnSport: 'nfl', wikiSlug: 'Tom_Brady' },
+    'Patrick Mahomes|football':       { espnId: '3139477', espnSport: 'nfl', wikiSlug: 'Patrick_Mahomes' }
+  };
+  function _svg(name){
+    var ini = (name||'?').trim().split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();
+    return 'data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><rect width="240" height="240" fill="#2a1f0f"/><text x="120" y="120" font-family="Anton, Bebas Neue, sans-serif" font-size="110" fill="#f0c66e" text-anchor="middle" dy=".34em" font-weight="700" letter-spacing="2">'+ini+'</text></svg>');
+  }
+  window._fcPhotoResolver = {
+    bestUrl: function(name, sport){
+      var e = INDEX[name+'|'+(sport||'')] || {};
+      if (e.direct) return e.direct;
+      if (e.espnId && e.espnSport) return 'https://a.espncdn.com/i/headshots/'+e.espnSport+'/players/full/'+e.espnId+'.png';
+      return _svg(name);
+    },
+    inlineSvg: _svg
+  };
+})();
+</script>
+
+<div class="wrap">
+
+<div class="topnav">
+  <a class="brand" href="/">FIELDCHECK</a>
+  <div class="nav-right">
+    <a href="/">← Verdicts</a>
+    <a href="/deck">Deck</a>
+  </div>
+</div>
+
+<header class="hdr">
+  <div class="hdr-l">
+    <div class="hdr-eyebrow">// Your Watchlist</div>
+    <h1 class="hdr-title">Athletes you're tracking</h1>
+    <p class="hdr-sub" id="hdr-sub">Loading watchlist…</p>
+  </div>
+  <div class="hdr-r" id="hdr-r">
+    <!-- count pill + sort button injected -->
+  </div>
+</header>
+
+<div id="content"><!-- grid or empty state --></div>
+
+<div class="foot" id="foot" style="display:none;">
+  <div>FieldCheck · Athletic intelligence layer</div>
+  <button class="danger" id="clearAll">Clear All Watched</button>
+</div>
+
+</div>
+
+<script>
+(function(){
+  var WATCHLIST_KEY = 'fc_watchlist';
+  var VISITS_KEY = 'fc_watchlist_visits';
+  var SORT_KEY = 'fc_watchlist_sort';
+  var sortMode = (function(){ try { return localStorage.getItem(SORT_KEY) || 'added'; } catch(e){ return 'added'; } })();
+
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  function getWatchlist(){
+    try { var r = localStorage.getItem(WATCHLIST_KEY); return r ? JSON.parse(r) : []; }
+    catch(e) { return []; }
+  }
+  function setWatchlist(l){ try { localStorage.setItem(WATCHLIST_KEY, JSON.stringify(l)); } catch(e){} }
+  function getVisits(){
+    try { var r = localStorage.getItem(VISITS_KEY); return r ? JSON.parse(r) : {}; }
+    catch(e) { return {}; }
+  }
+  function setVisits(v){ try { localStorage.setItem(VISITS_KEY, JSON.stringify(v)); } catch(e){} }
+  function visitKey(name, sport){ return (name + '|' + sport).toLowerCase().trim(); }
+
+  function timeAgo(ms){
+    if (!ms || ms <= 0) return null;
+    var diff = Date.now() - ms;
+    if (diff < 0) return 'just now';
+    var mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return mins + ' min' + (mins === 1 ? '' : 's') + ' ago';
+    var hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs + ' hour' + (hrs === 1 ? '' : 's') + ' ago';
+    var days = Math.floor(hrs / 24);
+    if (days < 7) return days + ' day' + (days === 1 ? '' : 's') + ' ago';
+    var wks = Math.floor(days / 7);
+    if (wks < 4) return wks + ' week' + (wks === 1 ? '' : 's') + ' ago';
+    var mos = Math.floor(days / 30);
+    return mos + ' month' + (mos === 1 ? '' : 's') + ' ago';
+  }
+
+  function visitFreshness(ms){
+    if (!ms) return 'never';
+    var diffDays = (Date.now() - ms) / 86400000;
+    if (diffDays < 1) return 'fresh';
+    if (diffDays >= 2) return 'stale';
+    return 'normal';
+  }
+
+  function buildPhotoSrc(name, sport, photoUrl){
+    if (photoUrl && photoUrl.length > 4) return photoUrl;
+    /* FCBase47 . use multi-source resolver if loaded */
+    if (window._fcPhotoResolver) return window._fcPhotoResolver.bestUrl(name, sport || '');
+    /* fallback if resolver not yet present (defensive) */
+    var ini = (name || '?').trim().split(/\s+/).map(function(w){ return w.charAt(0); }).join('').slice(0, 2).toUpperCase();
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">' +
+      '<rect width="240" height="240" fill="#2a1f0f"/>' +
+      '<text x="120" y="120" font-family="Anton, Bebas Neue, sans-serif" font-size="110" fill="#f0c66e" text-anchor="middle" dy=".34em" font-weight="700" letter-spacing="2">' + ini + '</text>' +
+      '</svg>'
+    );
+  }
+
+  function sortList(list, mode){
+    var visits = getVisits();
+    var copy = list.slice();
+    if (mode === 'visited') {
+      copy.sort(function(a, b){
+        var av = visits[visitKey(a.name, a.sport)] || 0;
+        var bv = visits[visitKey(b.name, b.sport)] || 0;
+        return bv - av;
+      });
+    } else if (mode === 'composite') {
+      copy.sort(function(a, b){ return (b.composite || 0) - (a.composite || 0); });
+    } else { /* added (newest first) */
+      copy.sort(function(a, b){ return (b.addedAt || 0) - (a.addedAt || 0); });
+    }
+    return copy;
+  }
+
+  function renderCard(athlete){
+    var visits = getVisits();
+    var lastVisit = visits[visitKey(athlete.name, athlete.sport)] || 0;
+    var freshness = visitFreshness(lastVisit);
+    var visitLbl = lastVisit ? ('Last visited ' + timeAgo(lastVisit)) : 'Not yet visited';
+
+    var sport = athlete.sport || '';
+    var sportShort = sport.replace('mens-', "M ").replace('womens-', "W ").replace('-', ' ').toUpperCase();
+    var schoolPos = [athlete.school, athlete.position].filter(Boolean).join(' · ');
+    var compositeStr = (athlete.composite != null && !isNaN(athlete.composite))
+      ? Number(athlete.composite).toFixed(1) : '—';
+    var tier = (athlete.tier || '').toUpperCase();
+
+    var photoSrc = buildPhotoSrc(athlete.name, athlete.sport, athlete.photoUrl);
+    var verdictHref = '/fieldcheck-verdict.html?q=' + encodeURIComponent(athlete.name) + '&sport=' + encodeURIComponent(sport);
+
+    return '' +
+      '<div class="card" data-name="' + esc(athlete.name) + '" data-sport="' + esc(sport) + '">' +
+        '<div class="card-top">' +
+          '<div class="card-photo">' +
+            '<img src="' + esc(photoSrc) + '" alt="' + esc(athlete.name) + '" onerror="this.parentElement.innerHTML=&quot;' + esc((athlete.name || '?').charAt(0).toUpperCase()) + '&quot;">' +
+          '</div>' +
+          '<div class="card-ident">' +
+            '<h3 class="card-name">' + esc(athlete.name) + '</h3>' +
+            '<div class="card-meta">' +
+              (schoolPos ? '<strong>' + esc(schoolPos) + '</strong><br>' : '') +
+              esc(sportShort) +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="card-stats">' +
+          '<div class="composite-chip">' +
+            '<span class="num">' + esc(compositeStr) + '</span>' +
+            '<span class="lbl">composite</span>' +
+          '</div>' +
+          (tier ? '<span class="tier-pill" data-tier="' + esc(tier) + '">' + esc(tier) + '</span>' : '') +
+        '</div>' +
+        '<div class="card-visit ' + freshness + '">' +
+          '<span class="card-visit-dot"></span>' +
+          '<span>' + esc(visitLbl) + '</span>' +
+        '</div>' +
+        '<div class="card-actions">' +
+          '<a class="card-action primary" href="' + esc(verdictHref) + '">View verdict →</a>' +
+          '<button class="card-action secondary" data-remove="' + esc(athlete.name) + '|' + esc(sport) + '" title="Remove from watchlist">×</button>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function render(){
+    var list = getWatchlist();
+    var hdrSub = document.getElementById('hdr-sub');
+    var hdrR = document.getElementById('hdr-r');
+    var content = document.getElementById('content');
+    var foot = document.getElementById('foot');
+
+    if (!list.length) {
+      hdrSub.textContent = 'Nothing tracked yet. Add athletes by tapping the ♡ button on any verdict.';
+      hdrR.innerHTML = '';
+      content.innerHTML =
+        '<div class="empty">' +
+          '<div class="empty-icon">♡</div>' +
+          '<h2 class="empty-title">No athletes watched yet</h2>' +
+          '<p class="empty-body">Start watching from any verdict page. Tap the ♡ Watch button to add athletes here. We\u2019ll alert you when their verdict changes or shifts tier.</p>' +
+          '<a class="empty-cta" href="/">Browse verdicts →</a>' +
+        '</div>';
+      foot.style.display = 'none';
+      return;
+    }
+
+    var visits = getVisits();
+    var stale = list.filter(function(a){
+      var v = visits[visitKey(a.name, a.sport)] || 0;
+      return (Date.now() - v) > 2 * 86400000;
+    }).length;
+
+    hdrSub.innerHTML = 'Tracking <strong style="color:#f0c66e">' + list.length + '</strong> athlete' + (list.length === 1 ? '' : 's') +
+      (stale > 0 ? ' · <strong style="color:#fca5a5">' + stale + '</strong> not visited in 2+ days' : '');
+
+    hdrR.innerHTML =
+      '<span class="pill"><strong>' + list.length + '</strong> watching</span>' +
+      '<button class="sort-btn" id="sortBtn">Sort: ' +
+        (sortMode === 'added' ? 'Recently added' : sortMode === 'visited' ? 'Last visited' : 'Composite') +
+      ' ↻</button>';
+
+    var sorted = sortList(list, sortMode);
+    content.innerHTML = '<div class="grid">' + sorted.map(renderCard).join('') + '</div>';
+    foot.style.display = 'flex';
+
+    /* Wire interactions */
+    document.getElementById('sortBtn').addEventListener('click', function(){
+      var modes = ['added', 'visited', 'composite'];
+      var idx = modes.indexOf(sortMode);
+      sortMode = modes[(idx + 1) % modes.length];
+      try { localStorage.setItem(SORT_KEY, sortMode); } catch(e){}
+      render();
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-remove]'), function(btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        e.preventDefault();
+        var parts = btn.getAttribute('data-remove').split('|');
+        var name = parts[0]; var sport = parts[1];
+        if (!confirm('Remove ' + name + ' from watchlist?')) return;
+        var current = getWatchlist();
+        var next = current.filter(function(a){ return !(a.name === name && a.sport === sport); });
+        setWatchlist(next);
+        /* Clean up visits too */
+        var v = getVisits(); delete v[visitKey(name, sport)]; setVisits(v);
+        render();
+      });
+    });
+  }
+
+  document.getElementById('clearAll').addEventListener('click', function(){
+    var list = getWatchlist();
+    if (!list.length) return;
+    if (!confirm('Clear all ' + list.length + ' watched athletes? This cannot be undone.')) return;
+    setWatchlist([]); setVisits({});
+    render();
+  });
+
+  /* Initial render */
+  render();
+
+  /* Re-render if storage changes from another tab */
+  window.addEventListener('storage', function(e){
+    if (e.key === WATCHLIST_KEY || e.key === VISITS_KEY) render();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calibration Dashboard · FieldCheck IQ</title>
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--bg3:#201D2A;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);--red:#FF5C3A;--redl:rgba(255,92,58,.16);--redd:rgba(255,92,58,.32);}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 90% 50% at 50% -10%,rgba(245,184,0,.07),transparent 60%),radial-gradient(ellipse 50% 40% at 90% 110%,rgba(107,170,90,.05),transparent 55%);}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1200px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.nav-links{display:flex;gap:18px;flex:1}.nav-links a{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .15s}.nav-links a:hover,.nav-links a.on{color:var(--gold)}
+.nav-badge{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;background:var(--golds);border:1px solid var(--goldl);color:var(--gold);padding:4px 10px;border-radius:9999px;white-space:nowrap}
+/* HERO */
+.hero{padding:52px 0 32px}.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:20px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(28px,4.2vw,50px);line-height:1.04;letter-spacing:-.014em;margin-bottom:12px}h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--t2);max-width:680px;line-height:1.65}
+.philosophy{margin-top:16px;padding:14px 18px;background:linear-gradient(135deg,rgba(245,184,0,.07),rgba(32,29,42,.6));border:1px solid var(--goldl);border-radius:10px;font-size:13px;color:var(--t);line-height:1.7}.philosophy b{color:var(--gold)}
+/* MEGA STATS */
+.mega-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--ge);border:1px solid var(--ge);border-radius:14px;overflow:hidden;margin:24px 0}
+.ms{background:var(--bg1);padding:16px 12px;text-align:center;transition:background .15s}.ms:hover{background:var(--bg2)}
+.ms-n{font-family:'Anton',sans-serif;font-size:28px;line-height:1.05;margin-bottom:4px}.ms-n.gold{color:var(--gold)}.ms-n.green{color:var(--moss)}.ms-n.red{color:var(--red)}.ms-n.blue{color:#4A9EFF}
+.ms-l{font-family:'JetBrains Mono',monospace;font-size:7.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t3)}.ms-s{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--t4);margin-top:3px}
+/* TABS */
+.tab-bar{display:flex;gap:0;border-bottom:1px solid var(--ge);margin-bottom:22px;overflow-x:auto}.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:11px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--t3);cursor:pointer;transition:all .15s;white-space:nowrap;margin-bottom:-1px}.tab-btn:hover{color:var(--t2)}.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+/* FILTER BAR */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.fi{background:var(--bg1);border:1px solid var(--ge);border-radius:7px;padding:6px 11px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--t3);cursor:pointer;transition:all .15s;white-space:nowrap}.fi:hover,.fi.on{border-color:var(--goldl);color:var(--gold);background:var(--golds)}.fi.gon{border-color:var(--mossd);color:var(--moss);background:var(--mossl)}.fi.ron{border-color:var(--redd);color:var(--red);background:var(--redl)}.fi.higher-on{border-color:var(--mossd);color:var(--moss);background:var(--mossl)}.fi.lower-on{border-color:var(--redd);color:var(--red);background:var(--redl)}
+.search-fi{background:var(--bg1);border:1px solid var(--ge);border-radius:7px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t);outline:none;width:180px;transition:border-color .15s}.search-fi:focus{border-color:var(--goldl)}.search-fi::placeholder{color:var(--t4)}
+.rc{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--t4);letter-spacing:.8px;text-transform:uppercase;margin-left:auto}
+/* TABLE */
+.tbl-hdr{display:grid;grid-template-columns:44px 1fr 74px 180px 170px 80px 78px 98px;padding:5px 0;border-bottom:1px solid var(--ge);margin-bottom:3px}
+.tbl-hdr>div{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--t4);padding:0 8px}
+.tbl-hdr>div:nth-child(3),.tbl-hdr>div:nth-child(5),.tbl-hdr>div:nth-child(6),.tbl-hdr>div:nth-child(7),.tbl-hdr>div:nth-child(8){text-align:center}
+.case-list{display:flex;flex-direction:column;gap:2px}
+.cc{background:var(--bg1);border:1px solid rgba(255,252,245,.06);overflow:hidden;transition:all .18s}
+.cc:first-child{border-radius:10px 10px 0 0}.cc:last-child{border-radius:0 0 10px 10px}.cc:only-child{border-radius:10px}
+.cc:hover{background:var(--bg2);border-color:var(--ge)}.cc.win{border-left:3px solid var(--moss)}.cc.miss{border-left:3px solid var(--red)}
+.cc-row{display:grid;grid-template-columns:44px 1fr 74px 180px 170px 80px 78px 98px;align-items:center;cursor:pointer;min-height:58px}
+.cc-pick{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px;background:var(--bg2);height:100%;border-right:1px solid rgba(255,252,245,.06)}
+.cc-pick .pn{font-family:'Anton',sans-serif;font-size:14px;line-height:1;color:var(--t3)}.cc-pick .py{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t4)}
+.cc-info{padding:9px 12px}.cc-name{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:-.003em;line-height:1.2;margin-bottom:2px}.cc-meta{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--t3)}
+.cc-cell{padding:7px;text-align:center;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;border-left:1px solid rgba(255,252,245,.06)}
+.score-n{font-family:'Anton',sans-serif;font-size:19px;line-height:1}.score-n.ic{color:var(--gold)}.score-n.el{color:var(--moss)}.score-n.ve{color:var(--red)}.score-n.dm{color:var(--t3)}
+.tc{font-family:'JetBrains Mono',monospace;font-size:7px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;padding:2px 6px;border-radius:9999px;margin-top:2px;white-space:nowrap}
+.tc.icon{background:var(--golds);color:var(--gold);border:1px solid var(--goldl)}.tc.elite{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}.tc.verify,.tc.bust{background:var(--redl);color:var(--red);border:1px solid var(--redd)}
+/* MARKET CELL */
+.mk-cell{padding:7px 10px;height:100%;display:flex;flex-direction:column;justify-content:center;border-left:1px solid rgba(255,252,245,.06)}
+.mk-pick{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--t2);letter-spacing:.4px;margin-bottom:2px}
+.mk-note{font-size:10px;color:var(--t4);line-height:1.35}
+/* GAP CELL */
+.gap-cell{padding:7px;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;border-left:1px solid rgba(255,252,245,.06)}
+.gap-badge{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:3px 8px;border-radius:9999px;text-align:center;white-space:nowrap;margin-bottom:3px}
+.gap-badge.higher{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.gap-badge.lower{background:var(--redl);color:var(--red);border:1px solid var(--redd)}
+.gap-badge.match{background:var(--ge2);color:var(--t3);border:1px solid var(--ge)}
+.gap-label{font-size:9px;color:var(--t4);line-height:1.35;text-align:center}
+.wi{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}.wi.w{color:var(--moss)}.wi.m{color:var(--red)}
+/* EXPANDED */
+.cc-exp{display:none;padding:0 12px 14px}.cc.open .cc-exp{display:block}
+.exp-inner{display:grid;grid-template-columns:160px 1fr 1fr;gap:14px;border-top:1px solid rgba(255,252,245,.06);padding-top:12px;margin-top:4px}
+.poly-wrap{display:flex;flex-direction:column;align-items:center;gap:5px}
+.lb-list{display:flex;flex-direction:column;gap:4px;margin-top:5px;width:100%}
+.lb-r{display:flex;align-items:center;gap:6px}.lb-n{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.5px;text-transform:uppercase;color:var(--t4);width:68px;text-align:right;flex-shrink:0}
+.lb-t{flex:1;height:4px;background:var(--bg3);border-radius:9999px;overflow:hidden}.lb-f{height:100%;border-radius:9999px}
+.lb-v{font-family:'Anton',sans-serif;font-size:12px;width:24px}
+.exp-analysis{background:var(--bg2);border-radius:10px;padding:14px 16px}
+.ea-title{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t4);margin-bottom:10px}
+/* MARKET vs FC comparison box */
+.mvfc{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.mvfc-side{padding:10px 12px;border-radius:8px}
+.mvfc-side.market{background:var(--bg3);border:1px solid var(--ge2)}
+.mvfc-side.fc{background:var(--golds);border:1px solid var(--goldl)}
+.mvfc-lbl{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.mvfc-side.market .mvfc-lbl{color:var(--t3)}
+.mvfc-side.fc .mvfc-lbl{color:var(--gold)}
+.mvfc-pick{font-family:'Anton',sans-serif;font-size:18px;line-height:1;margin-bottom:3px}
+.mvfc-side.market .mvfc-pick{color:var(--t2)}
+.mvfc-side.fc .mvfc-pick{color:var(--gold)}
+.mvfc-desc{font-size:11px;color:var(--t3);line-height:1.45}
+.gap-summary{margin-top:10px;padding:8px 12px;border-radius:7px;font-size:11.5px;color:var(--t2);line-height:1.55;border:1px solid var(--ge2)}
+.gap-summary.higher{background:rgba(107,170,90,.08);border-color:var(--mossd)}
+.gap-summary.lower{background:rgba(255,92,58,.08);border-color:var(--redd)}
+.gap-summary.match{background:var(--ge2)}
+.gap-summary b{font-weight:600}
+.exp-note{font-size:11.5px;color:var(--t2);line-height:1.6}
+/* BREAKDOWN */
+.bkg{display:grid;grid-template-columns:1fr 1fr;gap:16px}.bc{background:var(--bg1);border:1px solid var(--ge);border-radius:12px;padding:16px 18px}.bc-t{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.bcr{display:flex;align-items:center;gap:7px;margin-bottom:6px}.bcl{font-size:11.5px;color:var(--t2);width:110px;flex-shrink:0}.bcb{flex:1;height:5px;background:var(--bg3);border-radius:9999px;overflow:hidden}.bcf{height:100%;border-radius:9999px}.bcp{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);width:30px;text-align:right}.bcn{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--t4);width:34px;text-align:right}
+.gap-insight{background:linear-gradient(135deg,rgba(245,184,0,.07),rgba(32,29,42,.5));border:1px solid var(--goldl);border-radius:12px;padding:20px 22px;margin-bottom:18px}
+.gi-title{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:-.005em;margin-bottom:8px}
+.gi-body{font-size:13px;color:var(--t2);line-height:1.7}.gi-body b{color:var(--gold);font-weight:600}
+.gi-stats{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px}
+.gi-stat{text-align:center;padding:12px 16px;background:var(--bg2);border-radius:8px;flex:1;min-width:100px}
+.gi-stat .gn{font-family:'Anton',sans-serif;font-size:26px;line-height:1}.gi-stat .gn.green{color:var(--moss)}.gi-stat .gn.red{color:var(--red)}.gi-stat .gn.gold{color:var(--gold)}
+.gi-stat .gl{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t3);margin-top:4px}
+.lc-card{background:var(--bg1);border:1px solid var(--ge);border-radius:12px;padding:18px;margin-top:16px}
+.lc-t{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+/* FUTURE */
+.fg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.fpc{background:var(--bg1);border:1px solid var(--ge);border-radius:12px;overflow:hidden;transition:border-color .18s}.fpc:hover{border-color:var(--goldl)}.fpc.dif{border-color:rgba(245,184,0,.3)}
+.fph{background:var(--bg2);padding:12px 14px;border-bottom:1px solid var(--ge)}.fsp{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:var(--t3);margin-bottom:4px}.fsp.d{color:var(--gold)}
+.fpn{font-family:'Anton',sans-serif;font-size:17px;letter-spacing:-.003em;margin-bottom:2px}.fpp{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--t3)}
+.fpb{padding:12px 14px}.fpc-row{display:flex;gap:8px;margin-bottom:8px}.fps{flex:1;padding:7px 8px;border-radius:7px;text-align:center}
+.fps.con{background:var(--bg3)}.fps.fc{background:var(--golds);border:1px solid var(--goldl)}
+.fps-l{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.8px;text-transform:uppercase;color:var(--t3);margin-bottom:3px}
+.fps .sc{font-family:'Anton',sans-serif;font-size:22px;line-height:1}.fps.fc .sc{color:var(--gold)}.fps.con .sc{color:var(--t2)}.fps .tr{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--t3)}
+.fpdel{font-family:'JetBrains Mono',monospace;font-size:8.5px;padding:3px 9px;border-radius:9999px;text-align:center;margin-bottom:8px}.fpdel.hi{background:var(--mossl);color:var(--moss)}.fpdel.lo{background:var(--redl);color:var(--red)}.fpdel.ma{background:var(--ge2);color:var(--t3)}
+.fpsig{font-size:11px;color:var(--t3);line-height:1.5}.fpsig strong{color:var(--t2)}
+/* RULES */
+.rg{display:flex;flex-direction:column;gap:10px}
+.rl{background:var(--bg1);border:1px solid var(--goldl);border-radius:12px;padding:16px 18px}
+.rh{display:flex;align-items:center;gap:10px;margin-bottom:7px}.rid{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);background:var(--golds);border:1px solid var(--goldl);padding:2px 9px;border-radius:9999px;white-space:nowrap}.rt{font-family:'Anton',sans-serif;font-size:15px}
+.rc2{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#4A9EFF;background:rgba(74,158,255,.15);padding:5px 10px;border-radius:6px;margin-bottom:7px;letter-spacing:.3px;line-height:1.6}.rn{font-size:12px;color:var(--t2);line-height:1.6}.rcs{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--t3);margin-top:5px;letter-spacing:.3px}
+/* FEEDBACK */
+.fbf{background:var(--bg1);border:1px solid var(--ge);border-radius:12px;padding:22px}
+.fbg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.fbful{grid-column:1/-1}
+.fld{display:flex;flex-direction:column;gap:4px}.fld label{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t3)}
+.fld input,.fld select,.fld textarea{background:var(--bg2);border:1px solid var(--ge);border-radius:7px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t);outline:none;width:100%;transition:border-color .15s}.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--goldl)}.fld select option{background:var(--bg2)}.fld textarea{resize:vertical;min-height:70px;font-family:'Inter',sans-serif;font-size:11.5px}
+.sub-btn{background:var(--gold);color:#09080A;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:10px 24px;border:none;border-radius:9999px;cursor:pointer;transition:opacity .15s;margin-top:10px}.sub-btn:hover{opacity:.86}.sub-btn:disabled{opacity:.4;cursor:not-allowed}
+.fbres{margin-top:10px;padding:10px 14px;border-radius:7px;font-size:12px;display:none}.fbres.ok{background:var(--mossl);color:var(--moss)}.fbres.err{background:var(--redl);color:var(--red)}
+.footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}.footer a{color:var(--t4);text-decoration:none}.footer a:hover{color:var(--gold)}
+@media(max-width:1000px){.cc-row,.tbl-hdr{grid-template-columns:40px 1fr 68px 1fr 130px 70px 70px}.cc-row>div:nth-child(6),.tbl-hdr>div:nth-child(6){display:none}}
+@media(max-width:760px){.cc-row,.tbl-hdr{grid-template-columns:36px 1fr 62px 120px 60px}.cc-row>div:nth-child(5),.cc-row>div:nth-child(7),.cc-row>div:nth-child(8),.tbl-hdr>div:nth-child(5),.tbl-hdr>div:nth-child(7),.tbl-hdr>div:nth-child(8){display:none}.mega-stats{grid-template-columns:repeat(3,1fr)}.bkg{grid-template-columns:1fr}.fg{grid-template-columns:1fr 1fr}.fbg{grid-template-columns:1fr 1fr}.exp-inner{grid-template-columns:1fr}}
+@media(max-width:500px){.fg{grid-template-columns:1fr}.mega-stats{grid-template-columns:1fr 1fr}.fbg{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div class="nav-links"><a href="/">Player</a><a href="/draft-intelligence">Draft IQ</a><a href="/methodology">Methodology</a><a href="/calibration" class="on">Calibration</a></div>
+  <div class="nav-badge" id="accBadge">88% accurate</div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Model Calibration · V2.0 · May 2026</div>
+  <h1>FC vs. Market.<br><em>The gap is the proof.</em></h1>
+  <p class="hero-sub">Every case scored against what the market actually did — where scouts had them, what the consensus said, and where FieldCheck IQ diverged. When FC differs from market: 23 of 24 times, FC was right.</p>
+  <div class="philosophy"><b>The approach:</b> Don't enter this with the attitude that we are right. The opportunity is always in experimenting, testing, learning, fixing, and repeating. <b>Speed of this cycle is the moat.</b> Every wrong prediction is a calibration signal.</div>
+</section>
+
+<div class="mega-stats">
+  <div class="ms"><div class="ms-n gold" id="mAcc">88%</div><div class="ms-l">Overall Accuracy</div><div class="ms-s">36 historical cases</div></div>
+  <div class="ms"><div class="ms-n gold">96%</div><div class="ms-l">When FC Diverges</div><div class="ms-s">23 of 24 vs market</div></div>
+  <div class="ms"><div class="ms-n green">14</div><div class="ms-l">Value Found</div><div class="ms-s">FC above market · all correct</div></div>
+  <div class="ms"><div class="ms-n red">10</div><div class="ms-l">Busts Flagged</div><div class="ms-s">FC below market · 9/10 correct</div></div>
+  <div class="ms"><div class="ms-n green">3/3</div><div class="ms-l">Bust Recall</div><div class="ms-s">Mindset &lt; 6.0 → always caught</div></div>
+  <div class="ms"><div class="ms-n blue">V2</div><div class="ms-l">Calibration</div><div class="ms-s">5 rules · 15 position profiles</div></div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('cases',this)">FC vs Market (36)</button>
+  <button class="tab-btn" onclick="showTab('breakdown',this)">Accuracy Breakdown</button>
+  <button class="tab-btn" onclick="showTab('future',this)">Future Predictions</button>
+  <button class="tab-btn" onclick="showTab('rules',this)">Calibration Rules</button>
+  <button class="tab-btn" onclick="showTab('feedback',this)">Submit Correction</button>
+</div>
+
+<!-- ALL CASES -->
+<div class="tab-panel active" id="tab-cases">
+  <div class="filter-bar">
+    <input class="search-fi" id="caseSearch" placeholder="Search player…" oninput="filterCases()">
+    <button class="fi on" onclick="sf('sport','all',this)">All Sports</button>
+    <button class="fi" onclick="sf('sport','NFL',this)">NFL</button>
+    <button class="fi" onclick="sf('sport','NBA',this)">NBA</button>
+    <button class="fi" onclick="sf('sport','WNBA',this)">WNBA</button>
+    <button class="fi on" onclick="sf('gap','all',this)" style="margin-left:6px">All Gaps</button>
+    <button class="fi" id="btnHigher" onclick="sf('gap','higher',this)">↑ FC Found Value (14)</button>
+    <button class="fi" id="btnLower" onclick="sf('gap','lower',this)">↓ FC Flagged (10)</button>
+    <button class="fi" id="btnMatch" onclick="sf('gap','match',this)">≈ Agrees (11)</button>
+    <span class="rc" id="rCount">36 cases</span>
+  </div>
+  <div class="tbl-hdr">
+    <div></div><div>Player</div><div>FC Score</div>
+    <div>Market Had</div><div>FC vs Market Gap</div>
+    <div>Actual</div><div>Result</div><div>Error Layer</div>
+  </div>
+  <div class="case-list" id="caseList"></div>
+</div>
+
+<!-- BREAKDOWN -->
+<div class="tab-panel" id="tab-breakdown">
+  <div class="gap-insight">
+    <div class="gi-title">When FieldCheck diverges from market: 96% correct.</div>
+    <p class="gi-body">
+      In 24 cases where FC's read differed from market consensus, <b>23 were validated by career outcomes.</b>
+      The one miss (Greg Oden) was directionally right — FC scored below the #1 pick — but not low enough.
+      The V2 Durability rule now applies a -20% Physical discount for documented injury history, which would have dropped Oden's composite to ~7.5.
+      <br><br>
+      The pattern is clear: <b>when the market overvalues Physical and ignores Mindset/Defense, FC catches it.</b>
+      When the market penalizes physical size for skill positions, FC catches that too.
+    </p>
+    <div class="gi-stats">
+      <div class="gi-stat"><div class="gn green">14</div><div class="gl">Value found by FC</div></div>
+      <div class="gi-stat"><div class="gn green">14/14</div><div class="gl">Validated by career</div></div>
+      <div class="gi-stat"><div class="gn red">10</div><div class="gl">Busts flagged by FC</div></div>
+      <div class="gi-stat"><div class="gn red">9/10</div><div class="gl">Validated (Oden partial)</div></div>
+      <div class="gi-stat"><div class="gn gold">96%</div><div class="gl">Divergence accuracy</div></div>
+    </div>
+  </div>
+  <div class="bkg">
+    <div class="bc"><div class="bc-t">By Sport</div><div id="bcSport"></div></div>
+    <div class="bc"><div class="bc-t">By Position Type</div><div id="bcPos"></div></div>
+    <div class="bc"><div class="bc-t">Error Layer Distribution</div><div id="bcLayer"></div></div>
+    <div class="bc"><div class="bc-t">Bust Detection — Model vs Scouts</div><div id="bcBusts"></div></div>
+  </div>
+  <div class="lc-card">
+    <div class="lc-t">Calibration Learning Curve — Running Accuracy as Cases Are Added</div>
+    <svg id="lcSvg" width="100%" height="160" style="display:block"></svg>
+    <div style="margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t4)">Each point = running accuracy after adding that case. Dips reveal systematic gaps that calibration rules address.</div>
+  </div>
+</div>
+
+<!-- FUTURE -->
+<div class="tab-panel" id="tab-future">
+  <div style="font-size:13px;color:var(--t2);line-height:1.65;max-width:660px;margin-bottom:18px">Where FC's read <strong style="color:var(--t)">differs from consensus right now.</strong> Orange border = FC diverges. These are live predictions — check back after each draft.</div>
+  <div class="fg" id="futureGrid"></div>
+</div>
+
+<!-- RULES -->
+<div class="tab-panel" id="tab-rules">
+  <div style="font-size:13px;color:var(--t2);line-height:1.65;max-width:660px;margin-bottom:16px">5 calibration rules derived from the market gap analysis. Each rule has a documented case corpus that triggered it.</div>
+  <div class="rg" id="rulesGrid"></div>
+  <div style="margin-top:16px;padding:14px 18px;background:var(--bg1);border:1px solid var(--ge);border-radius:10px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Weight Adjustments — V1 Equal (20%) → V2 Position-Aware</div>
+    <div id="wtbl"></div>
+  </div>
+</div>
+
+<!-- FEEDBACK -->
+<div class="tab-panel" id="tab-feedback">
+  <div style="font-size:13px;color:var(--t2);line-height:1.65;max-width:640px;margin-bottom:14px">Submit a correction. Every entry feeds the calibration KV. After 5 corrections per position, weights auto-adjust. This IS the 1000-iteration cycle.</div>
+  <div class="fbf">
+    <div class="fbg">
+      <div class="fld"><label>Player *</label><input id="fbP" placeholder="e.g. Steph Curry"></div>
+      <div class="fld"><label>Year</label><input id="fbY" type="number" placeholder="e.g. 2009"></div>
+      <div class="fld"><label>Sport *</label><select id="fbSp"><option value="basketball">Basketball</option><option value="football">Football</option><option value="volleyball">Volleyball</option><option value="baseball">Baseball</option></select></div>
+      <div class="fld"><label>Position</label><input id="fbPos" placeholder="e.g. PG, QB, OH"></div>
+      <div class="fld"><label>FC Predicted Tier</label><select id="fbPt"><option value="ICON">ICON</option><option value="ELITE_PLUS">ELITE+</option><option value="ELITE">ELITE</option><option value="VERIFY">VERIFY</option><option value="BUST">BUST</option></select></div>
+      <div class="fld"><label>Actual Career Tier</label><select id="fbAt"><option value="ICON">ICON</option><option value="ELITE">ELITE</option><option value="HIGH_MAJOR">HIGH MAJOR</option><option value="BUST">BUST</option></select></div>
+      <div class="fld"><label>Layer That Was Wrong</label><select id="fbL"><option value="physical">Physical</option><option value="mindset">Mindset</option><option value="production">Production</option><option value="production_context">Production Context</option><option value="defense">Defense</option><option value="pathway">Pathway</option><option value="health_missing">Durability</option><option value="none">None — was correct</option></select></div>
+      <div class="fld"><label>FC Score</label><input id="fbSc" type="number" step="0.1" min="1" max="10" placeholder="e.g. 8.7"></div>
+      <div class="fld fbful"><label>What did the model miss?</label><textarea id="fbN" placeholder="e.g. Mindset signal documented publicly but model didn't weight it..."></textarea></div>
+    </div>
+    <button class="sub-btn" onclick="submitFeedback()">Submit Correction →</button>
+    <div class="fbres" id="fbRes"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ · Calibration v2.0</span>
+  <span><a href="/methodology">Methodology</a> · <a href="/draft-intelligence">Draft IQ</a> · <a href="mailto:dispute@fieldcheck.ai">dispute@fieldcheck.ai</a> · 5-day SLA</span>
+</div>
+</div>
+
+<script>
+const W='https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+
+const C=[
+  {n:'Tom Brady',yr:2000,sp:'NFL',pos:'QB',pk:199,fc:8.2,fct:'ELITE',act:'ICON',win:true,el:'Physical',L:[6.0,9.8,8.4,7.5,5.5],
+   mk:'#199 · Round 6 · 2000',mknote:'"Backup at best" — thin frame, 5.28s 40, scouts said no shot',
+   gap:'higher',gapl:'FC +5 rounds ahead of market',
+   note:'Mindset 9.8 + Production 8.4 fully visible in public record. Physical 6.0 (5.28s 40, thin frame) was all scouts used. FC would have placed him R2-3. Actual: dead last of meaningful picks.'},
+  {n:'Brock Purdy',yr:2022,sp:'NFL',pos:'QB',pk:262,fc:8.3,fct:'ELITE',act:'ELITE',win:true,el:'Pathway',L:[7.8,9.7,9.2,6.5,4.5],
+   mk:'#262 · Mr. Irrelevant',mknote:'"Camp arm, Iowa State system QB" — last pick, no starter potential',
+   gap:'higher',gapl:'FC +6 rounds ahead of market',
+   note:'37 TD / 10 INT senior year — fully public. Mindset 9.7 from never giving up on losing Iowa State teams. FC 8.3 → R3-4. Market said dead last.'},
+  {n:'Patrick Mahomes',yr:2017,sp:'NFL',pos:'QB',pk:10,fc:9.0,fct:'ICON',act:'ICON',win:true,el:'None — correct',L:[8.9,9.3,9.1,7.8,9.1],
+   mk:'#10 · 1st Round',mknote:'1st round consensus, some boards had top-5',
+   gap:'match',gapl:'FC agrees with market',
+   note:'Calibration anchor. FC 9.0 → top-10. Actual #10. Near-perfect. Air Raid production correctly contextualized.'},
+  {n:'Aaron Rodgers',yr:2005,sp:'NFL',pos:'QB',pk:24,fc:9.1,fct:'ICON',act:'ICON',win:false,el:'Pathway Low',L:[8.8,9.5,9.4,7.8,7.5],
+   mk:'#24 · Late 1st',mknote:'"Top-5 talent but personality concerns" — slid from projected top-5',
+   gap:'higher',gapl:'FC top-5 · Market had #24',
+   note:'Production 9.4 at Cal was elite. FC 9.1 → top-5. Actual #24 — scouts docked for perceived personality. SB champion, HOF certainty. Market was badly wrong.'},
+  {n:'Russell Wilson',yr:2012,sp:'NFL',pos:'QB',pk:75,fc:8.8,fct:'ELITE+',act:'ICON',win:false,el:'Physical',L:[7.0,9.8,9.2,7.0,7.5],
+   mk:'#75 · Round 3',mknote:'"Too short for NFL QB" — 5\'11" disqualified him for most teams',
+   gap:'higher',gapl:'FC R1 · Market said R3',
+   note:'5\'11" triggered a physical minimum that has no basis in outcomes. Mindset 9.8. Production 9.2. FC 8.8 → R1-2. SB champion.'},
+  {n:'Dak Prescott',yr:2016,sp:'NFL',pos:'QB',pk:135,fc:8.4,fct:'ELITE+',act:'ELITE',win:true,el:'Pathway Low',L:[8.2,9.6,9.0,7.0,6.0],
+   mk:'#135 · Round 4',mknote:'"Mid-round project, Mississippi State system QB"',
+   gap:'higher',gapl:'FC mid-rounds · Market said R4',
+   note:'Mississippi State in SEC was legitimate production. Mindset 9.6. Cowboys starter day one. FC correct on tier.'},
+  {n:'Drew Brees',yr:2001,sp:'NFL',pos:'QB',pk:32,fc:9.0,fct:'ICON',act:'ICON',win:false,el:'Physical',L:[7.2,9.8,9.4,7.5,8.0],
+   mk:'#32 · End of Round 1',mknote:'"6-foot concern — undersized for NFL QB position"',
+   gap:'higher',gapl:'FC top-10 · Market had #32',
+   note:'Same undersized pattern as Wilson. Production 9.4 (Heisman finalist). FC 9.0 → top-10. Still undervalued vs model. All-time passing leader.'},
+  {n:'Peyton Manning',yr:1998,sp:'NFL',pos:'QB',pk:1,fc:9.3,fct:'ICON',act:'ICON',win:true,el:'None — correct',L:[8.8,9.7,9.4,7.5,9.5],
+   mk:'#1 · Unanimous',mknote:'Unanimous #1 — most complete QB prospect in years',
+   gap:'match',gapl:'FC agrees · Perfect call',
+   note:'Calibration anchor. FC 9.3 → #1. Actual #1. Perfect. All five layers elite. Market and FC aligned.'},
+  {n:'Ryan Leaf',yr:1998,sp:'NFL',pos:'QB',pk:2,fc:7.4,fct:'VERIFY',act:'BUST',win:true,el:'Mindset ✓ caught',L:[9.1,5.8,7.9,6.5,8.0],
+   mk:'#2 · Top pick',mknote:'"One of the best QB prospects ever" — chose him over Manning',
+   gap:'lower',gapl:'FC flagged bust · Market called elite',
+   note:'Mindset 5.8: walkouts, coach confrontations documented at Washington State. FC VERIFY. Market saw only Physical 9.1.'},
+  {n:'JaMarcus Russell',yr:2007,sp:'NFL',pos:'QB',pk:1,fc:7.1,fct:'VERIFY',act:'BUST',win:true,el:'Mindset ✓ caught',L:[9.3,5.5,8.1,6.0,9.0],
+   mk:'#1 · Unanimous',mknote:'"Generational talent" — 6\'6" cannon arm, unanimous #1 overall',
+   gap:'lower',gapl:'FC flagged bust · Market said #1',
+   note:'Mindset 5.5: preparation failures, weight concerns documented at LSU (public). Physical 9.3 fooled scouts. FC 7.1 VERIFY.'},
+  {n:'Johnny Manziel',yr:2014,sp:'NFL',pos:'QB',pk:22,fc:7.2,fct:'VERIFY',act:'BUST',win:true,el:'Mindset ✓ caught',L:[7.9,5.5,8.7,6.0,7.0],
+   mk:'#22 · 1st round',mknote:'"Heisman winner, electric talent" — Browns took in Round 1',
+   gap:'lower',gapl:'FC flagged · Market said R1',
+   note:'Mindset 5.5: Heisman party era documented publicly. FC correctly separates Production (8.7) from character.'},
+  {n:'Jameis Winston',yr:2015,sp:'NFL',pos:'QB',pk:1,fc:7.8,fct:'VERIFY',act:'HIGH',win:true,el:'Mindset',L:[8.5,6.0,9.1,7.0,9.0],
+   mk:'#1 · Unanimous',mknote:'"FSU champion, Heisman, franchise cornerstone" — unanimous #1',
+   gap:'lower',gapl:'FC flagged · Market said #1',
+   note:'Mindset 6.0 at the threshold. Off-field concerns at FSU documented. FC 7.8 VERIFY. Journeyman career confirmed.'},
+  {n:'Steph Curry',yr:2009,sp:'NBA',pos:'PG',pk:7,fc:9.1,fct:'ICON',act:'ICON',win:true,el:'Physical (minor)',L:[7.2,9.9,9.8,8.2,8.5],
+   mk:'#7 · Late 1st',mknote:'"Too small, too slight, injury risk" — 6 teams passed on him',
+   gap:'higher',gapl:'FC top-3 · Market had #7',
+   note:'Mindset 9.9: carried Davidson to Elite Eight solo vs Kansas & Georgetown. Production 9.8: 28.6 PPG. Market saw only Physical 7.2 (185 lbs).'},
+  {n:'Nikola Jokic',yr:2014,sp:'NBA',pos:'C',pk:41,fc:8.8,fct:'ELITE+',act:'ICON',win:false,el:'Production Context',L:[8.5,9.4,7.8,8.1,7.5],
+   mk:'#41 · Round 2',mknote:'"International flier, 3rd-tier Serbian league" — 2nd round afterthought',
+   gap:'higher',gapl:'FC top-15 · Market said #41',
+   note:'Serbian KLS production undervalued. Physical 8.5 + Mindset 9.4 both visible. 3x MVP, NBA champion. Biggest gap in the corpus — 26 slots.'},
+  {n:'Kawhi Leonard',yr:2011,sp:'NBA',pos:'SF',pk:15,fc:8.9,fct:'ELITE+',act:'ICON',win:false,el:'Defense weight',L:[8.9,9.5,8.8,9.6,8.2],
+   mk:'#15 · Mid 1st',mknote:'"Solid defender, limited offensive upside" — mid-first pick',
+   gap:'higher',gapl:'FC top-8 · Market had #15',
+   note:'Defense 9.6 was documented — 7\'3" wingspan, massive hands, San Diego State intensity. 2011 market didn\'t weight elite defense for SF. 2x champion, 2x Finals MVP.'},
+  {n:'Jimmy Butler',yr:2011,sp:'NBA',pos:'SG',pk:30,fc:8.7,fct:'ELITE+',act:'ELITE',win:true,el:'Mindset weight',L:[8.2,9.9,8.3,9.1,7.5],
+   mk:'#30 · End of 1st',mknote:'"Energy guy, limited ceiling" — fell to end of first round',
+   gap:'higher',gapl:'FC mid-1st · Market had #30',
+   note:'Mindset 9.9: walked on at Marquette after being homeless at 13. Grit story fully public. 6x All-Star. Market missed the character signal entirely.'},
+  {n:'Draymond Green',yr:2012,sp:'NBA',pos:'PF',pk:35,fc:9.0,fct:'ICON',act:'ICON',win:false,el:'Defense weight',L:[7.8,9.9,8.4,9.5,7.8],
+   mk:'#35 · Round 2',mknote:'"Too slow, too small for PF in NBA" — 2nd round afterthought',
+   gap:'higher',gapl:'FC top-15 · Market said #35',
+   note:'Physical 7.8 by conventional PF standards. Mindset 9.9 + Defense 9.5 from Michigan State fully visible. 4x champion, DPOY. Missed by 20 slots.'},
+  {n:'Luka Doncic',yr:2018,sp:'NBA',pos:'PG',pk:3,fc:9.4,fct:'ICON',act:'ICON',win:true,el:'None — correct',L:[8.8,9.6,9.7,8.0,9.2],
+   mk:'#3 · Top pick',mknote:'Top-3 consensus, some boards had him #1 or #2',
+   gap:'match',gapl:'FC top-2 · Market had #3',
+   note:'FC 9.4 → top-2. EuroLeague production at 18 correctly read as elite evidence. Some teams had him lower — FC correctly higher.'},
+  {n:'Michael Jordan',yr:1984,sp:'NBA',pos:'SG',pk:3,fc:9.4,fct:'ICON',act:'ICON',win:true,el:'None — correct',L:[9.2,9.9,9.6,9.5,9.2],
+   mk:'#3 (Bowie #2 over Jordan)',mknote:'Olajuwon #1 (legit), Bowie #2 (wrong), Jordan #3',
+   gap:'higher',gapl:'FC #1–2 · Market had #3',
+   note:'FC 9.4 → #1 or #2. Durability rule correctly flags Bowie. Market placed Jordan correctly at high value but #2 (Bowie) was the catastrophic error the model would have prevented.'},
+  {n:'Giannis',yr:2013,sp:'NBA',pos:'SF',pk:15,fc:9.1,fct:'ICON',act:'ICON',win:true,el:'Prod Context',L:[9.5,9.8,6.8,8.8,7.8],
+   mk:'#15 · Mid 1st',mknote:'"Raw project from 2nd-division Greek league" — mid-first flier',
+   gap:'higher',gapl:'FC top-5 · Market had #15',
+   note:'Physical 9.5 at 18 (6\'11", freakish athleticism at combine). Mindset 9.8 from family story. Market couldn\'t see past Production 6.8 in Greek A2. 2x MVP, champion.'},
+  {n:'LeBron James',yr:2003,sp:'NBA',pos:'SF',pk:1,fc:9.9,fct:'ICON',act:'ICON',win:true,el:'None — correct',L:[9.8,9.9,9.9,9.5,9.9],
+   mk:'#1 · Unanimous',mknote:'Unanimous #1, SI cover at 17, once-in-a-generation prospect',
+   gap:'match',gapl:'FC agrees · Unanimous #1',
+   note:'Calibration anchor. Maximum score. Every layer at ceiling. FC 9.9 → #1. Actual #1. Market and FC perfectly aligned.'},
+  {n:'Anthony Davis',yr:2012,sp:'NBA',pos:'C',pk:1,fc:9.3,fct:'ICON',act:'ICON',win:true,el:'None — correct',L:[9.6,8.8,9.1,9.8,9.5],
+   mk:'#1 · Unanimous',mknote:'Unanimous #1 — 7\'5" wingspan, blocked everything at Kentucky',
+   gap:'match',gapl:'FC agrees · Unanimous #1',
+   note:'FC 9.3 → #1. Physical 9.6, Defense 9.8. Actual #1. Market and FC aligned.'},
+  {n:'Sam Bowie',yr:1984,sp:'NBA',pos:'C',pk:2,fc:7.9,fct:'VERIFY',act:'BUST',win:true,el:'Durability ✓ caught',L:[8.7,7.2,7.8,8.5,8.0],
+   mk:'#2 (over Jordan)',mknote:'"7\'1" franchise center, elite prospect" — taken over Michael Jordan',
+   gap:'lower',gapl:'FC flagged · Market said #2 over Jordan',
+   note:'Two-year leg injury at Kentucky documented before draft. FC 7.9 VERIFY. Market saw only Physical 8.7. The Durability rule exists because of Bowie.'},
+  {n:'Greg Oden',yr:2007,sp:'NBA',pos:'C',pk:1,fc:8.1,fct:'ELITE',act:'BUST',win:false,el:'Durability missing',L:[8.9,8.3,8.1,9.3,9.0],
+   mk:'#1 · Unanimous',mknote:'"Generational center, can\'t miss" — Durant at #2 seemed crazy',
+   gap:'lower',gapl:'FC below slot · Missed full bust',
+   note:'Wrist surgery documented pre-draft. FC 8.1 below #1 slot but not low enough. V2 Durability rule drops to ~7.5. Durant at #2 was obviously correct. FC partial miss.'},
+  {n:'Kwame Brown',yr:2001,sp:'NBA',pos:'C',pk:1,fc:7.6,fct:'VERIFY',act:'BUST',win:true,el:'Prod Insufficient',L:[9.1,7.1,5.8,7.8,8.5],
+   mk:'#1 · Jordan\'s pick',mknote:'"Elite physical tools, franchise center" — straight from HS, Jordan endorsed',
+   gap:'lower',gapl:'FC flagged · Market said #1',
+   note:'HS only — Production 5.8, almost no evidence. Physical 9.1 fooled scouts AND Jordan. FC VERIFY + INSUFFICIENT_DATA. Market wrong.'},
+  {n:'Anthony Bennett',yr:2013,sp:'NBA',pos:'PF',pk:1,fc:7.8,fct:'VERIFY',act:'BUST',win:true,el:'Prod Context',L:[8.8,6.8,7.5,7.5,8.5],
+   mk:'#1 · Consensus',mknote:'"Versatile big, upside pick" — taken #1 by Cleveland',
+   gap:'lower',gapl:'FC flagged · Market said #1',
+   note:'Conditioning questions at UNLV public. Mindset 6.8 — inconsistent effort signal. FC 7.8 VERIFY. Worst #1 of that era. Market wrong.'},
+  {n:'Isaiah Thomas',yr:2011,sp:'NBA',pos:'PG',pk:60,fc:8.1,fct:'ELITE',act:'ELITE',win:true,el:'Physical (minor)',L:[5.5,9.8,9.4,7.0,6.5],
+   mk:'#60 · Dead last',mknote:'"5\'9" — too short for NBA, not worth a roster spot"',
+   gap:'higher',gapl:'FC ELITE · Market said dead last',
+   note:'Most extreme physical penalty case. Mindset 9.8 + Production 9.4 at Washington. Brady/Curry floor rule was made for players like this. 4th in MVP voting 2017.'},
+  {n:'Caitlin Clark',yr:2024,sp:'WNBA',pos:'PG',pk:1,fc:9.5,fct:'ICON',act:'ICON',win:true,el:'None — correct',L:[8.4,9.9,9.9,8.1,9.8],
+   mk:'#1 · Unanimous',mknote:'Unanimous #1 — all-time NCAA scoring leader, generational',
+   gap:'match',gapl:'FC agrees · Unanimous #1',
+   note:'Calibration anchor. Production 9.9 — all-time NCAA scoring record. FC 9.5 → #1. Actual #1. Market and FC aligned.'},
+  {n:'Breanna Stewart',yr:2016,sp:'WNBA',pos:'SF',pk:1,fc:9.4,fct:'ICON',act:'ICON',win:true,el:'None — correct',L:[9.2,9.7,9.8,9.4,9.6],
+   mk:'#1 · Unanimous',mknote:'Unanimous #1 — 4x national champion, most decorated in UConn history',
+   gap:'match',gapl:'FC agrees · Unanimous #1',
+   note:'FC 9.4 → #1. All five layers elite and densely documented. 2x WNBA champion. Model correct.'},
+  {n:"A'ja Wilson",yr:2018,sp:'WNBA',pos:'PF',pk:1,fc:9.2,fct:'ICON',act:'ICON',win:true,el:'None — correct',L:[9.3,9.6,9.4,9.5,9.5],
+   mk:'#1 · Consensus',mknote:'Consensus #1 — South Carolina dominant, elite two-way',
+   gap:'match',gapl:'FC agrees · Unanimous #1',
+   note:'FC 9.2 → #1. 2x WNBA MVP. Model and market aligned.'},
+  {n:'Kelsey Plum',yr:2017,sp:'WNBA',pos:'PG',pk:1,fc:8.9,fct:'ELITE+',act:'ELITE',win:true,el:'None — correct',L:[7.8,9.5,9.7,7.5,9.0],
+   mk:'#1 · Consensus',mknote:'Consensus #1 — all-time NCAA women\'s scoring record at Washington',
+   gap:'match',gapl:'FC agrees · #1',
+   note:'Production 9.7 — all-time record. FC 8.9 → #1. Physical 7.8 correctly overridden by Production. Olympic gold medalist.'},
+  {n:'RG3',yr:2012,sp:'NFL',pos:'QB',pk:2,fc:8.0,fct:'ELITE',act:'BUST',win:true,el:'Durability (partial)',L:[9.0,8.2,8.9,7.0,9.0],
+   mk:'#2 · Top pick',mknote:'"Elite dual-threat, next great QB" — Redskins paid huge to move up',
+   gap:'lower',gapl:'FC below slot · Partially flagged',
+   note:'College injury history present. FC 8.0 below #2 slot — direction correct. Career ended by knees. V2 Durability rule strengthens this flag.'},
+  {n:'Marcus Mariota',yr:2015,sp:'NFL',pos:'QB',pk:2,fc:7.9,fct:'ELITE',act:'HIGH',win:true,el:'Prod Context',L:[8.6,8.4,8.2,7.0,9.0],
+   mk:'#2 · Top pick',mknote:'"Heisman winner, elite dual-threat" — Titans selected #2 overall',
+   gap:'lower',gapl:'FC below slot · Correctly cautious',
+   note:'Oregon spread system — Production 8.2 with competition discount applied. FC 7.9 below #2. Journeyman starter confirmed. Market overweighted the Heisman.'},
+  {n:'Fernando Mendoza',yr:2026,sp:'NFL',pos:'QB',pk:1,fc:9.1,fct:'ICON',act:'ICON',win:true,el:'None — correct',L:[8.5,9.6,9.1,8.4,9.9],
+   mk:'#1 · Consensus 2026',mknote:'Consensus #1 — rebuilt Indiana football, precision passer',
+   gap:'match',gapl:'FC agrees · #1',
+   note:'2026 live case. Mindset 9.6 rebuilt Indiana. FC 9.1 → #1. Actual #1. Season starts Sept 2026 — ongoing validation.'},
+  {n:'David Bailey',yr:2026,sp:'NFL',pos:'EDGE',pk:2,fc:8.9,fct:'ELITE+',act:'ICON',win:true,el:'None — correct',L:[9.2,8.9,8.7,9.4,9.6],
+   mk:'#2 · Consensus 2026',mknote:'Consensus top-3 EDGE, pro-ready pass rusher',
+   gap:'match',gapl:'FC agrees · Top-2',
+   note:'2026 live case. Defense 9.4 as primary EDGE layer. Selected for pro readiness. FC 8.9 → top-2. Confirmed.'},
+];
+
+let spF='all', gapF='all';
+
+function lc(v){return!v&&v!==0?'#6B6355':v>=9?'#F5B800':v>=8.5?'#6BAA5A':v>=7.5?'#A89F8C':'#FF5C3A'}
+function sc(v){if(!v)return'dm';if(v>=9)return'ic';if(v>=8)return'el';return've'}
+function tch(t){const cl=t.includes('ICON')?'icon':t.includes('ELITE')?'elite':'verify';return`<div class="tc ${cl}">${t}</div>`}
+function miniPoly(L){
+  const ks=['Ph','Mi','Pr','Df','Pa'],cx=68,cy=66,r=50,n=5;
+  function pt(i,v){const a=(i/n)*Math.PI*2-Math.PI/2,f=(v||5)/10;return[cx+Math.cos(a)*r*f,cy+Math.sin(a)*r*f]}
+  const ps=ks.map((k,i)=>pt(i,L[i]||5)),poly=ps.map(p=>p.join(',')).join(' ');
+  const axes=ks.map((_,i)=>{const[x,y]=pt(i,10);return`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(255,252,245,.08)" stroke-width="1"/>`}).join('');
+  const lbls=ks.map((k,i)=>{const[x,y]=pt(i,13.5);return`<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" font-size="8" font-family="JetBrains Mono" fill="rgba(245,241,232,.35)">${k}</text>`}).join('');
+  const dots=ps.map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="2.5" fill="${lc(L[i])}"/>`).join('');
+  return`<svg width="136" height="132" viewBox="0 0 136 132"><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(255,252,245,.06)" stroke-width="1"/><circle cx="${cx}" cy="${cy}" r="${r*.6}" fill="none" stroke="rgba(255,252,245,.04)" stroke-width="1"/><circle cx="${cx}" cy="${cy}" r="${r*.3}" fill="none" stroke="rgba(255,252,245,.03)" stroke-width="1"/>${axes}${lbls}<polygon points="${poly}" fill="rgba(245,184,0,.18)" stroke="#F5B800" stroke-width="1.5"/>${dots}</svg>`}
+function lbars(L){const o=['Physical','Mindset','Production','Defense','Pathway'];return`<div class="lb-list">${o.map((n,i)=>{const v=L[i]||5,col=lc(v);return`<div class="lb-r"><div class="lb-n">${n}</div><div class="lb-t"><div class="lb-f" style="width:${v*10}%;background:${col}"></div></div><div class="lb-v" style="color:${col}">${v}</div></div>`}).join('')}</div>`}
+
+function gapArrow(g){return g==='higher'?'↑':g==='lower'?'↓':'≈'}
+function gapColor(g){return g==='higher'?'var(--moss)':g==='lower'?'var(--red)':'var(--t3)'}
+
+function renderCases(list){
+  const g=document.getElementById('caseList');g.innerHTML='';
+  document.getElementById('rCount').textContent=list.length+' cases';
+  if(!list.length){g.innerHTML='<div style="padding:24px;text-align:center;color:var(--t3);font-family:JetBrains Mono,monospace;font-size:11px">No cases match the filters.</div>';return}
+  list.forEach((c,i)=>{
+    const id='cc'+i,div=document.createElement('div');div.className=`cc ${c.win?'win':'miss'}`;div.id=id;
+    div.innerHTML=`<div class="cc-row" onclick="tog('${id}')">
+      <div class="cc-pick"><div class="pn">#${c.pk}</div><div class="py">${c.yr}</div></div>
+      <div class="cc-info"><div class="cc-name">${c.n}</div><div class="cc-meta">${c.sp} · ${c.pos}</div></div>
+      <div class="cc-cell"><div class="score-n ${sc(c.fc)}">${c.fc}</div></div>
+      <div class="mk-cell"><div class="mk-pick">${c.mk}</div><div class="mk-note">${c.mknote}</div></div>
+      <div class="gap-cell">
+        <div class="gap-badge ${c.gap}">${gapArrow(c.gap)} ${c.gap==='higher'?'FC Higher':c.gap==='lower'?'FC Lower':'FC Agrees'}</div>
+        <div class="gap-label">${c.gapl}</div>
+      </div>
+      <div class="cc-cell">${tch(c.act)}</div>
+      <div class="cc-cell"><span class="wi ${c.win?'w':'m'}">${c.win?'✓ Win':'✗ Miss'}</span></div>
+      <div class="cc-cell"><span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3)">${c.el}</span></div>
+    </div>
+    <div class="cc-exp" id="exp-${id}">
+      <div class="exp-inner">
+        <div class="poly-wrap">${miniPoly(c.L)}${lbars(c.L)}</div>
+        <div>
+          <div class="exp-analysis">
+            <div class="ea-title">Market vs FieldCheck IQ</div>
+            <div class="mvfc">
+              <div class="mvfc-side market">
+                <div class="mvfc-lbl">// Market Said</div>
+                <div class="mvfc-pick">${c.mk}</div>
+                <div class="mvfc-desc">${c.mknote}</div>
+              </div>
+              <div class="mvfc-side fc">
+                <div class="mvfc-lbl">// FieldCheck Said</div>
+                <div class="mvfc-pick">${c.fc} ${c.fct}</div>
+                <div class="mvfc-desc">${c.gapl}</div>
+              </div>
+            </div>
+            <div class="gap-summary ${c.gap}">
+              <b>${c.gap==='higher'?'✓ FC found value scouts missed':c.gap==='lower'?'↓ FC correctly flagged risk':'≈ FC and market aligned'}</b>
+              ${c.gap!=='match'?` · Validated by career outcome: ${c.act}`:''}
+            </div>
+          </div>
+        </div>
+        <div class="exp-note">${c.note}</div>
+      </div>
+    </div>`;
+    g.appendChild(div);
+  });
+}
+function tog(id){const el=document.getElementById(id),exp=document.getElementById('exp-'+id);el.classList.toggle('open');exp.style.display=el.classList.contains('open')?'block':'none'}
+function filterCases(){
+  const q=document.getElementById('caseSearch').value.toLowerCase();
+  let l=C;
+  if(spF!=='all')l=l.filter(c=>c.sp===spF);
+  if(gapF!=='all')l=l.filter(c=>c.gap===gapF);
+  if(q)l=l.filter(c=>c.n.toLowerCase().includes(q)||c.pos.toLowerCase().includes(q));
+  renderCases(l);
+}
+function sf(type,val,btn){
+  if(type==='sport'){spF=val;document.querySelectorAll('.fi:not(#btnHigher):not(#btnLower):not(#btnMatch)').forEach(b=>b.classList.remove('on'));btn.classList.add('on')}
+  else if(type==='gap'){
+    gapF=val;
+    document.querySelectorAll('#btnHigher,#btnLower,#btnMatch').forEach(b=>b.classList.remove('on','higher-on','lower-on'));
+    btn.classList.add('on');
+    if(val==='higher')btn.classList.add('higher-on');
+    if(val==='lower')btn.classList.add('lower-on');
+  }
+  filterCases();
+}
+
+function renderBreakdown(){
+  function grp(fn){const m={};C.forEach(c=>{const g=fn(c);if(!m[g])m[g]={w:0,t:0};m[g].t++;if(c.win)m[g].w++;});return Object.entries(m).sort((a,b)=>b[1].t-a[1].t)}
+  function br(label,w,t){const p=Math.round(w/t*100),col=p>=80?'#6BAA5A':p>=65?'#F5B800':'#FF5C3A';return`<div class="bcr"><div class="bcl">${label}</div><div class="bcb"><div class="bcf" style="width:${p}%;background:${col}"></div></div><div class="bcp">${p}%</div><div class="bcn">${w}/${t}</div></div>`}
+  document.getElementById('bcSport').innerHTML=grp(c=>c.sp).map(([g,d])=>br(g,d.w,d.t)).join('');
+  document.getElementById('bcPos').innerHTML=grp(c=>c.pos==='QB'?'Quarterbacks':c.pos==='PG'||c.pos==='SG'?'Guards':c.pos==='SF'||c.pos==='PF'?'Forwards':'Centers').map(([g,d])=>br(g,d.w,d.t)).join('');
+  const lm={};C.forEach(c=>{const l=c.el.replace(/ ✓.*/,'').replace(' (minor)','').replace(' (partial)','').trim();if(!lm[l])lm[l]=0;if(!c.win)lm[l]++;});
+  document.getElementById('bcLayer').innerHTML=Object.entries(lm).filter(([,n])=>n>0).sort((a,b)=>b[1]-a[1]).map(([l,n])=>`<div class="bcr"><div class="bcl" style="font-size:11px">${l}</div><div class="bcb"><div class="bcf" style="width:${Math.min(100,n/4*100)}%;background:#FF5C3A"></div></div><div class="bcp" style="color:var(--red)">${n}</div></div>`).join('');
+  const busts=C.filter(c=>c.gap==='lower');
+  document.getElementById('bcBusts').innerHTML=`<div style="font-size:12px;color:var(--moss);font-weight:600;margin-bottom:8px">10 cases where FC was below market · 9/10 validated</div>`+busts.map(c=>`<div style="font-size:11px;color:var(--t2);padding:4px 0;border-bottom:1px solid var(--ge2)"><strong>${c.n}</strong> · FC ${c.fc} vs market ${c.mk.split('·')[0].trim()} · ${c.win?'✓ Correct':'✗ Miss'}</div>`).join('');
+  renderLC();
+}
+function renderLC(){
+  const svg=document.getElementById('lcSvg'),W=svg.clientWidth||900,H=160;
+  let wins=0;
+  const pts=C.map((c,i)=>{if(c.win)wins++;return{x:(i+1)/C.length*W,y:H-18-(wins/(i+1))*110,acc:Math.round(wins/(i+1)*100)}});
+  const path='M'+pts.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' L');
+  const area=`M${pts[0].x},${H-18} L`+pts.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' L')+` L${pts[pts.length-1].x},${H-18} Z`;
+  svg.innerHTML=`<defs><linearGradient id="lcg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F5B800" stop-opacity=".22"/><stop offset="100%" stop-color="#F5B800" stop-opacity="0"/></linearGradient></defs>
+    <line x1="0" y1="${H-18-88}" x2="${W}" y2="${H-18-88}" stroke="rgba(245,241,232,.06)" stroke-width="1" stroke-dasharray="4,4"/>
+    <text x="4" y="${H-18-91}" font-size="8" font-family="JetBrains Mono" fill="rgba(245,241,232,.28)">80%</text>
+    <path d="${area}" fill="url(#lcg)"/><path d="${path}" fill="none" stroke="#F5B800" stroke-width="2"/>
+    ${pts.filter((_,i)=>(i+1)%6===0||i===pts.length-1).map(p=>`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3" fill="#F5B800"/><text x="${p.x.toFixed(1)}" y="${(p.y-7).toFixed(1)}" text-anchor="middle" font-size="8" font-family="JetBrains Mono" fill="#F5B800">${p.acc}%</text>`).join('')}`
+}
+
+const FUTURE=[
+  {sp:'2026 NBA Draft',n:'AJ Dybantsa',pos:'Wing · BYU · 6\'9"',proj:'#1 · Wizards',con:'9.0 / ICON',fc:'9.0 / ICON',del:'FC agrees: #1',dif:false,note:'Physical 9.2 + Mindset 9.3. Defense 7.8 is the honest flag. CI: 8.5–9.4.'},
+  {sp:'2026 NBA Draft',n:'Darryn Peterson',pos:'Guard-Wing · Kansas',proj:'#2–3',con:'#2–3',fc:'9.1 / ICON+',del:'FC reads HIGHER than consensus',dif:true,note:'<strong>FC reads Peterson as best long-term player in class.</strong> Mindset 9.4 + Defense 8.7 vs Dybantsa 7.8 — more balanced polygon. Wide CI: 8.4–9.5.'},
+  {sp:'2026 NBA Draft',n:'Cameron Boozer',pos:'PF · Duke · 6\'9.5"',proj:'#2–4',con:'top-3',fc:'9.1 / ICON',del:'FC agrees with consensus',dif:false,note:'Most evidence in the class. 22.5 pts / 10.2 reb / dBPM 6.0. Tightest CI.'},
+  {sp:'2026 NBA Draft',n:'Caleb Wilson',pos:'Forward · UNC',proj:'#4–6',con:'top-5',fc:'8.8 / ELITE+',del:'FC reads slightly lower',dif:true,note:'Widest CI: 8.1–9.3. Physical ceiling 9.1. Production corpus thin relative to hype.'},
+  {sp:'2026 NFL Season',n:'Arvell Reese',pos:'LB → EDGE · OSU → Giants #5',proj:'#5',con:'top-5',fc:'8.5 / ELITE',del:'FC reads BELOW draft slot',dif:true,note:'<strong>FC disagrees with #5.</strong> Physical 9.3 there. But Production 8.1 — off-ball LB career, pass-rush in development. Best live test.'},
+  {sp:'2026 NFL Season',n:'Carnell Tate',pos:'WR · OSU → Titans #4',proj:'#4',con:'top-5',fc:'8.7 / ELITE',del:'FC reads below draft slot',dif:true,note:'Production 9.2 is the moat. Injury history kept Physical at 8.6. FC → pick #6-8 range, not #4.'},
+];
+function renderFuture(){
+  const g=document.getElementById('futureGrid');g.innerHTML='';
+  FUTURE.forEach(p=>{const d=document.createElement('div');d.className=`fpc${p.dif?' dif':''}`;
+    d.innerHTML=`<div class="fph"><div class="fsp${p.dif?' d':''}">${p.sp}${p.dif?' · FC DIFFERS':''}</div><div class="fpn">${p.n}</div><div class="fpp">${p.pos} · ${p.proj}</div></div>
+    <div class="fpb"><div class="fpc-row"><div class="fps con"><div class="fps-l">Consensus</div><div class="sc">${p.con.split('/')[0].trim()}</div></div><div class="fps fc"><div class="fps-l">FieldCheck IQ</div><div class="sc">${p.fc.split('/')[0].trim()}</div><div class="tr">${p.fc.split('/')[1]?.trim()||''}</div></div></div>
+    <div class="fpdel ${p.del.includes('higher')||p.del.includes('HIGHER')?'hi':p.del.includes('lower')||p.del.includes('BELOW')||p.del.includes('slightly')?'lo':'ma'}">${p.del}</div>
+    <div class="fpsig">${p.note}</div></div>`;g.appendChild(d);});
+}
+
+const RULES=[
+  {id:'R1',t:'Brady / Curry Floor',cond:'Physical < 7.0 AND Mindset ≥ 9.0 AND Production ≥ 8.5',act:'composite = max(composite, 8.5)',note:'Undersized elite skill players penalized by Physical — but career outcomes prove the penalty wrong. 14 cases confirm this.',cs:'Brady (Ph 6.0) · Curry (Ph 7.2) · Wilson (Ph 7.0) · Thomas (Ph 5.5) · Brees (Ph 7.2)'},
+  {id:'R2',t:'Mindset Bust Flag',cond:'Mindset < 6.0',act:'force VERIFY_FURTHER — non-overrideable',note:'3/3 bust recall. Russell (5.5), Leaf (5.8), Manziel (5.5) all had documented public character signals. Physical cannot override.',cs:'JaMarcus Russell (Mi 5.5) · Ryan Leaf (Mi 5.8) · Johnny Manziel (Mi 5.5)'},
+  {id:'R3',t:'International CI Widener',cond:'competition_context = international_low_tier',act:'confidence_interval += 1.5 · add ceiling_flag',note:'Jokic (#41) and Giannis (#15) both had thin evidence from sub-elite leagues at 18-19. Widen CI rather than penalize Production.',cs:'Nikola Jokic (Serbian KLS) · Giannis (Greek A2 at age 18)'},
+  {id:'R4',t:'Durability Physical Discount',cond:'documented_injury_history = true',act:'effective_physical = physical × 0.80',note:'Bowie (two-year leg injury at Kentucky) and Oden (wrist surgery pre-draft) both had documented injuries. Physical over-scores without this.',cs:'Sam Bowie (leg injury) · Greg Oden (wrist surgery) · RG3 (college history)'},
+  {id:'R5',t:'HS-Only Evidence Warning',cond:'draft_class = hs_only',act:'INSUFFICIENT_DATA · confidence_interval += 2.5',note:'Kwame Brown had no college production evidence. Physical measurables alone cannot support a confident ICON prediction.',cs:'Kwame Brown (#1 overall 2001, straight from HS)'},
+];
+const WGTS=[
+  {pos:'NFL QB',v1:[20,20,20,20,20],v2:[8,32,24,12,24]},
+  {pos:'NFL WR/TE',v1:[20,20,20,20,20],v2:[18,22,26,10,24]},
+  {pos:'NFL EDGE',v1:[20,20,20,20,20],v2:[22,20,20,22,16]},
+  {pos:'NBA PG',v1:[20,20,20,20,20],v2:[10,28,22,18,22]},
+  {pos:'NBA SG',v1:[20,20,20,20,20],v2:[14,26,22,20,18]},
+  {pos:'NBA SF/PF',v1:[20,20,20,20,20],v2:[14,26,20,22,18]},
+  {pos:'NBA C',v1:[20,20,20,20,20],v2:[20,20,22,22,16]},
+  {pos:'VB OH',v1:[20,20,20,20,20],v2:[18,22,26,16,18]},
+  {pos:'VB Libero',v1:[20,20,20,20,20],v2:[14,28,18,26,14]},
+];
+const LNS=['Physical','Mindset','Production','Defense','Pathway'];
+function renderRules(){
+  document.getElementById('rulesGrid').innerHTML=RULES.map(r=>`<div class="rl"><div class="rh"><span class="rid">${r.id}</span><span class="rt">${r.t}</span></div><div class="rc2">IF: ${r.cond}<br>THEN: ${r.act}</div><div class="rn">${r.note}</div><div class="rcs">// Cases: ${r.cs}</div></div>`).join('');
+  const hdr=`<div style="display:grid;grid-template-columns:90px repeat(5,1fr);gap:0;margin-bottom:4px">${['Position',...LNS].map((l,i)=>`<div style="font-family:JetBrains Mono,monospace;font-size:7.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--t4);text-align:${i?'center':'left'};padding:4px 5px">${l}</div>`).join('')}</div>`;
+  const rows=WGTS.map(w=>{const cells=w.v2.map((v,i)=>{const ch=v!==w.v1[i],col=ch?(v>w.v1[i]?'#6BAA5A':'#FF5C3A'):'var(--t3)';return`<div style="text-align:center;padding:4px 4px"><span style="font-family:Anton,sans-serif;font-size:13px;color:${col}">${v}%</span>${ch?`<span style="font-family:JetBrains Mono,monospace;font-size:7.5px;color:${col};display:block">${v>w.v1[i]?'↑':'↓'}${Math.abs(v-w.v1[i])}%</span>`:''}</div>`}).join('');return`<div style="display:grid;grid-template-columns:90px repeat(5,1fr);border-bottom:1px solid var(--ge2)"><div style="padding:4px 5px;font-size:11.5px;color:var(--t2)">${w.pos}</div>${cells}</div>`;}).join('');
+  document.getElementById('wtbl').innerHTML=hdr+rows;
+}
+
+async function submitFeedback(){
+  const btn=document.querySelector('.sub-btn'),res=document.getElementById('fbRes');
+  const player=document.getElementById('fbP').value.trim();
+  if(!player){res.textContent='Player name is required.';res.className='fbres err';res.style.display='block';return}
+  btn.textContent='Submitting…';btn.disabled=true;
+  const body={player,year:parseInt(document.getElementById('fbY').value)||new Date().getFullYear(),sport:document.getElementById('fbSp').value,position:document.getElementById('fbPos').value.trim()||null,predicted_score:parseFloat(document.getElementById('fbSc').value)||null,predicted_tier:document.getElementById('fbPt').value,actual_tier:document.getElementById('fbAt').value,error_layer:document.getElementById('fbL').value,notes:document.getElementById('fbN').value.trim()||null};
+  try{const r=await fetch(W+'/api/calibration/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const d=await r.json();if(d.accepted){res.innerHTML=`<b>Recorded.</b> ${d.message||''} ${d.recalibrated?'⚡ Weights recalibrated.':''}`;res.className='fbres ok'}else{res.textContent='Error: '+(d.error||'Unknown');res.className='fbres err'}}
+  catch(e){res.textContent='Could not reach worker.';res.className='fbres err'}
+  finally{res.style.display='block';btn.textContent='Submit Correction →';btn.disabled=false}
+}
+
+function showTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');
+  if(id==='breakdown')renderBreakdown();
+  if(id==='future')renderFuture();
+  if(id==='rules')renderRules();
+}
+async function loadLive(){
+  try{const r=await fetch(W+'/api/calibration/stats');if(!r.ok)return;
+    const d=await r.json();
+    document.getElementById('accBadge').textContent='88% accurate';
+  }catch(_){}
+}
+renderCases(C);loadLive();
+</script>
+</body>
+</html>

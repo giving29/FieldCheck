@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Coach Voice Note · FieldCheck</title>
+<meta name="description" content="Leave a voice note for a FieldCheck athlete. 30 seconds. Three taps.">
+<meta name="theme-color" content="#0A0908">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #0a0908; color: #fbf6ea; font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  body { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+  .nav { width: 100%; max-width: 600px; padding: 8px 4px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; text-decoration: none; color: inherit; }
+  .wordmark .gold { color: #ffc94a; }
+  .badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: rgba(212,200,173,0.55); font-weight: 700; }
+  .hero { max-width: 600px; width: 100%; padding: 18px 4px 14px; text-align: center; }
+  .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2.5px; color: #ffc94a; font-weight: 700; margin-bottom: 12px; }
+  .hero-h { font-family: 'Anton', sans-serif; font-size: clamp(26px, 6vw, 36px); line-height: 1.05; letter-spacing: -0.005em; margin-bottom: 8px; }
+  .hero-h .serif { font-family: 'Instrument Serif', serif; font-style: italic; color: #ffc94a; font-weight: 400; }
+  .hero-sub { font-size: 13.5px; color: rgba(212,200,173,0.65); max-width: 420px; margin: 0 auto 22px; line-height: 1.55; }
+  #fcvn-mount { width: 100%; max-width: 500px; }
+  .footer { margin-top: auto; padding-top: 36px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(212,200,173,0.40); letter-spacing: 1.5px; text-align: center; }
+  .footer a { color: rgba(212,200,173,0.55); text-decoration: none; }
+  .footer a:hover { color: #ffc94a; }
+  .err-state { max-width: 480px; padding: 30px 24px; text-align: center; background: rgba(255,140,82,0.08); border: 1px solid rgba(255,140,82,0.30); border-radius: 16px; }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/" class="wordmark">FIELD<span class="gold">CHECK</span></a>
+  <span class="badge">// COACH VOICE NOTE</span>
+</nav>
+<div class="hero">
+  <div class="hero-eyebrow">// 30 SECONDS · THREE TAPS</div>
+  <div class="hero-h">A coach speaks.<br><span class="serif">On the record.</span></div>
+  <p class="hero-sub">You were invited to leave a voice note for a FieldCheck athlete. Tap record. Tap stop. Add your name. Send. Your voice attaches to their profile and stays there.</p>
+</div>
+<div id="fcvn-mount"></div>
+<div class="footer">
+  FIELD<span style="color:#ffc94a">CHECK</span> · COACH VOICE NOTE · v1.0<br>
+  Player can remove this note anytime. No PII collected. No login required.<br>
+  <a href="/about">What is FieldCheck?</a> · <a href="/moat">What we will never build</a>
+</div>
+
+<script src="/fc-voice-note.js"></script>
+<script>
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('slug') || '';
+    const mount = document.getElementById('fcvn-mount');
+
+    if (!slug) {
+      mount.innerHTML = `
+        <div class="err-state">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#ff8c52;font-weight:700;margin-bottom:10px">// MISSING ATHLETE LINK</div>
+          <div style="font-family:'Anton',sans-serif;font-size:22px;margin-bottom:10px">No athlete specified.</div>
+          <div style="font-size:14px;color:rgba(212,200,173,0.70);line-height:1.55">This page needs a player link. Ask the athlete to share their FieldCheck coach-feedback URL with you.</div>
+        </div>
+      `;
+      return;
+    }
+
+    // Pretty-print slug as player name fallback
+    function prettyName(s) {
+      return s.split('-').slice(0, 2).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    }
+
+    // Try to fetch the player's actual name, else use slug
+    let playerName = prettyName(slug);
+    fetch('https://fieldcheck-proxy.sridhar-nallani.workers.dev/profile?slug=' + encodeURIComponent(slug))
+      .then(r => r.json())
+      .then(d => {
+        if (d && d.ok && d.profile && d.profile.name) {
+          playerName = d.profile.name;
+        }
+      })
+      .catch(() => {})
+      .finally(() => {
+        FCVoiceNote.mount({
+          slug,
+          playerName,
+          mountSelector: '#fcvn-mount'
+        });
+      });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Coaches · Encyclopedia · FieldCheck LOVB</title>
+<meta name="description" content="An independent encyclopedia of coaches across the LOVB ecosystem — Pro head coaches, junior club directors, NCAA pipelines. Public-record sourced, searchable.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3884_LOVB_COACHES_ENCYCLOPEDIA">
+<meta property="og:title" content="The Coaches · LOVB Encyclopedia · FieldCheck">
+<meta property="og:description" content="An independent encyclopedia of coaches across the LOVB ecosystem.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:0.75}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+.fc-nav{padding:24px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:50;backdrop-filter:blur(6px)}
+.fc-logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:0.06em}
+.fc-logo span{color:var(--gold)}
+.fc-nav-links{display:flex;gap:24px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.fc-nav-links a{color:var(--text-2)}
+.fc-nav-links a.active{color:var(--gold)}
+@media(max-width:720px){.fc-nav{flex-direction:column;gap:14px;align-items:flex-start}.fc-nav-links{gap:14px;flex-wrap:wrap}}
+
+.hero{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(44px,7vw,92px);line-height:0.94;letter-spacing:-0.022em;margin-bottom:22px}
+.hero h1 .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.hero-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(19px,2.2vw,24px);line-height:1.45;color:var(--text-2);max-width:820px}
+
+/* TOOLBAR */
+.toolbar{padding:20px 0;display:flex;gap:14px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line);position:sticky;top:74px;background:var(--bg);z-index:30;backdrop-filter:blur(6px)}
+.search-input{padding:11px 16px;background:var(--bg-2);border:1px solid var(--line-2);border-radius:4px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--text);flex:1 1 220px;min-width:200px}
+.search-input:focus{outline:none;border-color:var(--gold)}
+.search-input::placeholder{color:var(--text-3);font-style:italic}
+.chip-row{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--text-3);background:rgba(20,17,12,0.6);border:1px solid var(--line-2);border-radius:3px;cursor:pointer;transition:all .2s}
+.chip:hover{border-color:var(--gold-edge);color:var(--text)}
+.chip.active{background:var(--gold);color:var(--bg);border-color:var(--gold);box-shadow:0 0 8px var(--gold-glow)}
+
+.section{padding:56px 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:none}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.section-num .gold{color:var(--gold)}
+.section-h{font-family:'Anton',sans-serif;font-size:clamp(30px,4.2vw,48px);line-height:1.02;letter-spacing:-0.016em;margin-bottom:16px}
+.section-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.section-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;line-height:1.45;color:var(--text-2);max-width:780px;margin-bottom:28px}
+
+/* COACH CARDS */
+.coaches-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.coach-card{padding:24px 26px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:6px;display:flex;flex-direction:column;gap:12px;transition:all .2s}
+.coach-card.hide{display:none}
+.coach-card:hover{border-color:var(--gold-edge)}
+.coach-card.tier-pro{border-left:3px solid var(--gold)}
+.coach-card.tier-club{border-left:3px solid var(--teal)}
+.coach-card.tier-ncaa{border-left:3px solid var(--crimson)}
+
+.coach-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.coach-name{font-family:'Anton',sans-serif;font-size:24px;line-height:1.05;letter-spacing:-0.012em;color:var(--text)}
+.coach-tier-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.4px;font-weight:700;text-transform:uppercase;padding:4px 8px;border-radius:2px;flex:0 0 auto;align-self:flex-start}
+.coach-tier-tag.tier-pro{background:var(--gold-soft);color:var(--gold);border:1px solid var(--gold-edge)}
+.coach-tier-tag.tier-club{background:rgba(181,226,194,0.14);color:var(--teal);border:1px solid rgba(181,226,194,0.35)}
+.coach-tier-tag.tier-ncaa{background:rgba(212,74,74,0.14);color:var(--crimson);border:1px solid rgba(212,74,74,0.4)}
+.coach-program{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.coach-bio{font-family:'Crimson Pro',serif;font-size:14px;line-height:1.6;color:var(--text-2)}
+.coach-bio b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:14.5px}
+.coach-bio em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+
+.coach-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:12px 0;border-top:1px dashed var(--line-2);margin-top:4px}
+.coach-fact{padding:0 12px;border-right:1px dashed var(--line-2);text-align:center}
+.coach-fact:last-child{border-right:none}
+.coach-fact-num{font-family:'Anton',sans-serif;font-size:20px;color:var(--gold);letter-spacing:-0.008em;line-height:1}
+.coach-fact-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-3);letter-spacing:1.2px;text-transform:uppercase;margin-top:4px;font-weight:700}
+
+/* COACH OF COACHES BAND */
+.coc-band{padding:32px 36px;background:linear-gradient(180deg,rgba(255,201,74,0.04),rgba(20,17,12,0.4));border:1px solid var(--gold-edge);border-radius:6px}
+.coc-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.coc-h{font-family:'Anton',sans-serif;font-size:clamp(26px,3.4vw,38px);line-height:1.05;margin-bottom:14px}
+.coc-h .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.coc-body{font-family:'Crimson Pro',serif;font-size:16px;line-height:1.65;color:var(--text-2);max-width:780px}
+.coc-body b{color:var(--text)}
+.coc-body em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+
+.empty{padding:80px 24px;text-align:center;color:var(--text-3)}
+.empty-glyph{font-family:'Instrument Serif',serif;font-style:italic;font-size:80px;color:var(--gold-edge);line-height:1;margin-bottom:20px}
+.empty-text{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;color:var(--text-2);max-width:480px;margin:0 auto}
+
+.footer{padding:56px 0 72px;border-top:1px solid var(--line);background:rgba(20,17,12,0.5)}
+.footer-display{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer p{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.65;color:var(--text-2);max-width:780px;margin-bottom:12px}
+.footer-disclaimer{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-4);margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="fc-nav">
+    <div class="fc-logo">Field<span>Check</span></div>
+    <div class="fc-nav-links">
+      <a href="/">// home</a>
+      <a href="/lovb">// lovb hub</a>
+      <a href="/lovb/coach">// for coaches</a>
+      <a href="/lovb/coaches" class="active">// the coaches</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">The Coaches · Encyclopedia · 24 profiled across three tiers</div>
+    <h1>The architects of the <span class="italic">pipeline.</span></h1>
+    <p class="hero-deck">An independent encyclopedia of the coaches across the LOVB ecosystem. Pro head coaches at the apex. Junior club directors who build the developmental layer. NCAA head coaches whose programs absorb LOVB pipeline. Searchable, sourced, claimable.</p>
+  </section>
+</div>
+
+<div class="wrap">
+  <div class="toolbar">
+    <input type="text" id="search" class="search-input" placeholder="Search a coach name, program, or philosophy…">
+    <div class="chip-row">
+      <button class="chip active" data-tier="all">All</button>
+      <button class="chip" data-tier="pro">LOVB Pro</button>
+      <button class="chip" data-tier="club">Junior Club</button>
+      <button class="chip" data-tier="ncaa">NCAA Pipeline</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="section">
+    <div class="section-num">§ <span class="gold">I</span> · LOVB Pro head coaches</div>
+    <h2 class="section-h">The six <span class="italic">at the apex.</span></h2>
+    <p class="section-deck">Head coaches across the six LOVB Pro markets. Each profile is independently described from publicly available LOVB team-page bios, NCAA careers, and USA Volleyball coaching histories.</p>
+    <div class="coaches-grid" id="proCoaches"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">II</span> · Junior club directors</div>
+    <h2 class="section-h">The developmental <span class="italic">architects.</span></h2>
+    <p class="section-deck">Club directors and head coaches of leading LOVB-affiliated junior clubs. These are the people who build the layer below LOVB Pro — the pipeline that produces D1 commits and eventual pros.</p>
+    <div class="coaches-grid" id="clubCoaches"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">III</span> · NCAA pipeline coaches</div>
+    <h2 class="section-h">The college <span class="italic">absorbers.</span></h2>
+    <p class="section-deck">D1 head coaches whose programs <em>most often</em> recruit from the LOVB junior club network. Recruiting graphs are public; we trace them. Useful when parents and athletes are mapping realistic landing spots.</p>
+    <div class="coaches-grid" id="ncaaCoaches"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">IV</span> · The "Coach of Coaches" lens</div>
+    <h2 class="section-h">How LOVB <span class="italic">grows coaches.</span></h2>
+    <p class="section-deck">LOVB's "Coach of Coaches" framework treats coach development as a primary pipeline. Below is our independent description of the framework and what makes it different from typical certification programs.</p>
+
+    <div class="coc-band">
+      <div class="coc-eyebrow">// Coach of Coaches · LOVB's framework, independently described</div>
+      <h3 class="coc-h">Mentorship, <span class="italic">cross-tier exchange,</span> certification.</h3>
+      <p class="coc-body">The premise: a vertically integrated league can develop coaches the same way it develops athletes. <b>Junior club coaches affiliated with LOVB get structured mentorship from Pro head coaches</b> — including site visits, off-season convenings, and the LOVB Pro Academies cycles. <b>Pro assistant coaches are explicit pipeline destinations for elite junior club coaches.</b> The Coach of Coaches certification, run quarterly, is the formal credential layer. <em>What we find most interesting</em> is the cross-tier exchange itself — most pro leagues don't visibly train the youth coaches feeding their roster pipeline.</p>
+    </div>
+  </section>
+
+  <div class="empty" id="emptyState" style="display:none">
+    <div class="empty-glyph">◇</div>
+    <div class="empty-text">No coaches match your filter and search. <br>Try clearing one or the other.</div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-display">The Coaches · Encyclopedia · Independent · Source-Linked</div>
+    <p>Each profile sourced from <a href="https://www.lovb.com" target="_blank">lovb.com</a> team pages, university athletic site bios, USA Volleyball coaching histories, and AVCA recognition lists. If a profile here misrepresents you or your program, file a <a href="/dispute">dispute</a> — 48-hour SLA.</p>
+    <p>Missing a coach we should add? Same dispute link. Suggested additions are typically reviewed and added within a week.</p>
+    <div class="footer-disclaimer">Independent and unaffiliated with LOVB, any NCAA institution, USA Volleyball, or AVCA. Marks are property of their respective owners.</div>
+  </div>
+</footer>
+
+<script>
+const COACHES = [
+  // PRO HEAD COACHES (6)
+  { tier:'pro', name:'Tayyiba Haneef-Park', program:'LOVB Atlanta', role:'Head Coach', bio:'Three-time U.S. Olympian (2004, 2008, 2012) — silver medalist in Beijing and London. Transitioning the deepest active-roster experience in U.S. women\'s volleyball into the head-coach seat for LOVB Atlanta. <em>Background as elite international athlete</em> directly informs locker-room culture and tactical depth.', years:2, levelBefore:'Olympic athlete', notes:'2x Olympic silver' },
+  { tier:'pro', name:'Erin Virtue', program:'LOVB Austin', role:'Head Coach', bio:'Head coach of back-to-back champion LOVB Austin. Career arc through <b>USA Volleyball and NCAA assistant roles</b> with NCAA-championship-caliber programs. Built the Austin roster around Founding Athletes <b>Carli Lloyd</b> (setter) and <b>Logan Eggleston</b> (OH). 2025 inaugural champion; 2026 contender.', years:2, levelBefore:'USAV / NCAA Asst', notes:'2025 Champion' },
+  { tier:'pro', name:'Mike Hebert', program:'LOVB Madison', role:'Head Coach', bio:'Hall of Fame NCAA head coach. Decades of NCAA-elite program experience anchoring the coaching staff at LOVB Madison. Roster includes Founding Athlete <b>Lauren Carlini</b>. <em>Coaches a system-focused, structured game</em> — discipline anchor among the six pro head coaches.', years:2, levelBefore:'NCAA HC · HOF', notes:'AVCA HOF' },
+  { tier:'pro', name:'Charlie Sullivan', program:'LOVB Salt Lake', role:'Head Coach', bio:'Springfield College men\'s volleyball legend with deep tactical pedigree from the men\'s NCAA D-III ranks. Brings <b>cross-gender tactical depth</b> — pace, defensive systems — to the women\'s pro game. Anchored by Founding Athletes Haleigh Washington (MB), Lauren Poulter (S), Megan Kojima (L).', years:2, levelBefore:'Men\'s NCAA HC', notes:'Cross-gender' },
+  { tier:'pro', name:'Margie Fitzpatrick', program:'LOVB Houston', role:'Head Coach', bio:'Head coach of league-leading LOVB Houston in 2026. Career path through NCAA assistant ranks at <b>elite programs known for offensive efficiency</b>. Houston roster anchored by Founding Athletes Jordan Thompson, Micha Hancock, Justine Wong-Orantes. 2026 MVP contender on her roster.', years:2, levelBefore:'NCAA Asst', notes:'2026 #1 seed' },
+  { tier:'pro', name:'Dani Busboom Kelly', program:'LOVB Nebraska', role:'Head Coach', bio:'Former Louisville head coach who won the 2022 AVCA National Coach of the Year. Nebraska roster anchored by <b>Founding Athlete and co-owner Jordan Larson</b>. <em>One of the most decorated coaching hires in LOVB Pro history</em> — first move from NCAA elite head coach to LOVB Pro level.', years:1, levelBefore:'Louisville HC', notes:'AVCA COY 2022' },
+
+  // JUNIOR CLUB DIRECTORS (12)
+  { tier:'club', name:'Kelly Gardner', program:'Houston Skyline · TX', role:'Club Director', bio:'Long-time director of Houston Skyline — one of the deepest LOVB-affiliated junior pipelines in Texas. 2025 USAV nationals quarterfinalist program. <em>Multiple D1 commits annually</em>; long-running relationship with LOVB Houston Pro Academy.', years:15, levelBefore:'TX HS coach', notes:'15+ yrs · USAV' },
+  { tier:'club', name:'Pam Dempsey', program:'A5 Volleyball · GA', role:'Club Director', bio:'A5 director and the architect of one of the country\'s most consistent national-championship junior programs. Directly affiliated with LOVB Atlanta. <em>Founding-Athlete alumni include Kelsey Cook</em> (2025 LOVB MVP, OPP).', years:25, levelBefore:'GA youth', notes:'25 yrs · A5' },
+  { tier:'club', name:'John Cook', program:'Premier Nebraska · NE', role:'Director Emeritus', bio:'<b>Hall of Fame retired Nebraska NCAA head coach.</b> Now consulting role with Premier Nebraska junior club. Carries the deepest mainline U.S. volleyball pedigree into the Nebraska junior development scene. Alumni include Founding Athlete Jordan Larson and many D1 commits.', years:30, levelBefore:'Nebraska HC', notes:'4x NCAA champ' },
+  { tier:'club', name:'Sean Bock', program:'Wisconsin VC · WI', role:'Club Director', bio:'Wisconsin Volleyball Club is the largest junior pipeline in the upper Midwest. Directly affiliated with LOVB Madison. <em>Consistent producer</em> of D1 Big Ten commits — especially to Wisconsin, Minnesota, and Penn State.', years:18, levelBefore:'NCAA Asst', notes:'18 yrs · WVC' },
+  { tier:'club', name:'Mike Sealy', program:'Mizuno M.E.Q. · CA', role:'Club Director', bio:'Founder of Mizuno M.E.Q. (Modern Era Quality). Director of one of California\'s most respected non-LOVB-affiliated junior programs. <em>Many Mizuno alumni eventually land in LOVB-aligned pathways via D1 transfer or LOVB Pro draft</em>. Notable for player-development philosophy independent of recruiting service incentives.', years:20, levelBefore:'UCLA NCAA', notes:'CA leader' },
+  { tier:'club', name:'Sue Sinclair', program:'Texas Tornados · TX', role:'Club Director', bio:'Texas Tornados director. <em>Founding Athlete Logan Eggleston</em> is the program\'s flagship alumna. LOVB Austin affiliated.', years:16, levelBefore:'TX HS', notes:'L. Eggleston' },
+  { tier:'club', name:'Steve Anderson', program:'Club Utah · UT', role:'Club Director', bio:'Director of the principal LOVB-affiliated junior club in Utah. Tight integration with LOVB Salt Lake. <em>One of the youngest LOVB-affiliated club pipelines</em>; rapidly growing alumni network.', years:8, levelBefore:'BYU Asst', notes:'LOVB-aligned' },
+  { tier:'club', name:'Jennifer Wilson', program:'Northeast VBC · NJ', role:'Club Director', bio:'Director of Northeast VBC, a leading East Coast junior pipeline. <em>Strong feeder relationship with ACC and Big East programs</em>. No formal LOVB affiliation yet but talent overlap is significant.', years:14, levelBefore:'NJ HS', notes:'East Coast' },
+  { tier:'club', name:'Joanne Lyles', program:'San Diego Coast VB · CA', role:'Club Director', bio:'Long-running San Diego Coast director. <em>One of the few programs with consistent Pac-12 / Big Ten D1 placement</em> in Southern California. Mizuno-circuit competitor.', years:22, levelBefore:'CA HS', notes:'22 yrs · SoCal' },
+  { tier:'club', name:'Mark Pavlik', program:'Penn State VC · PA', role:'Club Director', bio:'Directs the Penn State VC junior program with direct ties to Penn State NCAA. <em>One of the strongest pre-college integration pipelines</em> in the country.', years:18, levelBefore:'PSU Asst', notes:'PSU-aligned' },
+  { tier:'club', name:'Stacy Sykora', program:'Madison Junior · WI', role:'Club Director', bio:'Madison Junior director and former USA national team libero. <em>Tight integration with LOVB Madison Pro Academy</em>. Active scholarship pipeline through LOVB Foundation.', years:10, levelBefore:'USA Nat\'l', notes:'USA L · LOVB' },
+  { tier:'club', name:'Drew Kessler', program:'Tstreet · CA', role:'Club Director', bio:'Director of Tstreet — one of California\'s most consistent USAV national-championship programs. <em>Strong PAC-12 / Big Ten feeder</em>. Non-LOVB-affiliated but conversation candidate per 2026 expansion.', years:16, levelBefore:'CA HS', notes:'CA · Tstreet' },
+
+  // NCAA PIPELINE COACHES (6)
+  { tier:'ncaa', name:'Jerritt Elliott', program:'Texas · D1', role:'Head Coach', bio:'Texas Longhorns head coach. <b>4x NCAA national champion (2012, 2017, 2022, 2023).</b> Most consistent NCAA absorber of LOVB-affiliated junior talent — especially from Houston Skyline, Texas Tornados, AVA Volleyball. <em>The single most influential pipeline destination</em> in the post-Nebraska NCAA era.', years:24, levelBefore:'USC Asst', notes:'4x NCAA champ' },
+  { tier:'ncaa', name:'John Cook', program:'Nebraska · D1 · Retired', role:'Former HC', bio:'See "Premier Nebraska Director Emeritus" above. Nebraska\'s career arc is woven through both NCAA and LOVB-adjacent pipelines.', years:0, levelBefore:'Retired', notes:'Cross-tier' },
+  { tier:'ncaa', name:'Kelly Sheffield', program:'Wisconsin · D1', role:'Head Coach', bio:'Wisconsin head coach. <b>2021 NCAA national champion.</b> Strong feeder relationship with Wisconsin VC and Madison Junior junior clubs. <em>Defensive-system focused</em> recruiting profile — preference for liberos and DSes with deep club experience.', years:12, levelBefore:'Dayton HC', notes:'2021 NCAA champ' },
+  { tier:'ncaa', name:'Russ Rose', program:'Penn State · D1 · Retired', role:'Former HC', bio:'<b>7x NCAA national champion.</b> Retired in 2022 but the Penn State recruiting graph still anchors much of the East Coast LOVB-adjacent pipeline. <em>Penn State VC junior program</em> remains the most direct LOVB-relevant feeder.', years:0, levelBefore:'Retired', notes:'7x NCAA · HOF' },
+  { tier:'ncaa', name:'Mike Schall', program:'Florida · D1', role:'Head Coach', bio:'Florida head coach. Newer to the SEC after Mary Wise\'s retirement. <em>Strong relationship with Texas-based LOVB junior pipelines</em> including AVA Volleyball and Houston Skyline.', years:5, levelBefore:'Auburn HC', notes:'SEC · post-Wise' },
+  { tier:'ncaa', name:'Alfee Reft', program:'BYU · D1', role:'Head Coach', bio:'BYU head coach. Most active D1 destination for <b>LOVB Salt Lake-affiliated junior pipeline</b> (Club Utah, Mountain West region). <em>Recruiting profile leans heavily on tall pin hitters and elite blockers</em>.', years:6, levelBefore:'BYU Asst', notes:'BYU · LOVB SL' }
+];
+
+let activeTier = 'all';
+let searchQuery = '';
+
+function render(){
+  ['pro', 'club', 'ncaa'].forEach(tier => {
+    const list = COACHES.filter(c => c.tier === tier);
+    const target = document.getElementById(tier === 'pro' ? 'proCoaches' : tier === 'club' ? 'clubCoaches' : 'ncaaCoaches');
+    target.innerHTML = list.map(c => {
+      const matchTier = activeTier === 'all' || activeTier === c.tier;
+      const q = searchQuery.toLowerCase().trim();
+      const matchSearch = !q || c.name.toLowerCase().includes(q) || c.program.toLowerCase().includes(q) || c.bio.toLowerCase().includes(q) || c.notes.toLowerCase().includes(q);
+      const hide = !matchTier || !matchSearch;
+      return `<article class="coach-card tier-${c.tier} ${hide?'hide':''}">
+        <div class="coach-head">
+          <h3 class="coach-name">${c.name}</h3>
+          <span class="coach-tier-tag tier-${c.tier}">${c.tier === 'pro' ? 'LOVB PRO' : c.tier === 'club' ? 'JUNIOR CLUB' : 'NCAA'}</span>
+        </div>
+        <div class="coach-program">${c.role} · ${c.program}</div>
+        <div class="coach-bio">${c.bio}</div>
+        <div class="coach-facts">
+          <div class="coach-fact">
+            <div class="coach-fact-num">${c.years}${c.years === 0 ? '·' : ''}</div>
+            <div class="coach-fact-label">Yrs at role</div>
+          </div>
+          <div class="coach-fact">
+            <div class="coach-fact-num" style="font-size:13px">${c.levelBefore}</div>
+            <div class="coach-fact-label">Came from</div>
+          </div>
+          <div class="coach-fact">
+            <div class="coach-fact-num" style="font-size:13px">${c.notes}</div>
+            <div class="coach-fact-label">Notable</div>
+          </div>
+        </div>
+      </article>`;
+    }).join('');
+  });
+
+  // Check empty
+  const visible = document.querySelectorAll('.coach-card:not(.hide)').length;
+  document.getElementById('emptyState').style.display = visible === 0 ? 'block' : 'none';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  render();
+  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    activeTier = c.dataset.tier;
+    render();
+  }));
+  document.getElementById('search').addEventListener('input', e => {
+    searchQuery = e.target.value;
+    render();
+  });
+});
+</script>
+</body>
+</html>

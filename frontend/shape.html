@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What's your shape? · FieldCheck IQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07060A; --bg-2: #0E0D14; --bg-3: #131220;
+  --line: #1F1E2C; --line-2: #2A2937;
+  --txt: #E8E6F0; --txt-2: #9C9AAE; --txt-3: #5E5C70;
+  --gold: #D4A24C; --gold-dim: rgba(212,162,76,0.18);
+  --moss: #6B8868; --rose: #B86B7A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { background: var(--bg); color: var(--txt); font-family: 'Inter', sans-serif; font-weight: 400; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { min-height: 100vh; }
+
+.h { padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--bg); z-index: 50; }
+.brand { font-family: 'Anton'; font-size: 17px; letter-spacing: 1.2px; color: var(--txt); text-decoration: none; }
+.brand b { color: var(--gold); font-weight: 400; }
+.h-meta { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--txt-3); letter-spacing: 1.5px; }
+.h-meta a { color: var(--gold); text-decoration: none; }
+
+.stage { display: none; }
+.stage.on { display: block; animation: fade-in 0.4s ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* SPORT PICK */
+#stage-sport { padding: 56px 24px 80px; max-width: 920px; margin: 0 auto; }
+.pick-hdr { text-align: center; margin-bottom: 40px; }
+.pick-eyebrow { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 3px; color: var(--gold); margin-bottom: 14px; text-transform: uppercase; }
+.pick-h { font-family: 'Anton'; font-size: clamp(44px, 10vw, 78px); line-height: 0.96; letter-spacing: -1px; margin-bottom: 10px; }
+.pick-h em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--gold); font-weight: 500; }
+.pick-deck { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 19px; color: var(--txt-2); line-height: 1.4; }
+
+.sport-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+.sport-tile {
+  padding: 28px 14px;
+  background: var(--bg-2); border: 1px solid var(--line);
+  cursor: pointer; text-align: center; transition: all .18s; color: var(--txt);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 150px;
+}
+.sport-tile:hover, .sport-tile:focus {
+  border-color: var(--gold); transform: translateY(-4px);
+  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-3) 100%);
+  box-shadow: 0 14px 36px rgba(212,162,76,0.12);
+  outline: none;
+}
+.sport-tile-emoji { font-size: 44px; line-height: 1; margin-bottom: 14px; }
+.sport-tile-label { font-family: 'Anton'; font-size: 17px; letter-spacing: -0.2px; }
+
+@media (max-width: 720px) { .sport-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* MOVE PICK (8 tiles) */
+#stage-pick { padding: 32px 24px 80px; max-width: 920px; margin: 0 auto; }
+.back-link { display: inline-block; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--txt-3); letter-spacing: 1.5px; text-decoration: none; margin-bottom: 16px; padding: 6px 0; }
+.back-link:hover { color: var(--gold); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.tile {
+  padding: 26px 16px;
+  background: var(--bg-2); border: 1px solid var(--line);
+  cursor: pointer; text-align: center; transition: all .15s; color: var(--txt);
+  min-height: 190px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.tile:hover, .tile:focus {
+  border-color: var(--gold); transform: translateY(-4px);
+  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-3) 100%);
+  box-shadow: 0 16px 40px rgba(212,162,76,0.12);
+  outline: none;
+}
+.tile-emoji { font-size: 48px; line-height: 1; margin-bottom: 14px; }
+.tile-label { font-family: 'Anton'; font-size: 17px; letter-spacing: -0.2px; line-height: 1.05; margin-bottom: 6px; }
+.tile-sub { font-family: 'JetBrains Mono'; font-size: 9px; color: var(--txt-3); letter-spacing: 1px; text-transform: uppercase; }
+
+@media (max-width: 880px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) {
+  .grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tile { min-height: 150px; padding: 20px 12px; }
+  .tile-emoji { font-size: 38px; margin-bottom: 12px; }
+  .tile-label { font-size: 15px; }
+}
+
+/* RESULT */
+#stage-result { padding: 36px 24px 80px; max-width: 560px; margin: 0 auto; }
+.r-eyebrow { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 3px; color: var(--gold); margin-bottom: 14px; text-align: center; text-transform: uppercase; }
+.r-h { font-family: 'Anton'; font-size: clamp(48px, 10vw, 80px); line-height: 0.96; letter-spacing: -1.5px; text-align: center; margin-bottom: 8px; }
+.r-h em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--gold); font-weight: 500; }
+.r-tagline { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 21px; color: var(--txt-2); text-align: center; margin-bottom: 36px; line-height: 1.4; }
+
+.shape-card {
+  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-3) 100%);
+  border: 1px solid var(--gold-dim);
+  padding: 32px 28px; margin-bottom: 24px; text-align: center;
+  animation: card-pop 0.7s cubic-bezier(.34, 1.56, .64, 1);
+}
+@keyframes card-pop { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+
+.shape-tag { font-family: 'JetBrains Mono'; font-size: 9px; color: var(--gold); letter-spacing: 2.5px; margin-bottom: 18px; }
+.shape-poly { width: 200px; height: 200px; margin: 0 auto 12px; display: block; }
+.shape-arch { font-family: 'Anton'; font-size: 32px; line-height: 1; letter-spacing: -0.4px; margin-bottom: 6px; }
+.shape-mood { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 17px; color: var(--txt-2); }
+
+.match { background: var(--bg-2); border: 1px solid var(--line); border-left: 3px solid var(--gold); padding: 22px; display: grid; grid-template-columns: 60px 1fr; gap: 16px; align-items: center; margin-bottom: 18px; }
+.match-init { width: 60px; height: 60px; border-radius: 50%; background: var(--gold-dim); color: var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Anton'; font-size: 28px; }
+.match-eyebrow { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--gold); letter-spacing: 2px; margin-bottom: 4px; }
+.match-name { font-family: 'Anton'; font-size: 22px; letter-spacing: -0.3px; }
+.match-meta { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--txt-2); margin-top: 2px; }
+
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+.duo-card { padding: 16px; background: var(--bg-2); border: 1px solid var(--line); }
+.duo-card.up { border-left: 3px solid var(--moss); }
+.duo-card.down { border-left: 3px solid var(--rose); }
+.duo-eyebrow { font-family: 'JetBrains Mono'; font-size: 9px; letter-spacing: 2px; margin-bottom: 6px; }
+.duo-card.up .duo-eyebrow { color: var(--moss); }
+.duo-card.down .duo-eyebrow { color: var(--rose); }
+.duo-txt { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 15px; line-height: 1.4; color: var(--txt); }
+
+@media (max-width: 480px) { .duo { grid-template-columns: 1fr; } }
+
+.r-actions { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.r-act { font-family: 'JetBrains Mono'; font-size: 12px; letter-spacing: 2px; font-weight: 700; padding: 18px 22px; border: 1px solid var(--gold); background: transparent; color: var(--gold); cursor: pointer; transition: all .15s; text-decoration: none; text-align: center; text-transform: uppercase; }
+.r-act.primary { background: var(--gold); color: var(--bg); }
+.r-act:hover { transform: translateY(-2px); }
+
+.share-toast { background: var(--bg-2); border: 1px solid var(--gold-dim); padding: 14px; margin-top: 12px; font-family: 'JetBrains Mono'; font-size: 10px; color: var(--txt-2); text-align: center; letter-spacing: 0.5px; }
+.share-toast b { color: var(--gold); }
+
+.retry { display: block; text-align: center; margin-top: 20px; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--txt-3); letter-spacing: 1.5px; text-decoration: none; padding: 10px; }
+.retry:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header class="h">
+  <a class="brand" href="/">FieldCheck<b>IQ</b></a>
+  <span class="h-meta">★ ONE TAP</span>
+</header>
+
+<!-- STAGE 1 · SPORT PICKER -->
+<section class="stage on" id="stage-sport">
+  <div class="pick-hdr">
+    <div class="pick-eyebrow">★ STEP 1 · YOUR SPORT</div>
+    <h1 class="pick-h">Pick the <em>game</em>.</h1>
+    <p class="pick-deck">We'll show you the moves. You pick the one that's most you.</p>
+  </div>
+
+  <div class="sport-grid" id="sport-grid"></div>
+</section>
+
+<!-- STAGE 2 · MOVE PICKER -->
+<section class="stage" id="stage-pick">
+  <div class="pick-hdr">
+    <a class="back-link" href="#" onclick="backToSports();return false;">← Pick a different sport</a>
+    <div class="pick-eyebrow">★ STEP 2 · YOUR <span id="sport-eyebrow-name">SPORT</span></div>
+    <h1 class="pick-h">Pick the move that's <em>most you</em>.</h1>
+    <p class="pick-deck">Whichever feels like yours. We'll do the rest.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- STAGE 3 · RESULT -->
+<section class="stage" id="stage-result">
+  <div class="r-eyebrow">★ YOUR SHAPE</div>
+  <h1 class="r-h">You're <em id="r-archetype">—</em>.</h1>
+  <p class="r-tagline" id="r-tagline">—</p>
+
+  <div class="shape-card">
+    <div class="shape-tag">★ YOUR FIELDCHECK POLYGON</div>
+    <svg class="shape-poly" viewBox="0 0 200 200">
+      <polygon points="100,28 161,55 178,116 145,170 80,178 26,150 16,90 50,40" fill="none" stroke="#2A2937" stroke-width="1"/>
+      <polygon id="poly-user" points="100,60 130,72 142,118 122,154 85,158 60,140 50,100 70,72" fill="rgba(212,162,76,0.28)" stroke="#D4A24C" stroke-width="1.5"/>
+    </svg>
+    <div class="shape-arch" id="r-arch-name">—</div>
+    <div class="shape-mood" id="r-mood">—</div>
+  </div>
+
+  <div class="match">
+    <div class="match-init" id="match-init">P</div>
+    <div>
+      <div class="match-eyebrow">★ YOUR PRO MATCH</div>
+      <div class="match-name" id="match-name">—</div>
+      <div class="match-meta" id="match-meta">—</div>
+    </div>
+  </div>
+
+  <div class="duo">
+    <div class="duo-card up">
+      <div class="duo-eyebrow">★ SUPERPOWER</div>
+      <div class="duo-txt" id="duo-up">—</div>
+    </div>
+    <div class="duo-card down">
+      <div class="duo-eyebrow">⚠ KRYPTONITE</div>
+      <div class="duo-txt" id="duo-down">—</div>
+    </div>
+  </div>
+
+  <div class="r-actions">
+    <button class="r-act primary" onclick="shareShape()">★ Share my shape</button>
+    <a class="r-act" href="#" onclick="resetQuiz();return false;">★ Try another sport →</a>
+  </div>
+
+  <div class="share-toast" id="share-toast" style="display:none;">
+    Copied! Paste in your story, your group chat, anywhere. <b>Tag a friend.</b>
+  </div>
+
+  <a class="retry" href="#" onclick="resetQuiz();return false;">↻ Pick again</a>
+</section>
+
+<script>
+/* ─── ARCHETYPE TEMPLATE (universal · 8 types) ─── */
+const ARCH = {
+  closer:  { tagline:'You want the ball with the game on the line. Always.',
+    up:'You make hard moments look easy. Crunch-time DNA.',
+    down:'Volume sometimes outruns efficiency. The hero play is real.',
+    poly:{scoring:9,skill:9,athl:7,def:5,iq:7,char:7,grit:6,size:5} },
+  switch_engine: { tagline:'You change the geometry of the game just by being out there.',
+    up:'You break possessions with one move. People are scared.',
+    down:'When the bounce slows, polish has to take over.',
+    poly:{athl:10,scoring:8,size:8,def:6,iq:5,char:6,grit:7,skill:5} },
+  architect: { tagline:'You see the play three moves before it happens.',
+    up:'You make everyone better. Game speed feels slow to you.',
+    down:'Sometimes you pass when the team needs you to take over.',
+    poly:{iq:10,skill:9,scoring:6,def:5,char:8,athl:5,grit:6,size:5} },
+  stopper: { tagline:"You're the reason the other team has to run something else.",
+    up:'You can erase a possession by yourself. Coaches love you day one.',
+    down:'Offense has to catch up. The two-way ceiling depends on it.',
+    poly:{def:10,athl:8,iq:8,grit:8,char:9,scoring:5,skill:6,size:7} },
+  motor: { tagline:"You don't out-talent anyone. You out-work everyone.",
+    up:"You raise everyone's level just by being on the field.",
+    down:'The fire that lifts you sometimes burns the room. Channel matters.',
+    poly:{grit:10,char:9,def:8,athl:7,iq:7,scoring:6,skill:6,size:6} },
+  anchor: { tagline:'Everyone wants you on the bus. Character is your superpower.',
+    up:'Coaches build franchises around guys like you. Trust travels.',
+    down:"You don't always demand your touches. Be selfish sometimes.",
+    poly:{char:10,size:8,grit:9,def:8,iq:7,scoring:6,athl:6,skill:6} },
+  maestro: { tagline:'You make moves people post compilations about.',
+    up:'Your bag is your moat. Skill at this level is rare.',
+    down:'The work between the flashes is where careers live.',
+    poly:{skill:10,scoring:8,iq:8,athl:7,char:6,grit:6,def:6,size:5} },
+  tower: { tagline:"Geometry doesn't lie. You change the field just standing there.",
+    up:"Your physical profile is a moat that doesn't go away.",
+    down:'Skill has to catch up to the frame. Reps are everything.',
+    poly:{size:10,athl:8,def:9,grit:7,char:7,scoring:7,iq:6,skill:6} }
+};
+
+/* ─── SPORTS · 5 ─── */
+const SPORTS = {
+  basketball: {
+    label: "Men's Basketball", emoji: '🏀',
+    tiles: [
+      { e:'🏀', l:'The step-back 3', s:'Cold shotmaker', arch:'closer', name:'The Closer', match:{name:'Devin Booker',meta:'Phoenix Suns · pure-scoring guard',init:'D'} },
+      { e:'🚀', l:'The poster dunk', s:'Above the rim', arch:'switch_engine', name:'The Switch Engine', match:{name:'Anthony Edwards',meta:'Minnesota T-Wolves · explosive 2-guard',init:'A'} },
+      { e:'👁', l:'The no-look dime', s:'Court vision', arch:'architect', name:'The Architect', match:{name:'Nikola Jokic',meta:'Denver Nuggets · 3x MVP',init:'N'} },
+      { e:'🛡', l:'The lock-down stop', s:'Defense first', arch:'stopper', name:'The Stopper', match:{name:'Kawhi Leonard',meta:'Clippers · 2x Finals MVP',init:'K'} },
+      { e:'🔥', l:'The loose-ball dive', s:'Pure compete', arch:'motor', name:'The Motor', match:{name:'Draymond Green',meta:'Warriors · 4x champ',init:'D'} },
+      { e:'💎', l:'The clutch board', s:'Glass cleaner', arch:'anchor', name:'The Anchor', match:{name:'Jrue Holiday',meta:'Celtics · NBA champion',init:'J'} },
+      { e:'🎨', l:'The crossover dribble', s:'Pure handle', arch:'maestro', name:'The Maestro', match:{name:'Kyrie Irving',meta:'Mavericks · skill-merchant PG',init:'K'} },
+      { e:'🗼', l:'The tip-in over three', s:'Length wins', arch:'tower', name:'The Tower', match:{name:'Victor Wembanyama',meta:'Spurs · physical-unicorn forward',init:'V'} }
+    ]
+  },
+  football: {
+    label: 'Football', emoji: '🏈',
+    tiles: [
+      { e:'🎯', l:'The 4th-down conversion', s:'Cold under pressure', arch:'closer', name:'The Closer', match:{name:'Joe Burrow',meta:'Cincinnati Bengals · clutch QB',init:'J'} },
+      { e:'⚡', l:'The 70-yard scramble', s:'Pure athleticism', arch:'switch_engine', name:'The Switch Engine', match:{name:'Lamar Jackson',meta:'Ravens · 2x MVP',init:'L'} },
+      { e:'🧠', l:'The pre-snap audible', s:'Play caller IQ', arch:'architect', name:'The Architect', match:{name:'Patrick Mahomes',meta:'Chiefs · 3x SB MVP',init:'P'} },
+      { e:'🔒', l:'The shutdown coverage', s:'Lockdown corner', arch:'stopper', name:'The Stopper', match:{name:'Sauce Gardner',meta:'Jets · DPOY-track CB',init:'S'} },
+      { e:'🔥', l:'The hustle sack', s:'Effort + relentlessness', arch:'motor', name:'The Motor', match:{name:'Aaron Donald',meta:'former Rams DT · pure compete',init:'A'} },
+      { e:'🫂', l:'The locker-room captain', s:'Team-first leader', arch:'anchor', name:'The Anchor', match:{name:'Justin Jefferson',meta:'Vikings · WR1 + locker-room vet',init:'J'} },
+      { e:'🎨', l:'The juke-stick run', s:'Pure footwork artist', arch:'maestro', name:'The Maestro', match:{name:'Saquon Barkley',meta:'Eagles · highlight-reel back',init:'S'} },
+      { e:'🗼', l:'The red-zone bully', s:'Move-the-pile size', arch:'tower', name:'The Tower', match:{name:'Travis Kelce',meta:'Chiefs · TE1 of his generation',init:'T'} }
+    ]
+  },
+  soccer: {
+    label: 'Soccer', emoji: '⚽',
+    tiles: [
+      { e:'⚽', l:'The bicycle kick', s:'Top-corner finisher', arch:'closer', name:'The Closer', match:{name:'Kylian Mbappé',meta:'Real Madrid · big-moment finisher',init:'K'} },
+      { e:'⚡', l:'The 1v1 burst', s:'First-step burner', arch:'switch_engine', name:'The Switch Engine', match:{name:'Vinicius Junior',meta:'Real Madrid · raw-pace winger',init:'V'} },
+      { e:'👁', l:'The thru-ball assist', s:'Vision under press', arch:'architect', name:'The Architect', match:{name:'Kevin De Bruyne',meta:'Napoli · vision merchant',init:'K'} },
+      { e:'🛡', l:'The slide tackle', s:'Last-line stopper', arch:'stopper', name:'The Stopper', match:{name:'Virgil van Dijk',meta:'Liverpool · defensive captain',init:'V'} },
+      { e:'🔥', l:'The box-to-box grind', s:'Engine for 90 min', arch:'motor', name:'The Motor', match:{name:'Jude Bellingham',meta:'Real Madrid · midfield motor',init:'J'} },
+      { e:'🫂', l:'The captain header', s:'Set-piece leader', arch:'anchor', name:'The Anchor', match:{name:'Aitana Bonmatí',meta:'Barcelona · 3x Ballon d\'Or captain',init:'A'} },
+      { e:'🎨', l:'The free kick curl', s:'Set-piece artistry', arch:'maestro', name:'The Maestro', match:{name:'Lionel Messi',meta:'Inter Miami · GOAT skill-merchant',init:'L'} },
+      { e:'🗼', l:'The aerial duel', s:'Target striker', arch:'tower', name:'The Tower', match:{name:'Erling Haaland',meta:'Man City · physical-monster #9',init:'E'} }
+    ]
+  },
+  baseball: {
+    label: 'Baseball', emoji: '⚾',
+    tiles: [
+      { e:'💥', l:'The walk-off HR', s:'Cold late-inning bat', arch:'closer', name:'The Closer', match:{name:'Shohei Ohtani',meta:'Dodgers · two-way unicorn',init:'O'} },
+      { e:'🚀', l:'The 100 mph fastball', s:'Pure stuff', arch:'switch_engine', name:'The Switch Engine', match:{name:'Paul Skenes',meta:'Pirates · ace-grade arm',init:'P'} },
+      { e:'🧠', l:'The breaking-ball mix', s:'Pitch artist', arch:'architect', name:'The Architect', match:{name:'Jacob deGrom',meta:'Rangers · command + sequencing',init:'J'} },
+      { e:'🛡', l:'The diving stop', s:'Glove-first defender', arch:'stopper', name:'The Stopper', match:{name:'Francisco Lindor',meta:'Mets · gold-glove SS',init:'L'} },
+      { e:'🔥', l:'The leadoff hustle', s:'Run-the-floor energy', arch:'motor', name:'The Motor', match:{name:'Mike Trout',meta:'Angels · all-effort superstar',init:'M'} },
+      { e:'🫂', l:'The framing catch', s:'Battery anchor', arch:'anchor', name:'The Anchor', match:{name:'J.T. Realmuto',meta:'Phillies · veteran C anchor',init:'J'} },
+      { e:'🎨', l:'The opposite-field single', s:'Pure bat skill', arch:'maestro', name:'The Maestro', match:{name:'Trea Turner',meta:'Phillies · contact-skill PG',init:'T'} },
+      { e:'🗼', l:'The HR robbery', s:'Wall-climbing range', arch:'tower', name:'The Tower', match:{name:'Bobby Witt Jr.',meta:'Royals · 5-tool MVP-track',init:'B'} }
+    ]
+  },
+  volleyball: {
+    label: "Women's Volleyball", emoji: '🏐',
+    tiles: [
+      { e:'💥', l:'The line-shot kill', s:'Crunch-time finisher', arch:'closer', name:'The Closer', match:{name:'Madisen Skinner',meta:'LOVB Austin · back-to-back MVP',init:'M'} },
+      { e:'⚡', l:'The slide attack', s:'Tempo + explosion', arch:'switch_engine', name:'The Switch Engine', match:{name:'Annie Drews',meta:'USA · explosive RS',init:'A'} },
+      { e:'👁', l:'The set in tempo', s:'Offense conductor', arch:'architect', name:'The Architect', match:{name:'Micha Hancock',meta:'LOVB Atlanta · set artistry',init:'M'} },
+      { e:'🛡', l:'The block at the net', s:'Net-presence stopper', arch:'stopper', name:'The Stopper', match:{name:'Foluke Akinradewo',meta:'former USA · gold-medal blocker',init:'F'} },
+      { e:'🔥', l:'The dig from the floor', s:'Pure defensive grind', arch:'motor', name:'The Motor', match:{name:'Justine Wong-Orantes',meta:'USA · libero relentless',init:'J'} },
+      { e:'🫂', l:'The captain serve', s:'Tone-setting vet', arch:'anchor', name:'The Anchor', match:{name:'Jordan Larson',meta:'USA · 4x Olympian captain',init:'J'} },
+      { e:'🎨', l:'The float serve', s:'Touch + finesse', arch:'maestro', name:'The Maestro', match:{name:'Sarah Wilhite',meta:'LOVB · serve artistry',init:'S'} },
+      { e:'🗼', l:'The over-the-block slam', s:'Length wins', arch:'tower', name:'The Tower', match:{name:'Chiaka Ogbogu',meta:'USA · 6\'4" middle blocker',init:'C'} }
+    ]
+  }
+};
+
+let activeSport = null;
+
+function $(id) { return document.getElementById(id); }
+function setStage(id) { document.querySelectorAll('.stage').forEach(s => s.classList.remove('on')); $(id).classList.add('on'); window.scrollTo(0,0); }
+
+/* SPORT PICKER */
+function renderSports() {
+  const grid = $('sport-grid');
+  grid.innerHTML = '';
+  Object.entries(SPORTS).forEach(([key, sport]) => {
+    const btn = document.createElement('button');
+    btn.className = 'sport-tile';
+    btn.innerHTML = '<div class="sport-tile-emoji">' + sport.emoji + '</div>' +
+      '<div class="sport-tile-label">' + sport.label + '</div>';
+    btn.onclick = () => pickSport(key);
+    grid.appendChild(btn);
+  });
+}
+renderSports();
+
+function pickSport(key) {
+  activeSport = key;
+  $('sport-eyebrow-name').textContent = SPORTS[key].label.toUpperCase();
+  renderTiles();
+  setStage('stage-pick');
+}
+
+function backToSports() { setStage('stage-sport'); }
+function resetQuiz() { setStage('stage-sport'); }
+
+/* MOVE PICKER */
+function renderTiles() {
+  const grid = $('grid');
+  grid.innerHTML = '';
+  SPORTS[activeSport].tiles.forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = 'tile';
+    btn.innerHTML = '<div class="tile-emoji">' + t.e + '</div>' +
+      '<div class="tile-label">' + t.l + '</div>' +
+      '<div class="tile-sub">' + t.s + '</div>';
+    btn.onclick = () => pickTile(t);
+    grid.appendChild(btn);
+  });
+}
+
+function pickTile(t) {
+  const archData = ARCH[t.arch];
+  $('r-archetype').textContent = t.name;
+  $('r-arch-name').textContent = t.name.toUpperCase();
+  $('r-tagline').textContent = archData.tagline;
+  $('r-mood').textContent = archData.tagline;
+  $('match-name').textContent = t.match.name;
+  $('match-meta').textContent = t.match.meta;
+  $('match-init').textContent = t.match.init;
+  $('duo-up').textContent = archData.up;
+  $('duo-down').textContent = archData.down;
+
+  const order = ['size','athl','def','scoring','skill','iq','grit','char'];
+  const cx=100, cy=100;
+  const points = [];
+  for (let i = 0; i < 8; i++) {
+    const angle = (Math.PI * 2 * i / 8) - Math.PI / 2;
+    const r = 20 + (archData.poly[order[i]] / 10) * 60;
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    points.push(x.toFixed(1) + ',' + y.toFixed(1));
+  }
+  $('poly-user').setAttribute('points', points.join(' '));
+
+  setStage('stage-result');
+}
+
+function shareShape() {
+  const arch = $('r-archetype').textContent;
+  const match = $('match-name').textContent;
+  const sportLabel = SPORTS[activeSport].label;
+  const text = "I'm " + arch + " · my FieldCheck " + sportLabel + " shape matches " + match + ". What's yours? fieldcheck.iq/shape";
+  if (navigator.share) navigator.share({title:'My FieldCheck shape',text:text,url:'https://fieldcheck-app.netlify.app/shape'}).catch(()=>{});
+  else navigator.clipboard.writeText(text).then(()=>{ $('share-toast').style.display = 'block'; }).catch(()=>alert(text));
+}
+</script>
+
+</body>
+</html>

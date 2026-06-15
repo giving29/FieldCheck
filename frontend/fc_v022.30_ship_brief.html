@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FC V022.30 · SHIP BRIEF · READY · May 26 2026</title>
+<style>
+:root{--bg:#07060a;--text:#f5f4f0;--t2:#a8a59c;--t3:#6f6d65;--gold:#d9b44c;--g2:#a88638;--ge:#1a1820;--ge2:#2a2730;--ok:#5fb878;--warn:#d97757;--violet:#8b6dc8;--mono:'JetBrains Mono','SF Mono',Menlo,monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;line-height:1.6;padding:32px 24px}
+.wrap{max-width:1100px;margin:0 auto}
+.hdr{padding-bottom:28px;border-bottom:1px solid var(--ge2);margin-bottom:32px}
+.hdr-tag{color:var(--ok);font-family:var(--mono);font-size:11px;letter-spacing:0.18em;margin-bottom:8px}
+.hdr h1{font-family:'Fraunces',Georgia,serif;font-size:42px;font-weight:600;letter-spacing:-0.02em;margin-bottom:8px}
+.hdr-meta{color:var(--t2);font-size:13.5px}
+.hdr-meta b{color:var(--gold)}
+.tldr{padding:24px;background:linear-gradient(135deg,rgba(95,184,120,0.06),rgba(7,6,10,0.4));border:2px solid var(--ok);border-radius:8px;margin-bottom:32px}
+.tldr-tag{color:var(--ok);font-family:var(--mono);font-size:11px;letter-spacing:0.15em;margin-bottom:10px}
+.tldr h2{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin-bottom:12px}
+.tldr p{color:var(--t2);font-size:14px;line-height:1.7}
+.tldr ul{padding-left:22px;color:var(--t2);font-size:13.5px;margin-top:10px}
+.tldr ul li{margin-bottom:6px}
+.tldr ul b{color:var(--ok)}
+.sect{margin-bottom:48px}
+.sect-h{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid var(--gold);padding-bottom:10px;margin-bottom:22px}
+.sect-num{color:var(--gold);font-family:var(--mono);font-size:13px;letter-spacing:0.1em;font-weight:600}
+.sect-h h2{font-family:'Fraunces',serif;font-size:24px;font-weight:600;letter-spacing:-0.01em}
+.sub{color:var(--t2);font-size:13.5px;margin-bottom:18px;line-height:1.7}
+.sub b{color:var(--gold)}
+.sub code{font-family:var(--mono);font-size:11.5px;background:var(--ge);padding:1px 6px;border-radius:3px;color:var(--gold)}
+.deliverable{padding:18px 22px;background:var(--ge);border:1px solid var(--ge2);border-radius:8px;margin-bottom:14px}
+.deliverable-h{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px}
+.deliverable-name{color:var(--gold);font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:0.02em}
+.deliverable-size{color:var(--t3);font-family:var(--mono);font-size:10.5px}
+.deliverable-desc{color:var(--t2);font-size:13px;line-height:1.6}
+.deliverable-desc b{color:var(--text)}
+.cmd{padding:14px 18px;background:#000;border-left:3px solid var(--gold);border-radius:4px;font-family:var(--mono);font-size:12.5px;color:var(--ok);margin:10px 0;overflow-x:auto;white-space:pre}
+.tenet{padding:16px 18px;background:var(--ge);border-left:4px solid var(--gold);border-radius:4px;margin:12px 0}
+.tenet-tag{color:var(--gold);font-family:var(--mono);font-size:10.5px;letter-spacing:0.15em;margin-bottom:6px}
+.tenet-h{color:var(--text);font-weight:600;font-size:14px;margin-bottom:6px;font-family:'Fraunces',serif}
+.tenet-b{color:var(--t2);font-size:13px;line-height:1.65}
+.patch-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.patch-table th{background:rgba(217,180,76,0.05);text-align:left;padding:10px 8px;border-bottom:2px solid var(--gold);font-weight:600;font-size:11px;letter-spacing:0.05em;color:var(--text)}
+.patch-table td{padding:10px 8px;border-bottom:1px solid var(--ge2);color:var(--t2);vertical-align:top}
+.patch-table td:first-child{color:var(--gold);font-family:var(--mono);font-weight:600}
+.patch-table td.h{color:var(--text);font-weight:500}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:14px 0}
+table th{background:rgba(217,180,76,0.05);color:var(--text);text-align:left;padding:10px 8px;border-bottom:2px solid var(--gold);font-weight:600;font-size:11px;letter-spacing:0.05em}
+table td{padding:10px 8px;border-bottom:1px solid var(--ge2);color:var(--t2);vertical-align:top}
+table td.green{color:var(--ok);font-weight:600}
+table td.gold{color:var(--gold);font-weight:600}
+table td.warn{color:var(--warn);font-weight:600}
+.callout{padding:20px 22px;background:linear-gradient(135deg,rgba(217,180,76,0.06),rgba(7,6,10,0.4));border:2px solid var(--gold);border-radius:8px;margin:18px 0}
+.callout h3{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:10px;color:var(--gold)}
+.callout p{color:var(--t2);font-size:13.5px;line-height:1.7}
+ul{padding-left:22px;color:var(--t2);font-size:13.5px;line-height:1.75}
+ul li{margin-bottom:6px}
+ul b{color:var(--text)}
+.step{display:flex;gap:14px;padding:14px;background:var(--ge);border-radius:6px;margin-bottom:10px;align-items:flex-start}
+.step-num{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--gold);color:#000;font-weight:700;font-family:var(--mono);display:flex;align-items:center;justify-content:center}
+.step-body{flex:1}
+.step-h{color:var(--text);font-weight:600;font-size:14px;margin-bottom:4px}
+.step-d{color:var(--t2);font-size:13px;line-height:1.6}
+.persona{padding:18px;background:var(--ge);border-left:4px solid var(--violet);border-radius:6px;margin:12px 0}
+.persona-tag{color:var(--violet);font-family:var(--mono);font-size:10.5px;letter-spacing:0.15em;margin-bottom:6px}
+.persona-h{color:var(--text);font-weight:600;font-size:14px;margin-bottom:6px;font-family:'Fraunces',serif}
+.persona-b{color:var(--t2);font-size:13px;line-height:1.65}
+.ftr{margin-top:48px;padding-top:24px;border-top:1px solid var(--ge2);color:var(--t3);font-size:11.5px;text-align:center;font-family:var(--mono);letter-spacing:0.05em}
+.bigtotal{padding:24px;background:var(--ge);border:1px solid var(--gold);border-radius:8px;margin:16px 0;text-align:center}
+.bigtotal-num{color:var(--gold);font-family:'Fraunces',serif;font-size:48px;font-weight:600;line-height:1}
+.bigtotal-lbl{color:var(--t2);font-size:13px;letter-spacing:0.05em;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <div class="hdr-tag">★ V022.30 · READY TO DEPLOY · NO CODE TOUCHED YET ON YOUR MACHINE</div>
+  <h1>The Greatness Pass · Ship Brief</h1>
+  <div class="hdr-meta">110-name battery built · V022.30 worker syntax-clean · batch test harness ready · 4-persona framework defined · 4 new tenets codified · all deliverables staged at <b>/mnt/user-data/outputs</b></div>
+</div>
+
+<div class="tldr">
+<div class="tldr-tag">★ TL;DR · WHAT YOU GOT</div>
+<h2>One worker. One roster. One test harness. Three docs. Ready to deploy.</h2>
+<p>I built the full V022.30 pass per your "go ALL OUT" directive. Six patches in the worker close the Antwan Kimmons cascade and add the brutally-honest interpretation layer. 110-athlete battery stratified across 11 buckets with provenance per name. Batch test runner is a single bash script that hits dev, validates against expected litmus checks per athlete, and produces a green/yellow/red HTML report. Four new tenets (41-44) codified so no future Claude can regress.</p>
+<ul>
+  <li><b>worker-v022.30.js</b> · 2.93 MB · 47,847 lines · syntax-clean · 6 patches applied (A through F)</li>
+  <li><b>roster_100.json</b> · 110 athletes · 11 buckets · full provenance + market oracles + adversarial flags per name</li>
+  <li><b>fc-batch-test.sh</b> · one-paste batch runner · hits dev → produces green/yellow/red HTML report</li>
+  <li><b>This brief</b> · everything you need to deploy + run + interpret + persona-test</li>
+</ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="sect">
+<div class="sect-h"><div class="sect-num">SECTION 01</div><h2>The 6 patches · what each one closes</h2></div>
+
+<div class="sub">Each patch tied to a specific defect from the Antwan Kimmons cascade trace. Cumulative effect: every athlete's identity validated at adapter boundary, no single source can override composite, brutally-honest read on every verdict page.</div>
+
+<table class="patch-table">
+<thead><tr><th>Patch</th><th>What it does</th><th>Defect closed</th><th>Files touched</th></tr></thead>
+<tbody>
+<tr>
+<td>A</td>
+<td class="h">Adapter-level name validation</td>
+<td>Antwan Kimmons → Tim Duncan fuzzy match; Jeremy Dent-Smith → Stanford; Tate Ivanyo → Morgan Township HS</td>
+<td>worker.js · new helper <code>_adapterProfileNameValidates()</code> at line ~1606 · wire-in to <code>fetchBasketballRefPro</code> (line ~5340) + <code>fetchProFootballReference</code> (line ~5450) + <code>fetchBaseballRef</code> (line ~5550). Strips Jr/Sr/II/III, tokenizes, requires first AND last name match with Lev≤1, fail-closed.</td>
+</tr>
+<tr>
+<td>B</td>
+<td class="h">HOF detection only in player-specific awards block</td>
+<td>False-positive HOF flags from nav links, related-player widgets, footer mentions</td>
+<td>worker.js · bbref_pro parser line ~5500 + PFR parser line ~5470. <code>is_hof</code> now requires mention within <code>highlights</code> / <code>bling</code> / <code>awards_excerpt</code> block. Same for All-Star, Pro-Bowl, All-Pro, MVP, championships counts.</td>
+</tr>
+<tr>
+<td>C</td>
+<td class="h">Multi-source corroboration for legend_pro</td>
+<td>Single noisy adapter promoting an HS amateur to legend_pro pathway floor</td>
+<td>worker.js · synthesis section line ~10440. New gates: <code>hofSourceCount = [wikidata, pfr, bbref].filter(Boolean).length</code> · <code>hasStructuredAccolades = (allStars>0 OR champs>0 OR mvps>0 OR proBowls>0)</code> · <code>isLegendValidated = (hofSourceCount≥2) OR (hofSourceCount≥1 AND hasStructuredAccolades)</code>. legend_pro pathway only fires when all three gates pass.</td>
+</tr>
+<tr>
+<td>D</td>
+<td class="h">career_stage → pool tier mapping</td>
+<td>Every athlete benchmarking against HS pool because no __pro reference distributions existed</td>
+<td>worker.js · <code>computePositionPoolBenchmark</code> line ~3895. Added 6 new __pro distributions (mens-basketball, womens-basketball, football, baseball) plus __juco and __naia. Added <code>mapCareerStageToTier()</code> helper. legend_pro / prime_pro / early_pro / retired_pro all map to 'pro' tier (means ~8.5 vs HS ~5.8).</td>
+</tr>
+<tr>
+<td>E</td>
+<td class="h">Structured-source school resolution priority</td>
+<td>current_school = null on every verdict because text extraction couldn't anchor</td>
+<td>worker.js · inserted before line ~9244 (existing schoolHint validation). Pulls <code>facts.identity.current_school</code> from structured sources in priority: ncaa_stats_portal → school_bio → schoolRoster → 247_commit → on3_commit → prephoops → maxpreps → wikipedia_infobox → bbref_pro_team (only if identity_validated). Claude's text extraction now fills only the gap where no structured source has the school.</td>
+</tr>
+<tr>
+<td>F</td>
+<td class="h">Brutal honest interpretation layer (THE CENTERPIECE)</td>
+<td>Verdict pages had no shareable "what market shows vs what we found" section. The moat was invisible.</td>
+<td>worker.js · new <code>generateBrutalHonest()</code> function line ~4112. New Haiku pass after trust_delta. Produces <code>encyclopedia.brutal_honest = {market_says: {maxpreps, 247sports, hudl, on3}, fieldcheck_says, the_asymmetry, decision_grade_read: {for_player, for_coach, for_scout, for_parent}, confidence, evidence_anchors}</code>. Wired into pipeline at line ~8270.</td>
+</tr>
+</tbody>
+</table>
+
+<div class="callout">
+<h3>What Patch F gives you that the others don't</h3>
+<p>Patches A-E fix the foundation. Patch F is what makes the foundation visible to a parent / coach / scout / player. Every verdict page now ends with a section where Claude (Haiku) takes our dossier + synthesis + trust_delta and writes the brutally honest side-by-side. It SAYS what MaxPreps shows. It SAYS what 247 shows. It SAYS what we found. It NAMES the asymmetry. And it tells four different humans — player, coach, scout, parent — what this means for their specific decision in one sentence each. Honest when sparse. Specific when confident. <b>This is the moat made visible on the surface of every page.</b></p>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="sect">
+<div class="sect-h"><div class="sect-num">SECTION 02</div><h2>The 110-name battery · what's in it and why</h2></div>
+
+<div class="sub">11 buckets stratified by tier × sport × adversarial intent. Every athlete has provenance (where the ranking came from), expected_composite_range (the band our verdict must land in to pass), and litmus checks (the specific things that must be true). Adversarial bucket B11 designed specifically to test the V022.30 fix.</div>
+
+<div class="bigtotal">
+<div class="bigtotal-num">110</div>
+<div class="bigtotal-lbl">ATHLETES · 60 HS · 17 D1 · 13 D2 · 10 D3 · 3 JUCO · 7 PRO REGRESSION/COLLISION</div>
+</div>
+
+<table>
+<thead><tr><th>Bucket</th><th>Count</th><th>Tier</th><th>Sport</th><th>What it tests</th></tr></thead>
+<tbody>
+<tr><td>B01 · Elite HS Boys Basketball</td><td>10</td><td>HS</td><td>MBB</td><td>Top-10 nationally (Stokes, Williams, Smith Jr., Crowe, Holt, Oladotun, Branch III, Arenas, Gaskins, Rippey Jr.) · max-coverage GREAT band</td></tr>
+<tr><td>B02 · Elite HS Girls Basketball</td><td>10</td><td>HS</td><td>WBB</td><td>Top-10 ESPNW (Hall, Edwards, Vukosa, Harpring, Jackson, Greenway, Fandel, Osho, Fernandez, McDonald) · GREAT band</td></tr>
+<tr><td>B03 · Elite HS Football</td><td>10</td><td>HS</td><td>FB</td><td>Top recruits (Brandon, Henry Jr., Henderson, L. Brown, Curtis, Bell, Washington, Griffin, Brewster, Meredith) · includes father/son collisions</td></tr>
+<tr><td>B04 · Elite HS Baseball</td><td>5</td><td>HS</td><td>BBL</td><td>2026 MLB draft top prospects (Emerson, Lombard, Booth Jr., Condon, Bumila) · Perfect Game + Baseball America</td></tr>
+<tr><td>B05 · Mid-tier HS</td><td>15</td><td>HS</td><td>mixed</td><td>3-star/4-star tier · Medlock Jr., Bass Jr., Smith Jr., Goosby, Ogden + JUCO and HS football mids · GOOD-AVERAGE band</td></tr>
+<tr><td>B06 · Off-radar HS + canonical FC amateurs</td><td>10</td><td>varies</td><td>mixed</td><td>The 5 FieldCheck canonical amateurs (Tomes, Dent, Kimmons, Dent-Smith, Ivanyo) PLUS 5 sparse-coverage cases · validates honest "VERIFY" when sparse</td></tr>
+<tr><td>B07 · Invisible D1 (mid-major)</td><td>12</td><td>D1</td><td>MBB</td><td>Current D1 starters at non-marquee programs (Avila, Reaves, Hill Jr., Karasinski, Goodin, Noel, Daniel, McCormick, Orioland, Guy-King, Jackson, Chime)</td></tr>
+<tr><td>B08 · D1 elite + pro regression</td><td>6</td><td>varies</td><td>MBB</td><td>2026 AAs (Boozer, Dybantsa, Toppin, Fears Jr.) + pros (Flagg, Clark) · MUST STILL WORK after V022.30</td></tr>
+<tr><td>B09 · D2 Bevo Francis watchlist</td><td>12</td><td>D2</td><td>MBB</td><td>Current D2 standouts (Claussen, Bachelor, Randolph, Djigo, Harcourt, Graziani, Reeves, Miller Jr., Pusateri, J. Brown, Freeman, Bill) · includes adversarial Jalen Brown vs Jaylen Brown Celtics</td></tr>
+<tr><td>B10 · D3 Jostens Trophy 2026</td><td>10</td><td>D3</td><td>MBB</td><td>The actual 2026 Jostens finalists (Pearce winner, Schleusner W winner, Bryant, Burman, Dopirak, Grieger, Gyimesi, Plesser, Nowoswiat, Kranson)</td></tr>
+<tr><td>B11 · Adversarial name collisions</td><td>10</td><td>varies</td><td>mixed</td><td>John Smith generic · Tim Duncan legit HOF · LeBron James + Bronny + Bryce family · Brandon Bass + Cameron Williams NFL + Chris Henry NFL + Gilbert Arenas · plus Alijah Arenas re-test. <b>This bucket validates the V022.30 fix.</b></td></tr>
+</tbody>
+</table>
+
+<div class="callout">
+<h3>Adversarial set is the litmus</h3>
+<p>If V022.30 works, here's what must happen on bucket B11: <b>Antwan Kimmons</b> (B06) returns composite ~4 with school = Concordia-St. Paul (NOT San Antonio Spurs) and is_hof = false. <b>Alijah Arenas</b> returns composite ~8.5 with school = USC commit, NOT inheriting Gilbert's NBA stats. <b>Tim Duncan</b> the real HOFer still returns composite ~9.6 because multi-source corroboration validates (Wikidata HOF + bbref HOF + 5 championships + 2 MVPs). <b>Jaquay Randolph</b> returns composite ~8 with tier=d2, school=Southern Wesleyan, properly benchmarked against d2 pool not hs.</p>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="sect">
+<div class="sect-h"><div class="sect-num">SECTION 03</div><h2>Deliverables · what's at /mnt/user-data/outputs</h2></div>
+
+<div class="deliverable">
+<div class="deliverable-h"><div class="deliverable-name">worker-v022.30.js</div><div class="deliverable-size">2,928,644 bytes · 47,847 lines</div></div>
+<div class="deliverable-desc">The patched worker, syntax-clean (<code>node --check</code> exit 0). Contains all 6 patches A through F. Cache keys bumped <code>v022.29 → v022.30</code> in lockstep so prior cached results from V022.29 won't bleed through. Ship to dev first, never prod.</div>
+</div>
+
+<div class="deliverable">
+<div class="deliverable-h"><div class="deliverable-name">roster_100.json</div><div class="deliverable-size">67,146 bytes · 110 athletes · 11 buckets</div></div>
+<div class="deliverable-desc">Full structured roster. Each athlete has: name, position, school, class_year, provenance (source ranking + URL), commit, expected_pool (hs/d1/d2/d3/juco/pro), expected_band (GREAT/GOOD/AVERAGE/BELOW/SPARSE), expected_composite_range, litmus checks, market_says (what 247/ESPN/MaxPreps show today), adversarial_risk flag.</div>
+</div>
+
+<div class="deliverable">
+<div class="deliverable-h"><div class="deliverable-name">fc-batch-test.sh</div><div class="deliverable-size">19,147 bytes · bash + embedded python</div></div>
+<div class="deliverable-desc">One-paste batch runner. Reads roster, hits <code>${BASE_URL}/verdict?name=X&sport=Y&school=Z</code> for each athlete in 3 parallel jobs, saves raw JSON responses, runs litmus checks per athlete, emits <code>fc-batch-test-report.html</code> with green/yellow/red status per athlete + per check. Configurable via env vars (FC_BASE_URL, FC_ROSTER, FC_PARALLEL, FC_TIMEOUT).</div>
+</div>
+
+<div class="deliverable">
+<div class="deliverable-h"><div class="deliverable-name">FC_V022.30_SHIP_BRIEF.html (this doc)</div><div class="deliverable-size">single self-contained file</div></div>
+<div class="deliverable-desc">Everything you need to deploy + test + persona-walk + interpret. Print and keep.</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="sect">
+<div class="sect-h"><div class="sect-num">SECTION 04</div><h2>Deploy steps · in order</h2></div>
+
+<div class="step">
+<div class="step-num">1</div>
+<div class="step-body">
+<div class="step-h">Pull the three files from /mnt/user-data/outputs to your machine</div>
+<div class="step-d">Open in Claude UI on the right side panel: download <code>worker-v022.30.js</code>, <code>roster_100.json</code>, <code>fc-batch-test.sh</code>. Move them to <code>~/Desktop/fieldcheck-proxy/</code>.</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">2</div>
+<div class="step-body">
+<div class="step-h">Freeze current dev state before risky deploy (Tenet 11)</div>
+<div class="cmd">cd ~/Desktop/fieldcheck-proxy
+./fc-freeze.sh PreV022.30_$(date +%Y%m%d_%H%M)</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">3</div>
+<div class="step-body">
+<div class="step-h">Deploy V022.30 to dev</div>
+<div class="cmd">cd ~/Desktop/fieldcheck-proxy
+cp worker-v022.30.js worker.js  # if your deploy reads worker.js
+./fc-stage.sh deploy   # auto-detects worker by mtime, deploys to dev</div>
+<div class="step-d">If <code>fc-stage.sh</code> isn't your current pattern, fall back to your <code>deploy-dev.sh</code>. Confirm dev is updated by hitting <code>https://fieldcheck-dev--fieldcheck-app.netlify.app/fc_canonical_state_v1</code> (password <code>thinkdifferent2026</code>) and checking the worker version string at top of <code>worker.js</code> in browser DevTools or directly via <code>curl https://fieldcheck-proxy.sridhar-nallani.workers.dev/version</code> (whatever your version endpoint is).</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">4</div>
+<div class="step-body">
+<div class="step-h">Run the 110-name battery against dev</div>
+<div class="cmd">chmod +x fc-batch-test.sh
+./fc-batch-test.sh</div>
+<div class="step-d">Default: takes 5-15 minutes depending on dev worker latency and parallelism (3 simultaneous, configurable via <code>FC_PARALLEL=N</code>). Each athlete prints progress on stdout. Final output: <code>fc-batch-test-report.html</code> in current dir + raw JSON responses in <code>./fc-batch-test-results/</code>. Open the report in browser: <code>open fc-batch-test-report.html</code>.</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">5</div>
+<div class="step-body">
+<div class="step-h">Read the green/yellow/red summary</div>
+<div class="step-d">Top of report: 5 summary cards (GREEN / YELLOW / RED / SKIP / TOTAL). Below: per-bucket tables with each athlete's status + which specific litmus checks passed/failed. Adversarial cases flagged in red badges. <b>Target: ≥85% GREEN, &lt;5% RED on first pass.</b> If RED is higher, the specific failures will pinpoint which patch needs adjustment.</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">6</div>
+<div class="step-body">
+<div class="step-h">Iterate fixes on dev only (NEVER touch prod yet)</div>
+<div class="step-d">For each RED athlete, look at the raw JSON in <code>fc-batch-test-results/</code> and trace which adapter returned wrong data. Apply targeted fix. Re-deploy to dev. Re-run batch. Repeat until ≥90% green. Increment version per fix: V022.30.1, V022.30.2, etc.</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">7</div>
+<div class="step-body">
+<div class="step-h">Run 4-persona walkthrough on 5 representative athletes</div>
+<div class="step-d">Once ≥90% green, manually walk through 5 verdict pages in browser — one per tier — and use the Player / Coach / Scout / Parent framework below (Section 06). 90-second win condition per persona. If all 5 pass, you're ready to promote.</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">8</div>
+<div class="step-body">
+<div class="step-h">Promote V022.30 to prod + freeze as FCBase19_V001</div>
+<div class="cmd">./deploy-canonical-to-prod.sh  # or your prod deploy script
+./fc-freeze.sh FCBase19_V001  # freeze the baseline</div>
+</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="sect">
+<div class="sect-h"><div class="sect-num">SECTION 05</div><h2>What the test harness validates · per athlete</h2></div>
+
+<div class="sub">Each athlete gets 6 specific litmus checks. The aggregate determines GREEN / YELLOW / RED.</div>
+
+<table>
+<thead><tr><th>#</th><th>Check</th><th>What it validates</th></tr></thead>
+<tbody>
+<tr><td class="gold">1</td><td>current_school</td><td>Patch E worked · school resolved from structured source matches roster expected_school</td></tr>
+<tr><td class="gold">2</td><td>composite_in_band</td><td>Composite landed within expected_composite_range (the band defined per athlete)</td></tr>
+<tr><td class="gold">3</td><td>pool_tier</td><td>Patch D worked · position_pool_benchmark.tier matches expected_pool (hs/d1/d2/d3/juco/pro)</td></tr>
+<tr><td class="gold">4</td><td>no_legend_pro_for_amateur</td><td>Patch C worked · amateurs (HS/D1/D2/D3/JUCO) MUST NOT be classified as legend_pro / prime_pro / retired_pro</td></tr>
+<tr><td class="gold">5</td><td>bbref_identity_validated</td><td>Patch A worked · either bbref returned ok with identity_validated=true OR returned <code>name_mismatch_v022.30</code> for adversarial cases (both are PASS)</td></tr>
+<tr><td class="gold">6</td><td>brutal_honest_present</td><td>Patch F worked · encyclopedia.brutal_honest.ok === true with confidence + ≥1 evidence_anchor</td></tr>
+</tbody>
+</table>
+
+<div class="callout">
+<h3>How GREEN / YELLOW / RED is determined</h3>
+<p><b style="color:var(--ok)">GREEN</b> = all checks pass (no fail, no near, no null). <b style="color:var(--gold)">YELLOW</b> = no checks failed but some are "near" the expected range (within 0.5 of band edge) or current_school is null but expected band allows it. <b style="color:var(--warn)">RED</b> = at least one check failed outright. <b style="color:var(--t3)">SKIP</b> = no response received or HTTP error (dev was down or timed out).</p>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="sect">
+<div class="sect-h"><div class="sect-num">SECTION 06</div><h2>4-persona walkthrough framework</h2></div>
+
+<div class="sub">Once batch test hits ≥90% green, pick 5 athletes (one per tier) and manually verdict-page them. Each persona walks through with a stopwatch. 90-second win condition per persona.</div>
+
+<div class="persona">
+<div class="persona-tag">★ PLAYER · 30-SECOND BAR</div>
+<div class="persona-h">Where do I stack? What's next?</div>
+<div class="persona-b">Test athlete: a real HS prospect opens the page about themselves. In 30 seconds they must see: (1) Where do I stack vs others at my tier — <i>concrete percentile, not vague praise</i>; (2) What's my trajectory — <i>improving / steady / declining with evidence</i>; (3) Realistic path to my goal school — <i>named programs, not vague tiers</i>; (4) The 1-2 things I can do in the next 6 months. <b>Win:</b> Player texts a friend the verdict and the friend understands it without context.</div>
+</div>
+
+<div class="persona">
+<div class="persona-tag">★ COACH · 30-SECOND BAR</div>
+<div class="persona-h">Recruit, pass, or watch?</div>
+<div class="persona-b">Test athlete: a college coach evaluating for roster slot. In 30 seconds: (1) Fit for our scheme; (2) Slot projection (starter / rotation / depth / red-shirt); (3) Recruiting status; (4) Red flags (academics, transfer history, character); (5) The honest "ask". <b>Win:</b> Coach forwards to assistant with "Pull tape" or "Pass" in under a minute.</div>
+</div>
+
+<div class="persona">
+<div class="persona-tag">★ SCOUT · 60-SECOND BAR</div>
+<div class="persona-h">Project: ceiling / floor / comparable?</div>
+<div class="persona-b">Test athlete: pro/independent scout building a draft board. In 60 seconds: (1) Comparable archetype with named pros; (2) Ceiling/floor/median outcome with confidence; (3) Hidden indicators others would miss; (4) Scout-grid letter grade per facet; (5) Where we differ from public composite + why. <b>Win:</b> Scout can defend this read in a scouting meeting against pushback.</div>
+</div>
+
+<div class="persona">
+<div class="persona-tag">★ PARENT · 90-SECOND BAR</div>
+<div class="persona-h">Should we commit? What's the real cost-benefit?</div>
+<div class="persona-b">Test athlete: parent of HS junior weighing D1 vs D2 vs D3 vs walk-on. In 90 seconds: (1) Realistic placement — not inflated; (2) Academic + financial reality; (3) Decision framework — the 3 questions to ask; (4) Time horizon; (5) The honest read — what would FieldCheck tell a friend about this kid. <b>Win:</b> Parent shares with spouse and they jointly decide without needing a recruiting consultant.</div>
+</div>
+
+<div class="callout">
+<h3>The Patch F brutally honest section is the persona-level winner</h3>
+<p>Patch F gives every verdict page <code>encyclopedia.brutal_honest.decision_grade_read</code> with one sentence each for <code>for_player</code> / <code>for_coach</code> / <code>for_scout</code> / <code>for_parent</code>. That's the test. If those four sentences are honest and useful, the page passes the 90-second bar. If they're vague platitudes, Patch F prompt needs refinement.</p>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="sect">
+<div class="sect-h"><div class="sect-num">SECTION 07</div><h2>Tenets 41-44 · codify so this never regresses</h2></div>
+
+<div class="sub">After V022.30 ships, add these to FC_CANONICAL_STATE_V1.html V5.22. They prevent future Claudes from sliding back into the spaghetti that caused the Antwan Kimmons cascade.</div>
+
+<div class="tenet">
+<div class="tenet-tag">TENET 41 · IDENTITY VALIDATION AT EVERY ADAPTER BOUNDARY</div>
+<div class="tenet-h">Any adapter that resolves to a player-specific profile MUST validate identity match before returning ok=true</div>
+<div class="tenet-b">Wikipedia, Basketball-Reference, PFR, Baseball-Ref, 247, On3, MaxPreps, Hudl — each must validate the profile-page name matches the queried name (first-name initial + last-name whole-word + Lev≤1 on last). Fuzzy-matching "first /players/ link" without validation is a SEVERE bug. Codified after V022.30 (May 26 2026): Antwan Kimmons query fuzzy-matched a Spurs HOFer's page → bbref_pro returned ok=true with is_hof=true → composite forced to 9.7 via pathway_floor → entire verdict corrupted across all 5 amateur tests. Single-adapter failure cascaded through 4 layers downstream.</div>
+</div>
+
+<div class="tenet">
+<div class="tenet-tag">TENET 42 · MULTI-SOURCE CORROBORATION FOR HIGH-IMPACT CLAIMS</div>
+<div class="tenet-h">Any signal that triggers a CASCADE requires ≥2 independent sources OR ≥1 source + structured accolade evidence</div>
+<div class="tenet-b">Career-stage promotion (especially legend_pro), composite floor overrides, tier classification — none may fire from a single noisy adapter. Threshold: <code>hofSourceCount ≥ 2</code> OR <code>(hofSourceCount ≥ 1 AND structuredAccolades > 0)</code>. Single-source claims trigger the cascade only when the source is structured-data-validated (Wikidata Q-ID, school roster confirmed, NCAA Stats Portal direct match).</div>
+</div>
+
+<div class="tenet">
+<div class="tenet-tag">TENET 43 · NO DESTRUCTIVE OVERWRITES</div>
+<div class="tenet-h">Pathway floors and tier adjustments preserve the original signal AND require explicit confidence ≥ threshold to overwrite display value</div>
+<div class="tenet-b">When pathway floor fires (e.g. legend_pro pushes 3.5 → 9.7), the original score MUST be preserved as <code>composite_pre_pathway_floor</code> AND the display composite shows the original 3.5 with the floor as a possibility annotation IF confidence is below threshold. Only high-confidence overrides display the floored value as truth. Brutal honesty over inflated tier promotion.</div>
+</div>
+
+<div class="tenet">
+<div class="tenet-tag">TENET 44 · END-TO-END VISUAL VERIFICATION BEFORE "SHIP"</div>
+<div class="tenet-h">Worker JSON correct is necessary but not sufficient. Ship-ready requires browser-rendered page check + ≥3 amateur tiers + ≥1 pro regression check + persona walkthrough</div>
+<div class="tenet-b">A successful curl JSON does not equal a working product. Required for ship: (1) curl JSON has all 8 facets populated + identity.current_school correct + correct tier in position_pool; (2) verdict page renders correctly in browser at dev URL; (3) at least 3 amateur athletes (HS + D1 + D2 OR D3) all pass; (4) at least 1 historical pro (Cooper Flagg or similar) regression check confirms no break for upper tier; (5) 4-persona walkthrough passes 90-second win condition on 5 representative athletes. Failing ANY of (1)-(5) BLOCKS the prod promote.</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="sect">
+<div class="sect-h"><div class="sect-num">SECTION 08</div><h2>What's NOT in V022.30 · deferred to V022.31+</h2></div>
+
+<div class="sub">From the source-moat audit · 20+ adapters identified as MISSING but intentionally deferred. Foundation first.</div>
+
+<table>
+<thead><tr><th>Source</th><th>Why deferred</th><th>Priority for V022.31+</th></tr></thead>
+<tbody>
+<tr><td>NJCAA + JucoRecruiting + CCCAA + USBasket JUCO</td><td>JUCO is the discovery tier we miss completely · separate adapter set</td><td>HIGH · Arterio Morris pipeline</td></tr>
+<tr><td>RSCI consensus</td><td>Currently inferred from 247 composite · direct adapter would strengthen</td><td>MEDIUM</td></tr>
+<tr><td>ESPN ScNext direct</td><td>Currently only via Google News / Tavily</td><td>MEDIUM</td></tr>
+<tr><td>MLS NEXT + ECNL Boys + Girls Academy + ECNL-RL</td><td>Entire soccer pipeline ecosystems · 4-source build</td><td>HIGH for soccer expansion</td></tr>
+<tr><td>PBR (Prep Baseball Report)</td><td>Primary discovery for ~30% of MLB picks · we don't have it</td><td>HIGH for baseball expansion</td></tr>
+<tr><td>Prep Redzone</td><td>State-by-state HS football</td><td>MEDIUM</td></tr>
+<tr><td>AJGA</td><td>American Junior Golf · top HS pipeline</td><td>LOW until golf expansion</td></tr>
+<tr><td>Inside Lacrosse</td><td>HS + college LAX</td><td>LOW until lacrosse expansion</td></tr>
+<tr><td>USA Today HS</td><td>National HS rankings all sports</td><td>LOW</td></tr>
+<tr><td>64analytics</td><td>NCAA D1/D2/D3 player data · mostly paywalled</td><td>MEDIUM if free tier accessible</td></tr>
+<tr><td>Athletic.net + TFRRS</td><td>Track & field comparison engines</td><td>MEDIUM for T&F expansion</td></tr>
+<tr><td>USTA Junior Rankings</td><td>Authoritative US junior tennis</td><td>LOW until tennis expansion</td></tr>
+</tbody>
+</table>
+
+<div class="callout">
+<h3>Why deferred is right</h3>
+<p>V022.30 fixes the foundation. Adding new source adapters before the foundation is stable just means new bugs cascade through the same broken architecture. Source expansion comes after V022.30 + 100-name battery validates ≥90% green AND 4-persona walkthrough passes. Then V022.31 adds NJCAA + JUCO (highest-impact gap). Then V022.32 adds MLS NEXT + ECNL. Etc.</p>
+</div>
+</div>
+
+<div class="ftr">
+FC_V022.30_SHIP_BRIEF · May 26 2026 · ThinkDifferent Holdings · 6 patches applied · 110 athletes battery · 4 new tenets · ready to deploy · NEVER-LOSE DOCTRINE
+</div>
+
+</div>
+</body>
+</html>

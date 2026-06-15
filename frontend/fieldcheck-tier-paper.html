@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FC-METH-001 · The FieldCheck Tier · v1.0 Methodology</title>
+<meta name="theme-color" content="#0A0908">
+<meta name="description" content="The public methodology paper for the FieldCheck Tier system. FC-METH-001 v1.0. Published May 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0908;
+    --bg-paper: #14110c;
+    --text: #fbf6ea;
+    --text-2: rgba(251,246,234,0.80);
+    --text-3: rgba(212,200,173,0.65);
+    --text-4: rgba(212,200,173,0.42);
+    --gold: #ffc94a;
+    --gold-dim: rgba(255,201,74,0.55);
+    --rule: rgba(255,201,74,0.16);
+    --rule-faint: rgba(255,201,74,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18.5px;
+    line-height: 1.68;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--gold); color: var(--bg); }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 100;
+    mix-blend-mode: overlay;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(12px);
+    background: rgba(10,9,8,0.85);
+    border-bottom: 1px solid var(--rule-faint);
+    padding: 16px 36px;
+    display: flex; align-items: center; gap: 26px;
+  }
+  nav .wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+  nav .wordmark .gold { color: var(--gold); }
+  nav a { color: var(--text-3); text-decoration: none; font-family: 'Crimson Pro', serif; font-size: 15px; }
+  nav a:hover { color: var(--gold); }
+  nav .meta-tag {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--text-4);
+  }
+
+  /* ─── COVER ─── */
+  .paper-cover {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 110px 36px 70px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .paper-cover .doc-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 26px;
+    text-transform: uppercase;
+  }
+  .paper-cover h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(54px, 8vw, 100px);
+    line-height: 0.96;
+    letter-spacing: -0.012em;
+    margin-bottom: 24px;
+  }
+  .paper-cover .sub {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(22px, 2.6vw, 32px);
+    line-height: 1.25;
+    color: var(--gold);
+    margin-bottom: 48px;
+    max-width: 720px;
+  }
+  .paper-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px 32px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule-faint);
+  }
+  .paper-meta-block .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-4);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .paper-meta-block .value {
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    color: var(--text-2);
+  }
+
+  /* ─── ABSTRACT ─── */
+  .abstract {
+    max-width: 740px;
+    margin: 70px auto;
+    padding: 40px 44px;
+    background: var(--bg-paper);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+  }
+  .abstract-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .abstract p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 18.5px;
+    line-height: 1.65;
+    color: var(--text-2);
+  }
+  .abstract p + p { margin-top: 1em; }
+  .abstract em { color: var(--gold-dim); font-style: italic; }
+
+  /* ─── BODY ─── */
+  .paper-body {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 50px 36px 90px;
+  }
+  .paper-body section {
+    margin-bottom: 80px;
+  }
+  .paper-body .sec-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: block;
+  }
+  .paper-body h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(34px, 4.4vw, 52px);
+    line-height: 1.03;
+    letter-spacing: -0.008em;
+    margin-bottom: 22px;
+  }
+  .paper-body h2 .italic {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+  .paper-body h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 24px;
+    letter-spacing: -0.003em;
+    margin: 44px 0 14px;
+    color: var(--text);
+  }
+  .paper-body h3::before {
+    content: '§ ';
+    color: var(--gold);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 400;
+    margin-right: 4px;
+  }
+  .paper-body h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin: 32px 0 10px;
+  }
+  .paper-body p {
+    margin-bottom: 1.2em;
+    color: var(--text-2);
+  }
+  .paper-body p strong { color: var(--text); font-weight: 600; }
+  .paper-body p em { font-style: italic; color: var(--gold-dim); }
+  .paper-body ul, .paper-body ol {
+    padding-left: 24px;
+    margin-bottom: 1.4em;
+    color: var(--text-2);
+  }
+  .paper-body li { margin-bottom: 8px; }
+  .paper-body li::marker { color: var(--gold-dim); }
+
+  /* ─── BAND DEFINITIONS ─── */
+  .band-defs { margin: 36px 0; display: grid; gap: 14px; }
+  .band-def {
+    padding: 28px 32px;
+    background: var(--bg-paper);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+  }
+  .band-def.icon { border-left-color: #ffd166; }
+  .band-def.elite { border-left-color: #b5e2c2; }
+  .band-def.star { border-left-color: var(--gold); }
+  .band-def.prospect { border-left-color: rgba(212,200,173,0.5); }
+  .band-def-name {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .band-def-criterion {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--gold-dim);
+    margin-bottom: 14px;
+  }
+  .band-def ul { margin: 14px 0 6px; }
+  .band-def li { font-size: 16.5px; color: var(--text-2); }
+  .band-def-examples {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--rule-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--text-3);
+    text-transform: uppercase;
+  }
+  .band-def-examples b { color: var(--gold); }
+
+  /* ─── DIMENSIONS TABLE ─── */
+  .dims-table { margin: 36px 0; border-top: 2px solid var(--gold); }
+  .dim-row {
+    display: grid;
+    grid-template-columns: 60px 200px 1fr;
+    gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule-faint);
+    align-items: baseline;
+  }
+  .dim-num {
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .dim-name {
+    font-family: 'Anton', sans-serif;
+    font-size: 19px;
+    letter-spacing: -0.003em;
+  }
+  .dim-body {
+    font-family: 'Crimson Pro', serif;
+    color: var(--text-3);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  /* ─── REQUIREMENTS LIST ─── */
+  .req-list { counter-reset: req; margin: 32px 0; }
+  .req {
+    counter-increment: req;
+    padding: 24px 0 24px 64px;
+    border-bottom: 1px solid var(--rule-faint);
+    position: relative;
+  }
+  .req::before {
+    content: 'R' counter(req, decimal-leading-zero);
+    position: absolute;
+    left: 0; top: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    font-weight: 700;
+    padding: 4px 8px;
+    background: rgba(255,201,74,0.10);
+    border-radius: 3px;
+  }
+  .req-h {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    letter-spacing: -0.003em;
+    margin-bottom: 6px;
+  }
+  .req-body { font-size: 16.5px; color: var(--text-3); line-height: 1.55; }
+  .req-body b { color: var(--gold); font-weight: 600; }
+
+  /* ─── CALLOUT ─── */
+  .callout {
+    margin: 40px 0;
+    padding: 32px;
+    background: var(--bg-paper);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+  }
+  .callout-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .callout p { font-family: 'Crimson Pro', serif; color: var(--text-2); margin-bottom: 0.8em; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ─── CITATION BLOCK ─── */
+  .citation {
+    margin: 36px 0;
+    padding: 28px 32px;
+    background: rgba(10,9,8,0.7);
+    border: 1px dashed var(--rule);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-2);
+  }
+  .citation-label {
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  .citation-body { font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--text-2); font-style: italic; }
+
+  /* ─── REFERENCES ─── */
+  .references {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 60px 36px 100px;
+    border-top: 1px solid var(--rule);
+  }
+  .references-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 22px;
+    text-transform: uppercase;
+  }
+  .ref-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px 40px;
+  }
+  .ref-block-h {
+    font-family: 'Anton', sans-serif;
+    font-size: 20px;
+    letter-spacing: -0.003em;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .ref-block-body { font-size: 14.5px; line-height: 1.55; color: var(--text-3); }
+  .ref-block-body a { color: var(--gold); text-decoration: none; }
+  .ref-block-body a:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 22px; gap: 12px; }
+    nav a:not(.wordmark) { display: none; }
+    .paper-cover, .paper-body, .references, .abstract { padding-left: 22px; padding-right: 22px; }
+    .abstract { padding: 28px 26px; margin: 50px 22px; }
+    .dim-row { grid-template-columns: 50px 1fr; }
+    .dim-row .dim-body { grid-column: 1 / -1; padding-left: 0; }
+    body { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="wordmark">FIELD<span class="gold">CHECK</span></a>
+  <a href="/strategic-framework">Strategic Framework</a>
+  <a href="/artifacts">Artifacts</a>
+  <a href="/voices">Voices</a>
+  <span class="meta-tag">// FC-METH-001 · v1.0</span>
+</nav>
+
+<!-- ═════════════ COVER ═════════════ -->
+<header class="paper-cover">
+  <div class="doc-id">FC-METH-001 · Methodology Paper · v1.0</div>
+  <h1>The FieldCheck Tier.</h1>
+  <p class="sub">A public methodology for athlete trajectory classification — a frame, not a list, defended by Voice attribution and traceable reasoning.</p>
+
+  <div class="paper-meta">
+    <div class="paper-meta-block">
+      <div class="label">Document</div>
+      <div class="value">FC-METH-001</div>
+    </div>
+    <div class="paper-meta-block">
+      <div class="label">Version</div>
+      <div class="value">1.0</div>
+    </div>
+    <div class="paper-meta-block">
+      <div class="label">Published</div>
+      <div class="value">May 14, 2026</div>
+    </div>
+    <div class="paper-meta-block">
+      <div class="label">Author</div>
+      <div class="value">Sridhar Nallani</div>
+    </div>
+    <div class="paper-meta-block">
+      <div class="label">Status</div>
+      <div class="value">Public · Citable</div>
+    </div>
+    <div class="paper-meta-block">
+      <div class="label">License</div>
+      <div class="value">CC BY-SA 4.0</div>
+    </div>
+  </div>
+</header>
+
+<!-- ═════════════ ABSTRACT ═════════════ -->
+<div class="abstract">
+  <div class="abstract-label">Abstract</div>
+  <p>This paper introduces <strong>the FieldCheck Tier</strong> — a four-band classification system for high school and collegiate athlete trajectory, designed as an alternative to the ranking systems that dominate the recruiting industry. Ranking systems convert athletes into inventory and serve the publisher rather than the family. The FieldCheck Tier instead anchors classification to a <em>frame</em>: four named bands (<strong>ICON, ELITE, STAR, PROSPECT</strong>) defined by published thresholds across eight dimensions, supported by Voice attribution and traceable reasoning for every designation.</p>
+  <p>The methodology defines five non-negotiable requirements (Voice attribution, reasoning trace, public-record sourcing, confidence interval, comp library construction) and a calibration process anchored to historical apex profiles. The paper specifies a versioned dispute and correction process, a recommended citation format for media and coach use, and a public commitment to release the underlying methodology with every annual update.</p>
+  <p>The strategic intent of this publication is unambiguous: <em>to make the FieldCheck Tier the language the industry adopts not because we pushed it, but because nothing else holds up to scrutiny.</em></p>
+</div>
+
+<div class="paper-body">
+
+<!-- ═════════════ 01. PROBLEM ═════════════ -->
+<section>
+  <span class="sec-num">§ 01 · The Problem</span>
+  <h2>Rankings are inventory, <span class="italic">not signal.</span></h2>
+
+  <p>The recruiting industry operates on a structural conflict of interest. The publishers that produce athlete rankings depend on those rankings as <em>inventory</em>: a recurring publication surface that drives subscriptions, ad impressions, and direct sales. Ranking volatility is not a bug; it is the business model. If an athlete's position remains stable, the inventory does not refresh, and the publication loses its monetization cycle.</p>
+
+  <p>The result is a system in which:</p>
+  <ul>
+    <li><strong>Rankings are revised week-over-week</strong> to generate new content even when the underlying athlete trajectory has not changed.</li>
+    <li><strong>Position differentials become noise</strong> — the difference between #18 and #34 is below the noise floor of the methodology, but is presented to families as material signal.</li>
+    <li><strong>Premium-tier access</strong> sells the right to see information that should have been free: Hudl tape, AAU box scores, state-association rosters, public NCAA APR data.</li>
+    <li><strong>The methodology itself is opaque.</strong> No major recruiting service publishes a thresholded, dimension-by-dimension rubric that a third party could replicate. The audience is asked to trust the brand.</li>
+  </ul>
+
+  <p>The downstream effect on athletes and families is consequential. A high school junior reading that she has dropped from #42 to #51 in a national position ranking experiences this as material — affecting confidence, recruitment outreach, and college-choice anxiety — even when the change reflects no real shift in her trajectory. <strong>The system converts her decision-making horizon into a content engagement metric.</strong></p>
+
+  <p>This paper proposes a deliberate alternative.</p>
+</section>
+
+<!-- ═════════════ 02. WHAT WE BUILT ═════════════ -->
+<section>
+  <span class="sec-num">§ 02 · What We Built Instead</span>
+  <h2>A frame, <span class="italic">not a list.</span></h2>
+
+  <p>The FieldCheck Tier is a classification system, not a ranking system. The distinction is foundational and is enforced architecturally throughout the FieldCheck product surface.</p>
+
+  <p>A <em>ranking</em> asserts that one athlete is the 47th-best at her position. A <em>tier classification</em> asserts that an athlete belongs to one of four named bands, with the band reflecting her current trajectory relative to defined thresholds across eight dimensions. Athletes within a band are not ordered against one another.</p>
+
+  <p>The strategic value of this distinction:</p>
+  <ul>
+    <li><strong>Stability.</strong> Tier transitions are infrequent and meaningful. A move from STAR to ELITE is itself a publishable signal, where a move from #34 to #28 is not.</li>
+    <li><strong>Comparability across cohorts.</strong> A 2023 STAR and a 2026 STAR meet the same defined thresholds. Year-over-year cohort comparisons become coherent.</li>
+    <li><strong>Defensibility.</strong> Every designation is attached to a reasoning trace and a comp library. The classification can be audited by any third party with access to the public methodology.</li>
+    <li><strong>Reduced harm.</strong> The system does not generate weekly anxiety cycles by churning athletes through rank positions.</li>
+  </ul>
+
+  <div class="callout">
+    <div class="callout-eyebrow">Note on terminology</div>
+    <p>The four bands are named in capitals throughout this paper (ICON, ELITE, STAR, PROSPECT) and in all FieldCheck product surfaces. This convention is intentional: the names function as proper nouns within the FieldCheck system. <em>"She is an ELITE 2026 OH"</em> is a complete, citable designation; <em>"she is in the elite tier"</em> is not.</p>
+  </div>
+</section>
+
+<!-- ═════════════ 03. THE FOUR BANDS ═════════════ -->
+<section>
+  <span class="sec-num">§ 03 · The Four Bands</span>
+  <h2>ICON. ELITE. STAR. <span class="italic">PROSPECT.</span></h2>
+
+  <p>Each band is defined by a sport-agnostic descriptor and is calibrated within each sport against historical apex profiles. The definitions below are the canonical statements; sport-specific calibration thresholds appear in Appendix A of each sport's annexed methodology supplement.</p>
+
+  <div class="band-defs">
+    <div class="band-def icon">
+      <div class="band-def-name">ICON</div>
+      <div class="band-def-criterion">The rare apex. Generational. Designation conferred sparingly.</div>
+      <p style="color:var(--text-2);font-size:16px">An athlete whose ceiling redefines the position. Multi-year sustained dominance against highest-level competition. Pro pipeline outcome is not in doubt; the question is degree. The ICON designation is reserved for the apex case in a position-sport-cohort intersection — generally one to four designations per sport per year, often zero.</p>
+      <div class="band-def-examples"><b>Reference cases ·</b> Joe Burrow (QB, 2018–2019). Madisen Skinner (OH, 2024–2025). The list of historical ICONs is short by design.</div>
+    </div>
+
+    <div class="band-def elite">
+      <div class="band-def-name">ELITE</div>
+      <div class="band-def-criterion">Top of class, multi-year sustained. Pro pipeline credible.</div>
+      <p style="color:var(--text-2);font-size:16px">An athlete whose trajectory is conference-shaping and whose pro outcome is materially probable. Multiple Voice-verified signals of physical, production, and projectability dimensions clearing ELITE thresholds. National-class recruiting attention. Multi-year sustained performance — single-season ELITE designations are rare and require exceptional production density.</p>
+      <div class="band-def-examples"><b>Typical count ·</b> Eight to thirty per sport per cohort year.</div>
+    </div>
+
+    <div class="band-def star">
+      <div class="band-def-name">STAR</div>
+      <div class="band-def-criterion">Regional or conference apex. College starter at minimum, pro plausible.</div>
+      <p style="color:var(--text-2);font-size:16px">An athlete who is the apex case at the regional or conference level. Power-conference starter trajectory is credible. The bedrock of any serious college roster. The STAR band is the workhorse designation and represents the largest population in the FieldCheck system.</p>
+      <div class="band-def-examples"><b>Typical count ·</b> Thirty to one-hundred-twenty per sport per cohort year.</div>
+    </div>
+
+    <div class="band-def prospect">
+      <div class="band-def-name">PROSPECT</div>
+      <div class="band-def-criterion">Talent and trajectory present. Ceiling not yet locked.</div>
+      <p style="color:var(--text-2);font-size:16px">The earliest defensible designation in the system. An athlete for whom multiple dimensions cross minimum-defensibility thresholds, but for whom sustained performance or peer-level competition has not yet been demonstrated. PROSPECT designations carry an explicit confidence note: the trajectory is real, but the band is provisional.</p>
+      <div class="band-def-examples"><b>Typical count ·</b> Unlimited within methodology; published only when Voice attribution is clean.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ 04. DIMENSIONS ═════════════ -->
+<section>
+  <span class="sec-num">§ 04 · The Eight Dimensions</span>
+  <h2>What we measure, <span class="italic">precisely.</span></h2>
+
+  <p>Every FieldCheck Tier designation is supported by scored values across eight dimensions. The scoring is anchored to a one-through-ten scale within each dimension, with thresholds defined sport-specifically in the relevant supplement. Three of the dimensions (Physical, Production, Projectability) are inherited from the existing FieldCheck evaluation grid; five additional dimensions (1, 2, 6, 7, 8 below) provide the context required for tier-level classification.</p>
+
+  <div class="dims-table">
+    <div class="dim-row">
+      <div class="dim-num">01</div>
+      <div class="dim-name">Player Development</div>
+      <div class="dim-body">The athlete's program-context development infrastructure. Coaching quality, position-specific instruction, pro-pipeline alumni density.</div>
+    </div>
+    <div class="dim-row">
+      <div class="dim-num">02</div>
+      <div class="dim-name">Championship Pedigree</div>
+      <div class="dim-body">Outcome history of the trajectory pathway. Title relevance, conference contention, recent peak-program record.</div>
+    </div>
+    <div class="dim-row">
+      <div class="dim-num">03</div>
+      <div class="dim-name">Physical</div>
+      <div class="dim-body">Size, athletic markers, position-specific physical thresholds. From the existing evaluation grid.</div>
+    </div>
+    <div class="dim-row">
+      <div class="dim-num">04</div>
+      <div class="dim-name">Production</div>
+      <div class="dim-body">Output against peer-level competition. Statistical performance, game-tape signal, sustained density.</div>
+    </div>
+    <div class="dim-row">
+      <div class="dim-num">05</div>
+      <div class="dim-name">Projectability</div>
+      <div class="dim-body">Tactical IQ, leadership signal, ceiling projection, durability. The forward-looking composite.</div>
+    </div>
+    <div class="dim-row">
+      <div class="dim-num">06</div>
+      <div class="dim-name">Recruiting Power</div>
+      <div class="dim-body">National-class attention. Multi-program offers, top-ranked-school engagement, peer-of-peer signaling.</div>
+    </div>
+    <div class="dim-row">
+      <div class="dim-num">07</div>
+      <div class="dim-name">Cultural Authenticity</div>
+      <div class="dim-body">Voice-verified intangible signal. Does the athlete belong to the sport's culture in a way coaches and peers recognize.</div>
+    </div>
+    <div class="dim-row">
+      <div class="dim-num">08</div>
+      <div class="dim-name">Independence Score</div>
+      <div class="dim-body">A FieldCheck-internal hygiene dimension. Has the athlete's record been distorted by paid placements, marketing relationships, or non-public-record sourcing. Independence-score floors are required for any tier designation.</div>
+    </div>
+  </div>
+
+  <p>A FieldCheck Tier is assigned when an athlete's dimensional scores meet the threshold combination for that band as published in the sport-specific supplement. Threshold matching is conjunctive — all required dimensions must clear — except where supplement-defined substitution rules apply.</p>
+</section>
+
+<!-- ═════════════ 05. METHODOLOGY ═════════════ -->
+<section>
+  <span class="sec-num">§ 05 · The Methodology</span>
+  <h2>Five non-negotiable <span class="italic">requirements.</span></h2>
+
+  <p>Every FieldCheck Tier designation must satisfy all five of the following requirements. A designation that fails any one is not published, regardless of underlying merit.</p>
+
+  <div class="req-list">
+    <div class="req">
+      <div class="req-h">Voice Attribution</div>
+      <div class="req-body">Every dimension score must be traceable to a <b>specific Voice</b> in the sport's sixteen-member Voice council. The Voice is named, the prompt that surfaced the signal is recorded, and the Voice retains the right to dissent from the published designation. <b>If no Voice can be named for a dimension, that dimension is not scored, and the designation is held.</b></div>
+    </div>
+    <div class="req">
+      <div class="req-h">Reasoning Trace</div>
+      <div class="req-body">Every designation is accompanied by a published reasoning trace. The trace names: the dimensional scores that drove the band assignment; the threshold combinations that were met; the comp library against which the trajectory is anchored; and the explicit confidence interval. <b>Black-box designations are categorically disallowed.</b></div>
+    </div>
+    <div class="req">
+      <div class="req-h">Public-Record Sourcing</div>
+      <div class="req-body">All evidence used in the designation must derive from <b>public-record sources</b> — game tape, public statistical databases, named published articles, named coach quotes, recruiting service rankings (used as input signals, not authority). Private or paid sources, anonymous tips, and recruiting-service insider feeds are <b>categorically excluded</b>. The independence pledge is upheld at the source level.</div>
+    </div>
+    <div class="req">
+      <div class="req-h">Confidence Interval</div>
+      <div class="req-body">Every designation is published with an explicit confidence value (HIGH, MEDIUM, PROVISIONAL). PROVISIONAL designations carry an explicit caveat in all published surfaces. <b>What we don't know is shown, not hidden.</b></div>
+    </div>
+    <div class="req">
+      <div class="req-h">Comp Library Anchoring</div>
+      <div class="req-body">Every designation is anchored to a comp library of historical apex cases at that band, position, and sport. The comp library is published. The trajectory of comp-library members provides the empirical anchor for the designation's predictive claim. <b>"Compares to" is not metaphor; it is a methodology element.</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ 06. APEX PROFILE ═════════════ -->
+<section>
+  <span class="sec-num">§ 06 · The Apex Profile</span>
+  <h2>The anchor object <span class="italic">for every tier.</span></h2>
+
+  <p>For each FieldCheck Tier in each position in each sport, FieldCheck maintains a canonical Apex Profile — a fully-elaborated reference case that defines what a band-level athlete looks like at apex. The Apex Profile is the deepest defensible asset in the FieldCheck system.</p>
+
+  <p>Each Apex Profile contains:</p>
+  <ul>
+    <li><strong>The eight dimensional scores</strong> at apex, with the Voice attribution for each.</li>
+    <li><strong>The reasoning trace</strong> documenting why the athlete reached apex status.</li>
+    <li><strong>The trajectory record</strong> — the chronological sequence of band designations the athlete moved through, with the inflection points named.</li>
+    <li><strong>The comp library</strong> of historical athletes who tested similarly at the same career stage, with their subsequent outcomes documented.</li>
+    <li><strong>The position-fit annotation</strong> describing what aspects of the athlete's profile generalize to other athletes versus what is genuinely idiosyncratic.</li>
+  </ul>
+
+  <p>Apex Profiles are stable in URL and citation-ready. When a coach explains a recruit's projected ceiling, the reference is to the named Apex Profile, not to a rank position. When a media outlet writes about an emerging athlete's potential, the comparison is to the named Apex Profile, not to an undefined "tier."</p>
+
+  <div class="callout">
+    <div class="callout-eyebrow">Strategic note</div>
+    <p>The Apex Profile is the structural reason the FieldCheck Tier becomes the language the industry adopts. Once a coach or media outlet uses an Apex Profile name as a comparison, they have cited FieldCheck without contractual relationship, paid promotion, or marketing intervention. <em>The methodology embeds itself in the recruiting conversation through utility, not advertising.</em></p>
+  </div>
+</section>
+
+<!-- ═════════════ 07. CALIBRATION ═════════════ -->
+<section>
+  <span class="sec-num">§ 07 · Calibration</span>
+  <h2>How thresholds <span class="italic">were set.</span></h2>
+
+  <p>The four-band threshold structure was calibrated through a three-stage process executed per sport:</p>
+
+  <h4>Stage 1 — Apex Anchoring</h4>
+  <p>For each sport, a starting set of three to five historical apex cases (clear ICONs by consensus) was identified by the relevant Voice council. The dimensional profile of each historical apex was documented in detail. These cases collectively defined the ICON-threshold floor.</p>
+
+  <h4>Stage 2 — Threshold Cascading</h4>
+  <p>Working downward from the ICON floor, ELITE thresholds were set at the level reachable by a credible pro-pipeline athlete who was not a generational case. STAR thresholds were set at the level reachable by a power-conference starter. PROSPECT thresholds were set at the minimum defensibility level for the dimension.</p>
+
+  <h4>Stage 3 — Voice Verification</h4>
+  <p>The proposed thresholds were tested against the relevant Voice council using a curated set of historical cases. Disagreement was recorded, and threshold adjustments were made where the Voice council disagreed with the algorithmic threshold. The published v1.0 thresholds are the post-verification values.</p>
+
+  <p>Calibration is revisited annually. Threshold drift is documented in the sport-specific supplement's version history. A threshold change at the ICON or ELITE level triggers a v2.0 of the supplement and a public notice.</p>
+</section>
+
+<!-- ═════════════ 08. DISPUTES ═════════════ -->
+<section>
+  <span class="sec-num">§ 08 · Disputes &amp; Updates</span>
+  <h2>The correction process. <span class="italic">Public and named.</span></h2>
+
+  <p>FieldCheck Tier designations may be disputed by any party — the athlete, a coach, a family member, a peer scout, a member of the Voice council, or an unaffiliated third party. Disputes are submitted to <a href="mailto:dispute@fieldcheck.ai" style="color:var(--gold)">dispute@fieldcheck.ai</a> with the published designation reference and the basis for the dispute.</p>
+
+  <h4>Dispute resolution path</h4>
+  <ol>
+    <li><strong>Initial receipt</strong> within 48 hours. The dispute is logged with a public reference ID.</li>
+    <li><strong>Voice council review</strong> within 14 days. The relevant Voice or Voices for the disputed dimension(s) review the underlying evidence and reasoning trace.</li>
+    <li><strong>Published outcome</strong> within 21 days. The dispute is resolved either by upholding the original designation (with annotation) or by reissuing the designation. The resolution is published publicly with the original dispute ID.</li>
+    <li><strong>Methodology amendment</strong> where the dispute reveals a systemic flaw. Amendments trigger a versioned update of this paper or the relevant supplement.</li>
+  </ol>
+
+  <h4>Versioning</h4>
+  <p>The FieldCheck Tier methodology follows semantic versioning. This paper is v1.0. Patch updates (v1.0.x) correct typographical or clarifying errors. Minor updates (v1.x) add new sport supplements or refine dimensional definitions without changing band semantics. Major updates (v2.0+) restructure band semantics, threshold structure, or core requirements, and trigger a full re-issuance with public notice.</p>
+</section>
+
+<!-- ═════════════ 09. CITATION ═════════════ -->
+<section>
+  <span class="sec-num">§ 09 · Citation Format</span>
+  <h2>How to cite <span class="italic">FieldCheck Tier.</span></h2>
+
+  <p>For media use, coach use, family use, and academic use, the following citation conventions apply. The conventions are designed to make the FieldCheck Tier easy to reference accurately and consistently.</p>
+
+  <h4>Inline reference (media, conversation)</h4>
+  <div class="citation">
+    <div class="citation-label">Format</div>
+    <div class="citation-body">"[Athlete name] is a FieldCheck [BAND] [position]." — e.g., <em>"Madisen Skinner is a FieldCheck ICON outside hitter."</em></div>
+  </div>
+
+  <h4>Full reference (article, research, scout report)</h4>
+  <div class="citation">
+    <div class="citation-label">Format</div>
+    <div class="citation-body">FieldCheck Tier: [BAND] · [Position] · [Cohort year] · Confidence: [HIGH | MEDIUM | PROVISIONAL] · Reference: FC-TIER-[reference id] · Source: fieldcheck-app.netlify.app</div>
+  </div>
+
+  <h4>Academic citation (this paper)</h4>
+  <div class="citation">
+    <div class="citation-label">Format</div>
+    <div class="citation-body">Nallani, S. (2026). <em>The FieldCheck Tier: A Public Methodology for Athlete Trajectory Classification,</em> v1.0. FC-METH-001. ThinkDifferent Holdings. Retrieved from fieldcheck-app.netlify.app/papers/fieldcheck-tier</div>
+  </div>
+
+  <p>Use of the FieldCheck Tier language is encouraged under the terms of the CC BY-SA 4.0 license that governs this paper. Attribution is the only constraint.</p>
+</section>
+
+</div><!-- /paper-body -->
+
+<!-- ═════════════ REFERENCES ═════════════ -->
+<div class="references">
+  <div class="references-eyebrow">// References &amp; companion documents</div>
+  <div class="ref-grid">
+    <div>
+      <div class="ref-block-h">Companion Framework</div>
+      <div class="ref-block-body">
+        <a href="/strategic-framework">FC-STRAT-001 · FieldCheck Strategic Framework v1.0</a> — The full strategic context within which the FieldCheck Tier sits. Includes the three-list-format publication strategy (FC100, Greatness Path, Position-Fit Apex) and the multi-sport Y1 rollout.
+      </div>
+    </div>
+    <div>
+      <div class="ref-block-h">Sport Supplements</div>
+      <div class="ref-block-body">
+        FC-METH-001-WVB · Women's Volleyball threshold supplement <em>(forthcoming Q2 2026)</em><br>
+        FC-METH-001-FB · Football threshold supplement <em>(Q2 2026)</em><br>
+        FC-METH-001-MBB · Men's Basketball threshold supplement <em>(Q3 2026)</em><br>
+        FC-METH-001-BSB · Baseball threshold supplement <em>(Q3 2026)</em>
+      </div>
+    </div>
+    <div>
+      <div class="ref-block-h">Voice Index</div>
+      <div class="ref-block-body">
+        The current Voice councils per sport are published at <a href="/voices">/voices</a>. Each Voice is a real, named person whose lived experience anchors the dimension scoring referenced in this paper.
+      </div>
+    </div>
+    <div>
+      <div class="ref-block-h">Disputes</div>
+      <div class="ref-block-body">
+        Designation disputes: <a href="mailto:dispute@fieldcheck.ai">dispute@fieldcheck.ai</a><br>
+        Methodology disputes: <a href="mailto:methodology@fieldcheck.ai">methodology@fieldcheck.ai</a>
+      </div>
+    </div>
+    <div>
+      <div class="ref-block-h">Version History</div>
+      <div class="ref-block-body">
+        v1.0 · May 14, 2026 · Initial public release. Author: Sridhar Nallani. Voice councils consulted: women's volleyball, football, men's basketball. Sport supplements pending.
+      </div>
+    </div>
+    <div>
+      <div class="ref-block-h">License</div>
+      <div class="ref-block-body">
+        CC BY-SA 4.0. Attribution and share-alike are the only constraints. Adoption by media, coaches, college programs, and academic researchers is encouraged and unimpeded.
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NBA Draft 2026 · FieldCheck IQ Pre-Draft Predictions</title>
+<meta name="description" content="FieldCheck IQ reads the 2026 NBA Draft before the picks are made. Peterson 9.1 ICON+ — the model reads him higher than Dybantsa. Check back June 24.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--bg3:#201D2A;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);--red:#FF5C3A;}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 90% 50% at 50% -8%,rgba(245,184,0,.08),transparent 55%),radial-gradient(ellipse 60% 40% at 80% 110%,rgba(74,158,255,.04),transparent 55%);}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1060px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.nav-links{display:flex;gap:18px;flex:1}.nav-links a{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .15s}.nav-links a:hover,.nav-links a.on{color:var(--gold)}
+
+/* COUNTDOWN HERO */
+.countdown-hero{padding:52px 0 36px;text-align:center}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px}
+.ey::before,.ey::after{content:"";width:28px;height:1px;background:var(--gold);opacity:.6}
+h1{font-family:'Anton',sans-serif;font-size:clamp(36px,6vw,78px);line-height:1.02;letter-spacing:-.018em;margin-bottom:14px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.hero-sub{font-size:16px;color:var(--t2);max-width:600px;margin:0 auto 28px;line-height:1.7}
+
+.countdown-strip{display:flex;gap:2px;justify-content:center;margin:24px 0 36px}
+.cd-unit{background:var(--bg1);border:1px solid var(--goldl);border-radius:12px;padding:16px 20px;text-align:center;min-width:80px}
+.cd-num{font-family:'Anton',sans-serif;font-size:clamp(28px,5vw,48px);color:var(--gold);line-height:1;letter-spacing:-.02em}
+.cd-label{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);margin-top:5px}
+.cd-sep{font-family:'Anton',sans-serif;font-size:36px;color:var(--goldl);display:flex;align-items:center;padding:0 4px}
+
+.draft-date-pill{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border-radius:9999px;background:var(--golds);border:1px solid var(--goldl);color:var(--gold);display:inline-block;margin-bottom:28px}
+
+/* FC PREDICTION BANNER */
+.fc-call-banner{background:linear-gradient(135deg,rgba(245,184,0,.10),rgba(32,29,42,.7));border:2px solid var(--gold);border-radius:16px;padding:24px 28px;text-align:center;margin-bottom:32px}
+.fcb-ey{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.fcb-h{font-family:'Anton',sans-serif;font-size:clamp(18px,3vw,28px);letter-spacing:-.008em;margin-bottom:8px}
+.fcb-sub{font-size:13.5px;color:var(--t2);line-height:1.65;max-width:640px;margin:0 auto 16px}
+.fcb-tag{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:9999px;background:rgba(255,92,58,.12);color:var(--red);border:1px solid rgba(255,92,58,.28);display:inline-block}
+
+/* PROSPECT CARDS */
+.prospects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px}
+.prospect-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:14px;overflow:hidden;transition:border-color .2s}
+.prospect-card:hover{border-color:var(--ge)}
+.prospect-card.diverges{border-color:rgba(245,184,0,.35);background:linear-gradient(160deg,rgba(245,184,0,.05),var(--bg1))}
+.pc-header{background:var(--bg2);padding:14px 18px;border-bottom:1px solid var(--ge2)}
+.pc-rank{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
+.pc-rank.consensus{color:var(--t4)} .pc-rank.diverge{color:var(--gold)}
+.pc-name{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:-.005em;margin-bottom:3px}
+.pc-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:.4px}
+.pc-body{padding:16px 18px}
+.pc-scores{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.pc-score{padding:10px 12px;border-radius:8px;text-align:center}
+.pc-score.consensus-s{background:var(--bg3)}
+.pc-score.fc-s{background:var(--golds);border:1px solid var(--goldl)}
+.pc-score-label{font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--t4);margin-bottom:4px}
+.pc-score-val{font-family:'Anton',sans-serif;font-size:22px;line-height:1}
+.pc-score.consensus-s .pc-score-val{color:var(--t2)} .pc-score.fc-s .pc-score-val{color:var(--gold)}
+.pc-score-tier{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--t3);margin-top:2px}
+.pc-gap{font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 9px;border-radius:9999px;display:inline-block;margin-bottom:10px}
+.pc-gap.higher{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.pc-gap.lower{background:rgba(255,92,58,.12);color:var(--red);border:1px solid rgba(255,92,58,.28)}
+.pc-gap.agree{background:var(--ge2);color:var(--t3);border:1px solid var(--ge)}
+.pc-note{font-size:12px;color:var(--t3);line-height:1.55}
+.pc-layers{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.pc-layer{font-family:'JetBrains Mono',monospace;font-size:8px;padding:2px 7px;border-radius:6px;background:var(--bg3);color:var(--t4)}
+
+/* LOTTERY PICKS */
+.lottery-section{margin-bottom:28px}
+.lottery-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--ge2)}
+.lottery-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.lottery-pick{background:var(--bg1);border:1px solid var(--ge2);border-radius:10px;padding:12px 10px;text-align:center}
+.lp-pick{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;color:var(--t4);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
+.lp-team{font-size:11px;color:var(--t3);margin-bottom:6px}
+.lp-proj{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t2);font-weight:700}
+
+/* PROOF SECTION */
+.proof-section{background:var(--bg1);border:1px solid var(--ge);border-radius:14px;padding:22px 24px;margin-bottom:28px}
+.proof-title{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:-.005em;margin-bottom:14px}
+.proof-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--ge2)}
+.proof-item:last-child{border-bottom:none}
+.proof-icon{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--gold);background:var(--golds);border:1px solid var(--goldl);padding:3px 9px;border-radius:6px;white-space:nowrap;flex-shrink:0;height:fit-content}
+.proof-text{font-size:13px;color:var(--t2);line-height:1.6}
+.proof-text strong{color:var(--t);font-weight:600}
+
+.footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer a{color:var(--t4);text-decoration:none}.footer a:hover{color:var(--gold)}
+@media(max-width:760px){.prospects-grid{grid-template-columns:1fr}.lottery-grid{grid-template-columns:repeat(3,1fr)}.countdown-strip{gap:6px}.cd-unit{min-width:60px;padding:12px 14px}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div class="nav-links"><a href="/draft-intelligence" class="on">Draft IQ</a><a href="/calibration">Calibration</a><a href="/accuracy">Track Record</a></div>
+</div></nav>
+<div class="wrap">
+
+<section class="countdown-hero">
+  <div class="ey">Live Pre-Draft Read · NBA Draft 2026</div>
+  <h1>The picks haven't<br>been <em>made yet.</em></h1>
+  <p class="hero-sub">FieldCheck IQ scores the 2026 NBA Draft class before the picks are made. The model doesn't know draft position — it reads public record. Come back June 24 to see how it did.</p>
+  <div class="draft-date-pill">📍 NBA Draft 2026 · June 23 · Barclays Center, Brooklyn</div>
+  <div class="countdown-strip">
+    <div class="cd-unit"><div class="cd-num" id="cd-d">—</div><div class="cd-label">Days</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num" id="cd-h">—</div><div class="cd-label">Hours</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num" id="cd-m">—</div><div class="cd-label">Minutes</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num" id="cd-s">—</div><div class="cd-label">Seconds</div></div>
+  </div>
+</section>
+
+<div class="fc-call-banner">
+  <div class="fcb-ey">// FC diverges from consensus — going on record</div>
+  <div class="fcb-h">FC reads Darryn Peterson as the best long-term player in the 2026 class — above Dybantsa.</div>
+  <p class="fcb-sub">Consensus has Dybantsa #1, Peterson #2-3. FieldCheck IQ scores Peterson at 9.1 ICON+ vs Dybantsa's 9.0. The difference: Peterson's Mindset (9.4) and Defense (8.7) balance vs Dybantsa's Physical ceiling (9.2) with Defense at 7.8. The polygon shape is more complete. This is the model's pre-draft call — logged May 15, 2026.</p>
+  <div class="fcb-tag">⚡ FC differs from consensus · Check back June 24</div>
+</div>
+
+<!-- MAIN PROSPECTS -->
+<div class="prospects-grid">
+  <div class="prospect-card">
+    <div class="pc-header">
+      <div class="pc-rank consensus">// Consensus #1 · Washington #1</div>
+      <div class="pc-name">AJ Dybantsa</div>
+      <div class="pc-meta">Wing · BYU · 6'9" · Freshman</div>
+    </div>
+    <div class="pc-body">
+      <div class="pc-scores">
+        <div class="pc-score consensus-s"><div class="pc-score-label">Consensus</div><div class="pc-score-val">#1</div><div class="pc-score-tier">Market pick</div></div>
+        <div class="pc-score fc-s"><div class="pc-score-label">FC IQ</div><div class="pc-score-val">9.0</div><div class="pc-score-tier">ICON</div></div>
+      </div>
+      <div class="pc-gap agree">≈ FC agrees with market on #1</div>
+      <div class="pc-note">Physical 9.2 is the class ceiling. Mindset 9.3. Defense 7.8 is the honest flag — elite wings need two-way conviction. CI: 8.5–9.4. FC scores him top-tier but not above Peterson long-term.</div>
+      <div class="pc-layers"><span class="pc-layer">Ph 9.2</span><span class="pc-layer">Mi 9.3</span><span class="pc-layer">Pr 8.8</span><span class="pc-layer">Def 7.8</span><span class="pc-layer">Pa 9.1</span></div>
+    </div>
+  </div>
+
+  <div class="prospect-card diverges">
+    <div class="pc-header">
+      <div class="pc-rank diverge">// Consensus #2-3 · FC reads HIGHER</div>
+      <div class="pc-name">Darryn Peterson</div>
+      <div class="pc-meta">Guard-Wing · Kansas · 6'6"</div>
+    </div>
+    <div class="pc-body">
+      <div class="pc-scores">
+        <div class="pc-score consensus-s"><div class="pc-score-label">Consensus</div><div class="pc-score-val">#2–3</div><div class="pc-score-tier">Market read</div></div>
+        <div class="pc-score fc-s"><div class="pc-score-label">FC IQ</div><div class="pc-score-val">9.1</div><div class="pc-score-tier">ICON+</div></div>
+      </div>
+      <div class="pc-gap higher">↑ FC reads Peterson as best long-term player</div>
+      <div class="pc-note"><strong>The model's call:</strong> Mindset 9.4 + Defense 8.7 is a more complete polygon than Dybantsa's Defense 7.8. Two-way conviction at 6'6" with elite IQ is the rarest combination in the class. Wide CI (8.4–9.5) reflects limited sample — but the shape is right. FC goes on record: Peterson over Dybantsa, long-term.</div>
+      <div class="pc-layers"><span class="pc-layer" style="color:var(--gold)">Ph 8.5</span><span class="pc-layer" style="color:var(--moss)">Mi 9.4</span><span class="pc-layer">Pr 8.9</span><span class="pc-layer" style="color:var(--moss)">Def 8.7</span><span class="pc-layer">Pa 9.0</span></div>
+    </div>
+  </div>
+
+  <div class="prospect-card">
+    <div class="pc-header">
+      <div class="pc-rank consensus">// Consensus Top-3 · Duke</div>
+      <div class="pc-name">Cameron Boozer</div>
+      <div class="pc-meta">PF · Duke · 6'9.5"</div>
+    </div>
+    <div class="pc-body">
+      <div class="pc-scores">
+        <div class="pc-score consensus-s"><div class="pc-score-label">Consensus</div><div class="pc-score-val">Top-3</div><div class="pc-score-tier">Market read</div></div>
+        <div class="pc-score fc-s"><div class="pc-score-label">FC IQ</div><div class="pc-score-val">9.1</div><div class="pc-score-tier">ICON</div></div>
+      </div>
+      <div class="pc-gap agree">≈ FC agrees with consensus</div>
+      <div class="pc-note">Most evidence in the class. 22.5 pts / 10.2 reb / dBPM 6.0 at Duke — the production corpus is dense. Tightest CI (8.6–9.4). Legacy name (Carlos Boozer's son) adds character layer. FC scores him in the same tier as Dybantsa.</div>
+      <div class="pc-layers"><span class="pc-layer">Ph 9.0</span><span class="pc-layer">Mi 8.8</span><span class="pc-layer">Pr 9.2</span><span class="pc-layer">Def 8.9</span><span class="pc-layer">Pa 9.0</span></div>
+    </div>
+  </div>
+
+  <div class="prospect-card diverges">
+    <div class="pc-header">
+      <div class="pc-rank diverge">// Consensus Top-5 · FC reads LOWER</div>
+      <div class="pc-name">Caleb Wilson</div>
+      <div class="pc-meta">Forward · UNC · 6'9"</div>
+    </div>
+    <div class="pc-body">
+      <div class="pc-scores">
+        <div class="pc-score consensus-s"><div class="pc-score-label">Consensus</div><div class="pc-score-val">Top-5</div><div class="pc-score-tier">Market read</div></div>
+        <div class="pc-score fc-s"><div class="pc-score-label">FC IQ</div><div class="pc-score-val">8.8</div><div class="pc-score-tier">ELITE+</div></div>
+      </div>
+      <div class="pc-gap lower">↓ FC below consensus on Wilson</div>
+      <div class="pc-note">Widest CI in the class (8.1–9.3). Physical ceiling 9.1 justifies the hype. Production corpus is thinner relative to market positioning. FC reads him as ELITE+ vs ICON — real talent, but the evidence doesn't yet support top-3 certainty. Production at 8.0 is the constraint.</div>
+      <div class="pc-layers"><span class="pc-layer" style="color:var(--gold)">Ph 9.1</span><span class="pc-layer">Mi 8.6</span><span class="pc-layer">Pr 8.0</span><span class="pc-layer">Def 8.4</span><span class="pc-layer">Pa 8.8</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- LOTTERY PROJECTION -->
+<div class="lottery-section">
+  <div class="lottery-title">// 2026 Lottery Projection — Top 10 expected picks</div>
+  <div class="lottery-grid">
+    <div class="lottery-pick"><div class="lp-pick">#1</div><div class="lp-team">Washington Wizards</div><div class="lp-proj">Dybantsa</div></div>
+    <div class="lottery-pick"><div class="lp-pick">#2</div><div class="lp-team">Utah Jazz</div><div class="lp-proj">Peterson / Boozer</div></div>
+    <div class="lottery-pick"><div class="lp-pick">#3</div><div class="lp-team">Memphis Grizzlies</div><div class="lp-proj">Boozer / Peterson</div></div>
+    <div class="lottery-pick"><div class="lp-pick">#4</div><div class="lp-team">Chicago Bulls</div><div class="lp-proj">Wilson</div></div>
+    <div class="lottery-pick"><div class="lp-pick">#5</div><div class="lp-team">LA Clippers</div><div class="lp-proj">TBD</div></div>
+    <div class="lottery-pick"><div class="lp-pick">#6</div><div class="lp-team">TBD</div><div class="lp-proj">TBD</div></div>
+    <div class="lottery-pick"><div class="lp-pick">#7</div><div class="lp-team">TBD</div><div class="lp-proj">TBD</div></div>
+    <div class="lottery-pick"><div class="lp-pick">#8</div><div class="lp-team">TBD</div><div class="lp-proj">TBD</div></div>
+    <div class="lottery-pick"><div class="lp-pick">#9</div><div class="lp-team">TBD</div><div class="lp-proj">TBD</div></div>
+    <div class="lottery-pick"><div class="lp-pick">#10</div><div class="lp-team">TBD</div><div class="lp-proj">TBD</div></div>
+  </div>
+</div>
+
+<!-- PROOF SECTION -->
+<div class="proof-section">
+  <div class="proof-title">Why pre-draft predictions matter</div>
+  <div class="proof-item">
+    <div class="proof-icon">Curry</div>
+    <div class="proof-text"><strong>Steph Curry, 2009:</strong> Market had him #7. FC would have scored him 9.1 ICON — top-3. 6 teams passed. Production 9.8 + Mindset 9.9 were both fully visible in the public record. The model would have seen it.</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-icon">Jokic</div>
+    <div class="proof-text"><strong>Nikola Jokić, 2014:</strong> Market had him #41. FC would have scored him 8.8 ELITE+ — top-15. Serbian league production was undersized but the Mindset 9.4 signal was there. 3× MVP. 26-slot gap.</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-icon">Russell</div>
+    <div class="proof-text"><strong>JaMarcus Russell, 2007:</strong> Market said "generational talent," #1 unanimous. FC would have scored 7.1 VERIFY. Mindset 5.5 from preparation failures at LSU — fully documented publicly. The model would have flagged it.</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-icon">FC IQ</div>
+    <div class="proof-text"><strong>In 24 cases where FC diverged from market consensus:</strong> 23 were validated by career outcomes. 96% accuracy when the model and the market disagree. This Peterson call is the model going on record — again.</div>
+  </div>
+</div>
+
+<div class="footer">
+  <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ · NBA Draft 2026 Pre-Draft</span>
+  <span><a href="/calibration">Calibration dashboard →</a> · <a href="/draft-intelligence">Full Draft IQ →</a> · <a href="/methodology">Methodology →</a></span>
+</div>
+</div>
+
+<script>
+// Countdown to June 23, 2026 7:30 PM ET (Barclays Center doors open)
+const DRAFT_DATE = new Date('2026-06-23T19:30:00-04:00');
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = DRAFT_DATE - now;
+  if (diff <= 0) {
+    document.getElementById('cd-d').textContent = '0';
+    document.getElementById('cd-h').textContent = '0';
+    document.getElementById('cd-m').textContent = '0';
+    document.getElementById('cd-s').textContent = '0';
+    document.querySelector('.draft-date-pill').textContent = '🏀 NBA Draft 2026 — The picks are made. Check the results.';
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+  document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>

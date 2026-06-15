@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Methodology · FieldCheck IQ</title>
+<meta name="description" content="How FieldCheck IQ scores athletes. Five layers, eight data source categories, the reconciliation engine, and the constraints that make it trustworthy.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);--teal:#4EC9C0;}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:820px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.nav-links{display:flex;gap:4px;margin-left:auto}
+.nav-links a{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--t4);text-decoration:none;padding:5px 9px;border-radius:6px;transition:all .15s}
+.nav-links a:hover{color:var(--gold);background:var(--golds)}
+.hero{padding:52px 0 36px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(26px,4.5vw,48px);line-height:1.04;letter-spacing:-.014em;margin-bottom:12px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.lede{font-size:15px;color:var(--t2);line-height:1.72;margin-bottom:32px}
+.section{padding:36px 0;border-bottom:1px solid var(--ge)}
+.section:last-of-type{border-bottom:none}
+.sh{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+h2{font-family:'Anton',sans-serif;font-size:clamp(20px,3vw,32px);letter-spacing:-.008em;margin-bottom:12px;line-height:1.1}
+p{font-size:14px;color:var(--t2);line-height:1.72;margin-bottom:14px}
+p:last-child{margin-bottom:0}
+.layer-stack{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.layer{background:var(--bg1);border:1px solid var(--ge2);border-radius:12px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start}
+.layer.crown{border-color:var(--goldl);background:linear-gradient(135deg,var(--golds),var(--bg1))}
+.layer-num{font-family:'Anton',sans-serif;font-size:24px;color:var(--gold);line-height:1;flex-shrink:0;width:32px}
+.layer-body{}
+.layer-name{font-size:14px;font-weight:600;color:var(--t);margin-bottom:4px}
+.layer-desc{font-size:13px;color:var(--t3);line-height:1.58}
+.layer-weight{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--gold);margin-top:6px}
+.source-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.source-tag{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.5px;padding:3px 9px;border-radius:7px;border:1px solid var(--ge);color:var(--t3)}
+.source-tag.live{border-color:var(--mossd);color:var(--moss);background:var(--mossl)}
+.constraint-list{display:flex;flex-direction:column;gap:8px}
+.constraint{display:flex;gap:12px;padding:12px 14px;background:var(--bg1);border:1px solid var(--ge2);border-radius:10px}
+.constraint-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--gold);flex-shrink:0;width:20px}
+.constraint-text{font-size:13.5px;color:var(--t2);line-height:1.58}
+.constraint-text b{color:var(--t);font-weight:600}
+.calibration-stat{background:linear-gradient(135deg,var(--golds),rgba(16,15,18,.8));border:1px solid var(--goldl);border-radius:12px;padding:18px 22px;margin-bottom:16px}
+.cs-num{font-family:'Anton',sans-serif;font-size:42px;color:var(--gold);line-height:1;margin-bottom:4px}
+.cs-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.cs-note{font-size:13px;color:var(--t2);line-height:1.6}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.stat-cell{background:var(--bg1);border:1px solid var(--ge2);border-radius:10px;padding:13px 14px;text-align:center}
+.stat-n{font-family:'Anton',sans-serif;font-size:26px;color:var(--gold);line-height:1;margin-bottom:3px}
+.stat-l{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--t4)}
+.footer{margin-top:40px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);text-align:center}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div class="nav-links">
+    <a href="#layers">Layers</a><a href="#sources">Sources</a>
+    <a href="#calibration">Calibration</a><a href="#constraints">Constraints</a>
+  </div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Methodology · How The Model Works</div>
+  <h1>The honest read.<br><em>Explained.</em></h1>
+  <p class="lede">FieldCheck IQ scores athletes from the public record. Five layers. Eight data source categories. One reconciliation engine that resolves contradictions, weights sources, and assigns confidence. No payola. No star ratings. No coach preferences. Just the evidence, read carefully.</p>
+</section>
+
+<section class="section" id="layers">
+  <div class="sh">// The five layers</div>
+  <h2>What the model measures.</h2>
+  <p>Every athlete receives five independent scores. The composite is a weighted average — but the shape of the five scores is the real signal. Two athletes can share a composite with completely different profiles.</p>
+  <div class="layer-stack">
+    <div class="layer">
+      <div class="layer-num">1</div>
+      <div class="layer-body">
+        <div class="layer-name">Physical</div>
+        <div class="layer-desc">Measurables, athleticism, size relative to position, speed, explosiveness. Sport-specific: 40-yard dash progression for football, vertical and wingspan for basketball, approach speed and arm speed for volleyball, pitch velocity and bat speed for baseball. Physical is the starting point — it is never the whole story.</div>
+        <div class="layer-weight">Weight: 20% of composite · Can be corrected upward by other layers</div>
+      </div>
+    </div>
+    <div class="layer crown">
+      <div class="layer-num">2</div>
+      <div class="layer-body">
+        <div class="layer-name">Mindset ⬡ Crown layer</div>
+        <div class="layer-desc">The most predictive and least-scored layer in the industry. Derived from: documented competitive behavior, injury response patterns, coaching feedback signals, academic profile, team leadership mentions, pressure-performance correlation, transfer pathway choices, and the narrative arc of how an athlete responds to adversity. JaMarcus Russell's Mindset was 5.5 — visible in the public record before the draft. Steph Curry's was 9.8. The market scored neither.</div>
+        <div class="layer-weight">Weight: 25% of composite · The #1 predictor of professional success in the calibration corpus</div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">3</div>
+      <div class="layer-body">
+        <div class="layer-name">Production</div>
+        <div class="layer-desc">Output against competition, adjusted for context. Stat lines, tournament results, awards, and performance trajectory — but always weighted by who it was against. A 40-point game against elite competition scores differently than 40 against a weak schedule. The opportunity-context adjustment corrects for rural school, mid-major conference, and club access gaps systematically.</div>
+        <div class="layer-weight">Weight: 25% of composite · Context-adjusted always</div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">4</div>
+      <div class="layer-body">
+        <div class="layer-name">Defense</div>
+        <div class="layer-desc">The most overlooked layer in recruiting. Derived from defensive stats where available, positioning mentions, coach descriptions of defensive IQ, and the willingness to guard elite opponents. Defensive specialists and two-way players receive a significant premium. The model specifically rewards athletes who embrace roles that don't generate highlight clips.</div>
+        <div class="layer-weight">Weight: 15% of composite · Significantly underweighted by the market</div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">5</div>
+      <div class="layer-body">
+        <div class="layer-name">Pathway</div>
+        <div class="layer-desc">Where this athlete is going. Program fit, development environment, coach track record, pro pipeline probability, LOVB/NFL/NBA conversion rate at this composite tier, international opportunity signals, and the trajectory of athletes with similar profiles. Pathway is the forward-looking layer — it incorporates everything the other four layers predict about the ceiling.</div>
+        <div class="layer-weight">Weight: 15% of composite · The pro probability engine</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sources">
+  <div class="sh">// Data sources</div>
+  <h2>Where the evidence comes from.</h2>
+  <p>FieldCheck reads the public record — not proprietary scouting networks, not paid access, not coach relationships. Every source is verifiable. Every claim is traceable.</p>
+  <div class="source-row">
+    <span class="source-tag live">Sports Reference</span>
+    <span class="source-tag live">247Sports composite</span>
+    <span class="source-tag live">USAV national team</span>
+    <span class="source-tag live">PVF Pro League</span>
+    <span class="source-tag live">PrepVolleyball</span>
+    <span class="source-tag live">LOVB rosters</span>
+    <span class="source-tag live">MaxPreps</span>
+    <span class="source-tag live">School rosters</span>
+    <span class="source-tag live">Open web + news</span>
+  </div>
+  <div class="source-row">
+    <span class="source-tag">PrepDig (volleyball)</span>
+    <span class="source-tag">Perfect Game (baseball)</span>
+    <span class="source-tag">On3 transfer portal</span>
+    <span class="source-tag">EYBL / UA Rise</span>
+    <span class="source-tag">BallerTV (coming)</span>
+    <span class="source-tag">YouTube film (Phase 5)</span>
+  </div>
+  <p>The model explicitly flags when information is thin, when sources conflict, and when the Confidence Interval is wide. A wide CI is honest — it means the public record is incomplete, not that the athlete is unscoreable.</p>
+</section>
+
+<section class="section" id="calibration">
+  <div class="sh">// Calibration</div>
+  <h2>The model measures its own errors.</h2>
+  <div class="stat-row">
+    <div class="stat-cell"><div class="stat-n">120+</div><div class="stat-l">Historical cases</div></div>
+    <div class="stat-cell"><div class="stat-n">88%</div><div class="stat-l">Overall accuracy</div></div>
+    <div class="stat-cell"><div class="stat-n">96%</div><div class="stat-l">Divergence accuracy</div></div>
+  </div>
+  <div class="calibration-stat">
+    <div class="cs-label">// The key insight</div>
+    <div class="cs-num">96%</div>
+    <div class="cs-note">When FieldCheck IQ disagrees with consensus by more than 0.5 composite points, the model has been right 96% of the time. The divergence cases — Curry, Jokić, Thomas, Allen, Russell — are where the model's edge is most visible. Overall accuracy is 88%. The divergence accuracy is 96%. This is where the intelligence layer matters.</div>
+  </div>
+  <p>The calibration corpus includes NFL, NBA, WNBA, MLB, and women's volleyball historical cases. Every case: player, predicted composite, actual outcome, documented variance. The corpus is public — you can read every case in the calibration section.</p>
+</section>
+
+<section class="section" id="constraints">
+  <div class="sh">// The six constraints</div>
+  <h2>What the model refuses to do.</h2>
+  <p>The constraints are the moat. Any ranking system can score athletes. Not every system is willing to publish what it won't do.</p>
+  <div class="constraint-list">
+    <div class="constraint"><div class="constraint-num">1</div><div class="constraint-text"><b>No payola.</b> Programs, coaches, agents, and players cannot pay to influence a FieldCheck IQ score. Scores are derived from the public record alone. This constraint is structural, not aspirational.</div></div>
+    <div class="constraint"><div class="constraint-num">2</div><div class="constraint-text"><b>No coach preferences.</b> The model does not weight a coach's opinion of their own player. Coach quotes are evidence of character signals — not performance evidence.</div></div>
+    <div class="constraint"><div class="constraint-num">3</div><div class="constraint-text"><b>No ranking inheritance.</b> A player ranked #1 by 247Sports does not start with a higher FC score. The model reads the evidence, not the existing ranking.</div></div>
+    <div class="constraint"><div class="constraint-num">4</div><div class="constraint-text"><b>No club-access penalty.</b> An athlete without elite club access doesn't receive a lower score for it. The opportunity-context adjustment corrects for access gaps — it doesn't penalize athletes for markets they weren't born into.</div></div>
+    <div class="constraint"><div class="constraint-num">5</div><div class="constraint-text"><b>Mandatory confidence intervals.</b> Every score publishes a CI. A score of 8.2 ± 0.8 is different from 8.2 ± 0.1. The width of the interval is itself a signal about how much public record evidence exists.</div></div>
+    <div class="constraint"><div class="constraint-num">6</div><div class="constraint-text"><b>Contradiction transparency.</b> When sources conflict, the model surfaces the conflict — it doesn't suppress it. A player whose stats contradict their reputation gets both the stats and the reputation, with confidence weights assigned to each.</div></div>
+  </div>
+</section>
+
+<div class="footer">© 2026 ThinkDifferent Holdings · FieldCheck IQ · Methodology · v2.0 · May 2026</div>
+</div>
+</body>
+</html>

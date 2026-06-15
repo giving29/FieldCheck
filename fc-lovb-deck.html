@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Deck · FieldCheck LOVB · Executive show-and-tell</title>
+<meta name="description" content="A 14-slide compact narrative of the FieldCheck-LOVB platform. Designed for executive show-and-tell.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3897_LOVB_DECK">
+<meta property="og:title" content="The Deck · FieldCheck LOVB">
+<meta property="og:description" content="14-slide narrative of FieldCheck-LOVB. Designed for executive show-and-tell.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;height:100vh;overflow:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+
+.deck{position:relative;z-index:1;width:100%;height:100vh;overflow:hidden}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:80px 96px;opacity:0;pointer-events:none;transition:opacity 0.4s cubic-bezier(.2,.7,.2,1)}
+.slide.active{opacity:1;pointer-events:auto}
+@media(max-width:780px){.slide{padding:48px 32px}}
+
+.slide-number{position:absolute;top:36px;left:48px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--text-3);text-transform:uppercase;font-weight:700;z-index:5}
+.slide-number .of{color:var(--text-4);margin-left:6px}
+.slide-meta{position:absolute;top:36px;right:48px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;font-weight:700;z-index:5}
+
+.slide-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:24px;display:flex;align-items:center;gap:14px}
+.slide-eyebrow::before{content:'';width:40px;height:1px;background:var(--gold)}
+
+h1.slide-h{font-family:'Anton',sans-serif;font-size:clamp(56px,9vw,128px);line-height:0.92;letter-spacing:-0.024em;margin-bottom:32px;max-width:1180px}
+h1.slide-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+
+h2.slide-h{font-family:'Anton',sans-serif;font-size:clamp(40px,6.5vw,84px);line-height:0.96;letter-spacing:-0.02em;margin-bottom:28px;max-width:1180px}
+h2.slide-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+
+.slide-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(22px,2.8vw,32px);line-height:1.4;color:var(--text-2);max-width:980px}
+.slide-deck b{color:var(--text);font-family:'Anton',sans-serif;font-style:normal;font-weight:normal;font-size:1.05em}
+
+.slide-body{font-family:'Crimson Pro',serif;font-size:clamp(17px,1.8vw,21px);line-height:1.65;color:var(--text-2);max-width:880px;margin-top:24px}
+.slide-body p{margin-bottom:14px}
+.slide-body b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:1.05em}
+.slide-body em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+
+/* TITLE slide */
+.slide.title{align-items:flex-start;justify-content:center}
+.slide.title .brand{font-family:'Anton',sans-serif;font-size:24px;letter-spacing:0.06em;color:var(--text);margin-bottom:32px}
+.slide.title .brand span{color:var(--gold)}
+.slide.title h1{font-size:clamp(72px,12vw,180px);line-height:0.88;letter-spacing:-0.028em;margin-bottom:20px}
+.slide.title .subtitle{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(24px,3vw,36px);line-height:1.4;color:var(--text-2);max-width:920px;margin-bottom:32px}
+.slide.title .meta-line{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:2.4px;color:var(--gold);text-transform:uppercase;font-weight:700;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.slide.title .meta-line .sep{color:var(--text-3)}
+
+/* STATS slide */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:36px 80px;margin-top:32px;max-width:1080px}
+@media(max-width:780px){.stats-grid{grid-template-columns:1fr;gap:24px}}
+.stat-block{display:flex;flex-direction:column;gap:6px}
+.stat-num{font-family:'Anton',sans-serif;font-size:clamp(56px,7vw,88px);line-height:1;color:var(--gold);letter-spacing:-0.022em}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--text-3);text-transform:uppercase;font-weight:700}
+.stat-context{font-family:'Crimson Pro',serif;font-style:italic;font-size:15px;color:var(--text-2);line-height:1.5;margin-top:6px}
+
+/* PILLAR slide */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px;max-width:1180px}
+@media(max-width:780px){.pillars{grid-template-columns:1fr;gap:14px}}
+.pillar{padding:26px 28px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:5px}
+.pillar-num{font-family:'Anton',sans-serif;font-size:46px;line-height:0.8;color:var(--gold);opacity:0.45;margin-bottom:4px;letter-spacing:-0.018em}
+.pillar-name{font-family:'Anton',sans-serif;font-size:24px;line-height:1.05;letter-spacing:-0.012em;color:var(--text);margin-bottom:8px}
+.pillar-name .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.pillar-body{font-family:'Crimson Pro',serif;font-size:15px;line-height:1.6;color:var(--text-2)}
+.pillar-body b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:15.5px}
+
+/* PERSONAS slide */
+.personas{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:32px;max-width:1180px}
+@media(max-width:880px){.personas{grid-template-columns:repeat(2,1fr)}}
+.persona{padding:22px;background:rgba(20,17,12,0.45);border:1px solid var(--line);border-radius:5px}
+.persona-glyph{font-family:'Instrument Serif',serif;font-style:italic;font-size:32px;color:var(--gold);line-height:1;margin-bottom:6px}
+.persona-name{font-family:'Anton',sans-serif;font-size:22px;line-height:1.05;letter-spacing:-0.012em;color:var(--text);margin-bottom:6px}
+.persona-body{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2)}
+.persona-body em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+
+/* PRINCIPLES list */
+.principles-list{margin-top:24px;max-width:980px;display:grid;gap:14px}
+.principle-line{display:grid;grid-template-columns:60px 1fr;gap:24px;padding:14px 0;border-bottom:1px dashed var(--line-2);align-items:baseline}
+.principle-line:last-child{border-bottom:none}
+.principle-line .pnum{font-family:'Anton',sans-serif;font-size:42px;color:var(--gold);line-height:1;letter-spacing:-0.018em}
+.principle-line .ptext{font-family:'Crimson Pro',serif;font-size:18px;line-height:1.5;color:var(--text-2)}
+.principle-line .ptext b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:19px}
+
+/* SURFACE COUNT slide */
+.surface-tiers{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px;max-width:1180px}
+@media(max-width:780px){.surface-tiers{grid-template-columns:repeat(2,1fr)}}
+.surface-tier{padding:22px 24px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:5px 5px 4px 4px}
+.surface-tier-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.surface-tier-num{font-family:'Anton',sans-serif;font-size:64px;line-height:0.9;color:var(--text);letter-spacing:-0.022em;margin-bottom:4px}
+.surface-tier-name{font-family:'Anton',sans-serif;font-size:16px;line-height:1.1;color:var(--text);letter-spacing:-0.005em}
+.surface-tier-body{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-2);line-height:1.45;margin-top:6px}
+
+/* CLOSING slide */
+.slide.closing{align-items:flex-start;justify-content:center}
+.slide.closing h2{font-size:clamp(56px,8vw,112px);line-height:0.92;letter-spacing:-0.022em}
+.slide.closing .url-banner{display:inline-block;margin-top:32px;padding:18px 28px;background:linear-gradient(180deg,rgba(255,201,74,0.06),rgba(20,17,12,0.4));border:1px solid var(--gold-edge);border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:18px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase}
+
+/* NAVIGATION CONTROLS */
+.nav-controls{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:18px;padding:12px 20px;background:rgba(10,9,8,0.85);border:1px solid var(--gold-edge);border-radius:32px;backdrop-filter:blur(8px);z-index:100;box-shadow:0 4px 24px rgba(0,0,0,0.5)}
+.nav-btn{padding:8px 14px;border:none;background:transparent;color:var(--text-3);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;font-weight:700;cursor:pointer;border-radius:4px;transition:all .2s}
+.nav-btn:hover{color:var(--gold);background:rgba(255,201,74,0.06)}
+.nav-btn:disabled{opacity:0.3;cursor:default}
+.nav-indicator{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1.8px;color:var(--text);font-weight:700;min-width:60px;text-align:center}
+.nav-indicator .of{color:var(--text-3)}
+
+.nav-dots{position:fixed;top:16px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:100;padding:8px 14px;background:rgba(10,9,8,0.6);border-radius:18px;backdrop-filter:blur(4px)}
+.nav-dot{width:8px;height:8px;background:var(--text-4);border-radius:50%;cursor:pointer;transition:all .2s}
+.nav-dot:hover{background:var(--text-2)}
+.nav-dot.active{background:var(--gold);box-shadow:0 0 6px var(--gold-glow);width:22px;border-radius:4px}
+
+/* TEXT spacing for very large screens */
+@media(min-width:1600px){.slide{padding:120px 160px}}
+
+.hint{position:fixed;bottom:80px;right:32px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.6px;color:var(--text-3);text-transform:uppercase;font-weight:700;z-index:50;opacity:0.7;animation:fade-in 1s 2s both}
+@keyframes fade-in{from{opacity:0}to{opacity:0.7}}
+</style>
+</head>
+<body>
+
+<div class="nav-dots" id="navDots"></div>
+
+<div class="deck" id="deck">
+  <!-- SLIDE 1 · TITLE -->
+  <section class="slide title active" data-slide="1">
+    <div class="slide-number">01<span class="of"> / 14</span></div>
+    <div class="slide-meta">// May 2026 · Executive Brief</div>
+    <div class="brand">Field<span>Check</span> · LOVB</div>
+    <h1><span class="italic">A capability</span><br>platform.</h1>
+    <p class="subtitle">An independent ecosystem layer that makes every player, coach, scout, club, and parent who interacts with LOVB <em>more capable</em>. By making the data layer they navigate clearer, more honest, and free of commercial-incentive distortion.</p>
+    <div class="meta-line">
+      <span>Independent</span><span class="sep">·</span><span>Free</span><span class="sep">·</span><span>Source-grounded</span><span class="sep">·</span><span>CC BY-SA 4.0</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 · WHY IT EXISTS -->
+  <section class="slide" data-slide="2">
+    <div class="slide-number">02<span class="of"> / 14</span></div>
+    <div class="slide-meta">// Why we built this</div>
+    <div class="slide-eyebrow">The problem</div>
+    <h2 class="slide-h">Volleyball doesn't have a trust problem. <span class="italic">It has a density problem.</span></h2>
+    <p class="slide-deck">Other XCheck verticals — rental, employment, healthcare — fight information asymmetry through skepticism. Volleyball doesn't need skepticism. <b>It needs articulation.</b> Pathways are opaque. The pro league is young. Founding-athlete stories are dispersed across press releases. 90 junior clubs sprawl without a central map. <em>We built the map.</em></p>
+  </section>
+
+  <!-- SLIDE 3 · POSITIONING -->
+  <section class="slide" data-slide="3">
+    <div class="slide-number">03<span class="of"> / 14</span></div>
+    <div class="slide-meta">// Strategic positioning</div>
+    <div class="slide-eyebrow">The positioning</div>
+    <h2 class="slide-h">Not an audit. <span class="italic">A capability multiplier.</span></h2>
+    <p class="slide-deck"><b>FieldCheck-LOVB makes everyone in the LOVB ecosystem more capable</b> — by surfacing data they would otherwise have to assemble themselves. Players make better pathway decisions. Coaches benchmark realistically. Scouts find prospects faster. Broadcasters write better pre-game packages. Parents ask sharper questions. <em>LOVB itself becomes stronger by having an articulate independent ecosystem around it.</em></p>
+  </section>
+
+  <!-- SLIDE 4 · THE SCALE -->
+  <section class="slide" data-slide="4">
+    <div class="slide-number">04<span class="of"> / 14</span></div>
+    <div class="slide-meta">// What's already built</div>
+    <div class="slide-eyebrow">The scale</div>
+    <h2 class="slide-h">Built and shipped. <span class="italic">Today.</span></h2>
+    <div class="stats-grid">
+      <div class="stat-block">
+        <div class="stat-num">37</div>
+        <div class="stat-label">// Surfaces shipped</div>
+        <div class="stat-context">From atlas to API docs to per-market dossiers. All live, all source-grounded.</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">47</div>
+        <div class="stat-label">// Routes wired</div>
+        <div class="stat-context">Every surface accessible at a clean public URL.</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">6+3</div>
+        <div class="stat-label">// LOVB Pro markets</div>
+        <div class="stat-context">Six 2025 founding markets + three 2027 expansion cities, all dossier-deep.</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">90</div>
+        <div class="stat-label">// Junior clubs · pipeline</div>
+        <div class="stat-context">The complete LOVB junior network, indexed.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 · ARCHITECTURE -->
+  <section class="slide" data-slide="5">
+    <div class="slide-number">05<span class="of"> / 14</span></div>
+    <div class="slide-meta">// Platform architecture</div>
+    <div class="slide-eyebrow">The architecture</div>
+    <h2 class="slide-h">Five tiers, <span class="italic">one identity.</span></h2>
+    <div class="surface-tiers">
+      <div class="surface-tier">
+        <div class="surface-tier-eyebrow">// Tier 1</div>
+        <div class="surface-tier-num">6</div>
+        <div class="surface-tier-name">Primary</div>
+        <div class="surface-tier-body">atlas · pathway · athletes · markets · clubs · methodology</div>
+      </div>
+      <div class="surface-tier">
+        <div class="surface-tier-eyebrow">// Tier 2</div>
+        <div class="surface-tier-num">6</div>
+        <div class="surface-tier-name">Deeper</div>
+        <div class="surface-tier-body">icons · season · playoffs · leaders · programs · expansion</div>
+      </div>
+      <div class="surface-tier">
+        <div class="surface-tier-eyebrow">// Tier 3</div>
+        <div class="surface-tier-num">4</div>
+        <div class="surface-tier-name">Platform</div>
+        <div class="surface-tier-body">for-lovb · embed · sources · changelog</div>
+      </div>
+      <div class="surface-tier">
+        <div class="surface-tier-eyebrow">// Tier 4</div>
+        <div class="surface-tier-num">11</div>
+        <div class="surface-tier-name">Interactive</div>
+        <div class="surface-tier-body">compare · news · alumni · foundation · glossary · timeline · parents · coaches · sports · (more)</div>
+      </div>
+      <div class="surface-tier">
+        <div class="surface-tier-eyebrow">// Tier 5</div>
+        <div class="surface-tier-num">7</div>
+        <div class="surface-tier-name">Meta</div>
+        <div class="surface-tier-body">awards · records · draft · voices · journalism · api · about</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 · THREE PILLARS -->
+  <section class="slide" data-slide="6">
+    <div class="slide-number">06<span class="of"> / 14</span></div>
+    <div class="slide-meta">// Three pillars</div>
+    <div class="slide-eyebrow">The three pillars</div>
+    <h2 class="slide-h">What we <span class="italic">actually do.</span></h2>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-num">1</div>
+        <div class="pillar-name">Map the <span class="italic">ecosystem.</span></div>
+        <div class="pillar-body">The atlas. 6 Pro markets, 90 junior clubs, 14 Icons, the Founding Ten, three 2027 expansion cities. <b>One single source of truth</b>, all CC-licensed and source-linked.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">2</div>
+        <div class="pillar-name">Calibrate the <span class="italic">pathway.</span></div>
+        <div class="pillar-body">The Pathway tool. <b>60-second junior-to-pro probability calibration</b> across D1, D2, D3, NAIA, juco, pro. Confidence intervals shown, nothing leaves the browser.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">3</div>
+        <div class="pillar-name">Surface the <span class="italic">narrative.</span></div>
+        <div class="pillar-body">News, voices, journalism, awards, records. <b>The articulate independent voice the ecosystem deserves</b>. Daily-relevant content layered on permanent reference.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7 · PERSONAS -->
+  <section class="slide" data-slide="7">
+    <div class="slide-number">07<span class="of"> / 14</span></div>
+    <div class="slide-meta">// Who we serve</div>
+    <div class="slide-eyebrow">The personas</div>
+    <h2 class="slide-h">Four audiences, <span class="italic">one platform.</span></h2>
+    <div class="personas">
+      <div class="persona">
+        <div class="persona-glyph">▷</div>
+        <div class="persona-name">The Player</div>
+        <div class="persona-body">Wants honest <em>college-pathway probability</em>. Wants to know which clubs fit. Wants alumni outcomes, not marketing.</div>
+      </div>
+      <div class="persona">
+        <div class="persona-glyph">⊙</div>
+        <div class="persona-name">The Coach</div>
+        <div class="persona-body">Wants <em>benchmark data</em> against peer clubs. Wants the coaching encyclopedia. Wants playbook references.</div>
+      </div>
+      <div class="persona">
+        <div class="persona-glyph">⊛</div>
+        <div class="persona-name">The Scout</div>
+        <div class="persona-body">Wants pro-pipeline data, <em>per-market dossiers</em>, athlete profiles. Free, sourced, structured.</div>
+      </div>
+      <div class="persona">
+        <div class="persona-glyph">⊕</div>
+        <div class="persona-name">The Parent</div>
+        <div class="persona-body">Wants <em>questions to ask</em>. Wants neutral pathway framing. Wants to keep their daughter's option open longest.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8 · GUARDRAILS -->
+  <section class="slide" data-slide="8">
+    <div class="slide-number">08<span class="of"> / 14</span></div>
+    <div class="slide-meta">// Independence guardrails</div>
+    <div class="slide-eyebrow">The seven principles</div>
+    <h2 class="slide-h">Independence, <span class="italic">in writing.</span></h2>
+    <div class="principles-list">
+      <div class="principle-line"><div class="pnum">1</div><div class="ptext"><b>Public-record sourcing.</b> Every claim cites a LOVB page, named publication, or registry.</div></div>
+      <div class="principle-line"><div class="pnum">2</div><div class="ptext"><b>CI on every score.</b> Confidence intervals always visible. Honest uncertainty over inflated confidence.</div></div>
+      <div class="principle-line"><div class="pnum">3</div><div class="ptext"><b>No school money.</b> No college, club, or HS pays to be featured. We don't rank.</div></div>
+      <div class="principle-line"><div class="pnum">4</div><div class="ptext"><b>No affiliate fees.</b> No commercial relationship with services, agents, or coaching certs.</div></div>
+      <div class="principle-line"><div class="pnum">5</div><div class="ptext"><b>Walk-away default.</b> Every recommendation supports declining as a valid choice.</div></div>
+      <div class="principle-line"><div class="pnum">6</div><div class="ptext"><b>LOVB language stays LOVB's.</b> "Founding Athlete," "Whole Athlete," "Coach of Coaches" — we cite, don't claim.</div></div>
+      <div class="principle-line"><div class="pnum">7</div><div class="ptext"><b>Athletes own their profiles.</b> Any athlete can claim and edit via verified flow.</div></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 9 · INDEPENDENCE STRUCTURE -->
+  <section class="slide" data-slide="9">
+    <div class="slide-number">09<span class="of"> / 14</span></div>
+    <div class="slide-meta">// LOVB relationship</div>
+    <div class="slide-eyebrow">The relationship with LOVB</div>
+    <h2 class="slide-h">Independent in money. <span class="italic">Aligned in mission.</span></h2>
+    <p class="slide-deck"><b>FieldCheck-LOVB is not commercially affiliated with League One Volleyball.</b> No sponsorship, no partnership, no advertising relationship, no content licensing. We're not a child of LOVB.</p>
+    <p class="slide-deck" style="margin-top:18px"><em>We are aligned.</em> LOVB's success matters because the broader U.S. women's volleyball ecosystem needs the league it built. If LOVB gets stronger because the data ecosystem around it gets stronger, that's <b>a good outcome — for them, for us, for everyone</b>. We are cousins, not children.</p>
+  </section>
+
+  <!-- SLIDE 10 · MULTI-SPORT -->
+  <section class="slide" data-slide="10">
+    <div class="slide-number">10<span class="of"> / 14</span></div>
+    <div class="slide-meta">// Multi-sport architecture</div>
+    <div class="slide-eyebrow">Beyond volleyball</div>
+    <h2 class="slide-h">Multi-sport <span class="italic">from day one.</span></h2>
+    <p class="slide-deck">Volleyball is the proof. <b>Football, basketball, soccer scaffold ahead.</b> Each sport's "what we will build" surface lives now, with position taxonomy, anchor pipelines, archetype skeleton, ship trajectory. <em>The platform proves replicable before it claims it is.</em></p>
+    <div class="slide-body" style="margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1080px">
+      <div style="padding:18px 20px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:4px"><b>Volleyball</b> · Live ▸ 37 surfaces. Multi-tier hub.</div>
+      <div style="padding:18px 20px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:4px"><b>Football</b> · Scaffold ▸ Position taxonomy + NIL framework + 2027 ship target.</div>
+      <div style="padding:18px 20px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:4px"><b>Basketball + Soccer</b> · Queued · Honest about it.</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 11 · DEFENSIBILITY -->
+  <section class="slide" data-slide="11">
+    <div class="slide-number">11<span class="of"> / 14</span></div>
+    <div class="slide-meta">// Why this is defensible</div>
+    <div class="slide-eyebrow">Why this is defensible</div>
+    <h2 class="slide-h">Execution speed × <span class="italic">independence discipline.</span></h2>
+    <p class="slide-deck">The platform's moat is the combination of (1) <b>AI-tooled execution speed</b> — 37 surfaces shipped in eight weeks — and (2) <b>operational independence discipline</b> — seven hard guardrails, public source manifest, no commercial dependencies. <em>Neither alone is the moat. Together, they are.</em></p>
+    <p class="slide-body" style="margin-top:18px">An incumbent recruiting service can't replicate this because their <b>commercial model demands the very dependencies we forbid</b>. An AI-tooled new entrant can't replicate this because they would have to <b>spend 18 months building the source-manifest discipline that already exists here</b>. The moat is the intersection.</p>
+  </section>
+
+  <!-- SLIDE 12 · ROADMAP -->
+  <section class="slide" data-slide="12">
+    <div class="slide-number">12<span class="of"> / 14</span></div>
+    <div class="slide-meta">// What's next</div>
+    <div class="slide-eyebrow">The roadmap</div>
+    <h2 class="slide-h">Where we're <span class="italic">going.</span></h2>
+    <div class="slide-body" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px;max-width:1180px">
+      <div style="padding:22px 24px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:5px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:10px">// Q2 2026</div>
+        <p style="font-family:'Crimson Pro',serif;font-size:15.5px;line-height:1.6;color:var(--text-2)"><b>Athletes-page expansion</b> from 24 to 84+ full LOVB Pro roster profiles. <b>Real-time playoffs surface</b> for Long Beach championship weekend. <b>Embed-kit live</b> with widget partners.</p>
+      </div>
+      <div style="padding:22px 24px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:5px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:10px">// Q3-Q4 2026</div>
+        <p style="font-family:'Crimson Pro',serif;font-size:15.5px;line-height:1.6;color:var(--text-2)"><b>Football scaffold becomes live surface</b>. NIL framework deepens. <b>2027 expansion markets (LA · SF · DEN)</b> get pre-launch dossiers. <b>Sources audit + claim-flow at scale</b>.</p>
+      </div>
+      <div style="padding:22px 24px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:5px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:10px">// 2027</div>
+        <p style="font-family:'Crimson Pro',serif;font-size:15.5px;line-height:1.6;color:var(--text-2)"><b>Basketball goes live</b>. Volleyball deepens into per-athlete-claim-managed profiles. <b>Broadcaster-partner integrations</b> for pre-game data packages. <b>First annual State of LOVB Ecosystem report.</b></p>
+      </div>
+      <div style="padding:22px 24px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:5px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:10px">// 2028+</div>
+        <p style="font-family:'Crimson Pro',serif;font-size:15.5px;line-height:1.6;color:var(--text-2)">Soccer evaluated against trigger conditions. <b>Trust-layer model extends to allied X-Check verticals</b>. Platform proven replicable; <b>multi-sport-platform thesis validated.</b></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 13 · THE ASK -->
+  <section class="slide" data-slide="13">
+    <div class="slide-number">13<span class="of"> / 14</span></div>
+    <div class="slide-meta">// What we're asking</div>
+    <div class="slide-eyebrow">The ask</div>
+    <h2 class="slide-h">What we <span class="italic">need next.</span></h2>
+    <p class="slide-deck">We've shipped the platform. <b>The next phase is partner depth.</b> Three asks we're open to discussing.</p>
+    <div class="slide-body" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:24px;max-width:1180px">
+      <div style="padding:22px 24px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:5px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:8px">// Ask 1</div>
+        <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.05;color:var(--text);margin-bottom:8px;letter-spacing:-0.01em">Embed partner</div>
+        <p style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.6;color:var(--text-2)"><b>One broadcaster, journalism partner, or club network</b> willing to embed widgets in their pre-game/feature/site flow. Validates the embed thesis.</p>
+      </div>
+      <div style="padding:22px 24px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:5px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:8px">// Ask 2</div>
+        <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.05;color:var(--text);margin-bottom:8px;letter-spacing:-0.01em">Advisor depth</div>
+        <p style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.6;color:var(--text-2)"><b>Volleyball-industry advisor</b> who knows the LOVB world from inside and is willing to be a sounding board. Equity-only, no cash ask.</p>
+      </div>
+      <div style="padding:22px 24px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:5px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:8px">// Ask 3</div>
+        <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.05;color:var(--text);margin-bottom:8px;letter-spacing:-0.01em">Reach amplification</div>
+        <p style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.6;color:var(--text-2)"><b>Introductions to LOVB-relevant audiences</b> — journalist circles, club director networks, broadcaster-prep teams. Awareness, not endorsement.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 14 · CLOSING -->
+  <section class="slide closing" data-slide="14">
+    <div class="slide-number">14<span class="of"> / 14</span></div>
+    <div class="slide-meta">// Independent · Free · Source-grounded</div>
+    <div class="slide-eyebrow">The platform behind the platform</div>
+    <h2>A capability layer. <br><span class="italic">A second-order moat.</span></h2>
+    <p class="slide-deck" style="margin-top:24px">FieldCheck-LOVB exists because the volleyball ecosystem deserves an articulate independent voice. <b>We make every player, coach, scout, club, parent more capable.</b> By doing so, we make LOVB stronger by existing. <em>That's the build. That's the entire build.</em></p>
+    <a href="https://fieldcheck-app.netlify.app/lovb" class="url-banner">fieldcheck-app.netlify.app/lovb</a>
+  </section>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" id="prev" disabled>← Prev</button>
+  <div class="nav-indicator"><span id="current">1</span><span class="of">/14</span></div>
+  <button class="nav-btn" id="next">Next →</button>
+</div>
+
+<div class="hint">// ←→ keys · space · click dots</div>
+
+<script>
+let currentSlide = 1;
+const totalSlides = 14;
+const navDots = document.getElementById('navDots');
+
+// Build dots
+for(let i = 1; i <= totalSlides; i++){
+  const dot = document.createElement('div');
+  dot.className = 'nav-dot' + (i === 1 ? ' active' : '');
+  dot.dataset.slide = i;
+  dot.title = 'Slide ' + i;
+  navDots.appendChild(dot);
+}
+
+function go(n){
+  if(n < 1 || n > totalSlides) return;
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
+  document.querySelector(`.slide[data-slide="${n}"]`).classList.add('active');
+  document.querySelector(`.nav-dot[data-slide="${n}"]`).classList.add('active');
+  document.getElementById('current').textContent = n;
+  document.getElementById('prev').disabled = (n === 1);
+  document.getElementById('next').disabled = (n === totalSlides);
+  currentSlide = n;
+}
+
+document.getElementById('next').addEventListener('click', () => go(currentSlide + 1));
+document.getElementById('prev').addEventListener('click', () => go(currentSlide - 1));
+document.querySelectorAll('.nav-dot').forEach(d => d.addEventListener('click', () => go(parseInt(d.dataset.slide))));
+
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); go(currentSlide + 1); }
+  else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); go(currentSlide - 1); }
+  else if(e.key === 'Home'){ go(1); }
+  else if(e.key === 'End'){ go(totalSlides); }
+  else if(/^[0-9]$/.test(e.key)){
+    const n = parseInt(e.key);
+    if(n === 0) go(10);
+    else go(n);
+  }
+});
+
+// Hide hint after 8 seconds
+setTimeout(() => { const h = document.querySelector('.hint'); if(h) h.style.opacity = '0'; }, 8000);
+</script>
+</body>
+</html>
