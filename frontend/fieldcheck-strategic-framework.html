@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FieldCheck · Strategic Framework 2026</title>
+<meta name="theme-color" content="#0A0908">
+<meta name="description" content="The strategic framework for FieldCheck — the trust layer where retail loses to information asymmetry. Published May 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0908;
+    --bg-2: #14110c;
+    --text: #fbf6ea;
+    --text-2: rgba(251,246,234,0.78);
+    --text-3: rgba(212,200,173,0.65);
+    --text-4: rgba(212,200,173,0.42);
+    --gold: #ffc94a;
+    --gold-dim: rgba(255,201,74,0.55);
+    --rule: rgba(255,201,74,0.16);
+    --rule-faint: rgba(255,201,74,0.08);
+    --accent-r: #ff5c3a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 19px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--gold); color: var(--bg); }
+
+  /* Subtle grain overlay for editorial texture */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 100;
+    mix-blend-mode: overlay;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(12px);
+    background: rgba(10,9,8,0.85);
+    border-bottom: 1px solid var(--rule-faint);
+    padding: 16px 36px;
+    display: flex; align-items: center; gap: 26px;
+  }
+  nav .wordmark {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  nav .wordmark .gold { color: var(--gold); }
+  nav a {
+    color: var(--text-3);
+    text-decoration: none;
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    transition: color 0.2s ease;
+  }
+  nav a:hover { color: var(--gold); }
+  nav .meta-tag {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--text-4);
+  }
+
+  /* ─── COVER ─── */
+  .cover {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 110px 36px 80px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  .cover .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .cover h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(72px, 10vw, 132px);
+    line-height: 0.92;
+    letter-spacing: -0.018em;
+    margin-bottom: 30px;
+  }
+  .cover .lede {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(28px, 3.6vw, 44px);
+    line-height: 1.18;
+    color: var(--gold);
+    max-width: 820px;
+    margin-bottom: 50px;
+    font-weight: 400;
+  }
+  .cover-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--text-4);
+    text-transform: uppercase;
+    display: flex; flex-wrap: wrap; gap: 8px 26px;
+  }
+  .cover-meta b { color: var(--gold-dim); font-weight: 500; }
+
+  /* ─── TOC ─── */
+  .toc {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 60px 36px 40px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .toc-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 2.5px;
+    color: var(--text-4);
+    margin-bottom: 22px;
+    text-transform: uppercase;
+  }
+  .toc ol {
+    list-style: none;
+    counter-reset: section;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px 36px;
+  }
+  .toc ol li {
+    counter-increment: section;
+    padding: 14px 0;
+    border-top: 1px solid var(--rule-faint);
+  }
+  .toc ol li a {
+    color: var(--text-2);
+    text-decoration: none;
+    font-family: 'Crimson Pro', serif;
+    font-size: 19px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    transition: color 0.2s ease;
+  }
+  .toc ol li a::before {
+    content: counter(section, decimal-leading-zero);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    flex-shrink: 0;
+  }
+  .toc ol li a:hover { color: var(--gold); }
+
+  /* ─── SECTIONS ─── */
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 90px 36px;
+  }
+  section {
+    padding-bottom: 80px;
+    border-bottom: 1px solid var(--rule-faint);
+    margin-bottom: 80px;
+  }
+  section:last-of-type { border-bottom: none; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: block;
+  }
+  section h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(38px, 5vw, 58px);
+    line-height: 1.02;
+    letter-spacing: -0.012em;
+    margin-bottom: 18px;
+  }
+  section h2 .italic {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+    letter-spacing: -0.002em;
+  }
+  section .deck {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--text-3);
+    margin-bottom: 36px;
+    line-height: 1.35;
+    max-width: 620px;
+  }
+  section p {
+    margin-bottom: 1.2em;
+    color: var(--text-2);
+  }
+  section p:first-of-type::first-letter {
+    /* Disabled for now — drop caps are noisy on retina + dark theme */
+  }
+  section h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    letter-spacing: -0.005em;
+    margin: 50px 0 14px;
+    color: var(--text);
+  }
+  section h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin: 36px 0 12px;
+  }
+  section ul, section ol {
+    padding-left: 24px;
+    margin-bottom: 1.4em;
+    color: var(--text-2);
+  }
+  section li { margin-bottom: 10px; }
+  section li::marker { color: var(--gold-dim); }
+  section strong { color: var(--text); font-weight: 600; }
+  section em { font-style: italic; color: var(--gold-dim); }
+
+  /* ─── PULL QUOTE ─── */
+  .pull-quote {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(28px, 3.8vw, 42px);
+    line-height: 1.18;
+    color: var(--gold);
+    padding: 40px 0 40px 36px;
+    margin: 50px -36px 50px 0;
+    border-left: 2px solid var(--gold);
+    max-width: none;
+  }
+  .pull-quote cite {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    font-size: 10.5px;
+    letter-spacing: 2.5px;
+    color: var(--text-4);
+    margin-top: 22px;
+    text-transform: uppercase;
+  }
+
+  /* ─── VISION BREAKDOWN ─── */
+  .vision-breakdown {
+    margin: 50px 0 30px;
+    padding: 36px 32px;
+    background: rgba(20,17,12,0.55);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+  }
+  .vision-breakdown dt {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    color: var(--gold);
+    letter-spacing: -0.005em;
+    margin: 18px 0 6px;
+  }
+  .vision-breakdown dt:first-child { margin-top: 0; }
+  .vision-breakdown dd {
+    color: var(--text-2);
+    margin-left: 0;
+    padding-left: 0;
+    line-height: 1.55;
+  }
+
+  /* ─── LIES TABLE ─── */
+  .lies {
+    margin: 36px 0;
+    counter-reset: lie;
+  }
+  .lie {
+    counter-increment: lie;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 28px;
+    padding: 26px 0;
+    border-top: 1px solid var(--rule-faint);
+  }
+  .lie:last-child { border-bottom: 1px solid var(--rule-faint); }
+  .lie::before {
+    content: 'NO ' counter(lie, decimal-leading-zero);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .lie .lie-claim {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .lie .lie-truth {
+    font-family: 'Crimson Pro', serif;
+    font-size: 17px;
+    color: var(--text-3);
+    line-height: 1.55;
+  }
+  .lie .lie-truth b { color: var(--gold); font-weight: 600; }
+
+  /* ─── THREE LAYERS ─── */
+  .layers {
+    display: grid;
+    gap: 24px;
+    margin: 36px 0;
+  }
+  .layer-card {
+    padding: 32px 32px 30px;
+    background: rgba(20,17,12,0.55);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    position: relative;
+  }
+  .layer-card-num {
+    position: absolute;
+    top: 28px; right: 32px;
+    font-family: 'Anton', sans-serif;
+    font-size: 64px;
+    line-height: 1;
+    color: rgba(255,201,74,0.12);
+    letter-spacing: -0.02em;
+  }
+  .layer-card-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .layer-card-h {
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    letter-spacing: -0.005em;
+    margin-bottom: 12px;
+  }
+  .layer-card-body { color: var(--text-2); font-size: 17px; line-height: 1.55; }
+
+  /* ─── ARC ─── */
+  .arc-years {
+    display: grid;
+    gap: 0;
+    margin: 36px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .arc-year {
+    padding: 28px 0 26px;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 36px;
+    align-items: baseline;
+  }
+  .arc-year-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .arc-year-h {
+    font-family: 'Anton', sans-serif;
+    font-size: 26px;
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    margin-bottom: 8px;
+  }
+  .arc-year-body { color: var(--text-3); font-size: 16.5px; line-height: 1.55; }
+  .arc-year.now {
+    background: linear-gradient(90deg, rgba(255,201,74,0.04), transparent);
+    padding-left: 22px;
+    margin-left: -22px;
+    border-left: 2px solid var(--gold);
+  }
+
+  /* ─── SPORTS PRIORITY ─── */
+  .sport-priority {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    margin: 32px 0;
+  }
+  .sport-pill {
+    padding: 22px 18px 20px;
+    background: rgba(20,17,12,0.65);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    text-align: center;
+    transition: all 0.2s ease;
+  }
+  .sport-pill:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .sport-pill .priority-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .sport-pill .sport-name {
+    font-family: 'Anton', sans-serif;
+    font-size: 19px;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+  }
+  .sport-pill .sport-role {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-4);
+    margin-top: 6px;
+  }
+
+  /* ─── TIER BANDS ─── */
+  .tier-bands {
+    margin: 40px 0;
+    display: grid;
+    gap: 16px;
+  }
+  .tier-band {
+    padding: 26px 32px 26px;
+    background: rgba(20,17,12,0.55);
+    border-left: 3px solid var(--gold);
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 28px;
+    align-items: baseline;
+  }
+  .tier-band.icon { border-left-color: #ffd166; background: linear-gradient(90deg, rgba(255,209,102,0.10), transparent 30%); }
+  .tier-band.elite { border-left-color: #b5e2c2; background: linear-gradient(90deg, rgba(181,226,194,0.08), transparent 30%); }
+  .tier-band.star { border-left-color: var(--gold); background: linear-gradient(90deg, rgba(255,201,74,0.08), transparent 30%); }
+  .tier-band.prospect { border-left-color: rgba(212,200,173,0.5); background: linear-gradient(90deg, rgba(212,200,173,0.06), transparent 30%); }
+  .tier-band-name {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+  .tier-band-body { color: var(--text-2); font-size: 17px; line-height: 1.55; }
+  .tier-band-body em { font-style: italic; color: var(--gold-dim); }
+
+  /* ─── LIST FORMATS ─── */
+  .list-formats {
+    margin: 32px 0;
+    counter-reset: lf;
+  }
+  .list-format {
+    counter-increment: lf;
+    padding: 34px 0;
+    border-top: 1px solid var(--rule-faint);
+  }
+  .list-format:last-child { border-bottom: 1px solid var(--rule-faint); }
+  .list-format-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .list-format-eyebrow::before {
+    content: counter(lf, decimal-leading-zero) ' · ';
+    color: var(--text-4);
+  }
+  .list-format h3 {
+    margin: 0 0 12px;
+    font-family: 'Anton', sans-serif;
+    font-size: 36px;
+    letter-spacing: -0.005em;
+  }
+  .list-format-tag {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 17px;
+    margin-bottom: 14px;
+  }
+
+  /* ─── ARTIFACT TABLE ─── */
+  .artifacts-table {
+    margin: 36px 0;
+    border-top: 2px solid var(--gold);
+  }
+  .artifact-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 110px;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule-faint);
+    align-items: start;
+  }
+  .artifact-row.flagship { background: linear-gradient(90deg, rgba(255,201,74,0.05), transparent); padding-left: 16px; margin-left: -16px; }
+  .artifact-num {
+    font-family: 'Anton', sans-serif;
+    font-size: 36px;
+    line-height: 0.9;
+    color: var(--gold);
+    letter-spacing: -0.005em;
+  }
+  .artifact-h {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    letter-spacing: -0.003em;
+    margin-bottom: 6px;
+    line-height: 1.18;
+  }
+  .artifact-body { color: var(--text-3); font-size: 15.5px; line-height: 1.5; }
+  .artifact-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-4);
+    text-align: right;
+    padding-top: 6px;
+  }
+  .artifact-status.ship { color: var(--gold); }
+
+  /* ─── NEGATIVES ─── */
+  .negatives {
+    margin: 32px 0;
+    padding: 32px;
+    background: rgba(20,17,12,0.55);
+    border: 1px dashed rgba(255,90,90,0.20);
+    border-radius: 4px;
+  }
+  .negatives ul { list-style: none; padding: 0; }
+  .negatives li {
+    padding: 9px 0 9px 28px;
+    color: var(--text-2);
+    border-bottom: 1px solid var(--rule-faint);
+    position: relative;
+    font-size: 17px;
+  }
+  .negatives li:last-child { border-bottom: none; }
+  .negatives li::before {
+    content: '×';
+    position: absolute;
+    left: 0;
+    color: rgba(255,90,90,0.65);
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ─── CLOSING ─── */
+  .closing {
+    max-width: 880px;
+    margin: 80px auto 0;
+    padding: 80px 36px 100px;
+    text-align: center;
+    border-top: 1px solid var(--rule);
+  }
+  .closing-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 28px;
+    text-transform: uppercase;
+  }
+  .closing h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(38px, 5vw, 58px);
+    line-height: 1.02;
+    letter-spacing: -0.012em;
+    margin-bottom: 38px;
+  }
+  .closing h2 .italic {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+  .closing-rules {
+    text-align: left;
+    margin: 0 auto;
+    max-width: 620px;
+    counter-reset: rule;
+  }
+  .closing-rules li {
+    counter-increment: rule;
+    padding: 20px 0 20px 56px;
+    color: var(--text-2);
+    border-bottom: 1px solid var(--rule-faint);
+    position: relative;
+    font-family: 'Crimson Pro', serif;
+    font-size: 18px;
+    line-height: 1.55;
+    list-style: none;
+  }
+  .closing-rules li b { color: var(--text); font-weight: 600; }
+  .closing-rules li::before {
+    content: counter(rule, decimal-leading-zero);
+    position: absolute;
+    left: 0; top: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 50px 36px 80px;
+    display: flex; flex-wrap: wrap; gap: 28px 60px;
+    border-top: 1px solid var(--rule);
+  }
+  footer .ftr-block { flex: 1 1 240px; }
+  footer .ftr-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--text-4);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  footer .ftr-body { color: var(--text-3); font-size: 14.5px; line-height: 1.55; }
+  footer .ftr-body a { color: var(--gold); text-decoration: none; }
+  footer .ftr-body a:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 22px; gap: 14px; }
+    nav a:not(.wordmark) { display: none; }
+    .cover { padding: 70px 22px 60px; }
+    .container { padding: 60px 22px; }
+    .toc { padding: 40px 22px; }
+    .closing { padding: 60px 22px 80px; }
+    footer { padding: 40px 22px 60px; }
+    .pull-quote { margin: 40px -22px 40px 0; padding: 30px 0 30px 26px; }
+    .arc-year, .tier-band, .lie, .artifact-row { grid-template-columns: 1fr; gap: 12px; }
+    body { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="wordmark">FIELD<span class="gold">CHECK</span></a>
+  <a href="/voices">Voices</a>
+  <a href="/artifacts">Artifacts</a>
+  <a href="/papers/fieldcheck-tier">FC Tier Paper</a>
+  <span class="meta-tag">// STRATEGIC FRAMEWORK · v1.0</span>
+</nav>
+
+<!-- ═════════════ COVER ═════════════ -->
+<header class="cover">
+  <div class="eyebrow">// Strategic Framework · 2026 Edition</div>
+  <h1>FieldCheck.</h1>
+  <p class="lede">A trust layer where retail loses to information asymmetry, and a reference standard the industry has no choice but to adopt.</p>
+  <div class="cover-meta">
+    <span><b>Version</b> 1.0</span>
+    <span><b>Published</b> May 14, 2026</span>
+    <span><b>Author</b> Sridhar Nallani</span>
+    <span><b>Status</b> Public</span>
+    <span><b>License</b> CC BY-SA 4.0</span>
+  </div>
+</header>
+
+<!-- ═════════════ TOC ═════════════ -->
+<section class="toc">
+  <div class="toc-eyebrow">Contents</div>
+  <ol>
+    <li><a href="#vision">The Vision</a></li>
+    <li><a href="#premise">The Strategic Premise</a></li>
+    <li><a href="#layers">The Three Layers</a></li>
+    <li><a href="#arc">The 5-Year Arc</a></li>
+    <li><a href="#frame">The Competitive Frame</a></li>
+    <li><a href="#standard">The Gold Standard · FieldCheck Tier</a></li>
+    <li><a href="#lists">The Three List Formats</a></li>
+    <li><a href="#artifacts">The Five Strategic Artifacts</a></li>
+    <li><a href="#not">What We Are Not</a></li>
+    <li><a href="#north">The Standard Adoption Index</a></li>
+  </ol>
+</section>
+
+<div class="container">
+
+<!-- ═════════════ 01. VISION ═════════════ -->
+<section id="vision">
+  <span class="section-num">01 · The Vision</span>
+  <h2>One sentence. <span class="italic">No noise.</span></h2>
+  <p class="deck">FieldCheck is the trust layer for athlete decisions where retail loses to information asymmetry.</p>
+
+  <p>Every word is load-bearing. Most strategy documents pad their thesis with adjectives. Ours does not, because the operating principle of the company is that every word, every Voice attribution, every reasoning trace, every visible asset must survive scrutiny on first read.</p>
+
+  <dl class="vision-breakdown">
+    <dt>Trust layer</dt>
+    <dd>Not a recruiting service. Not a media company. Not a ratings aggregator. Infrastructure that lives underneath every consequential choice an athlete and their family make.</dd>
+    <dt>Athlete decisions</dt>
+    <dd>Narrow on purpose. We exist at the moment of commitment — the school choice, the transfer, the NIL deal, the pro entry. We do not do general sports content.</dd>
+    <dt>Retail loses</dt>
+    <dd>The asymmetry runs against families and athletes. The industry profits from keeping them in the dark. We invert that.</dd>
+    <dt>Information asymmetry</dt>
+    <dd>The moat. Same shape as the XCheck portfolio thesis. Same operating logic across every product we ship.</dd>
+  </dl>
+</section>
+
+<!-- ═════════════ 02. PREMISE ═════════════ -->
+<section id="premise">
+  <span class="section-num">02 · The Strategic Premise</span>
+  <h2>Three lies the recruiting industry <span class="italic">survives on.</span></h2>
+  <p class="deck">Every incumbent's revenue model depends on at least one of these holding up. None of them survive scrutiny.</p>
+
+  <div class="lies">
+    <div class="lie">
+      <div>
+        <div class="lie-claim">"Rankings are signal."</div>
+        <div class="lie-truth">They're not. <b>Rankings are inventory.</b> Recruiting services need a constantly-refreshing top 25, top 100, top 247, top 300 to monetize subscription access and ad inventory. The ranking itself is the product, not the prediction.</div>
+      </div>
+    </div>
+    <div class="lie">
+      <div>
+        <div class="lie-claim">"Access is value."</div>
+        <div class="lie-truth">No. <b>Access is a paywall around public-record information</b> — Hudl tape, AAU box scores, regional all-star rosters, NCAA APR data — repackaged as proprietary. The premium tier sells you the right to see what should have been free.</div>
+      </div>
+    </div>
+    <div class="lie">
+      <div>
+        <div class="lie-claim">"Opacity benefits all parties."</div>
+        <div class="lie-truth">It doesn't. <b>Opacity benefits only the seller</b> — schools, coaches, recruiting services. Athletes and families have always been the unpaid suppliers of trust to a market that uses their decisions as content. We exist to invert that.</div>
+      </div>
+    </div>
+  </div>
+
+  <p>Every product decision at FieldCheck starts by asking which lie we are most directly disproving in that release. If we cannot name it, we don't ship.</p>
+</section>
+
+<!-- ═════════════ 03. LAYERS ═════════════ -->
+<section id="layers">
+  <span class="section-num">03 · The Three Layers</span>
+  <h2>Voices. Brains. <span class="italic">Surface.</span></h2>
+  <p class="deck">The architecture beneath the product. Each layer is independently defensible. Together, they are uncopyable.</p>
+
+  <div class="layers">
+    <div class="layer-card">
+      <div class="layer-card-num">01</div>
+      <div class="layer-card-eyebrow">Trust Engine</div>
+      <div class="layer-card-h">The Voices.</div>
+      <div class="layer-card-body">Sixteen real people per sport. Players, parents, coaches, scouts — whose questions and friction drive every product decision. <strong>Their lived experience is the methodology.</strong> Not algorithms pretending to be objective. Real voices saying "this is what I needed and never got." Voice attribution is non-negotiable: if we can't name which Voice asked for it, we don't ship it.</div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-card-num">02</div>
+      <div class="layer-card-eyebrow">Execution Engine</div>
+      <div class="layer-card-h">The Operating Brains.</div>
+      <div class="layer-card-body">CMO, CFO, Data, COO — four specialist agents working in concert per-decision, never as a standing committee. They translate Voice friction into shippable product. Lightspeed, customer-obsessed, zero bureaucracy. <strong>Apple has no committees; we have no committees.</strong></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-card-num">03</div>
+      <div class="layer-card-eyebrow">Product Surface</div>
+      <div class="layer-card-h">Verdicts. Profiles. Voice Notes. Position-Fit.</div>
+      <div class="layer-card-body">Every artifact a family touches. Every verdict cites a Voice. Every prediction has a reasoning trace. Every visible asset meets the Apple-grade bar — measurable, not vibes. The surface is the only thing the user sees, so the surface is the only thing that gets judged.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ 04. ARC ═════════════ -->
+<section id="arc">
+  <span class="section-num">04 · The 5-Year Arc</span>
+  <h2>Pace is the moat <span class="italic">as much as positioning is.</span></h2>
+  <p class="deck">Incumbents take 18 months to add a sport. We add one in four weeks because the engine inherits everything. Speed is itself a defensible signal that the operating model is different.</p>
+
+  <div class="arc-years">
+    <div class="arc-year now">
+      <div class="arc-year-label">Year 1 · Now</div>
+      <div>
+        <div class="arc-year-h">Multi-sport from the start.</div>
+        <div class="arc-year-body">Women's volleyball as the proof. Football, men's basketball, baseball, and adjacent sports following in the same year — same architecture, same Voices model, same independence pledge. The aggression of the rollout is itself a strategic asset.</div>
+      </div>
+    </div>
+    <div class="arc-year">
+      <div class="arc-year-label">Year 2</div>
+      <div>
+        <div class="arc-year-h">Embedded in the workflow.</div>
+        <div class="arc-year-body">FieldCheck profiles appear on coach roster sites, in scout reports, in major-media verdicts. Multi-sport credibility becomes the pitch-deck answer for institutional capital. The Standard Adoption Index begins registering meaningful citation counts.</div>
+      </div>
+    </div>
+    <div class="arc-year">
+      <div class="arc-year-label">Year 3</div>
+      <div>
+        <div class="arc-year-h">The second opinion every family runs.</div>
+        <div class="arc-year-body">Before any serious commitment — school choice, transfer, NIL deal — the family checks FieldCheck. Coaches reference us in living-room pitches because the language is unavoidable. The reference standard for athlete trajectory.</div>
+      </div>
+    </div>
+    <div class="arc-year">
+      <div class="arc-year-label">Year 5+</div>
+      <div>
+        <div class="arc-year-h">The trust layer for the athlete-decision economy.</div>
+        <div class="arc-year-body">Beyond college recruiting: NIL deal evaluation, coach changes, transfer portal, pro draft, post-career planning. Every family with a competitive athlete touches this surface at multiple decision points across the child's career. ARR Y7+ in the $1B–3B+ range is locked because the surface area is structural, not optional.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 id="sports-priority">The Year 1 sports rollout</h3>
+  <p>The order matters. Women's volleyball is the test bed — every architectural assumption gets validated there before propagation. The other three flagship sports are scheduled into the same year, not "Year 2," to prove the speed claim.</p>
+  <div class="sport-priority">
+    <div class="sport-pill">
+      <div class="priority-num">01 · Q1</div>
+      <div class="sport-name">Women's Volleyball</div>
+      <div class="sport-role">Test case · proof of architecture</div>
+    </div>
+    <div class="sport-pill">
+      <div class="priority-num">02 · Q2</div>
+      <div class="sport-name">Football</div>
+      <div class="sport-role">Largest market · highest stakes</div>
+    </div>
+    <div class="sport-pill">
+      <div class="priority-num">03 · Q3</div>
+      <div class="sport-name">Men's Basketball</div>
+      <div class="sport-role">NIL-defining sport</div>
+    </div>
+    <div class="sport-pill">
+      <div class="priority-num">04 · Q4</div>
+      <div class="sport-name">Baseball</div>
+      <div class="sport-role">MLB pipeline complexity</div>
+    </div>
+  </div>
+  <p style="margin-top:18px;font-size:16px;color:var(--text-3);font-style:italic">Adjacent sports (women's basketball, soccer, men's volleyball, others) ride the same engine and roll in the same year as Voice councils convene.</p>
+</section>
+
+<!-- ═════════════ 05. COMPETITIVE FRAME ═════════════ -->
+<section id="frame">
+  <span class="section-num">05 · The Competitive Frame</span>
+  <h2>We win the games <span class="italic">we choose to play.</span></h2>
+  <p class="deck">We do not compete on the dimensions incumbents have already won. We compete on the dimensions that make their wins irrelevant.</p>
+
+  <h4>We do not compete on</h4>
+  <div class="negatives" style="margin-bottom:36px">
+    <ul>
+      <li><strong>Volume of profiles.</strong> Incumbents win this — and lose families anyway.</li>
+      <li><strong>Speed of news.</strong> Twitter wins this and we don't need to.</li>
+      <li><strong>Insider access.</strong> They sell relationships; we sell independence.</li>
+    </ul>
+  </div>
+
+  <h4>We compete on</h4>
+  <ul>
+    <li><strong>Accuracy.</strong> The prediction was right, traceable, and auditable.</li>
+    <li><strong>Honest scope.</strong> What we don't know is explicit, not hidden.</li>
+    <li><strong>Independence.</strong> No school-paid placements. No collective sponsorships. No recruiting-service relationships. <em>Ever.</em></li>
+    <li><strong>Apple-grade craft.</strong> The verdict feels like it was made for one family, not scraped for all of them.</li>
+  </ul>
+
+  <div class="pull-quote">
+    The incumbents cannot copy this without burning down their business model. That is precisely the point.
+    <cite>— Strategic Premise</cite>
+  </div>
+</section>
+
+<!-- ═════════════ 06. GOLD STANDARD ═════════════ -->
+<section id="standard">
+  <span class="section-num">06 · The Gold Standard</span>
+  <h2>FieldCheck Tier. <span class="italic">The language the industry adopts.</span></h2>
+  <p class="deck">A ranking is a position on a list. A FieldCheck Tier is a position in a frame. The difference is the difference between noise and standard.</p>
+
+  <p>We do not rank athletes. Rankings are inventory and we are not in the inventory business. Instead, we maintain a four-band classification system — anchored to outcome data, calibrated against Voice-verified rubrics, defended by a public methodology paper that anyone can read, dispute, or cite.</p>
+
+  <div class="tier-bands">
+    <div class="tier-band icon">
+      <div class="tier-band-name">ICON</div>
+      <div class="tier-band-body">The rare apex. Generational. <em>Burrow. Madisen Skinner.</em> The athlete whose ceiling redefines what the position can be. Designation is conferred sparingly and conservatively.</div>
+    </div>
+    <div class="tier-band elite">
+      <div class="tier-band-name">ELITE</div>
+      <div class="tier-band-body">Top of class, multi-year sustained. <em>Pro pipeline credible.</em> Conference-shaping. Multiple Voice-verified signals of trajectory.</div>
+    </div>
+    <div class="tier-band star">
+      <div class="tier-band-name">STAR</div>
+      <div class="tier-band-body">Regional or conference apex. <em>College starter at minimum, pro plausible.</em> The bedrock of any serious roster.</div>
+    </div>
+    <div class="tier-band prospect">
+      <div class="tier-band-name">PROSPECT</div>
+      <div class="tier-band-body">Talent and trajectory present, ceiling not yet locked. <em>Watch this name.</em> The earliest defensible designation in the system.</div>
+    </div>
+  </div>
+
+  <h3>Why this is different</h3>
+  <p>A ranking says "she's #47." That number is noise. It changes every week. It serves the publisher, not the family.</p>
+  <p>A FieldCheck Tier says: "She is ELITE because of these five Voice-verified signals, traceable to these public-record sources, with this confidence interval, anchored to a comp library of twelve athletes who tested the same and went these places." <strong>It is not a position on a list. It is a position in a frame.</strong></p>
+  <p>The frame is published. Every threshold, every dimension, every Voice attribution is in the methodology paper. The paper is the standard. The standard is the moat.</p>
+
+  <p style="margin-top:30px;padding:24px 28px;background:rgba(20,17,12,0.55);border-left:2px solid var(--gold);border-radius:0 4px 4px 0">
+    <strong>See also:</strong> <a href="/papers/fieldcheck-tier" style="color:var(--gold)">The FieldCheck Tier · A Public Methodology · FC-METH-001 v1.0</a> — the formal spec paper accompanying this framework.
+  </p>
+</section>
+
+<!-- ═════════════ 07. LIST FORMATS ═════════════ -->
+<section id="lists">
+  <span class="section-num">07 · The Three List Formats</span>
+  <h2>FC100. Greatness Path. <span class="italic">Position-Fit Apex.</span></h2>
+  <p class="deck">Three named publications. Apple-keynote energy, not ESPN Top 25 churn. Each one performs a specific strategic function and is released at a distinct cadence.</p>
+
+  <div class="list-formats">
+    <div class="list-format">
+      <div class="list-format-eyebrow">Annual · Flagship</div>
+      <h3>The FieldCheck 100</h3>
+      <div class="list-format-tag">"The Time 100. The Fortune 500. The FieldCheck 100."</div>
+      <p>An annual cohort of one hundred athletes, drawn across all sports, classified by FieldCheck Tier. <strong>Clustered in tiers, not ranked 1 through 100.</strong> The 2026 edition might publish as "the 8 ICONs of 2026, the 32 ELITEs, the 60 STARs." Released once per year on a fixed date that the industry learns to anticipate.</p>
+      <p>The strategic function: become the citation everyone has to acknowledge. Major media will write about who made it and who didn't. Coaches will reference it in living-room pitches. The FC100 is the prestige surface that drags the methodology into the cultural foreground.</p>
+      <p><em>Sub-segments will emerge over time within FC100 — by sport, by position, by region — but the flagship release stays one cohort, one cover, one cadence.</em></p>
+    </div>
+
+    <div class="list-format">
+      <div class="list-format-eyebrow">Ongoing · Designation</div>
+      <h3>The Greatness Path</h3>
+      <div class="list-format-tag">"A status that travels with the athlete."</div>
+      <p>Not a list. A named cohort that an athlete is invited into when their FieldCheck Tier and trajectory cross a threshold. "She is on the Greatness Path" becomes a FieldCheck-issued designation that travels with the athlete from high school through college through pro.</p>
+      <p>The strategic function: standard adoption. When a coach quotes "Greatness Path," the coach is citing FieldCheck. When a media outlet writes about an athlete being on the Greatness Path, the outlet is acknowledging the system. The designation does the standard-building work for us.</p>
+    </div>
+
+    <div class="list-format">
+      <div class="list-format-eyebrow">Sport-Specific · Reference</div>
+      <h3>Position-Fit Apex</h3>
+      <div class="list-format-tag">"The named apex case at each tier in each position."</div>
+      <p>For every major position in every major sport, the canonical apex case at each FieldCheck Tier. <em>"Madisen Skinner is the W-VB OH ICON for 2025."</em> <em>"Joe Burrow is the QB ICON for the 2018–2019 trajectory class."</em> Reference architecture, not a leaderboard.</p>
+      <p>The strategic function: position-fit becomes the language coaches use to explain to a recruit what tier they are projecting toward. When a coach says "we think you can be the next position-fit STAR at OH," the coach is using FieldCheck terminology to set athlete expectations. The methodology embeds itself in the recruiting conversation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ 08. ARTIFACTS ═════════════ -->
+<section id="artifacts">
+  <span class="section-num">08 · The Five Strategic Artifacts</span>
+  <h2>Build these. <span class="italic">In this order.</span></h2>
+  <p class="deck">Five deliverables that, taken together, lock the strategy into shippable form. The first four are flagship; the fifth is the measurement instrument that tells us whether the rest worked.</p>
+
+  <div class="artifacts-table">
+    <div class="artifact-row flagship">
+      <div class="artifact-num">01</div>
+      <div>
+        <div class="artifact-h">The FieldCheck Tier · v1.0 Methodology Paper</div>
+        <div class="artifact-body">Public, citable methodology document. Every dimension named, every threshold defined, every Voice attribution traced. The asset that makes us cite-able by media and unavoidable by industry. <strong>Released as the companion paper to this framework.</strong></div>
+      </div>
+      <div class="artifact-status ship">Published</div>
+    </div>
+    <div class="artifact-row flagship">
+      <div class="artifact-num">02</div>
+      <div>
+        <div class="artifact-h">The Apex Profile Schema</div>
+        <div class="artifact-body">Every apex case rendered identically. Same eight dimensions, same evidence sources, same comp library construction. Apple's product page consistency, applied to athletes. Stable URL coaches link to. Downloadable PDF for offline reference.</div>
+      </div>
+      <div class="artifact-status">Q3 2026</div>
+    </div>
+    <div class="artifact-row flagship">
+      <div class="artifact-num">03</div>
+      <div>
+        <div class="artifact-h">The FieldCheck 100 · 2026 Edition</div>
+        <div class="artifact-body">The flagship annual cohort. Pick the release date. Lock the cohort. Build the page that becomes the citation surface. Not "here are 100 rankings" — <strong>"here are the 100 athletes FieldCheck believes are on the Greatness Path in 2026,"</strong> with full methodology, every Voice quoted, every reasoning trace.</div>
+      </div>
+      <div class="artifact-status">Q4 2026</div>
+    </div>
+    <div class="artifact-row flagship">
+      <div class="artifact-num">04</div>
+      <div>
+        <div class="artifact-h">Multi-sport Apex Roster · Year 1 Sweep</div>
+        <div class="artifact-body">Football, men's basketball, baseball, women's basketball, soccer, men's volleyball — each gets three to five apex profiles in v1. Same schema, same depth. <strong>The proof that the engine scales horizontally at speed.</strong> Anchors the Y1 multi-sport claim with concrete output.</div>
+      </div>
+      <div class="artifact-status">Year 1 · Rolling</div>
+    </div>
+    <div class="artifact-row">
+      <div class="artifact-num">05</div>
+      <div>
+        <div class="artifact-h">The Standard Adoption Index</div>
+        <div class="artifact-body">Internal scoreboard. Every appearance of FieldCheck Tier language in coach quotes, recruiting service write-ups, major-media articles, college program internal docs. <strong>This is our true north metric — not user count.</strong> When the language is the standard, the standard is the moat.</div>
+      </div>
+      <div class="artifact-status">Continuous</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ 09. WHAT WE ARE NOT ═════════════ -->
+<section id="not">
+  <span class="section-num">09 · What We Are Not</span>
+  <h2>The temptations <span class="italic">we refuse.</span></h2>
+  <p class="deck">When the company is doing well, every adjacent market will look like growth. The strategic discipline is naming what we will not become, in advance, so the answer is reflexive.</p>
+
+  <div class="negatives">
+    <ul>
+      <li>We are <strong>not</strong> a recruiting service.</li>
+      <li>We are <strong>not</strong> a media company.</li>
+      <li>We are <strong>not</strong> a ratings aggregator.</li>
+      <li>We are <strong>not</strong> a sports betting product.</li>
+      <li>We are <strong>not</strong> building general consumer sports content.</li>
+    </ul>
+  </div>
+  <p>When we are tempted to be any of these, the answer is no. The temptation will arrive disguised as opportunity. We name the lines in advance precisely so we can recognize the temptation when it arrives.</p>
+</section>
+
+<!-- ═════════════ 10. TRUE NORTH ═════════════ -->
+<section id="north">
+  <span class="section-num">10 · True North</span>
+  <h2>Standard adoption. <span class="italic">Nothing else.</span></h2>
+  <p class="deck">User count is a vanity metric. Subscription revenue is a downstream metric. Standard adoption is the metric that, if it goes up, makes everything else go up.</p>
+
+  <p>Every two weeks, we measure the Standard Adoption Index. Every appearance of FieldCheck Tier language in a coach quote, a recruiting service write-up, a major-media article, a college program internal document. Each one is a data point. The graph that matters is the cumulative count of those data points over time.</p>
+  <p>When that graph goes vertical — when "FieldCheck Tier" appears in a SportsCenter chyron without prompting, when an Alabama position coach uses the language in a Tuesday recruiting pitch, when a New York Times article opens with a FieldCheck ICON designation — the strategic battle is over.</p>
+  <p>Everything else we build is in service of that one number going up.</p>
+</section>
+
+</div><!-- /container -->
+
+<!-- ═════════════ CLOSING ═════════════ -->
+<section class="closing">
+  <div class="closing-eyebrow">// The Five Rules</div>
+  <h2>What wins this game. <span class="italic">What loses it.</span></h2>
+  <ol class="closing-rules">
+    <li><b>Independence stays absolute.</b> The first school-paid placement is the end. There is no exception, no "limited test," no "just this one."</li>
+    <li><b>Voices stay real.</b> Every Voice is a real person, not a persona. The moment we synthesize a Voice, we are indistinguishable from the incumbents.</li>
+    <li><b>Verdicts stay auditable.</b> Every prediction has a reasoning trace and a Voice attribution. Black-box AI verdicts are exactly what the incumbents do.</li>
+    <li><b>Craft stays Apple-grade.</b> Every visible asset, every interaction, every word. Measurable bar, not vibes. If we cannot measure it, we cannot claim it.</li>
+    <li><b>Speed stays lightspeed.</b> Zero bureaucracy, zero committees, zero politics. If you slow us down, you are done.</li>
+  </ol>
+</section>
+
+<!-- ═════════════ FOOTER ═════════════ -->
+<footer>
+  <div class="ftr-block">
+    <div class="ftr-eyebrow">Document</div>
+    <div class="ftr-body">
+      FieldCheck Strategic Framework<br>
+      Version 1.0 · Published May 14, 2026<br>
+      Author: Sridhar Nallani<br>
+      Reference: FC-STRAT-001
+    </div>
+  </div>
+  <div class="ftr-block">
+    <div class="ftr-eyebrow">Companion Publications</div>
+    <div class="ftr-body">
+      <a href="/papers/fieldcheck-tier">FC-METH-001 · The FieldCheck Tier</a><br>
+      <a href="/artifacts">Artifacts archive</a><br>
+      <a href="/voices">The Voices index</a>
+    </div>
+  </div>
+  <div class="ftr-block">
+    <div class="ftr-eyebrow">Suggested Citation</div>
+    <div class="ftr-body">
+      Nallani, S. (2026). <em>FieldCheck Strategic Framework, v1.0.</em> ThinkDifferent Holdings. fieldcheck-app.netlify.app/strategic-framework
+    </div>
+  </div>
+  <div class="ftr-block">
+    <div class="ftr-eyebrow">License</div>
+    <div class="ftr-body">
+      CC BY-SA 4.0 · This document may be shared and adapted with attribution.<br><br>
+      <a href="/">← Return to FieldCheck</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

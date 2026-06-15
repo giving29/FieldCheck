@@ -1,0 +1,29 @@
+# FieldCheck IQ . robots.txt . 2026-06-09
+
+User-agent: *
+Allow: /
+Disallow: /fc_canonical_state_v1*
+Disallow: /fieldcheck-coach-dashboard*
+Disallow: /fieldcheck-player-dashboard*
+Disallow: /admin*
+Disallow: /api/
+
+# Allow all major crawlers full access to public verdicts + content
+User-agent: Googlebot
+Allow: /
+Disallow: /fc_canonical_state_v1*
+
+User-agent: Bingbot
+Allow: /
+Disallow: /fc_canonical_state_v1*
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://fieldcheck-app.netlify.app/sitemap.xml

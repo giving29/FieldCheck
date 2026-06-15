@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FAQ · FieldCheck IQ</title>
+<meta name="description" content="Honest answers to the questions people actually ask about FieldCheck. Why these tiers, how the panel works, what the predictions mean.">
+<meta property="og:title" content="FieldCheck IQ · FAQ">
+<meta property="og:description" content="Honest answers to the questions people actually ask about FieldCheck. Why these tiers, how the panel works, what the predictions mean.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060A;--bg1:#100F14;--ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);--t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);--moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.3);--teal:#4EC9C0;--violet:#8B5CF6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 30% at 50% 0%,rgba(245,184,0,.04) 0%,transparent 60%),linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+.wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:60px 30px 100px}
+.brand-row{display:flex;align-items:center;gap:18px;margin-bottom:40px}
+.brand{font-family:'Anton',sans-serif;font-size:22px;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none}
+.back:hover{color:var(--gold)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(46px,6vw,76px);letter-spacing:-.014em;line-height:.98;margin-bottom:18px}
+h1 .em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--gold)}
+.lede{font-size:18px;color:var(--t2);max-width:760px;margin-bottom:42px}
+.lede b{color:var(--t)}
+h2{font-family:'Anton',sans-serif;font-size:30px;letter-spacing:-.012em;margin:60px 0 14px;padding-top:24px;border-top:1px solid var(--ge);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+h2:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:-.005em;margin:28px 0 10px;color:var(--t)}
+p{font-size:16px;color:var(--t2);margin-bottom:16px;max-width:780px}
+p b{color:var(--t)}
+p a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--goldl)}
+p a:hover{border-bottom-color:var(--gold)}
+ul,ol{margin:12px 0 22px 22px;color:var(--t2);font-size:15.5px}
+ul li,ol li{margin-bottom:7px;line-height:1.6}
+ul li b,ol li b{color:var(--gold);font-weight:600}
+dl{margin:18px 0 28px}
+dt{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-top:18px;margin-bottom:4px}
+dd{margin-left:0;font-size:15.5px;color:var(--t2);line-height:1.6;margin-bottom:10px}
+.callout{margin:30px 0;padding:24px 28px;border-radius:12px;background:var(--golds);border:1px solid var(--goldl);border-left:3px solid var(--gold);font-size:14.5px;line-height:1.6;color:var(--t)}
+.callout .label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 28px}
+.actions a{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);background:var(--golds);border:1px solid var(--goldl);padding:10px 18px;border-radius:9999px;text-decoration:none;transition:background .15s}
+.actions a:hover{background:rgba(245,184,0,.18)}
+.footer{margin-top:80px;padding-top:30px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t4);letter-spacing:.6px}
+.footer a{color:var(--gold);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin:14px 0 26px}
+.tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);padding:11px 14px;border-bottom:1px solid var(--ge)}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--ge2);color:var(--t2);vertical-align:top;line-height:1.55}
+.tbl .code{font-family:'JetBrains Mono',monospace;color:var(--gold);font-weight:700;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="wrap">
+  <div class="brand-row">
+    <a class="brand" href="/"><b>Field</b>Check<span class="iq">IQ</span></a>
+    <a class="back" href="/">← all players</a>
+  </div>
+  <div class="eyebrow">FAQ · honest answers</div>
+  <h1><span class="em">FAQ</span>.</h1>
+  
+  <p class="lede"><b>The questions people actually ask</b>, answered honestly. No marketing language. If we don't know, we say so.</p>
+
+  <dl>
+    <dt>Why is Boozer only a 7.4 STAR when 247 has him as #1?</dt>
+    <dd><b>Amateur cap doctrine.</b> No college freshman can be ELITE (>7.5) at FieldCheck until they've proven against pro defenders. That's a deliberate honesty about ceiling visibility. Boozer is graded against college peers, not against the projected NBA him.</dd>
+
+    <dt>Are these predictions or rankings?</dt>
+    <dd>Both, sort of. The composite + tier <b>is</b> our current grade. The 50 sealed predictions (sealed May 17 2026, check-in Aug 15 2028) are forward-looking statements with confidence intervals. The grade is what we know now; the prediction is what we're betting on.</dd>
+
+    <dt>What sports do you cover?</dt>
+    <dd>Currently: men's basketball (82), football (56), women's basketball (34), women's volleyball (24), baseball (18), men's volleyball (9), soccer M+W (7). See the <a href="/coverage">coverage map</a> for the full breakdown. Hockey, tennis, and track are queued for Q3 2026.</dd>
+
+    <dt>Who's behind the verdicts?</dt>
+    <dd>Solo founder + AI loop. The 25-PhD panel reviewed the framework and the first cohort verdicts. Specific names anonymized publicly for now; PhD credentials are real and verifiable on request.</dd>
+
+    <dt>How is this different from 247sports / On3 / Rivals?</dt>
+    <dd>(1) Same framework across every sport — basketball, football, volleyball all measured on the same 8 facets, just with different weights. (2) Pre-registered predictions with check-ins. (3) Honest amateur caps. (4) Source citations on every claim. (5) We publish our misses.</dd>
+
+    <dt>Why is the data sometimes thin?</dt>
+    <dd>If a facet doesn't have 3 independent sources, it's marked partial. We don't fake confidence. A 6.2 PROSPECT with all 8 facets fully sourced is more reliable than a 7.4 STAR with only 5 facets triangulated. See <a href="/coverage">coverage map</a> for known gaps.</dd>
+
+    <dt>How often are verdicts updated?</dt>
+    <dd>Monthly for the curated marquees (PhD round). Quarterly for the full cohort (weight recalibration). Major framework versions every 5 years (v2.0 targeted 2028-2030).</dd>
+
+    <dt>Can I see my own kid evaluated?</dt>
+    <dd>Cohort requests via the contact form on any verdict page. The PhD panel batches requests monthly. We're intentional about not turning into a pay-for-grade service — that breaks the prediction-ledger contract.</dd>
+
+    <dt>Is FieldCheck pro-athletes or pro-public?</dt>
+    <dd>Pro-public. Every verdict is free forever for everyone. The future B2B/program tier (Phase 14, late 2026) charges programs that want bulk roster eval and trajectory monitoring. Public-facing site stays free.</dd>
+
+    <dt>What if an athlete or family disagrees with a verdict?</dt>
+    <dd>Dispute via contact form. The panel will review with the new evidence and issue a versioned re-grade if warranted. <b>Re-grades are public and versioned.</b> No silent revisions. The dissent goes on the record either way.</dd>
+
+    <dt>How can I trust the photos?</dt>
+    <dd>The photo cascade pulls from school athletic sites, 247sports, On3, MaxPreps, ESPN, NBA.com, and Wikipedia in priority order. Each verdict page shows source attribution on hover. <a href="/methodology">Multi-source doctrine</a> applies to photos same as it applies to grades.</dd>
+
+    <dt>Are you affiliated with any school, league, or agent?</dt>
+    <dd>No. Solo-founder-plus-AI. No affiliations, no sponsored content, no pay-for-placement. The honest version of evaluation.</dd>
+  </dl>
+
+  <div class="actions">
+    <a href="/methodology">Methodology →</a>
+    <a href="/predictions">Predictions ledger →</a>
+    <a href="/coverage">Coverage map →</a>
+    <a href="/velocity">Velocity →</a>
+  </div>
+
+  <div class="footer">
+    FieldCheck IQ · <a href="/">home</a> · <a href="/methodology">methodology</a> · <a href="/predictions">predictions</a> · <a href="/coverage">coverage</a> · <a href="/velocity">velocity</a>
+  </div>
+</div>
+</body>
+</html>

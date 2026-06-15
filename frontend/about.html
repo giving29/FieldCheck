@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>About · FieldCheck — Why we exist</title>
+<meta name="description" content="FieldCheck is the independent trust layer for college recruiting. Built so every athlete, parent, coach, and program can see the same independent read on any recruit, any program, any path. No ads. No payola. The verdict, on the record.">
+<meta name="theme-color" content="#0A0908">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Marcellus&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0A0908; --bg-1: #110F0D; --bg-2: #1A1715;
+  --glass: rgba(255, 252, 245, 0.04);
+  --glass-2: rgba(255, 252, 245, 0.08);
+  --glass-edge: rgba(255, 252, 245, 0.14);
+  --text: #F5F1E8;
+  --text-2: rgba(245, 241, 232, 0.72);
+  --text-3: rgba(245, 241, 232, 0.50);
+  --gold: #F5B800;
+  --accent: #FF5C3A;
+  --accent-glow: rgba(255, 92, 58, 0.55);
+  --r-2: 12px; --r-3: 18px; --r-pill: 9999px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; background: #0A0908; color-scheme: dark; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: "General Sans", -apple-system, sans-serif;
+  font-size: 15px; line-height: 1.5;
+  letter-spacing: -0.005em;
+  min-height: 100vh; overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+.masthead {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(180deg, rgba(10,9,8,0.85), rgba(10,9,8,0.4));
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+.wordmark {
+  font-family: "Anton"; font-size: 28px;
+  letter-spacing: -0.005em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 4px;
+}
+.wordmark .dot {
+  display: inline-block; width: 8px; height: 8px;
+  background: var(--accent); border-radius: 50%;
+  margin-left: 4px; margin-bottom: 4px;
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+.nav {
+  display: flex; align-items: center; gap: 4px;
+  font-family: "JetBrains Mono"; font-size: 11px;
+  font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.nav a {
+  padding: 8px 14px; border-radius: var(--r-pill);
+  color: var(--text-3);
+  transition: all 0.2s var(--ease-out);
+}
+.nav a:hover { color: var(--text); background: var(--glass); }
+.nav a.active { color: var(--text); background: var(--glass-2); }
+
+/* HERO */
+.about-hero {
+  padding: 180px 32px 100px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 55% 50% at 50% 0%, rgba(245, 184, 0, 0.10), transparent 70%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-1) 100%);
+}
+.about-hero-eyebrow {
+  font-family: "JetBrains Mono"; font-size: 12px;
+  letter-spacing: 0.20em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 32px;
+}
+.about-hero-h {
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  font-size: clamp(54px, 8vw, 116px);
+  line-height: 0.93;
+  letter-spacing: -0.018em;
+  color: var(--text);
+  margin: 0 auto 40px;
+  max-width: 1100px;
+}
+.about-hero-h .serif {
+  font-family: "Marcellus", serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+}
+.about-hero-sub {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(22px, 2.3vw, 28px);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 820px;
+  margin: 0 auto 28px;
+}
+.about-hero-emph {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  margin-top: 36px;
+}
+.about-hero-emph strong { color: var(--gold); font-weight: 600; }
+
+/* PRINCIPLES */
+.about-principles {
+  padding: 96px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.about-eyebrow {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  letter-spacing: 0.18em; color: var(--gold);
+  text-transform: uppercase; text-align: center;
+  margin-bottom: 18px;
+}
+.about-h2 {
+  font-family: "Anton", sans-serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400; line-height: 0.96;
+  letter-spacing: -0.012em;
+  text-align: center;
+  margin: 0 auto 56px;
+  max-width: 900px;
+}
+.about-h2 .serif {
+  font-family: "Marcellus", serif;
+  font-style: italic; color: var(--gold);
+}
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+.principle {
+  padding: 32px 28px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-3);
+}
+.principle-num {
+  font-family: "Anton";
+  font-size: 48px; color: var(--gold);
+  line-height: 1; margin-bottom: 14px;
+}
+.principle-h {
+  font-family: "Anton";
+  font-size: 22px; letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.principle-body {
+  font-family: "General Sans";
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* MECHANISM */
+.about-mechanism {
+  padding: 96px 32px;
+  background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg) 100%);
+  border-top: 1px solid var(--glass-edge);
+  border-bottom: 1px solid var(--glass-edge);
+}
+.about-mechanism-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+.mechanism-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+  margin-top: 56px;
+}
+.mechanism-step {
+  text-align: left;
+  padding: 28px 26px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-3);
+}
+.mechanism-step-eyebrow {
+  font-family: "JetBrains Mono";
+  font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.mechanism-step-h {
+  font-family: "Anton";
+  font-size: 20px; letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.mechanism-step-body {
+  font-family: "General Sans";
+  font-size: 14px; line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* WHO */
+.about-who {
+  padding: 96px 32px;
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+}
+.who-card {
+  padding: 48px 40px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-3);
+}
+.who-quote {
+  font-family: "Marcellus", serif;
+  font-style: italic;
+  font-size: clamp(20px, 2.2vw, 28px);
+  line-height: 1.45;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+.who-attr {
+  font-family: "JetBrains Mono";
+  font-size: 12px; color: var(--text-3);
+  letter-spacing: 0.06em;
+}
+.who-attr strong { color: var(--text-2); }
+
+/* CTA */
+.about-cta {
+  text-align: center;
+  padding: 80px 32px 120px;
+}
+.about-cta-h {
+  font-family: "Anton";
+  font-size: clamp(32px, 4.5vw, 52px);
+  letter-spacing: -0.012em;
+  margin-bottom: 14px;
+}
+.about-cta-sub {
+  font-family: "General Sans";
+  font-size: 16px; color: var(--text-2);
+  margin-bottom: 32px;
+}
+.about-cta-btn {
+  display: inline-block;
+  padding: 16px 32px;
+  background: var(--gold);
+  color: var(--bg);
+  border-radius: var(--r-pill);
+  font-family: "JetBrains Mono"; font-size: 13px;
+  font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+.about-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(245, 184, 0, 0.45);
+}
+
+.about-footer {
+  padding: 48px 32px 40px;
+  border-top: 1px solid var(--glass-edge);
+  text-align: center;
+}
+.about-footer-colophon {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 720px) {
+  .nav a { padding: 6px 10px; font-size: 10px; }
+  .about-hero { padding: 130px 22px 64px; }
+  .about-principles, .about-mechanism, .about-who { padding: 64px 22px; }
+  .who-card { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a href="/" class="wordmark">FIELDCHECK<span class="dot"></span></a>
+  <!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+</header>
+
+<section class="about-hero">
+  <div class="about-hero-eyebrow">// WHY WE EXIST</div>
+  <h1 class="about-hero-h">
+    Every athlete deserves<br>
+    <span class="serif">the truth about the path.</span>
+  </h1>
+  <p class="about-hero-sub">
+    We built FieldCheck so a parent in a small town can see the same independent read on a recruit as the GM at a power-conference program. So a coach can verify what a kid actually did — not what a service got paid to claim. So a sixteen-year-old chasing the cut knows exactly what it takes — and what it doesn't.
+  </p>
+  <div class="about-hero-emph">
+    No ads. No payola. No pay-to-rank. <strong>The verdict, on the record.</strong>
+  </div>
+</section>
+
+<section class="about-principles">
+  <div class="about-eyebrow">// FOUR PRINCIPLES</div>
+  <h2 class="about-h2">
+    Built on a <span class="serif">trust pledge.</span>
+  </h2>
+  <div class="principles-grid">
+    <div class="principle">
+      <div class="principle-num">01</div>
+      <div class="principle-h">No ads.</div>
+      <div class="principle-body">No banner ads, no sponsored verdicts, no "featured" placements. Nothing in a FieldCheck verdict was paid for.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">02</div>
+      <div class="principle-h">No payola.</div>
+      <div class="principle-body">No program, agent, parent, or third party can pay to influence a tier, a score, or a recommendation. We have no business model that depends on it.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">03</div>
+      <div class="principle-h">No pay-to-rank.</div>
+      <div class="principle-body">Recruiting services have a long history of selling rankings. We refuse. Tiers are derived from public record + curated subjective read, both auditable.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">04</div>
+      <div class="principle-h">On the record.</div>
+      <div class="principle-body">Every verdict ships with a signed audit JSON URL. Every claim traces to a source. Disputes route to a human in 5 business days.</div>
+    </div>
+  </div>
+</section>
+
+<section class="about-mechanism">
+  <div class="about-mechanism-inner">
+    <div class="about-eyebrow">// HOW WE BUILD</div>
+    <h2 class="about-h2">
+      The receipts <span class="serif">make the claim.</span>
+    </h2>
+    <p class="about-hero-sub" style="margin: 0 auto">
+      Independence isn't a slogan; it's a mechanism. Three pieces hold it together.
+    </p>
+    <div class="mechanism-grid">
+      <div class="mechanism-step">
+        <div class="mechanism-step-eyebrow">01 · CURATED DATABASE</div>
+        <div class="mechanism-step-h">Hand-verified marquee profiles.</div>
+        <div class="mechanism-step-body">For top-tier names, we maintain hand-curated profiles with real measurables, real production stats, and a subjective tier read. Generic LLMs hallucinate at this level. We publish the source.</div>
+      </div>
+      <div class="mechanism-step">
+        <div class="mechanism-step-eyebrow">02 · AUDIT JSON</div>
+        <div class="mechanism-step-h">Every claim traces to a source.</div>
+        <div class="mechanism-step-body">Every verdict ships with a signed JSON URL containing the inputs, the sources, and the reasoning. No closed-box scoring. You can read what we read.</div>
+      </div>
+      <div class="mechanism-step">
+        <div class="mechanism-step-eyebrow">03 · DISPUTE PIPELINE</div>
+        <div class="mechanism-step-h">A human responds in 5 business days.</div>
+        <div class="mechanism-step-body">If a verdict is wrong — wrong stat, wrong source, wrong read — email dispute@fieldcheck.ai. A human reviews and either updates or explains, on a 5-business-day SLA.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-who">
+  <div class="about-eyebrow">// WHO BUILT IT</div>
+  <h2 class="about-h2">
+    Built by <span class="serif">ThinkDifferent Holdings.</span>
+  </h2>
+  <div class="who-card">
+    <div class="who-quote">
+      "Every kid deserves to know what it really takes. Every parent deserves to know if the path is real. Every coach deserves a verdict they can audit. Every scout deserves a tool that doesn't lie to them.<br><br>The truth doesn't belong to the highest bidder. We built FieldCheck so it belongs to everyone."
+    </div>
+    <div class="who-attr">
+      <strong>Founder</strong> &middot; ThinkDifferent Holdings
+    </div>
+  </div>
+
+  <div style="max-width:780px;margin:32px auto 0;padding:34px 38px;background:linear-gradient(135deg,rgba(245,184,0,0.07),rgba(26,23,21,0.4));border:1px solid rgba(245,184,0,0.25);border-radius:18px;text-align:center">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2.5px;color:var(--gold);font-weight:700;margin-bottom:14px">// WHERE THE NAME COMES FROM</div>
+    <p style="font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(18px,2.1vw,22px);line-height:1.5;color:var(--text);margin-bottom:14px">"Here's to the crazy ones. The misfits. The rebels. The troublemakers. <span style="color:var(--gold);font-style:normal;font-weight:500">The ones who see things differently.</span><br>They're not fond of rules. They have no respect for the status quo. You can quote them, disagree with them, glorify or vilify them. About the only thing you can't do is ignore them. Because they change things. They push the human race forward. While some may see them as the crazy ones, we see genius."</p>
+    <p style="font-size:13px;color:var(--text-3);font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;margin-top:18px">— APPLE · 1997 · "THINK DIFFERENT"</p>
+    <p style="font-size:14px;color:var(--text-2);line-height:1.6;margin-top:14px;max-width:560px;margin-left:auto;margin-right:auto">The campaign Steve Jobs launched the day he came back to a near-bankrupt Apple. It became the cultural permission slip for the most important reinvention in tech history. This holding company carries its name because <strong style="color:var(--text)">building outside the conventional company structure — AI-native, founder-led, lightspeed, no committees — is exactly that kind of bet.</strong></p>
+  </div>
+</section>
+
+<section style="padding:80px 32px 40px;max-width:980px;margin:0 auto">
+  <div style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--gold);margin-bottom:22px;font-weight:700">// THE CATEGORY</div>
+  <h2 style="font-family:'Anton',sans-serif;font-size:clamp(36px,5vw,60px);line-height:1.02;letter-spacing:-0.01em;text-align:center;margin-bottom:24px;color:var(--text)">The Bloomberg of <span style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400">athlete decisions.</span></h2>
+  <p style="text-align:center;max-width:720px;margin:0 auto 22px;font-size:18px;color:var(--text-2);line-height:1.65">On3 and 247 are the cable news of recruiting. Engagement-optimized. Opinion-led. Built so fans can argue. <strong style="color:var(--text)">FieldCheck is the Bloomberg of athlete decisions.</strong> Audit-first. Citation-per-claim. Built so athletes can decide.</p>
+  <p style="text-align:center;max-width:680px;margin:0 auto;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--gold);line-height:1.5">In five years there will be one trusted intelligence layer of athlete decisions across sports. The incumbents' revenue model requires opacity. Ours requires the opposite.</p>
+</section>
+
+<section style="padding:90px 32px 40px;max-width:1200px;margin:0 auto">
+  <div style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--gold);margin-bottom:22px;font-weight:700">// HOW WE OPERATE</div>
+  <h2 style="font-family:'Anton',sans-serif;font-size:clamp(40px,5.5vw,68px);line-height:0.98;letter-spacing:-0.01em;text-align:center;margin-bottom:18px;color:var(--text)">AI from end to end.<br><span style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400">Driven by a human brain.</span></h2>
+  <p style="text-align:center;max-width:760px;margin:0 auto 56px;font-size:17px;color:var(--text-2);line-height:1.65">Most companies say "we use AI." FieldCheck IS AI — operating natively through agent-augmented decision-making, accountable to real users, with a single human founder owning the strategic direction. We're not just building <em>through</em> AI. We're a new kind of company.</p>
+
+  <div style="max-width:880px;margin:0 auto 56px;padding:32px 36px;background:linear-gradient(135deg,rgba(245,184,0,0.07),rgba(26,23,21,0.4));border:1px solid rgba(245,184,0,0.25);border-radius:18px;text-align:center">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--gold);font-weight:700;margin-bottom:14px">// HOW WE OPERATE · NON-NEGOTIABLE</div>
+    <p style="font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(22px,2.6vw,28px);line-height:1.4;color:var(--text);margin-bottom:10px">"Apple has no committees. <span style="color:var(--gold);font-style:normal;font-weight:500">It's the biggest startup on the planet."</span></p>
+    <p style="font-size:13px;color:var(--text-3);font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;margin-bottom:18px">— STEVE JOBS</p>
+    <p style="font-size:16px;color:var(--text);line-height:1.7">We operate the same way. <strong style="color:var(--gold)">No committees. No standing review bodies. No deliberative councils.</strong> Decisions made at the lowest level by the smallest group at the fastest speed. Not reckless — fastest. Get to market, experiment, learn, get better, repeat. That's the only operating mode that scales <em>without slowing down.</em></p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:56px">
+    <div style="padding:36px;background:linear-gradient(135deg,rgba(245,184,0,0.08),rgba(26,23,21,0.6));border:1px solid rgba(245,184,0,0.30);border-radius:18px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--gold);font-weight:700;margin-bottom:14px">LAYER 1 · THE VOICES</div>
+      <h3 style="font-family:'Anton',sans-serif;font-size:28px;line-height:1.1;margin-bottom:14px;color:var(--text);letter-spacing:-0.005em">16 individuals per sport. Real friction. The signal.</h3>
+      <p style="font-size:15px;color:var(--text-2);line-height:1.65;margin-bottom:14px">Per sport — 16 Voices (player × parent × coach × scout, across ICON / ELITE / PROSPECT / STAR tiers). <strong style="color:var(--text)">Each is one real person, not a deliberative body.</strong> If we can't name which Voice asked for a feature, we don't ship it.</p>
+      <p style="font-size:14px;color:var(--text-3);line-height:1.6;font-style:italic">No committees. No standing review meetings. Their friction is the roadmap — direct, unfiltered.</p>
+    </div>
+    <div style="padding:36px;background:linear-gradient(135deg,rgba(255,92,58,0.08),rgba(26,23,21,0.6));border:1px solid rgba(255,92,58,0.30);border-radius:18px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--accent);font-weight:700;margin-bottom:14px">LAYER 2 · OPERATING BRAINS</div>
+      <h3 style="font-family:'Anton',sans-serif;font-size:28px;line-height:1.1;margin-bottom:14px;color:var(--text);letter-spacing:-0.005em">Four specialist agents. On-call. In concert.</h3>
+      <p style="font-size:15px;color:var(--text-2);line-height:1.65;margin-bottom:14px">CMO Brain, CFO Brain, Chief Data &amp; Analytics Brain, COO Brain — <strong style="color:var(--text)">each activated per-decision, not standing.</strong> When a marketing question is in front of us, the CMO Brain shows up. When the question's done, it steps aside. They work in concert as needed, never as a committee.</p>
+      <p style="font-size:14px;color:var(--text-3);line-height:1.6;font-style:italic">They never override product decisions. The Voices drive the path. The Brains help run the company that builds the path.</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:60px">
+    <div style="padding:26px;background:linear-gradient(180deg,rgba(245,184,0,0.05),rgba(26,23,21,0.6));border:1px solid rgba(245,184,0,0.20);border-top:3px solid var(--gold);border-radius:14px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.8px;color:var(--gold);font-weight:700;margin-bottom:10px">// CMO BRAIN</div>
+      <h4 style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1;margin-bottom:8px;color:var(--text);letter-spacing:-0.005em">Narrative discipline.</h4>
+      <p style="font-size:13.5px;color:var(--text-2);line-height:1.6">Synthesis of Seth Godin's permission marketing, April Dunford positioning, Rory Sutherland behavioral framing. Keeps the moat from growth-hacking that contradicts it.</p>
+    </div>
+    <div style="padding:26px;background:linear-gradient(180deg,rgba(126,179,156,0.06),rgba(26,23,21,0.6));border:1px solid rgba(126,179,156,0.25);border-top:3px solid #7eb39c;border-radius:14px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.8px;color:#7eb39c;font-weight:700;margin-bottom:10px">// CFO BRAIN</div>
+      <h4 style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1;margin-bottom:8px;color:var(--text);letter-spacing:-0.005em">Capital strategy.</h4>
+      <p style="font-size:13.5px;color:var(--text-2);line-height:1.6">Portfolio-CFO mindset, Bessemer cloud-metrics rigor, public-market discipline. Models funding, pricing tiers, dilution scenarios.</p>
+    </div>
+    <div style="padding:26px;background:linear-gradient(180deg,rgba(139,77,139,0.07),rgba(26,23,21,0.6));border:1px solid rgba(139,77,139,0.25);border-top:3px solid #b58ab3;border-radius:14px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.8px;color:#b58ab3;font-weight:700;margin-bottom:10px">// CHIEF DATA &amp; ANALYTICS BRAIN</div>
+      <h4 style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1;margin-bottom:8px;color:var(--text);letter-spacing:-0.005em">The analytics layer.</h4>
+      <p style="font-size:13.5px;color:var(--text-2);line-height:1.6">The synthesis of expert quantitative reasoning across 200+ research traditions. What data we don't yet collect. What analyses haven't been run.</p>
+    </div>
+    <div style="padding:26px;background:linear-gradient(180deg,rgba(125,168,196,0.06),rgba(26,23,21,0.6));border:1px solid rgba(125,168,196,0.25);border-top:3px solid #7da8c4;border-radius:14px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.8px;color:#7da8c4;font-weight:700;margin-bottom:10px">// COO BRAIN</div>
+      <h4 style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1;margin-bottom:8px;color:var(--text);letter-spacing:-0.005em">Agent-native ops.</h4>
+      <p style="font-size:13.5px;color:var(--text-2);line-height:1.6">Toyota Production System discipline, Amazon mechanism design, Stripe internal-ops engineering. Scales the company without scaling headcount.</p>
+    </div>
+  </div>
+
+  <!-- THE MANIFESTO -->
+  <div style="padding:48px 44px;background:linear-gradient(135deg,rgba(255,92,58,0.10),rgba(245,184,0,0.08));border:2px solid rgba(255,92,58,0.40);border-radius:22px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-40px;right:-40px;font-family:'Anton',sans-serif;font-size:280px;line-height:1;color:rgba(255,92,58,0.06);pointer-events:none">!</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:18px;position:relative">// THE MANIFESTO · NON-NEGOTIABLE</div>
+    <h3 style="font-family:'Anton',sans-serif;font-size:clamp(34px,4.5vw,54px);line-height:1.0;margin-bottom:24px;color:var(--text);letter-spacing:-0.01em;position:relative">Lightspeed. Customer-obsessed.<br><span style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400">Zero bureaucracy. Zero exceptions.</span></h3>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:32px;position:relative">
+      <div style="padding:22px 24px;background:rgba(10,9,8,0.45);border-left:3px solid var(--accent);border-radius:0 12px 12px 0">
+        <div style="font-family:'Anton',sans-serif;font-size:20px;color:var(--text);margin-bottom:6px;letter-spacing:-0.005em">Voices and Brains exist to serve customers.</div>
+        <p style="font-size:14.5px;color:var(--text-2);line-height:1.6">Not to add red tape. Not to create review cycles. Not to invent process for process's sake. The moment any Voice or Brain stops clearing the path to the player, parent, coach, or scout, <strong style="color:var(--accent)">it gets replaced. On the spot.</strong></p>
+      </div>
+      <div style="padding:22px 24px;background:rgba(10,9,8,0.45);border-left:3px solid var(--gold);border-radius:0 12px 12px 0">
+        <div style="font-family:'Anton',sans-serif;font-size:20px;color:var(--text);margin-bottom:6px;letter-spacing:-0.005em">No drama. No embellishment. No politics.</div>
+        <p style="font-size:14.5px;color:var(--text-2);line-height:1.6">We don't dress things up. We don't manufacture urgency. We don't gossip about competitors. We don't internal-political. Every minute spent on those is a minute stolen from the customer.</p>
+      </div>
+      <div style="padding:22px 24px;background:rgba(10,9,8,0.45);border-left:3px solid #7eb39c;border-radius:0 12px 12px 0">
+        <div style="font-family:'Anton',sans-serif;font-size:20px;color:var(--text);margin-bottom:6px;letter-spacing:-0.005em">Everyone plays together. FieldCheck wins.</div>
+        <p style="font-size:14.5px;color:var(--text-2);line-height:1.6">Voices, Brains, founder — same team. No factions. No turf. No "my function vs your function." Every second of every day, we work in concert so the customer gets the best experience on this planet.</p>
+      </div>
+      <div style="padding:22px 24px;background:rgba(10,9,8,0.45);border-left:3px solid #7da8c4;border-radius:0 12px 12px 0">
+        <div style="font-family:'Anton',sans-serif;font-size:20px;color:var(--text);margin-bottom:6px;letter-spacing:-0.005em">If you slow us down, you're done.</div>
+        <p style="font-size:14.5px;color:var(--text-2);line-height:1.6">Voices that don't represent real friction get rotated out. Brains that create bureaucracy get retrained or replaced. Founders who lose lightspeed instinct hand off. This is non-negotiable, and it's how we stay the GOATs.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:36px;padding-top:28px;border-top:1px solid rgba(255,92,58,0.30);position:relative">
+      <p style="font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(20px,2.2vw,28px);line-height:1.4;color:var(--text);text-align:center">"FieldCheck's philosophy: <span style="color:var(--gold);font-weight:500">lightspeed movement, obsessive customer focus, zero BS.</span><br>Players, coaches, parents, scouts — they get the best experience on this planet and universe. That's the only metric that matters."</p>
+    </div>
+  </div>
+</section>
+
+<section class="about-cta">
+  <h2 class="about-cta-h">Ready to read a player?</h2>
+  <p class="about-cta-sub">Sourced. Audited. On the record.</p>
+  <a class="about-cta-btn" href="/#player">Open a Player Check →</a>
+</section>
+
+<footer class="about-footer">
+  <div class="about-footer-colophon">
+    FieldCheck · ThinkDifferent Holdings · © 2026 · Built on the TD Trust Engine · v0.30
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IQ Fit · LOVB Intel · FieldCheck IQ</title>
+<meta name="description" content="Score all six LOVB Pro markets for any given player profile. System fit, current roster gaps, coaching style, geography — ranked with reasoning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0a0908; --bg-2: #14110c; --bg-3: #1a1612; --text: #fbf6ea; --text-2: rgba(251,246,234,0.7); --text-3: rgba(251,246,234,0.45); --gold: #ffc94a; --teal: #b5e2c2; --crimson: #d44a4a; --line: rgba(251,246,234,0.1); --line-strong: rgba(251,246,234,0.18); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Crimson Pro', serif; line-height: 1.55; min-height: 100vh; position: relative; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.07 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>"); opacity: 0.55; pointer-events: none; z-index: 1; mix-blend-mode: overlay; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+  /* TOP NAV — global mega-menu pattern */
+  .nav-global{position:sticky;top:0;z-index:100;background:rgba(10,9,8,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--line)}
+  .nav-global-inner{max-width:1240px;margin:0 auto;padding:0 32px;display:flex;align-items:center;height:60px}
+  .nav-global-brand{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--text);font-weight:500;margin-right:auto;text-decoration:none;display:flex;align-items:center;gap:6px}
+  .nav-global-brand b{color:var(--gold);font-weight:500}
+  .nav-global-brand .sep{color:var(--text-3);margin:0 2px}
+  .nav-global-brand .ctx{color:var(--teal)}
+  .nav-global-main{display:flex;align-items:center}
+  .nav-global-item{position:relative}
+  .nav-global-link{display:flex;align-items:center;gap:6px;padding:0 20px;height:60px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-2);background:none;border:0;cursor:pointer;transition:color .2s}
+  .nav-global-link:hover,.nav-global-link.open{color:var(--text)}
+  .nav-global-caret{font-size:7px;opacity:.6;transition:transform .2s}
+  .nav-global-link.open .nav-global-caret{transform:rotate(180deg)}
+  .nav-global-cta{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--gold);color:var(--gold);border-radius:2px;margin-left:18px;text-decoration:none;transition:all .2s}
+  .nav-global-cta:hover{background:var(--gold);color:var(--bg)}
+  .nav-global-mega{position:absolute;top:60px;left:50%;transform:translateX(-50%) translateY(-6px);min-width:440px;background:rgba(16,14,12,.97);backdrop-filter:blur(28px);border:1px solid var(--line);border-radius:6px;padding:24px;opacity:0;pointer-events:none;transition:all .22s;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+  .nav-global-item.open .nav-global-mega{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+  .nav-global-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 22px}
+  .nav-global-col-head{grid-column:span 2;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+  .nav-global-mega a{display:flex;flex-direction:column;padding:9px 10px;border-radius:3px;text-decoration:none}
+  .nav-global-mega a strong{font-family:'Crimson Pro',serif;font-size:15px;font-weight:500;color:var(--text)}
+  .nav-global-mega a span{font-family:'Instrument Serif',serif;font-style:italic;font-size:12.5px;color:var(--text-2);margin-top:1px;line-height:1.3}
+  .nav-global-mega a:hover{background:rgba(245,241,232,.06)}
+  .nav-global-mega a:hover strong{color:var(--gold)}
+  @media(max-width:880px){.nav-global-main,.nav-global-cta{display:none}}
+.topnav-links a { font-size: 10px; } }
+
+  .hero { padding: 80px 0 48px; }
+  .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; font-weight: 700; margin-bottom: 24px; }
+  .hero-h { font-family: 'Anton', sans-serif; font-size: clamp(48px, 8vw, 88px); line-height: 0.92; letter-spacing: -0.015em; margin-bottom: 24px; max-width: 760px; }
+  .hero-h .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .hero-deck { font-size: 19px; line-height: 1.55; color: var(--text-2); max-width: 620px; }
+
+  .section { padding: 48px 0; }
+  .section-h-mini { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--text-3); text-transform: uppercase; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 14px; }
+  .section-h-mini::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .section-h-mini .gold { color: var(--gold); }
+
+  .input-card { border: 1px solid var(--line); border-radius: 8px; background: var(--bg-2); padding: 36px 36px; }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-bottom: 22px; }
+  @media (max-width: 720px) { .field-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .field-grid { grid-template-columns: 1fr; } }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field-label { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; color: var(--text-3); text-transform: uppercase; font-weight: 600; }
+  .field-input, .field-select { padding: 12px 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; color: var(--text); font-family: 'Crimson Pro', serif; font-size: 15px; }
+  .field-input:focus, .field-select:focus { outline: none; border-color: var(--gold); }
+  .field-help { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 12.5px; color: var(--text-3); }
+  .run-btn { margin-top: 16px; padding: 14px 28px; background: var(--gold); color: var(--bg); border: none; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all .2s; }
+  .run-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,201,74,0.25); }
+
+  .results { margin-top: 36px; display: none; }
+  .results.active { display: block; animation: fadeIn .35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .top-card { border: 1px solid var(--gold); border-radius: 8px; padding: 36px 36px; background: linear-gradient(180deg, rgba(255,201,74,0.08), rgba(20,17,12,0.6)); margin-bottom: 28px; }
+  .top-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }
+  .top-h { font-family: 'Anton', sans-serif; font-size: clamp(40px, 7vw, 64px); line-height: 1; letter-spacing: -0.015em; margin-bottom: 14px; }
+  .top-h .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .top-fit { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 1.5px; color: var(--text-2); margin-bottom: 18px; }
+  .top-fit .num { font-family: 'Anton', sans-serif; font-size: 48px; color: var(--gold); display: inline-block; vertical-align: middle; margin-right: 10px; line-height: 1; }
+  .top-reason { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 17px; line-height: 1.55; color: var(--text); border-top: 1px solid rgba(255,201,74,0.2); padding-top: 18px; }
+
+  .markets-rank { display: flex; flex-direction: column; gap: 12px; }
+  .market-row { display: grid; grid-template-columns: 50px 1fr 100px; gap: 18px; align-items: center; padding: 18px 22px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 6px; }
+  .market-row.top-rank { border-color: rgba(255,201,74,0.3); background: linear-gradient(180deg, rgba(255,201,74,0.04), var(--bg-2)); }
+  .market-row .rank { font-family: 'Anton', sans-serif; font-size: 32px; color: var(--gold); line-height: 1; text-align: center; }
+  .market-row .body .name { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; margin-bottom: 4px; }
+  .market-row .body .name .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .market-row .body .why { font-family: 'Crimson Pro', serif; font-size: 14px; color: var(--text-2); line-height: 1.5; }
+  .market-row .score { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 1px; text-align: right; }
+  .market-row .score .big { font-family: 'Anton', sans-serif; font-size: 32px; color: var(--text); display: block; line-height: 1; margin-bottom: 4px; }
+  .market-row.top-rank .score .big { color: var(--gold); }
+
+  .method { border: 1px solid var(--line); border-radius: 8px; padding: 28px 32px; background: var(--bg-2); font-size: 14.5px; line-height: 1.6; color: var(--text-2); margin-top: 28px; }
+  .method strong { color: var(--text); font-weight: 600; }
+  .method .row { margin-bottom: 12px; }
+  .method .label { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-right: 10px; }
+
+  .footer { padding: 56px 0 40px; margin-top: 56px; border-top: 1px solid var(--line); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; color: var(--text-3); text-transform: uppercase; }
+  .footer a { color: var(--text-2); text-decoration: none; }
+  .footer a:hover { color: var(--gold); }
+  .footer-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(255,201,74,0.3); }
+  a:hover { border-bottom-color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">// Tool 03 · IQ Fit</div>
+    <h1 class="hero-h">Which market <span class="italic">suits her?</span></h1>
+    <p class="hero-deck">All six LOVB Pro markets scored against a player profile. System fit, current positional gaps, coaching style, geography, and story potential — ranked end-to-end.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-h-mini">§ <span class="gold">01</span> · Player profile</div>
+
+    <div class="input-card">
+      <div class="field-grid">
+        <div class="field">
+          <label class="field-label" for="position">Position</label>
+          <select class="field-select" id="position">
+            <option value="">— Select —</option>
+            <option value="OH">OH · Outside Hitter</option>
+            <option value="OPP">OPP · Opposite</option>
+            <option value="MB">MB · Middle Blocker</option>
+            <option value="S">S · Setter</option>
+            <option value="L">L · Libero / DS</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="style">Style</label>
+          <select class="field-select" id="style">
+            <option value="">— Select —</option>
+            <option value="power">Power / big-swing</option>
+            <option value="quick">Quick tempo / system</option>
+            <option value="balanced">Balanced / six-rotation</option>
+            <option value="defensive">Defensive / ball-control</option>
+            <option value="finisher">Efficient finisher</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="tier">Projection tier</label>
+          <select class="field-select" id="tier">
+            <option value="">— Select —</option>
+            <option value="elite">Elite / first-round</option>
+            <option value="solid">Solid pro / likely</option>
+            <option value="stash">Stash / developmental</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="region">Geographic preference (optional)</label>
+          <select class="field-select" id="region">
+            <option value="">No preference</option>
+            <option value="south">Southeast / South</option>
+            <option value="midwest">Midwest</option>
+            <option value="west">West</option>
+            <option value="texas">Texas</option>
+          </select>
+          <div class="field-help">If the athlete has a stated regional preference, weight it.</div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="market-size">Market-size preference (optional)</label>
+          <select class="field-select" id="market-size">
+            <option value="">No preference</option>
+            <option value="big-city">Big-city / major media market</option>
+            <option value="passionate">Passionate fanbase / smaller market</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="competing">Comfort with competing for minutes</label>
+          <select class="field-select" id="competing">
+            <option value="">— Select —</option>
+            <option value="lead">Wants immediate lead role</option>
+            <option value="compete">OK competing for spot</option>
+            <option value="learn">Wants to learn behind veteran</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="run-btn" id="runBtn">Score the markets →</button>
+    </div>
+
+    <div class="results" id="results">
+      <div class="top-card">
+        <div class="top-eyebrow">// Best-fit market</div>
+        <div class="top-h" id="tName">—</div>
+        <div class="top-fit"><span class="num" id="tScore">—</span>/ 100 fit score</div>
+        <div class="top-reason" id="tReason">Reasoning here.</div>
+      </div>
+
+      <div class="markets-rank" id="rankList">
+        <div class="market-row"><div class="rank">—</div><div class="body"><div class="name">—</div></div><div class="score">—</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-h-mini">§ <span class="gold">02</span> · Methodology</div>
+    <div class="method">
+      <div class="row"><span class="label">Inputs</span>Position, playing style, projection tier, optional region and market-size preference, and a comfort-with-competition signal.</div>
+      <div class="row"><span class="label">Market profiles</span>Each of the six pro markets has a documented profile: positional need pattern, system style (e.g. quick-tempo vs power), coaching style, market size, regional location, and current roster depth at each position.</div>
+      <div class="row"><span class="label">Scoring</span>The fit score is a weighted average of: positional need × 30%, system style match × 25%, projection tier × roster depth (does the team need elite or developmental at this position) × 20%, geography × 10%, market size × 8%, competition comfort × 7%.</div>
+      <div class="row"><span class="label">What it answers</span>"Where does she most naturally fit?" — not "where will she be signed." Free agency, contract economics, and personal relationships dominate the actual signing path. This tool predicts the basketball-fit-for-volleyball answer; the rest of the decision lives outside the model.</div>
+      <div class="row"><span class="label">Limits</span>Roster depth profiles are point-in-time. As trades and re-signings happen, the same player profile may score differently across the same six markets. Treat the output as a snapshot, not a forecast.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-row">
+      <div>// IQ Fit · v0.1 · Powered by FieldCheck IQ · Point-in-time snapshot</div>
+      <div>
+        <a href="/lovb">Hub</a> &nbsp;·&nbsp;
+        <a href="/lovb/projection">Pro Fit</a> &nbsp;·&nbsp;
+        <a href="/lovb/match">FA Match</a> &nbsp;·&nbsp;
+        <a href="/lovb/markets">All markets</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const MARKETS = [
+  { code: 'atl', name: 'Atlanta',   region: 'south',   size: 'big-city',  system: 'power',      needs: { OH: 0.6, OPP: 0.5, MB: 0.8, S: 0.3, L: 0.4 }, depthGap: { OH: 'elite', MB: 'elite', OPP: 'solid', S: 'covered', L: 'stash' } },
+  { code: 'atx', name: 'Austin',    region: 'texas',   size: 'big-city',  system: 'balanced',   needs: { OH: 0.5, OPP: 0.4, MB: 0.5, S: 0.8, L: 0.7 }, depthGap: { S: 'elite', L: 'elite', OH: 'stash', MB: 'solid', OPP: 'covered' } },
+  { code: 'htx', name: 'Houston',   region: 'texas',   size: 'big-city',  system: 'quick',      needs: { OH: 0.7, OPP: 0.8, MB: 0.4, S: 0.5, L: 0.4 }, depthGap: { OPP: 'elite', OH: 'solid', MB: 'stash', S: 'covered', L: 'covered' } },
+  { code: 'mad', name: 'Madison',   region: 'midwest', size: 'passionate', system: 'quick',     needs: { OH: 0.4, OPP: 0.5, MB: 0.7, S: 0.8, L: 0.3 }, depthGap: { S: 'elite', MB: 'elite', OH: 'covered', OPP: 'solid', L: 'covered' } },
+  { code: 'neb', name: 'Omaha',     region: 'midwest', size: 'passionate', system: 'power',     needs: { OH: 0.8, OPP: 0.4, MB: 0.7, S: 0.3, L: 0.4 }, depthGap: { OH: 'elite', MB: 'solid', OPP: 'stash', S: 'covered', L: 'stash' } },
+  { code: 'sl',  name: 'Salt Lake', region: 'west',    size: 'passionate', system: 'defensive', needs: { OH: 0.5, OPP: 0.7, MB: 0.5, S: 0.4, L: 0.8 }, depthGap: { L: 'elite', OPP: 'solid', OH: 'solid', MB: 'stash', S: 'covered' } }
+];
+
+const SYSTEM_AFFINITY = {
+  power: { power: 1.0, balanced: 0.7, quick: 0.4, defensive: 0.5, finisher: 0.8 },
+  quick: { quick: 1.0, balanced: 0.7, power: 0.4, defensive: 0.5, finisher: 0.6 },
+  balanced: { balanced: 1.0, power: 0.7, quick: 0.7, defensive: 0.7, finisher: 0.7 },
+  defensive: { defensive: 1.0, balanced: 0.7, quick: 0.5, power: 0.4, finisher: 0.5 },
+  finisher: { finisher: 1.0, power: 0.8, balanced: 0.7, quick: 0.6, defensive: 0.5 }
+};
+
+const TIER_DEPTH_MATCH = {
+  elite: { elite: 1.0, solid: 0.6, stash: 0.2, covered: 0.0 },
+  solid: { solid: 1.0, elite: 0.5, stash: 0.5, covered: 0.1 },
+  stash: { stash: 1.0, solid: 0.7, covered: 0.3, elite: 0.0 }
+};
+
+function compute(p) {
+  const scored = MARKETS.map(m => {
+    let score = 0;
+    let reasons = [];
+
+    // Positional need (30%)
+    const need = m.needs[p.position] || 0.3;
+    score += need * 30;
+    if (need >= 0.7) reasons.push(`high positional need at ${p.position}`);
+
+    // System affinity (25%)
+    const affinity = (SYSTEM_AFFINITY[m.system] || {})[p.style] || 0.5;
+    score += affinity * 25;
+    if (affinity >= 0.9) reasons.push(`system match (${m.system})`);
+
+    // Tier × depth gap (20%)
+    const gap = m.depthGap[p.position] || 'covered';
+    const tierMatch = (TIER_DEPTH_MATCH[p.tier] || {})[gap] || 0;
+    score += tierMatch * 20;
+    if (tierMatch >= 0.9) reasons.push(`roster gap matches projection tier`);
+
+    // Geography (10%)
+    if (p.region && p.region === m.region) { score += 10; reasons.push('geography aligned'); }
+    else if (!p.region) score += 5;
+
+    // Market size (8%)
+    if (p.marketSize && p.marketSize === m.size) { score += 8; reasons.push(`${m.size === 'big-city' ? 'big-city' : 'passionate-fanbase'} market`); }
+    else if (!p.marketSize) score += 4;
+
+    // Competition comfort (7%)
+    if (p.competing === 'lead' && gap === 'elite') { score += 7; reasons.push('lead role available'); }
+    else if (p.competing === 'compete' && (gap === 'solid' || gap === 'elite')) { score += 6; reasons.push('competitive spot'); }
+    else if (p.competing === 'learn' && (gap === 'covered' || gap === 'stash')) { score += 7; reasons.push('veteran to learn behind'); }
+    else score += 2;
+
+    const finalScore = Math.min(100, Math.round(score));
+
+    let whyShort;
+    if (reasons.length >= 2) whyShort = reasons.slice(0, 2).join('; ') + '.';
+    else if (reasons.length === 1) whyShort = reasons[0] + '.';
+    else whyShort = 'Average fit across criteria.';
+
+    return { ...m, score: finalScore, whyShort, reasons };
+  }).sort((a, b) => b.score - a.score);
+
+  const best = scored[0];
+  let topReason = `${best.name} scores highest on this profile. ` +
+    `The combination of ${best.reasons.length ? best.reasons.join(', ') + '. ' : 'baseline criteria. '}` +
+    `It is the cleanest positional and stylistic fit available across the six current pro markets.`;
+
+  return { all: scored, best, topReason };
+}
+
+document.getElementById('runBtn').addEventListener('click', () => {
+  const p = {
+    position: document.getElementById('position').value,
+    style: document.getElementById('style').value,
+    tier: document.getElementById('tier').value,
+    region: document.getElementById('region').value,
+    marketSize: document.getElementById('market-size').value,
+    competing: document.getElementById('competing').value
+  };
+  if (!p.position || !p.style || !p.tier) {
+    alert('Position, style, and projection tier are required.');
+    return;
+  }
+  const r = compute(p);
+
+  document.getElementById('tName').innerHTML = r.best.name + ' <span class="italic">' + r.best.code.toUpperCase() + '.</span>';
+  document.getElementById('tScore').textContent = r.best.score;
+  document.getElementById('tReason').textContent = r.topReason;
+
+  const rl = document.getElementById('rankList');
+  rl.innerHTML = r.all.map((m, i) => `
+    <div class="market-row ${i === 0 ? 'top-rank' : ''}">
+      <div class="rank">${String(i + 1).padStart(2, '0')}</div>
+      <div class="body">
+        <div class="name">${m.name} <span class="italic">${m.code.toUpperCase()}.</span></div>
+        <div class="why">${m.whyShort}</div>
+      </div>
+      <div class="score"><span class="big">${m.score}</span>fit score</div>
+    </div>
+  `).join('');
+
+  document.getElementById('results').classList.add('active');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+</script>
+
+
+<script>
+// Global mega-menu hover/click
+document.querySelectorAll('.nav-global-item').forEach(item => {
+  const link = item.querySelector('.nav-global-link');
+  let timeout;
+  item.addEventListener('mouseenter', () => { clearTimeout(timeout); document.querySelectorAll('.nav-global-item.open').forEach(o => { if(o!==item) o.classList.remove('open'); o.querySelector('.nav-global-link').classList.remove('open'); }); item.classList.add('open'); link.classList.add('open'); });
+  item.addEventListener('mouseleave', () => { timeout = setTimeout(() => { item.classList.remove('open'); link.classList.remove('open'); }, 150); });
+  link.addEventListener('click', e => { e.preventDefault(); item.classList.toggle('open'); link.classList.toggle('open'); });
+});
+</script>
+
+</body>
+</html>

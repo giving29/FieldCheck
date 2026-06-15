@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Men's basketball verdicts · FieldCheck IQ</title>
+<meta name="description" content="Men's basketball athletic intelligence: NBA stars, top D1 college, and class-of-2026/27 recruits. 82 marquees, 8 facets, 25 PhD reviewers.">
+<meta property="og:title" content="Men's basketball · FieldCheck IQ">
+<meta property="og:description" content="Men's basketball athletic intelligence: NBA stars, top D1 college, and class-of-2026/27 recruits. 82 marquees, 8 facets, 25 PhD reviewers.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060A;--bg1:#100F14;--ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);--t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);--moss:#6BAA5A;--teal:#4EC9C0;--violet:#8B5CF6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 30% at 50% 0%,rgba(245,184,0,.04) 0%,transparent 60%),linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+.wrap{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding:60px 30px 100px}
+.brand-row{display:flex;align-items:center;gap:18px;margin-bottom:40px}
+.brand{font-family:'Anton',sans-serif;font-size:22px;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none}
+.back:hover{color:var(--gold)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(50px,7vw,92px);letter-spacing:-.014em;line-height:.95;margin-bottom:18px}
+h1 .em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--gold)}
+.lede{font-size:18px;color:var(--t2);max-width:760px;margin-bottom:42px}
+.lede b{color:var(--t)}
+h2{font-family:'Anton',sans-serif;font-size:30px;letter-spacing:-.012em;margin:56px 0 14px;padding-top:24px;border-top:1px solid var(--ge);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+h2:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h2 .pin{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);padding:3px 10px;border-radius:9999px;background:var(--golds);border:1px solid var(--goldl)}
+p{font-size:15.5px;color:var(--t2);margin-bottom:14px;max-width:780px}
+
+.cohort-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:24px 0 16px}
+.athlete{padding:18px 20px;border:1px solid var(--ge);border-radius:12px;background:rgba(255,252,245,.015);text-decoration:none;color:var(--t);transition:all .15s;position:relative;overflow:hidden}
+.athlete:hover{border-color:var(--goldl);background:var(--golds)}
+.athlete .photo{width:64px;height:64px;border-radius:50%;background:rgba(245,184,0,.1);display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:22px;color:var(--gold);margin-bottom:14px;border:1px solid var(--goldl);overflow:hidden}
+.athlete .photo img{width:100%;height:100%;object-fit:cover}
+.athlete .name{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:-.005em;line-height:1.15;margin-bottom:4px}
+.athlete .school{font-size:12px;color:var(--t3);line-height:1.4;margin-bottom:8px}
+.athlete .tier-row{display:flex;align-items:center;gap:8px;margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.6px}
+.athlete .comp{color:var(--gold);font-size:14px;font-weight:700}
+.athlete .tier{padding:2px 7px;border-radius:9999px;font-size:9.5px;letter-spacing:1px;text-transform:uppercase}
+.athlete .tier.icon{background:rgba(245,184,0,.18);color:var(--gold);border:1px solid var(--goldl)}
+.athlete .tier.elite\+,.athlete .tier.eliteplus{background:rgba(78,201,192,.15);color:var(--teal);border:1px solid rgba(78,201,192,.3)}
+.athlete .tier.elite{background:rgba(139,92,246,.15);color:var(--violet);border:1px solid rgba(139,92,246,.3)}
+.athlete .tier.star{background:rgba(107,170,90,.18);color:var(--moss);border:1px solid rgba(107,170,90,.3)}
+.athlete .tier.prospect{background:rgba(224,120,86,.15);color:#E07856;border:1px solid rgba(224,120,86,.3)}
+.athlete .tier.scout{background:rgba(255,252,245,.08);color:var(--t3);border:1px solid var(--ge)}
+
+.callout{margin:30px 0;padding:24px 28px;border-radius:12px;background:var(--golds);border:1px solid var(--goldl);border-left:3px solid var(--gold);font-size:14.5px;line-height:1.6;color:var(--t)}
+.callout .label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 40px}
+.actions a{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);background:var(--golds);border:1px solid var(--goldl);padding:10px 18px;border-radius:9999px;text-decoration:none;transition:background .15s}
+.actions a:hover{background:rgba(245,184,0,.18)}
+
+.footer{margin-top:80px;padding-top:30px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t4);letter-spacing:.6px}
+.footer a{color:var(--gold);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* FCBase61 . Agent on sport landing */
+.fc-agent-pill{position:fixed;bottom:24px;right:24px;background:linear-gradient(135deg,#f0c66e,#d49b48);color:#1c150d;border:0;border-radius:9999px;padding:14px 22px;font-family:'Inter',-apple-system,sans-serif;font-size:14px;font-weight:700;cursor:pointer;z-index:60;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(245,184,0,.35),0 0 0 1px rgba(245,184,0,.5);transition:transform .18s;animation:fc-agent-pulse 3s ease-in-out infinite}
+.fc-agent-pill:hover{transform:translateY(-2px)}
+.fc-agent-pill .icon{font-size:18px;line-height:1}
+.fc-agent-pill .label{font-weight:700;letter-spacing:.01em}
+@keyframes fc-agent-pulse{0%,100%{box-shadow:0 4px 20px rgba(245,184,0,.35),0 0 0 1px rgba(245,184,0,.5)}50%{box-shadow:0 4px 28px rgba(245,184,0,.55),0 0 0 1px rgba(245,184,0,.75)}}
+.fc-agent-pill.open{display:none}
+.fc-agent-panel{position:fixed;bottom:0;right:24px;width:420px;max-width:calc(100vw - 48px);height:600px;max-height:80vh;background:#0e0d14;border:1px solid rgba(245,184,0,.3);border-bottom:0;border-radius:16px 16px 0 0;z-index:60;display:none;flex-direction:column;box-shadow:0 -8px 40px rgba(0,0,0,.5)}
+.fc-agent-panel.open{display:flex}
+.fc-agent-header{padding:16px 20px 14px;border-bottom:1px solid rgba(245,241,232,.08);display:flex;align-items:flex-start;justify-content:space-between}
+.fc-agent-header h3{font-size:17px;color:#f5f1e8;margin:0 0 4px 0;font-weight:700;letter-spacing:-.005em}
+.fc-agent-header .sub{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,241,232,.45);font-family:monospace}
+.fc-agent-close{background:transparent;border:0;color:rgba(245,241,232,.55);cursor:pointer;font-size:22px;padding:0;width:28px;height:28px;border-radius:50%}
+.fc-agent-close:hover{background:rgba(245,241,232,.08);color:#f0c66e}
+.fc-agent-body{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px}
+.fc-agent-msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.55}
+.fc-agent-msg.user{align-self:flex-end;background:rgba(245,184,0,.12);border:1px solid rgba(245,184,0,.22);color:#f5f1e8;border-bottom-right-radius:4px}
+.fc-agent-msg.bot{align-self:flex-start;background:rgba(245,241,232,.05);border:1px solid rgba(245,241,232,.10);color:#f5f1e8;border-bottom-left-radius:4px;white-space:pre-wrap}
+.fc-agent-msg.bot.streaming::after{content:'▍';color:#f0c66e;animation:fc-agent-cursor .9s steps(2) infinite}
+.fc-agent-msg.bot.error{background:rgba(212,96,60,.08);border-color:rgba(212,96,60,.3);color:#f5b8a8}
+@keyframes fc-agent-cursor{0%,50%{opacity:1}51%,100%{opacity:0}}
+.fc-agent-empty{font-size:13px;line-height:1.55;color:rgba(245,241,232,.6);text-align:center;padding:24px 12px}
+.fc-agent-empty b{color:#f0c66e;display:block;font-size:15px;font-weight:700;margin-bottom:8px}
+.fc-agent-suggestions{display:flex;flex-wrap:wrap;gap:6px;padding:0 20px 14px;border-bottom:1px solid rgba(245,241,232,.06)}
+.fc-agent-suggestions button{background:rgba(245,184,0,.06);border:1px solid rgba(245,184,0,.18);color:#f0c66e;font-size:11.5px;padding:6px 11px;border-radius:9999px;cursor:pointer;font-weight:500}
+.fc-agent-suggestions button:hover{background:rgba(245,184,0,.14)}
+.fc-agent-input-row{padding:14px 16px 16px;display:flex;gap:8px;border-top:1px solid rgba(245,241,232,.06)}
+.fc-agent-input{flex:1;background:rgba(245,241,232,.04);border:1px solid rgba(245,241,232,.1);border-radius:10px;padding:10px 14px;color:#f5f1e8;font-size:13.5px;resize:none;max-height:100px;min-height:40px;font-family:inherit;outline:none}
+.fc-agent-input:focus{border-color:rgba(245,184,0,.45)}
+.fc-agent-send{background:linear-gradient(135deg,#f0c66e,#d49b48);color:#1c150d;border:0;border-radius:10px;width:40px;height:40px;font-size:18px;cursor:pointer}
+.fc-agent-send:disabled{opacity:.35;cursor:not-allowed}
+.fc-agent-footer{padding:0 16px 12px;font-size:9px;text-align:center;color:rgba(245,241,232,.3);letter-spacing:.08em;text-transform:uppercase;font-family:monospace}
+@media (max-width:600px){.fc-agent-pill{bottom:16px;right:16px;left:16px;justify-content:center}.fc-agent-panel{right:0;left:0;width:100%;max-width:100%;height:75vh}}
+</style>
+</head>
+<body>
+<div id="fc-sport-search" style="background:rgba(212,162,76,.08);border-bottom:1px solid rgba(212,162,76,.3);padding:14px 24px"><form style="max-width:860px;margin:0 auto;display:flex;gap:10px" onsubmit="var q=this.q.value.trim();if(q)location.href='/fieldcheck-verdict.html?q='+encodeURIComponent(q)+'&sport=mens-basketball';return false;"><input name="q" placeholder="Search any Men's Basketball athlete - club, HS, NCAA, pro" autocomplete="off" style="flex:1;background:rgba(245,241,232,.05);border:1px solid rgba(248,244,237,.2);border-radius:4px;padding:11px 16px;color:#F5F1E8;font-family:Inter,sans-serif;font-size:14px;outline:none"><button type="submit" style="font-family:JetBrains Mono,monospace;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#0A0908;background:#D4A24C;border:none;border-radius:3px;padding:0 22px;cursor:pointer">Get the verdict</button></form></div>
+
+<div class="bg-fx"></div>
+<div class="wrap">
+  <div class="brand-row">
+    <a class="brand" href="/"><b>Field</b>Check<span class="iq">IQ</span></a>
+    <a class="back" href="/">← all players</a>
+  </div>
+  <div class="eyebrow">Men's Basketball · 82 marquees · updated June 9 2026</div>
+  <h1><span class="em">Men's</span> basketball.</h1>
+  <p class="lede">From <b>Cooper Flagg to AJ Dybantsa to Cameron Boozer</b>. 82 marquees across NBA ICONs, NCAA elites, and the 2026/27 recruit class. Every verdict triangulates 3+ sources across the 8 canonical facets.</p>
+
+  <div class="actions">
+    <a href="/fieldcheck-gems?sport=mens-basketball">Discover gems →</a>
+    <a href="/fieldcheck-watchlist">My watchlist →</a>
+    <a href="/predictions">Predictions →</a>
+    <a href="/methodology">Methodology →</a>
+  </div>
+
+  
+  <h2>NBA ICONs <span class="pin">12 ICONs · ELITE+</span></h2>
+  <p>Generational talents. Hall-of-fame trajectories. The benchmark every younger evaluation is measured against.</p>
+  <div class="cohort-grid">
+    <a class="athlete" href="/fieldcheck-verdict.html?q=LeBron+James&sport=mens-basketball">
+      <div class="photo"><img src="https://fieldcheck-proxy.sridhar-nallani.workers.dev/photo?q=LeBron+James&sport=mens-basketball" alt="LeBron James" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='LJ'"></div>
+      <div class="name">LeBron James</div>
+      <div class="school">Los Angeles Lakers</div>
+      <div class="tier-row">
+        <span class="comp">9.8</span>
+        <span class="tier icon">ICON</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Stephen+Curry&sport=mens-basketball">
+      <div class="photo"><img src="https://fieldcheck-proxy.sridhar-nallani.workers.dev/photo?q=Stephen+Curry&sport=mens-basketball" alt="Stephen Curry" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='SC'"></div>
+      <div class="name">Stephen Curry</div>
+      <div class="school">Golden State Warriors</div>
+      <div class="tier-row">
+        <span class="comp">9.7</span>
+        <span class="tier icon">ICON</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Kevin+Durant&sport=mens-basketball">
+      <div class="photo"><img src="https://fieldcheck-proxy.sridhar-nallani.workers.dev/photo?q=Kevin+Durant&sport=mens-basketball" alt="Kevin Durant" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='KD'"></div>
+      <div class="name">Kevin Durant</div>
+      <div class="school">Phoenix Suns</div>
+      <div class="tier-row">
+        <span class="comp">9.6</span>
+        <span class="tier icon">ICON</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Nikola+Jokic&sport=mens-basketball">
+      <div class="photo"><img src="https://fieldcheck-proxy.sridhar-nallani.workers.dev/photo?q=Nikola+Jokic&sport=mens-basketball" alt="Nikola Jokic" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='NJ'"></div>
+      <div class="name">Nikola Jokic</div>
+      <div class="school">Denver Nuggets</div>
+      <div class="tier-row">
+        <span class="comp">9.6</span>
+        <span class="tier icon">ICON</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Victor+Wembanyama&sport=mens-basketball">
+      <div class="photo"><img src="https://fieldcheck-proxy.sridhar-nallani.workers.dev/photo?q=Victor+Wembanyama&sport=mens-basketball" alt="Victor Wembanyama" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='VW'"></div>
+      <div class="name">Victor Wembanyama</div>
+      <div class="school">San Antonio Spurs</div>
+      <div class="tier-row">
+        <span class="comp">9.5</span>
+        <span class="tier icon">ICON</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Giannis+Antetokounmpo&sport=mens-basketball">
+      <div class="photo"><img src="https://fieldcheck-proxy.sridhar-nallani.workers.dev/photo?q=Giannis+Antetokounmpo&sport=mens-basketball" alt="Giannis Antetokounmpo" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='GA'"></div>
+      <div class="name">Giannis Antetokounmpo</div>
+      <div class="school">Milwaukee Bucks</div>
+      <div class="tier-row">
+        <span class="comp">9.5</span>
+        <span class="tier icon">ICON</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Luka+Doncic&sport=mens-basketball">
+      <div class="photo"><img src="https://fieldcheck-proxy.sridhar-nallani.workers.dev/photo?q=Luka+Doncic&sport=mens-basketball" alt="Luka Doncic" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='LD'"></div>
+      <div class="name">Luka Doncic</div>
+      <div class="school">Dallas Mavericks</div>
+      <div class="tier-row">
+        <span class="comp">9.5</span>
+        <span class="tier icon">ICON</span>
+      </div>
+    </a>
+  </div>
+
+  <h2>NCAA + 2026 class <span class="pin">17 STARs + ELITE</span></h2>
+  <p>College players holding the line + the class headlining 2026 draft conversations. Boozer, Dybantsa, Flagg sit at the top of the lookahead.</p>
+  <div class="cohort-grid">
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Cooper+Flagg&sport=mens-basketball">
+      <div class="photo"><img src="https://fieldcheck-proxy.sridhar-nallani.workers.dev/photo?q=Cooper+Flagg&sport=mens-basketball" alt="Cooper Flagg" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='CF'"></div>
+      <div class="name">Cooper Flagg</div>
+      <div class="school">Duke University</div>
+      <div class="tier-row">
+        <span class="comp">9.3</span>
+        <span class="tier eliteplus">ELITE+</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Cameron+Boozer&sport=mens-basketball">
+      <div class="photo"><img src="https://fieldcheck-proxy.sridhar-nallani.workers.dev/photo?q=Cameron+Boozer&sport=mens-basketball" alt="Cameron Boozer" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='CB'"></div>
+      <div class="name">Cameron Boozer</div>
+      <div class="school">Duke University</div>
+      <div class="tier-row">
+        <span class="comp">7.4</span>
+        <span class="tier star">STAR</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=AJ+Dybantsa&sport=mens-basketball">
+      <div class="photo"><img src="https://fieldcheck-proxy.sridhar-nallani.workers.dev/photo?q=AJ+Dybantsa&sport=mens-basketball" alt="AJ Dybantsa" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='AD'"></div>
+      <div class="name">AJ Dybantsa</div>
+      <div class="school">BYU</div>
+      <div class="tier-row">
+        <span class="comp">7.4</span>
+        <span class="tier star">STAR</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Darryn+Peterson&sport=mens-basketball">
+      <div class="photo">DP</div>
+      <div class="name">Darryn Peterson</div>
+      <div class="school">Kansas</div>
+      <div class="tier-row">
+        <span class="comp">7.4</span>
+        <span class="tier star">STAR</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Cameron+Williams&sport=mens-basketball">
+      <div class="photo">CW</div>
+      <div class="name">Cameron Williams</div>
+      <div class="school">Duke University</div>
+      <div class="tier-row">
+        <span class="comp">5.4</span>
+        <span class="tier scout">SCOUT</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Jordan+Smith+Jr&sport=mens-basketball">
+      <div class="photo">JS</div>
+      <div class="name">Jordan Smith Jr</div>
+      <div class="school">University of Florida</div>
+      <div class="tier-row">
+        <span class="comp">5.3</span>
+        <span class="tier scout">SCOUT</span>
+      </div>
+    </a>
+  </div>
+
+  <h2>Class of 2026 recruits <span class="pin">11 SCOUT + PROSPECT</span></h2>
+  <p>HS-cap doctrine in effect — none of these can move above SCOUT (5.4) until proven against college defenders. That's the honest band.</p>
+  <div class="cohort-grid">
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Tyran+Stokes&sport=mens-basketball">
+      <div class="photo">TS</div>
+      <div class="name">Tyran Stokes</div>
+      <div class="school">Notre Dame HS → Kansas</div>
+      <div class="tier-row">
+        <span class="comp">5.4</span>
+        <span class="tier scout">SCOUT</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Caleb+Wilson&sport=mens-basketball">
+      <div class="photo">CW</div>
+      <div class="name">Caleb Wilson</div>
+      <div class="school">Holy Innocents Episcopal</div>
+      <div class="tier-row">
+        <span class="comp">5.3</span>
+        <span class="tier scout">SCOUT</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=JJ+Mandaquit&sport=mens-basketball">
+      <div class="photo">JM</div>
+      <div class="name">JJ Mandaquit</div>
+      <div class="school">Utah Prep → BYU</div>
+      <div class="tier-row">
+        <span class="comp">5.2</span>
+        <span class="tier scout">SCOUT</span>
+      </div>
+    </a>
+    <a class="athlete" href="/fieldcheck-verdict.html?q=Xavion+Staton&sport=mens-basketball">
+      <div class="photo">XS</div>
+      <div class="name">Xavion Staton</div>
+      <div class="school">Sierra Vista → BYU</div>
+      <div class="tier-row">
+        <span class="comp">5.0</span>
+        <span class="tier scout">SCOUT</span>
+      </div>
+    </a>
+  </div>
+
+
+  <div class="footer">
+    FieldCheck IQ · Men's Basketball · last refreshed June 9 2026 · <a href="/">home</a> · <a href="/coverage">coverage map</a> · <a href="/methodology">methodology</a>
+  </div>
+</div>
+<!-- FCBase61 . Agent on fieldcheck-sport-mens-basketball.html (mode=sport, sport=mens-basketball) -->
+<button class="fc-agent-pill" id="fc-agent-pill"><span class="icon">✨</span><span class="label">Ask about MBB cohort</span></button>
+<div class="fc-agent-panel" id="fc-agent-panel">
+  <div class="fc-agent-header">
+    <div><h3>Ask about men's basketball</h3><div class="sub">82 athletes graded</div></div>
+    <button class="fc-agent-close" id="fc-agent-close">×</button>
+  </div>
+  <div class="fc-agent-suggestions" id="fc-agent-suggestions"></div>
+  <div class="fc-agent-body" id="fc-agent-body">
+    <div class="fc-agent-empty" id="fc-agent-empty">
+      <b>Ask about this cohort</b>
+      Top recruits, facet weights, gaps, trajectory. For specific athletes, visit their verdict page.
+    </div>
+  </div>
+  <div class="fc-agent-input-row">
+    <textarea class="fc-agent-input" id="fc-agent-input" placeholder="Type a question…" rows="1" maxlength="500"></textarea>
+    <button class="fc-agent-send" id="fc-agent-send" disabled>↑</button>
+  </div>
+  <div class="fc-agent-footer">Powered by Claude · 10 questions/day · <a href="/agent-transparency" style="color:rgba(245,184,0,.6);text-decoration:none">see the prompt</a></div>
+</div>
+<script>
+(function(){
+  if(window._fcAgentInit)return;window._fcAgentInit=true;
+  function init(){
+    var pill=document.getElementById('fc-agent-pill'),panel=document.getElementById('fc-agent-panel'),closeBtn=document.getElementById('fc-agent-close'),input=document.getElementById('fc-agent-input'),sendBtn=document.getElementById('fc-agent-send'),body=document.getElementById('fc-agent-body'),emptyState=document.getElementById('fc-agent-empty'),suggestionsEl=document.getElementById('fc-agent-suggestions');
+    if(!pill||!panel)return;
+    var WORKER_BASE=(location.hostname.indexOf('fieldcheck-dev')>=0)?'https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev':'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+    var suggestions=["Who is the highest-rated mens-basketball recruit?",
+      "How does Cooper Flagg compare to Boozer?",
+      "Who are the top PROSPECTS not yet at STAR?",
+      "Which freshmen are pushing the STAR cap?",
+      "Where are the gaps in this cohort?"];
+    var html='';for(var i=0;i<suggestions.length;i++){html+='<button data-q="'+suggestions[i].replace(/"/g,'&quot;')+'">'+suggestions[i]+'</button>';}
+    suggestionsEl.innerHTML=html;
+    var btns=suggestionsEl.querySelectorAll('button');
+    for(var k=0;k<btns.length;k++){btns[k].addEventListener('click',function(){input.value=this.getAttribute('data-q');updateSendState();input.focus();});}
+    var histKey='fc_agent_hist:sport:mens-basketball';
+    function loadHist(){try{return JSON.parse(localStorage.getItem(histKey)||'[]');}catch(e){return[];}}
+    function saveHist(h){try{localStorage.setItem(histKey,JSON.stringify(h.slice(-3)));}catch(e){}}
+    function renderHistory(){var hist=loadHist();if(hist.length===0){emptyState.style.display='';return;}emptyState.style.display='none';for(var i=0;i<hist.length;i++){if(hist[i].q)appendMsg(hist[i].q,'user');if(hist[i].a)appendMsg(hist[i].a,'bot');}}
+    function appendMsg(text,kind){emptyState.style.display='none';var m=document.createElement('div');m.className='fc-agent-msg '+kind;m.textContent=text;body.appendChild(m);body.scrollTop=body.scrollHeight;return m;}
+    pill.addEventListener('click',function(){panel.classList.add('open');pill.classList.add('open');renderHistory();input.focus();});
+    closeBtn.addEventListener('click',function(){panel.classList.remove('open');pill.classList.remove('open');});
+    function updateSendState(){sendBtn.disabled=!input.value.trim()||sending;input.style.height='auto';input.style.height=Math.min(input.scrollHeight,100)+'px';}
+    input.addEventListener('input',updateSendState);
+    input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();if(!sendBtn.disabled)send();}});
+    var sending=false;sendBtn.addEventListener('click',send);
+    function send(){
+      var question=input.value.trim();if(!question||sending)return;sending=true;
+      appendMsg(question,'user');input.value='';updateSendState();
+      var botMsg=appendMsg('','bot');botMsg.classList.add('streaming');
+      var hist=loadHist();
+      var payload={question:question,athlete:'FieldCheck sport cohort',sport:'mens-basketball',history:hist,verdict_data:{},mode:'sport'};
+      fetch(WORKER_BASE+'/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){
+        if(!r.ok||!r.body)throw new Error('HTTP '+r.status);
+        var reader=r.body.getReader(),decoder=new TextDecoder(),buffer='',full='',err=false;
+        function readChunk(){return reader.read().then(function(res){
+          if(res.done){botMsg.classList.remove('streaming');sending=false;updateSendState();if(!err&&full){hist.push({q:question,a:full});saveHist(hist);}return;}
+          buffer+=decoder.decode(res.value,{stream:true});var events=buffer.split('\n\n');buffer=events.pop()||'';
+          for(var i=0;i<events.length;i++){var lines=events[i].split('\n'),dp=null;for(var j=0;j<lines.length;j++){if(lines[j].indexOf('data: ')===0)dp=lines[j].slice(6);}if(!dp)continue;
+            try{var ev=JSON.parse(dp);
+              if(ev.type==='chunk'&&ev.text){full+=ev.text;botMsg.textContent=full;body.scrollTop=body.scrollHeight;}
+              else if(ev.type==='error'||ev.type==='rate_limit'||ev.type==='config_error'){err=true;botMsg.classList.add('error');botMsg.classList.remove('streaming');botMsg.textContent=ev.message||'Error';}
+              else if(ev.type==='done'){botMsg.classList.remove('streaming');}
+            }catch(e){}}
+          return readChunk();});}
+        return readChunk();
+      }).catch(function(e){botMsg.classList.remove('streaming');botMsg.classList.add('error');botMsg.textContent='Connection error: '+(e.message||'failed');sending=false;updateSendState();});
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(init,300);});}else{setTimeout(init,300);}
+})();
+</script>
+<!-- FCBase61 . sport agent (mode=sport, sport=mens-basketball) . 5 cohort-specific suggestions . localStorage history per sport . streams Claude Haiku via /agent -->
+</body>
+</html>

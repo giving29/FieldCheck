@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Position-Fit Oracle · FieldCheck</title>
+  <meta name="description" content="Am I really an OH or an opposite in disguise? FieldCheck's position-fit oracle reads your measurables and tells you where you actually project — and at which kind of system.">
+  <meta property="og:title" content="Position-Fit Oracle · FieldCheck">
+  <meta property="og:description" content="Not a ranking. A system-aware position fit. Built for the question scouts spend hours on.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #0d0d0d; --bg-2: #161616; --bg-3: #1d1d1d;
+  --text: #ededed; --text-2: #b8b8b8; --text-3: #888; --text-4: #555;
+  --gold: #d4af37; --gold-2: #f5b800;
+  --border: rgba(255,255,255,0.08); --glass: rgba(255,255,255,0.03); --glass-edge: rgba(255,255,255,0.1);
+  --rust: #c45132; --sage: #6a9c89;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+a { color: inherit; }
+.nav { padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-links a { color: var(--text-2); text-decoration: none; margin-left: 28px; font-size: 13px; transition: color 0.2s ease; }
+.nav-links a:hover { color: var(--gold); }
+
+.hero { padding: 72px 40px 40px; max-width: 980px; margin: 0 auto; }
+.hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); margin-bottom: 18px; font-weight: 600; }
+.hero h1 { font-family: 'Anton', sans-serif; font-size: clamp(46px, 7vw, 84px); line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 22px; }
+.hero h1 .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; color: var(--gold); }
+.hero-sub { font-size: 18px; color: var(--text-2); max-width: 720px; line-height: 1.55; margin-bottom: 22px; }
+.voice-attribution {
+  display: inline-flex; align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(212,175,55,0.06);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  max-width: 720px;
+  margin-bottom: 24px;
+}
+.voice-attribution-icon { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--gold); font-weight: 600; padding-top: 2px; flex-shrink: 0; }
+.voice-attribution-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--text); line-height: 1.5; }
+.voice-attribution-text strong { font-style: normal; font-family: 'Inter', sans-serif; font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: 0.5px; }
+
+/* Form card */
+.fit-card {
+  max-width: 980px;
+  margin: 0 auto 56px;
+  padding: 40px;
+  background: linear-gradient(180deg, var(--glass) 0%, rgba(20,20,20,0.4) 100%);
+  border: 1px solid var(--glass-edge);
+  border-radius: 20px;
+}
+.fit-section {
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--glass-edge);
+}
+.fit-section:last-of-type { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+.fit-section-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.fit-section-h {
+  font-family: 'Anton', sans-serif;
+  font-size: 28px;
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+.fit-section-h .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.fit-section-help {
+  font-size: 13px;
+  color: var(--text-3);
+  font-style: italic;
+  margin-bottom: 18px;
+}
+.fit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.fit-field { display: flex; flex-direction: column; gap: 6px; }
+.fit-field label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--text-2);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.fit-field .hint {
+  font-size: 11px;
+  color: var(--text-4);
+  margin-top: -2px;
+}
+.fit-field input, .fit-field select {
+  padding: 14px 16px;
+  background: var(--bg-2);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  border-radius: 10px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fit-field input::placeholder { color: var(--text-4); }
+.fit-field input:focus, .fit-field select:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: rgba(212,175,55,0.04);
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
+}
+.fit-field select {
+  cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3e%3cpath d='M1 1L6 6L11 1' stroke='%23d4af37' stroke-width='1.5' stroke-linecap='round'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.fit-submit-wrap {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--glass-edge);
+  display: flex; flex-direction: column; gap: 12px; align-items: center;
+}
+.fit-submit {
+  padding: 18px 36px;
+  background: var(--gold);
+  color: #0a0a0a;
+  border: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 2.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  min-width: 280px;
+}
+.fit-submit:hover {
+  background: var(--gold-2);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 32px rgba(212,175,55,0.3);
+}
+.fit-submit:active { transform: translateY(0); }
+.fit-submit:disabled {
+  opacity: 0.5; cursor: not-allowed; transform: none;
+}
+.fit-submit-note {
+  font-size: 12px;
+  color: var(--text-3);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+}
+
+/* Results */
+.result-wrap {
+  max-width: 980px;
+  margin: 0 auto 80px;
+  display: none;
+}
+.result-wrap.show { display: block; animation: result-in 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes result-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.result-primary {
+  padding: 40px;
+  background: linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(20,20,20,0.5) 100%);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.result-primary-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  color: var(--gold);
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+.result-primary-position {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(72px, 12vw, 120px);
+  line-height: 1;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.result-primary-position .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.result-primary-score {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--text-2);
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+}
+.result-primary-confidence {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+.result-primary-confidence.high { background: rgba(106,156,137,0.15); color: var(--sage); border: 1px solid var(--sage); }
+.result-primary-confidence.medium { background: rgba(245,184,0,0.15); color: var(--gold); border: 1px solid var(--gold); }
+.result-primary-confidence.low { background: rgba(196,81,50,0.15); color: var(--rust); border: 1px solid var(--rust); }
+
+.result-recruiter-vs-oracle {
+  margin-top: 24px;
+  padding: 18px 22px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 12px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.result-system-context {
+  padding: 28px 32px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+.result-section-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.result-system-recommendation {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+.result-system-detail {
+  font-size: 14px;
+  color: var(--text-2);
+  margin-bottom: 6px;
+  padding-left: 16px;
+  border-left: 2px solid var(--gold);
+}
+
+.result-positions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.result-position-card {
+  padding: 20px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: 12px;
+}
+.result-position-card.primary {
+  background: rgba(212,175,55,0.08);
+  border-color: var(--gold);
+}
+.result-position-name {
+  font-family: 'Anton', sans-serif;
+  font-size: 32px;
+  margin-bottom: 4px;
+}
+.result-position-score {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+}
+.result-position-bar {
+  margin-top: 10px;
+  height: 4px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.result-position-bar-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.result-reasoning {
+  padding: 28px 32px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+.result-reasoning-section { margin-bottom: 20px; }
+.result-reasoning-section:last-child { margin-bottom: 0; }
+.result-reasoning-pos {
+  font-family: 'Anton', sans-serif;
+  font-size: 22px;
+  margin-bottom: 12px;
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+}
+.result-reasoning-pos-score {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+}
+.result-reasoning-list { display: flex; flex-direction: column; gap: 8px; }
+.result-reasoning-item {
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.result-methodology {
+  padding: 20px 24px;
+  background: rgba(0,0,0,0.3);
+  border: 1px dashed var(--glass-edge);
+  border-radius: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+.result-methodology strong { color: var(--gold); font-weight: 600; }
+
+.result-actions {
+  margin-top: 24px;
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+}
+.result-action {
+  padding: 12px 24px;
+  background: var(--bg-2);
+  color: var(--text);
+  border: 1px solid var(--glass-edge);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+.result-action:hover { border-color: var(--gold); color: var(--gold); }
+
+/* v0.30.5.911-920 — SOCIAL SHARE CARD */
+.share-card {
+  margin-top: 32px;
+  padding: 32px;
+  background: linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(20,20,20,0.5) 100%);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 20px;
+}
+.share-card-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--gold); font-weight: 600;
+  margin-bottom: 8px;
+}
+.share-card-h {
+  font-family: 'Anton', sans-serif;
+  font-size: 32px; line-height: 1.05;
+  margin-bottom: 8px;
+}
+.share-card-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 20px;
+  max-width: 540px;
+}
+.share-card-actions {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.share-btn {
+  padding: 12px 20px;
+  background: var(--bg-2);
+  color: var(--text);
+  border: 1px solid var(--glass-edge);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.share-btn:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-1px); }
+.share-btn-primary { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
+.share-btn-primary:hover { background: var(--gold-2); }
+
+.share-preview {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--glass-edge);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+.share-preview iframe {
+  width: 240px;
+  height: 426px;
+  border: none;
+  border-radius: 8px;
+  background: var(--bg);
+}
+@media (max-width: 720px) {
+  .share-card { padding: 24px 20px; }
+  .share-card-actions { flex-direction: column; }
+  .share-btn { width: 100%; text-align: center; }
+  .share-preview iframe { width: 200px; height: 356px; }
+}
+
+/* Inline messages */
+.fit-msg {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  display: none;
+}
+.fit-msg.show { display: block; }
+.fit-msg.error { background: rgba(196,81,50,0.12); border-left: 2px solid var(--rust); color: var(--rust); }
+.fit-msg.info { background: rgba(136,136,136,0.08); border-left: 2px solid var(--text-3); color: var(--text-2); }
+
+/* Footer */
+footer { padding: 40px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-4); letter-spacing: 1px; border-top: 1px solid var(--border); }
+footer a { color: var(--text-3); text-decoration: none; }
+footer a:hover { color: var(--gold); }
+
+@media (max-width: 720px) {
+  .nav { padding: 18px 20px; }
+  .nav-links a { margin-left: 14px; font-size: 12px; }
+  .hero { padding: 40px 20px 24px; }
+  .fit-card { margin-left: 20px; margin-right: 20px; padding: 24px 20px; }
+  .fit-section { margin-bottom: 24px; padding-bottom: 24px; }
+  .fit-grid { grid-template-columns: 1fr; gap: 12px; }
+  .fit-submit { width: 100%; min-width: 0; }
+  .result-wrap { padding: 0 20px; }
+  .result-primary { padding: 28px 20px; }
+  .result-positions-grid { grid-template-columns: repeat(2, 1fr); }
+  .voice-attribution { flex-direction: column; gap: 6px; }
+}
+  </style>
+<script>
+// FieldCheck i18n loader · v0.30.5.2210 · shared across /voices, /position-fit, /add-me
+(function() {
+  const PROXY = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev/api';
+  const SUPPORTED = ['en', 'es'];
+
+  function getLang() {
+    try {
+      const stored = sessionStorage.getItem('fc_lang');
+      if (stored && SUPPORTED.includes(stored)) return stored;
+    } catch (_) {}
+    const browser = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    return SUPPORTED.includes(browser) ? browser : 'en';
+  }
+
+  function setLang(lang) {
+    if (!SUPPORTED.includes(lang)) return;
+    try { sessionStorage.setItem('fc_lang', lang); } catch (_) {}
+    location.reload();
+  }
+
+  async function fetchStrings(lang, ns) {
+    try {
+      const cacheKey = `fc_i18n_${lang}_${ns}`;
+      try {
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) return JSON.parse(cached);
+      } catch (_) {}
+      const r = await fetch(`${PROXY}/i18n/strings?lang=${encodeURIComponent(lang)}&ns=${encodeURIComponent(ns)}`);
+      const data = await r.json();
+      if (data && data.ok && data.strings) {
+        try { sessionStorage.setItem(cacheKey, JSON.stringify(data.strings)); } catch (_) {}
+        return data.strings;
+      }
+    } catch (_) {}
+    return {};
+  }
+
+  function applyStrings(strings) {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (strings[key] != null) el.textContent = strings[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (strings[key] != null) el.placeholder = strings[key];
+    });
+  }
+
+  function renderToggle(currentLang) {
+    let toggle = document.getElementById('fc-lang-toggle');
+    if (toggle) return;
+    toggle = document.createElement('div');
+    toggle.id = 'fc-lang-toggle';
+    toggle.style.cssText = 'position:fixed;top:18px;right:18px;z-index:1000;display:flex;gap:0;background:rgba(20,20,20,0.85);border:1px solid rgba(212,175,55,0.3);border-radius:99px;padding:3px;font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:1.5px;backdrop-filter:blur(8px)';
+    toggle.innerHTML = `
+      <button data-lang="en" style="background:${currentLang==='en'?'rgba(212,175,55,0.25)':'transparent'};color:${currentLang==='en'?'#e8b948':'#888'};border:none;padding:6px 12px;border-radius:99px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:inherit;font-weight:700">EN</button>
+      <button data-lang="es" style="background:${currentLang==='es'?'rgba(212,175,55,0.25)':'transparent'};color:${currentLang==='es'?'#e8b948':'#888'};border:none;padding:6px 12px;border-radius:99px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:inherit;font-weight:700">ES</button>
+    `;
+    toggle.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
+    });
+    document.body.appendChild(toggle);
+  }
+
+  window.FieldCheckI18n = {
+    init: async function(namespace) {
+      const lang = getLang();
+      document.documentElement.lang = lang;
+      renderToggle(lang);
+      const commonStrings = await fetchStrings(lang, 'common');
+      const nsStrings = namespace ? await fetchStrings(lang, namespace) : {};
+      applyStrings(Object.assign({}, commonStrings, nsStrings));
+      return { lang, strings: Object.assign({}, commonStrings, nsStrings) };
+    },
+    getLang: getLang,
+    setLang: setLang
+  };
+})();
+</script>
+<script>
+// FieldCheck CX library · Apple-grade polish · v1770
+// Loading states, empty states, success moments, error states, toast notifications
+(function() {
+  // Inject base styles once
+  if (document.getElementById('fc-cx-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'fc-cx-styles';
+  style.textContent = `
+    /* Loading skeleton */
+    .fc-skeleton {
+      display: inline-block;
+      background: linear-gradient(90deg, rgba(255,201,74,0.04) 0%, rgba(255,201,74,0.10) 50%, rgba(255,201,74,0.04) 100%);
+      background-size: 200% 100%;
+      animation: fc-skeleton-shimmer 1.4s ease-in-out infinite;
+      border-radius: 6px;
+      height: 1em;
+      min-width: 60px;
+    }
+    @keyframes fc-skeleton-shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .fc-skeleton-block { display: block; height: 1em; margin-bottom: 8px; }
+    .fc-skeleton-block:last-child { width: 60%; }
+
+    /* Empty state */
+    .fc-empty {
+      padding: 60px 32px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(255,201,74,0.03), transparent);
+      border: 1px dashed rgba(255,201,74,0.25);
+      border-radius: 16px;
+    }
+    .fc-empty-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: rgba(255,201,74,0.6);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .fc-empty-h {
+      font-family: 'Anton', sans-serif;
+      font-size: 26px;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      color: #f4ead5;
+    }
+    .fc-empty-body {
+      font-size: 15px;
+      color: rgba(244,234,213,0.7);
+      max-width: 480px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+    }
+    .fc-empty-cta {
+      display: inline-block;
+      padding: 12px 22px;
+      background: #e8b948;
+      color: #1a1410;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .fc-empty-cta:hover { background: #f5c950; transform: translateY(-1px); }
+
+    /* Toast */
+    .fc-toast-stack {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+      max-width: calc(100vw - 32px);
+    }
+    .fc-toast {
+      padding: 14px 22px;
+      background: rgba(20,17,12,0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,201,74,0.30);
+      border-left: 3px solid #e8b948;
+      border-radius: 12px;
+      color: #f4ead5;
+      font-size: 14px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      pointer-events: auto;
+      animation: fc-toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      max-width: 480px;
+    }
+    .fc-toast.success { border-left-color: #95d5b2; }
+    .fc-toast.error { border-left-color: #ff8c52; }
+    .fc-toast.info { border-left-color: #8ec4e8; }
+    .fc-toast.out { animation: fc-toast-out 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes fc-toast-in {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fc-toast-out {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+
+    /* Spinner */
+    .fc-spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,201,74,0.2);
+      border-top-color: #e8b948;
+      border-radius: 50%;
+      animation: fc-spin 0.7s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes fc-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Page transition */
+    body.fc-fade-in { animation: fc-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes fc-fade-in {
+      0% { opacity: 0; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Focus ring (accessibility) */
+    *:focus-visible {
+      outline: 2px solid #e8b948;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      .fc-skeleton, .fc-toast, .fc-spinner, body.fc-fade-in { animation: none !important; }
+      * { transition-duration: 0.01ms !important; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Toast API
+  function ensureToastStack() {
+    let stack = document.getElementById('fc-toast-stack');
+    if (!stack) {
+      stack = document.createElement('div');
+      stack.id = 'fc-toast-stack';
+      stack.className = 'fc-toast-stack';
+      document.body.appendChild(stack);
+    }
+    return stack;
+  }
+
+  function toast(message, opts) {
+    opts = opts || {};
+    const variant = opts.variant || 'info';
+    const duration = opts.duration || 3500;
+    const stack = ensureToastStack();
+    const t = document.createElement('div');
+    t.className = 'fc-toast ' + variant;
+    t.textContent = message;
+    stack.appendChild(t);
+    setTimeout(() => {
+      t.classList.add('out');
+      setTimeout(() => t.remove(), 280);
+    }, duration);
+    return t;
+  }
+
+  // Skeleton helper
+  function skeleton(target, lines) {
+    if (typeof target === 'string') target = document.querySelector(target);
+    if (!target) return;
+    lines = lines || 3;
+    const blocks = Array.from({ length: lines }, () => '<span class="fc-skeleton fc-skeleton-block"></span>').join('');
+    target.innerHTML = blocks;
+  }
+
+  // Empty state helper
+  function emptyState(target, opts) {
+    if (typeof target === 'string') target = document.querySelector(target);
+    if (!target) return;
+    opts = opts || {};
+    target.innerHTML = `
+      <div class="fc-empty">
+        <div class="fc-empty-icon">${opts.icon || '// NOTHING HERE YET'}</div>
+        <div class="fc-empty-h">${opts.title || 'Nothing yet.'}</div>
+        <div class="fc-empty-body">${opts.body || ''}</div>
+        ${opts.ctaText ? `<a href="${opts.ctaHref || '#'}" class="fc-empty-cta">${opts.ctaText}</a>` : ''}
+      </div>
+    `;
+  }
+
+  // Spinner helper
+  function spinner(text) {
+    return `<span class="fc-spinner"></span>${text ? ' ' + text : ''}`;
+  }
+
+  // Fade-in on body
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('fc-fade-in');
+  });
+
+  window.FieldCheckCX = { toast, skeleton, emptyState, spinner };
+})();
+</script>
+</head>
+<body>
+  <!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+  <section class="hero">
+    <div class="hero-eyebrow">// POSITION-FIT ORACLE · W-VB v1</div>
+    <h1>Am I really an OH or an <span class="serif">opposite in disguise?</span></h1>
+    <p class="hero-sub">Drop in your measurables, stats, and scout eval. The oracle reads you the way coaches do — and tells you which kind of system fits, not just which position. Auditable. Not a ranking.</p>
+
+    <div class="voice-attribution">
+      <span class="voice-attribution-icon">// VOICE ASK</span>
+      <span class="voice-attribution-text">
+        <strong>MAYA · MARCUS · JAMES</strong><br>
+        <em>"Position-fit is the universal missing feature."</em> Three independent Voices — a player, a club director, and a head coach — named this as their top ask. So we built it first.
+      </span>
+    </div>
+  </section>
+
+  <div class="fit-card">
+    <!-- Section 1: Sport + Position -->
+    <div class="fit-section">
+      <div class="fit-section-eyebrow">// STEP 1</div>
+      <h2 class="fit-section-h">What you play, what they say <span class="serif">you are.</span></h2>
+      <p class="fit-section-help">v1 covers women's + men's volleyball. Football and basketball oracle ship in v2.</p>
+      <div class="fit-grid">
+        <div class="fit-field">
+          <label for="sport">Sport</label>
+          <select id="sport">
+            <option value="womens-volleyball">Women's Volleyball</option>
+            <option value="mens-volleyball">Men's Volleyball</option>
+          </select>
+        </div>
+        <div class="fit-field">
+          <label for="recruited-as">Position being recruited as</label>
+          <select id="recruited-as">
+            <option value="">— Not specified —</option>
+            <option value="OH">OH · Outside Hitter</option>
+            <option value="Opp">Opp · Opposite / Right Side</option>
+            <option value="MB">MB · Middle Blocker</option>
+            <option value="S">S · Setter</option>
+            <option value="L">L · Libero</option>
+            <option value="DS">DS · Defensive Specialist</option>
+          </select>
+          <span class="hint">If multiple schools want you as different positions, leave blank.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Measurables -->
+    <div class="fit-section">
+      <div class="fit-section-eyebrow">// STEP 2</div>
+      <h2 class="fit-section-h">Your measurables. <span class="serif">The bones.</span></h2>
+      <p class="fit-section-help">Standing height + reach metrics. Optional but each one adds signal.</p>
+      <div class="fit-grid">
+        <div class="fit-field">
+          <label for="height">Height (inches)</label>
+          <input type="number" id="height" placeholder="73" min="60" max="84" step="0.5">
+          <span class="hint">73" = 6'1"</span>
+        </div>
+        <div class="fit-field">
+          <label for="weight">Weight (lbs)</label>
+          <input type="number" id="weight" placeholder="155" min="100" max="280">
+        </div>
+        <div class="fit-field">
+          <label for="vertical">Vertical jump (inches)</label>
+          <input type="number" id="vertical" placeholder="22" min="10" max="44" step="0.5">
+        </div>
+        <div class="fit-field">
+          <label for="approach-reach">Approach reach (inches)</label>
+          <input type="number" id="approach-reach" placeholder="117" min="80" max="140" step="0.5">
+          <span class="hint">117" = 9'9". P5 Opp standard: 117"+</span>
+        </div>
+        <div class="fit-field">
+          <label for="block-reach">Block reach (inches)</label>
+          <input type="number" id="block-reach" placeholder="115" min="80" max="140" step="0.5">
+          <span class="hint">121" = 10'1". Elite MB threshold.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Stats -->
+    <div class="fit-section">
+      <div class="fit-section-eyebrow">// STEP 3</div>
+      <h2 class="fit-section-h">Your <span class="serif">stat line.</span></h2>
+      <p class="fit-section-help">Last full season or most representative stretch.</p>
+      <div class="fit-grid">
+        <div class="fit-field">
+          <label for="passing">Passing rating (0-3 scale)</label>
+          <input type="number" id="passing" placeholder="2.1" min="0" max="3" step="0.05">
+          <span class="hint">≥2.2 = elite OH. &lt;1.8 = leans Opp.</span>
+        </div>
+        <div class="fit-field">
+          <label for="hitting">Hitting % (decimal)</label>
+          <input type="number" id="hitting" placeholder="0.310" min="-0.5" max="0.6" step="0.005">
+          <span class="hint">Format: .310 = .310. ≥.300 confirms OH viability.</span>
+        </div>
+        <div class="fit-field">
+          <label for="kills">Kills per set</label>
+          <input type="number" id="kills" placeholder="3.2" min="0" max="8" step="0.1">
+        </div>
+        <div class="fit-field">
+          <label for="errors">Errors per set</label>
+          <input type="number" id="errors" placeholder="1.1" min="0" max="5" step="0.1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Scout Eval -->
+    <div class="fit-section">
+      <div class="fit-section-eyebrow">// STEP 4</div>
+      <h2 class="fit-section-h">Scout eval. <span class="serif">Your coach's read.</span></h2>
+      <p class="fit-section-help">If you don't know, ask your club coach. Their honest answer is the signal.</p>
+      <div class="fit-grid">
+        <div class="fit-field">
+          <label for="arm-swing">Arm-swing variety</label>
+          <select id="arm-swing">
+            <option value="">— Not evaluated —</option>
+            <option value="high">High — scores on tough sets, multiple shots</option>
+            <option value="medium">Medium — solid but limited shot range</option>
+            <option value="low">Low — one-shot hitter</option>
+          </select>
+        </div>
+        <div class="fit-field">
+          <label for="reception">Reception load tolerance</label>
+          <select id="reception">
+            <option value="">— Not evaluated —</option>
+            <option value="high">High — passes 6 rotations consistently</option>
+            <option value="medium">Medium — 4-rotation viable</option>
+            <option value="low">Low — better as non-passing pin</option>
+          </select>
+        </div>
+        <div class="fit-field">
+          <label for="mental">Mental in serve receive</label>
+          <select id="mental">
+            <option value="">— Not evaluated —</option>
+            <option value="high">High — wants the ball under pressure</option>
+            <option value="medium">Medium — handles standard pressure</option>
+            <option value="low">Low — struggles in tough rotations</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="fit-submit-wrap">
+      <button class="fit-submit" id="fit-submit" onclick="runOracle()">RUN ORACLE →</button>
+      <p class="fit-submit-note">Auditable. Rule-based. Every reasoning step shown.</p>
+      <div class="fit-msg" id="fit-msg"></div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="result-wrap" id="result-wrap">
+    <div id="result-content"></div>
+  </div>
+
+  <footer>Build <span id="build-stamp">v0.30.5.2210</span> · <a href="/">Home</a> · <a href="/voices">Voices</a> · <a href="/pathway">Pathway</a> · <a href="/moat">Moat</a></footer>
+
+<script>
+const PROXY = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev/api';
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function getNum(id) {
+  const v = document.getElementById(id).value;
+  if (v === '' || v == null) return null;
+  const n = parseFloat(v);
+  return isNaN(n) ? null : n;
+}
+
+function getStr(id) {
+  const v = document.getElementById(id).value;
+  return v === '' ? null : v;
+}
+
+async function runOracle() {
+  const btn = document.getElementById('fit-submit');
+  const msg = document.getElementById('fit-msg');
+  const resultWrap = document.getElementById('result-wrap');
+  const resultContent = document.getElementById('result-content');
+
+  const body = {
+    sport: document.getElementById('sport').value,
+    measurables: {
+      height_inches: getNum('height'),
+      weight_lbs: getNum('weight'),
+      vertical_inches: getNum('vertical'),
+      approach_reach_inches: getNum('approach-reach'),
+      block_reach_inches: getNum('block-reach')
+    },
+    stats: {
+      passing_rating: getNum('passing'),
+      hitting_pct: getNum('hitting'),
+      kills_per_set: getNum('kills'),
+      errors_per_set: getNum('errors')
+    },
+    scout_eval: {
+      arm_swing_variety: getStr('arm-swing'),
+      reception_load_tolerance: getStr('reception'),
+      mental_in_serve_receive: getStr('mental')
+    },
+    position_being_recruited_as: getStr('recruited-as')
+  };
+
+  // Minimum input check: need at least height OR some stats
+  const hasAnyInput = body.measurables.height_inches != null ||
+                      body.stats.passing_rating != null ||
+                      body.stats.hitting_pct != null;
+  if (!hasAnyInput) {
+    msg.textContent = 'Add at least your height OR a stat line so the oracle has signal to work with.';
+    msg.className = 'fit-msg show error';
+    return;
+  }
+
+  msg.className = 'fit-msg';
+  btn.disabled = true;
+  btn.textContent = 'CONSULTING THE ORACLE…';
+
+  try {
+    const r = await fetch(`${PROXY}/agent/position-fit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const d = await r.json();
+
+    if (!d.ok) {
+      msg.textContent = 'Oracle error: ' + (d.error || d.note || 'unknown') + (d.supported ? ' Supported: ' + d.supported.join(', ') : '');
+      msg.className = 'fit-msg show error';
+      btn.disabled = false;
+      btn.textContent = 'RUN ORACLE →';
+      return;
+    }
+
+    resultContent.innerHTML = renderResult(d);
+    resultWrap.classList.add('show');
+    setTimeout(() => resultWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+
+    // Animate bars after render
+    setTimeout(() => {
+      document.querySelectorAll('.result-position-bar-fill').forEach(el => {
+        el.style.width = el.dataset.target;
+      });
+    }, 100);
+  } catch (e) {
+    msg.textContent = 'Network error: ' + e.message;
+    msg.className = 'fit-msg show error';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'RUN ORACLE AGAIN ↻';
+  }
+}
+
+function renderResult(d) {
+  const primary = d.primary_fit;
+  const alt = d.alternate_fit;
+  const all = d.all_positions || [];
+  const sys = d.system_context || {};
+
+  let html = '';
+
+  // PRIMARY FIT CARD
+  html += `<div class="result-primary">
+    <div class="result-primary-eyebrow">// PRIMARY FIT</div>
+    <div class="result-primary-position">${esc(primary.position)} <span class="serif">·</span></div>
+    <div class="result-primary-score">SCORE ${primary.score.toFixed(1)} / 10 · ALTERNATE: ${esc(alt.position)} (${alt.score.toFixed(1)})</div>
+    <div class="result-primary-confidence ${esc(primary.confidence)}">${esc(primary.confidence)} CONFIDENCE</div>`;
+
+  if (d.recruiter_vs_oracle) {
+    html += `<div class="result-recruiter-vs-oracle">${esc(d.recruiter_vs_oracle)}</div>`;
+  }
+  html += `</div>`;
+
+  // SYSTEM CONTEXT
+  if (sys.recommendation) {
+    html += `<div class="result-system-context">
+      <div class="result-section-eyebrow">// SYSTEM-AWARE READ</div>
+      <div class="result-system-recommendation">"${esc(sys.recommendation)}"</div>
+      ${sys.system_a ? `<div class="result-system-detail">${esc(sys.system_a)}</div>` : ''}
+      ${sys.system_b ? `<div class="result-system-detail">${esc(sys.system_b)}</div>` : ''}
+    </div>`;
+  }
+
+  // ALL POSITIONS GRID
+  html += `<div class="result-positions-grid">`;
+  all.forEach(pos => {
+    const isPrimary = pos.position === primary.position;
+    html += `<div class="result-position-card${isPrimary ? ' primary' : ''}">
+      <div class="result-position-name">${esc(pos.position)}</div>
+      <div class="result-position-score">SCORE ${pos.score.toFixed(1)} / 10</div>
+      <div class="result-position-bar"><div class="result-position-bar-fill" data-target="${pos.score * 10}%" style="width:0%"></div></div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  // REASONING TRACE
+  html += `<div class="result-reasoning">
+    <div class="result-section-eyebrow">// REASONING TRACE</div>`;
+  all.forEach(pos => {
+    if (!pos.reasoning || pos.reasoning.length === 0) return;
+    html += `<div class="result-reasoning-section">
+      <div class="result-reasoning-pos">
+        <span>${esc(pos.position)}</span>
+        <span class="result-reasoning-pos-score">${pos.score.toFixed(1)} / 10</span>
+      </div>
+      <div class="result-reasoning-list">
+        ${pos.reasoning.map(r => `<div class="result-reasoning-item">${esc(r)}</div>`).join('')}
+      </div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  // METHODOLOGY
+  html += `<div class="result-methodology">
+    <strong>METHODOLOGY:</strong> ${esc(d.methodology)}<br>
+    ${esc(d.methodology_note || '')}<br><br>
+    <strong>PHILOSOPHY:</strong> "${esc(d.philosophy || '')}"
+  </div>`;
+
+  // ACTIONS
+  html += `<div class="result-actions">
+    <a href="/voices" class="result-action">Read Maya's full Voice →</a>
+    <a href="/pathway" class="result-action">Build my pathway →</a>
+    <button class="result-action" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Run again</button>
+  </div>`;
+
+  // v0.30.5.911-920: SOCIAL SHARE
+  const shareParams = new URLSearchParams({
+    type: 'position-fit',
+    format: 'story',
+    position: primary.position,
+    score: primary.score.toString(),
+    name: (d.inputs_summary && d.inputs_summary.player_name) || '',
+    confidence: primary.confidence,
+    alt_position: alt.position,
+    alt_score: alt.score.toString(),
+    sport: d.sport || 'womens-volleyball'
+  }).toString();
+  const storyUrl = `${PROXY}/social/card?${shareParams}`;
+  const postUrl = storyUrl.replace('format=story', 'format=post');
+
+  html += `<div class="share-card">
+    <div class="share-card-eyebrow">// MAYA ASKED FOR THIS</div>
+    <div class="share-card-h">Share your read.</div>
+    <div class="share-card-sub">Insta-Story-ready. TikTok-ready. Apple-grade restraint, no rankings nonsense. Long-press the card to save, or use your native share button.</div>
+    <div class="share-card-actions">
+      <a href="${storyUrl}" target="_blank" rel="noopener" class="share-btn share-btn-primary">📱 INSTA STORY (1080×1920)</a>
+      <a href="${postUrl}" target="_blank" rel="noopener" class="share-btn">▢ INSTA POST (1080×1080)</a>
+      <button class="share-btn" onclick="copyPositionFitLink(this)">⎘ COPY LINK</button>
+    </div>
+    <div class="share-preview">
+      <iframe src="${storyUrl}" loading="lazy" title="Share preview"></iframe>
+    </div>
+  </div>`;
+
+  return html;
+}
+
+function copyPositionFitLink(btn) {
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ COPIED';
+    btn.style.color = 'var(--sage)';
+    setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 1800);
+  }).catch(() => {
+    btn.textContent = '✗ COPY FAILED';
+  });
+}
+</script>
+<script>document.addEventListener("DOMContentLoaded",()=>{window.FieldCheckI18n&&window.FieldCheckI18n.init("position-fit");});</script>
+</body>
+</html>

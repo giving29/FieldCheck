@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Embed badge · FieldCheck IQ</title>
+<meta name="description" content="Drop the official FieldCheck verdict badge onto any article. Live composite, tier, photo. Free to use, attribution required.">
+<meta property="og:title" content="FieldCheck Embed Badge">
+<meta property="og:description" content="Embed a live FieldCheck verdict badge in your article or blog post.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060A;--bg1:#100F14;--ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);--t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);--moss:#6BAA5A;--teal:#4EC9C0;--violet:#8B5CF6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 30% at 50% 0%,rgba(245,184,0,.04) 0%,transparent 60%),linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+.wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:60px 30px 100px}
+.brand-row{display:flex;align-items:center;gap:18px;margin-bottom:40px}
+.brand{font-family:'Anton',sans-serif;font-size:22px;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none}
+.back:hover{color:var(--gold)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(46px,6vw,76px);letter-spacing:-.014em;line-height:.98;margin-bottom:18px}
+h1 .em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--gold)}
+.lede{font-size:18px;color:var(--t2);max-width:760px;margin-bottom:40px}
+h2{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.012em;margin:48px 0 14px;padding-top:24px;border-top:1px solid var(--ge)}
+h2:first-of-type{border-top:none;padding-top:0;margin-top:0}
+p{font-size:15.5px;color:var(--t2);margin-bottom:14px}
+label{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin:18px 0 8px}
+input,select{display:block;width:100%;max-width:480px;padding:12px 14px;border-radius:8px;border:1px solid var(--ge);background:rgba(255,252,245,.04);color:var(--t);font-size:14px;font-family:inherit;margin-bottom:6px}
+input:focus,select:focus{outline:none;border-color:var(--goldl)}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:20px 0 32px}
+.preview-shell{padding:30px;border:1px dashed var(--ge);border-radius:14px;margin:22px 0;background:rgba(255,252,245,.015)}
+.preview-shell .label{font-family:'JetBrains Mono';font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);margin-bottom:14px}
+.code{background:#0a0913;border:1px solid var(--ge);border-radius:8px;padding:18px 20px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#a7e85f;white-space:pre-wrap;word-break:break-all;line-height:1.65;margin:10px 0 24px;overflow-x:auto}
+.copy-btn{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);background:var(--golds);border:1px solid var(--goldl);padding:10px 18px;border-radius:9999px;cursor:pointer}
+.copy-btn:hover{background:rgba(245,184,0,.18)}
+.copy-btn:active{transform:translateY(1px)}
+/* The actual badge */
+.fc-badge{display:inline-flex;align-items:center;gap:14px;padding:14px 18px;border:1px solid rgba(245,184,0,.3);border-radius:14px;background:#0e0d14;text-decoration:none;color:#e8e6f0;font-family:'Inter',-apple-system,sans-serif;line-height:1.3;max-width:380px}
+.fc-badge .photo{width:46px;height:46px;border-radius:50%;background:rgba(245,184,0,.1);display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:16px;color:#f0c66e;flex:0 0 46px;overflow:hidden;border:1px solid rgba(245,184,0,.2)}
+.fc-badge .photo img{width:100%;height:100%;object-fit:cover}
+.fc-badge .body{flex:1;min-width:0}
+.fc-badge .ath-name{font-family:'Anton',sans-serif;font-size:16px;letter-spacing:-.005em;color:#f5f1e8;margin-bottom:2px;line-height:1.15}
+.fc-badge .meta{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;color:rgba(245,241,232,0.45);margin-bottom:8px}
+.fc-badge .grade{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.5px}
+.fc-badge .grade .comp{font-family:'Anton';font-size:20px;color:#f0c66e;letter-spacing:0;font-weight:400;line-height:1}
+.fc-badge .grade .tier{padding:2px 8px;border-radius:9999px;background:rgba(107,170,90,.18);color:#6BAA5A;border:1px solid rgba(107,170,90,.3);font-size:9.5px;text-transform:uppercase;letter-spacing:1px}
+.fc-badge .fc-mark{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(245,184,0,0.6);letter-spacing:1px;text-transform:uppercase;margin-left:6px;border-left:1px solid rgba(245,241,232,0.1);padding-left:10px}
+.callout{margin:30px 0;padding:24px 28px;border-radius:12px;background:var(--golds);border:1px solid var(--goldl);border-left:3px solid var(--gold);font-size:14.5px;line-height:1.6;color:var(--t)}
+.callout .label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block}
+.footer{margin-top:80px;padding-top:30px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t4);letter-spacing:.6px}
+.footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="wrap">
+  <div class="brand-row">
+    <a class="brand" href="/"><b>Field</b>Check<span class="iq">IQ</span></a>
+    <a class="back" href="/">← all players</a>
+  </div>
+  <div class="eyebrow">Embed · drop into any article</div>
+  <h1>Embed a <span class="em">verdict</span> badge.</h1>
+  <p class="lede">Copy-paste official FieldCheck composite badges onto your articles, blog posts, or program pages. <b>Free to use, attribution required.</b> Updates live when calibration ships.</p>
+
+  <h2>Configure</h2>
+  <div class="controls">
+    <div>
+      <label>Athlete name</label>
+      <input id="cfg-name" placeholder="e.g. Cameron Boozer" value="Cameron Boozer">
+    </div>
+    <div>
+      <label>Sport</label>
+      <select id="cfg-sport">
+        <option value="mens-basketball">Men's Basketball</option>
+        <option value="football">Football</option>
+        <option value="womens-basketball">Women's Basketball</option>
+        <option value="womens-volleyball">Women's Volleyball</option>
+        <option value="baseball">Baseball</option>
+        <option value="mens-volleyball">Men's Volleyball</option>
+        <option value="soccer">Soccer</option>
+      </select>
+    </div>
+    <div>
+      <label>Composite</label>
+      <input id="cfg-comp" type="number" min="0" max="10" step="0.1" value="7.4">
+    </div>
+    <div>
+      <label>Tier</label>
+      <select id="cfg-tier">
+        <option>SCOUT</option>
+        <option>PROSPECT</option>
+        <option selected>STAR</option>
+        <option>ELITE</option>
+        <option>ELITE+</option>
+        <option>ICON</option>
+      </select>
+    </div>
+    <div>
+      <label>Position</label>
+      <input id="cfg-pos" placeholder="e.g. Power Forward" value="Power Forward">
+    </div>
+    <div>
+      <label>School / Team</label>
+      <input id="cfg-school" placeholder="e.g. Duke University" value="Duke University">
+    </div>
+  </div>
+
+  <h2>Preview</h2>
+  <div class="preview-shell">
+    <div class="label">Live preview</div>
+    <div id="badge-preview"></div>
+  </div>
+
+  <h2>Copy embed code</h2>
+  <p>Paste this anywhere HTML is supported (Wordpress, Substack, Medium custom HTML, your own CMS).</p>
+  <div class="code" id="embed-code"></div>
+  <button class="copy-btn" onclick="copyEmbed()">Copy code</button>
+
+  <h2>Attribution requirements</h2>
+  <ul style="margin:14px 0 24px 22px;color:var(--t2);font-size:15px;">
+    <li>The "FieldCheck IQ" wordmark in the badge must remain visible.</li>
+    <li>The badge must link back to the verdict page (the embed code does this automatically).</li>
+    <li>If you use the composite + tier in adjacent text, attribute as "FieldCheck IQ" the first time it appears.</li>
+    <li>Don't modify the composite or tier values to misrepresent the grade.</li>
+  </ul>
+
+  <div class="callout">
+    <span class="label">What's included free</span>
+    <b>Unlimited badges, unlimited articles, unlimited refresh.</b> No API key, no rate limit (within reasonable use), no domain whitelist. Use it on your blog, your school site, your athlete portfolio. The badge fetches its own photo via our worker proxy, so no hotlink issues.
+  </div>
+
+  <h2>Programs + agents: bulk badges</h2>
+  <p>For programs wanting badges for an entire roster, or agents wanting badges for their full client list, contact via any verdict page form. We can provide a JSON manifest you embed once and renders all your badges with a single script tag.</p>
+
+  <div class="footer">
+    FieldCheck IQ · embed · <a href="/">home</a> · <a href="/partners">partners</a> · <a href="/about">about</a>
+  </div>
+</div>
+
+<script>
+function tierClass(tier){
+  return ({'ICON':'icon','ELITE+':'eliteplus','ELITE':'elite','STAR':'star','PROSPECT':'prospect','SCOUT':'scout'})[tier] || 'scout';
+}
+
+function tierColor(tier){
+  return ({
+    'ICON': {bg:'rgba(245,184,0,.18)', c:'#F5B800', border:'rgba(245,184,0,.3)'},
+    'ELITE+': {bg:'rgba(78,201,192,.15)', c:'#4EC9C0', border:'rgba(78,201,192,.3)'},
+    'ELITE': {bg:'rgba(139,92,246,.15)', c:'#8B5CF6', border:'rgba(139,92,246,.3)'},
+    'STAR': {bg:'rgba(107,170,90,.18)', c:'#6BAA5A', border:'rgba(107,170,90,.3)'},
+    'PROSPECT': {bg:'rgba(224,120,86,.15)', c:'#E07856', border:'rgba(224,120,86,.3)'},
+    'SCOUT': {bg:'rgba(245,241,232,.08)', c:'rgba(245,241,232,0.55)', border:'rgba(245,241,232,.15)'}
+  })[tier] || {bg:'rgba(245,241,232,.08)', c:'rgba(245,241,232,0.55)', border:'rgba(245,241,232,.15)'};
+}
+
+function buildBadge(){
+  var name = document.getElementById('cfg-name').value || 'Athlete';
+  var sport = document.getElementById('cfg-sport').value || 'mens-basketball';
+  var comp = document.getElementById('cfg-comp').value || '0.0';
+  var tier = document.getElementById('cfg-tier').value || 'SCOUT';
+  var pos = document.getElementById('cfg-pos').value || '';
+  var school = document.getElementById('cfg-school').value || '';
+  var color = tierColor(tier);
+  var initials = name.split(' ').slice(0, 2).map(function(w){return w[0]||'';}).join('').toUpperCase();
+  var workerBase = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+  var photoUrl = workerBase + '/photo?q=' + encodeURIComponent(name) + '&sport=' + encodeURIComponent(sport);
+  var verdictUrl = window.location.origin + '/fieldcheck-verdict.html?q=' + encodeURIComponent(name) + '&sport=' + encodeURIComponent(sport);
+
+  var html = '<a href="' + verdictUrl + '" target="_blank" rel="noopener" class="fc-badge" style="display:inline-flex;align-items:center;gap:14px;padding:14px 18px;border:1px solid rgba(245,184,0,.3);border-radius:14px;background:#0e0d14;text-decoration:none;color:#e8e6f0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.3;max-width:380px;">'
+    + '<span style="width:46px;height:46px;border-radius:50%;background:rgba(245,184,0,.1);display:flex;align-items:center;justify-content:center;font-size:16px;color:#f0c66e;flex:0 0 46px;overflow:hidden;border:1px solid rgba(245,184,0,.2);">'
+    + '<img src="' + photoUrl + '" alt="' + name + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentNode.textContent=\'' + initials + '\'">'
+    + '</span>'
+    + '<span style="flex:1;min-width:0;">'
+    +   '<span style="display:block;font-size:16px;font-weight:700;letter-spacing:-.005em;color:#f5f1e8;margin-bottom:2px;line-height:1.15;">' + name + '</span>'
+    +   '<span style="display:block;font-family:Menlo,monospace;font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;color:rgba(245,241,232,0.45);margin-bottom:8px;">' + (school || pos) + '</span>'
+    +   '<span style="display:flex;align-items:center;gap:8px;font-family:Menlo,monospace;font-size:11px;font-weight:700;letter-spacing:.5px;">'
+    +     '<span style="font-size:20px;color:#f0c66e;font-weight:400;line-height:1;">' + comp + '</span>'
+    +     '<span style="padding:2px 8px;border-radius:9999px;background:' + color.bg + ';color:' + color.c + ';border:1px solid ' + color.border + ';font-size:9.5px;text-transform:uppercase;letter-spacing:1px;">' + tier + '</span>'
+    +     '<span style="font-family:Menlo,monospace;font-size:9px;color:rgba(245,184,0,0.6);letter-spacing:1px;text-transform:uppercase;margin-left:6px;border-left:1px solid rgba(245,241,232,0.1);padding-left:10px;">FieldCheck IQ</span>'
+    +   '</span>'
+    + '</span>'
+  + '</a>';
+
+  document.getElementById('badge-preview').innerHTML = html;
+  document.getElementById('embed-code').textContent = html;
+}
+
+function copyEmbed(){
+  var code = document.getElementById('embed-code').textContent;
+  navigator.clipboard.writeText(code).then(function(){
+    var btn = document.querySelector('.copy-btn');
+    var old = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(function(){ btn.textContent = old; }, 2000);
+  });
+}
+
+['cfg-name','cfg-sport','cfg-comp','cfg-tier','cfg-pos','cfg-school'].forEach(function(id){
+  var el = document.getElementById(id);
+  if (el) el.addEventListener('input', buildBadge);
+});
+
+/* Pre-fill from URL params if present */
+var params = new URLSearchParams(window.location.search);
+if (params.get('q')) document.getElementById('cfg-name').value = params.get('q');
+if (params.get('sport')) document.getElementById('cfg-sport').value = params.get('sport');
+if (params.get('comp')) document.getElementById('cfg-comp').value = params.get('comp');
+if (params.get('tier')) document.getElementById('cfg-tier').value = params.get('tier');
+if (params.get('position')) document.getElementById('cfg-pos').value = params.get('position');
+if (params.get('school')) document.getElementById('cfg-school').value = params.get('school');
+
+buildBadge();
+</script>
+</body>
+</html>

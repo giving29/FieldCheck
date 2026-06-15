@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's new · FieldCheck IQ</title>
+<meta name="description" content="Public build log. Every ship, every hour, every change. FieldCheck IQ ships in the open.">
+<meta property="og:title" content="What's new · FieldCheck IQ">
+<meta property="og:description" content="Public build log. Every ship, every hour, every change.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0d14;
+  --bg-card: #16141e;
+  --bg-card-hover: #1c1a28;
+  --border: rgba(245, 241, 232, 0.08);
+  --border-strong: rgba(245, 241, 232, 0.15);
+  --text: #f5f1e8;
+  --text-muted: rgba(245, 241, 232, 0.55);
+  --text-faint: rgba(245, 241, 232, 0.35);
+  --gold: #f0c66e;
+  --gold-dim: #d49b48;
+  --moss: #7fb069;
+  --orange: #e08e45;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 880px; margin: 0 auto; padding: 48px 24px 80px; }
+
+.hd { border-bottom: 1px solid var(--border); padding-bottom: 32px; margin-bottom: 48px; }
+.hd .tag {
+  display: inline-block; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--moss); background: rgba(127, 176, 105, 0.1);
+  border: 1px solid rgba(127, 176, 105, 0.25);
+  padding: 5px 12px; border-radius: 9999px; margin-bottom: 20px;
+}
+.hd h1 {
+  font-family: 'Anton', sans-serif; font-weight: 400;
+  font-size: clamp(36px, 6vw, 56px); letter-spacing: -0.015em;
+  line-height: 1.05; margin-bottom: 16px;
+}
+.hd p { font-size: 17px; line-height: 1.55; color: var(--text-muted); max-width: 680px; }
+
+/* Day-header */
+.day {
+  display: flex; align-items: baseline; gap: 16px;
+  margin-bottom: 24px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-strong);
+}
+.day h2 {
+  font-family: 'Anton', sans-serif; font-weight: 400;
+  font-size: 28px; letter-spacing: -0.005em;
+}
+.day .meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+.day .count {
+  margin-left: auto; font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; color: var(--gold);
+  background: rgba(245, 184, 0, 0.08);
+  border: 1px solid rgba(245, 184, 0, 0.22);
+  padding: 3px 10px; border-radius: 9999px;
+}
+
+/* Entry card */
+.entry {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px 24px; margin-bottom: 12px;
+  transition: background 0.15s, border-color 0.15s;
+  display: grid; grid-template-columns: 80px 1fr; gap: 20px;
+  align-items: start;
+}
+.entry:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-strong);
+}
+.entry .time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.04em;
+  color: var(--text-faint); padding-top: 4px;
+  white-space: nowrap;
+}
+.entry .time .tier {
+  display: block; color: var(--gold);
+  font-weight: 600; font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-top: 4px;
+}
+.entry h3 {
+  font-family: 'Anton', sans-serif; font-weight: 400;
+  font-size: 20px; letter-spacing: -0.005em;
+  margin-bottom: 6px; color: var(--text);
+}
+.entry .desc {
+  color: var(--text-muted); font-size: 14px;
+  line-height: 1.55; margin-bottom: 12px;
+}
+.entry .links {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.entry .links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; letter-spacing: 0.04em;
+  color: var(--gold); text-decoration: none;
+  background: rgba(245, 184, 0, 0.06);
+  border: 1px solid rgba(245, 184, 0, 0.18);
+  padding: 4px 10px; border-radius: 9999px;
+  transition: background 0.15s;
+}
+.entry .links a:hover {
+  background: rgba(245, 184, 0, 0.16);
+}
+
+/* Theme tag inside entry */
+.entry .theme {
+  display: inline-block; font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-faint); margin-left: 8px;
+}
+
+/* Stats banner */
+.stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--border); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; margin: 32px 0 48px;
+}
+.stat { background: var(--bg-card); padding: 20px 16px; }
+.stat .v {
+  font-family: 'Anton', sans-serif; font-size: 32px;
+  letter-spacing: -0.005em; line-height: 1; color: var(--gold);
+}
+.stat .l {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint);
+  margin-top: 4px;
+}
+@media (max-width: 600px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .entry { grid-template-columns: 1fr; gap: 12px; }
+  .entry .time { padding-top: 0; }
+}
+
+/* Older section (collapsed feel) */
+.older {
+  margin-top: 64px; padding-top: 24px;
+  border-top: 1px dashed var(--border-strong);
+}
+.older h2 {
+  font-family: 'Anton', sans-serif; font-weight: 400;
+  font-size: 22px; letter-spacing: -0.005em; margin-bottom: 16px;
+  color: var(--text-muted);
+}
+.older .week-block { margin-bottom: 24px; }
+.older .week-block .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-faint); margin-bottom: 10px;
+}
+.older .week-block .items {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.older .week-block .items span {
+  font-size: 12.5px; color: var(--text-muted);
+  background: var(--bg-card); border: 1px solid var(--border);
+  padding: 5px 10px; border-radius: 6px;
+}
+
+/* Footer */
+.foot {
+  margin-top: 64px; padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 24px;
+  font-size: 13px; color: var(--text-faint);
+}
+.foot a { color: var(--text-muted); text-decoration: none; }
+.foot a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hd">
+    <span class="tag">FCBase63 · Phase 10 · Public changelog</span>
+    <h1>What's new</h1>
+    <p>
+      Public build log. Every ship, every hour, every change. We don't publish a quarterly roadmap and pray — we ship and you watch. This page updates every time we deploy.
+    </p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="v">7</div><div class="l">Ships today</div></div>
+    <div class="stat"><div class="v">10</div><div class="l">Pages with agent</div></div>
+    <div class="stat"><div class="v">214</div><div class="l">Athletes graded</div></div>
+    <div class="stat"><div class="v">5</div><div class="l">Sports covered</div></div>
+  </div>
+
+  <div class="day">
+    <h2>Today</h2>
+    <span class="meta">June 10, 2026</span>
+    <span class="count">7 ships</span>
+  </div>
+
+  <!-- FCBase80 -->
+  <div class="entry">
+    <div class="time">eve MDT<span class="tier">FCBase80</span></div>
+    <div>
+      <h3>THE PATH, polished<span class="theme">· stickiness</span></h3>
+      <div class="desc">Your chosen dream now persists per device. The share card gained a NEXT RUNG line. New side-by-side compare hook into <code>/versus</code>. Mobile layout tightened.</div>
+      <div class="links"><a href="/fieldcheck-verdict.html?q=Carlos+Medlock+Jr&sport=mens-basketball">→ see THE PATH live</a></div>
+    </div>
+  </div>
+
+  <!-- FCBase79 -->
+  <div class="entry">
+    <div class="time">pm MDT<span class="tier">FCBase79</span></div>
+    <div>
+      <h3>Agent on every route, verified<span class="theme">· integrity</span></h3>
+      <div class="desc">Found and fixed a route-shadowing issue that served stale page copies on <code>/methodology</code> and <code>/predictions</code>. Feature-marker checks added to the ship discipline (Tenet 55).</div>
+      <div class="links"><a href="/methodology">→ methodology</a><a href="/predictions">→ predictions</a></div>
+    </div>
+  </div>
+
+  <!-- FCBase78 -->
+  <div class="entry">
+    <div class="time">pm MDT<span class="tier">FCBase78</span></div>
+    <div>
+      <h3>The deck states the gap<span class="theme">· story</span></h3>
+      <div class="desc">Tab 01 now carries the five-layer market map — film, stats, hype, biomech, attention — and the empty judgment row we occupy, with live demo links and the receipts.</div>
+      <div class="links"><a href="/deck">→ the deck</a><a href="/gap">→ full market brief</a></div>
+    </div>
+  </div>
+
+  <!-- FCBase77 -->
+  <div class="entry">
+    <div class="time">pm MDT<span class="tier">FCBase77</span></div>
+    <div>
+      <h3>Share your verdict card<span class="theme">· identity</span></h3>
+      <div class="desc">One tap on any verdict generates a 1080×1080 card — your composite, tier, and 8-facet polygon — built client-side, shared straight to the native sheet on mobile.</div>
+      <div class="links"><a href="/fieldcheck-verdict.html?q=Cooper+Flagg&sport=mens-basketball">→ try it on a verdict</a></div>
+    </div>
+  </div>
+
+  <!-- FCBase76 -->
+  <div class="entry">
+    <div class="time">am MDT<span class="tier">FCBase76</span></div>
+    <div>
+      <h3>Photo + data corrections<span class="theme">· integrity</span></h3>
+      <div class="desc">Curated headshots added for Caitlin Clark and Avery Skinner. Corrected Avery Skinner's club and transfer record — errors found, fixed, and logged in the open.</div>
+      <div class="links"><a href="/fieldcheck-verdict.html?q=Avery+Skinner&sport=womens-volleyball">→ her verdict</a></div>
+    </div>
+  </div>
+
+  <!-- FCBase75 -->
+  <div class="entry">
+    <div class="time">am MDT<span class="tier">FCBase75</span></div>
+    <div>
+      <h3>The market gap, published<span class="theme">· story</span></h3>
+      <div class="desc">New <code>/gap</code> brief: the five-layer landscape, why incumbents structurally can't build the judgment layer, the dream ladder, and the stickiness engine. Plus <code>/path</code>, the interactive explainer.</div>
+      <div class="links"><a href="/gap">→ the gap</a><a href="/path">→ the path</a></div>
+    </div>
+  </div>
+
+  <!-- FCBase74 -->
+  <div class="entry">
+    <div class="time">am MDT<span class="tier">FCBase74</span></div>
+    <div>
+      <h3>THE PATH on every verdict<span class="theme">· flagship</span></h3>
+      <div class="desc">Pick your dream — D1 roster, real NIL, pro radar — and the verdict shows the tier ladder, YOU ARE HERE, and the exact facets that close the gap, each one flowing into the agent. Evaluation became a roadmap.</div>
+      <div class="links"><a href="/fieldcheck-verdict.html?q=Carlos+Medlock+Jr&sport=mens-basketball">→ THE PATH live</a><a href="/dream">→ why it matters</a></div>
+    </div>
+  </div>
+
+  <div class="day">
+    <h2>June 9</h2>
+    <span class="meta">June 9, 2026</span>
+    <span class="count">10 ships</span>
+  </div>
+
+  <!-- FCBase62 -->
+  <div class="entry">
+    <div class="time">15:05 MDT<span class="tier">FCBase62</span></div>
+    <div>
+      <h3>Symmetric agent transparency<span class="theme">· trust</span></h3>
+      <div class="desc">All 10 agent pages now cross-link to <code>/agent-transparency</code> via "see the prompt" in the chat footer. Visitors who use the agent can audit the system prompt with one click.</div>
+      <div class="links">
+        <a href="/agent-transparency">→ transparency page</a>
+        <a href="/fieldcheck-verdict.html?q=Cooper+Flagg&sport=mens-basketball">→ tap pill, see footer</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FCBase61 -->
+  <div class="entry">
+    <div class="time">14:50 MDT<span class="tier">FCBase61</span></div>
+    <div>
+      <h3>Agent on 5 sport landings<span class="theme">· reach</span></h3>
+      <div class="desc">Men's basketball, football, women's basketball, women's volleyball, baseball — each landing page now has the agent with cohort-aware suggestions. Ask "Who is the top recruit?" and it cites athletes by name from that sport's pool.</div>
+      <div class="links">
+        <a href="/fieldcheck-sport-mens-basketball.html">→ MBB</a>
+        <a href="/fieldcheck-sport-football.html">→ football</a>
+        <a href="/fieldcheck-sport-womens-basketball.html">→ WBB</a>
+        <a href="/fieldcheck-sport-womens-volleyball.html">→ WVB</a>
+        <a href="/fieldcheck-sport-baseball.html">→ baseball</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FCBase60 -->
+  <div class="entry">
+    <div class="time">14:35 MDT<span class="tier">FCBase60</span></div>
+    <div>
+      <h3>Agent transparency page<span class="theme">· trust</span></h3>
+      <div class="desc">Published the exact system prompt the AI agent operates under. 5 modes (verdict, methodology, predictions, coverage, comparison) — every word, every guardrail, every DO/DO NOT visible. Live cost tracking. Audit instructions for visitors. Few sports services do this.</div>
+      <div class="links">
+        <a href="/agent-transparency">→ /agent-transparency</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FCBase59 -->
+  <div class="entry">
+    <div class="time">14:25 MDT<span class="tier">FCBase59</span></div>
+    <div>
+      <h3>Agent on predictions / coverage / versus<span class="theme">· reach</span></h3>
+      <div class="desc">3 more pages got the agent with mode-specific system prompts. Coverage agent answers about scope and gaps. Predictions agent stays within the sealed ledger. Versus agent picks up athletes from URL params and does cross-athlete analysis.</div>
+      <div class="links">
+        <a href="/predictions">→ predictions</a>
+        <a href="/coverage">→ coverage</a>
+        <a href="/versus?a=Cooper+Flagg&b=LeBron+James">→ versus</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FCBase58 -->
+  <div class="entry">
+    <div class="time">14:07 MDT<span class="tier">FCBase58</span></div>
+    <div>
+      <h3>Agent observability + methodology mode<span class="theme">· trust + reach</span></h3>
+      <div class="desc">Added <code>/agent/stats</code> endpoint with usage counters by mode and sport, plus a live cost estimate. Methodology page got the agent — visitors can ask about the rules ("Why is HS capped at SCOUT?") and the agent stays in-scope.</div>
+      <div class="links">
+        <a href="/methodology">→ methodology agent</a>
+        <a href="https://fieldcheck-proxy.sridhar-nallani.workers.dev/agent/stats" target="_blank">→ stats endpoint</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FCBase57 -->
+  <div class="entry">
+    <div class="time">13:51 MDT<span class="tier">FCBase57</span></div>
+    <div>
+      <h3>AI Agent on verdict pages (Phase 9.1)<span class="theme">· flagship</span></h3>
+      <div class="desc">The big one. Every verdict page got a conversational AI agent. Floating gold pill, expandable chat panel, character-by-character streaming, 5 suggested questions, localStorage history. Powered by Claude Haiku 4.5 with 8-facet doctrine baked into the system prompt. ~$0.003/question, 10/IP/day rate limit.</div>
+      <div class="links">
+        <a href="/fieldcheck-verdict.html?q=Cooper+Flagg&sport=mens-basketball">→ try on Flagg's verdict</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FCBase56 -->
+  <div class="entry">
+    <div class="time">~10:00 MDT<span class="tier">FCBase56</span></div>
+    <div>
+      <h3>OG + Schema.org + 24 new pages<span class="theme">· SEO + reach</span></h3>
+      <div class="desc">Mega ship. Open Graph metadata across all verdict pages for shareable previews. Schema.org JSON-LD for SEO. 24 new pages including sport landings, conference rollups, trust pages, legal pages, /predictions, /coverage, /versus, /watchlist v2.</div>
+      <div class="links">
+        <a href="/coverage">→ coverage</a>
+        <a href="/predictions">→ predictions</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FCBase55 -->
+  <div class="entry">
+    <div class="time">~09:00 MDT<span class="tier">FCBase55</span></div>
+    <div>
+      <h3>38 curated athlete photos<span class="theme">· polish</span></h3>
+      <div class="desc">Hardcoded photo overrides for 38 marquee athletes via ESPN CDN and direct school athletic site URLs. Bypasses the photo cascade for athletes we know have stable image sources. Eliminates "no photo" cases for top-of-mind players.</div>
+    </div>
+  </div>
+
+  <!-- FCBase54 -->
+  <div class="entry">
+    <div class="time">~08:00 MDT<span class="tier">FCBase54</span></div>
+    <div>
+      <h3>Watchlist v2 (Phase 6.4)<span class="theme">· engagement</span></h3>
+      <div class="desc">Personal watchlist page where visitors curate athletes they're tracking. localStorage-backed, no signup required. Filter by tier, sort by composite or trajectory, quick-add from any verdict page.</div>
+      <div class="links">
+        <a href="/watchlist">→ watchlist</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FCBase53 -->
+  <div class="entry">
+    <div class="time">~07:00 MDT<span class="tier">FCBase53</span></div>
+    <div>
+      <h3>Tier-jump alerts (Phase 6.3)<span class="theme">· discovery</span></h3>
+      <div class="desc">Hidden Gem alert system on verdict pages — when an athlete's composite trajectory suggests an imminent tier-jump, surface that signal prominently. Drives engagement on lesser-known names.</div>
+    </div>
+  </div>
+
+  <div class="older">
+    <h2>Earlier this week</h2>
+
+    <div class="week-block">
+      <div class="label">Jun 8 · V5.5 calibration</div>
+      <div class="items">
+        <span>FCBase36 worker recalibration</span>
+        <span>D1 amateur 7.4 STAR restored</span>
+        <span>HS amateur 5.4 SCOUT cap</span>
+        <span>6 polish facets recalibrated to ±0.5 composite</span>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="label">Jun 4 · FCBase19 LAUNCH</div>
+      <div class="items">
+        <span>/deck pitch deck live</span>
+        <span>5 Principles Charter</span>
+        <span>ESPN/Bloomberg HORIZON vision</span>
+        <span>PRIME TIME 2027 banner</span>
+        <span>First cold outreach landed</span>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="label">May 26 · V5 hybrid architecture</div>
+      <div class="items">
+        <span>Sonnet raw scoring + 6 deterministic post-rules</span>
+        <span>Tenet 46 codified</span>
+        <span>110-battery regression suite</span>
+        <span>Tenets 47-51 added (atomic bumps, regression discipline)</span>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="label">May 15 · FCBase16 baseline</div>
+      <div class="items">
+        <span>Single source of truth doctrine</span>
+        <span>Canonical state v1.7</span>
+        <span>17-tab navigation</span>
+        <span>Sport-gating architecture</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <a href="/">Home</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/predictions">Predictions</a>
+    <a href="/coverage">Coverage</a>
+    <a href="/agent-transparency">Agent transparency</a>
+    <a href="/outcomes">Outcomes</a>
+    <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px;">FCBase63 · June 9 2026</span>
+  </div>
+</div>
+<!-- FCBase63 . Phase 10 . Public changelog feed . 10 ships today + earlier eras . single static page . no JS required . SEO-friendly . pitch artifact -->
+</body>
+</html>

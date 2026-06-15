@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The API · Embed + data documentation · FieldCheck LOVB</title>
+<meta name="description" content="How to embed FieldCheck-LOVB widgets, access the data layer, and reuse content under CC BY-SA 4.0. No API key required.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3893_LOVB_API_DOCS">
+<meta property="og:title" content="The API · FieldCheck LOVB documentation">
+<meta property="og:description" content="Embed widgets, access the data layer, reuse under CC BY-SA 4.0. No API key required.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:0.75}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+.fc-nav{padding:24px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:50;backdrop-filter:blur(6px)}
+.fc-logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:0.06em}
+.fc-logo span{color:var(--gold)}
+.fc-nav-links{display:flex;gap:24px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.fc-nav-links a{color:var(--text-2)}
+.fc-nav-links a.active{color:var(--gold)}
+@media(max-width:720px){.fc-nav{flex-direction:column;gap:14px;align-items:flex-start}.fc-nav-links{gap:14px;flex-wrap:wrap}}
+
+.hero{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(44px,7vw,92px);line-height:0.94;letter-spacing:-0.022em;margin-bottom:22px}
+.hero h1 .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.hero-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(19px,2.2vw,24px);line-height:1.45;color:var(--text-2);max-width:820px}
+
+.section{padding:56px 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:none}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.section-num .gold{color:var(--gold)}
+.section-h{font-family:'Anton',sans-serif;font-size:clamp(30px,4.2vw,48px);line-height:1.02;letter-spacing:-0.016em;margin-bottom:18px}
+.section-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.section-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;line-height:1.45;color:var(--text-2);max-width:780px;margin-bottom:28px}
+
+.essay{font-family:'Crimson Pro',serif;font-size:16px;line-height:1.7;color:var(--text-2);max-width:780px}
+.essay p{margin-bottom:16px}
+.essay b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:16.5px}
+.essay em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+.essay code{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);background:rgba(255,201,74,0.06);padding:2px 6px;border-radius:3px;border:1px solid var(--gold-edge)}
+
+/* CODE BLOCK */
+.code-block{background:var(--bg-2);border:1px solid var(--line-2);border-radius:5px;padding:20px 24px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text);line-height:1.6;overflow-x:auto;margin:18px 0;position:relative}
+.code-block .com{color:var(--text-3)}
+.code-block .str{color:var(--teal)}
+.code-block .kwd{color:var(--gold)}
+.code-block .tag{color:var(--crimson)}
+.code-copy{position:absolute;top:10px;right:10px;padding:5px 10px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--text-3);background:rgba(10,9,8,0.85);border:1px solid var(--line-2);border-radius:2px;cursor:pointer;transition:all .2s}
+.code-copy:hover{color:var(--gold);border-color:var(--gold-edge)}
+
+/* ENDPOINT TABLE */
+.endpoints{display:grid;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.endpoint-row{padding:18px 22px;background:rgba(20,17,12,0.45);border-bottom:1px solid var(--line);display:grid;grid-template-columns:80px 1fr 2fr;gap:18px;align-items:start}
+.endpoint-row:last-child{border-bottom:none}
+@media(max-width:720px){.endpoint-row{grid-template-columns:1fr;gap:8px}}
+.ep-method{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--green);font-weight:700;text-transform:uppercase;padding:5px 10px;background:rgba(127,168,110,0.14);border:1px solid rgba(127,168,110,0.4);border-radius:2px;text-align:center;align-self:start;width:fit-content}
+.ep-path{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);font-weight:700;letter-spacing:0.02em;align-self:center}
+.ep-detail{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2)}
+.ep-detail b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:14px}
+
+/* WIDGET PREVIEW */
+.widget-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.widget-card{padding:24px 26px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.widget-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:10px}
+.widget-name{font-family:'Anton',sans-serif;font-size:22px;line-height:1.05;letter-spacing:-0.012em;color:var(--text);margin-bottom:8px}
+.widget-name .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.widget-detail{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2);margin-bottom:12px}
+.widget-snippet{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);background:rgba(10,9,8,0.6);padding:8px 10px;border-radius:3px;border:1px solid var(--line-2);overflow-x:auto;word-break:break-all}
+
+/* LICENSE BLOCK */
+.license{padding:32px 36px;background:linear-gradient(180deg,rgba(127,168,110,0.06),rgba(20,17,12,0.4));border:1px solid rgba(127,168,110,0.4);border-radius:6px;border-left:3px solid var(--green)}
+.license-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--green);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.license-h{font-family:'Anton',sans-serif;font-size:clamp(26px,3.4vw,38px);line-height:1.05;margin-bottom:14px}
+.license-h .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.license-body{font-family:'Crimson Pro',serif;font-size:16px;line-height:1.7;color:var(--text-2);max-width:780px}
+.license-body b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:16.5px}
+
+.footer{padding:56px 0 72px;border-top:1px solid var(--line);background:rgba(20,17,12,0.5)}
+.footer-display{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer p{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.65;color:var(--text-2);max-width:780px;margin-bottom:12px}
+.footer-disclaimer{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-4);margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="fc-nav">
+    <div class="fc-logo">Field<span>Check</span></div>
+    <div class="fc-nav-links">
+      <a href="/">// home</a>
+      <a href="/lovb">// lovb hub</a>
+      <a href="/lovb/api" class="active">// api</a>
+      <a href="/lovb/embed">// embed</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">The API · Embed widgets · Reuse data · No key required</div>
+    <h1>Embed it. <span class="italic">Reuse it.</span></h1>
+    <p class="hero-deck">FieldCheck-LOVB is built to be reused. Every widget, every dataset, every surface is available for embedding into broadcaster pre-game packages, journalism pieces, club pages, scout databases. <em>No API key. No rate limit. CC BY-SA 4.0 license.</em></p>
+  </section>
+</div>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">I</span> · Quick start</div>
+    <h2 class="section-h">Three minutes <span class="italic">to embed.</span></h2>
+    <p class="section-deck">Drop a single script tag and a div placeholder. The widget renders with FieldCheck identity. All data refreshes when our backend re-syncs from LOVB sources.</p>
+
+    <div class="essay">
+      <p><b>Step 1.</b> Pick the widget you want. The full menu is in §III below; <code>atlas</code> is a good default.</p>
+      <p><b>Step 2.</b> Paste this into the page where the widget should appear:</p>
+    </div>
+
+    <div class="code-block">
+<span class="com">&lt;!-- FieldCheck-LOVB Atlas widget --&gt;</span>
+<span class="tag">&lt;div</span> <span class="kwd">id</span>=<span class="str">"fc-lovb-atlas"</span><span class="tag">&gt;&lt;/div&gt;</span>
+<span class="tag">&lt;script</span> <span class="kwd">src</span>=<span class="str">"https://fieldcheck-app.netlify.app/embed/atlas.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+<button class="code-copy" onclick="navigator.clipboard.writeText(this.parentElement.innerText.replace('Copy','').trim()).then(()=>this.textContent='Copied!')">Copy</button>
+    </div>
+
+    <div class="essay">
+      <p><b>Step 3.</b> Verify it renders. The widget loads inside the div with our identity (Anton + Instrument Serif + Crimson Pro). Inherits the host page's background; otherwise self-contained.</p>
+      <p>That's the whole flow. <em>No API key, no auth, no rate limiting.</em></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">II</span> · Data layer access</div>
+    <h2 class="section-h">The <span class="italic">raw data file.</span></h2>
+    <p class="section-deck">If you want full data without the widget UI — pulling for your own analysis or building your own visualizations — just fetch the static JSON-able data file. Same source of truth, same updates.</p>
+
+    <div class="code-block">
+<span class="com">// Fetch the data file</span>
+<span class="kwd">fetch</span>(<span class="str">"https://fieldcheck-app.netlify.app/fc-lovb-data.js"</span>)
+  .<span class="kwd">then</span>(r =&gt; r.<span class="kwd">text</span>())
+  .<span class="kwd">then</span>(js =&gt; {
+    <span class="com">// The file assigns window.LOVB (and aliases LOVB_DATA, FC_LOVB)</span>
+    <span class="kwd">const</span> script = document.<span class="kwd">createElement</span>(<span class="str">"script"</span>);
+    script.text = js;
+    document.head.<span class="kwd">appendChild</span>(script);
+    console.<span class="kwd">log</span>(window.LOVB.markets);
+  });
+<button class="code-copy" onclick="navigator.clipboard.writeText(this.parentElement.innerText.replace('Copy','').trim()).then(()=>this.textContent='Copied!')">Copy</button>
+    </div>
+
+    <div class="essay">
+      <p>The exported <code>window.LOVB</code> contains: <b>markets</b> (6 LOVB Pro teams + 3 expansion), <b>foundingAthletes</b> (10 athletes), <b>icons2026</b> (14 athletes), <b>juniorClubs</b> (90 affiliated), <b>statLeaders2026</b>, <b>standings_2026</b>, <b>foundation</b>, <b>schedule_2026</b>, and helper functions under <code>LOVB.helpers</code>.</p>
+      <p>Every record is sourced — each has a <code>source</code> field pointing to the LOVB page or named publication that grounds the claim. <em>If you publish from our data, please cite the original source we cite, not just us.</em></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">III</span> · The embed widgets</div>
+    <h2 class="section-h">Eight widgets, <span class="italic">all turnkey.</span></h2>
+    <p class="section-deck">Each widget self-contained. Identity inherits from the host page background; all other styling is shipped by us. Copy the snippet, paste into your page, done.</p>
+
+    <div class="widget-grid">
+      <div class="widget-card">
+        <div class="widget-eyebrow">// WIDGET · atlas</div>
+        <div class="widget-name">The <span class="italic">Atlas.</span></div>
+        <div class="widget-detail">Pro · Junior · Foundation. The hub of hubs. 6 Pro markets + 90 junior clubs + foundation overview in one self-contained widget.</div>
+        <div class="widget-snippet">&lt;div id="fc-lovb-atlas"&gt;&lt;/div&gt;&lt;script src=".../embed/atlas.js"&gt;&lt;/script&gt;</div>
+      </div>
+      <div class="widget-card">
+        <div class="widget-eyebrow">// WIDGET · pathway</div>
+        <div class="widget-name">The <span class="italic">Pathway.</span></div>
+        <div class="widget-detail">Junior-to-pro probability tool. 60-second input, probability bands across D1 / D2 / D3 / NAIA / juco / pro. Privacy: nothing leaves the browser.</div>
+        <div class="widget-snippet">&lt;div id="fc-lovb-pathway"&gt;&lt;/div&gt;&lt;script src=".../embed/pathway.js"&gt;&lt;/script&gt;</div>
+      </div>
+      <div class="widget-card">
+        <div class="widget-eyebrow">// WIDGET · standings</div>
+        <div class="widget-name">The <span class="italic">Standings.</span></div>
+        <div class="widget-detail">2026 LOVB Pro standings. Auto-updates when our sync from lovb.com refreshes. Smallest widget (under 30KB).</div>
+        <div class="widget-snippet">&lt;div id="fc-lovb-standings"&gt;&lt;/div&gt;&lt;script src=".../embed/standings.js"&gt;&lt;/script&gt;</div>
+      </div>
+      <div class="widget-card">
+        <div class="widget-eyebrow">// WIDGET · leaders</div>
+        <div class="widget-name">The <span class="italic">Leaders.</span></div>
+        <div class="widget-detail">2026 statistical leaders by category. Pin to homepage; auto-refresh on sync. Great for club site sidebars.</div>
+        <div class="widget-snippet">&lt;div id="fc-lovb-leaders"&gt;&lt;/div&gt;&lt;script src=".../embed/leaders.js"&gt;&lt;/script&gt;</div>
+      </div>
+      <div class="widget-card">
+        <div class="widget-eyebrow">// WIDGET · market</div>
+        <div class="widget-name">The <span class="italic">Market.</span></div>
+        <div class="widget-detail">Single-market dossier. Pass <code>?m=</code> in query (atl/atx/htx/mad/neb/sl). Use this for pre-game broadcaster packages.</div>
+        <div class="widget-snippet">&lt;div id="fc-lovb-market" data-market="htx"&gt;&lt;/div&gt;&lt;script src=".../embed/market.js"&gt;&lt;/script&gt;</div>
+      </div>
+      <div class="widget-card">
+        <div class="widget-eyebrow">// WIDGET · icons</div>
+        <div class="widget-name">The <span class="italic">Icons.</span></div>
+        <div class="widget-detail">2026 LOVB Icons selection. First Team + Second Team. Updates if our weighted-vote tracking changes.</div>
+        <div class="widget-snippet">&lt;div id="fc-lovb-icons"&gt;&lt;/div&gt;&lt;script src=".../embed/icons.js"&gt;&lt;/script&gt;</div>
+      </div>
+      <div class="widget-card">
+        <div class="widget-eyebrow">// WIDGET · athletes</div>
+        <div class="widget-name">The <span class="italic">Athletes.</span></div>
+        <div class="widget-detail">Full roster grid across the league. Filterable by position, team, status. Useful for scout databases.</div>
+        <div class="widget-snippet">&lt;div id="fc-lovb-athletes"&gt;&lt;/div&gt;&lt;script src=".../embed/athletes.js"&gt;&lt;/script&gt;</div>
+      </div>
+      <div class="widget-card">
+        <div class="widget-eyebrow">// WIDGET · playoffs</div>
+        <div class="widget-name">The <span class="italic">Playoffs.</span></div>
+        <div class="widget-detail">Live bracket for 2026 playoffs (Louisville → Long Beach). Auto-updates as semifinal results come in.</div>
+        <div class="widget-snippet">&lt;div id="fc-lovb-playoffs"&gt;&lt;/div&gt;&lt;script src=".../embed/playoffs.js"&gt;&lt;/script&gt;</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">IV</span> · Endpoints reference</div>
+    <h2 class="section-h">Read-only <span class="italic">HTTP endpoints.</span></h2>
+    <p class="section-deck">If you want to fetch specific data slices instead of the full data file, these endpoints return JSON. All read-only, all GET, no auth.</p>
+
+    <div class="endpoints">
+      <div class="endpoint-row">
+        <div class="ep-method">GET</div>
+        <div class="ep-path">/api/markets</div>
+        <div class="ep-detail">All 6 Pro markets + 3 expansion markets. <b>Includes ownership, standings, founders, junior affiliates.</b></div>
+      </div>
+      <div class="endpoint-row">
+        <div class="ep-method">GET</div>
+        <div class="ep-path">/api/markets/:code</div>
+        <div class="ep-detail">Single market by code (atl/atx/htx/mad/neb/sl). <b>Full dossier data.</b></div>
+      </div>
+      <div class="endpoint-row">
+        <div class="ep-method">GET</div>
+        <div class="ep-path">/api/athletes</div>
+        <div class="ep-detail">All athletes — Founding Ten, 2026 Icons, full LOVB Pro rosters when available. Filterable by team, position, status.</div>
+      </div>
+      <div class="endpoint-row">
+        <div class="ep-method">GET</div>
+        <div class="ep-path">/api/icons/2026</div>
+        <div class="ep-detail">2026 LOVB Icons First Team + Second Team. <b>Unanimous selections flagged.</b> Source-linked.</div>
+      </div>
+      <div class="endpoint-row">
+        <div class="ep-method">GET</div>
+        <div class="ep-path">/api/standings</div>
+        <div class="ep-detail">Current season standings. Updates on each data sync (logged at /lovb/changelog).</div>
+      </div>
+      <div class="endpoint-row">
+        <div class="ep-method">GET</div>
+        <div class="ep-path">/api/leaders/:category</div>
+        <div class="ep-detail">Stat leaders by category (points/kills/blocks/assists/digs). Top six per category.</div>
+      </div>
+      <div class="endpoint-row">
+        <div class="ep-method">GET</div>
+        <div class="ep-path">/api/clubs</div>
+        <div class="ep-detail">All 90 affiliated junior clubs. Filterable by state, by Pro affiliate, by 2025 national-champion status.</div>
+      </div>
+      <div class="endpoint-row">
+        <div class="ep-method">GET</div>
+        <div class="ep-path">/api/schedule/2026</div>
+        <div class="ep-detail">Full 2026 LOVB Pro regular-season + playoffs schedule. <b>Broadcast partner attribution included.</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">V</span> · License + attribution</div>
+    <h2 class="section-h">How to <span class="italic">credit us.</span></h2>
+
+    <div class="license">
+      <div class="license-eyebrow">// LICENSE · CC BY-SA 4.0 · Attribution-ShareAlike</div>
+      <h3 class="license-h">Use freely. <span class="italic">Cite us. Share alike.</span></h3>
+      <p class="license-body">All FieldCheck-LOVB content — widgets, data, written analysis, surfaces — is published under <b>Creative Commons Attribution-ShareAlike 4.0 International</b>. You can reuse, remix, build upon, and republish — even commercially — provided you:</p>
+      <p class="license-body" style="margin-top:14px">(1) <b>Attribute</b> FieldCheck-LOVB as the source when you reuse our content. A link to <code style="color:var(--gold);background:rgba(255,201,74,0.06);padding:1px 6px;border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:13px">fieldcheck-app.netlify.app/lovb</code> in the credits or footer is sufficient.</p>
+      <p class="license-body" style="margin-top:8px">(2) <b>Share alike.</b> If you adapt or build upon our content, your derivative work must also be licensed under CC BY-SA 4.0 (or compatible).</p>
+      <p class="license-body" style="margin-top:8px">(3) <b>Cite the original sources we cite</b> — not just us. The LOVB pages, named publications, AVCA recognition lists we ground our content on are the actual provenance. We're just the assembler.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">VI</span> · Versioning + stability</div>
+    <h2 class="section-h">What <span class="italic">won't break</span> on you.</h2>
+    <p class="section-deck">If you're embedding widgets in broadcaster pre-game packages or scout databases, you need to know what's stable. Here's what we commit to.</p>
+
+    <div class="essay">
+      <p><b>Widget script URLs are stable.</b> The script at <code>/embed/atlas.js</code> will resolve to the same widget identity for at least 24 months. If we deprecate a widget, we'll provide migration notes 6 months ahead in <a href="/lovb/changelog">/lovb/changelog</a>.</p>
+      <p><b>Data shape is stable.</b> The <code>window.LOVB</code> object keys won't be renamed or removed without a version bump. <em>We add fields freely; we don't remove or rename them.</em></p>
+      <p><b>Endpoint paths are stable.</b> Same 24-month commitment as widget URLs. New endpoints come; existing ones don't change shape without notice.</p>
+      <p><b>Sync cadence is best-effort.</b> Our backend re-syncs from LOVB sources approximately weekly. During playoffs and major news (Icons announcement, ownership announcements), we sync ad-hoc. Stale-data risk is low; if you see a clearly outdated number, file a <a href="/dispute">dispute</a>.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-display">The API · Documentation · CC BY-SA 4.0 · No Key Required</div>
+    <p>If you embed a widget on a public page, we'd love to know — file a note via <a href="/dispute">dispute</a> with the URL. We don't track usage automatically (no analytics on widgets), so we only learn about deployments when implementers tell us. Helps us know what's load-bearing in the ecosystem.</p>
+    <p>For partners interested in <b>deeper integration</b> beyond CC BY-SA — co-branded broadcast packages, club-network rollouts, white-label scout interfaces — same dispute link. We respond inside 48 hours.</p>
+    <div class="footer-disclaimer">Independent and unaffiliated with LOVB. All data and content remains attributable to the originating sources we cite. "LOVB" and related marks are properties of League One Volleyball Inc.</div>
+  </div>
+</footer>
+
+</body>
+</html>

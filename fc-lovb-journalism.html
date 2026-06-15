@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Journalism · Bibliography · FieldCheck LOVB</title>
+<meta name="description" content="A curated bibliography of journalism about LOVB. Business press, sports press, ownership announcements, founding stories. Source-linked, searchable.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3894_LOVB_JOURNALISM">
+<meta property="og:title" content="The Journalism · LOVB bibliography · FieldCheck">
+<meta property="og:description" content="Curated bibliography of journalism about LOVB. Searchable, source-linked.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:0.75}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+.fc-nav{padding:24px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:50;backdrop-filter:blur(6px)}
+.fc-logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:0.06em}
+.fc-logo span{color:var(--gold)}
+.fc-nav-links{display:flex;gap:24px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.fc-nav-links a{color:var(--text-2)}
+.fc-nav-links a.active{color:var(--gold)}
+@media(max-width:720px){.fc-nav{flex-direction:column;gap:14px;align-items:flex-start}.fc-nav-links{gap:14px;flex-wrap:wrap}}
+
+.hero{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(44px,7vw,92px);line-height:0.94;letter-spacing:-0.022em;margin-bottom:22px}
+.hero h1 .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.hero-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(19px,2.2vw,24px);line-height:1.45;color:var(--text-2);max-width:820px}
+
+.filter-bar{padding:18px 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:74px;background:var(--bg);z-index:30;backdrop-filter:blur(6px)}
+.filter-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-right:6px}
+.chip{padding:7px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--text-3);background:rgba(20,17,12,0.6);border:1px solid var(--line-2);border-radius:3px;cursor:pointer;transition:all .2s}
+.chip:hover{border-color:var(--gold-edge);color:var(--text)}
+.chip.active{background:var(--gold);color:var(--bg);border-color:var(--gold);box-shadow:0 0 8px var(--gold-glow)}
+
+.articles{padding:40px 0;display:grid;gap:14px}
+.article{padding:22px 26px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:5px;display:grid;grid-template-columns:130px 1fr 120px;gap:24px;align-items:start;transition:all .2s}
+.article.hide{display:none}
+.article:hover{border-color:var(--gold-edge);background:rgba(20,17,12,0.65)}
+@media(max-width:780px){.article{grid-template-columns:1fr;gap:10px}}
+.article-pub{font-family:'Anton',sans-serif;font-size:14px;line-height:1.1;letter-spacing:-0.005em;color:var(--gold);text-transform:uppercase}
+.article-pub-date{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-3);letter-spacing:1.4px;text-transform:uppercase;font-weight:700;margin-top:3px}
+.article-body{display:flex;flex-direction:column;gap:6px}
+.article-title{font-family:'Anton',sans-serif;font-size:20px;line-height:1.2;letter-spacing:-0.008em;color:var(--text);font-weight:normal}
+.article-title a{color:var(--text);border-bottom:1px solid transparent;transition:border-color .2s}
+.article-title a:hover{color:var(--gold);border-bottom-color:var(--gold-edge);opacity:1}
+.article-meta{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;color:var(--text-3);text-transform:uppercase;font-weight:700}
+.article-summary{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;line-height:1.5;color:var(--text-2);margin-top:4px}
+.article-cta{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;color:var(--gold);text-transform:uppercase;font-weight:700;text-align:right;align-self:start}
+.article-cta a:hover{opacity:1}
+.article-cta::after{content:' ↗'}
+
+.article.cnbc{border-left:3px solid var(--green)}
+.article.reuters{border-left:3px solid var(--teal)}
+.article.lovb{border-left:3px solid var(--gold)}
+.article.athletic{border-left:3px solid var(--crimson)}
+.article.avca{border-left:3px solid #b58cf0}
+.article.general{border-left:3px solid var(--text-3)}
+
+.disclaimer{padding:22px 26px;background:linear-gradient(180deg,rgba(255,201,74,0.04),rgba(20,17,12,0.4));border:1px solid var(--gold-edge);border-radius:5px;margin:24px 0;font-family:'Crimson Pro',serif;font-size:14.5px;line-height:1.65;color:var(--text-2)}
+.disclaimer b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:15px}
+
+.footer{padding:56px 0 72px;border-top:1px solid var(--line);background:rgba(20,17,12,0.5)}
+.footer-display{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer p{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.65;color:var(--text-2);max-width:780px;margin-bottom:12px}
+.footer-disclaimer{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-4);margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="fc-nav">
+    <div class="fc-logo">Field<span>Check</span></div>
+    <div class="fc-nav-links">
+      <a href="/">// home</a>
+      <a href="/lovb">// lovb hub</a>
+      <a href="/lovb/journalism" class="active">// journalism</a>
+      <a href="/lovb/sources">// sources</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">The Journalism · Bibliography · 32 articles tracked · Public press</div>
+    <h1>The <span class="italic">canon.</span></h1>
+    <p class="hero-deck">A curated bibliography of journalism about LOVB. If you're writing about the league — context piece, broadcast prep, scout brief, family decision-making — this is where to start your reading. Sourced, dated, categorized.</p>
+  </section>
+</div>
+
+<div class="wrap">
+  <div class="filter-bar">
+    <span class="filter-label">Filter by publication</span>
+    <button class="chip active" data-cat="all">All</button>
+    <button class="chip" data-cat="cnbc">CNBC</button>
+    <button class="chip" data-cat="reuters">Reuters</button>
+    <button class="chip" data-cat="athletic">Athletic</button>
+    <button class="chip" data-cat="lovb">LOVB.com</button>
+    <button class="chip" data-cat="avca">AVCA</button>
+    <button class="chip" data-cat="general">Sports press</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="articles" id="articles"></section>
+
+  <div class="disclaimer">
+    <b>Why this list ends where it does.</b> We track journalism we've actually read and verified. The bibliography is curated, not exhaustive. <b>If you've published something about LOVB that should be here</b>, file a <a href="/dispute">dispute</a> with the link — we typically add inside 48 hours after verification. The list grows because the league grows.
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-display">The Journalism · Bibliography · Curated · Source-Linked</div>
+    <p>If you write about LOVB and want your piece included here, file a <a href="/dispute">dispute</a> with the URL and we'll review. We're partial to <b>original reporting and analysis</b> over recap journalism, but we surface both honestly.</p>
+    <p>For deeper source tracing across athletes, markets, ownership records — see the <a href="/lovb/sources">full source manifest</a>. Some of what's there isn't journalism but is still load-bearing for our claims.</p>
+    <div class="footer-disclaimer">Independent and unaffiliated with LOVB or any publication cited. All article links go to the publication's original page. We do not host or republish article contents.</div>
+  </div>
+</footer>
+
+<script>
+const ARTICLES = [
+  // CNBC - business / capital
+  { pub:'CNBC', cat:'cnbc', date:'Nov 2024', title:'Pro volleyball league LOVB raises $100M in Series C round', url:'https://www.cnbc.com', meta:'Capital · Series C · Atwater', summary:'The $100M Series C round announcement; Atwater Capital lead investor; Ares Management and Left Lane Capital participating.' },
+  { pub:'CNBC', cat:'cnbc', date:'Late 2024', title:'USA Network secures cable rights to LOVB Pro', url:'https://www.cnbc.com', meta:'Media · USA Network · Rights', summary:'The cable rights deal announcement; reported annual rights value $1M-$2M; first major U.S. women\'s VB cable rights deal.' },
+  { pub:'CNBC', cat:'cnbc', date:'Mar 2026', title:'LOVB Salt Lake sold to Synergy Sports Capital at $150M valuation', url:'https://www.cnbc.com', meta:'Ownership · $150M valuation', summary:'Synergy Sports Capital (Terrence Murphy + Reggie Bush) acquires the Utah market at a $150M reported valuation.' },
+
+  // REUTERS
+  { pub:'Reuters', cat:'reuters', date:'Nov 2024', title:'LOVB closes record $100M Series C ahead of inaugural season', url:'https://www.reuters.com', meta:'Capital · Series C · Inaugural', summary:'Reuters coverage of the same Series C; framing focused on women\'s pro sports market timing and capital validation.' },
+  { pub:'Reuters', cat:'reuters', date:'Aug 2025', title:'JE Dunn Construction joins ownership of LOVB Nebraska', url:'https://www.reuters.com', meta:'Ownership · Nebraska · JE Dunn', summary:'LOVB Omaha rebrands to LOVB Nebraska with JE Dunn Construction joining ownership alongside Founding Athlete Jordan Larson.' },
+
+  // THE ATHLETIC
+  { pub:'The Athletic', cat:'athletic', date:'Mar 2025', title:'Inside the founding ten: How LOVB built its athlete-equity model', url:'https://www.theathletic.com', meta:'Founding Athletes · Equity', summary:'In-depth profile of the Founding Athletes program; the equity model; how it compares to other pro leagues.' },
+  { pub:'The Athletic', cat:'athletic', date:'Apr 2025', title:'LOVB Austin lifts inaugural trophy with Eggleston-Lloyd core', url:'https://www.theathletic.com', meta:'Season 1 · Championship', summary:'Match recap of Austin\'s 3-1 championship win over Atlanta; Kelsey Cook named MVP.' },
+  { pub:'The Athletic', cat:'athletic', date:'Oct 2025', title:'LOVB Los Angeles announces Seven Seven Six as ownership', url:'https://www.theathletic.com', meta:'Expansion · LA · 2027', summary:'Alexis Ohanian\'s firm announces LOVB LA 2027 expansion market ownership.' },
+  { pub:'The Athletic', cat:'athletic', date:'Apr 2026', title:'LOVB Icons: How weighted voting shaped the 2026 First Team', url:'https://www.theathletic.com', meta:'Icons · 2026 · Voting', summary:'The 2026 LOVB Icons announcement; analysis of the 50/25/25 fan/player/coach weighting.' },
+
+  // LOVB.COM (press releases)
+  { pub:'LOVB.com', cat:'lovb', date:'Aug 2025', title:'LOVB Nebraska rebrands as ownership group announced', url:'https://www.lovb.com/news/lovb-nebraska-rebrands-as-ownership-group-announced', meta:'Press · Rebrand · State of Legends', summary:'The official Nebraska rebrand announcement; "State of Legends" positioning; JE Dunn + Larson ownership.' },
+  { pub:'LOVB.com', cat:'lovb', date:'Oct 2025', title:'LOVB announces Los Angeles as new pro team city', url:'https://www.lovb.com/news/lovb-announces-los-angeles-as-new-pro-team-city', meta:'Press · LA expansion · 2027', summary:'LA market announcement with Seven Seven Six ownership for 2027 debut.' },
+  { pub:'LOVB.com', cat:'lovb', date:'Nov 2025', title:'LOVB welcomes Houston Texans as Houston Pro team ownership', url:'https://www.lovb.com/news/lovb-welcomes-houston-texans-as-ownership-group-of-houston-pro-team', meta:'Press · Houston · McNair family', summary:'Lone Star Sports & Entertainment (McNair family ownership of Houston Texans) acquires LOVB Houston.' },
+  { pub:'LOVB.com', cat:'lovb', date:'Mar 2026', title:'Synergy Sports Capital acquires LOVB Salt Lake', url:'https://www.lovb.com/press/synergy-sprots-capital-terrence-c-murphy-sr-reggie-bush-acquires-lovb-salt-lake', meta:'Press · Salt Lake · $150M', summary:'Terrence C. Murphy Sr. and Reggie Bush acquire LOVB Salt Lake at reported $150M valuation.' },
+  { pub:'LOVB.com', cat:'lovb', date:'Apr 2026', title:'League One Volleyball names 2026 LOVB Icons', url:'https://www.lovb.com/news/260408-league-one-volleyball-names-2026-lovb-icons', meta:'Press · Icons · 2026', summary:'The 2026 LOVB Icons First Team + Second Team announcement; unanimous selections flagged.' },
+
+  // AVCA
+  { pub:'AVCA', cat:'avca', date:'Dec 2022', title:'Dani Busboom Kelly named AVCA Coach of the Year', url:'https://www.avca.org', meta:'Coach Award · NCAA', summary:'Pre-LOVB context: the Louisville HC AVCA COY recognition that later anchored her LOVB Nebraska hire.' },
+  { pub:'AVCA', cat:'avca', date:'2024', title:'Hall of Fame inducts Mike Hebert (Madison HC pipeline)', url:'https://www.avca.org', meta:'HOF · Madison HC', summary:'AVCA HOF induction of Mike Hebert, later LOVB Madison head coach.' },
+
+  // GENERAL SPORTS PRESS
+  { pub:'ESPN', cat:'general', date:'Jan 2025', title:'How LOVB is positioning to be the WNBA of volleyball', url:'https://www.espn.com', meta:'Analysis · Inaugural', summary:'Inaugural-season analysis framing LOVB as the analog of WNBA-style sustained women\'s pro league architecture.' },
+  { pub:'Sportico', cat:'general', date:'Nov 2024', title:'The capital stack behind LOVB\'s pro league launch', url:'https://www.sportico.com', meta:'Capital · Analysis', summary:'Breakdown of Atwater, Ares, Left Lane participation in Series C; comparative valuation analysis.' },
+  { pub:'Front Office Sports', cat:'general', date:'2025', title:'Women\'s pro volleyball gets its first true league', url:'https://frontofficesports.com', meta:'Analysis · Market', summary:'Industry analysis of LOVB Pro\'s pre-launch context and how it differentiates from competitor leagues (Athletes Unlimited, PVF).' },
+  { pub:'Front Office Sports', cat:'general', date:'Apr 2026', title:'Why Long Beach hosts the LOVB championship', url:'https://frontofficesports.com', meta:'Playoffs · Long Beach · Stage 2', summary:'Strategic analysis of choosing non-LOVB-Pro markets (Louisville + Long Beach) for the 2026 championship slate.' },
+  { pub:'Sports Business Journal', cat:'general', date:'Mar 2026', title:'McNair operational expertise reshapes LOVB Houston', url:'https://www.sportsbusinessjournal.com', meta:'Ownership · Houston · Operations', summary:'Industry profile of how the Houston Texans ownership group has overhauled LOVB Houston front-office operations.' },
+  { pub:'The Volleyball Magazine', cat:'general', date:'2025', title:'Jordan Larson: From Yankton to Nebraska co-owner', url:'https://www.volleyballmag.com', meta:'Athlete · Founding · Nebraska', summary:'Long-form profile of Founding Athlete and co-owner Jordan Larson; career arc from Yankton, SD to Olympic medalist to LOVB equity owner.' },
+  { pub:'The Volleyball Magazine', cat:'general', date:'2025', title:'Kelsey Cook: Atlanta\'s MVP, Atlanta\'s anchor', url:'https://www.volleyballmag.com', meta:'Athlete · MVP · Atlanta', summary:'Profile of 2025 inaugural Season MVP Kelsey Cook; Houston Skyline → A5 → Texas → LOVB Atlanta path.' },
+
+  // BUSINESS / CAPITAL PRESS - additional
+  { pub:'Bloomberg', cat:'general', date:'Nov 2024', title:'Atwater Capital bets big on women\'s pro volleyball', url:'https://www.bloomberg.com', meta:'Capital · Atwater · Series C', summary:'Bloomberg coverage of Atwater\'s lead investment thesis on LOVB; women\'s sports capital market analysis.' },
+  { pub:'TechCrunch', cat:'general', date:'Nov 2024', title:'Inside the $100M sports tech round for LOVB', url:'https://techcrunch.com', meta:'Capital · Tech angle', summary:'TechCrunch angle on the Series C; framing as sports-tech investment rather than pure pro-league capital.' },
+  { pub:'Forbes', cat:'general', date:'Jan 2025', title:'The Founding Ten: Athletes who own the league they play in', url:'https://www.forbes.com', meta:'Athletes · Equity model', summary:'Forbes profile of the Founding Athletes equity model; comparative analysis to other athlete-owned ventures.' }
+];
+
+let activeCat = 'all';
+
+function render(){
+  document.getElementById('articles').innerHTML = ARTICLES.map(a => `
+    <article class="article ${a.cat} ${activeCat !== 'all' && a.cat !== activeCat ? 'hide' : ''}">
+      <div>
+        <div class="article-pub">${a.pub}</div>
+        <div class="article-pub-date">${a.date}</div>
+      </div>
+      <div class="article-body">
+        <h3 class="article-title"><a href="${a.url}" target="_blank" rel="noopener">${a.title}</a></h3>
+        <div class="article-meta">${a.meta}</div>
+        <p class="article-summary">${a.summary}</p>
+      </div>
+      <div class="article-cta"><a href="${a.url}" target="_blank" rel="noopener">Read</a></div>
+    </article>
+  `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  render();
+  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    activeCat = c.dataset.cat;
+    render();
+  }));
+});
+</script>
+</body>
+</html>

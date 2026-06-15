@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FieldCheck IQ API · Audited intelligence over REST</title>
+  <meta name="description" content="The FieldCheck IQ engine, accessible over REST. Verdict, comparable, NIL Score, trust graph. Every response audit-signed (SHA-256). Edge tier required.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #0d0d0d; --bg-2: #161616; --bg-3: #1d1d1d;
+  --text: #F5F1E8; --text-2: #b8b8b8; --text-3: #888;
+  --gold: #d4af37; --moss: #95d5b2; --teal: #4ec9c0; --rust: #c45132;
+  --border: rgba(255,255,255,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+.fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+.fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+.fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+.fc-canonical-wordmark { font-size: 18px; }
+.fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+.fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+.fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+.fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+.fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.fc-canonical-nav .nav-more-wrap { display: none; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.nav-primary:hover { color: #ffc94a; }
+.nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.nav-more-wrap { position: relative; display: inline-block; }
+.nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-wrap { display: none; }
+.nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.nav-more-chev { transform: rotate(180deg); }
+.nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.nav-more-group { padding: 6px 4px; }
+.nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+
+
+.api-hero { max-width: 1000px; margin: 0 auto; padding: 72px 32px 36px; text-align: center; }
+.api-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 16px; }
+.api-title { font-family: 'Anton', sans-serif; font-size: clamp(42px, 6.5vw, 76px); line-height: 0.98; letter-spacing: -0.012em; margin-bottom: 22px; }
+.api-title .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.api-sub { font-size: 17px; color: var(--text-2); max-width: 720px; margin: 0 auto 14px; line-height: 1.55; }
+.api-coda { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-size: 16px; max-width: 600px; margin: 0 auto; }
+
+.api-base-row { max-width: 1000px; margin: 28px auto; padding: 0 32px; }
+.api-base-card { padding: 22px 24px; background: linear-gradient(135deg, rgba(78,201,192,0.05), rgba(20,17,12,0.4)); border: 1px solid rgba(78,201,192,0.3); border-radius: 12px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.api-base-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: var(--teal); font-weight: 700; }
+.api-base-url { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--text); flex: 1; min-width: 200px; }
+.api-base-auth { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--text-3); }
+.api-base-auth strong { color: var(--gold); font-weight: 700; }
+
+.api-endpoints { max-width: 1100px; margin: 32px auto 60px; padding: 0 32px; }
+.api-section-h { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 22px; }
+
+.api-endpoint { margin-bottom: 28px; padding: 26px 28px; background: rgba(0,0,0,0.32); border: 1px solid var(--border); border-radius: 14px; }
+.api-endpoint-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.api-method { padding: 5px 12px; background: rgba(149,213,178,0.15); color: var(--moss); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; font-weight: 700; border-radius: 5px; }
+.api-method.post { background: rgba(212,175,55,0.15); color: var(--gold); }
+.api-path { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--text); font-weight: 600; }
+.api-endpoint-h { font-family: 'Anton', sans-serif; font-size: 20px; margin-top: 4px; color: var(--text); letter-spacing: -0.005em; }
+.api-endpoint-desc { color: var(--text-2); font-size: 14px; line-height: 1.55; margin: 8px 0 16px; }
+
+.api-params { margin: 14px 0 18px; }
+.api-params-h { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--gold); margin-bottom: 8px; font-weight: 700; }
+.api-param-row { display: grid; grid-template-columns: 120px 80px 1fr; gap: 12px; padding: 7px 12px; background: rgba(0,0,0,0.25); border-radius: 6px; margin-bottom: 4px; font-size: 12.5px; align-items: baseline; }
+.api-param-name { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-weight: 600; }
+.api-param-type { font-family: 'JetBrains Mono', monospace; color: var(--text-3); font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase; }
+.api-param-desc { color: var(--text-2); line-height: 1.45; }
+
+.api-codeblock { margin: 14px 0; padding: 18px 22px; background: #050505; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.65; color: #b8b8b8; overflow-x: auto; position: relative; }
+.api-codeblock-label { position: absolute; top: 0; right: 12px; transform: translateY(-50%); padding: 3px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; font-size: 9px; letter-spacing: 1.5px; color: var(--gold); font-weight: 700; }
+.api-codeblock pre { white-space: pre; }
+.api-codeblock .k { color: #d4af37; }   /* keyword */
+.api-codeblock .s { color: #95d5b2; }   /* string */
+.api-codeblock .c { color: #555; font-style: italic; } /* comment */
+.api-codeblock .n { color: #4ec9c0; }   /* number */
+.api-codeblock .p { color: var(--text); }
+.api-codeblock .v { color: #f5f1e8; }   /* value */
+
+.api-response-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.api-resp-chip { padding: 5px 10px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--text-2); }
+.api-resp-chip.ok { border-color: rgba(149,213,178,0.4); color: var(--moss); }
+.api-resp-chip.err { border-color: rgba(196,81,50,0.4); color: var(--rust); }
+
+.api-audit-band { max-width: 1000px; margin: 56px auto; padding: 30px 32px; background: linear-gradient(135deg, rgba(78,201,192,0.05), rgba(20,17,12,0.45)); border: 1px solid rgba(78,201,192,0.3); border-radius: 14px; }
+.api-audit-h { font-family: 'Anton', sans-serif; font-size: clamp(26px, 4vw, 38px); margin-bottom: 14px; line-height: 1.05; letter-spacing: -0.005em; }
+.api-audit-h .iq-italic { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--teal); font-weight: 400; }
+.api-audit-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 18px; }
+.api-audit-item { padding: 16px 18px; background: rgba(0,0,0,0.3); border-radius: 8px; }
+.api-audit-item-h { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--teal); font-weight: 700; margin-bottom: 8px; }
+.api-audit-item-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+
+.api-cta { max-width: 880px; margin: 56px auto 80px; padding: 36px; text-align: center; background: linear-gradient(135deg, rgba(212,175,55,0.06), rgba(20,17,12,0.5)); border: 1px solid rgba(212,175,55,0.4); border-radius: 16px; }
+.api-cta-h { font-family: 'Anton', sans-serif; font-size: clamp(28px, 4vw, 42px); line-height: 1.05; margin-bottom: 14px; letter-spacing: -0.005em; }
+.api-cta-h .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.api-cta-sub { color: var(--text-2); font-size: 15px; line-height: 1.55; margin-bottom: 22px; }
+.api-cta-btn { display: inline-block; padding: 16px 32px; background: var(--gold); color: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 1.8px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 10px; margin: 0 6px; transition: transform 0.2s; }
+.api-cta-btn:hover { transform: translateY(-1px); }
+.api-cta-btn.outline { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+
+@media (max-width: 720px) {
+  .api-hero { padding: 48px 22px 22px; }
+  .api-endpoints { padding: 0 14px; }
+  .api-endpoint { padding: 18px 16px; }
+  .api-param-row { grid-template-columns: 1fr; }
+}
+  </style>
+</head>
+<body>
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="api-hero">
+  <div class="api-eyebrow">// FIELDCHECK IQ API · v0.1 · EDGE TIER</div>
+  <h1 class="api-title">The intelligence engine,<br><span class="iq-italic">at the speed of REST.</span></h1>
+  <p class="api-sub">Every verdict, comparable, NIL Score, and trust-graph edge — over a clean REST surface. Every response carries an audit JSON. Every payload is SHA-256 signed. <strong style="color:var(--text)">No black box.</strong></p>
+  <p class="api-coda">"You read the athlete. We show our work. The API returns both."</p>
+</section>
+
+<div class="api-base-row">
+  <div class="api-base-card">
+    <span class="api-base-tag">// BASE URL</span>
+    <span class="api-base-url">https://api.fieldcheck.app/v1</span>
+    <span class="api-base-auth"><strong>AUTH:</strong> Bearer token · Edge tier required</span>
+  </div>
+</div>
+
+<section class="api-endpoints">
+
+  <div class="api-section-h">// CORE ENDPOINTS</div>
+
+  <!-- VERDICT -->
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method">GET</span>
+      <span class="api-path">/verdict</span>
+    </div>
+    <h3 class="api-endpoint-h">Read an athlete</h3>
+    <p class="api-endpoint-desc">Returns the full FieldCheck IQ verdict: composite + tier + 5-layer moat + comparable + audit envelope. The same payload that renders on /run.</p>
+    <div class="api-params">
+      <div class="api-params-h">// PARAMETERS</div>
+      <div class="api-param-row"><span class="api-param-name">slug</span><span class="api-param-type">string · req</span><span class="api-param-desc">Athlete slug — e.g. <code>harper-murray-nebraska-womens-volleyball</code>. Use <code>/lookup</code> first if unknown.</span></div>
+      <div class="api-param-row"><span class="api-param-name">include_bars</span><span class="api-param-type">bool</span><span class="api-param-desc">Include numerical scores per moat layer (Physical, Mindset, Production, Pathway, Defense). Default <code>true</code>.</span></div>
+      <div class="api-param-row"><span class="api-param-name">include_audit</span><span class="api-param-type">bool</span><span class="api-param-desc">Include the audit envelope (citations, SHA-256, reasoning trace, drift flags). Default <code>true</code>.</span></div>
+    </div>
+    <div class="api-codeblock">
+      <span class="api-codeblock-label">CURL</span>
+<pre><span class="c"># Read Harper Murray verdict, full audit included</span>
+<span class="k">curl</span> <span class="s">"https://api.fieldcheck.app/v1/verdict?slug=harper-murray-nebraska-womens-volleyball"</span> \
+  <span class="p">-H</span> <span class="s">"Authorization: Bearer fc_edge_xxxxxxxxxxxxxxxxxxx"</span> \
+  <span class="p">-H</span> <span class="s">"Accept: application/json"</span></pre>
+    </div>
+    <div class="api-codeblock">
+      <span class="api-codeblock-label">RESPONSE · 200</span>
+<pre><span class="p">{</span>
+  <span class="k">"athlete"</span>: { <span class="k">"name"</span>: <span class="s">"Harper Murray"</span>, <span class="k">"sport"</span>: <span class="s">"womens-volleyball"</span>, <span class="k">"school"</span>: <span class="s">"Nebraska"</span>, <span class="k">"position"</span>: <span class="s">"OH"</span> },
+  <span class="k">"iq_score"</span>: <span class="n">85</span>,
+  <span class="k">"confidence"</span>: <span class="n">6</span>,
+  <span class="k">"tier"</span>: <span class="s">"ELITE"</span>,
+  <span class="k">"moat"</span>: {
+    <span class="k">"physical"</span>: <span class="n">8.6</span>, <span class="k">"mindset"</span>: <span class="n">9.1</span>, <span class="k">"attacking"</span>: <span class="n">8.4</span>, <span class="k">"defense"</span>: <span class="n">7.9</span>, <span class="k">"pathway"</span>: <span class="n">8.7</span>
+  },
+  <span class="k">"comparable"</span>: { <span class="k">"name"</span>: <span class="s">"Andrea Drews"</span>, <span class="k">"match"</span>: <span class="n">0.873</span>, <span class="k">"team"</span>: <span class="s">"LOVB Atlanta"</span> },
+  <span class="k">"audit"</span>: {
+    <span class="k">"sha256"</span>: <span class="s">"a4f9b2e1c7d8…"</span>,
+    <span class="k">"citations"</span>: <span class="n">12</span>,
+    <span class="k">"sources"</span>: [<span class="s">"huskers.com/roster"</span>, <span class="s">"avca.org/awards/2023"</span>, <span class="c">…</span>],
+    <span class="k">"signed_at"</span>: <span class="s">"2026-05-14T08:42:11Z"</span>,
+    <span class="k">"reasoning_trace"</span>: <span class="s">"/v1/audit/{sha256}/trace"</span>
+  }
+<span class="p">}</span></pre>
+    </div>
+    <div class="api-response-row">
+      <span class="api-resp-chip ok">200 OK</span>
+      <span class="api-resp-chip">401 No bearer / wrong tier</span>
+      <span class="api-resp-chip">404 Slug not in curated index</span>
+      <span class="api-resp-chip">429 Rate limited</span>
+    </div>
+  </div>
+
+  <!-- COMPARABLE -->
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method">GET</span>
+      <span class="api-path">/comparable</span>
+    </div>
+    <h3 class="api-endpoint-h">Find the founding-athlete comparable</h3>
+    <p class="api-endpoint-desc">For any athlete, returns the top-5 nearest founding-athlete archetypes by cosine similarity in the embedded archetype space.</p>
+    <div class="api-params">
+      <div class="api-params-h">// PARAMETERS</div>
+      <div class="api-param-row"><span class="api-param-name">slug</span><span class="api-param-type">string · req</span><span class="api-param-desc">Athlete slug.</span></div>
+      <div class="api-param-row"><span class="api-param-name">limit</span><span class="api-param-type">int</span><span class="api-param-desc">Number of comparables. Default 5, max 20.</span></div>
+      <div class="api-param-row"><span class="api-param-name">min_match</span><span class="api-param-type">float</span><span class="api-param-desc">Floor on similarity. Default 0.65.</span></div>
+    </div>
+    <div class="api-codeblock">
+      <span class="api-codeblock-label">JAVASCRIPT</span>
+<pre><span class="k">const</span> <span class="v">resp</span> = <span class="k">await</span> <span class="v">fetch</span>(
+  <span class="s">'https://api.fieldcheck.app/v1/comparable?slug=harper-murray-nebraska-womens-volleyball'</span>,
+  { <span class="k">headers</span>: { <span class="k">Authorization</span>: <span class="s">`Bearer ${process.env.FC_EDGE_TOKEN}`</span> } }
+);
+<span class="k">const</span> { <span class="v">comparables</span>, <span class="v">audit</span> } = <span class="k">await</span> <span class="v">resp</span>.<span class="v">json</span>();
+<span class="c">// comparables: [{ name, match: 0.873, archetype, sources }, …]</span></pre>
+    </div>
+  </div>
+
+  <!-- NIL SCORE -->
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method">GET</span>
+      <span class="api-path">/nil/score</span>
+    </div>
+    <h3 class="api-endpoint-h">NIL Score + reasoning trace</h3>
+    <p class="api-endpoint-desc">Audited NIL valuation. Returns score, confidence band, regional comparable set, and the reasoning trace. Defensible to boosters, donors, and counsel.</p>
+    <div class="api-params">
+      <div class="api-params-h">// PARAMETERS</div>
+      <div class="api-param-row"><span class="api-param-name">slug</span><span class="api-param-type">string · req</span><span class="api-param-desc">Athlete slug.</span></div>
+      <div class="api-param-row"><span class="api-param-name">market</span><span class="api-param-type">string</span><span class="api-param-desc">Regional market — e.g. <code>midwest-p5</code>. Default infers from school.</span></div>
+      <div class="api-param-row"><span class="api-param-name">include_trace</span><span class="api-param-type">bool</span><span class="api-param-desc">Include the full reasoning trace. Default <code>true</code>.</span></div>
+    </div>
+    <div class="api-codeblock">
+      <span class="api-codeblock-label">RESPONSE · 200</span>
+<pre><span class="p">{</span>
+  <span class="k">"slug"</span>: <span class="s">"harper-murray-nebraska-womens-volleyball"</span>,
+  <span class="k">"nil_score"</span>: <span class="n">8.4</span>,
+  <span class="k">"confidence_band"</span>: { <span class="k">"low"</span>: <span class="n">7.6</span>, <span class="k">"high"</span>: <span class="n">9.0</span> },
+  <span class="k">"market"</span>: <span class="s">"midwest-p5"</span>,
+  <span class="k">"regional_comparable"</span>: [{ <span class="k">"name"</span>: <span class="s">"…"</span>, <span class="k">"score"</span>: <span class="n">8.2</span> }, <span class="c">…</span>],
+  <span class="k">"reasoning_trace"</span>: {
+    <span class="k">"inputs"</span>: [<span class="s">"social_index_v3"</span>, <span class="s">"market_size"</span>, <span class="s">"competitive_set"</span>, <span class="c">…</span>],
+    <span class="k">"weights"</span>: { <span class="k">"social"</span>: <span class="n">0.32</span>, <span class="k">"performance"</span>: <span class="n">0.41</span>, <span class="k">"market"</span>: <span class="n">0.27</span> },
+    <span class="k">"published_methodology"</span>: <span class="s">"/methodology/nil-score-v1"</span>
+  },
+  <span class="k">"audit"</span>: { <span class="k">"sha256"</span>: <span class="s">"b1c5e2f4a8d6…"</span>, <span class="k">"signed_at"</span>: <span class="s">"2026-05-14T08:42:11Z"</span> }
+<span class="p">}</span></pre>
+    </div>
+  </div>
+
+  <!-- TRUST GRAPH -->
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method">GET</span>
+      <span class="api-path">/trust-graph/walk</span>
+    </div>
+    <h3 class="api-endpoint-h">Walk the relationship graph</h3>
+    <p class="api-endpoint-desc">Starting from any node — coach, program, or athlete — walk N edges and return the connected subgraph with citation count per edge.</p>
+    <div class="api-params">
+      <div class="api-params-h">// PARAMETERS</div>
+      <div class="api-param-row"><span class="api-param-name">node</span><span class="api-param-type">string · req</span><span class="api-param-desc">Node slug (e.g. <code>coach-john-cook</code>, <code>program-nebraska-wvb</code>).</span></div>
+      <div class="api-param-row"><span class="api-param-name">depth</span><span class="api-param-type">int</span><span class="api-param-desc">Edge traversal depth. Default 2, max 4.</span></div>
+      <div class="api-param-row"><span class="api-param-name">edge_types</span><span class="api-param-type">string[]</span><span class="api-param-desc">Filter — e.g. <code>coached</code>, <code>recruited</code>, <code>transferred</code>.</span></div>
+    </div>
+  </div>
+
+  <!-- DISPUTE -->
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method post">POST</span>
+      <span class="api-path">/dispute</span>
+    </div>
+    <h3 class="api-endpoint-h">Submit a dispute · 5-day SLA</h3>
+    <p class="api-endpoint-desc">Any verdict, anytime. Methodology desk responds within 5 business days with either a correction (with SHA-256 of new verdict) or a published rationale for the original.</p>
+    <div class="api-codeblock">
+      <span class="api-codeblock-label">REQUEST BODY · JSON</span>
+<pre><span class="p">{</span>
+  <span class="k">"verdict_sha256"</span>: <span class="s">"a4f9b2e1c7d8…"</span>,
+  <span class="k">"dispute_type"</span>: <span class="s">"factual_error"</span>,
+  <span class="k">"claim"</span>: <span class="s">"Murray's 2023 hit% listed as .328, official is .331"</span>,
+  <span class="k">"evidence_urls"</span>: [<span class="s">"https://huskers.com/stats/2023"</span>],
+  <span class="k">"submitter_org"</span>: <span class="s">"Nebraska Athletics"</span>
+<span class="p">}</span></pre>
+    </div>
+  </div>
+
+</section>
+
+<section class="api-audit-band">
+  <div class="api-section-h" style="color:var(--teal)">// EVERY RESPONSE IS AUDIT-SIGNED</div>
+  <h2 class="api-audit-h">No verdict ships without <span class="iq-italic">its receipts.</span></h2>
+  <p style="color:var(--text-2);font-size:14.5px;line-height:1.55;max-width:760px">Every JSON response carries an <code style="color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:12px">audit</code> envelope. SHA-256 of the payload. Timestamp. Citations list. Reasoning trace URL. The integrity guarantee isn't a marketing line — it's a hash you can verify.</p>
+  <div class="api-audit-row">
+    <div class="api-audit-item">
+      <div class="api-audit-item-h">// SHA-256 SIGNED</div>
+      <div class="api-audit-item-desc">Every payload hashed. Re-run the same query, get the same hash — or a new one with a drift flag pointing to what changed.</div>
+    </div>
+    <div class="api-audit-item">
+      <div class="api-audit-item-h">// CITATIONS INLINE</div>
+      <div class="api-audit-item-desc">Claim by claim. Source URL by source URL. Walkable from the JSON.</div>
+    </div>
+    <div class="api-audit-item">
+      <div class="api-audit-item-h">// REASONING TRACE</div>
+      <div class="api-audit-item-desc">Inputs, weights, methodology version, published methodology link. Auditable upstream — not just the output.</div>
+    </div>
+    <div class="api-audit-item">
+      <div class="api-audit-item-h">// PUBLISHED METHODOLOGY</div>
+      <div class="api-audit-item-desc">Every model carries a public methodology page. Versioned. Diff-tracked. No proprietary black box.</div>
+    </div>
+  </div>
+</section>
+
+<section class="api-cta">
+  <h2 class="api-cta-h">Build on the receipts. <span class="iq-italic">Not on rumor.</span></h2>
+  <p class="api-cta-sub">The IQ API is part of the Edge tier. Email us — we'll start with a few of your priority targets and a sandbox bearer.</p>
+  <a href="mailto:edge@fieldcheck.ai?subject=FieldCheck%20IQ%20API%20-%20Sandbox%20Access" class="api-cta-btn">Request sandbox access</a>
+  <a href="/edge" class="api-cta-btn outline">See Edge tier →</a>
+</section>
+
+<div style="text-align:center;padding:24px 32px 60px;color:#888;font-size:11px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:1.2px">
+  FieldCheck IQ API v0.1 · ThinkDifferent Holdings · © 2026 · v0.30.5.2232
+</div>
+
+<script>
+function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('fc-nav-more-wrap');
+  if (!wrap) return;
+  if (!wrap.contains(e.target)) {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+</body>
+</html>

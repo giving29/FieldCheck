@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- FieldCheck CX DNA — always honored, never compromised:
+  1. One action per screen. Never two.
+  2. Zero required fields. The model detects. The user speaks.
+  3. Hide complexity. Expose confidence. The user sees clarity.
+  4. The experience IS the product. Not a feature of it.
+  5. Voice first, type second, form never.
+  6. Every pixel earns its place. Apple bar. No lower.
+  Pricing: strategy discussion only — not a near-term build item.
+  © 2026 ThinkDifferent Holdings · FieldCheck IQ -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Share Your Verdict · FieldCheck</title>
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);--red:#FF5C3A;}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+.wrap{max-width:640px;margin:0 auto;padding:24px}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge);margin-bottom:32px}
+.nav-i{padding:14px 0;display:flex;align-items:center;gap:16px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+
+.card-preview{background:linear-gradient(135deg,#100F14,#09080A);border:1px solid rgba(245,184,0,.3);border-radius:20px;padding:28px;margin-bottom:20px;position:relative;overflow:hidden;aspect-ratio:4/5;display:flex;flex-direction:column;justify-content:space-between}
+.card-preview::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 30% -10%,rgba(245,184,0,.12),transparent 60%);pointer-events:none}
+.cp-brand{font-family:'Anton',sans-serif;font-size:13px;color:rgba(245,241,232,.35);letter-spacing:.05em}
+.cp-brand b{color:rgba(245,184,0,.6)}
+.cp-sport{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(245,241,232,.3);margin-bottom:8px}
+.cp-name{font-family:'Anton',sans-serif;font-size:clamp(28px,8vw,48px);line-height:1.02;letter-spacing:-.02em;margin-bottom:4px}
+.cp-composite{font-family:'Anton',sans-serif;font-size:clamp(52px,15vw,88px);color:var(--gold);line-height:1;margin-bottom:4px}
+.cp-tier{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;background:rgba(245,184,0,.1);border:1px solid rgba(245,184,0,.25);border-radius:9999px;display:inline-block;color:var(--gold);margin-bottom:20px}
+.cp-bars{display:flex;flex-direction:column;gap:5px;margin-bottom:20px}
+.cp-bar-row{display:flex;align-items:center;gap:8px}
+.cp-bar-label{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:rgba(245,241,232,.35);width:80px;flex-shrink:0}
+.cp-bar-wrap{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:9999px;overflow:hidden}
+.cp-bar-fill{height:100%;border-radius:9999px;background:var(--gold);opacity:.8}
+.cp-footer{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:rgba(245,241,232,.25);letter-spacing:.5px}
+
+.controls{background:var(--bg1);border:1px solid var(--ge);border-radius:14px;padding:20px;margin-bottom:16px}
+.ctrl-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.ctrl-input{width:100%;padding:11px 14px;background:var(--bg2);border:1px solid var(--ge);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--t);outline:none;margin-bottom:8px}
+.ctrl-input:focus{border-color:var(--goldl)}
+.ctrl-row{display:flex;gap:8px;flex-wrap:wrap}
+.ctrl-btn{flex:1;min-width:120px;padding:11px;background:var(--gold);color:#09080A;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;transition:opacity .15s}
+.ctrl-btn:hover{opacity:.88}
+.ctrl-btn.secondary{background:transparent;border:1px solid var(--ge);color:var(--t3)}
+.ctrl-btn.secondary:hover{border-color:var(--goldl);color:var(--gold)}
+
+.share-btns{display:flex;flex-direction:column;gap:8px}
+.share-btn{padding:13px 18px;border-radius:10px;border:1px solid var(--ge);background:var(--bg1);color:var(--t2);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:10px;width:100%}
+.share-btn:hover{border-color:var(--goldl);color:var(--gold)}
+.share-btn.copied{border-color:var(--mossd);color:var(--moss)}
+
+/* ── Alert System ───────────────────────────────────────── */
+.fc-alert-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: .8px;
+  text-transform: uppercase; padding: 6px 13px;
+  border-radius: 9999px; border: 1px solid rgba(255,255,255,.1);
+  color: rgba(245,241,232,.4); background: transparent;
+  cursor: pointer; transition: all .15s;
+  display: inline-flex; align-items: center; gap: 5px;
+}
+.fc-alert-btn:hover { border-color: rgba(107,170,90,.4); color: #6BAA5A; }
+.fc-alert-overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.7); backdrop-filter: blur(6px);
+  align-items: center; justify-content: center; padding: 24px;
+}
+.fc-alert-overlay.open { display: flex; }
+.fc-alert-modal {
+  background: #100F14; border: 1px solid rgba(107,170,90,.3);
+  border-radius: 18px; padding: 28px 30px; max-width: 420px;
+  width: 100%; position: relative;
+}
+.fam-close {
+  position: absolute; top: 14px; right: 14px; background: none;
+  border: none; color: rgba(245,241,232,.3); font-size: 18px;
+  cursor: pointer; padding: 4px; transition: color .15s;
+}
+.fam-close:hover { color: #F5F1E8; }
+.fam-ey {
+  font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+  font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+  color: #6BAA5A; margin-bottom: 12px;
+}
+.fam-title { font-family: 'Anton', sans-serif; font-size: 24px;
+  letter-spacing: -.008em; margin-bottom: 6px; }
+.fam-sub { font-size: 13px; color: rgba(245,241,232,.6); line-height: 1.6; margin-bottom: 18px; }
+.fam-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.fam-opt { display: flex; align-items: center; gap: 10px; padding: 10px 13px;
+  background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 9px; cursor: pointer; transition: all .15s; }
+.fam-opt:hover, .fam-opt.selected {
+  border-color: rgba(107,170,90,.35); background: rgba(107,170,90,.06); }
+.fam-opt input[type=radio] { accent-color: #6BAA5A; }
+.fam-opt-label { font-size: 13px; color: rgba(245,241,232,.75); }
+.fam-opt-note { font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: rgba(245,241,232,.3); margin-left: auto; }
+.fam-email-row { display: flex; gap: 0; margin-bottom: 10px; }
+.fam-email { flex: 1; padding: 12px 14px; background: #181620;
+  border: 1px solid rgba(255,255,255,.1); border-radius: 10px 0 0 10px;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  color: #F5F1E8; outline: none; transition: border-color .15s; }
+.fam-email:focus { border-color: rgba(107,170,90,.5); }
+.fam-submit { padding: 12px 18px; background: #6BAA5A; color: #09080A;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; border: none;
+  border-radius: 0 10px 10px 0; cursor: pointer; white-space: nowrap; transition: opacity .15s; }
+.fam-submit:hover { opacity: .88; }
+.fam-success { display: none; text-align: center; padding: 16px 0; }
+.fam-success-icon { font-size: 32px; margin-bottom: 10px; }
+.fam-success-title { font-family: 'Anton', sans-serif; font-size: 22px; color: #6BAA5A; margin-bottom: 6px; }
+.fam-success-sub { font-size: 13px; color: rgba(245,241,232,.6); line-height: 1.6; }
+
+/* ── Universal 4-Item Nav ────────────────────────────────── */
+.fc-nav {
+  position: sticky; top: 0; z-index: 90;
+  background: rgba(9,8,10,.94); backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255,252,245,.10);
+  font-family: 'Inter', sans-serif;
+}
+.fc-nav-inner {
+  max-width: 1060px; margin: 0 auto;
+  padding: 0 24px; height: 54px;
+  display: flex; align-items: center; gap: 6px;
+}
+.fc-brand {
+  font-family: 'Anton', sans-serif; font-size: 18px;
+  color: #F5F1E8; text-decoration: none; margin-right: 12px;
+}
+.fc-brand b { color: #F5B800; }
+
+/* Primary items */
+.fc-nav-item {
+  position: relative;
+}
+.fc-nav-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .8px;
+  text-transform: uppercase; color: rgba(245,241,232,.5);
+  text-decoration: none; padding: 8px 12px; border-radius: 8px;
+  cursor: pointer; border: none; background: none;
+  display: flex; align-items: center; gap: 4px;
+  transition: all .15s; white-space: nowrap;
+}
+.fc-nav-link:hover, .fc-nav-link.active {
+  color: #F5F1E8; background: rgba(255,255,255,.06);
+}
+.fc-nav-link.draft-link { color: rgba(245,184,0,.7); }
+.fc-nav-link.draft-link:hover { color: #F5B800; background: rgba(245,184,0,.08); }
+.fc-nav-link .chevron {
+  font-size: 8px; opacity: .5; transition: transform .15s;
+}
+.fc-nav-item:hover .chevron { transform: rotate(180deg); }
+
+/* Dropdown */
+.fc-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0;
+  background: #100F14; border: 1px solid rgba(255,252,245,.12);
+  border-radius: 12px; padding: 8px 0; min-width: 220px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.5);
+  opacity: 0; visibility: hidden; transform: translateY(-6px);
+  transition: all .18s; z-index: 100;
+}
+.fc-nav-item:hover .fc-dropdown {
+  opacity: 1; visibility: visible; transform: translateY(0);
+}
+.fc-dd-section {
+  padding: 4px 0; border-bottom: 1px solid rgba(255,252,245,.06);
+  margin-bottom: 4px;
+}
+.fc-dd-section:last-child { border-bottom: none; margin-bottom: 0; }
+.fc-dd-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: rgba(245,241,232,.25);
+  padding: 6px 16px 4px;
+}
+.fc-dd-link {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; font-size: 13px; color: rgba(245,241,232,.65);
+  text-decoration: none; transition: all .12s;
+}
+.fc-dd-link:hover { color: #F5F1E8; background: rgba(255,255,255,.04); }
+.fc-dd-link .dd-icon { font-size: 12px; width: 18px; text-align: center; flex-shrink: 0; }
+.fc-dd-link .dd-note { font-family: 'JetBrains Mono', monospace; font-size: 8px; color: rgba(245,241,232,.25); margin-left: auto; }
+
+/* Nav right */
+.fc-nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.fc-nav-search-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: .8px;
+  text-transform: uppercase; color: rgba(245,241,232,.35);
+  background: none; border: 1px solid rgba(255,252,245,.1);
+  border-radius: 7px; padding: 5px 10px; cursor: pointer;
+  transition: all .15s; display: flex; align-items: center; gap: 5px;
+}
+.fc-nav-search-btn:hover { color: #F5F1E8; border-color: rgba(255,252,245,.2); }
+.fc-nav-search-btn kbd { font-size: 9px; opacity: .5; }
+
+/* Mobile hamburger */
+.fc-hamburger {
+  display: none; background: none; border: none;
+  color: rgba(245,241,232,.5); font-size: 20px; cursor: pointer;
+  padding: 6px; margin-left: auto;
+}
+.fc-mobile-menu {
+  display: none; position: fixed; inset: 54px 0 0 0;
+  background: rgba(9,8,10,.98); z-index: 89; overflow-y: auto;
+  padding: 16px 24px;
+}
+.fc-mobile-menu.open { display: block; }
+.fc-mobile-section { margin-bottom: 20px; }
+.fc-mobile-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: rgba(245,241,232,.3); margin-bottom: 8px;
+}
+.fc-mobile-link {
+  display: block; padding: 11px 0;
+  font-size: 18px; color: rgba(245,241,232,.7);
+  text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.05);
+  transition: color .15s;
+}
+.fc-mobile-link:hover { color: #F5F1E8; }
+
+/* Universal footer */
+.fc-footer {
+  margin-top: 60px; padding: 32px 0;
+  border-top: 1px solid rgba(255,252,245,.08);
+  font-family: 'Inter', sans-serif;
+}
+.fc-footer-inner {
+  max-width: 1060px; margin: 0 auto; padding: 0 24px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 32px;
+}
+.fc-footer-col {}
+.fc-footer-brand {
+  font-family: 'Anton', sans-serif; font-size: 20px; margin-bottom: 6px;
+}
+.fc-footer-brand b { color: #F5B800; }
+.fc-footer-tagline {
+  font-size: 12px; color: rgba(245,241,232,.35); line-height: 1.6; max-width: 180px;
+}
+.fc-footer-col-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: rgba(245,241,232,.3); margin-bottom: 12px;
+}
+.fc-footer-link {
+  display: block; font-size: 13px; color: rgba(245,241,232,.5);
+  text-decoration: none; margin-bottom: 8px; transition: color .15s;
+}
+.fc-footer-link:hover { color: #F5F1E8; }
+.fc-footer-bottom {
+  max-width: 1060px; margin: 24px auto 0; padding: 16px 24px 0;
+  border-top: 1px solid rgba(255,255,255,.05);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px; letter-spacing: .8px; text-transform: uppercase;
+  color: rgba(245,241,232,.2);
+}
+
+@media(max-width:720px) {
+  .fc-nav-item { display: none; }
+  .fc-hamburger { display: block; }
+  .fc-nav-search-btn { display: none; }
+  .fc-footer-inner { grid-template-columns: 1fr 1fr; gap: 24px; }
+}
+@media(max-width:480px) {
+  .fc-footer-inner { grid-template-columns: 1fr; }
+}
+
+/* ── Voice Input — One Tap, Speak, Done ────────────────── */
+.voice-mic-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  color: rgba(245,241,232,.3);
+  font-size: 16px;
+  line-height: 1;
+  transition: all .2s;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+.voice-mic-btn:hover { color: rgba(245,241,232,.6); background: rgba(255,255,255,.05); }
+.voice-mic-btn.listening {
+  color: #6BAA5A;
+  animation: mic-glow 1s infinite;
+}
+@keyframes mic-glow {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.voice-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.voice-input-wrap .voice-mic-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+.voice-input-wrap input,
+.voice-input-wrap .main-search {
+  padding-right: 36px !important;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="fc-nav" id="fcNav">
+  <div class="fc-nav-inner">
+    <a href="/" class="fc-brand">Field<b>Check</b></a>
+
+    <!-- Player -->
+    <div class="fc-nav-item">
+      <a href="/" class="fc-nav-link">Player <span class="chevron">▾</span></a>
+      <div class="fc-dropdown">
+        <div class="fc-dd-section">
+          <a href="/" class="fc-dd-link"><span class="dd-icon">⬡</span>Run a verdict<span class="dd-note">Any athlete</span></a>
+          <a href="/trajectory" class="fc-dd-link"><span class="dd-icon">📈</span>Trajectory engine</a>
+          <a href="/path" class="fc-dd-link"><span class="dd-icon">→</span>Path simulator</a>
+          <a href="/gems" class="fc-dd-link"><span class="dd-icon">💎</span>Hidden gems<span class="dd-note">Discovery</span></a>
+        </div>
+        <div class="fc-dd-section">
+          <a href="/voice" class="fc-dd-link"><span class="dd-icon">🎙</span>Add me / Submit film</a>
+          <a href="/share" class="fc-dd-link"><span class="dd-icon">◎</span>Share your verdict</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Programs -->
+    <div class="fc-nav-item">
+      <a href="/coaches" class="fc-nav-link">Programs <span class="chevron">▾</span></a>
+      <div class="fc-dropdown">
+        <div class="fc-dd-section">
+          <div class="fc-dd-label">Intelligence</div>
+          <a href="/coaches" class="fc-dd-link"><span class="dd-icon">👤</span>Coach encyclopedia<span class="dd-note">26 coaches</span></a>
+          <a href="/accountability" class="fc-dd-link"><span class="dd-icon">📊</span>Program accountability</a>
+          <a href="/compare" class="fc-dd-link"><span class="dd-icon">↔</span>Compare programs</a>
+          <a href="/conference" class="fc-dd-link"><span class="dd-icon">🏛</span>Conference intelligence</a>
+        </div>
+        <div class="fc-dd-section">
+          <div class="fc-dd-label">Recruiting</div>
+          <a href="/portal" class="fc-dd-link"><span class="dd-icon">↗</span>Transfer portal</a>
+          <a href="/recruiting-class" class="fc-dd-link"><span class="dd-icon">📋</span>Class analyzer</a>
+          <a href="/pro-probability" class="fc-dd-link"><span class="dd-icon">⬆</span>Pro probability</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Draft -->
+    <div class="fc-nav-item">
+      <a href="/nba-draft" class="fc-nav-link draft-link">Draft ⚡ <span class="chevron">▾</span></a>
+      <div class="fc-dropdown">
+        <div class="fc-dd-section">
+          <div class="fc-dd-label">Live call — June 23</div>
+          <a href="/nba-draft" class="fc-dd-link" style="color:#F5B800"><span class="dd-icon">⚡</span>2026 NBA Draft call<span class="dd-note">FC goes on record</span></a>
+          <a href="/diverge" class="fc-dd-link"><span class="dd-icon">📖</span>FC vs The World<span class="dd-note">96% accuracy</span></a>
+        </div>
+        <div class="fc-dd-section">
+          <a href="/draft-intelligence" class="fc-dd-link"><span class="dd-icon">⬡</span>Draft intelligence</a>
+          <a href="/calibration" class="fc-dd-link"><span class="dd-icon">✓</span>Track record</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discover -->
+    <div class="fc-nav-item">
+      <a href="/gems" class="fc-nav-link">Discover <span class="chevron">▾</span></a>
+      <div class="fc-dropdown">
+        <div class="fc-dd-section">
+          <div class="fc-dd-label">Find athletes</div>
+          <a href="/gems" class="fc-dd-link"><span class="dd-icon">💎</span>Hidden gems<span class="dd-note">Drop your film</span></a>
+          <a href="/video-iq" class="fc-dd-link"><span class="dd-icon">▶</span>Video IQ<span class="dd-note">Phase 5</span></a>
+          <a href="/voices" class="fc-dd-link"><span class="dd-icon">◉</span>Community signals</a>
+        </div>
+        <div class="fc-dd-section">
+          <div class="fc-dd-label">Intelligence</div>
+          <a href="/benchmarks" class="fc-dd-link"><span class="dd-icon">≡</span>Position benchmarks</a>
+          <a href="/trajectory" class="fc-dd-link"><span class="dd-icon">📈</span>Trajectory</a>
+          <a href="/methodology" class="fc-dd-link"><span class="dd-icon">⬡</span>Methodology</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="fc-nav-right">
+      <button class="fc-nav-search-btn" onclick="document.querySelector('.main-search,#playerIn')?.focus()">
+        Search <kbd>/</kbd>
+      </button>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button class="fc-hamburger" onclick="toggleMobileMenu()" id="fcHamburger" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="fc-mobile-menu" id="fcMobileMenu">
+  <div class="fc-mobile-section">
+    <div class="fc-mobile-label">Player</div>
+    <a href="/" class="fc-mobile-link">Run a verdict</a>
+    <a href="/gems" class="fc-mobile-link">Hidden gems 💎</a>
+    <a href="/trajectory" class="fc-mobile-link">Trajectory</a>
+    <a href="/path" class="fc-mobile-link">Path simulator</a>
+    <a href="/voice" class="fc-mobile-link">Submit film 🎙</a>
+  </div>
+  <div class="fc-mobile-section">
+    <div class="fc-mobile-label">Programs</div>
+    <a href="/coaches" class="fc-mobile-link">Coaches</a>
+    <a href="/accountability" class="fc-mobile-link">Accountability</a>
+    <a href="/compare" class="fc-mobile-link">Compare</a>
+    <a href="/portal" class="fc-mobile-link">Transfer portal</a>
+  </div>
+  <div class="fc-mobile-section">
+    <div class="fc-mobile-label">Draft ⚡</div>
+    <a href="/nba-draft" class="fc-mobile-link" style="color:#F5B800">2026 NBA Draft call</a>
+    <a href="/diverge" class="fc-mobile-link">FC vs The World</a>
+  </div>
+  <div class="fc-mobile-section">
+    <div class="fc-mobile-label">Discover</div>
+    <a href="/video-iq" class="fc-mobile-link">Video IQ</a>
+    <a href="/voices" class="fc-mobile-link">Community</a>
+    <a href="/benchmarks" class="fc-mobile-link">Benchmarks</a>
+    <a href="/methodology" class="fc-mobile-link">Methodology</a>
+    <a href="/about" class="fc-mobile-link">About</a>
+  </div>
+</div>
+
+<!-- Card Preview -->
+<div class="card-preview" id="cardPreview">
+  <div>
+    <div class="cp-brand">Field<b>Check</b> IQ</div>
+  </div>
+  <div>
+    <div class="cp-sport" id="cpSport">WOMENS VOLLEYBALL</div>
+    <div class="cp-name" id="cpName">Harper Murray</div>
+    <div class="cp-composite" id="cpComposite">8.9</div>
+    <div class="cp-tier" id="cpTier">ELITE+</div>
+    <div class="cp-bars" id="cpBars">
+      <div class="cp-bar-row"><div class="cp-bar-label">Physical</div><div class="cp-bar-wrap"><div class="cp-bar-fill" style="width:92%"></div></div></div>
+      <div class="cp-bar-row"><div class="cp-bar-label">Mindset</div><div class="cp-bar-wrap"><div class="cp-bar-fill" style="width:88%"></div></div></div>
+      <div class="cp-bar-row"><div class="cp-bar-label">Production</div><div class="cp-bar-wrap"><div class="cp-bar-fill" style="width:85%"></div></div></div>
+      <div class="cp-bar-row"><div class="cp-bar-label">Defense</div><div class="cp-bar-wrap"><div class="cp-bar-fill" style="width:80%"></div></div></div>
+      <div class="cp-bar-row"><div class="cp-bar-label">Pathway</div><div class="cp-bar-wrap"><div class="cp-bar-fill" style="width:94%"></div></div></div>
+    </div>
+  </div>
+  <div class="cp-footer">fieldcheck-app.netlify.app · © 2026 ThinkDifferent Holdings</div>
+</div>
+
+<!-- Controls -->
+<div class="controls">
+  <div class="ctrl-label">// Customize</div>
+  <input class="ctrl-input" id="editName" placeholder="Player name" value="Harper Murray" oninput="updateCard()">
+  <input class="ctrl-input" id="editSport" placeholder="Sport" value="Womens Volleyball" oninput="updateCard()">
+  <div class="ctrl-row">
+    <input class="ctrl-input" id="editScore" placeholder="Score (e.g. 8.9)" value="8.9" style="max-width:120px" oninput="updateCard()">
+    <input class="ctrl-input" id="editTier" placeholder="Tier" value="ELITE+" oninput="updateCard()">
+  </div>
+</div>
+
+<!-- Share buttons -->
+<div class="share-btns">
+  <button class="share-btn" onclick="copyCardText()">📋 Copy card caption (for Instagram)</button>
+  <button class="share-btn" onclick="shareTwitter()">𝕏 Share on X / Twitter</button>
+  <button class="share-btn" onclick="copyLink()">🔗 Copy verdict link</button>
+  <button class="share-btn" onclick="shareNative()" id="nativeShare" style="display:none">📤 Share via phone</button>
+</div>
+</div>
+
+<script>
+function updateCard() {
+  const name = document.getElementById('editName').value || 'Player';
+  const sport = document.getElementById('editSport').value || 'Sport';
+  const score = document.getElementById('editScore').value || '—';
+  const tier = document.getElementById('editTier').value || 'VERIFY';
+  document.getElementById('cpName').textContent = name;
+  document.getElementById('cpSport').textContent = sport.toUpperCase();
+  document.getElementById('cpComposite').textContent = score;
+  document.getElementById('cpTier').textContent = tier.toUpperCase();
+}
+
+function getCaption() {
+  const name = document.getElementById('editName').value || 'Player';
+  const score = document.getElementById('editScore').value || '—';
+  const tier = document.getElementById('editTier').value || 'VERIFY';
+  const sport = document.getElementById('editSport').value || 'Sport';
+  return `${name} · FieldCheck IQ: ${score}/10 (${tier})\n\nFive-layer verdict from the public record:\nPhysical · Mindset · Production · Defense · Pathway\n\nThe model doesn't rank. It reads.\n\n#FieldCheck #${sport.replace(/\s+/g,'')} #Recruiting\n\nfieldcheck-app.netlify.app`;
+}
+
+function copyCardText() {
+  navigator.clipboard.writeText(getCaption()).then(() => {
+    const btn = document.querySelector('.share-btn');
+    btn.textContent = '✓ Copied! Paste into Instagram caption';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 Copy card caption (for Instagram)'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+
+function shareTwitter() {
+  const name = document.getElementById('editName').value || 'Player';
+  const score = document.getElementById('editScore').value || '—';
+  const tier = document.getElementById('editTier').value || 'VERIFY';
+  const text = `${name} · FieldCheck IQ: ${score}/10 (${tier}) · Five-layer verdict from the public record. No rankings. No payola. Just the read.`;
+  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent('https://fieldcheck-app.netlify.app')}`, '_blank');
+}
+
+function copyLink() {
+  const name = document.getElementById('editName').value;
+  const sport = document.getElementById('editSport').value;
+  const url = `https://fieldcheck-app.netlify.app/?player=${encodeURIComponent(name)}&sport=${encodeURIComponent(sport.toLowerCase().replace(/\s+/g,'-'))}`;
+  navigator.clipboard.writeText(url).then(() => {
+    const btns = document.querySelectorAll('.share-btn');
+    btns[2].textContent = '✓ Link copied!';
+    btns[2].classList.add('copied');
+    setTimeout(() => { btns[2].textContent = '🔗 Copy verdict link'; btns[2].classList.remove('copied'); }, 2200);
+  });
+}
+
+function shareNative() {
+  const name = document.getElementById('editName').value;
+  const score = document.getElementById('editScore').value;
+  if (navigator.share) {
+    navigator.share({
+      title: `${name} · FieldCheck IQ ${score}/10`,
+      text: getCaption(),
+      url: 'https://fieldcheck-app.netlify.app'
+    });
+  }
+}
+
+if (navigator.share) document.getElementById('nativeShare').style.display = 'flex';
+
+// Pre-fill from URL params
+const p = new URLSearchParams(location.search);
+if (p.get('player')) { document.getElementById('editName').value = p.get('player'); }
+if (p.get('sport')) { document.getElementById('editSport').value = p.get('sport').replace(/-/g,' '); }
+if (p.get('score')) { document.getElementById('editScore').value = p.get('score'); }
+if (p.get('tier')) { document.getElementById('editTier').value = p.get('tier'); }
+updateCard();
+</script>
+
+<!-- Alert Modal -->
+<div class="fc-alert-overlay" id="fcAlertOverlay" onclick="if(event.target===this)closeAlert()">
+  <div class="fc-alert-modal">
+    <button class="fam-close" onclick="closeAlert()">✕</button>
+    <div id="famForm">
+      <div class="fam-ey">🔔 FieldCheck Alerts</div>
+      <div class="fam-title" id="famTitle">Alert me.</div>
+      <div class="fam-sub" id="famSub">One email. We'll notify you when conditions are met. No spam. Unsubscribe in one click.</div>
+      <div class="fam-options" id="famOptions">
+        <label class="fam-opt selected">
+          <input type="radio" name="alertType" value="gem_discovery" checked>
+          <span class="fam-opt-label">New gem found in this sport</span>
+          <span class="fam-opt-note">Weekly</span>
+        </label>
+        <label class="fam-opt">
+          <input type="radio" name="alertType" value="score_change">
+          <span class="fam-opt-label">This player's score changes</span>
+          <span class="fam-opt-note">On update</span>
+        </label>
+        <label class="fam-opt">
+          <input type="radio" name="alertType" value="draft_result">
+          <span class="fam-opt-label">NBA Draft results (June 23)</span>
+          <span class="fam-opt-note">June 24</span>
+        </label>
+        <label class="fam-opt">
+          <input type="radio" name="alertType" value="field_report">
+          <span class="fam-opt-label">The Field Report (weekly digest)</span>
+          <span class="fam-opt-note">Every Monday</span>
+        </label>
+      </div>
+      <div class="fam-email-row">
+        <input class="fam-email" id="famEmail" type="email" placeholder="your@email.com" autocomplete="email">
+        <button class="fam-submit" onclick="submitAlert()">Set alert →</button>
+      </div>
+      <div style="font-size:11px;color:rgba(245,241,232,.3)">No account required. Unsubscribe anytime.</div>
+    </div>
+    <div class="fam-success" id="famSuccess">
+      <div class="fam-success-icon">🔔</div>
+      <div class="fam-success-title">Alert set.</div>
+      <div class="fam-success-sub">We'll notify you at <span id="famEmailConfirm"></span> when conditions are met.</div>
+    </div>
+  </div>
+</div>
+<script>
+// ── Alert System ────────────────────────────────────────────
+let _alertContext = {};
+
+function openAlert(context) {
+  _alertContext = context || {};
+  const overlay = document.getElementById('fcAlertOverlay');
+  if (!overlay) return;
+  const title = document.getElementById('famTitle');
+  const sub = document.getElementById('famSub');
+  if (context.player && title) {
+    title.textContent = `Alert me for ${context.player}.`;
+    if (sub) sub.textContent = `Get notified when ${context.player}'s score changes, or when similar players are discovered.`;
+  }
+  document.getElementById('famForm').style.display = '';
+  document.getElementById('famSuccess').style.display = 'none';
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('famEmail')?.focus(), 100);
+}
+
+function closeAlert() {
+  document.getElementById('fcAlertOverlay')?.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function submitAlert() {
+  const email = document.getElementById('famEmail')?.value?.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('famEmail')?.focus();
+    return;
+  }
+  const alertType = document.querySelector('input[name="alertType"]:checked')?.value || 'gem_discovery';
+  try {
+    await fetch('https://fieldcheck-proxy.sridhar-nallani.workers.dev/api/alert', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        alert_type: alertType,
+        sport: _alertContext.sport || 'all',
+        player_name: _alertContext.player || null,
+        threshold: _alertContext.threshold || 8.0
+      })
+    });
+  } catch(e) { /* non-blocking */ }
+  document.getElementById('famForm').style.display = 'none';
+  document.getElementById('famSuccess').style.display = 'block';
+  document.getElementById('famEmailConfirm').textContent = email;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAlert();
+});
+document.getElementById('famEmail')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter') submitAlert();
+});
+
+// Auto-add alert buttons to verdict output
+const _alertObs = new MutationObserver(mutations => {
+  mutations.forEach(m => {
+    m.addedNodes.forEach(n => {
+      if (n.nodeType !== 1) return;
+      // Find verdict action bars and inject alert button
+      [n, ...n.querySelectorAll('.vc-actions, .verdict-actions, [class*="action"]')].forEach(el => {
+        if (el.querySelector('.fc-alert-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'fc-alert-btn va-btn';
+        btn.innerHTML = '🔔 Alert me';
+        btn.onclick = () => openAlert({ sport: window._currentSport || 'all', player: window._currentPlayer || '' });
+        el.appendChild(btn);
+      });
+    });
+  });
+});
+_alertObs.observe(document.body, { childList: true, subtree: true });
+</script>
+<script>
+// ── Voice Input — One Tap, Speak, Done ──────────────────────
+// The Jobs principle: hide the speech API complexity,
+// expose a single microphone button.
+window.FC_VOICE = {
+  active: null,
+
+  start: function(inputEl, btnEl, opts) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      // Graceful degradation: focus the input for keyboard
+      if (inputEl) inputEl.focus();
+      return;
+    }
+
+    // Stop any active recognition
+    if (this.active) {
+      try { this.active.stop(); } catch(_) {}
+      this.active = null;
+    }
+
+    const recog = new SpeechRecognition();
+    recog.continuous = false;
+    recog.interimResults = true;
+    recog.lang = opts?.lang || 'en-US';
+    this.active = recog;
+
+    if (btnEl) btnEl.classList.add('listening');
+
+    recog.onresult = function(e) {
+      const interim = Array.from(e.results)
+        .map(r => r[0].transcript).join('');
+      if (inputEl) {
+        inputEl.value = interim;
+        inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    };
+
+    recog.onend = function() {
+      if (btnEl) btnEl.classList.remove('listening');
+      window.FC_VOICE.active = null;
+      // Auto-submit if configured
+      if (opts?.onDone && inputEl?.value?.trim()) {
+        opts.onDone(inputEl.value.trim());
+      }
+    };
+
+    recog.onerror = function() {
+      if (btnEl) btnEl.classList.remove('listening');
+      window.FC_VOICE.active = null;
+    };
+
+    recog.start();
+  }
+};
+
+// Auto-add mic buttons to existing search inputs
+document.addEventListener('DOMContentLoaded', function() {
+  // Main player/program search inputs
+  const searchSelectors = [
+    '.main-search',
+    '#playerIn',
+    '#programIn',
+    '#progIn',
+    '#coachSearch',
+    '#playerName',
+    '.search-input',
+    'input[placeholder*="player"]',
+    'input[placeholder*="Player"]',
+    'input[placeholder*="athlete"]',
+    'input[placeholder*="program"]',
+    'input[placeholder*="Program"]',
+    'input[placeholder*="search"]',
+  ];
+
+  searchSelectors.forEach(function(sel) {
+    document.querySelectorAll(sel).forEach(function(inp) {
+      // Don't double-add
+      if (inp.dataset.voiceAdded) return;
+      inp.dataset.voiceAdded = '1';
+
+      const mic = document.createElement('button');
+      mic.className = 'voice-mic-btn';
+      mic.type = 'button';
+      mic.title = 'Speak to search';
+      mic.setAttribute('aria-label', 'Voice input');
+      mic.textContent = '🎙';
+
+      // Wrap input in position-relative container if not already
+      const parent = inp.parentElement;
+      if (parent && !parent.classList.contains('voice-input-wrap')) {
+        const wrap = document.createElement('div');
+        wrap.className = 'voice-input-wrap';
+        wrap.style.flex = inp.style.flex || '1';
+        parent.insertBefore(wrap, inp);
+        wrap.appendChild(inp);
+        wrap.appendChild(mic);
+      } else if (parent) {
+        parent.appendChild(mic);
+      }
+
+      mic.addEventListener('click', function() {
+        window.FC_VOICE.start(inp, mic, {
+          onDone: function(text) {
+            // Trigger enter-key behavior after voice input
+            const enter = new KeyboardEvent('keydown', {key:'Enter',bubbles:true});
+            inp.dispatchEvent(enter);
+          }
+        });
+      });
+    });
+  });
+});
+</script>
+
+<a href="/" style="position:fixed;bottom:20px;left:20px;z-index:99;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(245,241,232,.4);text-decoration:none;padding:8px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(10,9,14,.94);backdrop-filter:blur(12px);display:inline-flex;align-items:center;gap:6px;transition:all .15s" onmouseover="this.style.color='#F5F1E8'" onmouseout="this.style.color='rgba(245,241,232,.4)'">← FieldCheck IQ</a>
+</body>
+</html>

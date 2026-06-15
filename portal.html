@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal · FieldCheck</title>
+  <meta name="description" content="FieldCheck agent tools — Why Graded, Counterfactual, Best Comparable, NIL Deal Audit, Watchlist.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=General+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-2: #161513;
+      --text: #f0eee7;
+      --text-2: #b8b5ad;
+      --text-3: #7d7a72;
+      --gold: #d4af37;
+      --gold-light: #e4c75e;
+      --moss: #6a8359;
+      --rust: #c45132;
+      --glass: rgba(255, 255, 255, 0.04);
+      --glass-edge: rgba(255, 255, 255, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "General Sans", -apple-system, system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      min-height: 100vh;
+      padding: 48px 24px 96px;
+    }
+    .container { max-width: 1080px; margin: 0 auto; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 36px; }
+    .topbar a {
+      color: var(--text-2);
+      text-decoration: none;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid var(--glass-edge);
+      padding: 8px 14px;
+      border-radius: 6px;
+    }
+    .topbar a:hover { color: var(--text); border-color: var(--text-2); }
+    .wordmark { font-family: "Anton", sans-serif; font-size: 20px; letter-spacing: 0.04em; color: var(--text); }
+    .wordmark .gold { color: var(--gold); }
+
+    h1 {
+      font-family: "Anton", sans-serif;
+      font-size: clamp(48px, 8vw, 88px);
+      line-height: 0.95;
+      letter-spacing: -0.012em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h1 .serif {
+      font-family: "Instrument Serif", serif;
+      font-style: italic;
+      text-transform: none;
+      letter-spacing: -0.02em;
+      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      line-height: 1.0;
+    }
+    .sub {
+      font-size: clamp(17px, 1.8vw, 21px);
+      color: var(--text-2);
+      margin-bottom: 48px;
+      max-width: 720px;
+      line-height: 1.5;
+    }
+    .sub .accent { color: var(--gold); font-style: italic; font-family: "Instrument Serif", serif; }
+
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 14px;
+      margin-bottom: 48px;
+    }
+    .agent-card {
+      padding: 24px;
+      background: var(--glass);
+      border: 1px solid var(--glass-edge);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background 0.2s ease, box-shadow 0.25s ease;
+    }
+    .agent-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(212, 175, 55, 0.5);
+      background: rgba(212, 175, 55, 0.04);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    }
+    .agent-card.active {
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.08);
+    }
+    .agent-card.developmental-os {
+      border-color: rgba(212, 175, 55, 0.7);
+      background: linear-gradient(135deg, var(--glass) 0%, rgba(212, 175, 55, 0.05) 100%);
+      position: relative;
+    }
+    .agent-card.developmental-os::before {
+      content: "DEVELOPMENTAL OS";
+      position: absolute;
+      top: -9px;
+      left: 16px;
+      background: var(--bg);
+      color: var(--gold);
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      padding: 0 6px;
+      font-weight: 700;
+    }
+    .agent-card.trust-infrastructure {
+      border-color: rgba(106, 156, 137, 0.7);
+      background: linear-gradient(135deg, var(--glass) 0%, rgba(106, 156, 137, 0.05) 100%);
+      position: relative;
+    }
+    .agent-card.trust-infrastructure::before {
+      content: "TRUST INFRASTRUCTURE";
+      position: absolute;
+      top: -9px;
+      left: 16px;
+      background: var(--bg);
+      color: #6a9c89;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      padding: 0 6px;
+      font-weight: 700;
+    }
+    .agent-name {
+      font-family: "Anton", sans-serif;
+      font-size: 22px;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .agent-tagline {
+      font-family: "Instrument Serif", serif;
+      font-style: italic;
+      color: var(--gold);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .agent-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.45;
+    }
+
+    .work-area {
+      background: var(--glass);
+      border: 1px solid var(--glass-edge);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 48px;
+      min-height: 200px;
+    }
+    .work-title {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    .work-h {
+      font-family: "Anton", sans-serif;
+      font-size: 32px;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .work-h .serif {
+      font-family: "Instrument Serif", serif;
+      font-style: italic;
+      text-transform: none;
+      color: var(--gold);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    input, select {
+      flex: 1;
+      min-width: 180px;
+      padding: 12px 14px;
+      background: var(--bg-2);
+      border: 1px solid var(--glass-edge);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    button {
+      padding: 12px 22px;
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      border-radius: 8px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    button:hover { opacity: 0.85; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    button.secondary {
+      background: transparent;
+      color: var(--text-2);
+      border: 1px solid var(--glass-edge);
+    }
+    button.secondary:hover {
+      color: var(--text);
+      border-color: var(--text-2);
+    }
+
+    .result {
+      margin-top: 24px;
+      padding: 20px;
+      background: var(--bg-2);
+      border: 1px solid var(--glass-edge);
+      border-radius: 8px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      color: var(--text-2);
+      max-height: 600px;
+      overflow-y: auto;
+    }
+    .result-narrative {
+      font-family: "General Sans", sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--text);
+      white-space: normal;
+    }
+    .result-narrative strong { color: var(--gold); font-weight: 500; }
+    .result-narrative .pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 0 4px;
+    }
+    .pill-fair { background: rgba(106, 131, 89, 0.16); color: #8ea876; border: 1px solid rgba(106, 131, 89, 0.45); }
+    .pill-undervalued { background: rgba(212, 175, 55, 0.10); color: var(--gold); border: 1px solid rgba(212, 175, 55, 0.35); }
+    .pill-overmarket { background: rgba(196, 81, 50, 0.12); color: var(--rust); border: 1px solid rgba(196, 81, 50, 0.45); }
+
+    .watchlist-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--bg-2);
+      border: 1px solid var(--glass-edge);
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    .watchlist-item-meta {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      color: var(--text-3);
+    }
+
+    .loading { color: var(--text-3); font-style: italic; padding: 16px 0; }
+    .error { color: var(--rust); padding: 12px; background: rgba(196, 81, 50, 0.08); border: 1px solid rgba(196, 81, 50, 0.3); border-radius: 8px; }
+
+    @media (max-width: 720px) {
+      body { padding: 20px 14px 56px; }
+      .agents-grid { grid-template-columns: 1fr; gap: 10px; }
+      .agent-card { padding: 18px; }
+      .work-area { padding: 18px; }
+      .topbar { flex-wrap: wrap; gap: 12px; }
+      .work-h { font-size: clamp(28px, 8vw, 44px) !important; line-height: 1.05; }
+      .form-row { flex-direction: column; align-items: stretch; gap: 10px; }
+      .form-row input, .form-row select, .form-row button { width: 100%; }
+    }
+    @media (max-width: 420px) {
+      .agent-name { font-size: 18px; }
+      .agent-card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+    <h1>The portal,<br><span class="serif">agentic.</span></h1>
+    <p class="sub">
+      Twelve tools no other recruiting platform can build. <span class="accent">Why a verdict</span> reads the way it does. <span class="accent">What would change it.</span> <span class="accent">Who's the closest historical comparable.</span> <span class="accent">Is this NIL deal fair.</span> <span class="accent">Who's on the LOVB pathway.</span>
+    </p>
+
+    <div id="signup-banner" style="display: none; padding: 20px 24px; background: rgba(212, 175, 55, 0.06); border: 1px solid rgba(212, 175, 55, 0.30); border-radius: 10px; margin-bottom: 32px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 240px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gold); margin-bottom: 4px;">// COMING SOON</div>
+        <div style="font-size: 15px; color: var(--text);">Save your watchlist across devices. Get verdict-change alerts when calibration drift fires.</div>
+      </div>
+      <input id="signup-email" type="email" placeholder="your@email.com" style="min-width: 200px; flex: 1;">
+      <button onclick="submitEmail()">Notify me</button>
+      <button class="secondary" onclick="dismissBanner()">Not now</button>
+    </div>
+
+    <div class="agents-grid" id="agents-grid">
+      <div class="agent-card" data-agent="why-graded">
+        <div class="agent-name">Why Graded</div>
+        <div class="agent-tagline">"Why does this composite read 8.7?"</div>
+        <div class="agent-desc">Dimension-by-dimension reasoning. Awards anchors, measurables, pro projection — all sourced. The model made legible.</div>
+      </div>
+      <div class="agent-card" data-agent="counterfactual">
+        <div class="agent-name">Counterfactual</div>
+        <div class="agent-tagline">"What pushes him to ELITE?"</div>
+        <div class="agent-desc">Concrete: which awards, measurables, or outcomes would close the gap to the next tier. Calibrated against historical data.</div>
+      </div>
+      <div class="agent-card" data-agent="best-comparable">
+        <div class="agent-name">Best Comparable</div>
+        <div class="agent-tagline">"Who's he most like?"</div>
+        <div class="agent-desc">Top-3 historical analogues by sport + composite + tier — and their actual outcomes. The retrospective comparable check.</div>
+      </div>
+      <div class="agent-card" data-agent="nil-audit">
+        <div class="agent-name">NIL Deal Audit</div>
+        <div class="agent-tagline">"Is this $400K offer fair?"</div>
+        <div class="agent-desc">Input deal terms, output fairness band. Annualized comparison to FieldCheck NIL regression for sport + tier + position.</div>
+      </div>
+      <div class="agent-card" data-agent="watchlist">
+        <div class="agent-name">Watchlist</div>
+        <div class="agent-tagline">"Alert me when this changes."</div>
+        <div class="agent-desc">Track up to 50 prospects. Verdict revisions, outcome anchors, drift signals — all surfaced. Anonymous session-based.</div>
+      </div>
+      <div class="agent-card" data-agent="coach-track">
+        <div class="agent-name">Coach Track Record</div>
+        <div class="agent-tagline">"Who has this coach produced?"</div>
+        <div class="agent-desc">Returns every alumni from a coach's program with verified outcomes, sorted by draft position. Saban's QB pipe, Hurley's NBA arc.</div>
+      </div>
+      <div class="agent-card" data-agent="recruiting-class">
+        <div class="agent-name">Recruiting Class</div>
+        <div class="agent-tagline">"How does Duke's class read?"</div>
+        <div class="agent-desc">Aggregates every curated profile at a school. Tier breakdown, sport split, top names. The class verdict, distilled.</div>
+      </div>
+      <div class="agent-card" data-agent="career-trajectory">
+        <div class="agent-name">Career Trajectory</div>
+        <div class="agent-tagline">"How did he evolve?"</div>
+        <div class="agent-desc">Multi-year arc with awards by year + outcome anchor. Read the prospect's evolution from freshman to draft.</div>
+      </div>
+      <div class="agent-card" data-agent="transfer-impact">
+        <div class="agent-name">Transfer Impact</div>
+        <div class="agent-tagline">"What if he transfers to Tennessee?"</div>
+        <div class="agent-desc">Conference modifier + NIL band shift if a prospect moves schools. The transfer portal what-if engine.</div>
+      </div>
+      <div class="agent-card" data-agent="draft-pathway">
+        <div class="agent-name">Draft Pathway</div>
+        <div class="agent-tagline">"Where does he project?"</div>
+        <div class="agent-desc">Projected draft range based on tier + composite + peer outcomes. Confidence HIGH/MODERATE/LOW based on peer sample size.</div>
+      </div>
+      <div class="agent-card" data-agent="dim-improvement">
+        <div class="agent-name">Improvement Targets</div>
+        <div class="agent-tagline">"Where do I focus next?"</div>
+        <div class="agent-desc">Lowest-scoring dimensions surface as concrete improvement areas — with sport-aware suggestions per layer.</div>
+      </div>
+      <div class="agent-card" data-agent="lovb-pathway">
+        <div class="agent-name">LOVB Pathway</div>
+        <div class="agent-tagline">"Who's NCAA → LOVB Pro?"</div>
+        <div class="agent-desc">Every W-Vball profile mapped to LOVB pathway status — currently on roster, projected target, college track, cross-path. Only FieldCheck has the dataset.</div>
+      </div>
+      <div class="agent-card" data-agent="risk-flags">
+        <div class="agent-name">Risk Flags</div>
+        <div class="agent-tagline">"What honest concerns exist?"</div>
+        <div class="agent-desc">Multi-transfer arc, durability concern, tier-composite mismatch, stale class year. Honest signal, not verdict — surface the things every family deserves to hear.</div>
+      </div>
+      <div class="agent-card" data-agent="momentum">
+        <div class="agent-name">Momentum</div>
+        <div class="agent-tagline">"Peaking or fading?"</div>
+        <div class="agent-desc">Reads awards-by-year and returns UP / FLAT / DOWN trajectory. Sport-aware. Powers the "is this prospect on the way up?" conversation.</div>
+      </div>
+      <div class="agent-card" data-agent="peer-comp">
+        <div class="agent-name">Peer Comp</div>
+        <div class="agent-tagline">"Who grades closest?"</div>
+        <div class="agent-desc">Same sport, same position, ranked by composite proximity. Lighter than best-comparable, faster, returns more peers. Anchored peers carry outcome data.</div>
+      </div>
+      <div class="agent-card" data-agent="eligibility-checker">
+        <div class="agent-name">Eligibility Checker</div>
+        <div class="agent-tagline">"How many years left?"</div>
+        <div class="agent-desc">Estimates NCAA eligibility from class year + transfer history. Surfaces flags for portal-era complications. Not legal advice — context for compliance conversations.</div>
+      </div>
+      <div class="agent-card developmental-os" onclick="window.location.href='/pathway'" style="grid-column: 1 / -1; background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.02) 100%); border-color: rgba(212,175,55,0.4);">
+        <div class="agent-name" style="color: var(--gold); font-size: 28px;">Pathway Blueprint  →</div>
+        <div class="agent-tagline" style="color: var(--text); font-size: 15px;">"Pick who you want to be like. Single or composite."</div>
+        <div class="agent-desc">The composed Dev OS experience. Trajectory Delta + Dev Archetype + Skill Velocity + NIL Forecast in one signed, shareable, returnable plan. Role-model picker. Composite mix-and-match. Refines with every checkpoint.</div>
+        <div style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--gold);">FLAGSHIP · /pathway</div>
+      </div>
+      <div class="agent-card developmental-os" data-agent="trajectory-delta">
+        <div class="agent-name">Trajectory Delta</div>
+        <div class="agent-tagline">"What closes the gap?"</div>
+        <div class="agent-desc">Per-dimension developmental analysis. Returns specific actionable moves and their estimated composite lift. The "what do I need to work on?" answer parents and athletes actually want.</div>
+      </div>
+      <div class="agent-card developmental-os" data-agent="dev-archetype">
+        <div class="agent-name">Dev Archetype Match</div>
+        <div class="agent-tagline">"Who's the comp?"</div>
+        <div class="agent-desc">"This player's arc most closely tracks freshman-year X." ICON-tier outcome-anchored heritage peers. Sport + position aware. Emotional + analytical hook.</div>
+      </div>
+      <div class="agent-card trust-infrastructure" data-agent="program-trust-card">
+        <div class="agent-name">Program Trust Card</div>
+        <div class="agent-tagline">"Honest scorecard."</div>
+        <div class="agent-desc">Unified coach trust grade: tenure + portal retention + GSR + culture quote anchors. Surfaces what no other recruiting platform owns — coach and program transparency.</div>
+      </div>
+      <div class="agent-card trust-infrastructure" data-agent="position-playbook">
+        <div class="agent-name">Position Playbook</div>
+        <div class="agent-tagline">"QB ≠ WR. Setter ≠ Libero."</div>
+        <div class="agent-desc">Returns the position-specific evaluation ontology and key questions. The structure underneath every verdict, made inspectable. Cites ICON anchors per position.</div>
+      </div>
+      <div class="agent-card developmental-os" data-agent="skill-velocity">
+        <div class="agent-name">Skill Velocity</div>
+        <div class="agent-tagline">"Faster than peers?"</div>
+        <div class="agent-desc">Year-over-year tier-weight delta vs same-sport same-position cohort. ACCELERATING / AHEAD / COHORT_PACE / BEHIND / DECELERATING. Where the long-term value lives.</div>
+      </div>
+      <div class="agent-card developmental-os" data-agent="nil-band-forecast">
+        <div class="agent-name">NIL Band Forecast</div>
+        <div class="agent-tagline">"What's tier worth?"</div>
+        <div class="agent-desc">"Reaching ICON projects NIL mid-band from $X to $Y." Conditional forecast based on tier achievement. The economics of developmental progress made concrete.</div>
+      </div>
+      <div class="agent-card" data-agent="peer-comp">
+        <div class="agent-name">Peer Comp</div>
+        <div class="agent-tagline">"Who grades like her?"</div>
+        <div class="agent-desc">Position-aware peer returns. Same sport + same position, sorted by composite proximity. Outcome-anchored peers flagged as ground-truth comparables.</div>
+      </div>
+      <div class="agent-card" data-agent="eligibility-checker">
+        <div class="agent-name">Eligibility Checker</div>
+        <div class="agent-tagline">"How much eligibility is left?"</div>
+        <div class="agent-desc">NCAA eligibility analyzer from class year + transfer history. Estimates years remaining, flags waiver concerns. Honest signal for families navigating the portal era.</div>
+      </div>
+    </div>
+
+    <div class="work-area" id="work-area">
+      <div class="work-title">// Select a tool above to begin</div>
+      <div class="work-h">Five agents, <span class="serif">one engine.</span></div>
+      <p style="color: var(--text-2);">Click any tool above. Each one calls a real production endpoint and returns the live engine's reasoning.</p>
+      <p style="color: var(--text-3); margin-top: 12px; font-size: 13px;">No sign-in required — the watchlist uses a local session ID stored on this device.</p>
+    </div>
+
+    <p style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 32px;">
+      Session ID: <span id="session-display" style="font-family: 'JetBrains Mono', monospace;">—</span>
+    </p>
+  </div>
+
+  <script>
+    const PROXY = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev/api';
+
+    // Generate or load session ID
+    function getSessionId() {
+      let s = localStorage.getItem('fc_session_id');
+      if (!s) {
+        s = 'sess-' + Math.random().toString(36).slice(2, 10) + '-' + Math.random().toString(36).slice(2, 10);
+        localStorage.setItem('fc_session_id', s);
+      }
+      return s;
+    }
+    const SESSION_ID = getSessionId();
+    document.getElementById('session-display').textContent = SESSION_ID;
+
+    // v307: Show signup banner unless dismissed
+    if (!localStorage.getItem('fc_signup_dismissed') && !localStorage.getItem('fc_signed_up')) {
+      const banner = document.getElementById('signup-banner');
+      if (banner) banner.style.display = 'flex';
+    }
+
+    window.submitEmail = async function() {
+      const email = (document.getElementById('signup-email').value || '').trim();
+      if (!email || !email.includes('@')) return;
+      try {
+        await fetch(`${PROXY}/signup/email`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, session_id: SESSION_ID, alerts_enabled: true })
+        });
+        localStorage.setItem('fc_signed_up', '1');
+        const banner = document.getElementById('signup-banner');
+        if (banner) banner.style.display = 'none';
+      } catch (e) { console.error(e); }
+    };
+
+    window.dismissBanner = function() {
+      localStorage.setItem('fc_signup_dismissed', '1');
+      const banner = document.getElementById('signup-banner');
+      if (banner) banner.style.display = 'none';
+    };
+
+    const workArea = document.getElementById('work-area');
+
+    document.querySelectorAll('.agent-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.agent-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        loadAgent(card.dataset.agent);
+      });
+    });
+
+    function loadAgent(agent) {
+      const fns = {
+        'why-graded': renderWhyGraded,
+        'counterfactual': renderCounterfactual,
+        'best-comparable': renderBestComparable,
+        'nil-audit': renderNILAudit,
+        'watchlist': renderWatchlist,
+        'coach-track': renderCoachTrack,
+        'recruiting-class': renderRecruitingClass,
+        'career-trajectory': renderCareerTrajectory,
+        'transfer-impact': renderTransferImpact,
+        'draft-pathway': renderDraftPathway,
+        'dim-improvement': renderDimImprovement,
+        'lovb-pathway': renderLOVBPathway,
+        'risk-flags': renderRiskFlags,
+        'momentum': renderMomentum,
+        'peer-comp': renderPeerComp,
+        'eligibility-checker': renderEligibilityChecker,
+        'trajectory-delta': renderTrajectoryDelta,
+        'dev-archetype': renderDevArchetype,
+        'program-trust-card': renderProgramTrust,
+        'position-playbook': renderPositionPlaybook,
+        'skill-velocity': renderSkillVelocity,
+        'nil-band-forecast': renderNILForecast
+      };
+      if (fns[agent]) fns[agent]();
+    }
+
+    function renderNILForecast() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 22 — DEVELOPMENTAL OS</div>
+        <div class="work-h">What's a tier <span class="serif">worth.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Conditional NIL band: if athlete reaches target tier, projected band moves to $X. The economics of development made concrete.</p>
+        <div class="form-row">
+          <input id="nf-slug" placeholder="profile-slug" value="madisen-skinner-lovb-austin-womens-volleyball">
+          <select id="nf-target" style="background: var(--bg-2); color: var(--text); border: 1px solid var(--border); padding: 8px;">
+            <option value="ELITE">Target: ELITE</option>
+            <option value="ICON">Target: ICON</option>
+            <option value="STAR">Target: STAR</option>
+          </select>
+          <button onclick="runNILForecast()">Forecast band</button>
+        </div>
+        <div id="nf-result"></div>
+      `;
+    }
+
+    window.runNILForecast = async function() {
+      const slug = document.getElementById('nf-slug').value.trim();
+      const target = document.getElementById('nf-target').value;
+      const res = document.getElementById('nf-result');
+      res.innerHTML = '<div class="loading">Computing tier-conditional band...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/nil-band-forecast?slug=${encodeURIComponent(slug)}&target_tier=${target}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.name}</strong> · ${d.sport.toUpperCase()} · ${d.position || '—'}</p>
+          <p style="margin-top: 8px; color: var(--text-3); font-size: 12px;">Conference inference: ${d.inferred_conference}</p>
+          <p style="margin-top: 16px; color: var(--text-2);">Current (${d.current_tier}):</p>
+          <p style="font-size: 20px; color: var(--text);">$${d.current_band.low.toLocaleString()} – $<strong>${d.current_band.mid.toLocaleString()}</strong> – $${d.current_band.high.toLocaleString()}</p>
+          <p style="margin-top: 16px; color: var(--gold);">Forecast (${d.target_tier}):</p>
+          <p style="font-size: 24px; color: var(--gold); font-family: 'Anton', sans-serif;">$${d.forecast_band.low.toLocaleString()} – $<strong>${d.forecast_band.mid.toLocaleString()}</strong> – $${d.forecast_band.high.toLocaleString()}</p>
+          <p style="margin-top: 16px; font-style: italic; color: var(--text-2);">${d.interpretation}</p>
+          <p style="margin-top: 12px; color: var(--text-3); font-size: 11px;">${d.honest_note}</p>
+        </div>`;
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderPositionPlaybook() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 20 — TRUST INFRASTRUCTURE</div>
+        <div class="work-h">The structure <span class="serif">underneath.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Position-specific ontology. QB ≠ WR. Setter ≠ Libero. The structure every verdict rests on.</p>
+        <div class="form-row">
+          <select id="pp-sport" style="background: var(--bg-2); color: var(--text); border: 1px solid var(--border); padding: 8px;">
+            <option value="football">Football</option>
+            <option value="womens-volleyball" selected>W-Volleyball</option>
+            <option value="mens-basketball">M-Basketball</option>
+          </select>
+          <input id="pp-position" placeholder="Position (Outside Hitter, QB, PG...)" value="Outside Hitter">
+          <button onclick="runPositionPlaybook()">Open playbook</button>
+        </div>
+        <div id="pp-result"></div>
+      `;
+    }
+
+    window.runPositionPlaybook = async function() {
+      const sport = document.getElementById('pp-sport').value;
+      const position = document.getElementById('pp-position').value.trim();
+      const res = document.getElementById('pp-result');
+      res.innerHTML = '<div class="loading">Opening playbook...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/position-playbook?sport=${encodeURIComponent(sport)}&position=${encodeURIComponent(position)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}${d.available_positions ? ' · try: ' + d.available_positions.join(', ') : ''}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.sport.toUpperCase()}</strong> · <strong>${d.position}</strong></p>
+          <p style="margin-top: 16px; font-weight: 600; color: var(--gold);">Evaluation layers:</p>`;
+        for (const [layer, dims] of Object.entries(d.playbook.layers)) {
+          html += `<p style="margin-top: 6px; padding-left: 12px;"><strong>${layer}</strong>: <span style="color: var(--text-2);">${dims.join(', ')}</span></p>`;
+        }
+        html += `<p style="margin-top: 16px; font-weight: 600; color: var(--gold);">Key questions:</p>`;
+        for (const q of d.playbook.key_questions || []) {
+          html += `<p style="margin-top: 4px; padding-left: 12px; color: var(--text-2); font-size: 13px; font-style: italic;">"${q}"</p>`;
+        }
+        if (d.playbook.icon_anchors && d.playbook.icon_anchors.length > 0) {
+          html += `<p style="margin-top: 16px; color: var(--text-3); font-size: 12px;">ICON anchors: ${d.playbook.icon_anchors.join(', ')}</p>`;
+        }
+        html += `<p style="margin-top: 16px; color: var(--gold); font-style: italic; font-size: 13px;">${d.principle}</p></div>`;
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderSkillVelocity() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 21 — DEVELOPMENTAL OS</div>
+        <div class="work-h">Faster <span class="serif">than peers.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Year-over-year awards delta vs cohort baseline. ACCELERATING means improving faster than position peers.</p>
+        <div class="form-row">
+          <input id="sv-slug" placeholder="profile-slug" value="madisen-skinner-lovb-austin-womens-volleyball">
+          <button onclick="runSkillVelocity()">Compute velocity</button>
+        </div>
+        <div id="sv-result"></div>
+      `;
+    }
+
+    window.runSkillVelocity = async function() {
+      const slug = document.getElementById('sv-slug').value.trim();
+      const res = document.getElementById('sv-result');
+      res.innerHTML = '<div class="loading">Comparing to peer cohort...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/skill-velocity?slug=${encodeURIComponent(slug)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        const gradeColor = d.velocity_grade === 'ACCELERATING' ? '#6a9c89' : d.velocity_grade === 'AHEAD' ? 'var(--gold)' : d.velocity_grade === 'COHORT_PACE' ? 'var(--text-2)' : 'var(--rust)';
+        let html = `<div class="result-narrative">
+          <p><strong>${d.name}</strong> · ${d.sport.toUpperCase()} · ${d.position || '—'}</p>`;
+        if (d.velocity_grade === 'INSUFFICIENT_DATA') {
+          html += `<p style="margin-top: 16px; color: var(--text-2);">${d.note}</p>`;
+        } else {
+          html += `<p style="margin-top: 12px; font-size: 32px; color: ${gradeColor}; font-family: 'Anton', sans-serif;">${d.velocity_grade.replace('_', ' ')}</p>
+            <p style="margin-top: 12px;">Subject: ${d.subject_avg_annual_delta}/yr · Cohort: ${d.cohort_avg_annual_delta}/yr</p>
+            <p>Delta vs cohort: <strong>${d.delta_vs_cohort > 0 ? '+' : ''}${d.delta_vs_cohort}</strong></p>
+            <p style="margin-top: 16px; color: var(--text-2); font-style: italic;">${d.interpretation}</p>
+            <p style="margin-top: 8px; color: var(--text-3); font-size: 12px;">Cohort sample: ${d.cohort_sample_size} peers</p>
+            <p style="margin-top: 12px; color: var(--text-3); font-size: 11px;">${d.honest_note}</p>`;
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderProgramTrust() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 19 — TRUST INFRASTRUCTURE</div>
+        <div class="work-h">Honest <span class="serif">scorecard.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Unified trust grade for any coach: tenure + portal retention + GSR + quote anchors. The transparency layer nobody else owns.</p>
+        <div class="form-row">
+          <input id="pt-coach" placeholder="coach-slug (e.g. dawn-staley)" value="dawn-staley">
+          <button onclick="runProgramTrust()">Pull scorecard</button>
+        </div>
+        <div id="pt-result"></div>
+      `;
+    }
+
+    window.runProgramTrust = async function() {
+      const coach = document.getElementById('pt-coach').value.trim();
+      const res = document.getElementById('pt-result');
+      res.innerHTML = '<div class="loading">Compiling trust scorecard...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/program-trust-card?coach=${encodeURIComponent(coach)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        const gradeColor = d.trust_grade === 'ELITE_TRUST' ? '#6a9c89' : d.trust_grade === 'STRONG_TRUST' ? 'var(--gold)' : d.trust_grade === 'AVERAGE_TRUST' ? 'var(--text-2)' : 'var(--rust)';
+        let html = `<div class="result-narrative">
+          <p style="color: var(--text-2); font-size: 13px;">${d.program} · ${d.sport.toUpperCase()}</p>
+          <p style="margin-top: 12px; font-size: 36px; color: ${gradeColor}; font-family: 'Anton', sans-serif;">${d.trust_grade.replace('_', ' ')}</p>
+          <p style="font-size: 13px; color: var(--text-3);">composite ${d.trust_composite} / 10</p>
+          <p style="margin-top: 20px; font-weight: 600; color: var(--text);">Components:</p>`;
+        for (const c of d.components) {
+          html += `<p style="margin-top: 6px; padding-left: 12px; font-size: 13px;"><strong>${c.k}:</strong> ${c.v} <span style="color: var(--text-3);">${c.signal}</span></p>`;
+        }
+        if (d.quotes_sample && d.quotes_sample.length > 0) {
+          html += `<p style="margin-top: 16px; font-weight: 600; color: var(--text);">Public philosophy:</p>`;
+          for (const q of d.quotes_sample) {
+            html += `<p style="margin-top: 6px; padding-left: 12px; color: var(--text-2); font-style: italic; font-size: 13px;">"${q}"</p>`;
+          }
+        }
+        html += `<p style="margin-top: 16px; color: var(--text-3); font-size: 11px;">${d.honest_note}</p></div>`;
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderTrajectoryDelta() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 17 — DEVELOPMENTAL OS</div>
+        <div class="work-h">What closes <span class="serif">the gap.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Per-dimension actionable moves to reach target tier. The "developmental OS" signature feature.</p>
+        <div class="form-row">
+          <input id="td-slug" placeholder="profile-slug" value="cooper-flagg-duke-mens-basketball">
+          <select id="td-target" style="background: var(--bg-2); color: var(--text); border: 1px solid var(--border); padding: 8px;">
+            <option value="ELITE">Target: ELITE</option>
+            <option value="ICON">Target: ICON</option>
+            <option value="STAR">Target: STAR</option>
+          </select>
+          <button onclick="runTrajectoryDelta()">Compute path</button>
+        </div>
+        <div id="td-result"></div>
+      `;
+    }
+
+    window.runTrajectoryDelta = async function() {
+      const slug = document.getElementById('td-slug').value.trim();
+      const target = document.getElementById('td-target').value;
+      const res = document.getElementById('td-result');
+      res.innerHTML = '<div class="loading">Computing trajectory delta...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/trajectory-delta?slug=${encodeURIComponent(slug)}&target_tier=${target}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.name}</strong> · ${d.sport.toUpperCase()}</p>
+          <p style="margin-top: 12px;">Current: <strong>${d.current_tier}</strong> · composite ${d.current_composite}</p>
+          <p>Target: <strong style="color: var(--gold);">${d.target_tier}</strong> · min ${d.target_composite_min}</p>`;
+        if (d.verdict === 'ALREADY_AT_OR_ABOVE') {
+          html += `<p style="margin-top: 16px; color: var(--gold);">${d.message}</p>`;
+        } else {
+          html += `<p style="margin-top: 12px;">Gap: <strong>${d.gap}</strong> points to close.</p>
+            <p style="margin-top: 16px; color: var(--text-2); font-style: italic;">${d.narrative}</p>
+            <p style="margin-top: 20px; font-weight: 600; color: var(--gold);">High-leverage moves:</p>`;
+          for (const m of d.actionable_moves) {
+            html += `<p style="margin-top: 12px; padding-left: 12px; border-left: 2px solid var(--gold);">
+              <strong>${m.dimension}</strong>: ${m.current_score} → ${m.move_to} <span style="color: var(--text-3); font-size: 12px;">(+${m.estimated_composite_lift} composite est.)</span><br>
+              <span style="color: var(--text-2); font-size: 13px;">${m.actionable_narrative}</span>
+            </p>`;
+          }
+          html += `<p style="margin-top: 16px; color: var(--text-3); font-size: 11px;">${d.honest_note}</p>`;
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderDevArchetype() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 18 — DEVELOPMENTAL OS</div>
+        <div class="work-h">Who's <span class="serif">the comp.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">"This player's arc tracks like sophomore-year X." Outcome-anchored heritage peers. Sport + position aware.</p>
+        <div class="form-row">
+          <input id="da-slug" placeholder="profile-slug" value="charitie-luper-stanford-womens-volleyball">
+          <button onclick="runDevArchetype()">Find archetype</button>
+        </div>
+        <div id="da-result"></div>
+      `;
+    }
+
+    window.runDevArchetype = async function() {
+      const slug = document.getElementById('da-slug').value.trim();
+      const res = document.getElementById('da-result');
+      res.innerHTML = '<div class="loading">Matching archetype...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/dev-archetype?slug=${encodeURIComponent(slug)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        if (!d.primary_archetype) {
+          res.innerHTML = `<div class="result"><p>${d.note}</p></div>`;
+          return;
+        }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.name}</strong> · ${d.sport.toUpperCase()} · ${d.position || '—'} · ${d.current_tier} (${d.current_composite})</p>
+          <p style="margin-top: 20px; font-weight: 600; color: var(--gold);">Primary archetype:</p>
+          <p style="margin-top: 8px; padding-left: 12px; border-left: 2px solid var(--gold);">
+            <strong>${d.primary_archetype.name}</strong> · ${d.primary_archetype.school || '—'}<br>
+            <span style="color: var(--text-2); font-size: 13px;">composite ${d.primary_archetype.composite}${d.primary_archetype.outcome_summary ? ' · <span style="color: var(--gold);">' + d.primary_archetype.outcome_summary + '</span>' : ''}</span>
+          </p>
+          <p style="margin-top: 16px; font-style: italic; color: var(--text-2);">${d.primary_archetype.narrative}</p>`;
+        if (d.alternative_archetypes && d.alternative_archetypes.length > 0) {
+          html += `<p style="margin-top: 20px; color: var(--text-3); font-size: 12px;">Alternative archetypes:</p>`;
+          for (const a of d.alternative_archetypes) {
+            html += `<p style="margin-top: 4px; padding-left: 12px; color: var(--text-2); font-size: 13px;">${a.name} (${a.school || '—'}) · ${a.composite}${a.outcome_summary ? ' · ' + a.outcome_summary : ''}</p>`;
+          }
+        }
+        html += `<p style="margin-top: 16px; color: var(--text-3); font-size: 11px;">${d.honest_note}</p></div>`;
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderPeerComp() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 15</div>
+        <div class="work-h">Who grades <span class="serif">like her?</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Returns position-aware peers sorted by composite proximity. Outcome-anchored peers flagged.</p>
+        <div class="form-row">
+          <input id="pc-slug" placeholder="profile-slug" value="madisen-skinner-lovb-austin-womens-volleyball">
+          <input id="pc-depth" placeholder="8" value="8" style="max-width: 80px;">
+          <button onclick="runPeerComp()">Find peers</button>
+        </div>
+        <div id="pc-result"></div>
+      `;
+    }
+
+    window.runPeerComp = async function() {
+      const slug = document.getElementById('pc-slug').value.trim();
+      const depth = document.getElementById('pc-depth').value.trim() || '8';
+      const res = document.getElementById('pc-result');
+      res.innerHTML = '<div class="loading">Finding peers...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/peer-comp?slug=${encodeURIComponent(slug)}&depth=${depth}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.target.name}</strong> · ${d.target.sport.toUpperCase()} · ${d.target.position || 'any pos'} · ${d.target.tier} (${d.target.composite})</p>
+          <p style="margin-top: 12px; color: var(--text-2);">Peers in corpus: ${d.peer_count_in_corpus}. Returning top ${d.peers_returned.length} by composite proximity.</p>`;
+        for (const p of d.peers_returned) {
+          const anchor = p.has_outcome ? ` <span style="color: #8ea876; font-size: 11px;">[OUTCOME ANCHORED]</span>` : '';
+          html += `<p style="margin-top: 8px; padding-left: 12px; border-left: 2px solid var(--text-3);"><strong>${p.name}</strong> · ${p.school || ''} · ${p.tier} (${p.composite})${anchor}<br>${p.outcome_summary ? `<span style="color: var(--gold); font-size: 12px;">${p.outcome_summary}</span>` : ''}</p>`;
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderEligibilityChecker() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 16</div>
+        <div class="work-h">How much <span class="serif">is left?</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">NCAA eligibility estimator. Years used + remaining + transfer flags. Not compliance advice.</p>
+        <div class="form-row">
+          <input id="ec-slug" placeholder="profile-slug" value="nico-iamaleava-ucla-football">
+          <button onclick="runEligibility()">Check eligibility</button>
+        </div>
+        <div id="ec-result"></div>
+      `;
+    }
+
+    window.runEligibility = async function() {
+      const slug = document.getElementById('ec-slug').value.trim();
+      const res = document.getElementById('ec-result');
+      res.innerHTML = '<div class="loading">Estimating eligibility...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/eligibility-checker?slug=${encodeURIComponent(slug)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.name}</strong> · ${d.sport.toUpperCase()} · ${d.class_year}</p>
+          <p style="margin-top: 12px;">Status: <strong>${d.eligibility_status}</strong></p>
+          <p>Years used estimate: <strong>${d.years_used_estimate}</strong> · Remaining: <strong>${d.years_remaining_estimate}</strong></p>
+          <p style="margin-top: 8px; color: var(--text-2); font-size: 12px;">College history (${d.transfer_count} transfers): ${d.college_history.join(' → ')}</p>`;
+        for (const f of (d.flags || [])) {
+          const color = f.severity === 'HIGH' ? 'var(--rust)' : f.severity === 'MEDIUM' ? 'var(--gold)' : 'var(--text-2)';
+          html += `<p style="margin-top: 12px; padding-left: 16px; border-left: 2px solid ${color};"><strong style="color: ${color};">${f.severity}</strong><br>${f.message}</p>`;
+        }
+        html += `<p style="margin-top: 12px; color: var(--text-3); font-size: 11px;"><em>${d.disclaimer}</em></p></div>`;
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderRiskFlags() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 13</div>
+        <div class="work-h">Honest <span class="serif">signal.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Surfaces concerning patterns honestly: multi-transfer, durability, tier-composite mismatch. Try a profile with known volatility.</p>
+        <div class="form-row">
+          <input id="rf-slug" placeholder="profile-slug" value="nico-iamaleava-ucla-football">
+          <button onclick="runRiskFlags()">Surface flags</button>
+        </div>
+        <div id="rf-result"></div>
+      `;
+    }
+
+    window.runRiskFlags = async function() {
+      const slug = document.getElementById('rf-slug').value.trim();
+      const res = document.getElementById('rf-result');
+      res.innerHTML = '<div class="loading">Scanning for honest signals...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/risk-flags?slug=${encodeURIComponent(slug)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.name}</strong> · ${d.sport.toUpperCase()} · ${d.tier} (${d.composite || '—'})</p>
+          <p style="margin-top: 12px;">Flags detected: <strong>${d.flag_count}</strong></p>
+          <p style="margin-top: 8px; color: var(--gold); font-style: italic;">${d.honest_note}</p>`;
+        for (const f of d.flags) {
+          const color = f.severity === 'HIGH' ? 'var(--rust)' : f.severity === 'MEDIUM' ? 'var(--gold)' : 'var(--text-2)';
+          html += `<p style="margin-top: 12px; padding-left: 16px; border-left: 2px solid ${color};"><strong style="color: ${color};">${f.severity}</strong> · ${f.type}<br><span style="color: var(--text-2); font-size: 13px;">${f.message}</span></p>`;
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderMomentum() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 14</div>
+        <div class="work-h">Up, <span class="serif">flat, or fading?</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Reads awards-by-year and returns trajectory. UP = >30% gain. DOWN = >30% drop.</p>
+        <div class="form-row">
+          <input id="mom-slug" placeholder="profile-slug" value="travis-hunter-colorado-football">
+          <button onclick="runMomentum()">Read trajectory</button>
+        </div>
+        <div id="mom-result"></div>
+      `;
+    }
+
+    window.runMomentum = async function() {
+      const slug = document.getElementById('mom-slug').value.trim();
+      const res = document.getElementById('mom-result');
+      res.innerHTML = '<div class="loading">Computing momentum...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/momentum?slug=${encodeURIComponent(slug)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        const arrow = d.momentum === 'UP' ? '↗' : d.momentum === 'DOWN' ? '↘' : d.momentum === 'FLAT' ? '→' : '·';
+        const color = d.momentum === 'UP' ? '#8ea876' : d.momentum === 'DOWN' ? 'var(--rust)' : 'var(--gold)';
+        let html = `<div class="result-narrative">
+          <p><strong>${d.name}</strong> · ${d.sport.toUpperCase()}</p>
+          <p style="margin-top: 12px; font-size: 32px; color: ${color};">${arrow} <strong>${d.momentum}</strong></p>
+          <p style="margin-top: 12px; color: var(--text-2);">${d.interpretation || ''}</p>
+          ${d.year_count ? `<p style="margin-top: 12px; color: var(--text-3); font-size: 12px;">${d.year_count} years of awards data</p>` : ''}
+        </div>`;
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderLOVBPathway() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 12 · LOVB-RELEVANT</div>
+        <div class="work-h">LOVB <span class="serif">pathway map.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Every NCAA W-Vball profile categorized by LOVB pathway status. Currently on roster, projected target, college track, cross-path. One call. Only FieldCheck has the dataset.</p>
+        <button onclick="runLOVBPathway()">Load pathway map</button>
+        <div id="lovbp-result" style="margin-top: 20px;"></div>
+      `;
+    }
+
+    window.runLOVBPathway = async function() {
+      const res = document.getElementById('lovbp-result');
+      res.innerHTML = '<div class="loading">Loading LOVB pathway map...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/lovb-pathway`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>Total W-Vball profiles:</strong> ${d.counts.total_w_vball_profiles}</p>
+          <p style="margin-top: 8px;">On LOVB roster: <strong style="color: var(--gold);">${d.counts.currently_on_lovb_roster}</strong> · Projected targets: <strong style="color: var(--gold);">${d.counts.projected_lovb_targets}</strong> · College track: <strong>${d.counts.college_track}</strong></p>
+          <p style="margin-top: 18px;"><strong>ON LOVB ROSTERS</strong></p>`;
+        for (const r of d.on_lovb_roster.slice(0, 10)) {
+          const signing = r.lovb_signing ? ` \u2192 ${r.lovb_signing.team} (${r.lovb_signing.year})` : '';
+          html += `<p style="margin-top: 6px; padding-left: 16px;"><strong>${r.name}</strong> (${r.position}, ${r.tier}, ${r.composite}) · ${r.school}${signing}</p>`;
+        }
+        html += `<p style="margin-top: 18px;"><strong>PROJECTED LOVB TARGETS</strong></p>`;
+        for (const r of d.projected_lovb_targets.slice(0, 10)) {
+          html += `<p style="margin-top: 6px; padding-left: 16px;"><strong>${r.name}</strong> (${r.position}, ${r.tier}, ${r.composite}) · ${r.school}</p>`;
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderDimImprovement() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 11</div>
+        <div class="work-h">Where to <span class="serif">focus.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Lowest-scoring dimensions surface as improvement targets. Suggestions per layer (physical → conditioning, production → role expansion, projectability → coachable IQ).</p>
+        <div class="form-row">
+          <input id="di-slug" placeholder="profile-slug" value="hailey-van-lith-tcu-womens-basketball">
+          <button onclick="runDimImprovement()">Find focus areas</button>
+        </div>
+        <div id="di-result"></div>
+      `;
+    }
+
+    window.runDimImprovement = async function() {
+      const slug = document.getElementById('di-slug').value.trim();
+      const res = document.getElementById('di-result');
+      res.innerHTML = '<div class="loading">Analyzing dimensions...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/dimension-improvement?slug=${encodeURIComponent(slug)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.name}</strong> · ${d.sport.toUpperCase()} · Composite <strong>${d.composite}</strong> · Mean dim score <strong>${d.mean_dimension_score}</strong></p>
+          <p style="margin-top: 18px;"><strong>FOCUS AREAS</strong></p>`;
+        for (const t of d.improvement_targets) {
+          html += `<p style="margin-top: 10px; padding-left: 16px;"><strong>${t.dimension}</strong> (${t.layer}) · Current <strong>${t.current_score}</strong></p>`;
+          html += `<p style="margin-left: 32px; color: var(--text-2); font-size: 13px;">${t.suggestion}</p>`;
+        }
+        html += `<p style="margin-top: 18px;"><strong>STRENGTHS TO PRESERVE</strong></p>`;
+        for (const s of d.strengths_to_preserve) {
+          html += `<p style="margin-top: 4px; padding-left: 16px; color: var(--gold);">${s.dimension} (${s.layer}) · ${s.score}</p>`;
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderCareerTrajectory() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 08</div>
+        <div class="work-h">Career <span class="serif">arc.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Year-by-year awards + college history + outcome anchor. The prospect's evolution.</p>
+        <div class="form-row">
+          <input id="ct2-slug" placeholder="profile-slug" value="travis-hunter-colorado-football">
+          <button onclick="runCareerTrajectory()">Get trajectory</button>
+        </div>
+        <div id="ct2-result"></div>
+      `;
+    }
+
+    window.runCareerTrajectory = async function() {
+      const slug = document.getElementById('ct2-slug').value.trim();
+      const res = document.getElementById('ct2-result');
+      res.innerHTML = '<div class="loading">Loading trajectory...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/career-trajectory?slug=${encodeURIComponent(slug)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.name}</strong> · ${d.sport.toUpperCase()} · ${d.class_year || ''}</p>
+          <p style="margin-top: 8px; color: var(--text-2);">College: ${(d.college_history || []).join(' \u2192 ') || d.current_school}</p>
+          <p style="margin-top: 12px; color: var(--gold);"><em>${d.summary}</em></p>
+          <p style="margin-top: 18px;"><strong>TIMELINE</strong></p>`;
+        for (const t of d.trajectory) {
+          if (t.is_outcome) {
+            html += `<p style="margin-top: 10px; padding-left: 16px; color: var(--gold);"><strong>${t.year}</strong> \u2192 OUTCOME: #${t.outcome.draft_position} ${t.outcome.team}</p>`;
+          } else {
+            html += `<p style="margin-top: 10px; padding-left: 16px;"><strong>${t.year}</strong> (${t.award_count} awards, ${t.national_tier_count} national-tier)</p>`;
+            for (const a of t.awards.slice(0, 3)) {
+              html += `<p style="margin-left: 32px; font-size: 13px; color: var(--text-2);">• ${a.award}</p>`;
+            }
+          }
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderTransferImpact() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 09</div>
+        <div class="work-h">Transfer <span class="serif">what-if.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">If a prospect transfers — conference shift, NIL band delta, calibration impact.</p>
+        <div class="form-row">
+          <input id="ti-slug" placeholder="profile-slug" value="hailey-van-lith-tcu-womens-basketball">
+          <input id="ti-school" placeholder="hypothetical school" value="LSU">
+          <button onclick="runTransferImpact()">Simulate</button>
+        </div>
+        <div id="ti-result"></div>
+      `;
+    }
+
+    window.runTransferImpact = async function() {
+      const slug = document.getElementById('ti-slug').value.trim();
+      const school = document.getElementById('ti-school').value.trim();
+      const res = document.getElementById('ti-result');
+      res.innerHTML = '<div class="loading">Running transfer simulation...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/transfer-impact?slug=${encodeURIComponent(slug)}&new_school=${encodeURIComponent(school)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        const cur = d.current_situation, hyp = d.hypothetical_transfer;
+        const fmt = (n) => '$' + (n || 0).toLocaleString();
+        let html = `<div class="result-narrative">
+          <p><strong>${d.profile.name}</strong> (${d.profile.position}, ${d.profile.tier})</p>
+          <p style="margin-top: 12px;">Current: <strong>${cur.school}</strong> (${cur.conference || 'unknown'}) ${cur.nil_band ? '· NIL band ' + fmt(cur.nil_band.band_low) + '\u2013' + fmt(cur.nil_band.band_high) : ''}</p>
+          <p style="margin-top: 8px;">If transfer to: <strong>${hyp.school}</strong> (${hyp.conference || 'unknown'}) ${hyp.nil_band ? '· NIL band ' + fmt(hyp.nil_band.band_low) + '\u2013' + fmt(hyp.nil_band.band_high) : ''}</p>
+          <p style="margin-top: 16px; color: var(--gold);"><em>${d.analysis}</em></p>
+        </div>`;
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderDraftPathway() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 10</div>
+        <div class="work-h">Draft <span class="serif">range.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Projected draft range based on peer outcomes with similar composite. Confidence HIGH/MODERATE/LOW based on sample size.</p>
+        <div class="form-row">
+          <input id="dp-slug" placeholder="profile-slug" value="paige-bueckers-uconn-womens-basketball">
+          <button onclick="runDraftPathway()">Project draft</button>
+        </div>
+        <div id="dp-result"></div>
+      `;
+    }
+
+    window.runDraftPathway = async function() {
+      const slug = document.getElementById('dp-slug').value.trim();
+      const res = document.getElementById('dp-result');
+      res.innerHTML = '<div class="loading">Computing draft range...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/draft-pathway?slug=${encodeURIComponent(slug)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.profile.name}</strong> · ${d.profile.sport.toUpperCase()} · ${d.profile.tier} (${d.profile.composite})</p>
+          <p style="margin-top: 12px; font-size: 22px; color: var(--gold);"><strong>${d.projected_draft_range}</strong></p>
+          <p style="margin-top: 4px; color: var(--text-2);">Median peer pick: ${d.median_peer_pick ? '#' + d.median_peer_pick : '—'} · Confidence <strong>${d.confidence}</strong></p>
+          <p style="margin-top: 18px;"><strong>COMPARABLE PEER OUTCOMES</strong></p>`;
+        for (const p of d.peer_outcomes) {
+          html += `<p style="margin-top: 6px; padding-left: 16px;"><strong>${p.name}</strong> (${p.school}, ${p.composite}) \u2192 #${p.draft_position} ${p.team} (${p.year})</p>`;
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderCoachTrack() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 06</div>
+        <div class="work-h">Coach <span class="serif">track record.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Enter a coach key. Returns every alumni in our corpus with verified outcomes. Try <code style="color: var(--gold);">nick-saban</code>, <code style="color: var(--gold);">dan-hurley</code>, or <code style="color: var(--gold);">kim-mulkey</code>.</p>
+        <div class="form-row">
+          <input id="ct-coach" placeholder="coach-key" value="dan-hurley">
+          <button onclick="runCoachTrack()">Pull track record</button>
+        </div>
+        <div id="ct-result"></div>
+      `;
+    }
+
+    window.runCoachTrack = async function() {
+      const coach = document.getElementById('ct-coach').value.trim();
+      const res = document.getElementById('ct-result');
+      res.innerHTML = '<div class="loading">Pulling alumni records...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/coach-track-record?coach=${encodeURIComponent(coach)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}${d.available_coaches ? ' · Available: ' + d.available_coaches.slice(0, 8).join(', ') + '...' : ''}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.coach_data.program}</strong> · ${d.sport.toUpperCase()}</p>
+          <p style="margin-top: 6px; font-style: italic; color: var(--text-2);">"${d.coach_data.quotes && d.coach_data.quotes[0] ? d.coach_data.quotes[0] : ''}"</p>
+          <p style="margin-top: 18px;"><strong>${d.alumni_with_anchored_outcomes}</strong> of ${d.total_alumni_in_corpus} alumni with anchored outcomes</p>`;
+        for (const a of d.alumni.slice(0, 15)) {
+          const out = a.outcome ? `→ <strong>#${a.outcome.draft_position}</strong> ${a.outcome.team} (${a.outcome.year})` : '<em>no outcome yet</em>';
+          html += `<p style="margin-top: 8px; padding-left: 16px;"><strong>${a.name}</strong> (${a.position || '—'}, ${a.tier}) ${out}</p>`;
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderRecruitingClass() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 07</div>
+        <div class="work-h">Class <span class="serif">verdict.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Aggregates every curated profile at a school. Optional class year filter (Freshman, Sophomore, Senior, etc).</p>
+        <div class="form-row">
+          <input id="rc-school" placeholder="School name" value="Duke">
+          <input id="rc-year" placeholder="Class year (optional)" value="">
+          <button onclick="runRecruitingClass()">Get class verdict</button>
+        </div>
+        <div id="rc-result"></div>
+      `;
+    }
+
+    window.runRecruitingClass = async function() {
+      const school = document.getElementById('rc-school').value.trim();
+      const year = document.getElementById('rc-year').value.trim();
+      const res = document.getElementById('rc-result');
+      res.innerHTML = '<div class="loading">Aggregating class verdict...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/recruiting-class?school=${encodeURIComponent(school)}${year ? '&class_year=' + encodeURIComponent(year) : ''}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.school}</strong> ${d.class_year ? '· ' + d.class_year : ''}</p>
+          <p style="margin-top: 12px;">Matched <strong>${d.matched_count}</strong> profiles across <strong>${Object.keys(d.sport_breakdown).length}</strong> sports.</p>
+          <p style="margin-top: 12px;"><strong>TIER BREAKDOWN</strong></p>`;
+        for (const [tier, count] of Object.entries(d.tier_breakdown)) {
+          html += `<p style="margin-top: 4px; padding-left: 16px;">${tier} × ${count}</p>`;
+        }
+        html += `<p style="margin-top: 18px;"><strong>TOP PROFILES</strong></p>`;
+        for (const p of d.profiles.slice(0, 10)) {
+          html += `<p style="margin-top: 6px; padding-left: 16px;"><strong>${p.name}</strong> (${p.position || '—'}, ${p.sport.toUpperCase()}) · ${p.tier} · ${p.composite || '—'}</p>`;
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderWhyGraded() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 01</div>
+        <div class="work-h">Why <span class="serif">graded.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Enter a profile slug to see dimension-by-dimension reasoning. Try <code style="color: var(--gold);">caitlin-clark-iowa-womens-basketball</code> or <code style="color: var(--gold);">travis-hunter-colorado-football</code>.</p>
+        <div class="form-row">
+          <input id="wg-slug" placeholder="profile-slug" value="cooper-flagg-duke-mens-basketball">
+          <button onclick="runWhyGraded()">Get reasoning</button>
+        </div>
+        <div id="wg-result"></div>
+      `;
+    }
+
+    window.runWhyGraded = async function() {
+      const slug = document.getElementById('wg-slug').value.trim();
+      if (!slug) return;
+      const res = document.getElementById('wg-result');
+      res.innerHTML = '<div class="loading">Reading the engine\u2019s rationale...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/why-graded?slug=${encodeURIComponent(slug)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative"><p><strong>${d.name}</strong> · ${d.sport} · Composite <strong>${d.composite}</strong> · Tier <strong>${d.subjective_tier}</strong></p>`;
+        for (const [layer, dims] of Object.entries(d.reasoning_by_layer || {})) {
+          html += `<p style="margin-top: 18px;"><strong>${layer.toUpperCase()}</strong></p>`;
+          for (const [dim, info] of Object.entries(dims)) {
+            html += `<p style="margin-top: 8px; padding-left: 16px; border-left: 2px solid rgba(212,175,55,0.3);"><strong>${dim}</strong> · ${info.score} — ${info.rationale}</p>`;
+          }
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderCounterfactual() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 02</div>
+        <div class="work-h">What pushes <span class="serif">to ICON?</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Enter a slug + target tier. The engine returns the concrete requirements to get there.</p>
+        <div class="form-row">
+          <input id="cf-slug" placeholder="profile-slug" value="hailey-van-lith-tcu-womens-basketball">
+          <select id="cf-tier"><option>ICON</option><option>ELITE</option><option>STAR</option></select>
+          <button onclick="runCounterfactual()">Run analysis</button>
+        </div>
+        <div id="cf-result"></div>
+      `;
+    }
+
+    window.runCounterfactual = async function() {
+      const slug = document.getElementById('cf-slug').value.trim();
+      const tier = document.getElementById('cf-tier').value;
+      const res = document.getElementById('cf-result');
+      res.innerHTML = '<div class="loading">Running counterfactual analysis...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/counterfactual?slug=${encodeURIComponent(slug)}&target_tier=${tier}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.name}</strong> · Current: <strong>${d.current_tier}</strong> (${d.current_composite}) → Target: <strong>${d.target_tier}</strong></p>
+          <p style="margin-top: 12px; color: var(--gold);"><em>${d.honest_assessment}</em></p>
+          <p style="margin-top: 18px;"><strong>REQUIREMENTS FOR ${d.target_tier}</strong></p>`;
+        for (const req of d.requirements_for_target) {
+          const icon = req.satisfied ? '<span style="color: #8ea876;">✓</span>' : '<span style="color: var(--rust);">○</span>';
+          html += `<p style="margin-top: 6px; padding-left: 16px;">${icon} ${req.requirement}</p>`;
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderBestComparable() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 03</div>
+        <div class="work-h">Who's <span class="serif">he most like?</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Returns the top-3 historical analogues by sport + composite + tier, with their actual outcomes.</p>
+        <div class="form-row">
+          <input id="bc-slug" placeholder="profile-slug" value="cooper-flagg-duke-mens-basketball">
+          <button onclick="runBestComparable()">Find comparables</button>
+        </div>
+        <div id="bc-result"></div>
+      `;
+    }
+
+    window.runBestComparable = async function() {
+      const slug = document.getElementById('bc-slug').value.trim();
+      const res = document.getElementById('bc-result');
+      res.innerHTML = '<div class="loading">Searching the corpus...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/best-comparable?slug=${encodeURIComponent(slug)}`);
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let html = `<div class="result-narrative">
+          <p><strong>${d.target.name}</strong> (${d.target.sport.toUpperCase()}, ${d.target.position || '—'}, ${d.target.tier} · ${d.target.composite})</p>
+          <p style="margin-top: 12px; color: var(--gold);"><em>${d.interpretation}</em></p>
+          <p style="margin-top: 18px;"><strong>TOP COMPARABLES</strong></p>`;
+        for (const c of d.best_comparables) {
+          const outcomeStr = c.outcome ? `→ <strong>#${c.outcome.draft_position}</strong> ${c.outcome.team} (${c.outcome.year})` : '<em>no outcome anchored yet</em>';
+          html += `<p style="margin-top: 10px; padding-left: 16px;"><strong>${c.name}</strong> (${c.school}, ${c.tier}, ${c.composite}) — similarity ${c.similarity_score} ${outcomeStr}</p>`;
+        }
+        html += '</div>';
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderNILAudit() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 04</div>
+        <div class="work-h">Is this NIL deal <span class="serif">fair?</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Enter deal terms. Returns fairness band vs FieldCheck's NIL regression for the profile's sport + tier + position.</p>
+        <div class="form-row">
+          <input id="na-name" placeholder="Player name" value="Caitlin Clark">
+          <input id="na-sport" placeholder="Sport" value="womens-basketball">
+        </div>
+        <div class="form-row">
+          <input id="na-amount" type="number" placeholder="Deal amount USD" value="3000000">
+          <input id="na-months" type="number" placeholder="Period (months)" value="12">
+          <button onclick="runNILAudit()">Audit deal</button>
+        </div>
+        <div id="na-result"></div>
+      `;
+    }
+
+    window.runNILAudit = async function() {
+      const body = {
+        name: document.getElementById('na-name').value.trim(),
+        sport: document.getElementById('na-sport').value.trim(),
+        deal_amount_usd: Number(document.getElementById('na-amount').value),
+        deal_period_months: Number(document.getElementById('na-months').value)
+      };
+      const res = document.getElementById('na-result');
+      res.innerHTML = '<div class="loading">Auditing deal terms...</div>';
+      try {
+        const r = await fetch(`${PROXY}/agent/nil-deal-audit`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const d = await r.json();
+        if (!d.ok) { res.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        let pillClass = 'pill-fair';
+        if (d.fairness === 'UNDERVALUED' || d.fairness === 'AT_LOW_END') pillClass = 'pill-undervalued';
+        if (d.fairness === 'OVERMARKET' || d.fairness === 'AT_HIGH_END') pillClass = 'pill-overmarket';
+        const band = d.fieldcheck_nil_band;
+        const bandStr = band ? `$${band.band_low.toLocaleString()}–$${band.band_high.toLocaleString()}` : 'no band available';
+        let html = `<div class="result-narrative">
+          <p><strong>${d.deal_input.name}</strong> · Deal: $${d.deal_input.deal_amount_usd.toLocaleString()} / ${d.deal_input.deal_period_months}mo (annualized $${d.deal_input.annualized_usd.toLocaleString()})</p>
+          <p style="margin-top: 12px;">FieldCheck NIL band: <strong>${bandStr}</strong></p>
+          <p style="margin-top: 12px;">Verdict: <span class="pill ${pillClass}">${d.fairness}</span></p>
+          ${d.audit_notes.map(n => `<p style="margin-top: 10px; color: var(--text-2);">${n}</p>`).join('')}
+        </div>`;
+        res.innerHTML = `<div class="result">${html}</div>`;
+      } catch (e) { res.innerHTML = `<div class="error">${e.message}</div>`; }
+    };
+
+    function renderWatchlist() {
+      workArea.innerHTML = `
+        <div class="work-title">// AGENT 05</div>
+        <div class="work-h">Tracking <span class="serif">prospects.</span></div>
+        <p style="color: var(--text-2); margin-bottom: 20px;">Add up to 50 profiles. Tracked across verdict changes, drift signals, outcome anchors.</p>
+        <div class="form-row">
+          <input id="wl-slug" placeholder="profile-slug" value="paige-bueckers-uconn-womens-basketball">
+          <button onclick="addToWatchlist()">+ Add to watchlist</button>
+        </div>
+        <div id="wl-list" style="margin-top: 20px;"><div class="loading">Loading watchlist...</div></div>
+      `;
+      loadWatchlist();
+    }
+
+    async function loadWatchlist() {
+      const listEl = document.getElementById('wl-list');
+      try {
+        const r = await fetch(`${PROXY}/agent/watchlist?session_id=${encodeURIComponent(SESSION_ID)}`);
+        const d = await r.json();
+        if (!d.ok) { listEl.innerHTML = `<div class="error">${d.error}</div>`; return; }
+        if (!d.watchlist || d.watchlist.length === 0) {
+          listEl.innerHTML = '<p style="color: var(--text-3);">No prospects tracked yet. Add one above.</p>';
+          return;
+        }
+        let html = '';
+        for (const item of d.watchlist) {
+          if (!item.name) {
+            html += `<div class="watchlist-item"><div>${item.slug}</div><button class="secondary" onclick="removeFromWatchlist('${item.slug}')">Remove</button></div>`;
+            continue;
+          }
+          const outcomeBadge = item.has_outcome ? '<span class="pill pill-fair">OUTCOME ANCHORED</span>' : '';
+          html += `<div class="watchlist-item">
+            <div>
+              <strong>${item.name}</strong> · ${item.school || ''} · ${(item.sport || '').toUpperCase()}
+              <div class="watchlist-item-meta">Tier ${item.current_tier} · Composite ${item.current_composite || '—'} ${outcomeBadge}</div>
+            </div>
+            <button class="secondary" onclick="removeFromWatchlist('${item.slug}')">Remove</button>
+          </div>`;
+        }
+        listEl.innerHTML = html;
+      } catch (e) { listEl.innerHTML = `<div class="error">${e.message}</div>`; }
+    }
+
+    window.addToWatchlist = async function() {
+      const slug = document.getElementById('wl-slug').value.trim();
+      if (!slug) return;
+      try {
+        await fetch(`${PROXY}/agent/watchlist?session_id=${encodeURIComponent(SESSION_ID)}`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug })
+        });
+        loadWatchlist();
+      } catch (e) { console.error(e); }
+    };
+
+    window.removeFromWatchlist = async function(slug) {
+      try {
+        await fetch(`${PROXY}/agent/watchlist?session_id=${encodeURIComponent(SESSION_ID)}&slug=${encodeURIComponent(slug)}`, {
+          method: 'DELETE'
+        });
+        loadWatchlist();
+      } catch (e) { console.error(e); }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Football · Coming next · FieldCheck Sports</title>
+<meta name="description" content="What football looks like on the platform. Position taxonomy drafted, anchor pipelines mapped, archetype framework defined. Ship target: late 2026.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3886_SPORTS_FOOTBALL">
+<meta property="og:title" content="Football · Coming next · FieldCheck Sports">
+<meta property="og:description" content="What football looks like on the platform. Position taxonomy drafted, anchor pipelines mapped. Ship target: late 2026.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:0.75}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+.nav-global{position:sticky;top:0;z-index:100;background:rgba(10,9,8,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--line)}
+.nav-global-inner{max-width:1240px;margin:0 auto;padding:0 32px;display:flex;align-items:center;height:60px}
+.nav-global-brand{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--text);font-weight:500;margin-right:auto;text-decoration:none;display:flex;align-items:center;gap:6px}
+.nav-global-brand b{color:var(--gold);font-weight:500}
+.nav-global-brand .sep{color:var(--text-3);margin:0 2px}
+.nav-global-brand .ctx{color:var(--teal)}
+.nav-global-main{display:flex;align-items:center}
+.nav-global-item{position:relative}
+.nav-global-link{display:flex;align-items:center;gap:6px;padding:0 20px;height:60px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-2);background:none;border:0;cursor:pointer;transition:color .2s}
+.nav-global-link:hover,.nav-global-link.open{color:var(--text)}
+.nav-global-caret{font-size:7px;opacity:.6;transition:transform .2s}
+.nav-global-link.open .nav-global-caret{transform:rotate(180deg)}
+.nav-global-cta{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--gold);color:var(--gold);border-radius:2px;margin-left:18px;text-decoration:none;transition:all .2s}
+.nav-global-cta:hover{background:var(--gold);color:var(--bg)}
+.nav-global-mega{position:absolute;top:60px;left:50%;transform:translateX(-50%) translateY(-6px);min-width:440px;background:rgba(16,14,12,.97);backdrop-filter:blur(28px);border:1px solid var(--line);border-radius:6px;padding:24px;opacity:0;pointer-events:none;transition:all .22s;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+.nav-global-item.open .nav-global-mega{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nav-global-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 22px}
+.nav-global-col-head{grid-column:span 2;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.nav-global-mega a{display:flex;flex-direction:column;padding:9px 10px;border-radius:3px;text-decoration:none}
+.nav-global-mega a strong{font-family:'Crimson Pro',serif;font-size:15px;font-weight:500;color:var(--text)}
+.nav-global-mega a span{font-family:'Instrument Serif',serif;font-style:italic;font-size:12.5px;color:var(--text-2);margin-top:1px;line-height:1.3}
+.nav-global-mega a:hover{background:rgba(245,241,232,.06)}
+.nav-global-mega a:hover strong{color:var(--gold)}
+@media(max-width:880px){.nav-global-main,.nav-global-cta{display:none}}
+
+/* HERO with status badge */
+.hero{padding:64px 0 48px;border-bottom:1px solid var(--line);position:relative}
+.hero-status{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;background:var(--gold-soft);border:1px solid var(--gold-edge);border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.8px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:18px}
+.hero-status::before{content:'●';color:var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(48px,8vw,108px);line-height:0.94;letter-spacing:-0.022em;margin-bottom:24px;max-width:1080px}
+.hero h1 .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.hero-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(20px,2.4vw,28px);line-height:1.4;color:var(--text-2);max-width:880px}
+
+.section{padding:56px 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:none}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.section-num .gold{color:var(--gold)}
+.section-h{font-family:'Anton',sans-serif;font-size:clamp(30px,4.2vw,48px);line-height:1.02;letter-spacing:-0.016em;margin-bottom:16px}
+.section-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.section-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;line-height:1.45;color:var(--text-2);max-width:780px;margin-bottom:28px}
+
+/* TIMELINE SHIP */
+.ship-bar{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.ship-cell{padding:22px 22px;border-right:1px solid var(--line);background:rgba(20,17,12,0.45)}
+.ship-cell:last-child{border-right:none}
+.ship-cell.done{background:linear-gradient(180deg,rgba(127,168,110,0.08),rgba(20,17,12,0.45))}
+.ship-cell.active{background:linear-gradient(180deg,rgba(255,201,74,0.06),rgba(20,17,12,0.45))}
+.ship-stage{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:6px}
+.ship-cell.done .ship-stage{color:var(--green)}
+.ship-when{font-family:'Anton',sans-serif;font-size:22px;line-height:1;letter-spacing:-0.01em;color:var(--text);margin-bottom:6px}
+.ship-detail{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2)}
+.ship-cell.done .ship-when{color:var(--green)}
+@media(max-width:780px){.ship-bar{grid-template-columns:repeat(2,1fr)}.ship-cell:nth-child(2n){border-right:none}.ship-cell:nth-child(n+3){border-top:1px solid var(--line)}}
+
+/* POSITION DIAGRAM */
+.field-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.field-side{padding:24px 26px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);min-height:280px}
+.field-side:last-child{border-right:none}
+.field-side.offense{background:linear-gradient(180deg,rgba(255,201,74,0.06),rgba(20,17,12,0.45))}
+.field-side.defense{background:linear-gradient(180deg,rgba(212,74,74,0.05),rgba(20,17,12,0.45))}
+.field-side.special{background:linear-gradient(180deg,rgba(127,168,110,0.06),rgba(20,17,12,0.45))}
+.field-side-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:14px}
+.offense .field-side-label{color:var(--gold)}
+.defense .field-side-label{color:var(--crimson)}
+.special .field-side-label{color:var(--green)}
+.field-side-h{font-family:'Anton',sans-serif;font-size:24px;line-height:1.05;letter-spacing:-0.012em;color:var(--text);margin-bottom:14px}
+.position-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px dashed var(--line-2);font-family:'Crimson Pro',serif;font-size:14px;color:var(--text-2);line-height:1.4}
+.position-row:last-child{border-bottom:none}
+.position-row .pos{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;color:var(--gold);font-weight:700;flex:0 0 auto;margin-right:14px}
+.position-row .name{font-family:'Anton',sans-serif;font-size:13px;color:var(--text);font-weight:normal;letter-spacing:-0.005em;flex:1 1 auto}
+@media(max-width:780px){.field-grid{grid-template-columns:1fr}.field-side{border-right:none;border-bottom:1px solid var(--line)}.field-side:last-child{border-bottom:none}}
+
+/* PIPELINES */
+.pipelines{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.pipe{padding:24px 26px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pipe-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:10px}
+.pipe-name{font-family:'Anton',sans-serif;font-size:20px;line-height:1.05;letter-spacing:-0.008em;color:var(--text);margin-bottom:8px}
+.pipe-name .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.pipe-detail{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2)}
+.pipe-detail b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:14px}
+
+/* ARCHETYPE SKELETON */
+.arch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.arch-card{padding:20px 22px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:5px;display:flex;flex-direction:column;gap:8px}
+.arch-pos{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.arch-name{font-family:'Anton',sans-serif;font-size:20px;line-height:1.05;letter-spacing:-0.008em;color:var(--text)}
+.arch-detail{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2);font-style:italic}
+
+/* NOTIFY */
+.notify-block{padding:32px 36px;background:linear-gradient(180deg,rgba(255,201,74,0.04),rgba(20,17,12,0.4));border:1px solid var(--gold-edge);border-radius:6px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.notify-text{font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;color:var(--text-2);line-height:1.45;flex:1 1 360px}
+.notify-text b{font-family:'Anton',sans-serif;font-style:normal;font-weight:normal;color:var(--text);font-size:22px}
+.notify-form{display:flex;gap:8px;flex-wrap:wrap}
+.notify-input{padding:13px 16px;background:var(--bg-2);border:1px solid var(--line-2);border-radius:3px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--text);min-width:220px}
+.notify-input:focus{outline:none;border-color:var(--gold)}
+.notify-btn{padding:13px 20px;background:var(--gold);color:var(--bg);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border-radius:3px;border:none;cursor:pointer}
+.notify-btn:hover{box-shadow:0 0 16px var(--gold-glow)}
+
+.footer{padding:56px 0 72px;border-top:1px solid var(--line);background:rgba(20,17,12,0.5)}
+.footer-display{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer p{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.65;color:var(--text-2);max-width:780px;margin-bottom:12px}
+.footer-disclaimer{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-4);margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav-global">
+  <div class="nav-global-inner">
+    <a href="/" class="nav-global-brand">Field<b>Check</b><span class="sep">·</span><span class="ctx">Football</span></a>
+    <div class="nav-global-main">
+      <div class="nav-global-item">
+        <button class="nav-global-link">Sports <span class="nav-global-caret">▼</span></button>
+        <div class="nav-global-mega"><div class="nav-global-grid">
+          <div class="nav-global-col-head">Sports we cover</div>
+          <a href="/lovb"><strong>Women's Volleyball</strong><span>LOVB · Live, deepest coverage</span></a>
+          <a href="/sports/football"><strong>Football</strong><span>NCAA + recruiting</span></a>
+          <a href="/sports/basketball"><strong>Basketball</strong><span>NCAA + transfer portal</span></a>
+          <a href="/sports/soccer"><strong>Soccer</strong><span>College + MLS pathway</span></a>
+        </div></div>
+      </div>
+      <div class="nav-global-item">
+        <button class="nav-global-link">LOVB <span class="nav-global-caret">▼</span></button>
+        <div class="nav-global-mega"><div class="nav-global-grid">
+          <div class="nav-global-col-head">The four tools</div>
+          <a href="/lovb/projection"><strong>Pro Fit Score</strong><span>Project any player's LOVB tier</span></a>
+          <a href="/lovb/match"><strong>FA Match</strong><span>Find the Founding Athlete comp</span></a>
+          <a href="/lovb/fit"><strong>Market Fit</strong><span>Score all six markets</span></a>
+          <a href="/lovb/roster"><strong>Roster Analyzer</strong><span>Grade any team's depth</span></a>
+          <div class="nav-global-col-head" style="margin-top:14px">Explore</div>
+          <a href="/lovb"><strong>The Hub</strong><span>Overview, this week, the league</span></a>
+          <a href="/lovb/archive"><strong>Archive</strong><span>40+ reference surfaces</span></a>
+        </div></div>
+      </div>
+      <div class="nav-global-item">
+        <button class="nav-global-link">About <span class="nav-global-caret">▼</span></button>
+        <div class="nav-global-mega" style="min-width:380px"><div class="nav-global-grid">
+          <div class="nav-global-col-head">FieldCheck</div>
+          <a href="/about"><strong>What FieldCheck is</strong><span>The thing in one page</span></a>
+          <a href="/about/methodology"><strong>Methodology</strong><span>How we score and cite</span></a>
+          <a href="/about/sources"><strong>Sources</strong><span>What's public-record</span></a>
+          <a href="/about/api"><strong>API</strong><span>Embed the data</span></a>
+        </div></div>
+      </div>
+    </div>
+    <a href="/lovb/projection" class="nav-global-cta">Try the tools →</a>
+  </div>
+</nav>
+
+  <section class="hero">
+    <div class="hero-status">SCAFFOLD · COMING LATE 2026</div>
+    <h1>Football, <span class="italic">scaffolded.</span></h1>
+    <p class="hero-deck">A working preview of what the platform will look like when football ships. Position taxonomy drafted. Anchor pipelines mapped. Archetype framework defined. Independence stance — no school payments, walk-away default, public-record sourcing — applies identically.</p>
+  </section>
+</div>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">I</span> · Ship trajectory</div>
+    <h2 class="section-h">Where we are <span class="italic">in the build.</span></h2>
+    <p class="section-deck">Football is the next sport after volleyball. Position taxonomy and pipeline architecture are drafted. Data ingestion is the gating step before public live ship.</p>
+
+    <div class="ship-bar">
+      <div class="ship-cell done">
+        <div class="ship-stage">// Stage 1 · Done</div>
+        <div class="ship-when">Taxonomy</div>
+        <div class="ship-detail">Position taxonomy drafted. Three sides of the ball, 11 position groups, role hybrids identified.</div>
+      </div>
+      <div class="ship-cell active">
+        <div class="ship-stage">// Stage 2 · Active</div>
+        <div class="ship-when">Pipelines</div>
+        <div class="ship-detail">Anchor leagues and data sources mapped. NCAA D1 + NFL Combine + transfer portal layer scoped.</div>
+      </div>
+      <div class="ship-cell">
+        <div class="ship-stage">// Stage 3 · Next</div>
+        <div class="ship-when">Archetypes</div>
+        <div class="ship-detail">Career-arc anchored archetypes per position. Visible college careers, NFL Combine measurables, pro outcomes.</div>
+      </div>
+      <div class="ship-cell">
+        <div class="ship-stage">// Stage 4 · Ship</div>
+        <div class="ship-when">Late 2026</div>
+        <div class="ship-detail">First public football surface ships. Realistic timeline based on volleyball ramp pace as the benchmark.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">II</span> · Position taxonomy</div>
+    <h2 class="section-h">11 positions, <span class="italic">three sides.</span></h2>
+    <p class="section-deck">The standard taxonomy. Modern football is increasingly position-fluid (slot WRs, hybrid TE/H-back, nickel CBs as starters) — our archetype layer will accommodate the fluidity rather than rigid role definitions.</p>
+
+    <div class="field-grid">
+      <div class="field-side offense">
+        <div class="field-side-label">// OFFENSE</div>
+        <h3 class="field-side-h">Move the ball.</h3>
+        <div class="position-row"><span class="pos">QB</span><span class="name">Quarterback</span></div>
+        <div class="position-row"><span class="pos">RB</span><span class="name">Running back</span></div>
+        <div class="position-row"><span class="pos">WR</span><span class="name">Wide receiver</span></div>
+        <div class="position-row"><span class="pos">TE</span><span class="name">Tight end</span></div>
+        <div class="position-row"><span class="pos">OL</span><span class="name">Offensive line · 5 roles</span></div>
+      </div>
+      <div class="field-side defense">
+        <div class="field-side-label">// DEFENSE</div>
+        <h3 class="field-side-h">Stop the ball.</h3>
+        <div class="position-row"><span class="pos">DL</span><span class="name">Defensive line · DE / DT</span></div>
+        <div class="position-row"><span class="pos">LB</span><span class="name">Linebacker · ILB / OLB</span></div>
+        <div class="position-row"><span class="pos">CB</span><span class="name">Cornerback · outside / slot</span></div>
+        <div class="position-row"><span class="pos">S</span><span class="name">Safety · strong / free</span></div>
+      </div>
+      <div class="field-side special">
+        <div class="field-side-label">// SPECIAL TEAMS</div>
+        <h3 class="field-side-h">The specialists.</h3>
+        <div class="position-row"><span class="pos">K</span><span class="name">Kicker</span></div>
+        <div class="position-row"><span class="pos">P</span><span class="name">Punter</span></div>
+        <div class="position-row"><span class="pos">LS</span><span class="name">Long snapper</span></div>
+        <div class="position-row" style="opacity:0.6;font-style:italic;border-bottom:none"><span class="pos">RETURN</span><span class="name">Often WR / DB hybrid</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">III</span> · Anchor pipelines</div>
+    <h2 class="section-h">Where the <span class="italic">data lives.</span></h2>
+    <p class="section-deck">Football's data landscape is more fragmented than volleyball's. Multiple competing recruiting services, multiple competing combines, multiple pro pathways. Our anchor strategy: lean hard on <em>publicly verifiable</em> sources, never on paid recruiting rankings.</p>
+
+    <div class="pipelines">
+      <div class="pipe">
+        <div class="pipe-eyebrow">// PRIMARY · D1 FBS</div>
+        <div class="pipe-name">The <span class="italic">flagship pipeline.</span></div>
+        <div class="pipe-detail"><b>134 D1 FBS programs.</b> Roster pages, scholarship counts, depth charts, NFL Draft outcomes — all publicly indexed via team athletic sites. Strongest single anchor for college-side data.</div>
+      </div>
+      <div class="pipe">
+        <div class="pipe-eyebrow">// PRIMARY · NFL COMBINE</div>
+        <div class="pipe-name">The <span class="italic">measurables anchor.</span></div>
+        <div class="pipe-detail"><b>40-yard dash, vertical, shuttle, broad jump, bench.</b> Published openly for every Combine invitee. Provides the strongest historical archetype scaffold — same physical thresholds anchor each position year over year.</div>
+      </div>
+      <div class="pipe">
+        <div class="pipe-eyebrow">// SECONDARY · TRANSFER PORTAL</div>
+        <div class="pipe-name">The <span class="italic">mobility layer.</span></div>
+        <div class="pipe-detail"><b>Modern football is portal-fluid.</b> 1,800+ FBS scholarship players enter the portal annually. The destination graph is public and observable; it's a primary signal for archetype landing.</div>
+      </div>
+      <div class="pipe">
+        <div class="pipe-eyebrow">// SECONDARY · NFL DRAFT</div>
+        <div class="pipe-name">The <span class="italic">outcome anchor.</span></div>
+        <div class="pipe-detail"><b>~260 picks annually.</b> Position-by-pick mapping is publicly verifiable. Combined with Combine data, the draft outcome layer fully anchors the pro-tier archetype set.</div>
+      </div>
+      <div class="pipe">
+        <div class="pipe-eyebrow">// EXCLUDED · PAID RANKINGS</div>
+        <div class="pipe-name">What we <span class="italic">won't use.</span></div>
+        <div class="pipe-detail"><b>247Sports rankings, Rivals stars, On3 NIL valuations.</b> All paid commercial products. We'll cite their existence; we won't anchor scoring on them. Same stance volleyball took on recruiting services.</div>
+      </div>
+      <div class="pipe">
+        <div class="pipe-eyebrow">// EXCLUDED · NIL DEALS</div>
+        <div class="pipe-name">Why we <span class="italic">stay out.</span></div>
+        <div class="pipe-detail"><b>NIL is too opaque and inconsistent</b> to use as a pathway signal. We may surface large publicly disclosed deals as facts; we won't use NIL valuation as an archetype input.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">IV</span> · Archetype skeleton</div>
+    <h2 class="section-h">What an <span class="italic">archetype looks like.</span></h2>
+    <p class="section-deck">Each position has a small set of archetype "types" anchored on visible career arcs. Below is a sample skeleton — the QB archetypes that would ship in the first football release.</p>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <div class="arch-pos">// QB · Archetype 1</div>
+        <div class="arch-name">The <span style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)">Pocket</span> Surgeon</div>
+        <div class="arch-detail">Statue in the pocket. Elite arm strength + processing speed. Production driven by play action and rhythm passing. <em>Career arc anchor: Burrow, Stafford, Mahomes (early-career frame).</em></div>
+      </div>
+      <div class="arch-card">
+        <div class="arch-pos">// QB · Archetype 2</div>
+        <div class="arch-name">The <span style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)">Dual-Threat</span> Conductor</div>
+        <div class="arch-detail">Plus mobility. Designed runs and second-reaction throws. Production driven by RPO and extending plays. <em>Career arc anchor: Lamar, Daniels, Hurts, Mahomes (late-career frame).</em></div>
+      </div>
+      <div class="arch-card">
+        <div class="arch-pos">// QB · Archetype 3</div>
+        <div class="arch-name">The <span style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)">Game-Manager</span> Steady</div>
+        <div class="arch-detail">Functional arm. Decision-making over physical tools. Production driven by limiting turnovers and capitalizing on defense. <em>Career arc anchor: Cousins, Goff, Tagovailoa.</em></div>
+      </div>
+      <div class="arch-card">
+        <div class="arch-pos">// QB · Archetype 4</div>
+        <div class="arch-name">The <span style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)">Athlete-First</span> Project</div>
+        <div class="arch-detail">Elite physical tools. Technical refinement is the bottleneck. Outcomes wide: HOF if it clicks, fast washout if not. <em>Career arc anchor: Allen (early), Fields, Lance.</em></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">V</span> · Get notified</div>
+    <h2 class="section-h">When football <span class="italic">ships.</span></h2>
+    <p class="section-deck">One email when the first football surface goes live. No marketing list, no second message, no resale. Same independence pledge.</p>
+
+    <div class="notify-block">
+      <div class="notify-text"><b>One email, one time.</b> When football ships, you'll know. We won't add you to any other list.</div>
+      <div class="notify-form">
+        <input type="email" class="notify-input" placeholder="your@email.com" id="notifyEmail">
+        <button class="notify-btn" onclick="alert('Noted. We\\'ll let you know when football ships.')">Notify me</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-display">Football · Scaffold · Coming Late 2026</div>
+    <p>Why a scaffold page <em>before</em> the surface ships? Because <b>proving the multi-sport intent matters</b>. The platform's value is the capability layer pattern — not the sport. Volleyball is the deepest first execution; football is the second deep execution.</p>
+    <p>Volleyball is the proof. Football is the validation. <a href="/lovb">See the volleyball platform</a> to understand what football will look like at maturity.</p>
+    <div class="footer-disclaimer">Independent platform. NFL, NCAA, recruiting services, and combine references are descriptive; marks belong to their respective owners.</div>
+  </div>
+</footer>
+
+
+<script>
+document.querySelectorAll('.nav-global-item').forEach(item => {
+  const link = item.querySelector('.nav-global-link');
+  let timeout;
+  item.addEventListener('mouseenter', () => { clearTimeout(timeout); document.querySelectorAll('.nav-global-item.open').forEach(o => { if(o!==item) o.classList.remove('open'); o.querySelector('.nav-global-link').classList.remove('open'); }); item.classList.add('open'); link.classList.add('open'); });
+  item.addEventListener('mouseleave', () => { timeout = setTimeout(() => { item.classList.remove('open'); link.classList.remove('open'); }, 150); });
+  link.addEventListener('click', e => { e.preventDefault(); item.classList.toggle('open'); link.classList.toggle('open'); });
+});
+</script>
+</body>
+</html>

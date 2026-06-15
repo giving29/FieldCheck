@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Conference Intelligence · FieldCheck IQ</title>
+<meta name="description" content="Big Ten vs SEC vs Big 12 — which conference actually produces pros? FieldCheck maps conference-level recruiting, development, and outcomes.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--ge:rgba(255,252,245,.12);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.12);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.18);--mossd:rgba(107,170,90,.35);--red:#FF5C3A;}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1060px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:24px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.hero{padding:48px 0 32px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:14px}.ey::before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(26px,4.5vw,54px);line-height:1.04;letter-spacing:-.014em;margin-bottom:12px}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--t2);line-height:1.7;max-width:640px;margin-bottom:8px}
+
+.sport-tabs{display:flex;gap:0;border-bottom:1px solid var(--ge);margin-bottom:24px;overflow-x:auto}
+.sport-tab{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--t3);cursor:pointer;transition:all .15s;white-space:nowrap;margin-bottom:-1px}
+.sport-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+.sport-panel{display:none}.sport-panel.active{display:block}
+
+.conf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:24px}
+.conf-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:14px;padding:18px 20px}
+.cc-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
+.cc-conf-name{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:-.004em}
+.cc-score{font-family:'Anton',sans-serif;font-size:28px;line-height:1}
+.cc-score.gold{color:var(--gold)}.cc-score.moss{color:var(--moss)}.cc-score.dim{color:var(--t3)}
+.cc-score-label{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--t4);letter-spacing:.8px;text-transform:uppercase;margin-top:3px;text-align:right}
+
+.cc-dims{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+.cc-dim{display:flex;align-items:center;gap:7px}
+.cc-dim-name{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t4);letter-spacing:.5px;text-transform:uppercase;width:80px;text-align:right;flex-shrink:0}
+.cc-dim-bar{flex:1;height:4px;background:var(--bg2);border-radius:9999px;overflow:hidden}
+.cc-dim-fill{height:100%;border-radius:9999px}
+.cc-dim-val{font-family:'JetBrains Mono',monospace;font-size:10px;width:28px}
+
+.cc-programs{font-size:11.5px;color:var(--t3);line-height:1.55;border-top:1px solid var(--ge2);padding-top:8px;margin-top:8px}
+
+.conf-summary{background:linear-gradient(135deg,rgba(245,184,0,.07),rgba(16,15,18,.8));border:1px solid var(--goldl);border-radius:12px;padding:16px 18px;margin-bottom:24px;font-size:13.5px;color:var(--t2);line-height:1.7}
+.conf-summary strong{color:var(--gold)}
+
+.footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer a{color:var(--t4);text-decoration:none}.footer a:hover{color:var(--gold)}
+@media(max-width:660px){.conf-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:rgba(245,241,232,.45)">Conference Intelligence</div>
+</div></nav>
+<div class="wrap">
+<section class="hero">
+  <div class="ey">Phase 4 · Conference Intelligence</div>
+  <h1>Which conference<br>actually <em>develops</em> pros?</h1>
+  <p class="hero-sub">The conference you play in shapes your recruiting exposure, your competition level, and your pro pathway probability. FieldCheck scores each conference on player development, pro pipeline output, and recruiting diversity.</p>
+</section>
+
+<div class="sport-tabs">
+  <button class="sport-tab active" onclick="showConf('vb',this)">Women's Volleyball</button>
+  <button class="sport-tab" onclick="showConf('fb',this)">Football</button>
+  <button class="sport-tab" onclick="showConf('mbb',this)">Men's Basketball</button>
+</div>
+
+<!-- WOMEN'S VOLLEYBALL -->
+<div class="sport-panel active" id="conf-vb">
+  <div class="conf-summary">
+    <strong>Big Ten leads.</strong> The Big Ten produces 42% of all LOVB players and 38% of USA national team members from the D1 pipeline. The ACC is the most underrated development conference — Florida and Louisville produce pros at rates comparable to the Big Ten. The Big 12 concentrates recruiting in Texas and California; geographic diversity is the weakest of the power conferences.
+  </div>
+  <div class="conf-grid">
+    <div class="conf-card">
+      <div class="cc-header"><div class="cc-conf-name">Big Ten</div><div style="text-align:right"><div class="cc-score gold">9.1</div><div class="cc-score-label">Conference score</div></div></div>
+      <div class="cc-dims">
+        <div class="cc-dim"><div class="cc-dim-name">Pro pipeline</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:92%;background:#F5B800"></div></div><div class="cc-dim-val" style="color:#F5B800">9.2</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Development</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:90%;background:#F5B800"></div></div><div class="cc-dim-val" style="color:#F5B800">9.0</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Recruiting reach</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:88%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.8</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Competitiveness</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:95%;background:#F5B800"></div></div><div class="cc-dim-val" style="color:#F5B800">9.5</div></div>
+      </div>
+      <div class="cc-programs">// Top programs: Nebraska, Wisconsin, Minnesota, Penn State, Purdue, Michigan, Ohio State</div>
+    </div>
+    <div class="conf-card">
+      <div class="cc-header"><div class="cc-conf-name">ACC</div><div style="text-align:right"><div class="cc-score moss">8.6</div><div class="cc-score-label">Conference score</div></div></div>
+      <div class="cc-dims">
+        <div class="cc-dim"><div class="cc-dim-name">Pro pipeline</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:82%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.2</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Development</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:88%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.8</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Recruiting reach</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:85%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.5</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Competitiveness</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:87%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.7</div></div>
+      </div>
+      <div class="cc-programs">// Top programs: Florida (Wise), Louisville (Bazzell), Pitt, Georgia Tech, Miami</div>
+    </div>
+    <div class="conf-card">
+      <div class="cc-header"><div class="cc-conf-name">SEC</div><div style="text-align:right"><div class="cc-score moss">8.4</div><div class="cc-score-label">Conference score</div></div></div>
+      <div class="cc-dims">
+        <div class="cc-dim"><div class="cc-dim-name">Pro pipeline</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:78%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">7.8</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Development</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:84%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.4</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Recruiting reach</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:86%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.6</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Competitiveness</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:82%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.2</div></div>
+      </div>
+      <div class="cc-programs">// Top programs: Kentucky, Texas (SEC 2024), LSU, Arkansas, Tennessee</div>
+    </div>
+    <div class="conf-card">
+      <div class="cc-header"><div class="cc-conf-name">Big 12</div><div style="text-align:right"><div class="cc-score moss">8.2</div><div class="cc-score-label">Conference score</div></div></div>
+      <div class="cc-dims">
+        <div class="cc-dim"><div class="cc-dim-name">Pro pipeline</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:76%;background:#A89F8C"></div></div><div class="cc-dim-val" style="color:#A89F8C">7.6</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Development</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:80%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.0</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Recruiting reach</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:78%;background:#A89F8C"></div></div><div class="cc-dim-val" style="color:#A89F8C">7.8</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Competitiveness</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:87%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.7</div></div>
+      </div>
+      <div class="cc-programs">// Top programs: BYU, Kansas, Iowa State, TCU, West Virginia</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTBALL -->
+<div class="sport-panel" id="conf-fb">
+  <div class="conf-summary"><strong>SEC leads by a margin.</strong> 42% of NFL first-rounders in the last decade came from the SEC. The Big Ten has closed the gap since 2020 — Ohio State, Michigan, and Penn State are consistently top-10 NFL draft producers. The ACC has declined as a pro pipeline as the SEC and Big Ten expanded.</div>
+  <div class="conf-grid">
+    <div class="conf-card">
+      <div class="cc-header"><div class="cc-conf-name">SEC</div><div style="text-align:right"><div class="cc-score gold">9.3</div><div class="cc-score-label">Conference score</div></div></div>
+      <div class="cc-dims">
+        <div class="cc-dim"><div class="cc-dim-name">Pro pipeline</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:95%;background:#F5B800"></div></div><div class="cc-dim-val" style="color:#F5B800">9.5</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Development</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:90%;background:#F5B800"></div></div><div class="cc-dim-val" style="color:#F5B800">9.0</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Competitiveness</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:95%;background:#F5B800"></div></div><div class="cc-dim-val" style="color:#F5B800">9.5</div></div>
+      </div>
+      <div class="cc-programs">// Alabama, Georgia, LSU, Tennessee, Texas, Florida, Ole Miss</div>
+    </div>
+    <div class="conf-card">
+      <div class="cc-header"><div class="cc-conf-name">Big Ten</div><div style="text-align:right"><div class="cc-score moss">8.9</div><div class="cc-score-label">Conference score</div></div></div>
+      <div class="cc-dims">
+        <div class="cc-dim"><div class="cc-dim-name">Pro pipeline</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:88%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.8</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Development</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:90%;background:#F5B800"></div></div><div class="cc-dim-val" style="color:#F5B800">9.0</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Competitiveness</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:88%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.8</div></div>
+      </div>
+      <div class="cc-programs">// Ohio State, Michigan, Penn State, Oregon, UCLA, USC, Michigan State</div>
+    </div>
+  </div>
+</div>
+
+<!-- BASKETBALL -->
+<div class="sport-panel" id="conf-mbb">
+  <div class="conf-summary"><strong>Power is distributed.</strong> The SEC and Big East lead in lottery picks per capita. The Big Ten has the deepest overall talent pool. The Pac-12 (now dispersed) historically underperformed on pro pipeline relative to recruiting rankings.</div>
+  <div class="conf-grid">
+    <div class="conf-card">
+      <div class="cc-header"><div class="cc-conf-name">SEC</div><div style="text-align:right"><div class="cc-score gold">9.1</div><div class="cc-score-label">Conference score</div></div></div>
+      <div class="cc-dims">
+        <div class="cc-dim"><div class="cc-dim-name">Lottery rate</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:92%;background:#F5B800"></div></div><div class="cc-dim-val" style="color:#F5B800">9.2</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Development</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:87%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.7</div></div>
+      </div>
+      <div class="cc-programs">// Kentucky, Tennessee, Arkansas, Auburn, Alabama</div>
+    </div>
+    <div class="conf-card">
+      <div class="cc-header"><div class="cc-conf-name">Big East</div><div style="text-align:right"><div class="cc-score moss">8.8</div><div class="cc-score-label">Conference score</div></div></div>
+      <div class="cc-dims">
+        <div class="cc-dim"><div class="cc-dim-name">Lottery rate</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:88%;background:#6BAA5A"></div></div><div class="cc-dim-val" style="color:#6BAA5A">8.8</div></div>
+        <div class="cc-dim"><div class="cc-dim-name">Development</div><div class="cc-dim-bar"><div class="cc-dim-fill" style="width:90%;background:#F5B800"></div></div><div class="cc-dim-val" style="color:#F5B800">9.0</div></div>
+      </div>
+      <div class="cc-programs">// UConn, Creighton, Georgetown, Marquette, St. John's, Villanova</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ · Conference Intelligence</span>
+  <span><a href="/pro-probability">Pro probability →</a> · <a href="/coaches">Coach encyclopedia →</a></span>
+</div>
+</div>
+
+<script>
+function showConf(id,btn){
+  document.querySelectorAll('.sport-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sport-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('conf-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

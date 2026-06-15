@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FieldCheck IQ — The Athletic Intelligence Layer</title>
+<meta name="description" content="The athletic intelligence layer the entire sport never had. Amateur. College. Pro. The honest read every athlete deserves.">
+<meta property="og:title" content="FieldCheck IQ — The Athletic Intelligence Layer">
+<meta property="og:description" content="Because every scout has a bias. Every ranking has a price. And every overlooked kid deserves better.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07060A;--bg1:#100F14;--bg2:#181620;
+  --ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);
+  --t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);
+  --gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);
+  --moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.30);
+  --teal:#4EC9C0;--red:#FF5C3A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;overflow-x:hidden}
+
+/* ── ROLLING HERO BACKGROUND ── */
+.hero-bg{position:fixed;inset:0;z-index:0;overflow:hidden}
+.hb-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.4s ease;filter:brightness(.28) saturate(.85)}
+.hb-img.show{opacity:1}
+.hb-overlay{position:absolute;inset:0;background:
+  linear-gradient(to bottom,rgba(7,6,10,.55) 0%,rgba(7,6,10,.8) 40%,rgba(7,6,10,.97) 72%,#07060A 100%),
+  radial-gradient(ellipse 80% 40% at 50% -5%,rgba(245,184,0,.07) 0%,transparent 65%)}
+.hb-texture{position:absolute;inset:0;
+  background:repeating-linear-gradient(168deg,rgba(107,170,90,.025) 0,rgba(107,170,90,.025) 48px,rgba(107,170,90,.04) 48px,rgba(107,170,90,.04) 96px)}
+.hb-court{position:absolute;bottom:-160px;left:50%;transform:translateX(-50%);width:1000px;height:1000px;border-radius:50%;border:1px solid rgba(245,184,0,.03);box-shadow:0 0 0 60px rgba(107,170,90,.01)}
+.hb-yard{position:absolute;bottom:0;left:0;right:0;height:28vh;background:repeating-linear-gradient(90deg,transparent 0,transparent 68px,rgba(255,255,255,.008) 68px,rgba(255,255,255,.008) 70px);mask-image:linear-gradient(to top,rgba(0,0,0,.4) 0%,transparent 100%)}
+
+/* ── DRAFT BAR ── */
+.dbar{position:sticky;top:0;z-index:100;background:rgba(7,6,10,.96);backdrop-filter:blur(18px);border-bottom:1px solid rgba(245,184,0,.28);padding:9px 28px;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.dd{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 1.8s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.dt{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.7px;color:var(--gold)}
+.dc{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3)}.dc b{color:var(--t)}
+.dcta{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 13px;border-radius:9999px;background:var(--gold);color:#07060A;text-decoration:none;transition:opacity .15s}
+.dcta:hover{opacity:.88}
+.dcd{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(245,184,0,.45)}
+
+/* ── NAV ── */
+nav{position:sticky;top:37px;z-index:90;background:rgba(7,6,10,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:1100px;margin:0 auto;padding:0 28px;height:58px;display:flex;align-items:center;gap:6px}
+.brand{text-decoration:none;display:flex;align-items:baseline;margin-right:14px}
+.brand-fc{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.012em;color:var(--t)}
+.brand-fc b{color:var(--gold)}
+.brand-iq{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:2px;color:rgba(245,184,0,.65);margin-left:4px}
+.ni{position:relative}
+.nl{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--t4);padding:8px 11px;border-radius:8px;cursor:pointer;border:none;background:none;transition:all .15s;white-space:nowrap;text-decoration:none;display:flex;align-items:center;gap:3px}
+.nl:hover{color:var(--t);background:rgba(255,255,255,.06)}
+.nl.draft-nav{color:rgba(245,184,0,.7)}
+.nl .ch{font-size:7px;opacity:.5;transition:transform .15s}
+.ni:hover .ch{transform:rotate(180deg)}
+.drop{position:absolute;top:calc(100%+6px);left:0;background:#100F14;border:1px solid var(--ge);border-radius:12px;padding:8px 0;min-width:220px;box-shadow:0 24px 64px rgba(0,0,0,.8);opacity:0;visibility:hidden;transform:translateY(-4px);transition:all .15s;z-index:100}
+.ni:hover .drop{opacity:1;visibility:visible;transform:translateY(0)}
+.dl{display:flex;align-items:center;gap:7px;padding:9px 14px;font-size:13px;color:var(--t3);text-decoration:none;transition:all .12s}
+.dl:hover{color:var(--t);background:rgba(255,255,255,.04)}
+.dl i{font-size:12px;width:16px;text-align:center;flex-shrink:0;font-style:normal}
+.dl .dn{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t4);margin-left:auto}
+.ds{border-bottom:1px solid var(--ge2);margin:4px 0}
+.nr{margin-left:auto;display:flex;align-items:center;gap:8px}
+.nsrch{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);background:rgba(255,255,255,.04);border:1px solid var(--ge);border-radius:6px;padding:4px 9px;cursor:pointer;transition:all .15s}
+.nsrch:hover{color:var(--t)}
+.hbg{display:none;background:none;border:none;color:var(--t4);font-size:20px;cursor:pointer;padding:6px}
+
+/* ── HERO ── */
+.hero{position:relative;z-index:1;min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 28px 56px}
+.hero-why{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2.2vw,22px);color:var(--t3);line-height:1.65;max-width:680px;margin:0 auto 32px;letter-spacing:.01em}
+.hero-why em{color:rgba(245,184,0,.75);font-style:normal}
+.hero-h1{font-family:'Anton',sans-serif;font-size:clamp(40px,8vw,92px);line-height:.96;letter-spacing:-.026em;max-width:1000px}
+.hero-h1 .w1,.hero-h1 .w2{display:block;color:var(--t)}
+.hero-h1 .w3{display:block;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:1.06em;letter-spacing:-.02em}
+.hero-how{display:flex;align-items:center;justify-content:center;gap:0;margin:20px auto 0;flex-wrap:wrap}
+.hhi{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);padding:0 16px}
+.hhi.g{color:rgba(245,184,0,.65)}
+.hhs{width:1px;height:18px;background:rgba(255,255,255,.1);flex-shrink:0}
+.hero-sub{font-size:clamp(14px,1.8vw,17px);color:var(--t3);line-height:1.75;max-width:540px;margin:22px auto 0;font-weight:300}
+.hero-sub strong{color:var(--t2);font-weight:500}
+.audiences{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.aud{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:5px 12px;border-radius:9999px;border:1px solid rgba(245,184,0,.2);color:rgba(245,184,0,.55);background:rgba(245,184,0,.05)}
+.scroll-cue{margin-top:44px;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bob 2s infinite ease-in-out;cursor:pointer}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.scroll-cue span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4)}
+.scroll-cue::after{content:"";width:1px;height:36px;background:linear-gradient(to bottom,var(--t4),transparent)}
+
+/* ── CINEMATIC STORY ── */
+.story-wrap{position:relative;z-index:1;max-width:920px;margin:0 auto 64px;padding:0 28px}
+.story-ey{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--t4);text-align:center;margin-bottom:16px}
+.cinema{border-radius:22px;overflow:hidden;background:#040308;border:1px solid rgba(255,255,255,.07);box-shadow:0 48px 120px rgba(0,0,0,.85),0 0 0 1px rgba(245,184,0,.05)}
+.cinema-stage{padding-top:56.25%;position:relative}
+.cinema-inner{position:absolute;inset:0;overflow:hidden}
+
+/* ── SCENES ── */
+.cin{position:absolute;inset:0;opacity:0;transition:opacity 1.1s ease}
+.cin.active{opacity:1}
+
+/* Opening / Closing — pure text on dark */
+.cin-text{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;height:100%;background:radial-gradient(ellipse 70% 60% at 50% 40%,rgba(18,10,35,.95),#040308 80%)}
+.ct-ey{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:rgba(245,184,0,.4);margin-bottom:20px}
+.ct-main{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,4vw,42px);color:var(--t);line-height:1.28;text-align:center;max-width:580px}
+.ct-main em{color:var(--gold);font-style:normal}
+.ct-sub{font-family:'Anton',sans-serif;font-size:clamp(20px,4vw,40px);letter-spacing:-.014em;color:var(--t);margin-top:8px;text-align:center}
+.ct-final{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);margin-top:16px;text-align:center}
+
+/* Player scenes — FULL BLEED IMAGE with overlay */
+.cin-player{position:absolute;inset:0;overflow:hidden}
+.cp-image{position:absolute;inset:0;background-size:cover;background-position:center top;filter:brightness(.55) saturate(.9) contrast(1.05);transition:transform 5s ease}
+.cin.active .cp-image{transform:scale(1.04)}
+/* Cinematic gradient overlay */
+.cp-overlay{position:absolute;inset:0;background:
+  linear-gradient(to right,rgba(4,3,8,.1) 0%,rgba(4,3,8,.05) 40%,rgba(4,3,8,.7) 65%,rgba(4,3,8,.92) 100%),
+  linear-gradient(to top,rgba(4,3,8,.85) 0%,rgba(4,3,8,.3) 40%,rgba(4,3,8,.1) 100%)}
+/* Fallback when no image */
+.cp-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.cp-initial{font-family:'Anton',sans-serif;font-size:clamp(60px,15vw,140px);color:rgba(245,184,0,.06);letter-spacing:-.02em;user-select:none}
+
+/* Player content — positioned over image */
+.cp-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(20px,3vw,40px);z-index:2}
+.cp-top{position:absolute;top:clamp(16px,2.5vw,28px);left:clamp(20px,3vw,40px);right:clamp(20px,3vw,40px);display:flex;justify-content:space-between;align-items:flex-start}
+.cp-category{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:9999px;backdrop-filter:blur(8px)}
+.cp-category.star{background:rgba(245,184,0,.15);color:var(--gold);border:1px solid rgba(245,184,0,.3)}
+.cp-category.underdog{background:rgba(107,170,90,.15);color:var(--moss);border:1px solid rgba(107,170,90,.3)}
+.cp-category.warning{background:rgba(255,92,58,.12);color:var(--red);border:1px solid rgba(255,92,58,.25)}
+.cp-category.live{background:rgba(245,184,0,.2);color:var(--gold);border:1px solid var(--gold);animation:pulse 1.8s infinite}
+.cp-score-badge{text-align:right;background:rgba(4,3,8,.6);backdrop-filter:blur(12px);border:1px solid rgba(245,184,0,.2);border-radius:12px;padding:10px 14px}
+.cpb-score{font-family:'Anton',sans-serif;font-size:clamp(28px,5vw,48px);color:var(--gold);line-height:1}
+.cpb-tier{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(245,184,0,.7);margin-top:2px}
+.cp-bottom{padding-top:16px}
+.cp-name{font-family:'Anton',sans-serif;font-size:clamp(26px,5vw,58px);letter-spacing:-.018em;line-height:1;color:var(--t);text-shadow:0 2px 20px rgba(0,0,0,.8);margin-bottom:6px}
+.cp-context{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(245,241,232,.5);letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px}
+.cp-story{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(14px,2.2vw,20px);color:rgba(245,241,232,.82);line-height:1.52;max-width:520px;text-shadow:0 1px 10px rgba(0,0,0,.7)}
+.cp-market{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(245,241,232,.35);margin-top:8px;letter-spacing:.4px}
+
+/* Cinema controls */
+.cinema-ctrl{background:rgba(0,0,0,.55);backdrop-filter:blur(10px);padding:11px 18px;display:flex;align-items:center;gap:10px;border-top:1px solid rgba(255,255,255,.05)}
+.cc-dots{display:flex;gap:4px;flex:1;justify-content:center}
+.cc-dot{height:3px;border-radius:9999px;background:rgba(255,255,255,.14);cursor:pointer;transition:all .3s;flex:1;max-width:28px}
+.cc-dot.active{background:var(--gold);max-width:40px}
+.cc-timer{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t4);white-space:nowrap;letter-spacing:.5px}
+.cc-btn{background:none;border:1px solid rgba(255,255,255,.1);color:var(--t4);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;transition:all .15s;white-space:nowrap}
+.cc-btn:hover{color:var(--t);border-color:rgba(255,255,255,.22)}
+
+/* ── INSPIRATION STRIP ── */
+.inspo{position:relative;z-index:1;max-width:1100px;margin:0 auto 64px;padding:0 28px}
+.inspo-inner{background:linear-gradient(135deg,rgba(245,184,0,.07) 0%,rgba(7,6,10,.96) 60%,rgba(107,170,90,.05) 100%);border:1px solid rgba(245,184,0,.14);border-radius:20px;padding:36px 40px;text-align:center;position:relative;overflow:hidden}
+.inspo-inner::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.inspo-l1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,2.8vw,30px);color:var(--t);line-height:1.45;margin-bottom:10px}
+.inspo-l1 em{color:var(--gold);font-style:normal}
+.inspo-l2{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4)}
+
+/* ── FOUR DOORS ── */
+.doors{position:relative;z-index:1;max-width:1100px;margin:0 auto 60px;padding:0 28px}
+.sey{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--t4);text-align:center;margin-bottom:20px}
+.doors-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.door{background:rgba(14,13,20,.92);border:1px solid var(--ge2);border-radius:18px;padding:26px 22px;text-decoration:none;display:block;transition:all .22s;position:relative;overflow:hidden;backdrop-filter:blur(8px)}
+.door::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .22s;border-radius:18px}
+.door:hover{transform:translateY(-4px)}
+.door.pl::before{background:linear-gradient(135deg,rgba(245,184,0,.09),transparent)}
+.door.fr::before{background:linear-gradient(135deg,rgba(107,170,90,.09),transparent)}
+.door.dr::before{background:linear-gradient(135deg,rgba(245,184,0,.13),transparent)}
+.door.di::before{background:linear-gradient(135deg,rgba(78,201,192,.09),transparent)}
+.door:hover::before{opacity:1}
+.door.pl:hover{border-color:rgba(245,184,0,.4);box-shadow:0 20px 60px rgba(245,184,0,.07)}
+.door.fr:hover{border-color:rgba(107,170,90,.4);box-shadow:0 20px 60px rgba(107,170,90,.06)}
+.door.dr:hover{border-color:rgba(245,184,0,.5);box-shadow:0 20px 60px rgba(245,184,0,.1)}
+.door.di:hover{border-color:rgba(78,201,192,.4);box-shadow:0 20px 60px rgba(78,201,192,.06)}
+.door-icon{font-size:26px;margin-bottom:12px;display:block;position:relative;z-index:1}
+.door-name{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:-.007em;margin-bottom:6px;position:relative;z-index:1}
+.door.pl .door-name{color:var(--gold)}.door.fr .door-name{color:var(--moss)}.door.dr .door-name{color:var(--gold)}.door.di .door-name{color:var(--teal)}
+.door-levels{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--t4);margin-bottom:10px;position:relative;z-index:1;line-height:1.8}
+.door-desc{font-size:12.5px;color:var(--t3);line-height:1.62;margin-bottom:16px;position:relative;z-index:1}
+.door-cta{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:8px 15px;border-radius:9999px;display:inline-block;position:relative;z-index:1;transition:all .2s}
+.door.pl .door-cta{background:rgba(245,184,0,.12);color:var(--gold);border:1px solid rgba(245,184,0,.25)}
+.door.fr .door-cta{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.door.dr .door-cta{background:rgba(245,184,0,.15);color:var(--gold);border:1px solid rgba(245,184,0,.3)}
+.door.di .door-cta{background:rgba(78,201,192,.1);color:var(--teal);border:1px solid rgba(78,201,192,.25)}
+
+/* ── SEARCH ── */
+.search-sec{position:relative;z-index:1;max-width:680px;margin:0 auto 60px;padding:0 28px}
+.search-box{display:flex;background:rgba(14,13,20,.97);border:1.5px solid var(--ge);border-radius:14px;overflow:hidden;transition:all .2s;box-shadow:0 8px 40px rgba(0,0,0,.4);backdrop-filter:blur(12px)}
+.search-box:focus-within{border-color:rgba(245,184,0,.5);box-shadow:0 0 0 4px rgba(245,184,0,.07),0 8px 40px rgba(0,0,0,.5)}
+.search-input{flex:1;padding:18px 16px;background:transparent;border:none;font-family:'Anton',sans-serif;font-size:22px;color:var(--t);outline:none;letter-spacing:-.006em;min-width:0}
+.search-input::placeholder{color:var(--t4);font-size:18px}
+.search-mic{padding:0 14px;background:transparent;border:none;cursor:pointer;color:var(--t4);font-size:17px;transition:color .2s;flex-shrink:0}
+.search-mic:hover{color:var(--moss)}
+.search-mic.listening{color:var(--moss);animation:pulse 1s infinite}
+.search-btn{padding:14px 26px;background:var(--gold);color:#07060A;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;flex-shrink:0;transition:opacity .15s}
+.search-btn:hover{opacity:.88}
+.ac{position:absolute;top:calc(100%+6px);left:0;right:0;background:rgba(12,11,18,.99);border:1px solid rgba(245,184,0,.2);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.85);z-index:100;display:none;backdrop-filter:blur(16px)}
+.ac.open{display:block}
+.ac-lbl{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);padding:10px 16px 6px;background:rgba(0,0,0,.35)}
+.ac-item{display:flex;align-items:center;gap:12px;padding:11px 16px;cursor:pointer;transition:background .12s;border-bottom:1px solid rgba(255,255,255,.03)}
+.ac-item:last-child{border-bottom:none}
+.ac-item:hover,.ac-item.sel{background:rgba(245,184,0,.06)}
+.ac-icon{font-size:15px;width:22px;text-align:center;flex-shrink:0}
+.ac-name{font-family:'Anton',sans-serif;font-size:16px;letter-spacing:-.004em;flex:1}
+.ac-detail{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4)}
+.ac-score{font-family:'Anton',sans-serif;font-size:15px;color:var(--gold);margin-left:8px}
+.search-hint{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);text-align:center;margin-top:10px;letter-spacing:.5px}
+.search-hint span{color:rgba(245,184,0,.5);cursor:pointer;transition:color .15s}
+.search-hint span:hover{color:var(--gold)}
+
+/* ── VERDICT OUTPUT ── */
+.vzone{position:relative;z-index:1;max-width:760px;margin:-16px auto 48px;padding:0 28px;display:none}
+.vzone.show{display:block}
+.vz-load{text-align:center;padding:28px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t4);display:flex;align-items:center;justify-content:center;gap:14px}
+.vz-spin{width:28px;height:28px;border:2.5px solid rgba(245,184,0,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.vz-card{background:rgba(14,13,20,.97);border:1px solid var(--goldl);border-radius:18px;overflow:hidden;backdrop-filter:blur(10px)}
+.vc-head{padding:22px 26px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
+.vc-name{font-family:'Anton',sans-serif;font-size:clamp(20px,3.5vw,34px);letter-spacing:-.012em;margin-bottom:4px}
+.vc-sport{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+.vc-summary{font-size:14px;color:var(--t2);line-height:1.65;max-width:460px}
+.vc-sc{text-align:right;flex-shrink:0}
+.vc-num{font-family:'Anton',sans-serif;font-size:64px;color:var(--gold);line-height:1}
+.vc-tier{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:4px 12px;border-radius:9999px;display:inline-block;margin-top:4px}
+.vc-body{padding:0 26px 22px;display:grid;grid-template-columns:150px 1fr;gap:20px;border-top:1px solid var(--ge2)}
+.vc-poly{padding-top:16px}
+.vc-layers{padding-top:16px}
+.lr{display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer}
+.lr-n{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--t4);width:76px;flex-shrink:0;text-align:right}
+.lr-bar{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:9999px;overflow:hidden}
+.lr-fill{height:100%;border-radius:9999px;transition:width .8s cubic-bezier(.34,1.56,.64,1)}
+.lr-val{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;width:28px}
+.lr-ev{display:none;font-size:11.5px;color:var(--t3);padding:7px 10px;background:rgba(0,0,0,.3);border-radius:7px;margin-top:4px;margin-bottom:4px;line-height:1.55;border-left:2px solid rgba(245,184,0,.2)}
+.lr.open .lr-ev{display:block}
+.vc-actions{padding:12px 26px;border-top:1px solid var(--ge2);display:flex;gap:7px;flex-wrap:wrap}
+.va{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:7px 14px;border-radius:9999px;border:1px solid var(--ge);color:var(--t4);background:transparent;cursor:pointer;text-decoration:none;transition:all .15s}
+.va:hover{border-color:var(--goldl);color:var(--gold)}
+.va.p{background:var(--gold);color:#07060A;border-color:var(--gold)}.va.p:hover{opacity:.88}
+
+/* ── TICKER ── */
+.ticker{position:relative;z-index:1;background:rgba(7,6,10,.9);border-top:1px solid rgba(245,184,0,.12);border-bottom:1px solid rgba(245,184,0,.12);height:34px;display:flex;align-items:center;overflow:hidden;margin-bottom:56px}
+.ticker-lbl{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);padding:0 16px;white-space:nowrap;border-right:1px solid rgba(245,184,0,.2);height:100%;display:flex;align-items:center;flex-shrink:0;background:rgba(245,184,0,.05);gap:8px}
+.ticker-track{flex:1;overflow:hidden;height:100%}
+.ticker-inner{display:flex;align-items:center;height:100%;white-space:nowrap;animation:tickscroll 90s linear infinite}
+.ticker-inner:hover{animation-play-state:paused}
+@keyframes tickscroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ti{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(245,241,232,.55);padding:0 24px;white-space:nowrap;border-right:1px solid rgba(255,255,255,.04)}
+.ti b{color:#F5F1E8}.ti .g{color:var(--gold)}.ti .m{color:var(--moss)}.ti .c{color:var(--teal)}
+
+/* ── GEM STRIP ── */
+.gem-strip{position:relative;z-index:1;max-width:1100px;margin:0 auto 56px;padding:0 28px}
+.gem-inner{background:linear-gradient(135deg,rgba(107,170,90,.09),rgba(7,6,10,.97));border:1px solid rgba(107,170,90,.28);border-radius:18px;padding:24px 32px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.gem-score{font-family:'Anton',sans-serif;font-size:58px;color:var(--moss);line-height:1}
+.gem-ey{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(107,170,90,.6);margin-bottom:4px}
+.gem-meta{flex:1;min-width:220px}
+.gem-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--moss);margin-bottom:8px}
+.gem-name{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.009em;margin-bottom:3px}
+.gem-detail{font-size:12px;color:var(--t3);margin-bottom:8px}
+.gem-read{font-size:14px;color:var(--t2);line-height:1.65;margin-bottom:12px;max-width:500px}
+.gcta{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;padding:9px 18px;border-radius:9999px;background:var(--moss);color:#07060A;text-decoration:none;display:inline-block;transition:opacity .15s}
+.gcta:hover{opacity:.88}
+.gcta.gold{background:var(--gold);margin-left:8px}
+
+/* ── STATS ── */
+.stats{position:relative;z-index:1;max-width:1100px;margin:0 auto 56px;padding:0 28px}
+.sb{display:flex;border:1px solid var(--ge2);border-radius:14px;overflow:hidden;background:rgba(14,13,20,.6);backdrop-filter:blur(4px)}
+.sbi{flex:1;padding:18px;text-align:center;border-right:1px solid var(--ge2)}
+.sbi:last-child{border-right:none}
+.sbi-n{font-family:'Anton',sans-serif;font-size:30px;color:var(--gold);line-height:1;margin-bottom:4px}
+.sbi-l{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--t4)}
+
+/* ── FEATURES ── */
+.feats{position:relative;z-index:1;max-width:1100px;margin:0 auto 56px;padding:0 28px}
+.feats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.fc{background:rgba(14,13,20,.88);border:1px solid var(--ge2);border-radius:12px;padding:18px;text-decoration:none;display:block;transition:all .2s;backdrop-filter:blur(4px)}
+.fc:hover{border-color:rgba(255,255,255,.1);transform:translateY(-2px)}
+.fc-icon{font-size:20px;margin-bottom:9px}
+.fc-name{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:-.004em;margin-bottom:4px;color:var(--t)}
+.fc-desc{font-size:12px;color:var(--t3);line-height:1.55}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:1;margin-top:52px;padding:32px 0;border-top:1px solid var(--ge);background:rgba(7,6,10,.98)}
+.ft{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:28px;margin-bottom:20px}
+.ft-bn{font-family:'Anton',sans-serif;font-size:22px}.ft-bn b{color:var(--gold)}
+.ft-biq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(245,184,0,.5);margin-bottom:6px}
+.ft-tag{font-size:12px;color:var(--t4);line-height:1.65;max-width:200px;margin-top:6px}
+.ft-title{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t4);margin-bottom:10px}
+.ft-link{display:block;font-size:13px;color:var(--t3);text-decoration:none;margin-bottom:7px;transition:color .15s}
+.ft-link:hover{color:var(--t)}
+.ft-bottom{max-width:1100px;margin:0 auto;padding:14px 28px 0;border-top:1px solid var(--ge2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--t4)}
+
+/* MOBILE */
+.mob-menu{display:none;position:fixed;inset:95px 0 0;background:rgba(7,6,10,.99);z-index:88;overflow-y:auto;padding:20px 24px}
+.mob-menu.open{display:block}
+.mm-s{margin-bottom:20px}
+.mm-l{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);margin-bottom:10px}
+.mm-a{display:block;padding:11px 0;font-size:17px;color:var(--t2);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.04)}
+.mm-a:hover{color:var(--t)}
+
+@media(max-width:860px){
+  .ni:not(:nth-child(-n+2)){display:none}.hbg{display:block}.nsrch{display:none}
+  .doors-grid{grid-template-columns:1fr 1fr}.feats-grid{grid-template-columns:1fr 1fr}
+  .sb{display:grid;grid-template-columns:1fr 1fr 1fr}.sbi{border-right:none;border-bottom:1px solid var(--ge2)}.sbi:last-child{border-bottom:none}
+  .ft{grid-template-columns:1fr 1fr;gap:20px}
+  .vc-body{grid-template-columns:1fr}.vc-poly{display:none}.vc-num{font-size:52px}
+  .gem-inner{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:500px){
+  .doors-grid,.feats-grid{grid-template-columns:1fr}
+  .hero{min-height:75vh;padding:60px 24px 44px}
+  .ft{grid-template-columns:1fr}
+  .cp-story{font-size:13px}
+  .cp-name{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- ROLLING HERO BACKGROUND IMAGES -->
+<div class="hero-bg">
+  <div class="hb-img show" id="hbImg0" style="background-image:url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')"></div>
+  <div class="hb-img" id="hbImg1" style="background-image:url('https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')"></div>
+  <div class="hb-img" id="hbImg2" style="background-image:url('https://images.unsplash.com/photo-1547941126-3d5322b218b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')"></div>
+  <div class="hb-img" id="hbImg3" style="background-image:url('https://images.unsplash.com/photo-1529900748604-07564a03e7a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')"></div>
+  <div class="hb-texture"></div>
+  <div class="hb-court"></div>
+  <div class="hb-yard"></div>
+  <div class="hb-overlay"></div>
+</div>
+
+<!-- DRAFT BAR -->
+<div class="dbar">
+  <div class="dd"></div>
+  <span class="dt">FC NBA DRAFT CALL IS LIVE</span>
+  <span class="dc">We have <b>Peterson #2</b> · Consensus <b>#3</b> · June 23 decides</span>
+  <a href="/nba-draft" class="dcta">See the call →</a>
+  <span class="dcd" id="dbarCd"></span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-i">
+    <a href="/" class="brand"><span class="brand-fc">Field<b>Check</b></span><span class="brand-iq">IQ</span></a>
+    <div class="ni">
+      <a href="/" class="nl">Player <span class="ch">▾</span></a>
+      <div class="drop">
+        <a href="/" class="dl"><i>⬡</i>Run a verdict<span class="dn">Any athlete</span></a>
+        <a href="/player" class="dl"><i>◉</i>Player profiles</a>
+        <a href="/gems" class="dl"><i>💎</i>Hidden gems</a>
+        <a href="/trajectory" class="dl"><i>📈</i>Trajectory</a>
+        <div class="ds"></div>
+        <a href="/voice" class="dl"><i>🎙</i>Submit film</a>
+        <a href="/versus" class="dl"><i>↔</i>Head-to-head</a>
+      </div>
+    </div>
+    <div class="ni">
+      <a href="/coaches" class="nl">Programs & Franchises <span class="ch">▾</span></a>
+      <div class="drop">
+        <a href="/coaches" class="dl"><i>👤</i>Coaches<span class="dn">26 scored</span></a>
+        <a href="/accountability" class="dl"><i>📊</i>Accountability</a>
+        <a href="/fit" class="dl"><i>↔</i>Program fit</a>
+        <a href="/class" class="dl"><i>📋</i>Class tracker</a>
+        <div class="ds"></div>
+        <a href="/portal" class="dl"><i>↗</i>Transfer portal</a>
+        <a href="/conference" class="dl"><i>🏛</i>Conference intel</a>
+      </div>
+    </div>
+    <div class="ni">
+      <a href="/nba-draft" class="nl draft-nav">Draft & Free Agency ⚡ <span class="ch">▾</span></a>
+      <div class="drop">
+        <a href="/nba-draft" class="dl" style="color:var(--gold)"><i>⚡</i>2026 NBA Draft<span class="dn">June 23</span></a>
+        <a href="/diverge" class="dl"><i>📖</i>FC vs The World<span class="dn">96% acc.</span></a>
+        <a href="/calibration" class="dl"><i>✓</i>Track record</a>
+      </div>
+    </div>
+    <div class="ni">
+      <a href="/gems" class="nl">Discover <span class="ch">▾</span></a>
+      <div class="drop">
+        <a href="/gems" class="dl"><i>💎</i>Hidden gems</a>
+        <a href="/video-iq" class="dl"><i>▶</i>Video IQ</a>
+        <a href="/scout" class="dl"><i>≡</i>Scout view</a>
+        <a href="/international" class="dl"><i>🌍</i>Global pipeline</a>
+      </div>
+    </div>
+    <div class="nr">
+      <button class="nsrch" onclick="document.getElementById('search').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>document.getElementById('srch').focus(),400)">Search <kbd style="opacity:.5;font-size:9px">/</kbd></button>
+      <button class="hbg" onclick="toggleMenu()" id="hbgBtn">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <div class="mm-s"><div class="mm-l">Player</div>
+    <a href="/" class="mm-a">Run a verdict</a><a href="/gems" class="mm-a">Hidden gems 💎</a>
+    <a href="/voice" class="mm-a">Submit film 🎙</a><a href="/versus" class="mm-a">Head-to-head</a>
+  </div>
+  <div class="mm-s"><div class="mm-l">Programs & Franchises</div>
+    <a href="/coaches" class="mm-a">Coaches</a><a href="/accountability" class="mm-a">Accountability</a>
+    <a href="/fit" class="mm-a">Program fit</a><a href="/portal" class="mm-a">Transfer portal</a>
+  </div>
+  <div class="mm-s"><div class="mm-l">Draft ⚡</div>
+    <a href="/nba-draft" class="mm-a" style="color:var(--gold)">2026 NBA Draft call</a>
+    <a href="/diverge" class="mm-a">FC vs The World</a>
+  </div>
+  <div class="mm-s"><div class="mm-l">More</div>
+    <a href="/scout" class="mm-a">Scout view</a><a href="/international" class="mm-a">Global pipeline</a>
+    <a href="/features" class="mm-a">All features</a><a href="/about" class="mm-a">About</a>
+    <a href="/field-report" class="mm-a">The Field Report</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-why">
+    Because <em>every scout has a bias.</em> Every ranking has a price.<br>
+    And every overlooked kid in every small town deserves better.
+  </div>
+  <h1 class="hero-h1">
+    <span class="w1">The athletic intelligence</span>
+    <span class="w2">layer the entire sport</span>
+    <span class="w3">never had.</span>
+  </h1>
+  <div class="hero-how">
+    <div class="hhi g">Five layers</div><div class="hhs"></div>
+    <div class="hhi">Public record</div><div class="hhs"></div>
+    <div class="hhi">No payola</div><div class="hhs"></div>
+    <div class="hhi">Free forever</div>
+  </div>
+  <p class="hero-sub"><strong>Amateur. College. Pro. Club. Franchise.</strong> The honest read every athlete deserves — and the industry never gave them.</p>
+  <div class="audiences">
+    <div class="aud">Athlete</div><div class="aud">Family</div><div class="aud">Coach</div>
+    <div class="aud">Club</div><div class="aud">Franchise</div><div class="aud">Scout</div>
+  </div>
+  <div class="scroll-cue" onclick="document.querySelector('.story-wrap').scrollIntoView({behavior:'smooth'})">
+    <span>Their stories</span>
+  </div>
+</section>
+
+<!-- CINEMATIC STORY -->
+<div class="story-wrap">
+  <div class="story-ey">// Ten athletes. Their stories. One honest read. Amateur to Pro.</div>
+  <div class="cinema">
+    <div class="cinema-stage">
+      <div class="cinema-inner" id="cinInner">
+
+        <!-- Scene 0: Opening -->
+        <div class="cin active" id="cin0">
+          <div class="cin-text">
+            <div class="ct-ey">FieldCheck IQ · The Honest Read</div>
+            <div class="ct-main">In every era,<br><em>greatness</em> was hiding<br>in plain sight.</div>
+          </div>
+        </div>
+
+        <!-- Scene 1: Nikola Jokić -->
+        <div class="cin" id="cin1">
+          <div class="cin-player">
+            <div class="cp-image" id="img1" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Nikola_Jokic_%2852723183751%29.jpg/800px-Nikola_Jokic_%2852723183751%29.jpg');background-position:center top"></div>
+            <div class="cp-overlay"></div>
+            <div class="cp-top">
+              <div class="cp-category underdog">The Ultimate Underdog</div>
+              <div class="cp-score-badge"><div class="cpb-score">8.8</div><div class="cpb-tier">ELITE+</div></div>
+            </div>
+            <div class="cp-content">
+              <div class="cp-bottom">
+                <div class="cp-name">Nikola Jokić</div>
+                <div class="cp-context">C · Denver Nuggets · 41st pick · 2014 NBA Draft</div>
+                <div class="cp-story">"Picked 41st. Left home at 16. FC scored 8.8. The market scored 5.2. Three MVPs later — the largest validated divergence in basketball history."</div>
+                <div class="cp-market">Market: 5.2 composite · Picked 40 spots too late · The model knew.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 2: Caitlin Clark -->
+        <div class="cin" id="cin2">
+          <div class="cin-player">
+            <div class="cp-image" id="img2" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Caitlin_Clark_2024_%28cropped%29.jpg/800px-Caitlin_Clark_2024_%28cropped%29.jpg');background-position:center top"></div>
+            <div class="cp-overlay"></div>
+            <div class="cp-top">
+              <div class="cp-category star">The Undeniable</div>
+              <div class="cp-score-badge"><div class="cpb-score">9.3</div><div class="cpb-tier">ICON</div></div>
+            </div>
+            <div class="cp-content">
+              <div class="cp-bottom">
+                <div class="cp-name">Caitlin Clark</div>
+                <div class="cp-context">PG · Indiana Fever · Iowa · All-time NCAA scoring leader</div>
+                <div class="cp-story">"Nobody questioned her. But nobody could prove it, either. Production 9.6. Mindset 9.5. The honest read confirmed what the world already felt."</div>
+                <div class="cp-market">Consensus #1 overall · FC validated unanimously · The data matched the feeling.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 3: Steph Curry -->
+        <div class="cin" id="cin3">
+          <div class="cin-player">
+            <div class="cp-image" id="img3" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Stephen_Curry_2019-04-20_%28cropped%29.jpg/800px-Stephen_Curry_2019-04-20_%28cropped%29.jpg');background-position:center top"></div>
+            <div class="cp-overlay"></div>
+            <div class="cp-top">
+              <div class="cp-category underdog">The Undersized Dream</div>
+              <div class="cp-score-badge"><div class="cpb-score">9.1</div><div class="cpb-tier">ICON</div></div>
+            </div>
+            <div class="cp-content">
+              <div class="cp-bottom">
+                <div class="cp-name">Steph Curry</div>
+                <div class="cp-context">PG · Golden State Warriors · Davidson · Pick #7 · 2009</div>
+                <div class="cp-story">"Too small. Too slight. Went 7th. FieldCheck IQ composite: 9.1. Four championships. Two MVP seasons. The model measured what the combine couldn't."</div>
+                <div class="cp-market">Market: #7 pick · FC: ICON tier from day one · 4× champion.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 4: Harper Murray -->
+        <div class="cin" id="cin4">
+          <div class="cin-player">
+            <div class="cp-image" id="img4" style="background:linear-gradient(135deg,#0a1020,#060810);background-image:none"></div>
+            <div class="cp-fallback"><div class="cp-initial">HM</div></div>
+            <div class="cp-overlay"></div>
+            <div class="cp-top">
+              <div class="cp-category underdog">The Invisible Gem</div>
+              <div class="cp-score-badge"><div class="cpb-score">8.9</div><div class="cpb-tier">ELITE+</div></div>
+            </div>
+            <div class="cp-content">
+              <div class="cp-bottom">
+                <div class="cp-name">Harper Murray</div>
+                <div class="cp-context">OH · Nebraska Cornhuskers · Volleyball · Walk-on · Unranked</div>
+                <div class="cp-story">"She walked on. No scholarship. No national ranking. Mindset 9.2 — the highest signal of competitive will the model saw all season. She went on to start for Nebraska."</div>
+                <div class="cp-market">Walk-on · No ranking · Mindset 9.2 · FieldCheck saw it first.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 5: Victor Wembanyama -->
+        <div class="cin" id="cin5">
+          <div class="cin-player">
+            <div class="cp-image" id="img5" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Victor_Wembanyama_%2853608327062%29_%28cropped%29.jpg/800px-Victor_Wembanyama_%2853608327062%29_%28cropped%29.jpg');background-position:center top"></div>
+            <div class="cp-overlay"></div>
+            <div class="cp-top">
+              <div class="cp-category star">Once in a Generation</div>
+              <div class="cp-score-badge"><div class="cpb-score">9.5</div><div class="cpb-tier">ICON+</div></div>
+            </div>
+            <div class="cp-content">
+              <div class="cp-bottom">
+                <div class="cp-name">Victor Wembanyama</div>
+                <div class="cp-context">C · San Antonio Spurs · France · #1 Overall · 2023</div>
+                <div class="cp-story">"Physical 9.8. Wingspan never documented at this position. FC composite 9.5 before the draft. No debate required. Some verdicts are unanimous — and provable."</div>
+                <div class="cp-market">Consensus #1 · FC ICON+ · Highest Physical score in the model corpus.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 6: Isaiah Thomas -->
+        <div class="cin" id="cin6">
+          <div class="cin-player">
+            <div class="cp-image" id="img6" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Isaiah_Thomas_2016_%28cropped%29.jpg/800px-Isaiah_Thomas_2016_%28cropped%29.jpg');background-position:center top"></div>
+            <div class="cp-overlay"></div>
+            <div class="cp-top">
+              <div class="cp-category underdog">The Last Pick</div>
+              <div class="cp-score-badge"><div class="cpb-score">8.1</div><div class="cpb-tier">ELITE</div></div>
+            </div>
+            <div class="cp-content">
+              <div class="cp-bottom">
+                <div class="cp-name">Isaiah Thomas</div>
+                <div class="cp-context">PG · The last pick in the entire 2011 draft · 5'9" · Pick #60</div>
+                <div class="cp-story">"The very last pick. Undrafted by every team until the 60th slot. FC scored 8.1. The market scored 4.2. Two All-Star seasons. 29 points per game. The model never measured height."</div>
+                <div class="cp-market">Pick #60 of 60 · FC 8.1 · Market 4.2 · 2× All-Star · We never count anyone out.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 7: Paige Bueckers -->
+        <div class="cin" id="cin7">
+          <div class="cin-player">
+            <div class="cp-image" id="img7" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Paige_Bueckers_%2852537390718%29_%28cropped%29.jpg/800px-Paige_Bueckers_%2852537390718%29_%28cropped%29.jpg');background-position:center top"></div>
+            <div class="cp-overlay"></div>
+            <div class="cp-top">
+              <div class="cp-category star">The Comeback</div>
+              <div class="cp-score-badge"><div class="cpb-score">9.1</div><div class="cpb-tier">ICON</div></div>
+            </div>
+            <div class="cp-content">
+              <div class="cp-bottom">
+                <div class="cp-name">Paige Bueckers</div>
+                <div class="cp-context">PG · UConn Huskies · WBCA Player of the Year · ACL survivor</div>
+                <div class="cp-story">"She tore her ACL. Sat out. Came back sharper, stronger, more certain. That's not luck — that's Mindset 9.4. Injury response is a data point. It always was."</div>
+                <div class="cp-market">ACL recovery signal = Mindset premium · The model sees what physicals miss.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 8: Paul Skenes -->
+        <div class="cin" id="cin8">
+          <div class="cin-player">
+            <div class="cp-image" id="img8" style="background:linear-gradient(135deg,#060a10,#0e1420)"></div>
+            <div class="cp-fallback"><div class="cp-initial">PS</div></div>
+            <div class="cp-overlay"></div>
+            <div class="cp-top">
+              <div class="cp-category star">The Disciplined</div>
+              <div class="cp-score-badge"><div class="cpb-score">9.2</div><div class="cpb-tier">ICON</div></div>
+            </div>
+            <div class="cp-content">
+              <div class="cp-bottom">
+                <div class="cp-name">Paul Skenes</div>
+                <div class="cp-context">SP · Pittsburgh Pirates · Air Force Academy · MLB #1 Pick 2023</div>
+                <div class="cp-story">"Military academy. 100 mph fastball. The model assigned a Mindset premium before anyone used that language. Discipline is a physical advantage. The public record always knew."</div>
+                <div class="cp-market">Mindset 9.4 · Air Force → MLB #1 · The training and the talent aligned perfectly.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 9: JaMarcus Russell — The Warning -->
+        <div class="cin" id="cin9">
+          <div class="cin-player">
+            <div class="cp-image" id="img9" style="background:linear-gradient(135deg,#100606,#1a0808)"></div>
+            <div class="cp-fallback"><div class="cp-initial" style="color:rgba(255,92,58,.08)">JR</div></div>
+            <div class="cp-overlay" style="background:linear-gradient(to right,rgba(4,3,8,.1),rgba(4,3,8,.05) 40%,rgba(20,8,8,.75) 65%,rgba(20,8,8,.94) 100%),linear-gradient(to top,rgba(20,8,8,.85) 0%,rgba(20,8,8,.3) 40%,rgba(20,8,8,.1) 100%)"></div>
+            <div class="cp-top">
+              <div class="cp-category warning">The Warning Nobody Read</div>
+              <div class="cp-score-badge" style="border-color:rgba(255,92,58,.25)"><div class="cpb-score" style="color:var(--red)">7.1</div><div class="cpb-tier" style="color:var(--red)">FLAG</div></div>
+            </div>
+            <div class="cp-content">
+              <div class="cp-bottom">
+                <div class="cp-name">JaMarcus Russell</div>
+                <div class="cp-context">QB · Oakland Raiders · #1 Overall Pick · 2007 NFL Draft · $61M guaranteed</div>
+                <div class="cp-story">"The #1 pick. FC Mindset composite: 5.5 — visible in the public record before draft night. The signal was there. The industry wasn't reading it. We don't miss it."</div>
+                <div class="cp-market">Mindset 5.5 · Market: #1 overall · The data was always there to read.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 10: Darryn Peterson — The Live Call -->
+        <div class="cin" id="cin10">
+          <div class="cin-player">
+            <div class="cp-image" id="img10" style="background:linear-gradient(135deg,#08060e,#100e1a)"></div>
+            <div class="cp-fallback"><div class="cp-initial">DP</div></div>
+            <div class="cp-overlay"></div>
+            <div class="cp-top">
+              <div class="cp-category live">⚡ The Live Call · June 23</div>
+              <div class="cp-score-badge"><div class="cpb-score">9.1</div><div class="cpb-tier" style="animation:pulse 1.8s infinite">ICON+</div></div>
+            </div>
+            <div class="cp-content">
+              <div class="cp-bottom">
+                <div class="cp-name">Darryn Peterson</div>
+                <div class="cp-context">PG · Kansas · 2026 NBA Draft · FC: #2 Overall · Consensus: #3</div>
+                <div class="cp-story">"Mindset 9.4. Point-pressure production documented all season. We have him #2. Every major outlet has him #3. June 23 is the test. The model goes on record publicly — 39 days early."</div>
+                <div class="cp-market">FC #2 · Consensus #3 · Results reveal June 24 · The model doesn't flinch.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 11: Closing -->
+        <div class="cin" id="cin11">
+          <div class="cin-text" style="background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(12,8,25,.95),#040308 75%)">
+            <div class="ct-ey">FieldCheck IQ · Amateur · College · Pro</div>
+            <div class="ct-main">Greatness doesn't hide.</div>
+            <div class="ct-sub">It just waits to be read honestly.</div>
+            <div class="ct-final">The athletic intelligence layer the entire sport never had · Free forever · No payola</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Cinema controls -->
+    <div class="cinema-ctrl" id="cinCtrl">
+      <button class="cc-btn" id="ccPlay" onclick="togglePlay()">⏸ Pause</button>
+      <div class="cc-dots" id="ccDots"></div>
+      <div class="cc-timer" id="ccTimer">1 / 12</div>
+    </div>
+  </div>
+</div>
+
+<!-- INSPIRATION STRIP -->
+<div class="inspo">
+  <div class="inspo-inner">
+    <div class="inspo-l1">We don't just score athletes.<br>We find the ones <em>the industry forgot.</em></div>
+    <div class="inspo-l2">The kid from the small town · The walk-on · The 41st pick · The last pick · The overlooked · The underdog · FieldCheck IQ doesn't write anyone off.</div>
+  </div>
+</div>
+
+<!-- FOUR DOORS -->
+<div class="doors">
+  <div class="sey">// Where do you want to start?</div>
+  <div class="doors-grid">
+    <a href="/" class="door pl" onclick="return focusDoor(event,'football')">
+      <span class="door-icon">⬡</span>
+      <div class="door-name">Player</div>
+      <div class="door-levels">High School · College · Pro</div>
+      <div class="door-desc">Any athlete. Any sport. Any level. Five-layer verdict from the public record. The honest read every athlete deserves. Free forever.</div>
+      <div class="door-cta">Run a verdict →</div>
+    </a>
+    <a href="/coaches" class="door fr">
+      <span class="door-icon">🏛</span>
+      <div class="door-name">Programs & Franchises</div>
+      <div class="door-levels">Club · College Program · Pro Franchise</div>
+      <div class="door-desc">26 coaches scored. Franchise intelligence. Trade fit. Championship probability. The intelligence layer front offices never had.</div>
+      <div class="door-cta">Explore →</div>
+    </a>
+    <a href="/nba-draft" class="door dr">
+      <span class="door-icon">⚡</span>
+      <div class="door-name">Draft & Free Agency</div>
+      <div class="door-levels">NBA Draft · NFL Draft · Free Agency</div>
+      <div class="door-desc">Live 2026 NBA Draft call. Peterson #2, consensus #3. The model goes on record 39 days before the picks.</div>
+      <div class="door-cta">See the call →</div>
+    </a>
+    <a href="/gems" class="door di">
+      <span class="door-icon">💎</span>
+      <div class="door-name">Discover</div>
+      <div class="door-levels">Hidden Gems · Video IQ · Global</div>
+      <div class="door-desc">Athletes the model scores above their public ranking. Drop a YouTube link — the model decides if you're undiscovered. No database entry required.</div>
+      <div class="door-cta">Find gems →</div>
+    </a>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-sec" id="search">
+  <div class="sey" style="margin-bottom:14px">// Search any athlete · Amateur or Pro · Any sport</div>
+  <div style="position:relative">
+    <div class="search-box">
+      <input id="srch" class="search-input" type="text" placeholder="Harper Murray"
+        autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Search any athlete">
+      <button class="search-mic" id="micBtn" onclick="startVoice()">🎙</button>
+      <button class="search-btn" onclick="runVerdict()">Analyze →</button>
+    </div>
+    <div class="ac" id="acDrop"></div>
+  </div>
+  <div class="search-hint">Try:
+    <span onclick="pick('Nikola Jokic','mens-basketball')">Nikola Jokić</span> ·
+    <span onclick="pick('Caitlin Clark','womens-basketball')">Caitlin Clark</span> ·
+    <span onclick="pick('Harper Murray','womens-volleyball')">Harper Murray</span> ·
+    <span onclick="pick('Darryn Peterson','mens-basketball')">Darryn Peterson</span> ·
+    <span onclick="pick('Paul Skenes','baseball')">Paul Skenes</span>
+  </div>
+</div>
+
+<!-- VERDICT OUTPUT -->
+<div class="vzone" id="verdictZone">
+  <div class="vz-load" id="vzLoad" style="display:none">
+    <div class="vz-spin"></div><span id="vzText">Reading the public record.</span>
+  </div>
+  <div id="vzCard" class="vz-card" style="display:none"></div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-lbl"><span class="dd"></span>LIVE</div>
+  <div class="ticker-track"><div class="ticker-inner" id="tickerEl"></div></div>
+</div>
+
+<!-- GEM OF WEEK -->
+<div class="gem-strip">
+  <div class="gem-inner">
+    <div style="text-align:center;flex-shrink:0">
+      <div class="gem-ey">💎 FC IQ</div>
+      <div class="gem-score">9.1</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(107,170,90,.5);margin-top:4px">+0.7 gap</div>
+    </div>
+    <div class="gem-meta">
+      <div class="gem-label">💎 Gem of the Week <span style="color:var(--gold)">⚡ Live call</span></div>
+      <div class="gem-name">Darryn Peterson</div>
+      <div class="gem-detail">PG · Kansas · 2026 NBA Draft</div>
+      <div class="gem-read">FC has Peterson at ICON+ (9.1) — consensus has him #3. Mindset 9.4 from documented point-pressure excellence. June 23 is the test.</div>
+      <a href="/nba-draft" class="gcta gold">See the call →</a>
+      <a href="/gems" class="gcta">All gems →</a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats"><div class="sb">
+  <div class="sbi"><div class="sbi-n">120+</div><div class="sbi-l">Calibration cases</div></div>
+  <div class="sbi"><div class="sbi-n">96%</div><div class="sbi-l">Divergence accuracy</div></div>
+  <div class="sbi"><div class="sbi-n">6</div><div class="sbi-l">Audience types</div></div>
+  <div class="sbi"><div class="sbi-n">8</div><div class="sbi-l">Sports covered</div></div>
+  <div class="sbi"><div class="sbi-n">$0</div><div class="sbi-l">Free forever</div></div>
+</div></div>
+
+<!-- FEATURES -->
+<div class="feats">
+  <div class="sey" style="margin-bottom:16px">// Built for every audience · Every sport · Every level</div>
+  <div class="feats-grid">
+    <a href="/gems" class="fc"><div class="fc-icon">💎</div><div class="fc-name">Hidden Gems</div><div class="fc-desc">Drop a YouTube link. The model decides if you're undiscovered. No database required.</div></a>
+    <a href="/versus" class="fc"><div class="fc-icon">↔</div><div class="fc-name">Head-to-Head</div><div class="fc-desc">Two athletes. Five layers. One honest comparison. Pick #41 vs Pick #7.</div></a>
+    <a href="/diverge" class="fc"><div class="fc-icon">📖</div><div class="fc-name">FC vs The World</div><div class="fc-desc">96% accuracy when we disagree with consensus. Jokić. Curry. Thomas. The receipts.</div></a>
+    <a href="/features" class="fc" style="border-color:var(--goldl)"><div class="fc-icon">⬡</div><div class="fc-name">All 29 Features</div><div class="fc-desc">Every feature at full depth. The entire athletic intelligence layer, documented.</div></a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div>
+      <div class="ft-bn">Field<b>Check</b></div>
+      <div class="ft-biq">IQ · Athletic Intelligence</div>
+      <div class="ft-tag">The athletic intelligence layer the entire sport never had. We don't write anyone off.</div>
+    </div>
+    <div><div class="ft-title">Player</div>
+      <a href="/" class="ft-link">Run a verdict</a>
+      <a href="/gems" class="ft-link">Hidden gems</a>
+      <a href="/trajectory" class="ft-link">Trajectory</a>
+      <a href="/video-iq" class="ft-link">Video IQ</a>
+      <a href="/voice" class="ft-link">Submit film</a>
+    </div>
+    <div><div class="ft-title">Programs & Franchises</div>
+      <a href="/coaches" class="ft-link">College coaches</a>
+      <a href="/accountability" class="ft-link">Accountability</a>
+      <a href="/fit" class="ft-link">Program fit</a>
+      <a href="/portal" class="ft-link">Transfer portal</a>
+      <a href="/class" class="ft-link">Class tracker</a>
+    </div>
+    <div><div class="ft-title">Company</div>
+      <a href="/about" class="ft-link">About FieldCheck IQ</a>
+      <a href="/methodology" class="ft-link">Methodology</a>
+      <a href="/features" class="ft-link">All features</a>
+      <a href="/field-report" class="ft-link">The Field Report</a>
+      <a href="/nba-draft" class="ft-link">NBA Draft call ⚡</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ · Built on FieldCheck IQ</span>
+    <span>Football · Basketball · Baseball · Volleyball · Soccer · Tennis · And more</span>
+  </div>
+</footer>
+
+<script>
+const W='https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+const TOTAL=12;
+let cur=0,playing=true,autoT;
+
+// Scene durations: opening=4s, players=5s each, closing=7s
+const DUR=[4000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,7000];
+
+function goScene(n){
+  document.querySelectorAll('.cin').forEach((s,i)=>s.classList.toggle('active',i===n));
+  cur=n;
+  renderDots();
+  document.getElementById('ccTimer').textContent=`${n+1} / ${TOTAL}`;
+}
+function renderDots(){
+  document.getElementById('ccDots').innerHTML=Array.from({length:TOTAL},(_,i)=>
+    `<div class="cc-dot${i===cur?' active':''}" onclick="jump(${i})"></div>`).join('');
+}
+function jump(n){goScene(n);if(playing){clearTimeout(autoT);schedNext();}}
+function schedNext(){autoT=setTimeout(()=>{goScene((cur+1)%TOTAL);if(playing)schedNext();},DUR[cur]||5000);}
+function togglePlay(){
+  playing=!playing;
+  document.getElementById('ccPlay').textContent=playing?'⏸ Pause':'▶ Play';
+  if(playing)schedNext();else clearTimeout(autoT);
+}
+renderDots();schedNext();
+
+// ── ROLLING BG ───────────────────────────────────────────────
+let bgIdx=0;
+const bgImgs=document.querySelectorAll('.hb-img');
+function rotateBg(){
+  bgImgs[bgIdx].classList.remove('show');
+  bgIdx=(bgIdx+1)%bgImgs.length;
+  bgImgs[bgIdx].classList.add('show');
+}
+setInterval(rotateBg,7000);
+
+// ── SEARCH + AUTOCOMPLETE ────────────────────────────────────
+const ATHLETES=[
+  {n:'Patrick Mahomes',p:'QB',s:'football',i:'🏈',fc:9.3},
+  {n:'Josh Allen',p:'QB',s:'football',i:'🏈',fc:8.8},
+  {n:'Travis Kelce',p:'TE',s:'football',i:'🏈',fc:9.2},
+  {n:'JaMarcus Russell',p:'QB',s:'football',i:'🏈',fc:7.1},
+  {n:'Steph Curry',p:'PG',s:'mens-basketball',i:'🏀',fc:9.1},
+  {n:'LeBron James',p:'SF',s:'mens-basketball',i:'🏀',fc:9.6},
+  {n:'Nikola Jokic',p:'C',s:'mens-basketball',i:'🏀',fc:8.8},
+  {n:'Victor Wembanyama',p:'C',s:'mens-basketball',i:'🏀',fc:9.5},
+  {n:'Jaylen Brunson',p:'PG',s:'mens-basketball',i:'🏀',fc:8.8},
+  {n:'Darryn Peterson',p:'PG',s:'mens-basketball',i:'🏀',fc:9.1},
+  {n:'AJ Dybantsa',p:'SF',s:'mens-basketball',i:'🏀',fc:9.0},
+  {n:'Cameron Boozer',p:'PF',s:'mens-basketball',i:'🏀',fc:9.1},
+  {n:'Isaiah Thomas',p:'PG',s:'mens-basketball',i:'🏀',fc:8.1},
+  {n:'Giannis Antetokounmpo',p:'PF',s:'mens-basketball',i:'🏀',fc:9.3},
+  {n:'Luka Doncic',p:'PG',s:'mens-basketball',i:'🏀',fc:9.2},
+  {n:'Caitlin Clark',p:'PG',s:'womens-basketball',i:'🏀',fc:9.3},
+  {n:'Paige Bueckers',p:'PG',s:'womens-basketball',i:'🏀',fc:9.1},
+  {n:'Breanna Stewart',p:'PF',s:'womens-basketball',i:'🏀',fc:9.4},
+  {n:'Angel Reese',p:'PF',s:'womens-basketball',i:'🏀',fc:8.7},
+  {n:'Sabrina Ionescu',p:'PG',s:'womens-basketball',i:'🏀',fc:8.9},
+  {n:'Paul Skenes',p:'SP',s:'baseball',i:'⚾',fc:9.2},
+  {n:'Shohei Ohtani',p:'DH/SP',s:'baseball',i:'⚾',fc:9.6},
+  {n:'Aaron Judge',p:'RF',s:'baseball',i:'⚾',fc:9.2},
+  {n:'Mike Trout',p:'CF',s:'baseball',i:'⚾',fc:9.4},
+  {n:'Harper Murray',p:'OH',s:'womens-volleyball',i:'🏐',fc:8.9},
+  {n:'Jordan Larson',p:'OH',s:'womens-volleyball',i:'🏐',fc:9.4},
+  {n:'Dana Rettke',p:'MB',s:'womens-volleyball',i:'🏐',fc:9.2},
+  {n:'Mya Payton',p:'S',s:'womens-volleyball',i:'\U0001f3d0',fc:8.6},
+  {n:'Madisen Skinner',p:'OH',s:'womens-volleyball',i:'\U0001f3d0',fc:9.3},
+  {n:'Lexi Rodriguez',p:'L',s:'womens-volleyball',i:'\U0001f3d0',fc:9.1},
+  {n:'Avery Little',p:'S',s:'womens-volleyball',i:'\U0001f3d0',fc:8.7},
+  {n:'Nate Ament',p:'F',s:'mens-basketball',i:'\U0001f3c0',fc:8.8},
+  {n:'Mikel Brown Jr.',p:'G',s:'mens-basketball',i:'\U0001f3c0',fc:8.9},
+];
+let sport='football',acI=-1,acF=[];
+const si=document.getElementById('srch');
+const acd=document.getElementById('acDrop');
+function getSug(v){if(!v||v.trim().length<1)return ATHLETES.slice(0,8);const q=v.toLowerCase();return ATHLETES.filter(a=>a.n.toLowerCase().includes(q)).slice(0,8);}
+function renderAC(v){
+  acF=getSug(v);
+  var label=(!v||!v.trim())?'<div class="ac-lbl">// Popular athletes</div>':'';
+  if(!acF.length){closeAC();return;}
+  acd.innerHTML=label+acF.map((a,i)=>`<div class="ac-item${i===acI?' sel':''}" onmousedown="selectAC(${i})">
+      <span class="ac-icon">${a.i}</span><span class="ac-name">${a.n}</span>
+      <span class="ac-detail">${a.p} · ${a.s.replace(/-/g,' ')}</span>
+      <span class="ac-score">${a.fc}</span></div>`).join('');
+  acd.classList.add('open');
+}
+function closeAC(){acd.classList.remove('open');acI=-1;}
+function selectAC(i){const a=acF[i];if(!a)return;si.value=a.n;sport=a.s;si.style.background='rgba(245,184,0,.08)';closeAC();setTimeout(function(){si.style.background='';runVerdict();},280);}
+function pick(n,s){si.value=n;sport=s;si.style.background='rgba(245,184,0,.08)';setTimeout(function(){si.style.background='';runVerdict();},280);}
+si.addEventListener('input',()=>{acI=-1;renderAC(si.value);});
+
+si.addEventListener('blur',()=>setTimeout(closeAC,260));
+si.addEventListener('focus',()=>{acI=-1;renderAC(si.value);});
+si.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'){e.preventDefault();acI=Math.min(acI+1,acF.length-1);renderAC(si.value);}
+  if(e.key==='ArrowUp'){e.preventDefault();acI=Math.max(acI-1,-1);renderAC(si.value);}
+  if(e.key==='Enter'){if(acI>=0)selectAC(acI);else runVerdict();closeAC();}
+  if(e.key==='Escape')closeAC();
+});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement!==si){e.preventDefault();si.focus();si.select();}});
+
+// Sport auto-detect
+const KNOWN={mahomes:'football',allen:'football',burrow:'football',jackson:'football',kelce:'football',jefferson:'football',russell:'football',curry:'mens-basketball',james:'mens-basketball',jokic:'mens-basketball',wembanyama:'mens-basketball',brunson:'mens-basketball',peterson:'mens-basketball',dybantsa:'mens-basketball',boozer:'mens-basketball',thomas:'mens-basketball',giannis:'mens-basketball',doncic:'mens-basketball',clark:'womens-basketball',bueckers:'womens-basketball',stewart:'womens-basketball',reese:'womens-basketball',ionescu:'womens-basketball',skenes:'baseball',ohtani:'baseball',judge:'baseball',trout:'baseball',murray:'womens-volleyball',larson:'womens-volleyball',rettke:'womens-volleyball',payton:'womens-volleyball',skinner:'womens-volleyball',rodriguez:'womens-volleyball'};
+si.addEventListener('input',()=>{const v=si.value.toLowerCase();for(const[k,s]of Object.entries(KNOWN))if(v.includes(k)){sport=s;break;}});
+
+// Door player click → scroll to search
+function focusDoor(e,s){
+  e.preventDefault();sport=s;
+  document.getElementById('search').scrollIntoView({behavior:'smooth',block:'center'});
+  setTimeout(()=>{si.focus();},500);
+  return false;
+}
+
+// Voice
+function startVoice(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){si.focus();return;}
+  const btn=document.getElementById('micBtn');
+  const r=new SR();r.continuous=false;r.interimResults=true;r.lang='en-US';
+  btn.classList.add('listening');r.start();
+  r.onresult=e=>{si.value=Array.from(e.results).map(r=>r[0].transcript).join('');};
+  r.onend=()=>{btn.classList.remove('listening');if(si.value.trim())runVerdict();};
+  r.onerror=()=>btn.classList.remove('listening');
+}
+
+// ── VERDICT ENGINE — WIRED TO BACKEND ───────────────────────
+const LAYERS=['physical','mindset','production','defense','pathway'];
+const EV={
+  physical:['Measurables, athleticism, size relative to position','Sport-specific biomechanics and film signals','Competition-context physical indicators','Injury history applied to durability score'],
+  mindset:['Documented competitive behavior under pressure','Injury response and recovery arc — comeback signal','Transfer pathway: seeking harder competition = premium','Academic profile and dual-excellence signals'],
+  production:['Statistical output context-adjusted for competition quality','Playoff and tournament performance weighted higher','Consistency curve and trajectory direction','Opportunity-context correction for access gaps'],
+  defense:['Defensive stats and positioning signals','Coach descriptions of defensive IQ from public record','Two-way player premium applied','Off-ball awareness and scheme fit from film'],
+  pathway:['Program or franchise development environment','Coach or GM track record at this position','Pro conversion or career ceiling probability','Comparable athlete outcomes at similar composite profiles'],
+};
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function tierLabel(v){return v>=9?'ICON':v>=8.5?'ELITE+':v>=8?'ELITE':v>=7?'HIGH':'VERIFY';}
+function tierStyle(v){return v>=9?'background:rgba(245,184,0,.12);color:#F5B800;border:1px solid rgba(245,184,0,.28)':v>=8?'background:rgba(107,170,90,.12);color:#6BAA5A;border:1px solid rgba(107,170,90,.28)':'background:rgba(255,255,255,.06);color:rgba(245,241,232,.4);border:1px solid rgba(255,255,255,.1)';}
+function lc(v){return v>=9?'#F5B800':v>=8?'#6BAA5A':v>=7?'#A89F8C':'#FF5C3A';}
+function drawPoly(dims){
+  const sc=LAYERS.map(l=>Number(dims[l]?.score||dims[l]||7));
+  const cx=75,cy=75,r=62;
+  const pts=sc.map((s,i)=>{const a=(i/5)*2*Math.PI-Math.PI/2,d=(s/10)*r;return[cx+d*Math.cos(a),cy+d*Math.sin(a)];});
+  const gPts=Array.from({length:5},(_,i)=>{const a=(i/5)*2*Math.PI-Math.PI/2;return[cx+r*Math.cos(a),cy+r*Math.sin(a)];}).map(p=>p.join(',')).join(' ');
+  return`<svg viewBox="0 0 150 150" width="140" height="140"><polygon points="${gPts}" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="1"/><polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="rgba(245,184,0,.10)" stroke="#F5B800" stroke-width="1.5"/>${sc.map((s,i)=>{const a=(i/5)*2*Math.PI-Math.PI/2,d=(s/10)*r;return`<circle cx="${cx+d*Math.cos(a)}" cy="${cy+d*Math.sin(a)}" r="4" fill="${lc(s)}"/>`;}).join('')}</svg>`;
+}
+const LMSGS=['Reading the public record.','Pulling sources.','Scoring five layers.','Calibrating the model.','Almost there.'];
+let li=0,lt;
+
+function runVerdict(){
+  const name=document.getElementById('srch').value.trim();
+  if(!name){document.getElementById('srch').focus();return;}
+  window.location.href='/fieldcheck-verdict.html?q='+encodeURIComponent(name)+'&sport='+encodeURIComponent(sport||'football');
+}
+async function _runVerdictInline_disabled(){
+  const name=si.value.trim();
+  if(!name){si.focus();return;}
+  closeAC();
+  const zone=document.getElementById('verdictZone');
+  const load=document.getElementById('vzLoad');
+  const card=document.getElementById('vzCard');
+  zone.classList.add('show');
+  zone.scrollIntoView({behavior:'smooth',block:'nearest'});
+  load.style.display='flex';card.style.display='none';
+  clearInterval(lt);lt=setInterval(()=>{document.getElementById('vzText').textContent=LMSGS[li++%LMSGS.length];},1900);
+  try{
+    const r=await fetch(`${W}/verdict/player`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,sport})});
+    const d=await r.json();
+    clearInterval(lt);load.style.display='none';card.style.display='block';
+    const og=d.encyclopedia?.eval_grid?.overall_grade||{};
+    const composite=Number(og.composite||7);
+    const dims=og.dimensions||{};
+    const ci=og.confidence_interval||{};
+    const ciStr=ci.low&&ci.high?` · CI ${ci.low}–${ci.high}`:'';
+    const tier=tierLabel(composite);
+    const summary=og.summary||d.encyclopedia?.punch_summary||`${name} scores ${composite.toFixed(1)} across five layers from the public record.`;
+    const sportLabel=sport.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+    const pUrl=`/player?player=${encodeURIComponent(name)}&sport=${encodeURIComponent(sport)}`;
+    const layersHtml=LAYERS.map(l=>{
+      const score=Number(dims[l]?.score||dims[l]||7);const color=lc(score);
+      return`<div class="lr" onclick="this.classList.toggle('open')">
+        <div style="display:flex;align-items:center;gap:10px;width:100%">
+          <div class="lr-n">${l.charAt(0).toUpperCase()+l.slice(1)}</div>
+          <div class="lr-bar"><div class="lr-fill" style="width:${score*10}%;background:${color}"></div></div>
+          <div class="lr-val" style="color:${color}">${score.toFixed(1)}</div>
+          <div style="font-size:8px;color:var(--t4)">▾</div>
+        </div>
+        <div class="lr-ev">${(EV[l]||[]).map(e=>`<div style="display:flex;gap:6px;margin-bottom:4px"><span style="color:var(--moss);flex-shrink:0">✓</span><span>${e}</span></div>`).join('')}${dims[l]?.note?`<div style="color:var(--gold);margin-top:5px;font-size:11px">→ ${esc(dims[l].note)}</div>`:''}</div>
+      </div>`;
+    }).join('');
+    card.innerHTML=`
+      <div class="vc-head">
+        <div>
+          <div class="vc-name">${esc(name)}</div>
+          <div class="vc-sport">${esc(sportLabel)}${ciStr}</div>
+          <div class="vc-summary">${esc(summary)}</div>
+        </div>
+        <div class="vc-sc">
+          <div class="vc-num">${composite.toFixed(1)}</div>
+          <div class="vc-tier" style="${tierStyle(composite)}">${tier}</div>
+        </div>
+      </div>
+      <div class="vc-body">
+        <div class="vc-poly">${drawPoly(dims)}</div>
+        <div class="vc-layers">${layersHtml}</div>
+      </div>
+      <div class="vc-actions">
+        <a href="${pUrl}" class="va p" target="_blank">Full deep analysis →</a>
+        <a href="/versus?a=${encodeURIComponent(name)}&sport=${encodeURIComponent(sport)}" class="va">Compare →</a>
+        <button class="va" onclick="navigator.clipboard.writeText('https://fieldcheck-app.netlify.app${pUrl}').then(()=>{this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy link',2000)})">Copy link</button>
+        <button class="va" onclick="window.open('https://twitter.com/intent/tweet?text=${encodeURIComponent(name+' · FieldCheck IQ '+composite.toFixed(1)+' ('+tier+')')}','_blank')">𝕏 Share</button>
+        <a href="/gems" class="va">💎 Gems</a>
+      </div>`;
+    document.title=`${name} · FC IQ ${composite.toFixed(1)} · ${tier}`;
+  }catch(e){
+    clearInterval(lt);load.style.display='none';card.style.display='block';
+    card.innerHTML=`<div style="padding:24px;text-align:center;color:var(--t3);font-size:14px">Could not load verdict — check connection and try again.</div>`;
+  }
+}
+
+// Check for URL params on load — auto-run verdict
+(function(){
+  const p=new URLSearchParams(location.search);
+  const q=p.get('q');const sp=p.get('sport');
+  if(q){si.value=q;if(sp)sport=sp;setTimeout(runVerdict,400);}
+})();
+
+// ── TICKER ───────────────────────────────────────────────────
+const TICKS=[
+  '<b>LIVE CALL</b> · FC has <span class="g">Peterson #2</span> (9.1 ICON+) · Consensus #3 · June 23 decides',
+  '<b>Nikola Jokić</b> · 41st pick · FC 8.8 · Market 5.2 · 3× MVP · Largest divergence in basketball history',
+  '<span class="c">FRANCHISE INTEL</span> · Warriors · Lakers · Knicks · Championship probability · Same five-layer model',
+  '<b>Harper Murray</b> · Nebraska · <span class="m">8.9 ELITE+</span> · Walk-on → starter · Mindset 9.2 · We saw it first',
+  '<b>Isaiah Thomas</b> · 60th pick (last) · FC 8.1 · Market 4.2 · 2× All-Star · We never count anyone out',
+  '<span class="g">96% accuracy</span> · When FC diverges from consensus by 0.5+ · Verified across 120+ cases',
+  '<b>Paul Skenes</b> · Air Force Academy · Mindset premium · Military discipline is measurable · The model knows',
+  '<b>JaMarcus Russell</b> · #1 overall · FC Mindset 5.5 · Visible pre-draft in the public record · We read it',
+  '<span class="c">NEW</span> · Prediction layer · Brunson championship probability 34% · 2-year window · Built on FieldCheck IQ',
+  '<b>Amateur → Pro</b> · Same five-layer model · Same polygon · The honest read at every level of sport',
+];
+document.getElementById('tickerEl').innerHTML=[...TICKS,...TICKS].map(t=>`<div class="ti">${t}</div>`).join('');
+
+// ── COUNTDOWN ────────────────────────────────────────────────
+function updateCd(){
+  const D=new Date('2026-06-23T19:30:00-04:00'),diff=D-new Date();
+  if(diff<=0)return;
+  const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000);
+  const el=document.getElementById('dbarCd');if(el)el.textContent=`${d}d ${h}h ${m}m`;
+}
+updateCd();setInterval(updateCd,30000);
+
+// ── PLACEHOLDER ROTATION ─────────────────────────────────────
+const EX=['Harper Murray','Steph Curry','Nikola Jokić','Darryn Peterson','Caitlin Clark','Paul Skenes','Isaiah Thomas','Paige Bueckers','Josh Allen','Victor Wembanyama','Jaylen Brunson'];
+let exI=0;setInterval(()=>{if(document.activeElement!==si)si.placeholder=EX[exI++%EX.length];},3200);
+
+// ── MOBILE MENU ──────────────────────────────────────────────
+function toggleMenu(){
+  const m=document.getElementById('mobMenu'),b=document.getElementById('hbgBtn');
+  const open=m.classList.toggle('open');b.textContent=open?'✕':'☰';document.body.style.overflow=open?'hidden':'';
+}
+document.querySelectorAll('.mm-a').forEach(a=>a.addEventListener('click',()=>{
+  document.getElementById('mobMenu').classList.remove('open');
+  document.getElementById('hbgBtn').textContent='☰';document.body.style.overflow='';
+}));
+</script>
+</body>
+</html>

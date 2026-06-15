@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Glossary · FieldCheck IQ</title>
+<meta name="description" content="Every FieldCheck term — facet, tier, composite, cohort, calibration — defined precisely.">
+<meta property="og:title" content="FieldCheck IQ · Glossary">
+<meta property="og:description" content="Every FieldCheck term — facet, tier, composite, cohort, calibration — defined precisely.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060A;--bg1:#100F14;--ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);--t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);--moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.3);--teal:#4EC9C0;--violet:#8B5CF6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 30% at 50% 0%,rgba(245,184,0,.04) 0%,transparent 60%),linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+.wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:60px 30px 100px}
+.brand-row{display:flex;align-items:center;gap:18px;margin-bottom:40px}
+.brand{font-family:'Anton',sans-serif;font-size:22px;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none}
+.back:hover{color:var(--gold)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(46px,6vw,76px);letter-spacing:-.014em;line-height:.98;margin-bottom:18px}
+h1 .em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--gold)}
+.lede{font-size:18px;color:var(--t2);max-width:760px;margin-bottom:42px}
+.lede b{color:var(--t)}
+h2{font-family:'Anton',sans-serif;font-size:30px;letter-spacing:-.012em;margin:60px 0 14px;padding-top:24px;border-top:1px solid var(--ge);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+h2:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:-.005em;margin:28px 0 10px;color:var(--t)}
+p{font-size:16px;color:var(--t2);margin-bottom:16px;max-width:780px}
+p b{color:var(--t)}
+p a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--goldl)}
+p a:hover{border-bottom-color:var(--gold)}
+ul,ol{margin:12px 0 22px 22px;color:var(--t2);font-size:15.5px}
+ul li,ol li{margin-bottom:7px;line-height:1.6}
+ul li b,ol li b{color:var(--gold);font-weight:600}
+dl{margin:18px 0 28px}
+dt{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-top:18px;margin-bottom:4px}
+dd{margin-left:0;font-size:15.5px;color:var(--t2);line-height:1.6;margin-bottom:10px}
+.callout{margin:30px 0;padding:24px 28px;border-radius:12px;background:var(--golds);border:1px solid var(--goldl);border-left:3px solid var(--gold);font-size:14.5px;line-height:1.6;color:var(--t)}
+.callout .label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 28px}
+.actions a{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);background:var(--golds);border:1px solid var(--goldl);padding:10px 18px;border-radius:9999px;text-decoration:none;transition:background .15s}
+.actions a:hover{background:rgba(245,184,0,.18)}
+.footer{margin-top:80px;padding-top:30px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t4);letter-spacing:.6px}
+.footer a{color:var(--gold);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin:14px 0 26px}
+.tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);padding:11px 14px;border-bottom:1px solid var(--ge)}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--ge2);color:var(--t2);vertical-align:top;line-height:1.55}
+.tbl .code{font-family:'JetBrains Mono',monospace;color:var(--gold);font-weight:700;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="wrap">
+  <div class="brand-row">
+    <a class="brand" href="/"><b>Field</b>Check<span class="iq">IQ</span></a>
+    <a class="back" href="/">← all players</a>
+  </div>
+  <div class="eyebrow">Glossary · the language behind the verdict</div>
+  <h1><span class="em">Glossary</span>.</h1>
+  
+  <p class="lede">Every term used in a FieldCheck verdict, defined precisely. No fluff, no marketing — the vocabulary as used in the methodology.</p>
+
+  <dl>
+    <dt>Composite</dt>
+    <dd>The 0–10 weighted average across all 8 facets. The single number that maps to the tier ladder. Higher is better.</dd>
+
+    <dt>Tier</dt>
+    <dd>Composite mapped to a label: ICON (9.5–10), ELITE+ (9.0–9.4), ELITE (7.5–8.9), STAR (7.0–7.4), PROSPECT (5.5–6.9), SCOUT (3.5–5.4).</dd>
+
+    <dt>Facet</dt>
+    <dd>One of 8 canonical evaluation dimensions: Character · Mindset · Mental Strength · Talent · Physical · Mental/IQ · Coachability · Competitiveness. Same 8 across every sport, weights vary.</dd>
+
+    <dt>Eval Grid</dt>
+    <dd>The full per-facet scoring block on every verdict page. Shows each facet's score + evidence summary + source citations.</dd>
+
+    <dt>Cohort</dt>
+    <dd>A versioned batch of locked verdicts. The current cohort is v1.7.A (locked May 17 2026 with 50 pre-registered predictions).</dd>
+
+    <dt>Calibration</dt>
+    <dd>The set of weights + thresholds that turn raw evidence into scores. Currently V5.5 doctrine (locked June 8 2026). Calibration changes are versioned; all prior verdicts re-score on a calibration version bump.</dd>
+
+    <dt>Amateur Cap</dt>
+    <dd>The doctrinal constraint that HS amateurs can't score above SCOUT (5.4) and college freshmen can't score above STAR (7.4). Protects against ceiling-visibility errors that the rest of the market routinely makes.</dd>
+
+    <dt>Polish Set</dt>
+    <dd>The hand-curated set of marquee athletes (currently ~30) with full eval grids, source-cited evidence, and verified photos. The "we did the work" tier.</dd>
+
+    <dt>Hidden Gem</dt>
+    <dd>A cross-cohort discovery match — a lower-tier athlete whose composite is unexpectedly close to a higher-tier athlete in another sport or position. Surfaced on verdict pages via the FCBase45 card.</dd>
+
+    <dt>Trajectory</dt>
+    <dd>The forward-projection band shown on each verdict — where we expect the athlete's composite to land at the next major checkpoint (typically 18 months out).</dd>
+
+    <dt>Peer</dt>
+    <dd>An athlete in the same tier, same sport, and same position whose composite is within ±0.3 of the subject. Shown in the Peers strip.</dd>
+
+    <dt>Tier-Jump Alert</dt>
+    <dd>The purple banner shown when a watched athlete moves up a tier between visits. Surfaces on the FCBase53 frontend.</dd>
+
+    <dt>Verdict</dt>
+    <dd>The single page representing a graded athlete. Includes hero, eval grid, peers, hidden-gem matches, sources, dispute path.</dd>
+
+    <dt>PhD Panel</dt>
+    <dd>25 named PhD reviewers (anonymized publicly for now) who vetted the framework + cohort verdicts. Reviews weekly (Patel), monthly (full panel), quarterly (weight updates), annually (refinements), 5-yearly (major versions).</dd>
+
+    <dt>Tenet</dt>
+    <dd>An operating principle locked into the build. Tenet 53 (Multi-Source First) is the most recent. Tenets are doctrinally permanent; new tenets only added, never removed.</dd>
+
+    <dt>FCBase</dt>
+    <dd>A frozen shipped baseline. Numbered sequentially. Current: FCBase55. Each FCBase is atomic — a full deploy + verification + freeze cycle.</dd>
+
+    <dt>Sealed Prediction</dt>
+    <dd>One of the 50 forward-looking statements locked into the predictions ledger on May 17 2026. Cryptographically sealed via SHA-256; reveals at Aug 15 2028 check-in.</dd>
+
+    <dt>Check-in</dt>
+    <dd>The scheduled date the predictions ledger updates with actual outcomes. First check-in: August 15 2028. Subsequent check-ins: every 12 months.</dd>
+  </dl>
+
+  <div class="footer">
+    FieldCheck IQ · <a href="/">home</a> · <a href="/methodology">methodology</a> · <a href="/predictions">predictions</a> · <a href="/coverage">coverage</a> · <a href="/velocity">velocity</a>
+  </div>
+</div>
+</body>
+</html>

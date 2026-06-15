@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Master Deck - FieldCheck IQ · The Briefing · 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #07060A;
+  --ink-2: #0F0C09;
+  --ink-3: #14110D;
+  --t: #F3EFE7;
+  --t2: #BFB6A4;
+  --t3: #8B8475;
+  --t4: #5C574D;
+  --gold: #D4A24C;
+  --gold-hi: #E8BC6C;
+  --gold-dim: rgba(212, 162, 76, 0.18);
+  --gold-soft: rgba(212, 162, 76, 0.06);
+  --teal: #5BA8A0;
+  --moss: #6B8A5F;
+  --rose: #C4665A;
+  --flame: #E07B4A;
+  --rule: rgba(255, 253, 247, 0.10);
+  --rule-2: rgba(255, 253, 247, 0.05);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink);
+  color: var(--t);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.62;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--gold); color: var(--ink); }
+
+/* ── NAV ───────────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: rgba(7, 6, 10, 0.85); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+  padding: 14px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 600; letter-spacing: -0.01em;
+  color: var(--t); text-decoration: none;
+}
+.nav-brand .iq { color: var(--gold); font-style: italic; }
+.nav-cta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+  background: var(--gold); color: var(--ink);
+  padding: 10px 18px; border-radius: 2px; text-decoration: none;
+  transition: background 0.18s;
+}
+.nav-cta:hover { background: var(--gold-hi); }
+
+/* ── HERO ─────────────────────────────────── */
+.hero {
+  padding: 140px 32px 80px;
+  max-width: 1280px; margin: 0 auto;
+  position: relative;
+}
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 3px;
+  color: var(--gold); margin-bottom: 32px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before {
+  content: ''; width: 32px; height: 1px; background: var(--gold);
+}
+.hero-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(56px, 8vw, 110px); font-weight: 500;
+  letter-spacing: -0.022em; line-height: 1.02;
+  margin-bottom: 28px; max-width: 1100px;
+}
+.hero-h em { font-style: italic; color: var(--gold-hi); }
+.hero-deck {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: clamp(20px, 2.4vw, 26px); line-height: 1.44;
+  color: var(--t2); max-width: 860px; margin-bottom: 40px;
+}
+.hero-deck b { color: var(--t); font-style: normal; font-weight: 500; }
+.hero-metrics {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 36px; padding: 36px 0 0;
+  border-top: 1px solid var(--rule); margin-top: 48px;
+}
+.hero-metric-n {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 48px; font-weight: 500; color: var(--gold);
+  line-height: 1; margin-bottom: 8px; letter-spacing: -0.02em;
+}
+.hero-metric-l {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase;
+  color: var(--t3); line-height: 1.4;
+}
+
+/* ── TAB NAV (sticky) ─────────────────────── */
+.tab-nav-wrap {
+  position: sticky; top: 56px; z-index: 40;
+  background: rgba(7, 6, 10, 0.92); backdrop-filter: blur(8px);
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+
+/* ── CHARTER · FIVE PRINCIPLES ────────────── */
+.charter {
+  background: var(--ink-2);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 80px 32px;
+}
+.charter-wrap {
+  max-width: 1080px; margin: 0 auto;
+}
+.charter-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 3px;
+  color: var(--gold); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.charter-eyebrow::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  max-width: 320px; opacity: 0.5;
+}
+.charter-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4.2vw, 50px); font-weight: 500;
+  letter-spacing: -0.014em; line-height: 1.12;
+  color: var(--t); margin-bottom: 56px;
+  max-width: 820px;
+}
+.charter-h em { font-style: italic; color: var(--gold-hi); }
+
+.principle {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 24px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: flex-start;
+}
+.principle:last-child { border-bottom: none; }
+.principle-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-weight: 500;
+  font-size: 52px; color: var(--gold);
+  line-height: 1; letter-spacing: -0.02em;
+}
+.principle-body { padding-top: 6px; }
+.principle-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(22px, 2.6vw, 30px); font-weight: 600;
+  color: var(--t); line-height: 1.22;
+  letter-spacing: -0.008em; margin-bottom: 10px;
+}
+.principle-h em { font-style: italic; color: var(--gold-hi); }
+.principle-d {
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px; line-height: 1.62;
+  color: var(--t2); max-width: 760px;
+}
+
+@media (max-width: 600px) {
+  .principle { grid-template-columns: 56px 1fr; gap: 16px; }
+  .principle-num { font-size: 38px; }
+  .charter { padding: 60px 22px; }
+}
+.tab-nav {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 32px;
+  display: flex; overflow-x: auto;
+  gap: 4px;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: var(--t3); background: transparent; border: none;
+  padding: 18px 18px; cursor: pointer;
+  transition: color 0.18s; white-space: nowrap;
+  position: relative;
+}
+.tab-btn:hover { color: var(--t); }
+.tab-btn.active { color: var(--gold); }
+.tab-btn.active::after {
+  content: ''; position: absolute; bottom: -1px; left: 18px; right: 18px;
+  height: 2px; background: var(--gold);
+}
+.tab-num {
+  display: inline-block; margin-right: 8px;
+  color: var(--t4); font-size: 9px;
+}
+.tab-btn.active .tab-num { color: var(--gold); opacity: 0.6; }
+
+/* ── PANELS ───────────────────────────────── */
+.panel {
+  display: none;
+  max-width: 1280px; margin: 0 auto;
+  padding: 80px 32px;
+}
+.panel.active { display: block; }
+.panel-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 3px;
+  color: var(--gold); margin-bottom: 16px;
+}
+.panel-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 5.4vw, 68px); font-weight: 500;
+  letter-spacing: -0.018em; line-height: 1.05;
+  margin-bottom: 24px; max-width: 1000px;
+}
+.panel-h em { font-style: italic; color: var(--gold-hi); }
+.panel-deck {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: clamp(18px, 2vw, 22px); line-height: 1.5;
+  color: var(--t2); max-width: 820px; margin-bottom: 56px;
+}
+.panel-deck b { color: var(--t); font-style: normal; font-weight: 500; }
+
+/* ── CARDS ────────────────────────────────── */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+
+.card {
+  background: var(--ink-2); border: 1px solid var(--rule);
+  padding: 32px 28px; transition: all 0.2s;
+}
+.card:hover { border-color: rgba(212, 162, 76, 0.3); background: var(--ink-3); }
+.card-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+}
+.card-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px; font-weight: 600; color: var(--t);
+  line-height: 1.2; margin-bottom: 14px;
+}
+.card-h em { font-style: italic; color: var(--gold-hi); }
+.card-d {
+  font-size: 14px; line-height: 1.62; color: var(--t2);
+}
+.card-d b { color: var(--t); font-weight: 600; }
+
+/* Tier rows (used for gap-mapped strips) */
+.row-strip {
+  display: grid; grid-template-columns: 240px 1fr; gap: 32px;
+  padding: 28px 0; border-bottom: 1px solid var(--rule);
+}
+.row-strip:last-child { border-bottom: none; }
+.row-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold); line-height: 1.4;
+}
+.row-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; line-height: 1.5; color: var(--t);
+}
+.row-text b { font-weight: 600; }
+.row-text i { color: var(--t2); }
+
+/* Comparison matrix */
+.matrix-wrap { overflow-x: auto; margin-top: 8px; }
+.matrix { width: 100%; border-collapse: collapse; min-width: 720px; }
+.matrix th, .matrix td {
+  text-align: left; padding: 16px 18px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 13px;
+}
+.matrix th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: var(--t3); background: var(--ink-2);
+}
+.matrix th.fc-col { color: var(--gold); }
+.matrix td {
+  color: var(--t2); font-family: 'Inter', sans-serif;
+}
+.matrix td.fc-cell {
+  color: var(--gold); font-weight: 600;
+}
+.matrix td.check { color: var(--gold); font-weight: 700; }
+.matrix td.x { color: var(--t4); }
+.matrix td.partial { color: var(--t3); }
+.matrix tr:hover td { background: var(--ink-2); }
+
+/* Audience use case cards */
+.usecase {
+  background: var(--ink-2); border: 1px solid var(--rule);
+  padding: 36px 32px; transition: all 0.2s;
+  display: flex; flex-direction: column;
+}
+.usecase:hover {
+  border-color: var(--gold); background: var(--ink-3);
+  transform: translateY(-2px);
+}
+.usecase-icon {
+  width: 48px; height: 48px;
+  background: var(--gold-dim); color: var(--gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif; font-size: 26px; font-style: italic;
+  margin-bottom: 22px;
+}
+.usecase-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 10px;
+}
+.usecase-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 600; color: var(--t);
+  line-height: 1.18; margin-bottom: 14px;
+}
+.usecase-h em { font-style: italic; color: var(--gold-hi); }
+.usecase-d {
+  font-size: 14px; line-height: 1.62; color: var(--t2);
+  flex: 1; margin-bottom: 24px;
+}
+.usecase-flow {
+  border-top: 1px dashed var(--rule); padding-top: 18px;
+}
+.usecase-flow-l {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+  color: var(--t3); margin-bottom: 8px;
+}
+.usecase-flow-steps {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  font-size: 12px; color: var(--t2);
+}
+.usecase-flow-step {
+  padding: 4px 10px; background: var(--ink); border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+.usecase-flow-arrow { color: var(--gold); font-size: 12px; }
+
+/* Sample athlete cards (clickable) */
+.sample-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px; margin-top: 32px;
+}
+.sample-card {
+  display: block; padding: 20px 22px;
+  border: 1px solid var(--rule); background: rgba(15,12,10,0.4);
+  text-decoration: none; transition: all .18s ease;
+  color: var(--gold);
+}
+.sample-card:visited { color: var(--gold); }
+.sample-card:hover {
+  border-color: var(--gold); background: var(--gold-soft);
+  transform: translateY(-2px);
+}
+.sample-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 21px; color: var(--gold); margin-bottom: 6px;
+  transition: color .15s;
+}
+.sample-card:hover .sample-name { color: var(--t); }
+.sample-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px; color: var(--t3); letter-spacing: 1.4px; text-transform: uppercase;
+}
+
+/* Founder/Team/Engine cards */
+.bio-card {
+  background: var(--ink-2); border: 1px solid var(--rule);
+  padding: 36px 32px; transition: all 0.2s;
+  border-left: 3px solid var(--gold);
+}
+.bio-card.teal { border-left-color: var(--teal); }
+.bio-card.gold-bright { border-left-color: var(--gold-hi); }
+.bio-grid {
+  display: grid; grid-template-columns: 64px 1fr; gap: 28px;
+  align-items: flex-start;
+}
+.bio-icon {
+  width: 56px; height: 56px;
+  background: var(--gold-dim); color: var(--gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif; font-size: 28px;
+  font-style: italic; font-weight: 500;
+}
+.bio-icon.teal-icon { background: rgba(91,168,160,0.18); color: var(--teal); }
+.bio-role {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 8px;
+}
+.bio-role.teal-role { color: var(--teal); }
+.bio-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 600; color: var(--t);
+  line-height: 1.2; margin-bottom: 14px;
+}
+.bio-h em { font-style: italic; color: var(--gold-hi); }
+.bio-d {
+  font-size: 14.5px; line-height: 1.62; color: var(--t2);
+}
+.bio-d b { color: var(--t); font-weight: 600; }
+
+/* Callout boxes */
+.callout {
+  margin: 56px 0;
+  padding: 36px 36px 36px 40px;
+  border-left: 3px solid var(--gold);
+  background: var(--gold-soft);
+}
+.callout.teal-callout {
+  border-left-color: var(--teal);
+  background: rgba(91,168,160,0.05);
+}
+.callout-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 12px;
+}
+.callout.teal-callout .callout-label { color: var(--teal); }
+.callout-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 2.2vw, 24px); line-height: 1.48;
+  color: var(--t); font-style: italic; margin: 0;
+}
+.callout-text b { font-style: normal; font-weight: 500; }
+
+/* Sub-section divider */
+.section-divider {
+  margin: 72px 0 32px;
+}
+.section-divider-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 8px;
+}
+.section-divider-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3.6vw, 40px); font-weight: 500;
+  line-height: 1.15; color: var(--t);
+}
+.section-divider-h em { font-style: italic; color: var(--gold-hi); }
+
+/* ── ASK PANEL specific ────────────────────── */
+.ask-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px; margin-top: 16px;
+}
+.ask-stat {
+  background: var(--ink-2); border: 1px solid var(--rule);
+  padding: 32px 28px;
+  border-top: 3px solid var(--gold);
+}
+.ask-stat-n {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 56px; font-weight: 500; color: var(--gold);
+  line-height: 1; margin-bottom: 12px; letter-spacing: -0.02em;
+}
+.ask-stat-l {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--t3); line-height: 1.4; margin-bottom: 14px;
+}
+.ask-stat-d { font-size: 13px; line-height: 1.6; color: var(--t2); }
+
+/* ── FINAL CTA ────────────────────────────── */
+.final-cta {
+  max-width: 1080px; margin: 0 auto;
+  padding: 120px 32px 100px;
+  text-align: center;
+  border-top: 1px solid var(--rule);
+}
+.final-cta-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 3px;
+  color: var(--gold); margin-bottom: 24px;
+}
+.final-cta-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 6.4vw, 88px); font-weight: 500;
+  letter-spacing: -0.018em; line-height: 1.05;
+  margin-bottom: 32px;
+}
+.final-cta-h em { font-style: italic; color: var(--gold-hi); }
+.final-cta-deck {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 22px; line-height: 1.46; color: var(--t2);
+  max-width: 720px; margin: 0 auto 48px;
+}
+.final-cta-row { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.cta-primary, .cta-secondary {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+  padding: 16px 28px; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: all 0.18s;
+  border-radius: 2px;
+}
+.cta-primary {
+  background: var(--gold); color: var(--ink);
+}
+.cta-primary:hover { background: var(--gold-hi); transform: translateY(-2px); }
+.cta-secondary {
+  background: transparent; color: var(--t2);
+  border: 1px solid var(--rule);
+}
+.cta-secondary:hover { color: var(--gold); border-color: var(--gold); }
+
+/* ── CONTACT MODAL ────────────────────────── */
+.contact-modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(7,6,10,0.86);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  padding: 20px;
+  overflow-y: auto;
+}
+.contact-modal-overlay.open {
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 80px;
+}
+.contact-modal {
+  background: var(--ink-2);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--gold);
+  border-radius: 4px;
+  padding: 48px 44px;
+  max-width: 560px; width: 100%;
+  position: relative;
+}
+.contact-modal-close {
+  position: absolute; top: 14px; right: 16px;
+  background: transparent; border: none;
+  color: var(--t3); font-size: 28px; cursor: pointer;
+  width: 32px; height: 32px; line-height: 1;
+  font-family: 'JetBrains Mono', monospace;
+}
+.contact-modal-close:hover { color: var(--gold); }
+.contact-modal-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 2.4px;
+  color: var(--gold); margin-bottom: 14px; text-transform: uppercase;
+}
+.contact-modal-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px; font-weight: 500;
+  letter-spacing: -0.014em; line-height: 1.2;
+  color: var(--t); margin-bottom: 10px;
+}
+.contact-modal-d {
+  font-size: 13.5px; color: var(--t2); margin-bottom: 28px;
+  line-height: 1.6;
+}
+.contact-form { display: flex; flex-direction: column; gap: 16px; }
+.contact-field { display: flex; flex-direction: column; gap: 6px; }
+.contact-field label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px; font-weight: 600; letter-spacing: 1.4px;
+  color: var(--t3); text-transform: uppercase;
+}
+.contact-field input, .contact-field textarea {
+  background: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 12px 14px;
+  color: var(--t);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.18s;
+}
+.contact-field input:focus, .contact-field textarea:focus { border-color: var(--gold); }
+.contact-field textarea { resize: vertical; min-height: 100px; font-family: 'Inter', sans-serif; }
+.contact-submit {
+  background: var(--gold); color: var(--ink);
+  border: none; padding: 14px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
+  text-transform: uppercase;
+  cursor: pointer; margin-top: 8px;
+  border-radius: 2px;
+  transition: background 0.18s;
+}
+.contact-submit:hover { background: var(--gold-hi); }
+.contact-thanks { text-align: center; padding: 20px 0; }
+.contact-thanks-icon {
+  width: 64px; height: 64px;
+  background: var(--gold); color: var(--ink);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; font-weight: 700;
+  margin: 0 auto 20px;
+}
+.contact-thanks h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px; font-weight: 500; color: var(--t);
+  margin-bottom: 8px;
+}
+.contact-thanks p { font-size: 14px; color: var(--t2); }
+
+/* ── VISION BLOCK · THE HORIZON ───────────── */
+.vision-block {
+  background: linear-gradient(135deg, rgba(212,162,76,0.06) 0%, rgba(212,162,76,0.02) 100%);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--gold);
+  border-radius: 4px;
+  padding: 44px 44px 40px;
+  margin: 36px 0 56px;
+}
+.vision-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 2.6px;
+  color: var(--gold); margin-bottom: 18px; text-transform: uppercase;
+}
+.vision-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3.6vw, 42px); font-weight: 500;
+  letter-spacing: -0.012em; line-height: 1.18;
+  color: var(--t); margin-bottom: 22px;
+}
+.vision-h em { font-style: italic; color: var(--gold-hi); }
+.vision-d {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px; line-height: 1.66;
+  color: var(--t2); margin-bottom: 16px;
+  max-width: 860px;
+}
+.vision-d b { color: var(--t); font-weight: 600; }
+.vision-d-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; line-height: 1.62;
+  color: var(--t3); padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  max-width: 860px;
+}
+.vision-d-sub b { color: var(--gold-hi); font-weight: 600; }
+
+.ask-timeline-anchor {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; font-weight: 700; letter-spacing: 2.6px;
+  color: var(--gold); text-transform: uppercase;
+  text-align: center;
+  padding: 20px 16px;
+  margin: 8px 0 28px;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  background: rgba(212,162,76,0.04);
+}
+
+@media (max-width: 600px) {
+  .vision-block { padding: 32px 24px 28px; }
+}
+
+/* ── FOOTER ───────────────────────────────── */
+.footer {
+  padding: 48px 32px;
+  text-align: center;
+  border-top: 1px solid var(--rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--t4);
+}
+.footer a { color: var(--gold); text-decoration: none; margin: 0 12px; }
+
+/* ── RESPONSIVE ───────────────────────────── */
+@media (max-width: 900px) {
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .row-strip { grid-template-columns: 1fr; gap: 12px; }
+  .panel { padding: 56px 24px; }
+  .hero { padding: 120px 24px 60px; }
+  .nav { padding: 12px 20px; }
+  .tab-nav { padding: 0 20px; }
+  .bio-grid { grid-template-columns: 1fr; gap: 18px; }
+}
+@media (max-width: 540px) {
+  .grid-4 { grid-template-columns: 1fr; }
+  .hero-metrics { grid-template-columns: 1fr 1fr; gap: 24px; }
+}
+</style>
+</head>
+<!-- FCBase91d . take 4 (five lenses + team doctrine + overlay/110 walks) (live rail + wedge flagship) . gap-quantified + stickiness loop + competitive matrix + live proof stack + WVB wedge + June-11 traction (2026-06-11) -->
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="nav">
+  <a href="#top" class="nav-brand">FieldCheck<span class="iq">IQ</span></a>
+  <a href="#" onclick="openContact(event)" class="nav-cta">★ Get in touch</a>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero" id="top">
+  <div class="hero-eyebrow">★ THE FIELDCHECK BRIEFING · 2026</div>
+  <h1 class="hero-h">The <em>athletic intelligence layer</em> the sport never had.</h1>
+  <p class="hero-deck">Recruiting services lie. Mock drafts are vibes. Highlight reels are PR. <b>FieldCheck IQ</b> is the AI-native verdict layer for athletes — sixteen analytical voices in parallel, Bayesian consensus, eight facets per athlete, methodology audit-ready and public. Built amateur-first.</p>
+
+  <div class="hero-metrics">
+    <div>
+      <div class="hero-metric-n">16</div>
+      <div class="hero-metric-l">LLM voices in parallel<br>per verdict</div>
+    </div>
+    <div>
+      <div class="hero-metric-n">8</div>
+      <div class="hero-metric-l">Canonical facets<br>every athlete, every sport</div>
+    </div>
+    <div>
+      <div class="hero-metric-n">5+</div>
+      <div class="hero-metric-l">Sports covered<br>and growing</div>
+    </div>
+    <div>
+      <div class="hero-metric-n">$0</div>
+      <div class="hero-metric-l">Free tier<br>permanent · structural</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ THE FIVE PRINCIPLES ═══════════════ -->
+<section class="charter">
+  <div class="charter-wrap">
+    <div class="charter-eyebrow">★ THE FIVE PRINCIPLES · THE FIELDCHECK CHARTER</div>
+    <h2 class="charter-h">What we <em>believe</em>. Before the deck. Before the demo. Before anything.</h2>
+
+    <div class="principle">
+      <div class="principle-num">01</div>
+      <div class="principle-body">
+        <div class="principle-h">Build what <em>nobody else will</em>.</div>
+        <div class="principle-d">Where every other player in evaluation has bent the line — to revenue, to access, to convenience — we hold it. That refusal is the product.</div>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">02</div>
+      <div class="principle-body">
+        <div class="principle-h">One algorithm. <em>Every level.</em></div>
+        <div class="principle-d">A HS sophomore and an NBA MVP get the same eight facets, the same sixteen voices, the same Bayesian consensus. The framework refuses to bend to fit the level.</div>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">03</div>
+      <div class="principle-body">
+        <div class="principle-h">Trust compounds. <em>Vibes don't.</em></div>
+        <div class="principle-d">Methodology public. Dissent on the record. Predictions pre-registered. Trust is the only asset in athletic evaluation that grows with use — and we optimize for its compounding curve, not for quarterly engagement.</div>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">04</div>
+      <div class="principle-body">
+        <div class="principle-h">AI-native. <em>From day one.</em></div>
+        <div class="principle-d">Not bolted on. Not a retrofit. The sixteen-voice pipeline IS the product — engineered as architecture before any feature was drawn. The moat is the system, not the model.</div>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">05</div>
+      <div class="principle-body">
+        <div class="principle-h">The verdict belongs to <em>the family</em>.</div>
+        <div class="principle-d">Free for athletes and their families. Forever. Locked structurally — not as a marketing tier we can retract. The verdict on your kid will never be paywalled, never be conflicted, never be for sale.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TAB NAV ═══════════════ -->
+<div class="tab-nav-wrap">
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="problem"><span class="tab-num">01</span>The Problem</button>
+    <button class="tab-btn" data-tab="product"><span class="tab-num">02</span>The Product</button>
+    <button class="tab-btn" data-tab="moat"><span class="tab-num">03</span>The Moat</button>
+    <button class="tab-btn" data-tab="proof"><span class="tab-num">04</span>The Proof</button>
+    <button class="tab-btn" data-tab="audience"><span class="tab-num">05</span>Who It's For</button>
+    <button class="tab-btn" data-tab="traction"><span class="tab-num">06</span>Traction</button>
+    <button class="tab-btn" data-tab="team"><span class="tab-num">07</span>Team</button>
+    <button class="tab-btn" data-tab="ask"><span class="tab-num">08</span>The Ask</button>
+  </div>
+</div>
+
+<!-- ═══════════════ PANEL · PROBLEM ═══════════════ -->
+<section class="panel active" id="panel-problem">
+  <div class="panel-eyebrow">01 · THE PROBLEM</div>
+  <h2 class="panel-h">Sports evaluation is <em>structurally broken</em>.</h2>
+  <p class="panel-deck">Every athlete is graded by a system that profits from grading them. The truth has become a paywall, a vibe, a press release — never a verifiable verdict. The market has been waiting for an honest evaluation layer for two decades.</p>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-num">PROBLEM 01</div>
+      <h3 class="card-h">Recruiting services <em>lie</em>.</h3>
+      <p class="card-d">National services charge families <b>$500–$2,000+</b> to be ranked. Pay-to-play is documented. The truth costs more than the lie does.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">PROBLEM 02</div>
+      <h3 class="card-h">Mock drafts are <em>vibes</em>.</h3>
+      <p class="card-d">A handful of well-followed accounts move <b>billions in NIL</b> and contract dollars on prior boards and Tuesday-night Twitter consensus.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">PROBLEM 03</div>
+      <h3 class="card-h">Film is <em>PR</em>.</h3>
+      <p class="card-d">Every prospect's tape is a 90-second highlight reel. The film is the message. The message is no longer the film.</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0 30px">
+    <div style="border:1px solid rgba(248,244,237,.12);border-radius:6px;padding:18px 20px"><div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#EEC067;line-height:1">$2.3B</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(245,241,232,.46);margin-top:7px">NIL market 2024-25 · ~9% growth · House settlement live</div></div>
+    <div style="border:1px solid rgba(248,244,237,.12);border-radius:6px;padding:18px 20px"><div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#EEC067;line-height:1">8M</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(245,241,232,.46);margin-top:7px">US high-school athletes · zero ever graded</div></div>
+    <div style="border:1px solid rgba(248,244,237,.12);border-radius:6px;padding:18px 20px"><div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#EEC067;line-height:1">40+</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(245,241,232,.46);margin-top:7px">States permitting HS NIL · the question moved down-market</div></div>
+  </div>
+  <p class="panel-deck" style="margin-top:0">Every market that prices assets builds a ratings layer — equities got S&amp;P, credit got FICO. The athlete economy prices teenagers with <b>no accountable rating infrastructure at all.</b></p>
+  <div class="callout">
+    <div class="callout-label">★ THE GAP · FIVE LAYERS EXIST. THE JUDGMENT LAYER DOES NOT.</div>
+    <div style="margin:14px 0 4px;border:1px solid rgba(248,244,237,.12);border-radius:6px;overflow:hidden;font-size:13px">
+      <div style="display:grid;grid-template-columns:118px 1fr;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(248,244,237,.12)"><b style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;color:rgba(245,241,232,.74)">FILM</b><span style="color:rgba(245,241,232,.6)">Hudl · 300K teams · shows what happened, renders no verdict</span></div>
+      <div style="display:grid;grid-template-columns:118px 1fr;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(248,244,237,.12)"><b style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;color:rgba(245,241,232,.74)">STATS</b><span style="color:rgba(245,241,232,.6)">MaxPreps · counts production, explains nothing</span></div>
+      <div style="display:grid;grid-template-columns:118px 1fr;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(248,244,237,.12)"><b style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;color:rgba(245,241,232,.74)">HYPE</b><span style="color:rgba(245,241,232,.6)">247 · On3+Rivals · top 300, two sports, opaque, never scored on outcomes</span></div>
+      <div style="display:grid;grid-template-columns:118px 1fr;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(248,244,237,.12)"><b style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;color:rgba(245,241,232,.74)">BIOMECH</b><span style="color:rgba(245,241,232,.6)">ai.io · Uplift · measures the body, silent on character, IQ, coachability</span></div>
+      <div style="display:grid;grid-template-columns:118px 1fr;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(248,244,237,.12)"><b style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;color:rgba(245,241,232,.74)">ATTENTION</b><span style="color:rgba(245,241,232,.6)">Overtime · 100M followers · owns Gen Z eyeballs, zero evaluative intelligence</span></div>
+      <div style="display:grid;grid-template-columns:118px 1fr;gap:12px;padding:11px 16px;background:rgba(212,162,76,.1);border-left:3px solid #D4A24C"><b style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.4px;color:#EEC067">JUDGMENT</b><span style="color:#EEC067;font-weight:600">FieldCheck IQ · public, accountable, 8 facets, every level · nobody else is here</span></div>
+    </div>
+    <p class="callout-text" style="margin-top:14px">Proof the incumbent layer is broken, from their own pages: the same 2026 receiver is <b>No. 23 on 247Sports and No. 214 on Rivals</b> — a 191-spot divergence no mechanism ever scores. And the incumbents structurally cannot close the gap: media sells hype, Hudl sells to coaches — <b>accountability would destroy their own product.</b></p>
+    <p class="callout-text" style="margin-top:10px">For the athlete, the verdict is a GPS to the dream — a top program is a means to NIL and the pros. <b>THE PATH</b> on every verdict shows where they are, what the next rung requires, and which facets close the gap — then the AI agent coaches them through it. <b>That is why they come back after every game.</b></p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+      <a href="/fieldcheck-verdict.html?q=Carlos+Medlock+Jr&sport=mens-basketball" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:#0A0908;background:#D4A24C;padding:11px 16px;border-radius:3px;text-decoration:none">Live demo: THE PATH →</a>
+      <a href="/gap" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:#D4A24C;border:1px solid rgba(212,162,76,.3);padding:10px 16px;border-radius:3px;text-decoration:none">Market brief →</a>
+      <a href="/receipts" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:#D4A24C;border:1px solid rgba(212,162,76,.3);padding:10px 16px;border-radius:3px;text-decoration:none">The receipts →</a>
+    </div>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:#EEC067;margin-top:18px;line-height:1.4">“Hudl shows the film. MaxPreps counts the stats. 247 ranks the famous. Nobody judges. We are the verdict — public, accountable, for every athlete.”</p>
+  </div>
+
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:#D4A24C;margin:40px 0 4px">NEW · THE GAP, QUANTIFIED</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px">
+    <div class="card"><div class="card-num">GAP 01</div><h3 class="card-h">~8 million <em>invisible</em>.</h3><p class="card-d">High-school athletes alone — before club, JUCO, D2/D3. The recruiting industry prices and covers roughly the top 1%. Everyone else gets stats storage, never judgment.</p></div>
+    <div class="card"><div class="card-num">GAP 02</div><h3 class="card-h">Judgment <em>is</em> the product.</h3><p class="card-d">$2.3B of recruiting-services spend is priced for the famous few. The unpriced market is a graded verdict + a path for the 99% — that's the build.</p></div>
+    <div class="card"><div class="card-num">GAP 03</div><h3 class="card-h">Meet the <em>ghost</em>.</h3><p class="card-d">Carlos Medlock Jr — zero stars, zero coverage, holding the first honest 8-facet verdict of his athletic life. <a href="/fieldcheck-verdict.html?q=Carlos+Medlock+Jr&sport=mens-basketball" target="_blank" style="color:#EEC067;text-decoration:underline">Live, today →</a></p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ PANEL · PRODUCT ═══════════════ -->
+<section class="panel" id="panel-product">
+  <div class="panel-eyebrow">02 · THE PRODUCT</div>
+  <h2 class="panel-h">One verdict. <em>Sixteen voices.</em> Zero agendas.</h2>
+  <p class="panel-deck">Every athlete gets a single composite score (1–10), a tier (ICON → SCOUT), and an eight-facet polygon — derived from a hybrid algorithmic + LLM-synthesis pipeline that anyone can audit. The same framework runs on a HS sophomore and an NBA MVP.</p>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-num">★ THE POLYGON</div>
+      <h3 class="card-h"><em>Eight</em> canonical facets.</h3>
+      <p class="card-d">Character · Mindset · Mental Strength · Talent · Physical · Mental/IQ · Coachability · Competitiveness. Every facet scored independently. Every score traceable to the inputs that produced it.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">★ THE VOICES</div>
+      <h3 class="card-h"><em>Sixteen</em> analytical voices.</h3>
+      <p class="card-d">Sixteen independent perspectives (statistical, scouting, biomechanical, character, projection) run in parallel. Synthesized via <b>Bayesian consensus</b>, not vibes. Dissent published on the record.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">★ THE METHODOLOGY</div>
+      <h3 class="card-h"><em>Public.</em> Audit-ready.</h3>
+      <p class="card-d">The 16 voices, the eval grid, the tier bands, the cap discipline — all documented and inspectable. 50 pre-registered predictions locked May 2026, Aug 2028 check-in. We publish the wrong ones, by name.</p>
+    </div>
+  </div>
+
+  <div style="border:1px solid rgba(212,162,76,.3);background:rgba(212,162,76,.1);border-radius:6px;padding:22px 24px;margin:30px 0">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:#EEC067;margin-bottom:10px">★ NEW · THE STICKINESS LOOP — LIVE ON EVERY VERDICT</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <div><b style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.4px;color:#F5F1E8">THE PATH</b><p style="font-size:12.5px;color:rgba(245,241,232,.74);margin-top:5px;font-weight:300">Pick your dream — D1, NIL, Pro — see the ladder, YOU ARE HERE, and the exact facets that close the gap.</p></div>
+      <div><b style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.4px;color:#F5F1E8">THE AGENT</b><p style="font-size:12.5px;color:rgba(245,241,232,.74);margin-top:5px;font-weight:300">Every gap flows into a live AI coach — "why is my Mental IQ 6.0, and what moves it?" Grade becomes roadmap.</p></div>
+      <div><b style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.4px;color:#F5F1E8">THE CARD</b><p style="font-size:12.5px;color:rgba(245,241,232,.74);margin-top:5px;font-weight:300">One tap renders the 1080×1080 identity card — polygon, tier, next rung — straight to the share sheet. Every share recruits the next athlete.</p></div>
+    </div>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#EEC067;margin-top:14px">"Your number moved" is the strongest notification in sports — and only we can send it, because nobody else grades these athletes at all.</p>
+  </div>
+  <div class="section-divider">
+    <div class="section-divider-label">★ TEST IT YOURSELF</div>
+    <h3 class="section-divider-h">Click any amateur. <em>Read the verdict.</em></h3>
+  </div>
+
+  <div class="sample-grid">
+    <a class='sample-card' href='https://fieldcheck-app.netlify.app/fieldcheck-verdict?q=AJ+Dybantsa&sport=mens-basketball' target='_blank'>
+      <div class="sample-name">AJ Dybantsa</div>
+      <div class="sample-meta">HS · BYU commit · Basketball</div>
+    </a>
+    <a class='sample-card' href='https://fieldcheck-app.netlify.app/fieldcheck-verdict?q=Cameron+Boozer&sport=mens-basketball' target='_blank'>
+      <div class="sample-name">Cameron Boozer</div>
+      <div class="sample-meta">HS · Duke commit · Basketball</div>
+    </a>
+    <a class='sample-card' href='https://fieldcheck-app.netlify.app/fieldcheck-verdict?q=Faizon+Brandon&sport=football' target='_blank'>
+      <div class="sample-name">Faizon Brandon</div>
+      <div class="sample-meta">HS · Tennessee · #1 QB 2026</div>
+    </a>
+    <a class='sample-card' href='https://fieldcheck-app.netlify.app/fieldcheck-verdict?q=Chris+Henry+Jr&sport=football' target='_blank'>
+      <div class="sample-name">Chris Henry Jr.</div>
+      <div class="sample-meta">HS · Ohio State · WR</div>
+    </a>
+    <a class='sample-card' href='https://fieldcheck-app.netlify.app/fieldcheck-verdict?q=Bryce+Underwood&sport=football' target='_blank'>
+      <div class="sample-name">Bryce Underwood</div>
+      <div class="sample-meta">D1 · Michigan · Freshman QB</div>
+    </a>
+    <a class='sample-card' href='https://fieldcheck-app.netlify.app/fieldcheck-verdict?q=Cavan+Sullivan&sport=mens-soccer' target='_blank'>
+      <div class="sample-name">Cavan Sullivan</div>
+      <div class="sample-meta">Pro · Philadelphia Union · 15</div>
+    </a>
+  </div>
+
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:#D4A24C;margin:40px 0 4px">NEW · THE STICKINESS LOOP — WHY ATHLETES COME BACK</div>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.45;color:#EEC067;border-left:3px solid #D4A24C;padding:4px 0 4px 20px;margin:18px 0 6px">Every game changes your number — and your number is the one thing about your athletic life that compounds somewhere.</p>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px">
+    <div class="card"><div class="card-num">LOOP 01</div><h3 class="card-h"><em>Identity.</em></h3><p class="card-d">Fine-grain per-athlete numbers (shipped June 11): 7.33 is yours, not a bucket shared with a thousand kids.</p></div>
+    <div class="card"><div class="card-num">LOOP 02</div><h3 class="card-h"><em>GPS.</em></h3><p class="card-d">THE PATH on every verdict: current rung, dream rung, the exact facets in between. Direction, never a sentence.</p></div>
+    <div class="card"><div class="card-num">LOOP 03</div><h3 class="card-h"><em>Pulse.</em></h3><p class="card-d">The movement wire + verdict banners: did Tuesday's match move me? A reason to return after every game — and movement is never manufactured.</p></div>
+    <div class="card"><div class="card-num">LOOP 04</div><h3 class="card-h"><em>Status.</em></h3><p class="card-d">The share card makes the number a social object — every share recruits the next athlete. Acquisition lives inside the product.</p></div>
+  </div>
+  <p class="card-d" style="margin-top:14px">And for the ghosts, the deepest hook of all: <b style="color:#F5F1E8">being seen</b> — we are the only mirror that ever looked at them seriously.</p>
+</section>
+
+<!-- ═══════════════ PANEL · MOAT ═══════════════ -->
+<section class="panel" id="panel-moat">
+  <div class="panel-eyebrow">03 · THE MOAT</div>
+  <h2 class="panel-h">Where every other rating product <em>breaks down</em>.</h2>
+  <p class="panel-deck">Pros are evaluated to death. Amateurs — HS, JUCO, D3, D2, D1 — are graded by services that profit from grading them. <b>The amateur gap is the moat.</b> We built every piece of FieldCheck to win there first.</p>
+  <div class="callout" style="margin-top:24px">
+    <div class="callout-label">★ THE ACCOUNTABILITY CLOCK · A MOAT COMPETITORS CANNOT RETROFIT</div>
+    <p class="callout-text">50 predictions sealed May 17, 2026 — public check-in August 15, 2028, whether we like the results or not. Outcomes ledger publishes the misses alongside the hits. Every AI system prompt public, live cost on the page. <b>A copycat starts the accountability clock at zero — permanently two years behind.</b> Incumbents can't even start it: media sells hype, Hudl sells to coaches — accountability would destroy their own product.</p>
+  </div>
+
+  <div style="margin-top: 32px;">
+    <div class="row-strip">
+      <div class="row-label">PROS · SATURATED</div>
+      <div class="row-text">NBA / NFL / MLB mock drafts, analytics models, contract data. Already a well-served market. <i>We grade pros so the methodology can be benchmarked against known outcomes — not because they need us.</i></div>
+    </div>
+    <div class="row-strip">
+      <div class="row-label">D1 · PARTIAL</div>
+      <div class="row-text">Men's basketball top tier covered by ESPN / KenPom. Women's basketball: <b>top 50 only</b>. Olympic-sport D1 athletes: effectively zero verdict layer. <i>The vast majority of D1 athletes go ungraded.</i></div>
+    </div>
+    <div class="row-strip">
+      <div class="row-label">D2 · D3 · JUCO · INVISIBLE</div>
+      <div class="row-text">Tens of thousands of athletes evaluated by <b>nobody</b>. The largest fully-underserved tier in athletics. We grade all of them with the same methodology we apply to the pros.</div>
+    </div>
+    <div class="row-strip">
+      <div class="row-label">HS RECRUITS · PAY-TO-RANK</div>
+      <div class="row-text">247Sports, Rivals, On3: <b>documented pay-to-play.</b> Families pay $500–$2,000+ per year to be ranked by services that profit from ranking them. <i>FieldCheck is free. Forever. Locked structurally, not as a marketing tier.</i></div>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-label">★ WHAT WE BUILT</div>
+    <h3 class="section-divider-h">Six proof points. Engineered <em>amateur-first</em>.</h3>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-num">PROOF 01</div>
+      <h3 class="card-h">110-athlete validation <em>battery</em>.</h3>
+      <p class="card-d">Continuously-run regression suite: <b>60 HS · 17 D1 · 13 D2 · 10 D3 · 3 JUCO · 7 pro</b>, spanning 11 evaluation cohorts. Every algorithm change tested against all 110 before shipping.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">PROOF 02</div>
+      <h3 class="card-h">HS evidence-ceiling <em>discipline</em>.</h3>
+      <p class="card-d">HS-only composite capped at <b>5.40</b> unless 4-of-4 phenom criteria are met. 247Sports and Rivals routinely grade HS kids at 9+ with no such discipline.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">PROOF 03</div>
+      <h3 class="card-h">Cross-level cap <em>discipline</em>.</h3>
+      <p class="card-d">D2 dominance isn't D1-projectable. HS standout isn't pro-projectable. Live test cases: <b>Dent-Smith</b> (D2-vs-D1), <b>Alozie</b> (HS-to-D1 inverse).</p>
+    </div>
+    <div class="card">
+      <div class="card-num">PROOF 04</div>
+      <h3 class="card-h">Identity-collision <em>protection</em>.</h3>
+      <p class="card-d">HS namesake matches a famous pro? Most platforms silently inherit pro evidence into HS grades. We refuse the merge. Test case: <b>Kimmons / Duncan</b> false-match caught.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">PROOF 05</div>
+      <h3 class="card-h">One algorithm. <em>Every level.</em></h3>
+      <p class="card-d">Same 8 facets, 16 voices, Bayesian consensus on HS sophomores and NBA MVPs. <b>Tier bands published</b>: ICON · ELITE+ · ELITE · STAR · PROSPECT · SCOUT.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">PROOF 06</div>
+      <h3 class="card-h">$0 <em>forever</em> for amateurs.</h3>
+      <p class="card-d">Recruiting services charge families $500–$2,000+ per year. We charge $0. <b>The verdict on your kid will never be paywalled.</b> Structural commitment, not a marketing tier.</p>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-label">★ COMPETITIVE LANDSCAPE</div>
+    <h3 class="section-divider-h">Nobody owns the <em>verdict layer</em>.</h3>
+  </div>
+
+  <div class="matrix-wrap">
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="fc-col">FieldCheck IQ</th>
+          <th>247 / Rivals / On3</th>
+          <th>Hudl</th>
+          <th>Mock drafts</th>
+          <th>MaxPreps</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Verdict layer</td>
+          <td class="fc-cell">✓ All levels</td>
+          <td class="partial">~ HS rankings</td>
+          <td class="x">— (video/data)</td>
+          <td class="partial">✓ Pros only</td>
+          <td class="x">— (stats only)</td>
+        </tr>
+        <tr>
+          <td>D2 / D3 / JUCO coverage</td>
+          <td class="fc-cell">✓</td>
+          <td class="x">—</td>
+          <td class="partial">~ (capture)</td>
+          <td class="x">—</td>
+          <td class="partial">~ (stats)</td>
+        </tr>
+        <tr>
+          <td>Methodology public + auditable</td>
+          <td class="fc-cell">✓</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+        </tr>
+        <tr>
+          <td>Cross-level cap discipline</td>
+          <td class="fc-cell">✓</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+        </tr>
+        <tr>
+          <td>Identity-collision protection</td>
+          <td class="fc-cell">✓</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+        </tr>
+        <tr>
+          <td>HS evidence-ceiling discipline</td>
+          <td class="fc-cell">✓</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+        </tr>
+        <tr>
+          <td>Pre-registered predictions</td>
+          <td class="fc-cell">✓ (50 locked)</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+        </tr>
+        <tr>
+          <td>Pay-to-rank free</td>
+          <td class="fc-cell">✓</td>
+          <td class="x">Pay-to-play</td>
+          <td class="partial">n/a</td>
+          <td class="partial">n/a</td>
+          <td class="partial">~ basic</td>
+        </tr>
+        <tr>
+          <td>AI-native architecture</td>
+          <td class="fc-cell">✓ From day one</td>
+          <td class="x">—</td>
+          <td class="partial">Bolted on</td>
+          <td class="x">—</td>
+          <td class="x">—</td>
+        </tr>
+        <tr>
+          <td>Free to athletes & families</td>
+          <td class="fc-cell">✓ Forever</td>
+          <td class="x">$500–$2K/yr</td>
+          <td class="partial">~ Some tiers</td>
+          <td class="partial">n/a</td>
+          <td class="partial">~ Basic</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">★ BOTTOM LINE</div>
+    <p class="callout-text">The amateur evaluation layer is <b>the largest underserved market in athletics</b>. Existing services are compromised, pro-centric, or stats-only. FieldCheck is the first verdict layer built <b>amateur-first</b> — with public methodology, cross-level discipline, and zero conflict with the families it serves.</p>
+  </div>
+
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:#D4A24C;margin:40px 0 4px">NEW · THE COMPETITIVE MATRIX</div>
+  <div style="border:1px solid rgba(248,244,237,.12);border-radius:8px;overflow:hidden;margin-top:16px;font-size:13px">
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 0.9fr;background:rgba(248,244,237,.03);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(245,241,232,.46)"><div style="padding:11px 14px">Player</div><div style="padding:11px 14px">What it stores</div><div style="padding:11px 14px">Who it covers</div><div style="padding:11px 14px">Judgment?</div></div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 0.9fr;border-top:1px solid rgba(248,244,237,.08)"><div style="padding:11px 14px;color:#F5F1E8">Hudl</div><div style="padding:11px 14px;color:rgba(245,241,232,.7)">Film</div><div style="padding:11px 14px;color:rgba(245,241,232,.7)">Whoever uploads</div><div style="padding:11px 14px;color:#C97B6B">Never</div></div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 0.9fr;border-top:1px solid rgba(248,244,237,.08)"><div style="padding:11px 14px;color:#F5F1E8">MaxPreps</div><div style="padding:11px 14px;color:rgba(245,241,232,.7)">Box scores</div><div style="padding:11px 14px;color:rgba(245,241,232,.7)">HS broadly</div><div style="padding:11px 14px;color:#C97B6B">Never</div></div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 0.9fr;border-top:1px solid rgba(248,244,237,.08)"><div style="padding:11px 14px;color:#F5F1E8">247 · On3 · Rivals</div><div style="padding:11px 14px;color:rgba(245,241,232,.7)">Rankings + recruiting news</div><div style="padding:11px 14px;color:rgba(245,241,232,.7)">The famous ~1%</div><div style="padding:11px 14px;color:#EEC067">Stars, no path</div></div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 0.9fr;border-top:1px solid rgba(248,244,237,.08)"><div style="padding:11px 14px;color:#F5F1E8">ESPN / media</div><div style="padding:11px 14px;color:rgba(245,241,232,.7)">Narrative</div><div style="padding:11px 14px;color:rgba(245,241,232,.7)">Stars only</div><div style="padding:11px 14px;color:#C97B6B">Vibes</div></div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 0.9fr;border-top:1px solid rgba(212,162,76,.4);background:rgba(212,162,76,.07)"><div style="padding:11px 14px;color:#EEC067;font-weight:600">FieldCheck IQ</div><div style="padding:11px 14px;color:#F5F1E8">Verdict + 8-facet shape + PATH</div><div style="padding:11px 14px;color:#F5F1E8">Everyone — club to pro</div><div style="padding:11px 14px;color:#7C9B6E;font-weight:600">Graded + accountable</div></div>
+  </div>
+  <p class="card-d" style="margin-top:16px"><b style="color:#F5F1E8">The test no incumbent can pass:</b> hash-seal your predictions before the event, publish your misses by name, and keep a public build log. An incumbent that tried would put its existing ratings business on trial. We were born on trial — <a href="/draft-board" target="_blank" style="color:#EEC067;text-decoration:underline">the sealed board is live →</a></p>
+</section>
+
+<!-- ═══════════════ PANEL · AUDIENCE ═══════════════ -->
+<section class="panel" id="panel-proof">
+  <div class="panel-eyebrow">04 · THE PROOF</div>
+  <h2 class="panel-h">The 110-athlete calibration battery, <em>on the table.</em></h2>
+  <p class="panel-deck">Every algorithm change runs against these 110 athletes before shipping. Eleven evaluation cohorts spanning the entire amateur tree, plus pro regression checks. Click any name to see their live verdict — the same eight facets and sixteen voices applied to a 6'8 senior in Sherman Oaks as to a Wooden Award winner at Duke.</p>
+
+  <div class="t110-deck-stats">
+    <div class="t110-deck-stat"><div class="t110-deck-stat-num">60</div><div class="t110-deck-stat-lbl">HS amateur</div></div>
+    <div class="t110-deck-stat"><div class="t110-deck-stat-num">17</div><div class="t110-deck-stat-lbl">D1</div></div>
+    <div class="t110-deck-stat"><div class="t110-deck-stat-num">13</div><div class="t110-deck-stat-lbl">D2</div></div>
+    <div class="t110-deck-stat"><div class="t110-deck-stat-num">10</div><div class="t110-deck-stat-lbl">D3</div></div>
+    <div class="t110-deck-stat"><div class="t110-deck-stat-num">3</div><div class="t110-deck-stat-lbl">JUCO</div></div>
+    <div class="t110-deck-stat"><div class="t110-deck-stat-num">7</div><div class="t110-deck-stat-lbl">Pro check</div></div>
+    <div class="t110-deck-stat"><div class="t110-deck-stat-num" style="color:var(--gold-hi,#E8BC6C)">110</div><div class="t110-deck-stat-lbl">Total</div></div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-label">★ MARQUEE SAMPLE · 9 of 110</div>
+    <h3 class="section-divider-h">Live verdicts. <em>Click any name.</em></h3>
+  </div>
+
+  <div class="t110-grid">
+    <a class='t110-card t110-band-great' href='/fieldcheck-verdict?q=Tyran+Stokes&sport=mens-basketball'>
+        <div class="t110-card-name">Tyran Stokes</div>
+        <div class="t110-card-meta">SF · MENS BASKETBALL</div>
+        <div class="t110-card-school">Notre Dame HS (CA)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class='t110-card t110-band-great' href='/fieldcheck-verdict?q=Cameron+Williams&sport=mens-basketball'>
+        <div class="t110-card-name">Cameron Williams</div>
+        <div class="t110-card-meta">PF · MENS BASKETBALL</div>
+        <div class="t110-card-school">St. Mary's HS (Phoenix)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class='t110-card t110-band-great' href='/fieldcheck-verdict?q=Jordan+Smith+Jr&sport=mens-basketball'>
+        <div class="t110-card-name">Jordan Smith Jr</div>
+        <div class="t110-card-meta">CG · MENS BASKETBALL</div>
+        <div class="t110-card-school">Paul VI Catholic (VA)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class='t110-card t110-band-great' href='/fieldcheck-verdict?q=Saniyah+Hall&sport=womens-basketball'>
+        <div class="t110-card-name">Saniyah Hall</div>
+        <div class="t110-card-meta">G · WOMENS BASKETBALL</div>
+        <div class="t110-card-school">Spire Academy (OH)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class='t110-card t110-band-great' href='/fieldcheck-verdict?q=Faizon+Brandon&sport=football'>
+        <div class="t110-card-name">Faizon Brandon</div>
+        <div class="t110-card-meta">QB · FOOTBALL</div>
+        <div class="t110-card-school">Grimsley HS (NC)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class='t110-card t110-band-great' href='/fieldcheck-verdict?q=Chris+Henry+Jr&sport=football'>
+        <div class="t110-card-name">Chris Henry Jr</div>
+        <div class="t110-card-meta">WR · FOOTBALL</div>
+        <div class="t110-card-school">Mater Dei (CA)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class='t110-card t110-band-great' href='/fieldcheck-verdict?q=Grady+Emerson&sport=baseball'>
+        <div class="t110-card-name">Grady Emerson</div>
+        <div class="t110-card-meta">SS · BASEBALL</div>
+        <div class="t110-card-school">Fort Worth Christian (TX)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class='t110-card t110-band-good' href='/fieldcheck-verdict?q=Carlos+Medlock+Jr&sport=mens-basketball'>
+        <div class="t110-card-name">Carlos Medlock Jr</div>
+        <div class="t110-card-meta">PG · MENS BASKETBALL</div>
+        <div class="t110-card-school">Link Academy (MO)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GOOD</span></div>
+      </a>
+      <a class='t110-card t110-band-great' href='/fieldcheck-verdict?q=Robbie+Avila&sport=mens-basketball'>
+        <div class="t110-card-name">Robbie Avila</div>
+        <div class="t110-card-meta">F · MENS BASKETBALL</div>
+        <div class="t110-card-school">Saint Louis</div>
+        <div class="t110-card-tags"><span class="t110-tier">D1</span><span class="t110-band">GREAT</span></div>
+      </a>
+  </div>
+
+  <div class="t110-cta-row">
+    <a class='t110-cta' href='/fieldcheck-roster-110'>Browse all 110 athletes <span class="t110-cta-arrow">→</span></a>
+  </div>
+
+  <style>
+    .t110-deck-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:16px;padding:24px 0;border-top:1px solid rgba(255,253,247,.10);border-bottom:1px solid rgba(255,253,247,.10);margin:32px 0 40px}
+    .t110-deck-stat{text-align:center}
+    .t110-deck-stat-num{font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;color:var(--gold);font-weight:400;line-height:1}
+    .t110-deck-stat-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;color:#8B8475;letter-spacing:.12em;text-transform:uppercase;margin-top:6px}
+    .t110-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:24px 0 40px}
+    .t110-card{display:block;padding:18px 16px 14px;background:var(--ink-2);border:1px solid rgba(255,253,247,.05);border-radius:10px;text-decoration:none;color:var(--t);transition:all .16s ease}
+    .t110-card:hover{background:var(--ink-3);border-color:rgba(212,162,76,.32);transform:translateY(-1px)}
+    .t110-card-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;font-weight:500;margin:0 0 4px;line-height:1.2}
+    .t110-card-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:#8B8475;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+    .t110-card-school{font-size:12.5px;color:#BFB6A4;margin-bottom:10px;font-style:italic}
+    .t110-card-tags{display:flex;gap:6px;padding-top:8px;border-top:1px solid rgba(255,253,247,.05)}
+    .t110-tier,.t110-band{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 6px;border-radius:3px;letter-spacing:.08em}
+    .t110-tier{background:rgba(255,253,247,.04);color:#8B8475}
+    .t110-band-great .t110-band{background:rgba(212,162,76,.18);color:var(--gold)}
+    .t110-band-great .t110-card-name{color:#E8BC6C}
+    .t110-band-good .t110-band{background:rgba(91,168,160,.12);color:#5BA8A0}
+    .t110-cta-row{display:flex;justify-content:center;margin-top:8px}
+    .t110-cta{display:inline-flex;align-items:center;gap:14px;padding:18px 36px;background:var(--gold);color:#0A0907;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:8px;transition:all .16s ease}
+    .t110-cta:hover{background:#E8BC6C;transform:translateY(-1px);box-shadow:0 8px 24px rgba(212,162,76,.32)}
+    .t110-cta-arrow{font-size:18px}
+  </style>
+
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:#D4A24C;margin:40px 0 4px">NEW · THE LIVE PROOF STACK — SHIPPED THIS WEEK</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px">
+    <div class="card"><div class="card-num">PROOF · SEALED</div><h3 class="card-h">The <em>draft board</em>.</h3><p class="card-d">Six predictions, SHA-256 on the page, our calls beside the market's, graded in public June 25. <a href="/draft-board" target="_blank" style="color:#EEC067;text-decoration:underline">See it →</a></p></div>
+    <div class="card"><div class="card-num">PROOF · ALIVE</div><h3 class="card-h">The <em>own-number</em> day.</h3><p class="card-d">June 11: ceiling clamps became ordered compressions. Six freshmen who shared 7.4 each woke up with their own number — and the sealed values never moved. Ledger and leaderboard, one page.</p></div>
+    <div class="card"><div class="card-num">PROOF · HONEST</div><h3 class="card-h">The <em>movement wire</em>.</h3><p class="card-d">Numbers move only on real re-evaluation — a no-fake-movement law enforced in code. <a href="/movement" target="_blank" style="color:#EEC067;text-decoration:underline">The wire →</a></p></div>
+  </div>
+
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:#D4A24C;margin:40px 0 4px">NEW · THE LIVE RAIL — EVERY CLAIM, CLICKABLE</div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px">
+    <a href="/sports/womens-volleyball" target="_blank" style="display:block;border:1px solid rgba(212,162,76,.3);background:rgba(212,162,76,.08);border-radius:6px;padding:12px 16px;font-size:13px;color:rgba(245,241,232,.85);transition:border-color .15s">The volleyball index + search →</a>
+    <a href="/fieldcheck-verdict.html?q=Madisen+Skinner&sport=womens-volleyball" target="_blank" style="display:block;border:1px solid rgba(212,162,76,.3);background:rgba(212,162,76,.08);border-radius:6px;padding:12px 16px;font-size:13px;color:rgba(245,241,232,.85);transition:border-color .15s">Madisen Skinner · the wedge’s flagship verdict · full WVB treatment →</a>
+    <a href="/fieldcheck-verdict.html?q=Carlos+Medlock+Jr&sport=mens-basketball" target="_blank" style="display:block;border:1px solid rgba(212,162,76,.3);background:rgba(212,162,76,.08);border-radius:6px;padding:12px 16px;font-size:13px;color:rgba(245,241,232,.85);transition:border-color .15s">The ghost athlete · first verdict of his life →</a>
+    <a href="/fieldcheck-verdict.html?q=Tyran+Stokes&sport=mens-basketball" target="_blank" style="display:block;border:1px solid rgba(212,162,76,.3);background:rgba(212,162,76,.08);border-radius:6px;padding:12px 16px;font-size:13px;color:rgba(245,241,232,.85);transition:border-color .15s">HS #1 · 0.1 from the next tier · THE PATH →</a>
+    <a href="/draft-board" target="_blank" style="display:block;border:1px solid rgba(212,162,76,.3);background:rgba(212,162,76,.08);border-radius:6px;padding:12px 16px;font-size:13px;color:rgba(245,241,232,.85);transition:border-color .15s">The sealed draft board · our calls vs the market →</a>
+    <a href="/movement" target="_blank" style="display:block;border:1px solid rgba(212,162,76,.3);background:rgba(212,162,76,.08);border-radius:6px;padding:12px 16px;font-size:13px;color:rgba(245,241,232,.85);transition:border-color .15s">The movement wire · real events only →</a>
+    <a href="/predictions" target="_blank" style="display:block;border:1px solid rgba(212,162,76,.3);background:rgba(212,162,76,.08);border-radius:6px;padding:12px 16px;font-size:13px;color:rgba(245,241,232,.85);transition:border-color .15s">The prediction ledger · H1–H4 horizons →</a>
+    <a href="/whats-new" target="_blank" style="display:block;border:1px solid rgba(212,162,76,.3);background:rgba(212,162,76,.08);border-radius:6px;padding:12px 16px;font-size:13px;color:rgba(245,241,232,.85);transition:border-color .15s">The build log · this week, in public →</a>
+  </div>
+</section>
+
+<section class="panel" id="panel-audience">
+  <div class="panel-eyebrow">05 · WHO IT'S FOR</div>
+  <h2 class="panel-h">One framework. <em>Different eyes.</em></h2>
+  <p class="panel-deck">The same eight facets, sixteen voices, and Bayesian consensus serve four distinct constituencies. Each finds exactly what they need — without seeing the rest. <b>Multi-sided market on a single trust layer.</b></p>
+
+  <div class="grid-2">
+    <div class="usecase">
+      <div class="usecase-icon">P</div>
+      <div class="usecase-label">FOR PLAYERS</div>
+      <h3 class="usecase-h">Find your <em>shape</em>.</h3>
+      <p class="usecase-d">A 30-second quiz reveals which pro athletes share your shape across eight facets. Free verdict on request — same methodology applied to Cooper Flagg. No account, no fee, no recruiting-service trap.</p>
+      <div class="usecase-flow">
+        <div class="usecase-flow-l">★ Player flow</div>
+        <div class="usecase-flow-steps">
+          <span class="usecase-flow-step">Shape quiz</span>
+          <span class="usecase-flow-arrow">→</span>
+          <span class="usecase-flow-step">Pro match</span>
+          <span class="usecase-flow-arrow">→</span>
+          <span class="usecase-flow-step">Full verdict</span>
+          <span class="usecase-flow-arrow">→</span>
+          <span class="usecase-flow-step">Refinement</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="usecase">
+      <div class="usecase-icon">C</div>
+      <div class="usecase-label">FOR COACHES</div>
+      <h3 class="usecase-h">Interrogate the <em>methodology</em>.</h3>
+      <p class="usecase-d">The 16 voices, the eval grid, the cap logic — all public. Show coaches the work. They tell us what's missing. The framework updates with provenance.</p>
+      <div class="usecase-flow">
+        <div class="usecase-flow-l">★ Coach flow</div>
+        <div class="usecase-flow-steps">
+          <span class="usecase-flow-step">Methodology</span>
+          <span class="usecase-flow-arrow">→</span>
+          <span class="usecase-flow-step">Verdict drill</span>
+          <span class="usecase-flow-arrow">→</span>
+          <span class="usecase-flow-step">Feedback</span>
+          <span class="usecase-flow-arrow">→</span>
+          <span class="usecase-flow-step">Published update</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="usecase">
+      <div class="usecase-icon">S</div>
+      <div class="usecase-label">FOR SCOUTS / EVALUATORS</div>
+      <h3 class="usecase-h">Publish dissent <em>on the record</em>.</h3>
+      <p class="usecase-d">Sixteen voices means sixteen dissents are possible. When the consensus is wrong, the framework updates publicly with provenance. Peer-level conversation, not consumer-facing rankings.</p>
+      <div class="usecase-flow">
+        <div class="usecase-flow-l">★ Scout flow</div>
+        <div class="usecase-flow-steps">
+          <span class="usecase-flow-step">Compare verdict</span>
+          <span class="usecase-flow-arrow">→</span>
+          <span class="usecase-flow-step">Flag dissent</span>
+          <span class="usecase-flow-arrow">→</span>
+          <span class="usecase-flow-step">Provenance</span>
+          <span class="usecase-flow-arrow">→</span>
+          <span class="usecase-flow-step">Ledger</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="usecase">
+      <div class="usecase-icon">F</div>
+      <div class="usecase-label">FOR FAMILIES</div>
+      <h3 class="usecase-h">A verdict <em>you can trust</em>.</h3>
+      <p class="usecase-d">Free. Forever. No paywall, no account, no data harvest. The system applies the same eight facets and cross-level discipline to your kid that it applies to a #1 NBA pick. No conflict of interest.</p>
+      <div class="usecase-flow">
+        <div class="usecase-flow-l">★ Family flow</div>
+        <div class="usecase-flow-steps">
+          <span class="usecase-flow-step">Shape quiz</span>
+          <span class="usecase-flow-arrow">→</span>
+          <span class="usecase-flow-step">Free verdict</span>
+          <span class="usecase-flow-arrow">→</span>
+          <span class="usecase-flow-step">Polygon</span>
+          <span class="usecase-flow-arrow">→</span>
+          <span class="usecase-flow-step">Trajectory</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout teal-callout">
+    <div class="callout-label">★ NETWORK EFFECT</div>
+    <p class="callout-text">Every player adds a node. Every coach who interrogates adds a refinement. Every scout dissent improves provenance. Every family trust signal compounds the moat. <b>Four-sided market on one trust layer — the more it's used, the harder it is to replicate.</b></p>
+  </div>
+
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:#D4A24C;margin:40px 0 4px">NEW · THE WEDGE — WOMEN'S VOLLEYBALL, ON PURPOSE</div>
+  <p class="card-d" style="margin-top:12px">All amateurs is the mission; the wedge is chosen: the highest-participation, most under-served evaluation market in American sports — a huge club ecosystem, exploding NCAA audiences, and for the first time a real domestic pro destination. Nobody has instrumented that ladder. We have:</p>
+  <div style="border:1px solid rgba(248,244,237,.12);border-radius:8px;padding:18px 22px;margin-top:12px">
+    <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid rgba(248,244,237,.06);font-size:13.5px;color:rgba(245,241,232,.74)"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#EEC067">1</span><span>Club + HS — graded today, same 8-facet engine as the pros</span></div>
+    <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid rgba(248,244,237,.06);font-size:13.5px;color:rgba(245,241,232,.74)"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#EEC067">2</span><span>NCAA — program-fit + a coach-voices corpus nobody else reads</span></div>
+    <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid rgba(248,244,237,.06);font-size:13.5px;color:rgba(245,241,232,.74)"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#EEC067">3</span><span>LOVB · AU · overseas — the pro rung, treated with full scouting seriousness</span></div>
+    <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;padding:8px 0;font-size:13.5px;color:rgba(245,241,232,.74)"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#EEC067">4</span><span>National team — the dream rung on every volleyball PATH</span></div>
+  </div>
+  <p class="card-d" style="margin-top:14px">Then the same playbook, sport by sport, level by level — amateurs first, pros as the final angle. <b style="color:#F5F1E8">The coach side closes the loop:</b> a pipeline of graded athletes only we cover, gem alerts wired to real movement, fit scoring — the Club tier prices the pool, the athlete side stays free forever. In August we hash-seal NCAA volleyball season-opener predictions — the accountability machine pointed at the wedge. <a href="/fieldcheck-verdict.html?q=Madisen+Skinner&sport=womens-volleyball" target="_blank" style="color:#EEC067;text-decoration:underline">See the wedge's flagship verdict →</a></p>
+
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:#D4A24C;margin:40px 0 4px">NEW · THE FIVE LENSES — WHAT THIS MEANS FOR YOU</div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px">
+    <div class="card"><div class="card-num">THE PLAYER</div><h3 class="card-h">Finally, <em>an answer.</em></h3><p class="card-d">Where am I really — and what exactly closes the gap to the dream? Your own number, your shape, THE PATH. It moves when you earn it. Free, forever. Nobody has ever owed you this honesty before.</p></div>
+    <div class="card"><div class="card-num">THE COACH</div><h3 class="card-h">A pipeline <em>nobody else sees.</em></h3><p class="card-d">Graded athletes only we cover, gem alerts wired to real movement, fit scoring against your system, a watch-room for your roster. Stop recruiting from the same three lists as everyone else.</p></div>
+    <div class="card"><div class="card-num">THE SCOUT</div><h3 class="card-h">Shape over <em>stars.</em></h3><p class="card-d">An 8-facet shape with evidence citations and an audit trail — compare a JUCO kid to a lottery pick on the same scale. The pre-consensus read, before the market forms one.</p></div>
+    <div class="card"><div class="card-num">THE CLUB / PROGRAM</div><h3 class="card-h">The ladder, <em>instrumented.</em></h3><p class="card-d">Every athlete in your ecosystem on one graded index — development visible season over season, your program’s story told in shapes that improve. The Club tier prices exactly this.</p></div>
+    <div class="card"><div class="card-num">THE PARENT</div><h3 class="card-h">The journey, <em>legible.</em></h3><p class="card-d">No more guessing between hype and silence. An honest tier, a path with named facets, and a calendar of what’s verified vs pending. You can finally see where this is going — and help.</p></div>
+    <div class="card"><div class="card-num">ONE ENGINE</div><h3 class="card-h">Same verdict, <em>every lens.</em></h3><p class="card-d">All five read the same number — that’s the point. One honest evaluation becomes a different superpower in each pair of hands. No payola can survive that symmetry.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ PANEL · TRACTION ═══════════════ -->
+<section class="panel" id="panel-traction">
+  <div class="panel-eyebrow">06 · TRACTION</div>
+  <h2 class="panel-h">What we've <em>shipped</em>.</h2>
+  <p class="panel-deck">FieldCheck is not a deck. It's a live, audit-ready product running on a hybrid algorithmic + LLM pipeline. Built lean. Validated continuously. Public-facing today.</p>
+
+  <div class="grid-4">
+    <div class="card">
+      <div class="card-num">★ LIVE</div>
+      <h3 class="card-h">80 <em>baselines</em>.</h3>
+      <p class="card-d">FCBase80 live in prod — 7 ships on June 10 alone, logged in the open at <b>/whats-new</b>. Every release tested against the 110-athlete regression suite.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">★ COVERAGE</div>
+      <h3 class="card-h">5+ <em>sports</em>.</h3>
+      <p class="card-d">Men's basketball, women's basketball, football, soccer, volleyball — and growing. Same methodology every sport.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">★ ALGO</div>
+      <h3 class="card-h">V5 <em>hybrid</em>.</h3>
+      <p class="card-d">Prompt-based evidence evaluation + code-based post-synthesis discipline. Every correction audited in <code>v5_corrections[]</code> trail.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">★ COMMIT</div>
+      <h3 class="card-h">50 <em>predictions</em>.</h3>
+      <p class="card-d">Pre-registered, locked May 17 2026. Aug 15 2028 check-in. We publish the wrong ones, by name, on the public ledger.</p>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-label">★ WHAT'S LIVE TODAY</div>
+    <h3 class="section-divider-h">Audit-ready product. Not a roadmap.</h3>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-num">SHIPPED</div>
+      <h3 class="card-h">Verdict pages.</h3>
+      <p class="card-d">Full polygon + eight facets + tier conversion + comparable trajectory for every athlete searched. Edge-served from a global Cloudflare worker.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">SHIPPED</div>
+      <h3 class="card-h">Shape quiz.</h3>
+      <p class="card-d">30-second multi-sport archetype identifier. 5 sports, 8 archetype tiles each. Sport-specific pro matches.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">SHIPPED</div>
+      <h3 class="card-h">Methodology page.</h3>
+      <p class="card-d">Sixteen voices · four perspectives · eight facets · six constraints · four refusals. All public. All linkable.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">SHIPPED</div>
+      <h3 class="card-h">Audience pages.</h3>
+      <p class="card-d">Players & Families · Coaches & Programs · Franchises & Scouts. Each with audience-appropriate framing + working search.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">SHIPPED</div>
+      <h3 class="card-h">Sample verdicts.</h3>
+      <p class="card-d">12 clickable amateur athletes on the briefing. Live data. Any reader can interrogate the framework in two clicks.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">SHIPPED</div>
+      <h3 class="card-h">Predictions ledger.</h3>
+      <p class="card-d">50 pre-registered, locked May 17 2026. The accountability infrastructure that no recruiting service has.</p>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-label">★ ENGINEERING DISCIPLINE</div>
+    <h3 class="section-divider-h">Operator-grade ops on a venture build.</h3>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-num">★ TENETS</div>
+      <h3 class="card-h">49+ codified <em>tenets</em>.</h3>
+      <p class="card-d">Engineering doctrine documented at the source. Dev→verify→prod always. Atomic deploy guard. Memory hygiene before context compaction. Operator-grade discipline on a venture timeline.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">★ TESTING</div>
+      <h3 class="card-h">Every change <em>regressed</em>.</h3>
+      <p class="card-d">110-athlete battery runs against every algorithm change. Variance bound. Tier banding consistent. No change ships without the full battery passing.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">★ INFRA</div>
+      <h3 class="card-h">AI-native <em>stack</em>.</h3>
+      <p class="card-d">Cloudflare worker backend · Netlify edge frontend · Bayesian consensus engine · 16-voice LLM pipeline · audit trail every verdict. Built for the AI era, not retrofitted to it.</p>
+    </div>
+  </div>
+
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:#D4A24C;margin:40px 0 4px">NEW · THE JUNE 11 WAVE</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px">
+    <div class="card"><div class="card-num">SHIPPED</div><h3 class="card-h">90 frozen releases.</h3><p class="card-d">Public build log, verified golden freezes, a 40-point automated harness green across the surface. <a href="/whats-new" target="_blank" style="color:#EEC067;text-decoration:underline">The log →</a></p></div>
+    <div class="card"><div class="card-num">SEALED</div><h3 class="card-h">6 predictions on the clock.</h3><p class="card-d">Hash-sealed June 11, resolving at the NBA Draft June 25 — hits and misses published by name, misses fed back as calibration cases.</p></div>
+    <div class="card"><div class="card-num">LIVE</div><h3 class="card-h">5 sports, one algorithm.</h3><p class="card-d">Fine-grain per-athlete numbers, the movement engine, sport-aware paths (a volleyball athlete's dream rung says LOVB, not draft board), search on every sport index.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ PANEL · TEAM ═══════════════ -->
+<section class="panel" id="panel-team">
+  <div class="panel-eyebrow">07 · WHO'S BUILDING THIS</div>
+  <h2 class="panel-h">Founder. <em>Team.</em> AI engine.</h2>
+  <p class="panel-deck">A small, AI-native team operating where evaluation, data, and trust converge. Built by an operator. Sharp enough to outbuild teams five times our size. AI-engineered from day one.</p>
+
+  <div class="bio-card">
+    <div class="bio-grid">
+      <div class="bio-icon">S</div>
+      <div>
+        <div class="bio-role">FOUNDER · OPERATOR · 25+ YEARS AT SCALE</div>
+        <h3 class="bio-h">The Founder.</h3>
+        <p class="bio-d">Two decades operating at the C-suite intersection of <b>technology, product, and trust</b> — leading multiple end-to-end transformations across retail, fintech, and consumer, including AI-native change at the top. FieldCheck is what an operator builds when no other player in the category will hold the line.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bio-card teal" style="margin-top: 20px;">
+    <div class="bio-grid">
+      <div class="bio-icon teal-icon">★</div>
+      <div>
+        <div class="bio-role teal-role">THE TEAM · SHARP · SMALL · AI-NATIVE</div>
+        <h3 class="bio-h">Built for the AI era — <em>not retrofitted to it</em>.</h3>
+        <p class="bio-d">Engineers, evaluators, and operators who chose this over bigger jobs because the mission is bigger. Every person ships. Every workflow leverages AI as a force multiplier — not a slogan. <b>Small enough to move at the speed of the AI era. Sharp enough to outbuild teams five times our size.</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bio-card gold-bright" style="margin-top: 20px;">
+    <div class="bio-grid">
+      <div class="bio-icon">∞</div>
+      <div>
+        <div class="bio-role">THE AI ENGINE · THE REAL MOAT</div>
+        <h3 class="bio-h">16 LLM voices. Bayesian consensus. <em>Real-time evidence.</em></h3>
+        <p class="bio-d">The product wasn't AI-bolted-on — it was AI-engineered from day one. Sixteen analytical voices run every verdict in parallel. Disagreement resolves through Bayesian consensus, not majority vote. New evidence updates the verdict in real time. <b>This is the moat: a system, not a model — built by an operator team for the AI era of evaluation.</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 56px;">
+    <div class="callout-label">★ WHY THIS TEAM</div>
+    <p class="callout-text">Operator discipline. AI-native architecture. Mission alignment with the underserved audience (amateurs and families) and the truth-respecting professional audience (scouts and coaches). <b>The team optimizes for trust compounding, not for short-term unit economics.</b></p>
+  </div>
+
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:#D4A24C;margin:40px 0 4px">NEW · HOW THIS GETS BUILT</div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px">
+    <div class="card"><div class="card-num">FOUNDER-LED</div><h3 class="card-h">Velocity as <em>proof.</em></h3><p class="card-d">90 frozen releases with a public build log — founder-led, AI-native execution where the product you click shipped this week. The operating system: seal it, ship it, grade it in public.</p></div>
+    <div class="card"><div class="card-num">THE TEAM</div><h3 class="card-h">Small, <em>elite, fast.</em></h3><p class="card-d">Built to stay small and move at the speed of the best labs and launch companies — a SpaceX/Anthropic-caliber bar for every seat: AI/ML, data engineering, sports intelligence. Ten exceptional people, not a hundred average ones.</p></div>
+    <div class="card"><div class="card-num">THE MOAT</div><h3 class="card-h">AI · ML · <em>Data.</em></h3><p class="card-d">A learning loop nobody can buy: every evaluation, every sealed prediction, every public miss feeds the engine. The data compounds daily on athletes nobody else covers — the algorithm gets a season smarter every season.</p></div>
+    <div class="card"><div class="card-num">THE STANDARD</div><h3 class="card-h">Born <em>on trial.</em></h3><p class="card-d">Methodology public, predictions hash-sealed, misses published by name. The team culture and the product principle are the same sentence: we are accountable on the record, at speed.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ PANEL · ASK ═══════════════ -->
+<section class="panel" id="panel-ask">
+  <div class="panel-eyebrow">08 · THE ASK</div>
+  <h2 class="panel-h">Let's build the <em>intelligence layer</em>.</h2>
+  <p class="panel-deck">FieldCheck is live, audit-ready, and shipping. Sixteen voices in parallel. Eight facets per athlete. A 110-athlete battery proving the algorithm holds across every level. <b>Now we scale the trust layer to every athlete on the planet — and we're opening the conversation with the partners who want to compound it with us.</b></p>
+
+  <div class="vision-block">
+    <div class="vision-label">★ THE HORIZON</div>
+    <h3 class="vision-h">One intelligence layer. <em>Every athlete. Every level. Every sport. Forever.</em></h3>
+    <p class="vision-d">ESPN became the layer for sports media in 1979. Bloomberg became the layer for financial information in 1981. The intelligence layer for athletes has <b>never existed</b>. FieldCheck is that company. We're building the trust framework that every player, parent, coach, scout, franchise, and federation can stake a decision on — refusing every shortcut the incumbents took to get there.</p>
+    <p class="vision-d-sub">No athlete written off. No family priced out. No sport left invisible. <b>One framework. Compounding forever. The amateur wedge is how we earn the right to be it.</b></p>
+  </div>
+
+  <div class="ask-timeline-anchor">★ PRIME TIME: 2027 · EACH YEAR AFTER — WAY BIGGER ★</div>
+
+  <div class="ask-grid">
+    <div class="ask-stat">
+      <div class="ask-stat-n">Pre-seed → A</div>
+      <div class="ask-stat-l">The fuel</div>
+      <div class="ask-stat-d">Strategic capital <b>and</b> strategic partners. Sports-focused VCs, ecosystem operators — leagues, broadcasters, federations, distribution platforms — and angels with deep sport conviction. Round sized for <b>12-month sprint to prime time.</b></div>
+    </div>
+    <div class="ask-stat">
+      <div class="ask-stat-n">Amateur → Default</div>
+      <div class="ask-stat-l">The wedge</div>
+      <div class="ask-stat-d">HS, JUCO, D3, D2, D1 — the underserved tier where pay-to-play services have systematically failed. Free forever for athletes and families. Every refinement compounds the data graph. <b>Wedge to default in 12 months.</b></div>
+    </div>
+    <div class="ask-stat">
+      <div class="ask-stat-n">5 → 12 → All sport</div>
+      <div class="ask-stat-l">The expansion</div>
+      <div class="ask-stat-d">Cricket, lacrosse, hockey, rugby, swimming, track, every individual Olympic sport. The methodology is sport-agnostic. Each new sport compounds the cross-sport polygon graph. <b>By 2027, every NCAA and Olympic sport on one framework.</b></div>
+    </div>
+    <div class="ask-stat">
+      <div class="ask-stat-n">2027 → 2028 → ∞</div>
+      <div class="ask-stat-l">The trajectory</div>
+      <div class="ask-stat-d"><b>2027: prime time.</b> FieldCheck the default verdict layer across amateur athletics. <b>August 2028:</b> the first 50 pre-registered predictions hit their scoring window — accuracy and dissent published by name on the public ledger. Trust compounds in public. <b>Each year after — way bigger.</b></div>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-label">★ USE OF FUNDS</div>
+    <h3 class="section-divider-h">Three areas. <em>Compounding moat.</em></h3>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-num">USE 01</div>
+      <h3 class="card-h">Sport <em>expansion</em>.</h3>
+      <p class="card-d">From 5 sports to 12. Each new sport requires methodology calibration, data adapters, and battery expansion. The hardest evaluations — track, swimming, individual Olympic sports — yield the highest moat because nobody else will go there.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">USE 02</div>
+      <h3 class="card-h">Data <em>graph</em>.</h3>
+      <p class="card-d">Continuously expand the amateur evaluation graph. Every athlete is one more node. Every refinement, one more edge. The graph compounds with usage — and the marginal cost of the next athlete drops with scale. The first to a million amateur athletes wins the category.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">USE 03</div>
+      <h3 class="card-h">Verification <em>infrastructure</em>.</h3>
+      <p class="card-d">Publishing the dissent on the record is expensive. Pre-registered predictions, audit trails, methodology updates — this is what makes the trust layer compound. We invest in the accountability infrastructure that <b>no competitor has and none will build</b>.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">★ WHAT WE'RE LOOKING FOR</div>
+    <p class="callout-text">Partners who understand that <b>trust is the compounding asset in athletic evaluation</b> — not engagement metrics, not vanity rankings, not pay-to-play arbitrage. Strategic capital with deep sports ecosystem ties. Distribution partners building the next generation of athletic infrastructure. Investors with AI-product conviction and patience for the compounding curve. <b>Operators who want to build the layer with us — not just rent it.</b></p>
+  </div>
+</section>
+
+<!-- ═══════════════ FINAL CTA ═══════════════ -->
+<section class="final-cta">
+  <div class="final-cta-eyebrow">★ START THE CONVERSATION</div>
+  <h2 class="final-cta-h">The verdict layer. <em>Worth a 30-minute call.</em></h2>
+  <p class="final-cta-deck">If you're investing in sports, AI, or trust-graph products — let's talk. The briefing above is the case. The live product is the proof. The next conversation is where partnership begins.</p>
+  <div class="final-cta-row">
+    <a href="#" onclick="openContact(event)" class="cta-primary">★ Get in touch</a>
+    <a href="https://fieldcheck-app.netlify.app" target="_blank" class="cta-secondary">See the live product →</a>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <div>FIELDCHECK IQ · 2026 · BUILT IN THE BAY AREA</div>
+  <div style="margin-top: 14px;">
+    <a href="https://fieldcheck-app.netlify.app">Home</a>
+    <a href="https://fieldcheck-app.netlify.app/voices">Methodology</a>
+    <a href="https://fieldcheck-app.netlify.app/pitch">The Thesis</a>
+    <a href="https://fieldcheck-app.netlify.app/shape">Shape Quiz</a>
+  </div>
+</footer>
+
+<script>
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+    // Scroll to tabs (not page top)
+    const tabNav = document.querySelector('.tab-nav-wrap');
+    if (tabNav) {
+      window.scrollTo({
+        top: tabNav.offsetTop - 56,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+// Keyboard: arrow keys cycle through tabs
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  const tabs = Array.from(document.querySelectorAll('.tab-btn'));
+  const active = tabs.findIndex(t => t.classList.contains('active'));
+  if (e.key === 'ArrowRight' && active < tabs.length - 1) {
+    e.preventDefault();
+    tabs[active + 1].click();
+  }
+  if (e.key === 'ArrowLeft' && active > 0) {
+    e.preventDefault();
+    tabs[active - 1].click();
+  }
+});
+</script>
+
+<!-- ═══════════════ CONTACT MODAL ═══════════════ -->
+<div id="contactModal" class="contact-modal-overlay" onclick="if(event.target===this)closeContact()">
+  <div class="contact-modal">
+    <button class="contact-modal-close" onclick="closeContact()" aria-label="Close">×</button>
+
+    <div id="contactFormWrap">
+      <div class="contact-modal-eyebrow">★ START THE CONVERSATION</div>
+      <h3 class="contact-modal-h">Tell us briefly what brings you here.</h3>
+      <p class="contact-modal-d">We respond within 48 hours. Investor conversations, advisor introductions, distribution partnerships — all welcome.</p>
+
+      <form class='contact-form' method='POST' name='contact' onsubmit='return handleContactSubmit(event, this)'>
+        <input type="hidden" name="form-name" value="contact">
+        <p style="position:absolute; left:-9999px;"><label>Don't fill: <input name="bot-field"></label></p>
+
+        <div class="contact-field">
+          <label for="cf-name">Your name</label>
+          <input id="cf-name" type="text" name="name" required>
+        </div>
+        <div class="contact-field">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" type="email" name="email" required>
+        </div>
+        <div class="contact-field">
+          <label for="cf-company">Firm / company (optional)</label>
+          <input id="cf-company" type="text" name="company">
+        </div>
+        <div class="contact-field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="4" required placeholder="A line or two — context, ask, timing."></textarea>
+        </div>
+
+        <button type="submit" class="contact-submit">★ Send</button>
+      </form>
+    </div>
+
+    <div id="contactThanks" class="contact-thanks" style="display:none;">
+      <div class="contact-thanks-icon">✓</div>
+      <h3>Thanks. Heard.</h3>
+      <p>We'll respond within 48 hours.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function openContact(e) {
+  if (e) e.preventDefault();
+  document.getElementById('contactModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('cf-name')?.focus(), 100);
+}
+function closeContact() {
+  document.getElementById('contactModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleContactSubmit(e, form) {
+  e.preventDefault();
+  const data = new FormData(form);
+  const submitBtn = form.querySelector('.contact-submit');
+  submitBtn.textContent = 'Sending…';
+  submitBtn.disabled = true;
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(data).toString()
+  })
+  .then(() => {
+    document.getElementById('contactFormWrap').style.display = 'none';
+    document.getElementById('contactThanks').style.display = 'block';
+  })
+  .catch(err => {
+    submitBtn.textContent = '★ Send';
+    submitBtn.disabled = false;
+    alert('Submission failed: ' + err.message + '\nPlease email sridhar.nallani@gmail.com directly.');
+  });
+  return false;
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeContact(); });
+</script>
+
+</body>
+</html>

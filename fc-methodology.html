@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Methodology v1 · FieldCheck IQ</title>
+  <meta name="description" content="The published methodology behind every FieldCheck IQ verdict. Composite math, dimension weights, tier thresholds, comparable similarity, NIL Score formula. Version 1.0.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+:root { --bg: #0d0d0d; --bg-2: #161616; --text: #F5F1E8; --text-2: #b8b8b8; --text-3: #888; --gold: #d4af37; --moss: #95d5b2; --teal: #4ec9c0; --rust: #c45132; --border: rgba(255,255,255,0.08); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+.fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+.fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+.fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+.fc-canonical-wordmark { font-size: 18px; }
+.fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+.fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+.fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+.fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+.fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.fc-canonical-nav .nav-more-wrap { display: none; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.nav-primary:hover { color: #ffc94a; }
+.nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.nav-more-wrap { position: relative; display: inline-block; }
+.nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-wrap { display: none; }
+.nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.nav-more-chev { transform: rotate(180deg); }
+.nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.nav-more-group { padding: 6px 4px; }
+.nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+
+.mth-hero { max-width: 980px; margin: 0 auto; padding: 72px 32px 32px; text-align: center; }
+.mth-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 16px; }
+.mth-title { font-family: 'Anton', sans-serif; font-size: clamp(44px, 7vw, 80px); line-height: 0.96; letter-spacing: -0.012em; margin-bottom: 22px; }
+.mth-title .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.mth-sub { font-size: 17px; color: var(--text-2); max-width: 740px; margin: 0 auto 14px; line-height: 1.55; }
+.mth-version { display: inline-flex; gap: 12px; align-items: center; margin-top: 18px; padding: 9px 16px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.35); border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: var(--gold); font-weight: 700; }
+.mth-toc { max-width: 980px; margin: 24px auto 40px; padding: 22px 28px; background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 12px; }
+.mth-toc h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: var(--gold); font-weight: 700; margin-bottom: 14px; }
+.mth-toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+.mth-toc-grid a { display: flex; justify-content: space-between; padding: 8px 12px; color: var(--text-2); text-decoration: none; font-size: 13px; border-radius: 6px; transition: all 0.15s; border: 1px solid rgba(255,255,255,0.04); }
+.mth-toc-grid a:hover { color: var(--gold); border-color: rgba(212,175,55,0.3); }
+.mth-toc-grid a span:last-child { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-3); }
+.mth-section { max-width: 980px; margin: 56px auto; padding: 0 32px; }
+.mth-section h2 { font-family: 'Anton', sans-serif; font-size: clamp(28px, 4.5vw, 44px); line-height: 1; letter-spacing: -0.01em; margin-bottom: 14px; }
+.mth-section h2 .iq-italic { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.mth-section .sect-tag { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: var(--gold); font-weight: 700; margin-bottom: 14px; }
+.mth-section p { color: var(--text-2); font-size: 15px; line-height: 1.65; margin-bottom: 14px; }
+.mth-section p strong { color: var(--text); }
+.mth-section code { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--gold); background: rgba(212,175,55,0.08); padding: 1px 6px; border-radius: 3px; }
+.mth-formula { padding: 22px 28px; background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(20,17,12,0.5)); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; margin: 22px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--text); line-height: 1.7; }
+.mth-formula-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.8px; color: var(--gold); font-weight: 700; margin-bottom: 12px; }
+.mth-weights-table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 13.5px; }
+.mth-weights-table th { text-align: left; padding: 10px 14px; background: rgba(212,175,55,0.08); color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; font-weight: 700; border-bottom: 1px solid var(--border); }
+.mth-weights-table td { padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-2); }
+.mth-weights-table td:first-child { color: var(--text); font-weight: 600; }
+.mth-weights-table td:nth-child(2) { font-family: 'JetBrains Mono', monospace; color: var(--gold); }
+.mth-tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 18px 0; }
+.mth-tier-card { padding: 18px 20px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 10px; }
+.mth-tier-name { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--gold); font-weight: 700; margin-bottom: 8px; }
+.mth-tier-range { font-family: 'Anton', sans-serif; font-size: 24px; color: var(--text); margin-bottom: 4px; letter-spacing: -0.005em; }
+.mth-tier-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+.mth-promise { padding: 30px 32px; background: linear-gradient(135deg, rgba(78,201,192,0.05), rgba(20,17,12,0.45)); border: 1px solid rgba(78,201,192,0.3); border-radius: 14px; margin: 56px 0; }
+.mth-promise-h { font-family: 'Anton', sans-serif; font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 14px; line-height: 1.05; letter-spacing: -0.005em; }
+.mth-promise-h .iq-italic { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--teal); font-weight: 400; }
+.mth-promise ul { list-style: none; padding: 0; margin-top: 18px; }
+.mth-promise li { padding: 8px 0 8px 22px; position: relative; font-size: 14px; color: var(--text-2); line-height: 1.55; }
+.mth-promise li::before { content: '✓'; position: absolute; left: 0; top: 8px; color: var(--teal); font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+.mth-promise li strong { color: var(--text); font-weight: 600; }
+.mth-stamp { text-align: center; padding: 24px 32px 60px; color: var(--text-3); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; }
+.mth-stamp a { color: var(--gold); }
+@media (max-width: 720px) { .mth-section { padding: 0 18px; } .mth-toc { margin: 18px 14px 32px; padding: 18px 20px; } }
+  
+/* ── FC Integration: Draft IQ + Calibration sections ─────────── */
+.fc-int-section{padding:52px 0;border-top:1px solid rgba(255,252,245,.1)}
+.fc-int-eyebrow{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;color:#F5B800;
+  display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.fc-int-eyebrow::before{content:"";width:18px;height:1px;background:#F5B800}
+.fc-int-h2{font-family:'Anton',sans-serif;font-size:clamp(24px,3.5vw,42px);
+  line-height:1.06;letter-spacing:-.012em;margin-bottom:10px}
+.fc-int-h2 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:#F5B800}
+.fc-int-sub{font-size:14.5px;color:rgba(245,241,232,.68);max-width:640px;
+  line-height:1.68;margin-bottom:24px}
+.fc-int-stat-row{display:flex;gap:1px;background:rgba(255,252,245,.1);
+  border:1px solid rgba(255,252,245,.1);border-radius:12px;overflow:hidden;margin-bottom:28px;
+  max-width:720px}
+.fc-int-stat{background:#100F14;padding:16px 20px;text-align:center;flex:1}
+.fc-int-stat .isn{font-family:'Anton',sans-serif;font-size:28px;line-height:1}
+.fc-int-stat .isn.gold{color:#F5B800}.fc-int-stat .isn.green{color:#6BAA5A}.fc-int-stat .isn.red{color:#FF5C3A}
+.fc-int-stat .isl{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;color:rgba(245,241,232,.4);margin-top:5px}
+.fc-int-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.fc-int-card{background:#110F0D;border:1px solid rgba(255,252,245,.1);border-radius:12px;
+  padding:16px 18px;position:relative;overflow:hidden;transition:border-color .18s}
+.fc-int-card:hover{border-color:rgba(245,184,0,.3)}
+.fc-int-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px}
+.fc-int-card.found::before{background:linear-gradient(to right,#6BAA5A,transparent)}
+.fc-int-card.flagged::before{background:linear-gradient(to right,#FF5C3A,transparent)}
+.fc-int-card.agree::before{background:linear-gradient(to right,#F5B800,transparent)}
+.fc-int-card-pick{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;
+  letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
+.fc-int-card.found .fc-int-card-pick{color:#6BAA5A}
+.fc-int-card.flagged .fc-int-card-pick{color:#FF5C3A}
+.fc-int-card.agree .fc-int-card-pick{color:#F5B800}
+.fc-int-card-name{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:-.004em;margin-bottom:4px}
+.fc-int-card-market{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:rgba(245,241,232,.45);margin-bottom:8px}
+.fc-int-card-scores{display:flex;gap:8px;margin-bottom:8px}
+.fc-int-score-box{padding:6px 10px;border-radius:6px;text-align:center;flex:1}
+.fc-int-score-box.market{background:rgba(255,252,245,.05)}
+.fc-int-score-box.fc{background:rgba(245,184,0,.1);border:1px solid rgba(245,184,0,.2)}
+.fc-int-score-box .sbl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.8px;
+  text-transform:uppercase;color:rgba(245,241,232,.35);margin-bottom:3px}
+.fc-int-score-box .sbn{font-family:'Anton',sans-serif;font-size:17px;line-height:1}
+.fc-int-score-box.market .sbn{color:rgba(245,241,232,.55)}
+.fc-int-score-box.fc .sbn{color:#F5B800}
+.fc-int-card-gap{font-family:'JetBrains Mono',monospace;font-size:8.5px;
+  padding:3px 8px;border-radius:9999px;display:inline-block}
+.fc-int-card-gap.found{background:rgba(107,170,90,.15);color:#6BAA5A}
+.fc-int-card-gap.flagged{background:rgba(255,92,58,.12);color:#FF5C3A}
+.fc-int-card-gap.agree{background:rgba(245,184,0,.1);color:#F5B800}
+.fc-int-cta{display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;padding:11px 22px;border-radius:9999px;
+  background:#F5B800;color:#0A0908;text-decoration:none;transition:opacity .15s}
+.fc-int-cta:hover{opacity:.88}
+.fc-int-cta-ghost{background:transparent;border:1px solid rgba(255,252,245,.15);
+  color:rgba(245,241,232,.6);margin-left:12px}
+.fc-int-cta-ghost:hover{border-color:rgba(245,184,0,.3);color:#F5B800;opacity:1}
+.fc-int-rules{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.fc-int-rule{background:#110F0D;border:1px solid rgba(255,252,245,.1);border-radius:10px;
+  padding:14px 16px}
+.fc-int-rule-id{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;
+  letter-spacing:.8px;text-transform:uppercase;color:#F5B800;
+  background:rgba(245,184,0,.1);border:1px solid rgba(245,184,0,.2);
+  padding:2px 8px;border-radius:9999px;display:inline-block;margin-bottom:6px}
+.fc-int-rule-title{font-family:'Anton',sans-serif;font-size:14px;margin-bottom:4px}
+.fc-int-rule-body{font-size:11.5px;color:rgba(245,241,232,.55);line-height:1.55}
+.fc-int-rule-case{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:rgba(245,241,232,.3);margin-top:5px}
+@media(max-width:800px){.fc-int-cards{grid-template-columns:1fr 1fr}.fc-int-rules{grid-template-columns:1fr}}
+@media(max-width:540px){.fc-int-cards{grid-template-columns:1fr}.fc-int-stat-row{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="mth-hero">
+  <div class="mth-eyebrow">// METHODOLOGY · PUBLISHED · VERSIONED · DIFF-TRACKED</div>
+  <h1 class="mth-title">The math. <span class="iq-italic">In public.</span></h1>
+  <p class="mth-sub">Every FieldCheck IQ verdict is the output of a transparent function. This page documents the function — the inputs, the weights, the thresholds, the formulas. Read it. Stress-test it. Dispute it. It's a published methodology, not a marketing line.</p>
+  <div class="mth-version">METHODOLOGY v1.0 · LOCKED 2026-05-14</div>
+</section>
+
+<div class="mth-toc">
+  <h3>// CONTENTS</h3>
+  <div class="mth-toc-grid">
+    <a href="#composite"><span>The IQ Composite</span><span>§1</span></a>
+    <a href="#moat"><span>The 5-Layer Moat</span><span>§2</span></a>
+    <a href="#tiers"><span>Tier thresholds</span><span>§3</span></a>
+    <a href="#comparable"><span>Comparable matching</span><span>§4</span></a>
+    <a href="#nil"><span>NIL Score</span><span>§5</span></a>
+    <a href="#drift"><span>Drift handling</span><span>§6</span></a>
+    <a href="#audit"><span>Audit envelope</span><span>§7</span></a>
+    <a href="#promises"><span>The 7 promises</span><span>§8</span></a>
+  </div>
+</div>
+
+<section class="mth-section" id="composite">
+  <div class="sect-tag">// §1 · THE IQ COMPOSITE</div>
+  <h2>One number. <span class="iq-italic">Five layers behind it.</span></h2>
+  <p>The IQ Score is a weighted geometric mean of the 5-Layer Moat dimensions. Geometric (not arithmetic) so a single floor-level dimension can't be papered over by spikes elsewhere — the lowest layer drags the whole composite down.</p>
+  <div class="mth-formula">
+    <div class="mth-formula-label">// COMPOSITE FORMULA</div>
+    <div>IQ = round( (Physical<sup>w₁</sup> · Mindset<sup>w₂</sup> · Production<sup>w₃</sup> · Pathway<sup>w₄</sup> · Defense<sup>w₅</sup>)<sup>1/Σw</sup> × 10 )</div>
+    <div style="margin-top:10px;color:#888;font-size:12px">where each dimension ∈ [0, 10] and Σw = total weight</div>
+  </div>
+  <p>The confidence interval (the ± value next to every score) is a function of citation density per dimension. More citations → tighter band. Few citations → wider band. The math is published in §6.</p>
+</section>
+
+<section class="mth-section" id="moat">
+  <div class="sect-tag">// §2 · THE 5-LAYER MOAT (SPORT-AWARE)</div>
+  <h2>Five layers. <span class="iq-italic">Sport-aware. Position-aware.</span></h2>
+  <p>Each sport — and within football and baseball, each position — gets a slightly different layer 3 label. The framework is constant: Physical, Mindset, [Production-axis], Pathway, Defense. The production layer name changes because what "scoring" means is sport-specific.</p>
+  <table class="mth-weights-table">
+    <tr><th>Layer</th><th>Default weight</th><th>What it measures</th></tr>
+    <tr><td>Physical</td><td>0.22</td><td>Verified anthropometric + athletic-test data with citations</td></tr>
+    <tr><td>Mindset</td><td>0.22</td><td>Composure, coachability, situational decision-making (qualitative + cited)</td></tr>
+    <tr><td>Production (sport-aware)*</td><td>0.30</td><td>Output that matters in this sport at this position</td></tr>
+    <tr><td>Pathway</td><td>0.14</td><td>Realistic next-step trajectory from current node in the system</td></tr>
+    <tr><td>Defense</td><td>0.12</td><td>Defensive contribution per sport's definition (full per-sport label below)</td></tr>
+  </table>
+  <p>* The production-layer label per sport: <code>football=PRODUCTION</code>, <code>mbb/wbb=SCORING</code>, <code>baseball.hitter=HITTING</code>, <code>baseball.pitcher=COMMAND</code>, <code>soccer=ATTACKING</code>, <code>mvb/wvb=ATTACKING</code>, <code>tennis=COMPETITION</code>, <code>golf=TOURNAMENT</code>.</p>
+</section>
+
+<section class="mth-section" id="tiers">
+  <div class="sect-tag">// §3 · TIER THRESHOLDS</div>
+  <h2>The composite, <span class="iq-italic">in bands.</span></h2>
+  <p>Tier boundaries are intentional. They are not auto-fit to the distribution — they are normative thresholds so a STAR-tier athlete this year would also be STAR-tier in 2010 and in 2030.</p>
+  <div class="mth-tier-grid">
+    <div class="mth-tier-card"><div class="mth-tier-name">ICON</div><div class="mth-tier-range">≥ 88</div><div class="mth-tier-desc">Generational. Top-10 in the global cohort. Min individual layer ≥ 7.</div></div>
+    <div class="mth-tier-card"><div class="mth-tier-name">ELITE</div><div class="mth-tier-range">80 — 87</div><div class="mth-tier-desc">P5 + pro pathway candidate. Top-50 in cohort. Min layer ≥ 6.</div></div>
+    <div class="mth-tier-card"><div class="mth-tier-name">STAR</div><div class="mth-tier-range">73 — 79</div><div class="mth-tier-desc">High-major P5 + AA top-25. Min layer ≥ 5.</div></div>
+    <div class="mth-tier-card"><div class="mth-tier-name">EDGE</div><div class="mth-tier-range">65 — 72</div><div class="mth-tier-desc">Mid-major upside, transfer-portal candidate. Min layer ≥ 4.</div></div>
+    <div class="mth-tier-card"><div class="mth-tier-name">DEVELOP</div><div class="mth-tier-range">&lt; 65</div><div class="mth-tier-desc">Foundational. Tier shown only with confidence ≥ 0.6.</div></div>
+  </div>
+</section>
+
+<section class="mth-section" id="comparable">
+  <div class="sect-tag">// §4 · COMPARABLE MATCHING</div>
+  <h2>The founding-athlete <span class="iq-italic">comparable.</span></h2>
+  <p>Every athlete is matched against the Founding Athletes archetype set — 50 to 200 athletes per sport whose archetype was hand-curated and whose career trajectories are fully traced. Matching is cosine similarity in a normalized 5-layer embedding space.</p>
+  <div class="mth-formula">
+    <div class="mth-formula-label">// COSINE SIMILARITY</div>
+    <div>match = cos(θ) = (A · B) / (||A|| · ||B||)</div>
+    <div style="margin-top:10px;color:#888;font-size:12px">where A = the athlete's normalized 5-layer vector and B = the founding archetype's vector</div>
+  </div>
+  <p>A match ≥ 0.85 is reported as a "strong comparable." A match between 0.65 and 0.85 is reported as a "near comparable." Below 0.65, we return the top-5 with a flag warning the user that no strong archetype was found.</p>
+</section>
+
+<section class="mth-section" id="nil">
+  <div class="sect-tag">// §5 · NIL SCORE</div>
+  <h2>NIL valuation, <span class="iq-italic">with the trace exposed.</span></h2>
+  <p>The NIL Score is the only score we publish with a complete reasoning trace — every input variable, every weight, every regional adjustment. We do this because in NIL, opacity is a feature elsewhere and a problem here.</p>
+  <div class="mth-formula">
+    <div class="mth-formula-label">// NIL SCORE FORMULA</div>
+    <div>NIL = 0.32·Social + 0.41·Performance + 0.27·Market</div>
+    <div style="margin-top:10px;color:#888;font-size:12px">all components ∈ [0, 10], market-adjusted by region. Trace returned with every API response.</div>
+  </div>
+</section>
+
+<section class="mth-section" id="drift">
+  <div class="sect-tag">// §6 · DRIFT HANDLING</div>
+  <h2>What we do when <span class="iq-italic">the truth moves.</span></h2>
+  <p>Every verdict has a <code>signed_at</code> timestamp. Every input has its own freshness metadata. When a sourced field changes upstream (e.g. a roster page updates), we flag drift in the next request to that verdict and recompute. Confidence intervals widen automatically when stale fields are detected.</p>
+</section>
+
+<section class="mth-section" id="audit">
+  <div class="sect-tag">// §7 · AUDIT ENVELOPE</div>
+  <h2>The receipt that ships <span class="iq-italic">with every verdict.</span></h2>
+  <p>Every response carries an audit envelope: SHA-256 of the payload, citations list with source URLs, signed-at timestamp, drift flags, methodology version, reasoning trace URL. Walk it. Re-run it. Dispute it. See the <a href="/api" style="color:var(--gold)">API docs</a> for the field-level schema.</p>
+</section>
+
+<section class="mth-section" id="promises">
+  <div class="mth-promise">
+    <div class="sect-tag" style="color:var(--teal)">// §8 · THE 7 PROMISES</div>
+    <h3 class="mth-promise-h">The methodology is <span class="iq-italic">the product.</span></h3>
+    <p style="color:var(--text-2);margin-bottom:6px">FieldCheck IQ commits, in public, to:</p>
+    <ul>
+      <li><strong>Published methodology.</strong> This page exists. The math is here. The weights are here.</li>
+      <li><strong>Versioned methodology.</strong> v1.0 is locked. Any change opens v1.1 with a public diff.</li>
+      <li><strong>Citations per claim.</strong> Every fact in every verdict carries a source URL.</li>
+      <li><strong>Confidence per projection.</strong> Every score has a ± band. No false precision.</li>
+      <li><strong>5-business-day dispute SLA.</strong> Submit a dispute; we respond in 5 business days with either a correction or a published rationale.</li>
+      <li><strong>SHA-256 signed audit JSON.</strong> Every payload re-verifiable. No black box.</li>
+      <li><strong>Anti-ranking commitment.</strong> No leaderboards. No engagement-optimized lists. Decision-quality only.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="mth-stamp">
+  // POWERED BY FIELDCHECK IQ · Methodology v1.0 · Diff-tracked at <a href="/changelog">/changelog</a> · API at <a href="/api">/api</a>
+</div>
+
+<script>
+function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('fc-nav-more-wrap');
+  if (!wrap) return;
+  if (!wrap.contains(e.target)) {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+
+<!-- ── Calibration: Model Self-Assessment Integration ──────────── -->
+<div style="max-width:980px;margin:0 auto;padding:0 32px 52px">
+<section class="fc-int-section">
+  <div class="fc-int-eyebrow">Model Calibration · V2.0</div>
+  <h2 class="fc-int-h2">The model measures<br>its own <em>errors.</em></h2>
+  <p class="fc-int-sub">
+    Five calibration rules derived from 36 historical cases across NFL and NBA.
+    Each rule has a documented failure corpus behind it.
+    The model doesn't just produce verdicts — it tracks where it was wrong and adjusts.
+  </p>
+
+  <div class="fc-int-stat-row">
+    <div class="fc-int-stat"><div class="isn gold">88%</div><div class="isl">Overall accuracy</div></div>
+    <div class="fc-int-stat"><div class="isn gold">96%</div><div class="isl">When diverging from market</div></div>
+    <div class="fc-int-stat"><div class="isn green">23/24</div><div class="isl">Divergences validated</div></div>
+    <div class="fc-int-stat"><div class="isn gold">V2</div><div class="isl">5 rules · 15 position profiles</div></div>
+  </div>
+
+  <div class="fc-int-rules">
+    <div class="fc-int-rule">
+      <div class="fc-int-rule-id">R1</div>
+      <div class="fc-int-rule-title">Brady / Curry Floor</div>
+      <div class="fc-int-rule-body">Physical &lt; 7.0 + Mindset ≥ 9.0 + Production ≥ 8.5 → composite floor 8.5. Undersized elite skill players penalized by Physical — career outcomes prove the penalty wrong.</div>
+      <div class="fc-int-rule-case">// Brady (Ph 6.0) · Curry (Ph 7.2) · Wilson (Ph 7.0) · Thomas (Ph 5.5)</div>
+    </div>
+    <div class="fc-int-rule">
+      <div class="fc-int-rule-id">R2</div>
+      <div class="fc-int-rule-title">Mindset Bust Flag</div>
+      <div class="fc-int-rule-body">Mindset &lt; 6.0 → force VERIFY_FURTHER, non-overrideable. 3/3 bust recall. Russell (5.5), Leaf (5.8), Manziel (5.5) — all had documented public character signals at draft time.</div>
+      <div class="fc-int-rule-case">// JaMarcus Russell · Ryan Leaf · Johnny Manziel</div>
+    </div>
+    <div class="fc-int-rule">
+      <div class="fc-int-rule-id">R3</div>
+      <div class="fc-int-rule-title">International CI Widener</div>
+      <div class="fc-int-rule-body">International low-tier production → widen confidence interval +1.5, add ceiling flag. Jokic (#41) and Giannis (#15) had thin evidence from sub-elite leagues at 18-19. The ceiling was hidden, not absent.</div>
+      <div class="fc-int-rule-case">// Nikola Jokic (Serbian KLS) · Giannis (Greek A2 at 18)</div>
+    </div>
+    <div class="fc-int-rule">
+      <div class="fc-int-rule-id">R4 + R5</div>
+      <div class="fc-int-rule-title">Durability + HS-Only Evidence</div>
+      <div class="fc-int-rule-body">Documented pre-draft injury → Physical effective score −20%. High school only evidence → force INSUFFICIENT_DATA warning. Sam Bowie and Kwame Brown are the founding cases.</div>
+      <div class="fc-int-rule-case">// Sam Bowie (leg injury at Kentucky) · Kwame Brown (HS only)</div>
+    </div>
+  </div>
+
+  <a href="/calibration" class="fc-int-cta">Full calibration dashboard →</a>
+  <a href="/draft-intelligence" class="fc-int-cta fc-int-cta-ghost">Draft intelligence →</a>
+</section>
+</div>
+</body>
+</html>

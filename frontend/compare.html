@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FieldCheck IQ · Compare</title>
+<style>
+:root{--g:#0a0a0a;--g2:#141414;--t:#f8f4ed;--t2:#bbb;--t3:#888;--gold:#f5b800;--moss:#6baa5a;--violet:#a37ee0;--red:#e07e7e;--bd:#333}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,system-ui,sans-serif;background:var(--g);color:var(--t);min-height:100vh;padding:24px 16px}
+.wrap{max-width:1100px;margin:0 auto}
+h1{font-family:'Anton','Inter',sans-serif;font-size:32px;letter-spacing:-.4px;margin-bottom:6px}
+.sub{color:var(--t3);font-size:12px;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:24px}
+.inputs{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.card{background:var(--g2);border:1px solid var(--bd);border-radius:10px;padding:18px}
+.card-h{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+input,select{width:100%;background:rgba(0,0,0,.4);border:1px solid var(--bd);border-radius:6px;padding:10px 12px;color:var(--t);font-size:14px;font-family:inherit;margin-bottom:10px}
+input:focus,select:focus{outline:none;border-color:var(--gold)}
+label{display:block;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-bottom:4px;margin-top:4px}
+button{background:var(--gold);color:#111;border:none;padding:14px 28px;font-weight:700;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;border-radius:6px;cursor:pointer;width:100%;margin-bottom:24px}
+button:hover{background:#ffce4d}
+button:disabled{background:#444;color:#777;cursor:not-allowed}
+.status{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-bottom:16px;letter-spacing:.5px;min-height:18px}
+.results{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+.r-card{background:var(--g2);border:1px solid var(--bd);border-radius:10px;padding:20px;font-size:13px;line-height:1.65}
+.r-name{font-family:'Anton',sans-serif;font-size:22px;margin-bottom:4px}
+.r-meta{color:var(--t3);font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px}
+.r-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1f1f1f}
+.r-key{color:var(--t3);font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.6px;text-transform:uppercase}
+.r-val{color:var(--t);font-size:13px;text-align:right;max-width:60%;word-break:break-word}
+.r-val b{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:13px}
+.tier{display:inline-block;padding:3px 8px;border-radius:4px;font-size:11px;letter-spacing:1px;font-family:'JetBrains Mono',monospace;text-transform:uppercase}
+.tier-elite{background:rgba(245,184,0,.15);color:var(--gold)}
+.tier-star{background:rgba(107,170,90,.15);color:var(--moss)}
+.tier-prospect{background:rgba(163,126,224,.15);color:var(--violet)}
+.tier-tracked{background:rgba(190,190,190,.1);color:var(--t2)}
+.tier-edge{background:rgba(245,184,0,.25);color:var(--gold)}
+.tier-greatness{background:rgba(107,170,90,.25);color:var(--moss)}
+.tier-reasonable{background:rgba(163,126,224,.25);color:var(--violet)}
+.tier-insuf{background:rgba(224,126,126,.15);color:var(--red)}
+.diff{margin-top:20px;background:var(--g2);border:1px solid var(--bd);border-radius:10px;padding:20px}
+.diff-h{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:var(--violet);margin-bottom:12px}
+.diff-row{display:grid;grid-template-columns:1fr 80px 1fr;align-items:center;padding:8px 0;border-bottom:1px solid #1f1f1f;font-size:13px}
+.diff-row b{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px}
+.diff-arrow{text-align:center;color:var(--t3);font-size:11px;font-family:'JetBrains Mono',monospace}
+.anchors-list{margin-top:12px;font-size:12px;line-height:1.6}
+.anchor{padding:6px 0;color:var(--t2)}
+.anchor b{color:var(--moss);font-weight:600}
+.err{color:var(--red);font-size:12px;font-family:'JetBrains Mono',monospace;padding:14px;background:rgba(224,126,126,.08);border:1px solid rgba(224,126,126,.3);border-radius:6px;margin-bottom:14px}
+@media(max-width:780px){.inputs,.results{grid-template-columns:1fr}.diff-row{grid-template-columns:1fr 1fr}.diff-arrow{display:none}}
+</style></head>
+<body>
+<div class="wrap">
+  <h1>FieldCheck IQ · <span style="color:var(--gold)">Compare</span></h1>
+  <div class="sub">// head-to-head verdict comparison · same framework · side-by-side</div>
+
+  <div class="inputs">
+    <div class="card">
+      <div class="card-h">Athlete A</div>
+      <label>Name</label>
+      <input type="text" id="nameA" placeholder="e.g. Tate Ivanyo" value="">
+      <label>Sport</label>
+      <select id="sportA">
+        <option value="mens-basketball">Men&apos;s Basketball</option>
+        <option value="womens-basketball">Women&apos;s Basketball</option>
+        <option value="football">Football</option>
+        <option value="baseball">Baseball</option>
+        <option value="mens-volleyball">Men&apos;s Volleyball</option>
+        <option value="womens-volleyball">Women&apos;s Volleyball</option>
+      </select>
+      <label>School (optional)</label>
+      <input type="text" id="schoolA" placeholder="e.g. Anderson University">
+    </div>
+    <div class="card">
+      <div class="card-h">Athlete B</div>
+      <label>Name</label>
+      <input type="text" id="nameB" placeholder="e.g. Antwan Kimmons" value="">
+      <label>Sport</label>
+      <select id="sportB">
+        <option value="mens-basketball">Men&apos;s Basketball</option>
+        <option value="womens-basketball">Women&apos;s Basketball</option>
+        <option value="football">Football</option>
+        <option value="baseball">Baseball</option>
+        <option value="mens-volleyball">Men&apos;s Volleyball</option>
+        <option value="womens-volleyball">Women&apos;s Volleyball</option>
+      </select>
+      <label>School (optional)</label>
+      <input type="text" id="schoolB" placeholder="e.g. Concordia-St. Paul">
+    </div>
+  </div>
+
+  <button id="go">Compare</button>
+  <div class="status" id="status"></div>
+  <div id="err"></div>
+  <div id="results"></div>
+</div>
+
+<script>
+const API = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev/verdict/player';
+
+const tierClass = v => {
+  v = (v||'').toLowerCase();
+  if (v.includes('elite')) return 'tier-elite';
+  if (v.includes('greatness')) return 'tier-greatness';
+  if (v.includes('star')) return 'tier-star';
+  if (v.includes('prospect')) return 'tier-prospect';
+  if (v.includes('tracked')) return 'tier-tracked';
+  if (v.includes('edge')) return 'tier-edge';
+  if (v.includes('reasonable')) return 'tier-reasonable';
+  return 'tier-insuf';
+};
+
+function fetchOne(payload) {
+  return fetch(API, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)})
+    .then(r => r.json());
+}
+
+function row(k, v) {
+  return `<div class="r-row"><span class="r-key">${k}</span><span class="r-val">${v}</span></div>`;
+}
+
+function renderOne(d, label) {
+  if (!d || !d.verdict) return `<div class="r-card"><div class="r-name">${label}</div><div class="err">No verdict returned</div></div>`;
+  const eg = (d.encyclopedia?.eval_grid) || {};
+  const f = (d.encyclopedia?.facts?.identity) || {};
+  const anchors = d.decision_anchors || [];
+  const conf = (d.sources?.conference) || {};
+  const nabc = (d.sources?.nabc) || {};
+  const sources = [];
+  if (d.sources?.wikipedia?.ok || d.sources?.wikipedia?.extract) sources.push('wiki');
+  if (d.sources?.open_web?.pages_fetched > 0) sources.push('web');
+  if (conf.pages_fetched > 0) sources.push('conf:' + (conf.conference||'?'));
+  if (nabc.pages_fetched > 0) sources.push('nabc');
+  const anchorsHtml = anchors.slice(0,3).map(a => `<div class="anchor"><b>${a.role||''}</b> · ${a.action||''}</div>`).join('');
+  return `<div class="r-card">
+    <div class="r-name">${label}</div>
+    <div class="r-meta">${d.sport || ''} · ${(d.encyclopedia?.facts?.identity?.detected_level)||''}</div>
+    ${row('Verdict', `<span class="tier ${tierClass(d.verdict)}">${d.verdict}</span>`)}
+    ${row('Composite', '<b>'+(eg.composite??'—')+'</b>')}
+    ${row('School', f.current_school||'—')}
+    ${row('Pos', f.position||'—')}
+    ${row('Height', f.height||'—')}
+    ${row('Year', f.class_year||f.season||'—')}
+    ${row('Sources lit', sources.join(' · ')||'—')}
+    ${row('Anchors', anchors.length)}
+    ${anchorsHtml ? '<div class="anchors-list">'+anchorsHtml+'</div>' : ''}
+  </div>`;
+}
+
+function renderDiff(a, b) {
+  if (!a?.verdict || !b?.verdict) return '';
+  const ea = (a.encyclopedia?.eval_grid)||{}, eb = (b.encyclopedia?.eval_grid)||{};
+  const ca = ea.composite ?? null, cb = eb.composite ?? null;
+  const compDiff = (ca!==null && cb!==null) ? (ca - cb).toFixed(2) : '—';
+  const arrow = (ca!==null && cb!==null) ? (ca > cb ? '→' : ca < cb ? '←' : '=') : '·';
+  return `<div class="diff">
+    <div class="diff-h">Comparison</div>
+    <div class="diff-row"><b>${a.verdict}</b><div class="diff-arrow">${arrow}</div><b>${b.verdict}</b></div>
+    <div class="diff-row"><b>${ea.composite??'—'}</b><div class="diff-arrow">Δ ${compDiff}</div><b>${eb.composite??'—'}</b></div>
+    <div class="diff-row"><span>${(a.decision_anchors||[]).length} anchors</span><div class="diff-arrow">vs</div><span>${(b.decision_anchors||[]).length} anchors</span></div>
+  </div>`;
+}
+
+document.getElementById('go').addEventListener('click', async () => {
+  const nameA = document.getElementById('nameA').value.trim();
+  const nameB = document.getElementById('nameB').value.trim();
+  if (!nameA || !nameB) { document.getElementById('err').innerHTML = '<div class="err">Both athlete names are required</div>'; return; }
+  document.getElementById('err').innerHTML = '';
+  const btn = document.getElementById('go'); btn.disabled = true;
+  const status = document.getElementById('status');
+  status.textContent = '⏳ Resolving both athletes in parallel · 30-90 seconds typical · cache misses can take longer';
+  const pA = {name: nameA, sport: document.getElementById('sportA').value, schoolHint: document.getElementById('schoolA').value.trim() || undefined};
+  const pB = {name: nameB, sport: document.getElementById('sportB').value, schoolHint: document.getElementById('schoolB').value.trim() || undefined};
+  try {
+    const [a, b] = await Promise.all([fetchOne(pA), fetchOne(pB)]);
+    status.textContent = '✓ Both verdicts resolved · ' + new Date().toLocaleTimeString();
+    document.getElementById('results').innerHTML = '<div class="results">' + renderOne(a, nameA) + renderOne(b, nameB) + '</div>' + renderDiff(a, b);
+  } catch (e) {
+    status.textContent = '✗ ' + String(e).slice(0,100);
+  }
+  btn.disabled = false;
+});
+
+// Allow Enter to submit from any input
+['nameA','nameB','schoolA','schoolB'].forEach(id => {
+  document.getElementById(id).addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('go').click(); });
+});
+</script>
+</body></html>

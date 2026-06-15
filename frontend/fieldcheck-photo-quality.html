@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photo Quality Audit · FieldCheck</title>
+<meta name="theme-color" content="#0A0908">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #0a0908; color: #fbf6ea; font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  nav { padding: 20px 28px; display: flex; gap: 18px; align-items: center; border-bottom: 1px solid rgba(255,201,74,0.10); }
+  nav a { color: rgba(212,200,173,0.75); text-decoration: none; font-size: 13px; letter-spacing: 0.05em; }
+  nav a:hover { color: #ffc94a; }
+  nav .wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: #fbf6ea; }
+  nav .wordmark .gold { color: #ffc94a; }
+  .hero { padding: 60px 28px 30px; text-align: center; max-width: 980px; margin: 0 auto; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: #ffc94a; font-weight: 700; margin-bottom: 14px; }
+  h1 { font-family: 'Anton', sans-serif; font-size: clamp(38px, 6vw, 56px); line-height: 1.05; letter-spacing: -0.005em; margin-bottom: 14px; }
+  h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; color: #ffc94a; font-weight: 400; }
+  .sub { font-size: 15.5px; color: rgba(212,200,173,0.78); line-height: 1.55; max-width: 720px; margin: 0 auto 26px; }
+  .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 12px; max-width: 800px; margin: 0 auto 50px; padding: 22px 26px; background: rgba(20,17,12,0.7); border: 1px solid rgba(255,201,74,0.15); border-radius: 16px; }
+  .summary-stat { text-align: center; }
+  .summary-stat-num { font-family: 'Anton', sans-serif; font-size: 32px; line-height: 1; margin-bottom: 4px; }
+  .summary-stat-num.grade-A { color: #95d5b2; }
+  .summary-stat-num.grade-B { color: #b9e8c9; }
+  .summary-stat-num.grade-C { color: #ffc94a; }
+  .summary-stat-num.grade-D { color: #ff8c52; }
+  .summary-stat-num.grade-F { color: #ff5a5a; }
+  .summary-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: rgba(212,200,173,0.55); font-weight: 700; text-transform: uppercase; }
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 24px 80px; }
+  .section-h { font-family: 'Anton', sans-serif; font-size: 26px; margin: 40px 0 18px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,201,74,0.12); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; }
+  .card { background: rgba(20,17,12,0.55); border: 1px solid rgba(255,201,74,0.15); border-radius: 14px; overflow: hidden; transition: all 0.2s ease; }
+  .card:hover { border-color: rgba(255,201,74,0.4); transform: translateY(-2px); }
+  .card-photo { width: 100%; aspect-ratio: 16/9; overflow: hidden; background: rgba(10,9,8,0.6); position: relative; }
+  .card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card-photo .grade-badge { position: absolute; top: 12px; right: 12px; padding: 4px 10px; border-radius: 6px; font-family: 'Anton', sans-serif; font-size: 16px; line-height: 1; color: #0a0908; }
+  .grade-A .grade-badge { background: #95d5b2; }
+  .grade-B .grade-badge { background: #b9e8c9; }
+  .grade-C .grade-badge { background: #ffc94a; }
+  .grade-D .grade-badge { background: #ff8c52; }
+  .grade-F .grade-badge { background: #ff5a5a; color: #fff; }
+  .card-photo .err-state { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(212,200,173,0.55); font-family: 'JetBrains Mono', monospace; font-size: 11px; text-align: center; padding: 20px; }
+  .card-body { padding: 16px 18px 18px; }
+  .card-h { font-family: 'Anton', sans-serif; font-size: 19px; line-height: 1.15; letter-spacing: -0.005em; margin-bottom: 6px; }
+  .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(212,200,173,0.60); letter-spacing: 0.04em; line-height: 1.55; }
+  .card-meta b { color: #ffc94a; font-weight: 700; }
+  .card-notes { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,201,74,0.10); font-size: 11.5px; color: #ff8c52; }
+  .loading-state { text-align: center; padding: 80px 24px; color: rgba(212,200,173,0.55); font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 1px; }
+  .action-button { display: inline-block; margin-left: 12px; padding: 8px 16px; background: #ffc94a; color: #0a0908; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; text-decoration: none; }
+  .action-button.ghost { background: transparent; color: #ffc94a; border: 1px solid rgba(255,201,74,0.4); }
+  .action-button:hover { transform: translateY(-1px); }
+  .action-bar { text-align: center; margin: 36px 0 12px; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="wordmark">FIELD<span class="gold">CHECK</span></a>
+  <a href="/voices">Voices</a>
+  <a href="/moat">Moat</a>
+  <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(212,200,173,0.55)">// PHOTO QA · v1.0</span>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">// IMAGE QUALITY AUDIT · APPLE-GRADE BAR</div>
+  <h1>Every photo, <span class="serif">measured.</span></h1>
+  <p class="sub">If we want to be the GOATs, every visible image meets a quantitative bar. Resolution, file size, aspect ratio, presence of subject. No assumptions. No "it loaded so it's fine." This page audits every stadium and key player photo currently served by the worker proxy.</p>
+  <div class="action-bar">
+    <button class="action-button" onclick="runAudit(true)">Re-warm cache + Audit</button>
+    <button class="action-button ghost" onclick="runAudit(false)">Quick Audit</button>
+  </div>
+</div>
+
+<div id="summary-container"></div>
+<div class="container">
+  <div id="loading" class="loading-state">Loading audit results…</div>
+  <div id="content" style="display:none">
+    <h2 class="section-h" id="stadium-section-h">// STADIUM PHOTOS</h2>
+    <div class="grid" id="stadium-grid"></div>
+
+    <h2 class="section-h">// FAMOUS NAMES · WIKIPEDIA-SOURCED</h2>
+    <div class="grid" id="wiki-grid"></div>
+  </div>
+</div>
+
+<script>
+const WORKER = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+const KEY_NAMES = [
+  // Coaches you'd see on a verdict page
+  { article: 'Nick_Saban', label: 'Nick Saban' },
+  { article: 'Lane_Kiffin', label: 'Lane Kiffin' },
+  { article: 'Les_Miles', label: 'Les Miles' },
+  { article: 'Ed_Orgeron', label: 'Ed Orgeron' },
+  { article: 'Brian_Kelly', label: 'Brian Kelly' },
+  { article: 'Kirby_Smart', label: 'Kirby Smart' },
+  { article: 'Dabo_Swinney', label: 'Dabo Swinney' },
+  { article: 'Ryan_Day_(American_football)', label: 'Ryan Day' },
+  { article: 'Lincoln_Riley', label: 'Lincoln Riley' },
+  { article: 'Mike_Norvell', label: 'Mike Norvell' },
+  // Star alumni
+  { article: 'Joe_Burrow', label: 'Joe Burrow' },
+  { article: "Ja'Marr_Chase", label: "Ja'Marr Chase" },
+  { article: 'Justin_Jefferson', label: 'Justin Jefferson' },
+  { article: 'Odell_Beckham_Jr.', label: 'Odell Beckham Jr.' },
+  { article: 'Tyrann_Mathieu', label: 'Tyrann Mathieu' },
+  // Current top recruits
+  { article: 'Bryce_Underwood', label: 'Bryce Underwood' },
+  { article: 'Caleb_Williams', label: 'Caleb Williams' },
+  { article: 'C._J._Stroud', label: 'C.J. Stroud' },
+  { article: 'Trevor_Lawrence', label: 'Trevor Lawrence' },
+  { article: 'Bryce_Young', label: 'Bryce Young' },
+];
+
+function esc(s) { return String(s || '').replace(/[<>&"]/g, c => ({ '<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;' }[c])); }
+
+async function warmAndAudit() {
+  // Fire-and-forget GET on every stadium photo + key name to warm the cache
+  const stadiums = await fetch(`${WORKER}/api/photo-quality`).then(r => r.json()).catch(() => ({ stadiums: [] }));
+  const slugs = (stadiums.stadiums || []).map(s => s.slug);
+  await Promise.all([
+    ...slugs.map(slug => fetch(`${WORKER}/api/stadium-photo/${slug}`).catch(() => {})),
+    ...KEY_NAMES.map(n => fetch(`${WORKER}/api/wiki-photo/${encodeURIComponent(n.article)}`).catch(() => {})),
+  ]);
+}
+
+async function runAudit(warm) {
+  document.getElementById('content').style.display = 'none';
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('loading').textContent = warm ? 'Warming cache… (first run takes ~30s)' : 'Loading audit…';
+  if (warm) await warmAndAudit();
+  const audit = await fetch(`${WORKER}/api/photo-quality`).then(r => r.json());
+  renderSummary(audit.summary);
+  renderStadiums(audit.stadiums || []);
+  await renderWikiPhotos();
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('content').style.display = 'block';
+}
+
+function renderSummary(s) {
+  if (!s) return;
+  const total = s.total;
+  document.getElementById('summary-container').innerHTML = `
+    <div class="summary">
+      <div class="summary-stat"><div class="summary-stat-num">${total}</div><div class="summary-stat-label">TOTAL</div></div>
+      <div class="summary-stat"><div class="summary-stat-num grade-A">${s.by_grade.A || 0}</div><div class="summary-stat-label">GRADE A</div></div>
+      <div class="summary-stat"><div class="summary-stat-num grade-B">${s.by_grade.B || 0}</div><div class="summary-stat-label">GRADE B</div></div>
+      <div class="summary-stat"><div class="summary-stat-num grade-C">${s.by_grade.C || 0}</div><div class="summary-stat-label">GRADE C</div></div>
+      <div class="summary-stat"><div class="summary-stat-num grade-D">${s.by_grade.D || 0}</div><div class="summary-stat-label">GRADE D</div></div>
+      <div class="summary-stat"><div class="summary-stat-num grade-F">${s.by_grade.F || 0}</div><div class="summary-stat-label">GRADE F</div></div>
+      <div class="summary-stat"><div class="summary-stat-num" style="color:rgba(212,200,173,0.55)">${s.by_grade.not_cached || 0}</div><div class="summary-stat-label">NOT CACHED</div></div>
+    </div>
+  `;
+}
+
+function renderStadiums(stadiums) {
+  const grid = document.getElementById('stadium-grid');
+  document.getElementById('stadium-section-h').textContent = `// STADIUM PHOTOS · ${stadiums.length} venues`;
+  grid.innerHTML = stadiums.map(s => {
+    const grade = s.grade || (s.ok ? 'D' : 'F');
+    const dims = s.width && s.height ? `${s.width}×${s.height}` : '—';
+    const size = s.size_human || '—';
+    const aspect = s.aspect_ratio || '—';
+    const photoUrl = `${WORKER}/api/stadium-photo/${s.slug}`;
+    return `
+      <div class="card grade-${grade}">
+        <div class="card-photo">
+          <img src="${photoUrl}" alt="${esc(s.stadium_name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+          <div class="err-state" style="display:none">⚠ Could not load<br>${esc(s.error || 'unknown')}</div>
+          <div class="grade-badge">${grade}</div>
+        </div>
+        <div class="card-body">
+          <div class="card-h">${esc(s.stadium_name || s.slug)}</div>
+          <div class="card-meta">
+            <b>slug:</b> ${esc(s.slug)}<br>
+            <b>wiki:</b> ${esc(s.wikipedia_article || '—')}<br>
+            <b>dims:</b> ${dims}  ·  <b>size:</b> ${size}  ·  <b>aspect:</b> ${aspect}<br>
+            <b>format:</b> ${esc(s.format || '—')}
+          </div>
+          ${s.notes && s.notes.length ? `<div class="card-notes">⚠ ${esc(s.notes.join(', '))}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function renderWikiPhotos() {
+  const grid = document.getElementById('wiki-grid');
+  const results = await Promise.all(KEY_NAMES.map(async n => {
+    const audit = await fetch(`${WORKER}/api/photo-quality/wiki/${encodeURIComponent(n.article)}`).then(r => r.json()).catch(() => ({ ok: false, error: 'fetch_failed' }));
+    return { ...n, audit };
+  }));
+  grid.innerHTML = results.map(r => {
+    const a = r.audit;
+    const grade = a.grade || (a.ok ? 'D' : 'F');
+    const dims = a.width && a.height ? `${a.width}×${a.height}` : '—';
+    const size = a.size_human || '—';
+    const photoUrl = `${WORKER}/api/wiki-photo/${encodeURIComponent(r.article)}`;
+    return `
+      <div class="card grade-${grade}">
+        <div class="card-photo">
+          <img src="${photoUrl}" alt="${esc(r.label)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+          <div class="err-state" style="display:none">⚠ No photo<br>${esc(a.error || 'not_cached')}</div>
+          <div class="grade-badge">${grade}</div>
+        </div>
+        <div class="card-body">
+          <div class="card-h">${esc(r.label)}</div>
+          <div class="card-meta">
+            <b>article:</b> ${esc(r.article)}<br>
+            <b>dims:</b> ${dims}  ·  <b>size:</b> ${size}  ·  <b>aspect:</b> ${a.aspect_ratio || '—'}<br>
+            <b>format:</b> ${esc(a.format || '—')}
+          </div>
+          ${a.notes && a.notes.length ? `<div class="card-notes">⚠ ${esc(a.notes.join(', '))}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+runAudit(true);
+</script>
+</body>
+</html>

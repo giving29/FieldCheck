@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The FieldCheck thesis · FieldCheck IQ</title>
+<meta name="description" content="An athletic intelligence layer the sport never had. 16 voices. One verdict. Six constraints we never break.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07060A; --bg-2: #0E0D14; --bg-3: #131220;
+  --line: #1F1E2C; --line-2: #2A2937;
+  --txt: #E8E6F0; --txt-2: #9C9AAE; --txt-3: #5E5C70;
+  --gold: #D4A24C; --gold-dim: rgba(212,162,76,0.18);
+  --moss: #6B8868; --rose: #B86B7A; --flame: #E07856;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { background: var(--bg); color: var(--txt); font-family: 'Newsreader', serif; font-weight: 400; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+/* ── HEADER ── */
+.h { padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(7,6,10,0.92); backdrop-filter: blur(12px); z-index: 50; }
+.brand { font-family: 'Anton'; font-size: 17px; letter-spacing: 1.2px; color: var(--txt); text-decoration: none; }
+.brand b { color: var(--gold); font-weight: 400; }
+.h-cta { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 1.5px; color: var(--gold); text-decoration: none; padding: 8px 14px; border: 1px solid var(--gold-dim); transition: all .15s; }
+.h-cta:hover { background: var(--gold-dim); }
+
+/* ── COMMON ── */
+.section { max-width: 900px; margin: 0 auto; padding: 80px 28px; }
+.section-num { font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 3px; color: var(--gold); margin-bottom: 12px; text-transform: uppercase; }
+h1, h2, h3 { font-family: 'Anton'; line-height: 0.96; letter-spacing: -1px; }
+h1 em, h2 em, h3 em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--gold); font-weight: 500; }
+p { font-family: 'Newsreader'; font-size: 19px; line-height: 1.6; color: var(--txt); margin-bottom: 20px; }
+p.lede { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 24px; color: var(--txt-2); line-height: 1.45; margin-bottom: 28px; font-weight: 500; }
+p b { color: var(--gold); font-weight: 600; }
+p i { color: var(--txt-2); }
+
+/* ── HERO ── */
+.hero { padding: 110px 28px 80px; text-align: left; max-width: 900px; margin: 0 auto; }
+.hero-eyebrow { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 3.5px; color: var(--gold); margin-bottom: 22px; text-transform: uppercase; }
+.hero h1 { font-size: clamp(64px, 12vw, 124px); margin-bottom: 18px; letter-spacing: -2px; }
+.hero-deck { font-family: 'Cormorant Garamond'; font-style: italic; font-size: clamp(20px, 3.2vw, 30px); color: var(--txt-2); margin-bottom: 32px; line-height: 1.35; font-weight: 500; max-width: 760px; }
+.hero-meta { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--txt-3); letter-spacing: 1.5px; }
+.hero-meta b { color: var(--gold); }
+
+/* ── DIVIDER ── */
+.dvd { max-width: 900px; margin: 0 auto; height: 1px; background: var(--line); }
+
+/* ── THESIS BLOCK ── */
+.thesis-h { font-size: clamp(40px, 7vw, 64px); margin-bottom: 18px; }
+.thesis-grid { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 36px; }
+.thesis-row {
+  padding: 22px 0; border-bottom: 1px solid var(--line);
+  display: grid; grid-template-columns: 180px 1fr; gap: 32px; align-items: start;
+}
+.thesis-row:last-child { border-bottom: 0; }
+.thesis-label { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; padding-top: 6px; }
+.thesis-text { font-family: 'Newsreader'; font-size: 18px; line-height: 1.55; color: var(--txt); }
+.thesis-text b { color: var(--gold); }
+.thesis-text em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--txt-2); }
+@media (max-width: 720px) {
+  .thesis-row { grid-template-columns: 1fr; gap: 8px; }
+  .thesis-label { padding-top: 0; }
+}
+
+/* ── PULL QUOTE ── */
+.pq {
+  font-family: 'Cormorant Garamond'; font-style: italic; font-size: clamp(28px, 4.5vw, 42px);
+  line-height: 1.3; color: var(--gold); font-weight: 500;
+  padding: 36px 0; margin: 0 auto;
+  text-align: center; max-width: 760px;
+}
+
+/* ── METRICS BAR ── */
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; max-width: 900px; margin: 0 auto; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.metric { padding: 32px 24px; text-align: center; border-right: 1px solid var(--line); }
+.metric:last-child { border-right: 0; }
+.metric-num { font-family: 'Anton'; font-size: 44px; color: var(--gold); letter-spacing: -1px; line-height: 1; }
+.metric-num em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--gold); font-weight: 500; }
+.metric-lbl { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--txt-3); letter-spacing: 1.5px; margin-top: 8px; text-transform: uppercase; }
+@media (max-width: 600px) { .metrics { grid-template-columns: 1fr 1fr; } .metric:nth-child(2) { border-right: 0; } .metric:nth-child(1), .metric:nth-child(2) { border-bottom: 1px solid var(--line); } }
+
+/* ── 6 CONSTRAINTS ── */
+.constraints { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
+.constraint { padding: 22px; background: var(--bg-2); border: 1px solid var(--line); border-left: 3px solid var(--gold); }
+.constraint-num { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--gold); letter-spacing: 1.5px; margin-bottom: 8px; }
+.constraint-h { font-family: 'Anton'; font-size: 20px; margin-bottom: 6px; letter-spacing: -0.3px; }
+.constraint-h em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--gold); font-weight: 500; }
+.constraint-d { font-family: 'Newsreader'; font-size: 15px; color: var(--txt-2); line-height: 1.5; }
+@media (max-width: 720px) { .constraints { grid-template-columns: 1fr; } }
+
+/* ── MOAT BLOCKS ── */
+.moat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 32px; }
+.moat-card { padding: 28px 22px; background: var(--bg-2); border: 1px solid var(--line); }
+.moat-card .num { font-family: 'Anton'; font-size: 56px; color: var(--gold); line-height: 0.9; margin-bottom: 10px; }
+.moat-card h4 { font-family: 'Anton'; font-size: 22px; margin-bottom: 8px; letter-spacing: -0.3px; }
+.moat-card h4 em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--gold); font-weight: 500; }
+.moat-card p { font-family: 'Newsreader'; font-size: 15px; line-height: 1.5; color: var(--txt-2); margin-bottom: 0; }
+@media (max-width: 720px) { .moat-grid { grid-template-columns: 1fr; } }
+
+/* ── FOUNDER ── */
+.founder { background: var(--bg-2); border: 1px solid var(--line); padding: 36px 32px; }
+.founder-grid { display: grid; grid-template-columns: 80px 1fr; gap: 22px; align-items: start; }
+.founder-init { width: 80px; height: 80px; border-radius: 50%; background: var(--gold-dim); color: var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Anton'; font-size: 36px; }
+.founder-l h4 { font-family: 'Anton'; font-size: 28px; margin-bottom: 4px; letter-spacing: -0.4px; }
+.founder-l .founder-role { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--gold); letter-spacing: 1.5px; margin-bottom: 14px; }
+.founder-l p { font-family: 'Newsreader'; font-size: 16px; line-height: 1.55; color: var(--txt); margin-bottom: 0; }
+.founder-l p b { color: var(--gold); }
+@media (max-width: 480px) { .founder-grid { grid-template-columns: 1fr; } }
+
+/* ── CTA ── */
+.cta-block { text-align: center; padding: 80px 28px 100px; max-width: 700px; margin: 0 auto; }
+.cta-h { font-family: 'Anton'; font-size: clamp(40px, 7vw, 64px); line-height: 1; letter-spacing: -1px; margin-bottom: 16px; }
+.cta-h em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--gold); font-weight: 500; }
+.cta-d { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 21px; color: var(--txt-2); margin-bottom: 36px; line-height: 1.4; }
+.cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 480px; margin: 0 auto; }
+.cta-btn { font-family: 'JetBrains Mono'; font-size: 12px; letter-spacing: 2px; font-weight: 700; padding: 20px 32px; border: 1px solid var(--gold); background: transparent; color: var(--gold); cursor: pointer; transition: all .15s; text-decoration: none; text-align: center; text-transform: uppercase; }
+.cta-btn.primary { background: var(--gold); color: var(--bg); }
+.cta-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(212,162,76,0.18); }
+@media (max-width: 480px) { .cta-row { grid-template-columns: 1fr; } }
+
+/* ── FOOTER ── */
+.foot { padding: 36px 28px; text-align: center; border-top: 1px solid var(--line); font-family: 'JetBrains Mono'; font-size: 10px; color: var(--txt-3); letter-spacing: 1.5px; }
+.foot a { color: var(--gold); text-decoration: none; margin: 0 10px; }
+
+/* ── Sample athlete cards (clickable verdicts) ── */
+.sample-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 28px; }
+.sample-card { display: block; padding: 18px 20px; border: 1px solid var(--rule); background: rgba(15,12,10,0.4); text-decoration: none; transition: all .18s ease; color: var(--gold); }
+.sample-card:visited { color: var(--gold); }
+.sample-card:hover { border-color: var(--gold); background: rgba(212,162,76,0.06); transform: translateY(-2px); }
+.sample-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--gold); margin-bottom: 5px; transition: color .15s; }
+.sample-card:hover .sample-name { color: var(--t); }
+.sample-meta { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--t3); letter-spacing: 1.4px; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<header class="h">
+  <a class="brand" href="/">FieldCheck<b>IQ</b></a>
+  <a class="h-cta" href="#cta">Get in touch →</a>
+</header>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-eyebrow">★ THE FIELDCHECK THESIS · 2026</div>
+  <h1>The athletic intelligence layer the sport <em>never had</em>.</h1>
+  <p class="hero-deck">Recruiting services lie. Mock drafts are vibes. Highlight reels are PR. FieldCheck is the first <b style="color:var(--gold)">AI-native verdict layer</b> across high school, college, and pro athletics — sixteen analytical voices, Bayesian consensus, every grade you can audit.</p>
+  <div class="hero-meta">FOUNDED 2026 · SAN FRANCISCO BAY AREA · <b>FIELDCHECK.IQ</b></div>
+</section>
+
+<!-- ── METRICS ── -->
+<div class="metrics">
+  <div class="metric">
+    <div class="metric-num">16</div>
+    <div class="metric-lbl">Independent voices per verdict</div>
+  </div>
+  <div class="metric">
+    <div class="metric-num">8</div>
+    <div class="metric-lbl">Facets in every polygon</div>
+  </div>
+  <div class="metric">
+    <div class="metric-num"><em>5+</em></div>
+    <div class="metric-lbl">Sports covered &amp; growing</div>
+  </div>
+  <div class="metric">
+    <div class="metric-num">$0</div>
+    <div class="metric-lbl">Free tier · permanent</div>
+  </div>
+</div>
+
+<!-- ── THE PROBLEM ── -->
+<section class="section">
+  <div class="section-num">01 · THE PROBLEM</div>
+  <h2 class="thesis-h">Sports evaluation is <em>broken</em>.</h2>
+  <p class="lede">Every athlete is graded by a system that profits from grading them.</p>
+
+  <div class="thesis-grid">
+    <div class="thesis-row">
+      <div class="thesis-label">RECRUITING</div>
+      <div class="thesis-text">National services charge families thousands to be ranked, then rank the families that pay. <i>Pay-to-play has become pay-to-rank.</i></div>
+    </div>
+    <div class="thesis-row">
+      <div class="thesis-label">MOCK DRAFTS</div>
+      <div class="thesis-text">A handful of well-followed accounts move billions in NIL and contract dollars on vibes, prior boards, and Tuesday-night Twitter consensus.</div>
+    </div>
+    <div class="thesis-row">
+      <div class="thesis-label">HIGHLIGHT FILM</div>
+      <div class="thesis-text">Every prospect's tape is now a 90-second PR reel. The film is the message. <b>The message is no longer the film.</b></div>
+    </div>
+    <div class="thesis-row">
+      <div class="thesis-label">THE GAP</div>
+      <div class="thesis-text"><b>Nobody grades the whole athletic graph</b> — HS to D1 to pro — with verifiable methodology, transparent inputs, and a free tier the consumer can trust.</div>
+    </div>
+  </div>
+</section>
+
+<div class="dvd"></div>
+
+<!-- ── PULL QUOTE ── -->
+<div class="pq">
+  Trust layers win where information asymmetry has run too long. <br>FieldCheck is that layer for athletics.
+</div>
+
+<div class="dvd"></div>
+
+<!-- ── THE PRODUCT ── -->
+<section class="section">
+  <div class="section-num">02 · THE PRODUCT</div>
+  <h2 class="thesis-h">One <em>verdict</em>. Sixteen voices. <em>Zero</em> agendas.</h2>
+  <p class="lede">Every athlete gets a single composite score (1–10), a tier (ICON → SCOUT), and an 8-facet polygon — derived from a hybrid algorithmic + LLM-synthesis pipeline that anyone can audit.</p>
+
+  <div class="moat-grid">
+    <div class="moat-card">
+      <div class="num">8</div>
+      <h4>The <em>polygon</em></h4>
+      <p>Size · Athleticism · Speed · Production · Skill · IQ · Grit · Character. Every facet scored independently. Every score traceable to the inputs that produced it.</p>
+    </div>
+    <div class="moat-card">
+      <div class="num">16</div>
+      <h4>The <em>voices</em></h4>
+      <p>16 independent analytical perspectives (statistical, scouting, biomechanical, character, projection) run in parallel. Synthesized via Bayesian consensus, not vibes.</p>
+    </div>
+    <div class="moat-card">
+      <div class="num">6</div>
+      <h4>The <em>constraints</em></h4>
+      <p>Six hard rules we never break. Free tier permanence. No affiliate revenue. Walk-away default. All disclosed on the methodology page.</p>
+    </div>
+  </div>
+
+  <!-- SEE IT IN ACTION · live product surfaces -->
+  <div style="margin-top: 48px;">
+    <div class="section-num" style="margin-bottom: 14px;">★ SEE IT IN ACTION</div>
+    <p class="lede" style="margin-bottom: 22px;">Two live surfaces. Same methodology. Take fifteen seconds.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <a href="/shape" style="text-decoration: none; padding: 24px; background: var(--bg-2); border: 1px solid var(--line); border-left: 3px solid var(--gold); display: block; transition: all .15s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(212,162,76,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="font-family: 'JetBrains Mono'; font-size: 10px; color: var(--gold); letter-spacing: 2px; margin-bottom: 6px;">★ FIND YOUR SHAPE · ONE TAP</div>
+        <div style="font-family: 'Anton'; font-size: 24px; color: var(--txt); letter-spacing: -0.3px;">The Shape Quiz</div>
+        <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: var(--txt-2); margin-top: 4px;">Pick your move · get your polygon · match a pro · 15 seconds</div>
+        <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: var(--gold); letter-spacing: 1px; margin-top: 12px;">TAKE THE QUIZ →</div>
+      </a>
+      <a href="/drop" style="text-decoration: none; padding: 24px; background: var(--bg-2); border: 1px solid var(--line); border-left: 3px solid var(--gold); display: block; transition: all .15s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(212,162,76,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="font-family: 'JetBrains Mono'; font-size: 10px; color: var(--gold); letter-spacing: 2px; margin-bottom: 6px;">★ THE DAILY DROP · NOON ET</div>
+        <div style="font-family: 'Anton'; font-size: 24px; color: var(--txt); letter-spacing: -0.3px;">One verdict, every weekday</div>
+        <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: var(--txt-2); margin-top: 4px;">Today: a verdict on a real prospect · streak counter builds the habit</div>
+        <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: var(--gold); letter-spacing: 1px; margin-top: 12px;">READ TODAY'S DROP →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="dvd"></div>
+
+<!-- ── 6 CONSTRAINTS ── -->
+<section class="section">
+  <div class="section-num">03 · THE SIX CONSTRAINTS</div>
+  <h2 class="thesis-h">The rules we <em>never</em> break.</h2>
+  <p class="lede">Every other rating product compromises here. We commit publicly to the opposite.</p>
+
+  <div class="constraints">
+    <div class="constraint">
+      <div class="constraint-num">CONSTRAINT 01</div>
+      <h3 class="constraint-h">Free tier <em>permanent</em>.</h3>
+      <p class="constraint-d">The core verdict is free forever. No paywall on the truth.</p>
+    </div>
+    <div class="constraint">
+      <div class="constraint-num">CONSTRAINT 02</div>
+      <h3 class="constraint-h">No payola, no <em>uplift</em>.</h3>
+      <p class="constraint-d">Athletes, agents, schools, leagues — no one can pay to raise their grade.</p>
+    </div>
+    <div class="constraint">
+      <div class="constraint-num">CONSTRAINT 03</div>
+      <h3 class="constraint-h">No affiliate <em>revenue</em>.</h3>
+      <p class="constraint-d">We don't recommend products we earn from. Our recs and our revenue never overlap.</p>
+    </div>
+    <div class="constraint">
+      <div class="constraint-num">CONSTRAINT 04</div>
+      <h3 class="constraint-h">Walk-away <em>default</em>.</h3>
+      <p class="constraint-d">When the model lacks confidence, it says so. No fake precision. No forced verdict.</p>
+    </div>
+    <div class="constraint">
+      <div class="constraint-num">CONSTRAINT 05</div>
+      <h3 class="constraint-h">Methodology <em>public</em>.</h3>
+      <p class="constraint-d">The 16 voices, the eval grid, the tier bands — all documented and audit-ready.</p>
+    </div>
+    <div class="constraint">
+      <div class="constraint-num">CONSTRAINT 06</div>
+      <h3 class="constraint-h">Every grade <em>refutable</em>.</h3>
+      <p class="constraint-d">If you can show us why a verdict is wrong, we update — publicly, with provenance.</p>
+    </div>
+  </div>
+</section>
+
+<div class="dvd"></div>
+
+<!-- ── THE MOAT ── -->
+<section class="section">
+  <div class="section-num">04 · THE MOAT</div>
+  <h2 class="thesis-h">Why this is <em>defensible</em>.</h2>
+  <p class="lede">Verdict products live or die on trust. Trust compounds. So does the data graph.</p>
+
+  <div class="thesis-grid">
+    <div class="thesis-row">
+      <div class="thesis-label">DATA GRAPH</div>
+      <div class="thesis-text">Every athlete added is one more node. Every verdict refined is one more edge. The graph gets denser with every refinement — and the marginal cost of adding the next athlete keeps dropping.</div>
+    </div>
+    <div class="thesis-row">
+      <div class="thesis-label">METHODOLOGY</div>
+      <div class="thesis-text">The 16-voice synthesis is not a single model — it's a system. New voices can be added. Weights can be retuned. Bias can be measured. <b>This is what a credible verdict layer looks like.</b></div>
+    </div>
+    <div class="thesis-row">
+      <div class="thesis-label">CONSTITUENT TRUST</div>
+      <div class="thesis-text">Recruiting services lost trust through pay-to-play. Mocks lost trust through inconsistency. FieldCheck's six constraints are designed to never repeat those mistakes. <i>Trust is the only compounding asset in this category.</i></div>
+    </div>
+    <div class="thesis-row">
+      <div class="thesis-label">PRODUCT VOICE</div>
+      <div class="thesis-text">Apple-simple UX on top of Einstein-grade depth. Players, parents, and coaches use the same product — each finds exactly what they need without seeing the rest. No competitor ships at this depth + this surface.</div>
+    </div>
+  </div>
+</section>
+
+<div class="dvd"></div>
+
+<!-- ── THE AMATEUR PROOF ── -->
+<section class="section">
+  <div class="section-num">05 · THE AMATEUR PROOF</div>
+  <h2 class="thesis-h">Where every other rating product <em>breaks down</em>.</h2>
+  <p class="lede">Pros are evaluated to death. Amateurs — HS, JUCO, D3, D2, D1 — are graded by services that profit from grading them. <b>The amateur gap is the moat.</b> We built every piece of FieldCheck to win there first.</p>
+
+  <div class="thesis-grid" style="margin-top: 32px;">
+    <div class="thesis-row">
+      <div class="thesis-label">PROS · SATURATED</div>
+      <div class="thesis-text">NBA / NFL / MLB mock drafts, analytics models, contract data. Already a well-served market. <i>We grade pros so the methodology can be benchmarked against known outcomes — not because they need us.</i></div>
+    </div>
+    <div class="thesis-row">
+      <div class="thesis-label">D1 · PARTIAL</div>
+      <div class="thesis-text">Men's basketball top tier covered by ESPN / KenPom. Women's basketball: <b>top 50 only</b>. Olympic-sport D1 athletes: effectively zero verdict layer. <i>The vast majority of D1 athletes go ungraded.</i></div>
+    </div>
+    <div class="thesis-row">
+      <div class="thesis-label">D2 · D3 · JUCO · INVISIBLE</div>
+      <div class="thesis-text">Tens of thousands of athletes evaluated by <b>nobody</b>. The largest fully-underserved tier in athletics. We grade all of them with the same methodology we apply to the pros.</div>
+    </div>
+    <div class="thesis-row">
+      <div class="thesis-label">HS RECRUITS · PAY-TO-RANK</div>
+      <div class="thesis-text">247Sports, Rivals, On3: <b>documented pay-to-play.</b> Families pay $500–$2,000+ per year to be ranked by services that profit from ranking them. FieldCheck is free for athletes and families. <i>Forever. Locked in Constraint 01.</i></div>
+    </div>
+  </div>
+
+  <div style="margin-top: 64px; margin-bottom: 28px;">
+    <div class="section-num">★ WHAT WE BUILT</div>
+    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(28px,3.6vw,38px); font-weight: 400; color: var(--t); margin-top: 10px; margin-bottom: 0; line-height: 1.15;">Six proof points. Engineered <em style="color: var(--gold);">amateur-first</em>.</h3>
+  </div>
+
+  <div class="constraints">
+    <div class="constraint">
+      <div class="constraint-num">PROOF 01</div>
+      <h3 class="constraint-h">110-athlete validation <em>battery</em>.</h3>
+      <p class="constraint-d">Continuously-run regression suite: <b>60 HS · 17 D1 · 13 D2 · 10 D3 · 3 JUCO · 7 pro</b>, spanning 11 evaluation cohorts. Every algorithm change is tested across all 110 athletes before it ships. No other amateur evaluator publishes anything like this.</p>
+    </div>
+    <div class="constraint">
+      <div class="constraint-num">PROOF 02</div>
+      <h3 class="constraint-h">HS evidence-ceiling <em>discipline</em>.</h3>
+      <p class="constraint-d">High school evidence has a ceiling on what it can prove. Our algorithm caps HS-only composite at <b>5.40 unless 4-of-4 phenom criteria are met</b>. 247Sports and Rivals routinely grade HS kids at 9+ with no such discipline. We refuse to.</p>
+    </div>
+    <div class="constraint">
+      <div class="constraint-num">PROOF 03</div>
+      <h3 class="constraint-h">Cross-level cap <em>discipline</em>.</h3>
+      <p class="constraint-d">D2 dominance isn't D1-projectable. HS standout isn't pro-projectable. Test cases live in our regression suite: <b>Dent-Smith</b> (D2-vs-D1 cap), <b>Alozie</b> (HS-to-D1 inverse). The system holds the line.</p>
+    </div>
+    <div class="constraint">
+      <div class="constraint-num">PROOF 04</div>
+      <h3 class="constraint-h">Identity-collision <em>protection</em>.</h3>
+      <p class="constraint-d">HS namesake matches a famous pro? Most platforms silently inherit the pro evidence into the HS grade. We refuse the merge. Test case in production: <b>Antwan Kimmons / Tim Duncan</b> false-match caught and quarantined.</p>
+    </div>
+    <div class="constraint">
+      <div class="constraint-num">PROOF 05</div>
+      <h3 class="constraint-h">One algorithm. <em>Every level.</em></h3>
+      <p class="constraint-d">Tenet 49: same 8 facets, same 16 voices, same Bayesian consensus on HS sophomores and NBA MVPs. <b>Tier bands published</b>: ICON · ELITE+ · ELITE · STAR · PROSPECT · SCOUT. We refuse to bend the framework to fit the level.</p>
+    </div>
+    <div class="constraint">
+      <div class="constraint-num">PROOF 06</div>
+      <h3 class="constraint-h">$0 <em>forever</em> for amateurs.</h3>
+      <p class="constraint-d">Recruiting services charge families <b>$500–$2,000+</b> per year. We charge $0 — for athletes, parents, and high school coaches. The verdict on your kid will <i>never</i> be paywalled. This is the structural commitment, not a marketing tier.</p>
+    </div>
+  </div>
+
+  <div style="margin-top: 56px; padding: 32px 32px 32px 36px; border-left: 3px solid var(--gold); background: rgba(212, 162, 76, 0.04);">
+    <div class="section-num" style="margin-bottom: 10px;">★ BOTTOM LINE</div>
+    <p style="font-family: 'Cormorant Garamond', serif; font-size: clamp(20px, 2.4vw, 24px); line-height: 1.46; color: var(--t); font-style: italic; margin: 0;">The amateur evaluation layer is <b style="font-style: normal;">the largest underserved market in athletics</b>. Existing services are compromised, pro-centric, or stats-only. FieldCheck is the first verdict layer built <b style="font-style: normal;">amateur-first</b> — with public methodology, cross-level discipline, and zero conflict with the families it serves.</p>
+  </div>
+
+  <div style="margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--rule);">
+    <div class="section-num">★ TEST IT YOURSELF</div>
+    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(28px,3.6vw,38px); font-weight: 400; color: var(--t); margin-top: 10px; margin-bottom: 12px; line-height: 1.15;">Click any amateur. <em style="color: var(--gold);">Read the verdict</em>.</h3>
+    <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: var(--t2); margin-bottom: 0; max-width: 720px; line-height: 1.62;">Live verdicts on current amateur athletes across sports and levels. Same eight facets, same sixteen voices, same Bayesian consensus we apply to the pros. If you find a wrong call, the framework updates publicly with provenance.</p>
+
+    <div class="sample-grid">
+      <a class='sample-card' href='/fieldcheck-verdict?q=AJ+Dybantsa&sport=mens-basketball'>
+        <div class="sample-name">AJ Dybantsa</div>
+        <div class="sample-meta">HS · BYU commit · Basketball</div>
+      </a>
+      <a class='sample-card' href='/fieldcheck-verdict?q=Cameron+Boozer&sport=mens-basketball'>
+        <div class="sample-name">Cameron Boozer</div>
+        <div class="sample-meta">HS · Duke commit · Basketball</div>
+      </a>
+      <a class='sample-card' href='/fieldcheck-verdict?q=Darryn+Peterson&sport=mens-basketball'>
+        <div class="sample-name">Darryn Peterson</div>
+        <div class="sample-meta">HS · Kansas commit · Basketball</div>
+      </a>
+      <a class='sample-card' href='/fieldcheck-verdict?q=Koa+Peat&sport=mens-basketball'>
+        <div class="sample-name">Koa Peat</div>
+        <div class="sample-meta">HS · Arizona commit · Basketball</div>
+      </a>
+      <a class='sample-card' href='/fieldcheck-verdict?q=Ikenna+Alozie&sport=mens-basketball'>
+        <div class="sample-name">Ikenna Alozie</div>
+        <div class="sample-meta">HS · 2026 PG · Basketball</div>
+      </a>
+      <a class='sample-card' href='/fieldcheck-verdict?q=Saniyah+Hall&sport=womens-basketball'>
+        <div class="sample-name">Saniyah Hall</div>
+        <div class="sample-meta">HS · USC commit · Women's BB</div>
+      </a>
+      <a class='sample-card' href='/fieldcheck-verdict?q=Sitaya+Fagan&sport=womens-basketball'>
+        <div class="sample-name">Sitaya Fagan</div>
+        <div class="sample-meta">HS · USC commit · Women's BB</div>
+      </a>
+      <a class='sample-card' href='/fieldcheck-verdict?q=Faizon+Brandon&sport=football'>
+        <div class="sample-name">Faizon Brandon</div>
+        <div class="sample-meta">HS · Tennessee · #1 QB 2026</div>
+      </a>
+      <a class='sample-card' href='/fieldcheck-verdict?q=Chris+Henry+Jr&sport=football'>
+        <div class="sample-name">Chris Henry Jr.</div>
+        <div class="sample-meta">HS · Ohio State · WR</div>
+      </a>
+      <a class='sample-card' href='/fieldcheck-verdict?q=Jackson+Cantwell&sport=football'>
+        <div class="sample-name">Jackson Cantwell</div>
+        <div class="sample-meta">HS · OL · Class of 2026</div>
+      </a>
+      <a class='sample-card' href='/fieldcheck-verdict?q=Bryce+Underwood&sport=football'>
+        <div class="sample-name">Bryce Underwood</div>
+        <div class="sample-meta">D1 · Michigan · Freshman QB</div>
+      </a>
+      <a class='sample-card' href='/fieldcheck-verdict?q=Cavan+Sullivan&sport=mens-soccer'>
+        <div class="sample-name">Cavan Sullivan</div>
+        <div class="sample-meta">Pro · Philadelphia Union · 15</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="dvd"></div>
+
+<!-- ── FOUNDER ── -->
+<section class="section">
+  <div class="section-num">06 · WHO'S BUILDING THIS</div>
+  <h2 class="thesis-h">Founder. <em>Team.</em> AI engine.</h2>
+  <p class="lede">A small, AI-native team operating where evaluation, data, and trust converge.</p>
+
+  <div class="founder">
+    <div class="founder-grid">
+      <div class="founder-init">S</div>
+      <div class="founder-l">
+        <div class="founder-role">FOUNDER · OPERATOR · 25+ YEARS AT SCALE</div>
+        <h4>Sridhar Nallani</h4>
+        <p>Two decades operating at the C-suite intersection of <b>technology, product, and trust</b> — leading multiple end-to-end transformations across retail, fintech, and consumer, including AI-native change at the top. <b>FieldCheck is what an operator builds</b> when no other player in the category will hold the line.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="founder" style="margin-top: 14px; border-left: 3px solid #5BA8A0;">
+    <div class="founder-grid">
+      <div class="founder-init" style="background: rgba(91,168,160,0.15); color: #5BA8A0;">★</div>
+      <div class="founder-l">
+        <div class="founder-role" style="color: #5BA8A0;">THE TEAM · SHARP · SMALL · AI-NATIVE</div>
+        <h4>Built for the AI era — not retrofitted to it.</h4>
+        <p>Engineers, evaluators, and operators who chose this over bigger jobs because the mission is bigger. Every person ships. Every workflow leverages AI as a force multiplier — not a slogan. <b>Small enough to move at the speed of the AI era. Sharp enough to outbuild teams five times our size.</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="founder" style="margin-top: 14px; border-left: 3px solid var(--gold);">
+    <div class="founder-grid">
+      <div class="founder-init" style="background: var(--gold-dim); color: var(--gold);">∞</div>
+      <div class="founder-l">
+        <div class="founder-role">THE AI ENGINE · THE REAL MOAT</div>
+        <h4>16 LLM voices in parallel. Bayesian consensus. Real-time evidence.</h4>
+        <p>The product wasn't AI-bolted-on — it was AI-engineered from day one. Sixteen analytical voices run every verdict in parallel. Disagreement is resolved through Bayesian consensus, not majority vote. New evidence updates the verdict in real time. <b>This is the moat: a system, not a model — built by an operator team for the AI era of evaluation.</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="dvd"></div>
+
+<!-- ── CTA ── -->
+<section class="cta-block" id="cta">
+  <div class="section-num">07 · THE NEXT STEP</div>
+  <h2 class="cta-h">Let's <em>talk</em>.</h2>
+  <p class="cta-d">Investor conversation, advisor introduction, distribution partnership, or just a 30-minute walkthrough — the door's open.</p>
+  <div class="cta-row">
+    <a class="cta-btn primary" href="mailto:sridhar@fieldcheck.iq?subject=FieldCheck%20conversation">★ Start the conversation</a>
+    <a class="cta-btn" href="/voices">Read the methodology →</a>
+  </div>
+</section>
+
+<footer class="foot">
+  FIELDCHECK IQ · 2026 · BUILT IN THE BAY AREA · 
+  <a href="/">Home</a> · 
+  <a href="/voices">Methodology</a> · 
+  <a href="/shape">Find your shape</a> · 
+  <a href="/drop">The daily drop</a>
+</footer>
+
+</body>
+</html>

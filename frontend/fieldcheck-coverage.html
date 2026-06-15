@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coverage map · FieldCheck IQ</title>
+<meta name="description" content="What FieldCheck IQ covers right now. Per-sport athlete counts, source breakdown, last-refresh date per source. Honest transparency about depth and gaps.">
+<meta property="og:title" content="FieldCheck Coverage Map">
+<meta property="og:description" content="What we cover · what we don't · what's coming.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060A;--bg1:#100F14;--ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);--t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);--moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.3);--teal:#4EC9C0;--violet:#8B5CF6;--red:#FF5C3A}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 30% at 50% 0%,rgba(245,184,0,.04) 0%,transparent 60%),linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:60px 30px 100px}
+.brand-row{display:flex;align-items:center;gap:18px;margin-bottom:36px}
+.brand{font-family:'Anton',sans-serif;font-size:22px;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none}
+.back:hover{color:var(--gold)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(46px,6vw,76px);letter-spacing:-.014em;line-height:.98;margin-bottom:16px}
+h1 .em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--gold)}
+.lede{font-size:18px;color:var(--t2);max-width:760px;margin-bottom:42px}
+.lede b{color:var(--t)}
+h2{font-family:'Anton',sans-serif;font-size:30px;letter-spacing:-.01em;margin:60px 0 14px;padding-top:24px;border-top:1px solid var(--ge)}
+h2:first-of-type{border-top:none;padding-top:0;margin-top:0}
+p{font-size:15.5px;color:var(--t2);margin-bottom:14px;max-width:780px}
+
+/* Per-sport grid */
+.sport-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:30px 0}
+.sport-card{padding:24px;border:1px solid var(--ge);border-radius:14px;background:rgba(255,252,245,.015);transition:border-color .15s}
+.sport-card:hover{border-color:var(--goldl)}
+.sport-card .sport-name{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:-.005em;color:var(--t);margin-bottom:6px}
+.sport-card .count{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:14px;text-transform:uppercase}
+.sport-card .count b{color:var(--gold);font-size:24px;font-weight:700;letter-spacing:0;font-family:'Anton',sans-serif}
+.sport-card .depth-bar{height:6px;border-radius:3px;background:rgba(255,252,245,.06);overflow:hidden;margin:12px 0 14px}
+.sport-card .depth-bar .fill{height:100%;background:linear-gradient(90deg,var(--gold) 0%,var(--moss) 100%);border-radius:3px}
+.sport-card .depth-bar .fill.partial{background:linear-gradient(90deg,var(--moss) 0%,rgba(107,170,90,.4) 100%)}
+.sport-card .depth-bar .fill.shallow{background:linear-gradient(90deg,#E07856 0%,rgba(224,120,86,.3) 100%)}
+.sport-card .desc{font-size:13px;color:var(--t3);line-height:1.55}
+.sport-card .meta{display:flex;gap:14px;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t4);letter-spacing:.7px;text-transform:uppercase}
+.sport-card .meta span b{color:var(--t2);font-weight:700;font-size:11px}
+.sport-card a{color:var(--gold);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-top:12px;display:inline-block}
+.sport-card a:hover{text-decoration:underline}
+
+/* Source tier breakdown */
+.src-tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin:20px 0}
+.src-tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);padding:12px 14px;border-bottom:1px solid var(--ge)}
+.src-tbl td{padding:13px 14px;border-bottom:1px solid var(--ge2);color:var(--t2);vertical-align:top;line-height:1.55}
+.src-tbl .src-name{font-family:'JetBrains Mono',monospace;color:var(--gold);font-weight:700;font-size:12.5px;letter-spacing:.4px}
+.src-tbl .tier-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:9999px;white-space:nowrap}
+.src-tbl .t1{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.src-tbl .t2{background:var(--golds);color:var(--gold);border:1px solid var(--goldl)}
+.src-tbl .t3{background:rgba(78,201,192,.1);color:var(--teal);border:1px solid rgba(78,201,192,.3)}
+
+.callout{margin:30px 0;padding:24px 28px;border-radius:12px;background:var(--golds);border:1px solid var(--goldl);border-left:3px solid var(--gold);font-size:14.5px;line-height:1.6;color:var(--t)}
+.callout .label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block}
+.callout.warn{background:rgba(255,92,58,.06);border-color:rgba(255,92,58,.3);border-left-color:var(--red)}
+.callout.warn .label{color:var(--red)}
+
+.footer{margin-top:80px;padding-top:30px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t4);letter-spacing:.6px}
+.footer a{color:var(--gold);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* FCBase59 . Agent on this page */
+.fc-agent-pill{position:fixed;bottom:24px;right:24px;background:linear-gradient(135deg,#f0c66e,#d49b48);color:#1c150d;border:0;border-radius:9999px;padding:14px 22px;font-family:'Inter',-apple-system,sans-serif;font-size:14px;font-weight:700;cursor:pointer;z-index:60;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(245,184,0,.35),0 0 0 1px rgba(245,184,0,.5);transition:transform .18s;animation:fc-agent-pulse 3s ease-in-out infinite}
+.fc-agent-pill:hover{transform:translateY(-2px)}
+.fc-agent-pill .icon{font-size:18px;line-height:1}
+.fc-agent-pill .label{font-weight:700;letter-spacing:.01em}
+@keyframes fc-agent-pulse{0%,100%{box-shadow:0 4px 20px rgba(245,184,0,.35),0 0 0 1px rgba(245,184,0,.5)}50%{box-shadow:0 4px 28px rgba(245,184,0,.55),0 0 0 1px rgba(245,184,0,.75)}}
+.fc-agent-pill.open{display:none}
+.fc-agent-panel{position:fixed;bottom:0;right:24px;width:420px;max-width:calc(100vw - 48px);height:600px;max-height:80vh;background:#0e0d14;border:1px solid rgba(245,184,0,.3);border-bottom:0;border-radius:16px 16px 0 0;z-index:60;display:none;flex-direction:column;box-shadow:0 -8px 40px rgba(0,0,0,.5)}
+.fc-agent-panel.open{display:flex}
+.fc-agent-header{padding:16px 20px 14px;border-bottom:1px solid rgba(245,241,232,.08);display:flex;align-items:flex-start;justify-content:space-between}
+.fc-agent-header h3{font-size:17px;color:#f5f1e8;margin:0 0 4px 0;font-weight:700;letter-spacing:-.005em}
+.fc-agent-header .sub{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,241,232,.45);font-family:monospace}
+.fc-agent-close{background:transparent;border:0;color:rgba(245,241,232,.55);cursor:pointer;font-size:22px;padding:0;width:28px;height:28px;border-radius:50%}
+.fc-agent-close:hover{background:rgba(245,241,232,.08);color:#f0c66e}
+.fc-agent-body{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px}
+.fc-agent-msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.55}
+.fc-agent-msg.user{align-self:flex-end;background:rgba(245,184,0,.12);border:1px solid rgba(245,184,0,.22);color:#f5f1e8;border-bottom-right-radius:4px}
+.fc-agent-msg.bot{align-self:flex-start;background:rgba(245,241,232,.05);border:1px solid rgba(245,241,232,.10);color:#f5f1e8;border-bottom-left-radius:4px;white-space:pre-wrap}
+.fc-agent-msg.bot.streaming::after{content:'▍';color:#f0c66e;animation:fc-agent-cursor .9s steps(2) infinite}
+.fc-agent-msg.bot.error{background:rgba(212,96,60,.08);border-color:rgba(212,96,60,.3);color:#f5b8a8}
+@keyframes fc-agent-cursor{0%,50%{opacity:1}51%,100%{opacity:0}}
+.fc-agent-empty{font-size:13px;line-height:1.55;color:rgba(245,241,232,.6);text-align:center;padding:24px 12px}
+.fc-agent-empty b{color:#f0c66e;display:block;font-size:15px;font-weight:700;margin-bottom:8px}
+.fc-agent-suggestions{display:flex;flex-wrap:wrap;gap:6px;padding:0 20px 14px;border-bottom:1px solid rgba(245,241,232,.06)}
+.fc-agent-suggestions button{background:rgba(245,184,0,.06);border:1px solid rgba(245,184,0,.18);color:#f0c66e;font-size:11.5px;padding:6px 11px;border-radius:9999px;cursor:pointer;font-weight:500}
+.fc-agent-suggestions button:hover{background:rgba(245,184,0,.14)}
+.fc-agent-input-row{padding:14px 16px 16px;display:flex;gap:8px;border-top:1px solid rgba(245,241,232,.06)}
+.fc-agent-input{flex:1;background:rgba(245,241,232,.04);border:1px solid rgba(245,241,232,.1);border-radius:10px;padding:10px 14px;color:#f5f1e8;font-size:13.5px;resize:none;max-height:100px;min-height:40px;font-family:inherit;outline:none}
+.fc-agent-input:focus{border-color:rgba(245,184,0,.45)}
+.fc-agent-send{background:linear-gradient(135deg,#f0c66e,#d49b48);color:#1c150d;border:0;border-radius:10px;width:40px;height:40px;font-size:18px;cursor:pointer}
+.fc-agent-send:disabled{opacity:.35;cursor:not-allowed}
+.fc-agent-footer{padding:0 16px 12px;font-size:9px;text-align:center;color:rgba(245,241,232,.3);letter-spacing:.08em;text-transform:uppercase;font-family:monospace}
+@media (max-width:600px){.fc-agent-pill{bottom:16px;right:16px;left:16px;justify-content:center}.fc-agent-panel{right:0;left:0;width:100%;max-width:100%;height:75vh}}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="wrap">
+  <div class="brand-row">
+    <a class="brand" href="/"><b>Field</b>Check<span class="iq">IQ</span></a>
+    <a class="back" href="/">← all players</a>
+  </div>
+
+  <div class="eyebrow">Coverage map · updated June 9 2026</div>
+  <h1>What we <span class="em">actually</span> cover.</h1>
+  <p class="lede"><b>Honest depth, sport by sport.</b> The current marquee set, sources behind each verdict, and the gaps we're filling next. No marketing claims here — just the count and the receipts.</p>
+
+  <h2>Athletes by sport</h2>
+  <p>Marquee verdicts shipped with full 8-facet evaluation. Bar depth shows roster completeness relative to the elite-tier target population for that sport (LOVB for womens-vball, NBA top 200 for mens-bball, etc.).</p>
+
+  <div class="sport-grid">
+    <div class="sport-card">
+      <div class="sport-name">Men's Basketball</div>
+      <div class="count"><b>82</b> athletes · ICONs, ELITE+, polish set</div>
+      <div class="depth-bar"><div class="fill" style="width:78%"></div></div>
+      <div class="desc">NBA stars + top D1 college + class-of-2026/27 recruits. 9 polish-set marquees with curated photos + full eval grids.</div>
+      <div class="meta"><span><b>ICONs:</b> 12</span><span><b>ELITE:</b> 24</span><span><b>STARs:</b> 46</span></div>
+      <a href="/sports/mens-basketball">View sport →</a>
+    </div>
+
+    <div class="sport-card">
+      <div class="sport-name">Football</div>
+      <div class="count"><b>56</b> athletes · NFL + NCAA + HS recruits</div>
+      <div class="depth-bar"><div class="fill" style="width:72%"></div></div>
+      <div class="desc">NFL veterans (Brady, Mahomes, Burrow) + Heisman-tier college + 2026/27 class. Brandon as polish-set HS-to-D1 anchor.</div>
+      <div class="meta"><span><b>ICONs:</b> 9</span><span><b>ELITE:</b> 18</span><span><b>STARs:</b> 29</span></div>
+      <a href="/sports/football">View sport →</a>
+    </div>
+
+    <div class="sport-card">
+      <div class="sport-name">Women's Basketball</div>
+      <div class="count"><b>34</b> athletes · WNBA + NCAA</div>
+      <div class="depth-bar"><div class="fill partial" style="width:58%"></div></div>
+      <div class="desc">JuJu Watkins, Paige Bueckers, Hannah Hidalgo + WNBA marquee. Building depth into the rookie + sophomore college class.</div>
+      <div class="meta"><span><b>ICONs:</b> 4</span><span><b>ELITE:</b> 12</span><span><b>STARs:</b> 18</span></div>
+      <a href="/sports/womens-basketball">View sport →</a>
+    </div>
+
+    <div class="sport-card">
+      <div class="sport-name">Women's Volleyball</div>
+      <div class="count"><b>24</b> athletes · LOVB-grade</div>
+      <div class="depth-bar"><div class="fill" style="width:85%"></div></div>
+      <div class="desc">First sport with curated verdicts. LOVB-aligned cohort. Includes Harper Murray, Jess Mruzik, NCAA POYs.</div>
+      <div class="meta"><span><b>ICONs:</b> 2</span><span><b>ELITE:</b> 8</span><span><b>STARs:</b> 14</span></div>
+      <a href="/sports/womens-volleyball">View sport →</a>
+    </div>
+
+    <div class="sport-card">
+      <div class="sport-name">Baseball</div>
+      <div class="count"><b>18</b> athletes · MLB + MiLB top prospects</div>
+      <div class="depth-bar"><div class="fill partial" style="width:45%"></div></div>
+      <div class="desc">Early cohort — top MLB stars + MiLB Top-10 prospects. College + draft class expansion is Phase 7.3.</div>
+      <div class="meta"><span><b>ICONs:</b> 3</span><span><b>ELITE:</b> 6</span><span><b>STARs:</b> 9</span></div>
+      <a href="/sports/baseball">View sport →</a>
+    </div>
+
+    <div class="sport-card">
+      <div class="sport-name">Men's Volleyball</div>
+      <div class="count"><b>9</b> athletes · early cohort</div>
+      <div class="depth-bar"><div class="fill shallow" style="width:25%"></div></div>
+      <div class="desc">Initial Olympic-team-pool seed. Depth shipping later this summer to mirror womens-vball cohort completeness.</div>
+      <div class="meta"><span><b>ICONs:</b> 1</span><span><b>ELITE:</b> 3</span><span><b>STARs:</b> 5</span></div>
+      <a href="/sports/mens-volleyball">View sport →</a>
+    </div>
+
+    <div class="sport-card">
+      <div class="sport-name">Soccer (M+W)</div>
+      <div class="count"><b>7</b> athletes · USMNT/USWNT seed</div>
+      <div class="depth-bar"><div class="fill shallow" style="width:18%"></div></div>
+      <div class="desc">Pulisic, Smith, Sophia Wilson + a few rising youth-national-team prospects. Cohort expansion timed with 2026 World Cup window.</div>
+      <div class="meta"><span><b>ICONs:</b> 1</span><span><b>ELITE:</b> 2</span><span><b>STARs:</b> 4</span></div>
+      <a href="/sports/soccer">View sport →</a>
+    </div>
+
+    <div class="sport-card" style="background:rgba(78,201,192,.04);border-color:rgba(78,201,192,.2);">
+      <div class="sport-name" style="color:var(--teal);">Coming next</div>
+      <div class="count" style="color:var(--teal);">Hockey · Tennis · Track</div>
+      <div class="depth-bar"><div class="fill shallow" style="width:0%"></div></div>
+      <div class="desc">Order of operations: hockey (winter 2026), tennis (US Open window), track (post-Olympics). Each one ships with 20+ curated marquees on launch.</div>
+      <div class="meta"><span style="color:rgba(78,201,192,.7);">Target: Q3 2026</span></div>
+    </div>
+  </div>
+
+  <h2>Source tier breakdown</h2>
+  <p>Every verdict triangulates from at least 3 independent sources. Tier 1 = primary truth, Tier 2 = cross-validation, Tier 3 = context fill. <b>If a facet doesn't have 3 sources, it's marked partial on the verdict page.</b></p>
+
+  <table class="src-tbl">
+    <thead><tr><th>Source</th><th>Tier</th><th>Coverage</th><th>Last refresh</th></tr></thead>
+    <tbody>
+      <tr><td class="src-name">School athletic sites</td><td><span class="tier-tag t1">Tier 1</span></td><td>Roster, official bio, headshot, class, hometown. Sidearm Sports CDN for ~90% of D1.</td><td>Real-time via proxy</td></tr>
+      <tr><td class="src-name">247sports</td><td><span class="tier-tag t1">Tier 1</span></td><td>HS recruits — composite ranking, position analysis, scouting copy. og:image for headshots.</td><td>Daily</td></tr>
+      <tr><td class="src-name">On3 / Rivals</td><td><span class="tier-tag t1">Tier 1</span></td><td>Cross-validation of recruit rankings, NIL valuations, transfer portal updates.</td><td>Daily</td></tr>
+      <tr><td class="src-name">ESPN</td><td><span class="tier-tag t1">Tier 1</span></td><td>Pro headshots (NBA/NFL/NHL), live stats endpoints, news.</td><td>Real-time</td></tr>
+      <tr><td class="src-name">MaxPreps</td><td><span class="tier-tag t1">Tier 1</span></td><td>HS stats and game logs — ground truth for verifiable HS production.</td><td>Weekly</td></tr>
+      <tr><td class="src-name">Sports Reference</td><td><span class="tier-tag t1">Tier 1</span></td><td>Historical pro/college stats, season-by-season, awards, advanced metrics.</td><td>Daily</td></tr>
+      <tr><td class="src-name">CFBD</td><td><span class="tier-tag t2">Tier 2</span></td><td>College Football Data — roster, recruits, official rankings, transfer portal.</td><td>Daily</td></tr>
+      <tr><td class="src-name">NBA / WNBA APIs</td><td><span class="tier-tag t2">Tier 2</span></td><td>Pro player metadata, advanced stats, injury reports.</td><td>Real-time</td></tr>
+      <tr><td class="src-name">Public news + press</td><td><span class="tier-tag t3">Tier 3</span></td><td>Coach quotes, post-game interviews, behavioral observations. Must triangulate.</td><td>Continuous</td></tr>
+      <tr><td class="src-name">Wikipedia</td><td><span class="tier-tag t3">Tier 3</span></td><td>Bio context, career arcs, post-career trajectories. Backup, not default.</td><td>Daily</td></tr>
+      <tr><td class="src-name">Curated PhD priors</td><td><span class="tier-tag t3">Tier 3</span></td><td>Panel's analytical record fills gaps for ICONs and historical anchors.</td><td>Per panel meeting</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="label">Tenet 53 · Multi-source first</span>
+    Every data lookup defaults to many sources with cascade. No single point of failure, ever. The photo cascade alone hits 11 different sources before falling back to inline initials. Same architecture extends to stats, NIL, bio, news.
+  </div>
+
+  <h2>Known gaps</h2>
+  <p>The honest things we don't have yet:</p>
+  <ul style="color:var(--t2);font-size:15px;margin:14px 0 24px 22px;">
+    <li><b>Pre-D1 international recruits</b> · we miss most non-US prospects until they're listed on a US-school roster. EuroLeague + Asia Pacific cohorts queued for Q3.</li>
+    <li><b>Olympic-only sports</b> · gymnastics, swimming, track-and-field — visibility windows are too sparse for monthly evaluation. Building a different cadence model for these.</li>
+    <li><b>D2 / D3 cohorts</b> · intentionally not graded yet. Different roster + ranking systems. Phase 11 add-on.</li>
+    <li><b>JUCO transfers</b> · partial coverage via transfer portal data. Real depth depends on 247/Rivals JUCO rankings consistency improving.</li>
+  </ul>
+
+  <div class="callout warn">
+    <span class="label">If we don't have a verdict for someone</span>
+    It's not because they don't matter — it's because we haven't yet had 3 independent sources for all 8 facets. <b>An honest "no verdict yet" is better than a confident wrong one.</b> Athletes get added in cohort batches with PhD review, not one-at-a-time.
+  </div>
+
+  <h2>How to request a cohort</h2>
+  <p>If you're a coach, parent, or athlete who'd like an evaluation for a specific roster or program, message us through the contact form on any verdict page. Cohort requests are batched monthly and reviewed by the PhD panel for inclusion in the next quarterly drop.</p>
+
+  <div class="footer">
+    Coverage map · updated June 9 2026 · refreshed nightly · <a href="/">home</a> · <a href="/methodology">methodology</a> · <a href="/predictions">predictions ledger</a> · <a href="/velocity">velocity</a>
+  </div>
+</div>
+<!-- FCBase59 . Agent on fieldcheck-coverage.html (mode=coverage) -->
+<button class="fc-agent-pill" id="fc-agent-pill"><span class="icon">✨</span><span class="label">Ask about coverage</span></button>
+<div class="fc-agent-panel" id="fc-agent-panel">
+  <div class="fc-agent-header">
+    <div>
+      <h3>Ask about coverage</h3>
+      <div class="sub">214 athletes . 5 sports . 11 source tiers</div>
+    </div>
+    <button class="fc-agent-close" id="fc-agent-close">×</button>
+  </div>
+  <div class="fc-agent-suggestions" id="fc-agent-suggestions"></div>
+  <div class="fc-agent-body" id="fc-agent-body">
+    <div class="fc-agent-empty" id="fc-agent-empty">
+      <b>Ask about who we cover</b>
+      Athletes per sport, source quality, depth, gaps, refresh cadence. For specific athletes, visit their verdict page.
+    </div>
+  </div>
+  <div class="fc-agent-input-row">
+    <textarea class="fc-agent-input" id="fc-agent-input" placeholder="Type a question…" rows="1" maxlength="500"></textarea>
+    <button class="fc-agent-send" id="fc-agent-send" disabled>↑</button>
+  </div>
+  <div class="fc-agent-footer">Powered by Claude · 10 questions/day · <a href="/agent-transparency" style="color:rgba(245,184,0,.6);text-decoration:none">see the prompt</a></div>
+</div>
+<script>
+(function(){
+  if (window._fcAgentInit) return;
+  window._fcAgentInit = true;
+  function init() {
+    var pill=document.getElementById('fc-agent-pill'),panel=document.getElementById('fc-agent-panel'),closeBtn=document.getElementById('fc-agent-close'),input=document.getElementById('fc-agent-input'),sendBtn=document.getElementById('fc-agent-send'),body=document.getElementById('fc-agent-body'),emptyState=document.getElementById('fc-agent-empty'),suggestionsEl=document.getElementById('fc-agent-suggestions');
+    if(!pill||!panel)return;
+    var WORKER_BASE=(location.hostname.indexOf('fieldcheck-dev')>=0)?'https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev':'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+    var suggestions=['How many athletes per sport?',
+      'What are the 11 source tiers?',
+      'Why is womens basketball at 34?',
+      'What are the known gaps?',
+      'How often is data refreshed?'];
+    var html='';for(var i=0;i<suggestions.length;i++){html+='<button data-q="'+suggestions[i].replace(/"/g,'&quot;')+'">'+suggestions[i]+'</button>';}
+    suggestionsEl.innerHTML=html;
+    var btns=suggestionsEl.querySelectorAll('button');
+    for(var k=0;k<btns.length;k++){btns[k].addEventListener('click',function(){input.value=this.getAttribute('data-q');updateSendState();input.focus();});}
+    var histKey='fc_agent_hist:coverage';
+    function loadHist(){try{return JSON.parse(localStorage.getItem(histKey)||'[]');}catch(e){return[];}}
+    function saveHist(h){try{localStorage.setItem(histKey,JSON.stringify(h.slice(-3)));}catch(e){}}
+    function renderHistory(){var hist=loadHist();if(hist.length===0){emptyState.style.display='';return;}emptyState.style.display='none';for(var i=0;i<hist.length;i++){if(hist[i].q)appendMsg(hist[i].q,'user');if(hist[i].a)appendMsg(hist[i].a,'bot');}}
+    function appendMsg(text,kind){emptyState.style.display='none';var m=document.createElement('div');m.className='fc-agent-msg '+kind;m.textContent=text;body.appendChild(m);body.scrollTop=body.scrollHeight;return m;}
+    pill.addEventListener('click',function(){panel.classList.add('open');pill.classList.add('open');renderHistory();input.focus();});
+    closeBtn.addEventListener('click',function(){panel.classList.remove('open');pill.classList.remove('open');});
+    function updateSendState(){sendBtn.disabled=!input.value.trim()||sending;input.style.height='auto';input.style.height=Math.min(input.scrollHeight,100)+'px';}
+    input.addEventListener('input',updateSendState);
+    input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();if(!sendBtn.disabled)send();}});
+    var sending=false;sendBtn.addEventListener('click',send);
+    function send(){
+      var question=input.value.trim();if(!question||sending)return;sending=true;
+      appendMsg(question,'user');input.value='';updateSendState();
+      var botMsg=appendMsg('','bot');botMsg.classList.add('streaming');
+      var hist=loadHist();
+    var verdictData = {};
+      var payload={question:question,athlete:'FieldCheck coverage',sport:null,history:hist,verdict_data:verdictData,mode:'coverage'};
+      fetch(WORKER_BASE+'/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){
+        if(!r.ok||!r.body)throw new Error('HTTP '+r.status);
+        var reader=r.body.getReader(),decoder=new TextDecoder(),buffer='',full='',err=false;
+        function readChunk(){return reader.read().then(function(res){
+          if(res.done){botMsg.classList.remove('streaming');sending=false;updateSendState();if(!err&&full){hist.push({q:question,a:full});saveHist(hist);}return;}
+          buffer+=decoder.decode(res.value,{stream:true});var events=buffer.split('\n\n');buffer=events.pop()||'';
+          for(var i=0;i<events.length;i++){var lines=events[i].split('\n'),dp=null;for(var j=0;j<lines.length;j++){if(lines[j].indexOf('data: ')===0)dp=lines[j].slice(6);}if(!dp)continue;
+            try{var ev=JSON.parse(dp);
+              if(ev.type==='chunk'&&ev.text){full+=ev.text;botMsg.textContent=full;body.scrollTop=body.scrollHeight;}
+              else if(ev.type==='error'||ev.type==='rate_limit'||ev.type==='config_error'){err=true;botMsg.classList.add('error');botMsg.classList.remove('streaming');botMsg.textContent=ev.message||'Error';}
+              else if(ev.type==='done'){botMsg.classList.remove('streaming');}
+            }catch(e){}}
+          return readChunk();});}
+        return readChunk();
+      }).catch(function(e){botMsg.classList.remove('streaming');botMsg.classList.add('error');botMsg.textContent='Connection error: '+(e.message||'failed');sending=false;updateSendState();});
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(init,300);});}else{setTimeout(init,300);}
+})();
+</script>
+<!-- FCBase59 . agent UI mode=coverage . streams Claude Haiku via /agent endpoint . localStorage history . 10/IP/day rate limit -->
+</body>
+</html>

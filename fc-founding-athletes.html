@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Founding Athletes · FieldCheck IQ</title>
+  <meta name="description" content="The archetype anchor set behind every Comparable in FieldCheck IQ. Hand-curated, fully traced career arcs across sports.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+:root { --bg: #0d0d0d; --bg-2: #161616; --text: #F5F1E8; --text-2: #b8b8b8; --text-3: #888; --gold: #d4af37; --moss: #95d5b2; --teal: #4ec9c0; --rust: #c45132; --border: rgba(255,255,255,0.08); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+.fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+.fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+.fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+.fc-canonical-wordmark { font-size: 18px; }
+.fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+.fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+.fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+.fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+.fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.fc-canonical-nav .nav-more-wrap { display: none; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.nav-primary:hover { color: #ffc94a; }
+.nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.nav-more-wrap { position: relative; display: inline-block; }
+.nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-wrap { display: none; }
+.nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.nav-more-chev { transform: rotate(180deg); }
+.nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.nav-more-group { padding: 6px 4px; }
+.nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+
+.fa-hero { max-width: 980px; margin: 0 auto; padding: 72px 32px 28px; text-align: center; }
+.fa-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 16px; }
+.fa-title { font-family: 'Anton', sans-serif; font-size: clamp(42px, 6.5vw, 76px); line-height: 0.98; letter-spacing: -0.012em; margin-bottom: 22px; }
+.fa-title .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.fa-sub { font-size: 17px; color: var(--text-2); max-width: 720px; margin: 0 auto 14px; line-height: 1.55; }
+.fa-filter-row { max-width: 1200px; margin: 28px auto 32px; padding: 0 24px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.fa-chip { padding: 8px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-2); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.3px; border-radius: 6px; cursor: pointer; transition: all 0.15s; font-weight: 600; }
+.fa-chip.active { background: rgba(212,175,55,0.15); border-color: var(--gold); color: var(--gold); }
+.fa-chip:hover { color: var(--text); }
+.fa-grid { max-width: 1200px; margin: 0 auto 56px; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.fa-card { padding: 22px 24px; background: linear-gradient(135deg, rgba(212,175,55,0.04), rgba(20,17,12,0.5)); border: 1px solid var(--border); border-radius: 14px; transition: all 0.18s; }
+.fa-card:hover { border-color: rgba(212,175,55,0.4); transform: translateY(-2px); }
+.fa-card.hidden { display: none; }
+.fa-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.fa-card-photo { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, rgba(212,175,55,0.3), rgba(78,201,192,0.2)); display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: 20px; color: var(--gold); letter-spacing: -0.005em; }
+.fa-card-tier-row { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.fa-card-tier { padding: 3px 8px; background: rgba(212,175,55,0.15); color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; font-weight: 700; border-radius: 4px; }
+.fa-card-iq { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--gold); letter-spacing: -0.005em; line-height: 1; }
+.fa-card-name { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); letter-spacing: -0.005em; line-height: 1.1; margin-bottom: 4px; }
+.fa-card-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-3); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+.fa-card-archetype { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--moss); font-weight: 700; margin-bottom: 12px; padding: 6px 10px; background: rgba(149,213,178,0.08); border: 1px solid rgba(149,213,178,0.18); border-radius: 5px; display: inline-block; }
+.fa-card-why { font-size: 13px; color: var(--text-2); line-height: 1.55; margin-bottom: 16px; }
+.fa-card-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.2px; color: var(--text-3); }
+.fa-card-sport { color: var(--gold); font-weight: 700; }
+.fa-explain { max-width: 980px; margin: 32px auto 60px; padding: 28px 32px; background: linear-gradient(135deg, rgba(78,201,192,0.04), rgba(20,17,12,0.4)); border: 1px solid rgba(78,201,192,0.28); border-radius: 14px; }
+.fa-explain-h { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: var(--teal); font-weight: 700; margin-bottom: 12px; }
+.fa-explain h3 { font-family: 'Anton', sans-serif; font-size: clamp(24px, 3.5vw, 34px); line-height: 1.1; margin-bottom: 14px; letter-spacing: -0.005em; }
+.fa-explain h3 .iq-italic { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--teal); font-weight: 400; }
+.fa-explain p { color: var(--text-2); font-size: 14.5px; line-height: 1.6; }
+.fa-explain a { color: var(--teal); }
+@media (max-width: 720px) { .fa-grid { padding: 0 14px; grid-template-columns: 1fr; } }
+  
+/* v0.30.5.2244 FCBase13_V026 — Founding Athletes drill-down */
+.fa-card { cursor: pointer; }
+.fa-card.expanded { border-color: rgba(212,175,55,0.5); box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
+.fa-drilldown { max-width: 980px; margin: 18px auto 60px; padding: 28px 32px; background: linear-gradient(135deg, rgba(212,175,55,0.06), rgba(20,17,12,0.55)); border: 1px solid rgba(212,175,55,0.35); border-radius: 14px; display: none; animation: fa-fade 0.3s ease; }
+.fa-drilldown.open { display: block; }
+@keyframes fa-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.fa-dd-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 22px; flex-wrap: wrap; }
+.fa-dd-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: var(--gold); font-weight: 700; margin-bottom: 8px; }
+.fa-dd-name { font-family: 'Anton', sans-serif; font-size: clamp(28px, 4.5vw, 42px); color: var(--text); letter-spacing: -0.005em; line-height: 1; }
+.fa-dd-close { background: transparent; border: 1px solid rgba(255,255,255,0.12); color: var(--text-3); padding: 6px 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; cursor: pointer; flex-shrink: 0; }
+.fa-dd-close:hover { color: var(--rust); border-color: var(--rust); }
+.fa-dd-arc-h { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: var(--gold); font-weight: 700; margin-bottom: 14px; }
+.fa-dd-arc { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; position: relative; padding-left: 26px; border-left: 2px solid rgba(212,175,55,0.25); }
+.fa-dd-arc-stop { position: relative; padding: 12px 16px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 10px; }
+.fa-dd-arc-stop::before { content: ''; position: absolute; left: -33px; top: 16px; width: 10px; height: 10px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg, #0d0d0d); }
+.fa-dd-arc-years { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.2px; color: var(--gold); font-weight: 700; margin-bottom: 3px; }
+.fa-dd-arc-where { font-family: 'Anton', sans-serif; font-size: 16px; color: var(--text); letter-spacing: -0.005em; margin-bottom: 5px; }
+.fa-dd-arc-note { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+.fa-dd-comp { padding: 18px 22px; background: rgba(78,201,192,0.05); border: 1px solid rgba(78,201,192,0.3); border-radius: 10px; margin-bottom: 22px; }
+.fa-dd-comp-h { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: var(--teal); font-weight: 700; margin-bottom: 8px; }
+.fa-dd-comp-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--text); line-height: 1.55; }
+.fa-dd-cites { padding: 18px 22px; background: rgba(0,0,0,0.3); border-radius: 10px; margin-bottom: 18px; }
+.fa-dd-cites-h { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; color: var(--gold); font-weight: 700; margin-bottom: 12px; }
+.fa-dd-cite-row { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; font-size: 13px; color: var(--text-2); border-bottom: 1px solid rgba(255,255,255,0.04); }
+.fa-dd-cite-row:last-child { border-bottom: 0; }
+.fa-dd-cite-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 1px; flex-shrink: 0; }
+.fa-dd-cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.fa-dd-cta { padding: 9px 16px; background: rgba(212,175,55,0.12); color: var(--gold); border: 1px solid rgba(212,175,55,0.35); border-radius: 6px; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; transition: background 0.15s; }
+.fa-dd-cta:hover { background: rgba(212,175,55,0.22); }
+
+</style>
+</head>
+<body>
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="fa-hero">
+  <div class="fa-eyebrow">// FOUNDING ATHLETES · ARCHETYPE ANCHOR SET</div>
+  <h1 class="fa-title">The reference cohort.<br><span class="iq-italic">Every comparable starts here.</span></h1>
+  <p class="fa-sub">When FieldCheck IQ tells you a high-school OH is an "87% match for Andrea Drews," <strong style="color:var(--text)">this is who Andrea is</strong>. The Founding Athletes set is the archetype anchor for every Comparable in the system. Hand-curated. Fully traced. Public-record sourced.</p>
+</section>
+
+<div class="fa-filter-row">
+  <button class="fa-chip active" onclick="faFilter('ALL', this)">ALL SPORTS</button>
+  <button class="fa-chip" onclick="faFilter('W-VB', this)">W-VB</button>
+  <button class="fa-chip" onclick="faFilter('MBB', this)">MBB</button>
+  <button class="fa-chip" onclick="faFilter('WBB', this)">WBB</button>
+  <button class="fa-chip" onclick="faFilter('FB', this)">FB</button>
+  <button class="fa-chip" onclick="faFilter('MLB', this)">MLB</button>
+  <button class="fa-chip" onclick="faFilter('WSOC', this)">WSOC</button>
+  <button class="fa-chip" onclick="faFilter('TENNIS', this)">TENNIS</button>
+  <button class="fa-chip" onclick="faFilter('GOLF', this)">GOLF</button>
+</div>
+
+<div class="fa-grid" id="fa-grid">
+    <div class="fa-card" data-sport="W-VB" data-name="Andrea Drews" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">AD</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ICON</span><span class="fa-card-iq">9.0</span></div>
+      </div>
+      <div class="fa-card-name">Andrea Drews</div>
+      <div class="fa-card-meta">Opposite · LOVB Atlanta</div>
+      <div class="fa-card-archetype">// POWER-OPPOSITE</div>
+      <div class="fa-card-why">The model for a high-block, downball-finishing opposite. Verifiable career arc from Illinois → Italy → USA team → LOVB founding.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">W-VB</span><span class="fa-card-cite">12 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="W-VB" data-name="Jordan Larson" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">JL</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ICON</span><span class="fa-card-iq">9.4</span></div>
+      </div>
+      <div class="fa-card-name">Jordan Larson</div>
+      <div class="fa-card-meta">Outside Hitter · LOVB Nebraska</div>
+      <div class="fa-card-archetype">// CAPTAIN-OH</div>
+      <div class="fa-card-why">The captain-OH archetype. Three Olympics. Defensive floor + situational scoring. Career trajectory fully traced.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">W-VB</span><span class="fa-card-cite">18 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="W-VB" data-name="Justine Wong-Orantes" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">JW</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ICON</span><span class="fa-card-iq">8.8</span></div>
+      </div>
+      <div class="fa-card-name">Justine Wong-Orantes</div>
+      <div class="fa-card-meta">Libero · LOVB Houston</div>
+      <div class="fa-card-archetype">// BACKROW-FOUNDATION</div>
+      <div class="fa-card-why">Libero archetype. Nebraska two-time champion, Tokyo Olympic gold starter. Defense layer anchor.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">W-VB</span><span class="fa-card-cite">11 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="W-VB" data-name="Kelsey Robinson-Cook" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">KR</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ICON</span><span class="fa-card-iq">9.2</span></div>
+      </div>
+      <div class="fa-card-name">Kelsey Robinson-Cook</div>
+      <div class="fa-card-meta">Outside Hitter · LOVB Atlanta</div>
+      <div class="fa-card-archetype">// VETERAN-OH</div>
+      <div class="fa-card-why">Late-blooming OH archetype. Long pro pathway in Italy/Turkey. Veteran leadership comparable.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">W-VB</span><span class="fa-card-cite">10 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="W-VB" data-name="Micha Hancock" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">MH</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ELITE</span><span class="fa-card-iq">8.6</span></div>
+      </div>
+      <div class="fa-card-name">Micha Hancock</div>
+      <div class="fa-card-meta">Setter · Pro (Italy)</div>
+      <div class="fa-card-archetype">// JUMP-SERVE-SETTER</div>
+      <div class="fa-card-why">Penn State setter archetype with the jump-serve weapon. Setter comparison anchor.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">W-VB</span><span class="fa-card-cite">8 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="MBB" data-name="Tyrese Haliburton" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">TH</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ICON</span><span class="fa-card-iq">9.1</span></div>
+      </div>
+      <div class="fa-card-name">Tyrese Haliburton</div>
+      <div class="fa-card-meta">Point Guard · Indiana Pacers</div>
+      <div class="fa-card-archetype">// PASS-FIRST-PG</div>
+      <div class="fa-card-why">Pass-first PG with elite spacing IQ. Iowa State → All-NBA arc. Decision-quality comparable.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">MBB</span><span class="fa-card-cite">14 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="MBB" data-name="Anthony Edwards" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">AE</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ICON</span><span class="fa-card-iq">9.0</span></div>
+      </div>
+      <div class="fa-card-name">Anthony Edwards</div>
+      <div class="fa-card-meta">Shooting Guard · Minnesota Timberwolves</div>
+      <div class="fa-card-archetype">// ATHLETIC-SG</div>
+      <div class="fa-card-why">Athletic-SG archetype. Georgia one-and-done → All-NBA. Production-layer anchor for explosive guards.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">MBB</span><span class="fa-card-cite">13 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="WBB" data-name="A'ja Wilson" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">AW</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ICON</span><span class="fa-card-iq">9.5</span></div>
+      </div>
+      <div class="fa-card-name">A'ja Wilson</div>
+      <div class="fa-card-meta">Forward · Las Vegas Aces</div>
+      <div class="fa-card-archetype">// TWO-WAY-POST</div>
+      <div class="fa-card-why">Two-way post archetype. SC champion → MVP → WNBA dynasty. Defense + scoring layer anchor.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">WBB</span><span class="fa-card-cite">16 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="WBB" data-name="Caitlin Clark" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">CC</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ELITE</span><span class="fa-card-iq">8.8</span></div>
+      </div>
+      <div class="fa-card-name">Caitlin Clark</div>
+      <div class="fa-card-meta">Guard · Indiana Fever</div>
+      <div class="fa-card-archetype">// DEEP-RANGE-PG</div>
+      <div class="fa-card-why">Deep-range PG comparable. Iowa scoring records → ROY arc.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">WBB</span><span class="fa-card-cite">12 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="FB" data-name="Caleb Williams" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">CW</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ELITE</span><span class="fa-card-iq">8.9</span></div>
+      </div>
+      <div class="fa-card-name">Caleb Williams</div>
+      <div class="fa-card-meta">Quarterback · Chicago Bears</div>
+      <div class="fa-card-archetype">// MOBILE-PASSER</div>
+      <div class="fa-card-why">Mobile-passer archetype. USC Heisman → #1 overall. Modern dual-threat anchor.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">FB</span><span class="fa-card-cite">15 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="FB" data-name="Travis Hunter" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">TH</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ICON</span><span class="fa-card-iq">9.2</span></div>
+      </div>
+      <div class="fa-card-name">Travis Hunter</div>
+      <div class="fa-card-meta">Two-way · Jacksonville Jaguars</div>
+      <div class="fa-card-archetype">// TWO-WAY-EDGE</div>
+      <div class="fa-card-why">Two-way archetype. Colorado Heisman + #2 pick. Multi-position comparable anchor.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">FB</span><span class="fa-card-cite">14 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="MLB" data-name="Paul Skenes" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">PS</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ICON</span><span class="fa-card-iq">9.3</span></div>
+      </div>
+      <div class="fa-card-name">Paul Skenes</div>
+      <div class="fa-card-meta">Pitcher · Pittsburgh Pirates</div>
+      <div class="fa-card-archetype">// POWER-RHP</div>
+      <div class="fa-card-why">Power-RHP archetype. LSU CWS → #1 overall → ROY. Command + velocity anchor.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">MLB</span><span class="fa-card-cite">11 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="WSOC" data-name="Trinity Rodman" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">TR</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ELITE</span><span class="fa-card-iq">8.7</span></div>
+      </div>
+      <div class="fa-card-name">Trinity Rodman</div>
+      <div class="fa-card-meta">Forward · Washington Spirit</div>
+      <div class="fa-card-archetype">// PRESSING-FORWARD</div>
+      <div class="fa-card-why">Pressing forward archetype. Skipped college, NWSL ROY → Olympic gold. Modern forward path.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">WSOC</span><span class="fa-card-cite">10 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="TENNIS" data-name="Coco Gauff" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">CG</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ICON</span><span class="fa-card-iq">9.0</span></div>
+      </div>
+      <div class="fa-card-name">Coco Gauff</div>
+      <div class="fa-card-meta">— · WTA Pro</div>
+      <div class="fa-card-archetype">// POWER-BASELINER</div>
+      <div class="fa-card-why">Power baseliner archetype, junior path. US Open champion arc.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">TENNIS</span><span class="fa-card-cite">9 citations</span></div>
+    </div>
+    <div class="fa-card" data-sport="GOLF" data-name="Nelly Korda" onclick="faDrill(this)">
+      <div class="fa-card-head">
+        <div class="fa-card-photo">NK</div>
+        <div class="fa-card-tier-row"><span class="fa-card-tier">ICON</span><span class="fa-card-iq">9.1</span></div>
+      </div>
+      <div class="fa-card-name">Nelly Korda</div>
+      <div class="fa-card-meta">— · LPGA Pro</div>
+      <div class="fa-card-archetype">// PRECISION-DRIVER</div>
+      <div class="fa-card-why">Precision driver + iron play archetype. Olympic gold + major champion.</div>
+      <div class="fa-card-footer"><span class="fa-card-sport">GOLF</span><span class="fa-card-cite">8 citations</span></div>
+    </div>
+</div>
+
+
+<div class="fa-drilldown" id="fa-drilldown">
+  <div class="fa-dd-head">
+    <div>
+      <div class="fa-dd-tag" id="fa-dd-tag">// FOUNDING ATHLETE</div>
+      <div class="fa-dd-name" id="fa-dd-name">Select an athlete</div>
+    </div>
+    <button class="fa-dd-close" onclick="faDrillClose()">CLOSE ×</button>
+  </div>
+  <div id="fa-dd-body"></div>
+</div>
+
+<div class="fa-explain">
+  <div class="fa-explain-h">// WHAT MAKES SOMEONE A FOUNDING ATHLETE</div>
+  <h3>It's <span class="iq-italic">not a ranking.</span> It's an anchor.</h3>
+  <p>Founding Athletes aren't "the best" — they're the <strong style="color:var(--text)">most-traced</strong>. Career arc fully documented from HS through pro. Archetype unambiguous. Citations dense. When the IQ engine projects what a current recruit becomes, it does so by finding their nearest founding athlete in 5-layer embedding space (cosine similarity, see <a href="/methodology#comparable">§4 of the methodology</a>). 200+ athletes across the 8 sports. Curated, not ranked. The set grows quarterly with each new archetype that emerges.</p>
+</div>
+
+<script>
+function faFilter(sport, btn) {
+  document.querySelectorAll('.fa-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.fa-card').forEach(c => {
+    if (sport === 'ALL' || c.dataset.sport === sport) c.classList.remove('hidden');
+    else c.classList.add('hidden');
+  });
+}
+function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('fc-nav-more-wrap');
+  if (!wrap) return;
+  if (!wrap.contains(e.target)) {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+
+<script>
+// V026 — Founding Athletes drill-down
+const FA_PROFILES = {"Andrea Drews": {"arc": [["2014-2018", "Illinois Volleyball", "AVCA All-American Senior \u00b7 NCAA Tournament Elite Eight"], ["2018-2024", "Italy / Turkey pro", "Multi-year European club career \u00b7 Champions League starter"], ["2021", "USA Olympic Team", "Tokyo Gold Medal \u00b7 starting opposite"], ["2024-present", "LOVB Atlanta", "Founding athlete of LOVB Atlanta \u00b7 brand-defining opposite"]], "comparable": "Anchor archetype for POWER-OPPOSITE \u2014 all current opposite verdicts cosine-matched against Drews vector.", "cites": ["LOVB Atlanta official roster", "USA Volleyball Tokyo records", "Illinois Volleyball alumni page", "AVCA All-American archives 2017-2018", "FIVB Champions League stats"]}, "Jordan Larson": {"arc": [["2005-2008", "Nebraska Volleyball", "2006 NCAA National Champion \u00b7 AVCA First Team"], ["2008-2024", "International pro", "Russia \u00b7 Turkey \u00b7 Italy \u00b7 16-year top-flight career"], ["2012-2024", "USA National Team", "3 Olympic Games \u00b7 Tokyo Gold (captain) \u00b7 Paris Silver"], ["2024-present", "LOVB Nebraska", "Founding captain \u00b7 brand-defining OH"]], "comparable": "Anchor archetype for CAPTAIN-OH \u2014 leadership-weighted OH archetype for veteran captain types.", "cites": ["USA Volleyball career archive", "LOVB Nebraska 2025 roster", "NCAA 2006 Championship record book", "Nebraska Volleyball Hall of Fame"]}, "Justine Wong-Orantes": {"arc": [["2014-2017", "Nebraska Volleyball", "Two-time NCAA Champion (2015, 2017) \u00b7 AVCA Libero of the Year"], ["2018-2021", "Germany pro \u00b7 USA development", "Bundesliga starter \u00b7 USA Pan-Am 2019"], ["2021", "Tokyo Olympics", "Starting libero \u00b7 Gold Medal"], ["2024-present", "LOVB Houston", "Founding libero \u00b7 defense-layer anchor"]], "comparable": "Anchor archetype for BACKROW-FOUNDATION \u2014 libero-archetype anchor for all libero verdicts.", "cites": ["LOVB Houston roster", "USA Volleyball Tokyo gold-medal record", "Nebraska 2017 Champ team records"]}, "Kelsey Robinson-Cook": {"arc": [["2010-2013", "Nebraska Volleyball", "AVCA First Team Senior \u00b7 graduate transfer arc"], ["2014-2023", "Italy / Turkey pro", "10+ years Italian Serie A1 + Turkish Sultanlar Ligi"], ["2016-2021", "USA National Team", "Two Olympic Games \u00b7 Tokyo Gold"], ["2024-present", "LOVB Atlanta", "Veteran founding OH"]], "comparable": "Anchor archetype for VETERAN-OH \u2014 late-blooming OH archetype with international pro path emphasis.", "cites": ["USA Volleyball roster", "LOVB Atlanta 2025 roster", "Italian Lega Serie A1 records"]}, "Micha Hancock": {"arc": [["2011-2014", "Penn State Volleyball", "NCAA Champion 2013, 2014 \u00b7 AVCA Setter of the Year"], ["2015-present", "Italy / Turkey pro", "Sustained European pro career \u00b7 Champions League appearances"], ["2016-2021", "USA National Team", "Tokyo Olympic Bronze \u00b7 2nd setter"]], "comparable": "Anchor archetype for JUMP-SERVE-SETTER \u2014 setter-specialist archetype with the jump-serve weapon.", "cites": ["Penn State Volleyball record book", "USA Volleyball Tokyo records", "FIVB World Championship rosters"]}, "Tyrese Haliburton": {"arc": [["2018-2020", "Iowa State Basketball", "2-year college career \u00b7 top-12 NBA Draft pick"], ["2020-2022", "Sacramento Kings", "NBA rookie standout \u00b7 Rookie 1st team"], ["2022-present", "Indiana Pacers", "All-NBA 3rd team \u00b7 franchise PG \u00b7 2024 ECF run"]], "comparable": "Anchor archetype for PASS-FIRST-PG \u2014 pass-first PG with elite spacing IQ.", "cites": ["NBA stats archive 2020-2024", "Iowa State career stats", "All-NBA team rosters"]}, "Anthony Edwards": {"arc": [["2019-2020", "Georgia Bulldogs", "1-year college \u00b7 #1 overall 2020 NBA Draft pick"], ["2020-present", "Minnesota Timberwolves", "All-NBA 2nd team \u00b7 Olympic Gold 2024 \u00b7 WCF run"]], "comparable": "Anchor archetype for ATHLETIC-SG \u2014 explosive guard archetype anchor.", "cites": ["NBA stats archive", "USA Basketball 2024 Olympic roster", "Georgia Basketball record book"]}, "A'ja Wilson": {"arc": [["2014-2018", "South Carolina Basketball", "2017 NCAA Champion \u00b7 AP Player of the Year senior"], ["2018-present", "Las Vegas Aces", "2\u00d7 WNBA MVP \u00b7 2\u00d7 WNBA Champion \u00b7 multiple Olympic Golds"]], "comparable": "Anchor archetype for TWO-WAY-POST \u2014 two-way post archetype with elite scoring + defense.", "cites": ["WNBA MVP records", "USA Basketball Olympic rosters", "South Carolina 2017 Championship team", "AP POY archive"]}, "Caitlin Clark": {"arc": [["2020-2024", "Iowa Hawkeyes", "NCAA scoring records \u00b7 2\u00d7 NCAA Final Four \u00b7 National POY 2024"], ["2024-present", "Indiana Fever", "WNBA Rookie of the Year \u00b7 franchise PG"]], "comparable": "Anchor archetype for DEEP-RANGE-PG \u2014 deep-range PG with handles + vision.", "cites": ["NCAA scoring record book", "WNBA 2024 ROY award", "Iowa Basketball record book"]}, "Caleb Williams": {"arc": [["2021-2022", "Oklahoma football", "Freshman QB starter \u00b7 transfer to USC"], ["2022-2023", "USC football", "2022 Heisman Trophy \u00b7 Pac-12 POY"], ["2024-present", "Chicago Bears", "#1 overall 2024 NFL Draft pick \u00b7 franchise QB"]], "comparable": "Anchor archetype for MOBILE-PASSER \u2014 mobile QB archetype with extension ability.", "cites": ["Heisman Trophy 2022 archive", "NFL Draft 2024 records", "USC football record book"]}, "Travis Hunter": {"arc": [["2022", "Jackson State football", "Coach Prime recruit \u00b7 1-year HBCU stint"], ["2023-2024", "Colorado football", "2024 Heisman Trophy \u00b7 two-way star (CB + WR)"], ["2025-present", "Jacksonville Jaguars", "#2 overall 2025 NFL Draft pick \u00b7 two-way pro project"]], "comparable": "Anchor archetype for TWO-WAY-EDGE \u2014 multi-position elite archetype.", "cites": ["Heisman Trophy 2024 archive", "NFL Draft 2025 records", "Colorado football record book"]}, "Paul Skenes": {"arc": [["2021-2022", "Air Force baseball", "Two-way player \u00b7 transfer to LSU"], ["2022-2023", "LSU baseball", "2023 CWS Champion \u00b7 Golden Spikes Award \u00b7 #1 overall MLB Draft pick"], ["2024-present", "Pittsburgh Pirates", "MLB Rookie of the Year \u00b7 All-Star Game starter"]], "comparable": "Anchor archetype for POWER-RHP \u2014 power right-handed pitcher archetype.", "cites": ["MLB stats archive 2024", "LSU CWS 2023 records", "Golden Spikes Award archive"]}, "Trinity Rodman": {"arc": [["2021", "Skipped college", "NWSL #2 overall draft pick at 18 \u00b7 Washington Spirit"], ["2021-present", "Washington Spirit", "NWSL Rookie of the Year \u00b7 2021 NWSL Champion"], ["2024-present", "USA National Team", "Paris Olympic Gold \u00b7 USWNT starter"]], "comparable": "Anchor archetype for PRESSING-FORWARD \u2014 modern pressing forward archetype.", "cites": ["NWSL records 2021-2024", "USWNT Olympic roster 2024", "Washington Spirit official roster"]}, "Coco Gauff": {"arc": [["2017-2019", "Junior tennis", "Wimbledon Junior champion \u00b7 top junior in the world"], ["2019-present", "WTA pro", "Multiple Slam quarterfinals \u00b7 2023 US Open Champion"], ["2024", "Olympic team", "Paris Olympic doubles \u00b7 WTA Top 5"]], "comparable": "Anchor archetype for POWER-BASELINER \u2014 power baseline tennis archetype with athletic defense.", "cites": ["WTA rankings archive", "US Open 2023 records", "Wimbledon Junior 2018 records"]}, "Nelly Korda": {"arc": [["2017-2019", "LPGA early career", "2-year breakthrough to top-10"], ["2021", "Tokyo Olympics", "Olympic Gold Medal"], ["2021-present", "LPGA Tour", "2\u00d7 LPGA Player of the Year \u00b7 multiple major championships"]], "comparable": "Anchor archetype for PRECISION-DRIVER \u2014 precision driving + iron-play archetype.", "cites": ["LPGA POY archive", "Tokyo Olympics golf records", "Major championship records"]}};
+function escapeHtml(s) { return (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+window.faDrill = function(card) {
+  const name = card.dataset.name;
+  if (!name) return;
+  const prof = FA_PROFILES[name];
+  if (!prof) return;
+  document.querySelectorAll('.fa-card').forEach(c => c.classList.remove('expanded'));
+  card.classList.add('expanded');
+  document.getElementById('fa-dd-tag').textContent = '// FOUNDING ATHLETE · ' + name.toUpperCase();
+  document.getElementById('fa-dd-name').textContent = name;
+  const arc = prof.arc.map(stop =>
+    '<div class="fa-dd-arc-stop">' +
+      '<div class="fa-dd-arc-years">' + escapeHtml(stop[0]) + '</div>' +
+      '<div class="fa-dd-arc-where">' + escapeHtml(stop[1]) + '</div>' +
+      '<div class="fa-dd-arc-note">' + escapeHtml(stop[2]) + '</div>' +
+    '</div>'
+  ).join('');
+  const cites = prof.cites.map((c, i) =>
+    '<div class="fa-dd-cite-row"><span>' + escapeHtml(c) + '</span><span class="fa-dd-cite-tag">[' + (i+1) + ']</span></div>'
+  ).join('');
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  document.getElementById('fa-dd-body').innerHTML =
+    '<div class="fa-dd-arc-h">// CAREER ARC · CITED</div>' +
+    '<div class="fa-dd-arc">' + arc + '</div>' +
+    '<div class="fa-dd-comp">' +
+      '<div class="fa-dd-comp-h">// WHY THIS IS AN ARCHETYPE ANCHOR</div>' +
+      '<div class="fa-dd-comp-text">' + escapeHtml(prof.comparable) + '</div>' +
+    '</div>' +
+    '<div class="fa-dd-cites">' +
+      '<div class="fa-dd-cites-h">// CITED SOURCES (' + prof.cites.length + ')</div>' +
+      cites +
+    '</div>' +
+    '<div class="fa-dd-cta-row">' +
+      '<a href="/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:name})) + '" class="fa-dd-cta">Open IQ verdict →</a>' +
+      '<a href="/methodology#comparable" class="fa-dd-cta">How matching works →</a>' +
+    '</div>';
+  document.getElementById('fa-drilldown').classList.add('open');
+  setTimeout(function() { document.getElementById('fa-drilldown').scrollIntoView({behavior:'smooth',block:'start'}); }, 80);
+};
+window.faDrillClose = function() {
+  document.getElementById('fa-drilldown').classList.remove('open');
+  document.querySelectorAll('.fa-card').forEach(c => c.classList.remove('expanded'));
+};
+</script>
+
+</body>
+</html>

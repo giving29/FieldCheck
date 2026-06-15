@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Pathway · FieldCheck</title>
+  <meta name="description" content="A personalized developmental pathway. Pick your role model — single or composite. Watch the shape change over time.">
+  <meta property="og:title" content="Your Pathway · FieldCheck">
+  <meta property="og:description" content="Don't rank. Develop. Pick who you want to be like. Build the plan.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #0d0d0d; --bg-2: #161616; --bg-3: #1d1d1d;
+  --text: #ededed; --text-2: #b8b8b8; --text-3: #888; --text-4: #555;
+  --gold: #d4af37; --gold-2: #f5b800;
+  --border: rgba(255,255,255,0.08); --glass: rgba(255,255,255,0.03); --glass-edge: rgba(255,255,255,0.1);
+  --rust: #c45132; --sage: #6a9c89;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+.nav { padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-links a { color: var(--text-2); text-decoration: none; margin-left: 28px; font-size: 13px; }
+.nav-links a:hover { color: var(--gold); }
+
+.hero { padding: 88px 40px 40px; max-width: 1200px; margin: 0 auto; }
+.hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); margin-bottom: 18px; font-weight: 600; }
+.hero h1 { font-family: 'Anton', sans-serif; font-size: clamp(52px, 8vw, 88px); line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 18px; }
+.hero h1 .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; color: var(--gold); }
+.hero-sub { font-size: 19px; color: var(--text-2); max-width: 720px; line-height: 1.5; margin-bottom: 22px; }
+.hero-principle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: var(--gold); max-width: 680px; line-height: 1.4; }
+
+.stepper { display: flex; gap: 0; padding: 0 40px 32px; max-width: 1200px; margin: 0 auto; }
+.step-pill { flex: 1; padding: 14px 18px; background: var(--bg-2); border: 1px solid var(--glass-edge); color: var(--text-3); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; font-weight: 600; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.step-pill:first-child { border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
+.step-pill:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
+.step-pill + .step-pill { border-left: none; }
+.step-pill.active { background: rgba(212,175,55,0.1); border-color: var(--gold); color: var(--gold); }
+.step-pill.done { background: rgba(106,156,137,0.08); border-color: rgba(106,156,137,0.4); color: var(--sage); }
+.step-pill-num { display: inline-block; margin-right: 8px; font-family: 'Anton', sans-serif; font-size: 14px; }
+
+.panel { padding: 0 40px 48px; max-width: 1200px; margin: 0 auto; display: none; }
+.panel.active { display: block; animation: fadein 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.panel-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--gold); margin-bottom: 14px; font-weight: 600; }
+.panel-h { font-family: 'Anton', sans-serif; font-size: clamp(34px, 5vw, 52px); line-height: 1.05; margin-bottom: 18px; }
+.panel-h .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); }
+.panel-sub { color: var(--text-2); font-size: 16px; margin-bottom: 28px; max-width: 720px; line-height: 1.5; }
+
+.field { margin-bottom: 18px; }
+.field-label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--text-3); margin-bottom: 8px; font-weight: 600; }
+.field-input, .field-select { width: 100%; padding: 14px 16px; background: var(--bg-2); border: 1px solid var(--glass-edge); color: var(--text); font-size: 15px; border-radius: 10px; font-family: 'Inter', sans-serif; transition: border-color 0.2s ease, background 0.2s ease; }
+.field-input:focus, .field-select:focus { outline: none; border-color: var(--gold); background: var(--bg-3); }
+.field-helper { margin-top: 8px; padding: 8px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.5px; color: var(--moss, #6BAA5A); background: rgba(107,170,90,0.08); border: 1px solid rgba(107,170,90,0.25); border-radius: 8px; }
+.field-helper a { color: var(--moss, #6BAA5A); text-decoration: none; }
+.field-helper a:hover { text-decoration: underline; }
+.ac-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--bg-2); border: 1px solid var(--glass-edge); border-radius: 10px; max-height: 320px; overflow-y: auto; z-index: 50; display: none; box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
+.ac-dropdown.show { display: block; animation: ac-in 0.18s cubic-bezier(0.16,1,0.3,1); }
+@keyframes ac-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.ac-item { padding: 12px 16px; cursor: pointer; border-bottom: 1px solid var(--glass-edge); display: flex; flex-direction: column; gap: 3px; transition: background 0.15s ease; }
+.ac-item:last-child { border-bottom: none; }
+.ac-item:hover, .ac-item.active { background: rgba(245,184,0,0.10); }
+.ac-name { font-family: 'Inter', sans-serif; font-size: 14.5px; color: var(--text); font-weight: 600; }
+.ac-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 0.3px; }
+.ac-meta .ac-school { color: var(--text-2); }
+.ac-meta .ac-pos { color: var(--gold); margin-left: 6px; }
+.ac-meta .ac-tier { color: var(--moss, #6BAA5A); margin-left: 6px; font-weight: 600; }
+.ac-empty { padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 0.3px; }
+.field-row { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; }
+
+.cta-row { display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
+.btn { padding: 14px 28px; border-radius: 10px; cursor: pointer; border: none; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; font-weight: 700; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; text-decoration: none; display: inline-block; }
+.btn-primary { background: var(--gold); color: var(--bg); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212,175,55,0.3); }
+.btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--glass-edge); }
+.btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+.role-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 14px; }
+.role-card { padding: 18px; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 12px; cursor: pointer; position: relative; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+.role-card:hover { transform: translateY(-3px); border-color: rgba(212,175,55,0.5); background: rgba(212,175,55,0.04); }
+.role-card.selected { border-color: var(--gold); background: rgba(212,175,55,0.08); box-shadow: 0 0 0 1px var(--gold) inset; }
+.role-card.selected::after { content: '✓ SELECTED'; position: absolute; top: 10px; right: 12px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.5px; color: var(--gold); font-weight: 700; }
+.role-name { font-family: 'Anton', sans-serif; font-size: 22px; margin-bottom: 4px; line-height: 1.1; }
+.role-meta { font-size: 12px; color: var(--text-3); margin-bottom: 10px; }
+.role-comp { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 1px; font-weight: 600; }
+.role-summary { font-size: 12px; color: var(--text-2); line-height: 1.4; margin-top: 10px; font-style: italic; }
+.role-gen-badge { display: inline-block; padding: 2px 8px; background: rgba(212,175,55,0.18); color: var(--gold); border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; }
+.role-empty { padding: 40px; text-align: center; color: var(--text-3); font-style: italic; }
+
+.advanced-toggle { margin-top: 24px; padding: 14px 18px; background: var(--bg-2); border: 1px solid var(--glass-edge); border-radius: 10px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: border-color 0.2s ease; }
+.advanced-toggle:hover { border-color: var(--gold); }
+.advanced-toggle-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: var(--text); }
+.advanced-toggle-state { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); }
+.advanced-panel { margin-top: 16px; padding: 20px; background: var(--bg-2); border: 1px solid rgba(212,175,55,0.2); border-radius: 10px; display: none; }
+.advanced-panel.live { display: block; }
+.advanced-row { padding: 10px 0; border-bottom: 1px solid var(--glass-edge); }
+.advanced-row:last-child { border: none; }
+.advanced-row-label { font-size: 13px; color: var(--text); margin-bottom: 6px; }
+.advanced-row-dims { display: flex; flex-wrap: wrap; gap: 6px; }
+.dim-chip { padding: 4px 10px; background: var(--bg-3); border: 1px solid var(--glass-edge); border-radius: 999px; cursor: pointer; font-size: 11px; color: var(--text-3); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px; transition: all 0.2s ease; }
+.dim-chip:hover { border-color: var(--gold); color: var(--gold); }
+.dim-chip.selected { background: rgba(212,175,55,0.12); border-color: var(--gold); color: var(--gold); font-weight: 600; }
+
+.chip-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 10px 16px; background: var(--bg-2); border: 1px solid var(--glass-edge); border-radius: 999px; cursor: pointer; font-size: 13px; color: var(--text-2); transition: all 0.2s ease; }
+.chip:hover { border-color: var(--gold); color: var(--gold); }
+.chip.selected { background: rgba(212,175,55,0.12); border-color: var(--gold); color: var(--gold); font-weight: 600; }
+
+.bp-header { padding: 32px; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 16px; margin-bottom: 24px; }
+.bp-subject-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--gold); margin-bottom: 10px; font-weight: 600; }
+.bp-subject-name { font-family: 'Anton', sans-serif; font-size: clamp(36px, 5vw, 56px); line-height: 1; margin-bottom: 12px; }
+.bp-subject-meta { color: var(--text-2); font-size: 14px; }
+.bp-subject-meta strong { color: var(--text); }
+
+.bp-composite { padding: 28px; background: linear-gradient(135deg, rgba(212,175,55,0.06) 0%, rgba(212,175,55,0.02) 100%); border: 1px solid rgba(212,175,55,0.18); border-radius: 14px; margin-bottom: 24px; }
+.bp-composite-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--gold); margin-bottom: 10px; font-weight: 600; }
+.bp-composite-name { font-family: 'Anton', sans-serif; font-size: 28px; margin-bottom: 6px; }
+.bp-composite-sub { color: var(--text-2); font-size: 14px; }
+
+.bp-summary { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; line-height: 1.45; color: var(--text); padding: 24px 28px; background: var(--bg-2); border-radius: 14px; border-left: 3px solid var(--gold); margin-bottom: 32px; }
+
+.bp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+.bp-card { padding: 28px; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 14px; }
+.bp-card-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--gold); margin-bottom: 12px; font-weight: 600; }
+.bp-card-title { font-family: 'Anton', sans-serif; font-size: 22px; margin-bottom: 14px; line-height: 1.1; }
+.bp-card-title .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); }
+.bp-row { padding: 12px 0; border-bottom: 1px solid var(--glass-edge); display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.bp-row:last-child { border-bottom: none; }
+.bp-row-dim { color: var(--text); font-weight: 500; }
+.bp-row-gap { color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.bp-priority-HIGH { color: var(--rust); }
+.bp-priority-MEDIUM { color: var(--gold); }
+.bp-priority-LOW { color: var(--sage); }
+.bp-priority-AT_OR_ABOVE { color: var(--sage); }
+.bp-priority-UNKNOWN { color: var(--text-4); }
+
+.bp-actions { padding: 28px; background: var(--bg-2); border: 1px solid var(--glass-edge); border-radius: 14px; margin-bottom: 32px; }
+.bp-actions-title { font-family: 'Anton', sans-serif; font-size: 26px; margin-bottom: 16px; }
+.bp-action { padding: 12px 0; border-bottom: 1px solid var(--glass-edge); font-size: 14px; color: var(--text-2); line-height: 1.5; }
+.bp-action:last-child { border-bottom: none; }
+.bp-action::before { content: '→ '; color: var(--gold); font-weight: 700; }
+
+.bp-milestones { padding: 28px; background: var(--bg-2); border: 1px solid var(--glass-edge); border-radius: 14px; margin-bottom: 32px; }
+.bp-milestones-title { font-family: 'Anton', sans-serif; font-size: 28px; margin-bottom: 20px; }
+.bp-milestone { display: grid; grid-template-columns: 160px 1fr; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--glass-edge); }
+.bp-milestone:last-child { border-bottom: none; }
+.bp-milestone-stage { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: var(--gold); font-weight: 600; }
+.bp-milestone-focus { color: var(--text); font-weight: 500; margin-bottom: 4px; font-size: 15px; }
+.bp-milestone-metric { color: var(--text-2); font-size: 13px; font-style: italic; }
+.bp-milestone-acc { color: var(--text-3); font-size: 12px; margin-top: 4px; }
+
+.bp-commitment { padding: 32px; background: linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(20,20,20,0.5) 100%); border: 1px solid rgba(212,175,55,0.2); border-radius: 14px; text-align: center; }
+.bp-commitment-line { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; color: var(--gold); margin-bottom: 16px; }
+.bp-commitment-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.bp-signature { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-4); text-align: center; margin-top: 20px; letter-spacing: 1px; }
+
+/* v0.30.5.671-680 — CHECKPOINT CARD polish. Matches the design system. */
+.bp-checkpoint-card { padding: 32px; background: linear-gradient(135deg, var(--glass) 0%, rgba(20,20,20,0.6) 100%); border: 1px solid var(--glass-edge); border-radius: 14px; margin: 32px 0; }
+.bp-checkpoint-card .bp-card-eyebrow { color: var(--gold); }
+.bp-checkpoint-card .bp-card-title { font-size: 28px; margin-bottom: 6px; }
+.bp-checkpoint-sub { font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.55; max-width: 560px; }
+.cp-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.cp-form select, .cp-form input { width: 100%; padding: 14px 16px; background: var(--bg-2); border: 1px solid var(--glass-edge); color: var(--text); font-family: 'Inter', sans-serif; font-size: 14px; border-radius: 8px; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.cp-form select:focus, .cp-form input:focus { outline: none; border-color: var(--gold); background: rgba(212,175,55,0.04); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+.cp-form select { cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3e%3cpath d='M1 1L6 6L11 1' stroke='%23d4af37' stroke-width='1.5' stroke-linecap='round'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+.cp-form input::placeholder { color: var(--text-4); }
+.cp-form-full { grid-column: 1 / -1; }
+.cp-submit { grid-column: 1 / -1; padding: 16px; background: var(--gold); color: #0a0a0a; border: none; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; cursor: pointer; border-radius: 8px; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.cp-submit:hover { background: var(--gold-2); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(212,175,55,0.25); }
+.cp-submit:active { transform: translateY(0); }
+.cp-history { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--glass-edge); }
+.cp-history-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--text-3); margin-bottom: 14px; font-weight: 600; }
+.cp-history-empty { font-size: 13px; color: var(--text-3); font-style: italic; padding: 14px 0; }
+.cp-entry { padding: 14px 0; border-bottom: 1px solid var(--glass-edge); }
+.cp-entry:last-child { border-bottom: none; }
+.cp-entry-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.cp-entry-label { font-weight: 500; color: var(--text); font-size: 14px; }
+.cp-entry-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-3); letter-spacing: 0.5px; }
+.cp-entry-meta { font-size: 11px; color: var(--text-3); margin-top: 4px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px; }
+.cp-entry-meta a { color: var(--gold); text-decoration: none; }
+.cp-entry-meta a:hover { text-decoration: underline; }
+.cp-msg { margin-top: 14px; font-size: 12px; line-height: 1.5; padding: 10px 14px; border-radius: 6px; transition: all 0.3s ease; opacity: 0; min-height: 0; }
+.cp-msg.show { opacity: 1; min-height: 36px; }
+.cp-msg.success { background: rgba(106,156,137,0.12); border-left: 2px solid var(--sage); color: var(--sage); }
+.cp-msg.error { background: rgba(196,81,50,0.12); border-left: 2px solid var(--rust); color: var(--rust); }
+.cp-msg.info { background: var(--bg-2); border-left: 2px solid var(--text-3); color: var(--text-2); }
+
+/* v0.30.5.681-685 — Mobile responsive: stack checkpoint form on small screens */
+@media (max-width: 720px) {
+  .cp-form { grid-template-columns: 1fr; }
+  .bp-checkpoint-card { padding: 24px 20px; }
+  .bp-grid { grid-template-columns: 1fr; }
+  .bp-milestone { grid-template-columns: 1fr; gap: 8px; }
+}
+
+.saved-section { padding: 0 40px 56px; max-width: 1200px; margin: 0 auto; }
+.saved-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--text-3); margin-bottom: 14px; font-weight: 600; }
+.saved-list { display: flex; gap: 10px; flex-wrap: wrap; }
+.saved-chip { padding: 10px 18px; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 999px; cursor: pointer; font-size: 13px; color: var(--text-2); transition: all 0.2s ease; }
+.saved-chip:hover { border-color: var(--gold); color: var(--gold); }
+
+.loading { text-align: center; padding: 56px 40px; color: var(--text-3); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; }
+.error { padding: 22px 24px; background: rgba(196,81,50,0.08); border: 1px solid rgba(196,81,50,0.3); color: var(--rust); border-radius: 12px; margin-top: 16px; }
+
+footer { padding: 40px; border-top: 1px solid var(--border); text-align: center; color: var(--text-3); font-size: 12px; }
+footer a { color: var(--gold); text-decoration: none; }
+
+@media (max-width: 720px) {
+  .nav { padding: 16px 18px; flex-wrap: wrap; gap: 12px; }
+  .nav-links a { margin-left: 16px; font-size: 12px; }
+  .hero { padding: 56px 18px 28px; }
+  .stepper { padding: 0 18px 24px; flex-wrap: wrap; gap: 6px; }
+  .step-pill { flex: 1 1 calc(50% - 3px); border-radius: 8px !important; border-left: 1px solid var(--glass-edge) !important; }
+  .panel { padding: 0 18px 40px; }
+  .field-row { grid-template-columns: 1fr; gap: 12px; }
+  .bp-header { padding: 22px; }
+  .bp-grid { grid-template-columns: 1fr; }
+  .bp-card { padding: 22px; }
+  .bp-milestone { grid-template-columns: 1fr; gap: 6px; }
+  .saved-section { padding: 0 18px 40px; }
+  .role-grid { grid-template-columns: 1fr; }
+}
+  
+/* v0.30.5.2228 FCBase13_V010 — Pathway Journal v2 */
+.pj-section { max-width: 1080px; margin: 48px auto; padding: 32px 36px; background: linear-gradient(135deg, rgba(149,213,178,0.05), rgba(20,17,12,0.4)); border: 1px solid rgba(149,213,178,0.25); border-radius: 16px; }
+.pj-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+.pj-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: #95d5b2; font-weight: 700; margin-bottom: 10px; }
+.pj-h { font-family: 'Anton', sans-serif; font-size: clamp(26px, 4vw, 40px); line-height: 1.05; color: var(--text); letter-spacing: -0.005em; margin-bottom: 8px; }
+.pj-h .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; color: #95d5b2; font-weight: 400; }
+.pj-sub { color: var(--text-2); font-size: 15px; line-height: 1.5; max-width: 620px; }
+.pj-count { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: #95d5b2; background: rgba(149,213,178,0.1); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(149,213,178,0.3); font-weight: 600; white-space: nowrap; }
+
+.pj-add { display: grid; grid-template-columns: 110px 1fr 1fr auto; gap: 10px; margin-bottom: 22px; }
+.pj-add input, .pj-add select { padding: 11px 13px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: var(--text); font-size: 14px; border-radius: 8px; font-family: 'Inter', sans-serif; }
+.pj-add input:focus, .pj-add select:focus { outline: none; border-color: #95d5b2; }
+.pj-btn { padding: 11px 18px; background: #95d5b2; color: #0d0d0d; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; border: 0; border-radius: 8px; cursor: pointer; transition: transform 0.15s; }
+.pj-btn:hover { transform: translateY(-1px); }
+
+.pj-timeline { position: relative; padding-left: 28px; border-left: 2px solid rgba(149,213,178,0.25); margin-top: 8px; }
+.pj-entry { position: relative; padding: 14px 18px 14px 22px; margin-bottom: 12px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; }
+.pj-entry::before { content: ''; position: absolute; left: -34px; top: 18px; width: 12px; height: 12px; border-radius: 50%; background: #95d5b2; border: 3px solid var(--bg, #0d0d0d); }
+.pj-entry-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+.pj-entry-date { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.2px; color: #95d5b2; font-weight: 600; }
+.pj-entry-dim { padding: 3px 10px; background: rgba(149,213,178,0.12); color: #95d5b2; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.5px; font-weight: 700; border-radius: 4px; text-transform: uppercase; }
+.pj-entry-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--text); line-height: 1.5; margin-top: 6px; }
+.pj-entry-remove { background: transparent; border: 0; color: var(--text-3); font-size: 16px; cursor: pointer; padding: 0 4px; transition: color 0.15s; float: right; margin-left: 10px; }
+.pj-entry-remove:hover { color: var(--rust, #c45132); }
+.pj-empty { text-align: center; padding: 28px; color: var(--text-3); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; background: rgba(0,0,0,0.2); border-radius: 10px; }
+.pj-stamp { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.8px; color: var(--text-3); margin-top: 14px; font-weight: 600; opacity: 0.75; }
+@media (max-width: 720px) {
+  .pj-add { grid-template-columns: 1fr; }
+  .pj-section { padding: 22px 18px; margin: 24px 12px; }
+}
+
+</style>
+<script>
+// FieldCheck CX library · Apple-grade polish · v1770
+// Loading states, empty states, success moments, error states, toast notifications
+(function() {
+  // Inject base styles once
+  if (document.getElementById('fc-cx-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'fc-cx-styles';
+  style.textContent = `
+    /* Loading skeleton */
+    .fc-skeleton {
+      display: inline-block;
+      background: linear-gradient(90deg, rgba(255,201,74,0.04) 0%, rgba(255,201,74,0.10) 50%, rgba(255,201,74,0.04) 100%);
+      background-size: 200% 100%;
+      animation: fc-skeleton-shimmer 1.4s ease-in-out infinite;
+      border-radius: 6px;
+      height: 1em;
+      min-width: 60px;
+    }
+    @keyframes fc-skeleton-shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .fc-skeleton-block { display: block; height: 1em; margin-bottom: 8px; }
+    .fc-skeleton-block:last-child { width: 60%; }
+
+    /* Empty state */
+    .fc-empty {
+      padding: 60px 32px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(255,201,74,0.03), transparent);
+      border: 1px dashed rgba(255,201,74,0.25);
+      border-radius: 16px;
+    }
+    .fc-empty-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: rgba(255,201,74,0.6);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .fc-empty-h {
+      font-family: 'Anton', sans-serif;
+      font-size: 26px;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      color: #f4ead5;
+    }
+    .fc-empty-body {
+      font-size: 15px;
+      color: rgba(244,234,213,0.7);
+      max-width: 480px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+    }
+    .fc-empty-cta {
+      display: inline-block;
+      padding: 12px 22px;
+      background: #e8b948;
+      color: #1a1410;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .fc-empty-cta:hover { background: #f5c950; transform: translateY(-1px); }
+
+    /* Toast */
+    .fc-toast-stack {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+      max-width: calc(100vw - 32px);
+    }
+    .fc-toast {
+      padding: 14px 22px;
+      background: rgba(20,17,12,0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,201,74,0.30);
+      border-left: 3px solid #e8b948;
+      border-radius: 12px;
+      color: #f4ead5;
+      font-size: 14px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      pointer-events: auto;
+      animation: fc-toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      max-width: 480px;
+    }
+    .fc-toast.success { border-left-color: #95d5b2; }
+    .fc-toast.error { border-left-color: #ff8c52; }
+    .fc-toast.info { border-left-color: #8ec4e8; }
+    .fc-toast.out { animation: fc-toast-out 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes fc-toast-in {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fc-toast-out {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+
+    /* Spinner */
+    .fc-spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,201,74,0.2);
+      border-top-color: #e8b948;
+      border-radius: 50%;
+      animation: fc-spin 0.7s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes fc-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Page transition */
+    body.fc-fade-in { animation: fc-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes fc-fade-in {
+      0% { opacity: 0; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Focus ring (accessibility) */
+    *:focus-visible {
+      outline: 2px solid #e8b948;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      .fc-skeleton, .fc-toast, .fc-spinner, body.fc-fade-in { animation: none !important; }
+      * { transition-duration: 0.01ms !important; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Toast API
+  function ensureToastStack() {
+    let stack = document.getElementById('fc-toast-stack');
+    if (!stack) {
+      stack = document.createElement('div');
+      stack.id = 'fc-toast-stack';
+      stack.className = 'fc-toast-stack';
+      document.body.appendChild(stack);
+    }
+    return stack;
+  }
+
+  function toast(message, opts) {
+    opts = opts || {};
+    const variant = opts.variant || 'info';
+    const duration = opts.duration || 3500;
+    const stack = ensureToastStack();
+    const t = document.createElement('div');
+    t.className = 'fc-toast ' + variant;
+    t.textContent = message;
+    stack.appendChild(t);
+    setTimeout(() => {
+      t.classList.add('out');
+      setTimeout(() => t.remove(), 280);
+    }, duration);
+    return t;
+  }
+
+  // Skeleton helper
+  function skeleton(target, lines) {
+    if (typeof target === 'string') target = document.querySelector(target);
+    if (!target) return;
+    lines = lines || 3;
+    const blocks = Array.from({ length: lines }, () => '<span class="fc-skeleton fc-skeleton-block"></span>').join('');
+    target.innerHTML = blocks;
+  }
+
+  // Empty state helper
+  function emptyState(target, opts) {
+    if (typeof target === 'string') target = document.querySelector(target);
+    if (!target) return;
+    opts = opts || {};
+    target.innerHTML = `
+      <div class="fc-empty">
+        <div class="fc-empty-icon">${opts.icon || '// NOTHING HERE YET'}</div>
+        <div class="fc-empty-h">${opts.title || 'Nothing yet.'}</div>
+        <div class="fc-empty-body">${opts.body || ''}</div>
+        ${opts.ctaText ? `<a href="${opts.ctaHref || '#'}" class="fc-empty-cta">${opts.ctaText}</a>` : ''}
+      </div>
+    `;
+  }
+
+  // Spinner helper
+  function spinner(text) {
+    return `<span class="fc-spinner"></span>${text ? ' ' + text : ''}`;
+  }
+
+  // Fade-in on body
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('fc-fade-in');
+  });
+
+  window.FieldCheckCX = { toast, skeleton, emptyState, spinner };
+})();
+</script>
+</head>
+<body>
+
+<!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+
+<section class="hero">
+  <div class="hero-eyebrow">// YOUR PATHWAY</div>
+  <h1>Pick who you <span class="serif">want to be.</span></h1>
+  <p class="hero-sub">A developmental plan built from your chosen role models — single ("be like Mahomes") or composite ("Mahomes' arm + Lamar's mobility"). Refines with every checkpoint. The shape changes as you do.</p>
+  <p class="hero-principle">"A verdict is a snapshot. A pathway is a relationship."</p>
+</section>
+
+<div class="stepper">
+  <div class="step-pill active" id="pill-1"><span class="step-pill-num">1</span>YOU</div>
+  <div class="step-pill" id="pill-2"><span class="step-pill-num">2</span>ROLE MODELS</div>
+  <div class="step-pill" id="pill-3"><span class="step-pill-num">3</span>GOALS</div>
+  <div class="step-pill" id="pill-4"><span class="step-pill-num">4</span>PATHWAY</div>
+</div>
+
+<section class="panel active" id="panel-1">
+  <div class="panel-eyebrow">// STEP 1 OF 4</div>
+  <h2 class="panel-h">Who is this pathway <span class="serif">for?</span></h2>
+  <p class="panel-sub">Start typing a name. We'll calibrate the pathway against this athlete's actual current dimensions. Don't know who you want to map yet? Just pick a sport and position — we'll work with a generic profile.</p>
+
+  <div class="field" style="position: relative;">
+    <label class="field-label">ATHLETE</label>
+    <input class="field-input" id="athlete-search" placeholder="Type a name — Madisen Skinner, Cooper Flagg, Arch Manning…" autocomplete="off">
+    <input type="hidden" id="athlete-slug">
+    <div class="ac-dropdown" id="athlete-ac-dropdown" role="listbox"></div>
+    <div class="field-helper" id="athlete-resolved" style="display:none;"></div>
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label class="field-label">SPORT</label>
+      <select class="field-select" id="athlete-sport">
+        <option value="football">Football</option>
+        <option value="mens-basketball">M-Basketball</option>
+        <option value="womens-basketball">W-Basketball</option>
+        <option value="baseball">Baseball</option>
+        <option value="womens-volleyball">W-Volleyball</option>
+        <option value="mens-volleyball">M-Volleyball</option>
+        <option value="tennis">Tennis</option>
+        <option value="mens-soccer">M-Soccer</option>
+        <option value="womens-soccer">W-Soccer</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">POSITION (optional)</label>
+      <input class="field-input" id="athlete-position" placeholder="QB, Setter, PG, OF...">
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <button class="btn btn-primary" onclick="advanceToStep(2)">CONTINUE →</button>
+  </div>
+</section>
+
+<section class="panel" id="panel-2">
+  <div class="panel-eyebrow">// STEP 2 OF 4</div>
+  <h2 class="panel-h">Who do you want to <span class="serif">be like?</span></h2>
+  <p class="panel-sub">Pick one role model for a focused arc. Or pick multiple and toggle advanced mode below to mix dimensions ("Mahomes' arm + Lamar's mobility"). The composite becomes your target.</p>
+
+  <div id="role-grid-container"><div class="role-empty">Loading role models for your sport...</div></div>
+
+  <div class="advanced-toggle" onclick="toggleAdvanced()">
+    <div class="advanced-toggle-text">// ADVANCED MODE — Mix dimensions across role models</div>
+    <div class="advanced-toggle-state" id="adv-state">OFF</div>
+  </div>
+  <div class="advanced-panel" id="advanced-panel"></div>
+
+  <div class="cta-row" style="margin-top: 24px;">
+    <button class="btn btn-secondary" onclick="advanceToStep(1)">← BACK</button>
+    <button class="btn btn-primary" onclick="advanceToStep(3)">CONTINUE →</button>
+  </div>
+</section>
+
+<section class="panel" id="panel-3">
+  <div class="panel-eyebrow">// STEP 3 OF 4</div>
+  <h2 class="panel-h">What's the <span class="serif">target.</span></h2>
+  <p class="panel-sub">Where do you want this to land? Pro pathway, college starter, Olympic team? Timeline and primary concerns shape the plan.</p>
+
+  <div class="field-row">
+    <div class="field">
+      <label class="field-label">TARGET PATHWAY</label>
+      <select class="field-select" id="goal-pathway">
+        <option value="COLLEGE_STARTER">College starter (D-I)</option>
+        <option value="NFL">NFL</option>
+        <option value="NBA">NBA</option>
+        <option value="WNBA">WNBA</option>
+        <option value="MLB">MLB</option>
+        <option value="LOVB_PRO">LOVB Pro</option>
+        <option value="OLYMPIC">Olympic team</option>
+        <option value="OVERSEAS_PRO">Overseas pro</option>
+        <option value="ATP">ATP (men's tennis)</option>
+        <option value="WTA">WTA (women's tennis)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">TIMELINE (years)</label>
+      <select class="field-select" id="goal-timeline">
+        <option value="1">1 year</option>
+        <option value="2">2 years</option>
+        <option value="3">3 years</option>
+        <option value="4" selected>4 years</option>
+        <option value="5">5 years</option>
+        <option value="6">6 years</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="field-label">TARGET SCHOOL (optional)</label>
+    <input class="field-input" id="goal-school" placeholder="e.g. Texas, Duke, Stanford">
+  </div>
+
+  <div class="field">
+    <label class="field-label">PRIMARY CONCERNS — pick all that apply</label>
+    <div class="chip-grid" id="concerns-grid">
+      <div class="chip" data-concern="physical">Physical development</div>
+      <div class="chip" data-concern="skill">Skill refinement</div>
+      <div class="chip" data-concern="exposure">Exposure / recruiting</div>
+      <div class="chip" data-concern="nil">NIL</div>
+      <div class="chip" data-concern="mental">Mental / pressure</div>
+      <div class="chip" data-concern="durability">Durability / injury</div>
+    </div>
+  </div>
+
+  <div class="cta-row" style="margin-top: 24px;">
+    <button class="btn btn-secondary" onclick="advanceToStep(2)">← BACK</button>
+    <button class="btn btn-primary" onclick="generatePathway()">GENERATE PATHWAY →</button>
+  </div>
+</section>
+
+<section class="panel" id="panel-4"><div id="blueprint-container"></div></section>
+
+<section class="saved-section" id="saved-section" style="display:none;">
+  <div class="saved-title">// YOUR SAVED PATHWAYS</div>
+  <div class="saved-list" id="saved-list"></div>
+</section>
+
+<footer>Build <span id="build-stamp">v0.30.5.2210</span> · <a href="/voices">Voices</a> · <a href="/position-fit">Position-Fit</a> · <a href="/add-me">Add Me</a> · <a href="/moat">Moat</a> · <a href="/">Home</a></footer>
+
+<script>
+const PROXY = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev/api';
+const STORAGE_KEY = 'fieldcheck-pathways-v2';
+
+let state = {
+  athlete: { slug: '', sport: 'football', position: '', name: '', school: '' },
+  roleModelMenu: [],
+  selectedRoleModels: [],
+  advancedMode: false,
+  goals: { target_pathway: 'COLLEGE_STARTER', timeline_years: 4, target_school: '', primary_concerns: [] }
+};
+
+// ════════════════════════════════════════════════════════════════════════
+// v0.30.5.473 — AUTOCOMPLETE for athlete search on Step 1
+// One-time fetch of /api/marquee/list cached client-side. Filter by sport
+// when sport is selected. Picking an item populates slug + name + school
+// + position + sport in state and shows a confirmation chip.
+// ════════════════════════════════════════════════════════════════════════
+let athleteCache = null;
+let athleteCacheLoading = null;
+let acActiveIdx = -1;
+let acVisibleItems = [];
+
+async function loadAthleteCache() {
+  if (athleteCache) return athleteCache;
+  if (athleteCacheLoading) return athleteCacheLoading;
+  athleteCacheLoading = (async () => {
+    try {
+      const r = await fetch(`${PROXY}/marquee/list`);
+      const d = await r.json();
+      athleteCache = Array.isArray(d) ? d : (d.items || d.players || []);
+    } catch (e) {
+      athleteCache = [];
+    }
+    return athleteCache;
+  })();
+  return athleteCacheLoading;
+}
+
+function filterAthletes(query, sport) {
+  if (!athleteCache) return [];
+  const q = (query || '').toLowerCase().trim();
+  const sp = (sport || '').toLowerCase();
+  let list = athleteCache;
+  if (sp) list = list.filter(p => !p.sport || p.sport === sp);
+  if (!q) return list.slice(0, 10);
+  return list.filter(p => {
+    const name = (p.name || '').toLowerCase();
+    const school = (p.school || '').toLowerCase();
+    return name.includes(q) || school.includes(q);
+  }).slice(0, 10);
+}
+
+function renderAcItems(items) {
+  const dd = document.getElementById('athlete-ac-dropdown');
+  acVisibleItems = items;
+  acActiveIdx = -1;
+  if (!dd) return;
+  if (items.length === 0) {
+    dd.innerHTML = '<div class="ac-empty">No matches in the curated corpus. You can continue with sport + position only — pathway will run with generic baseline.</div>';
+  } else {
+    dd.innerHTML = items.map((p, i) => {
+      const tierBadge = p.tier ? `<span class="ac-tier">${escapeHtml(p.tier)}</span>` : '';
+      return `<div class="ac-item" data-idx="${i}" role="option">
+        <div class="ac-name">${escapeHtml(p.name || '')}</div>
+        <div class="ac-meta">
+          <span class="ac-school">${escapeHtml(p.school || '')}</span>
+          ${p.position ? `<span class="ac-pos">${escapeHtml(p.position)}</span>` : ''}
+          ${tierBadge}
+        </div>
+      </div>`;
+    }).join('');
+    dd.querySelectorAll('.ac-item').forEach(el => {
+      el.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        const idx = parseInt(el.dataset.idx, 10);
+        pickAthlete(acVisibleItems[idx]);
+      });
+    });
+  }
+  dd.classList.add('show');
+}
+
+function pickAthlete(p) {
+  if (!p) return;
+  state.athlete.slug = p.slug || '';
+  state.athlete.name = p.name || '';
+  state.athlete.school = p.school || '';
+  state.athlete.sport = p.sport || state.athlete.sport;
+  state.athlete.position = p.position || state.athlete.position;
+  // Update visible fields
+  const search = document.getElementById('athlete-search');
+  const hidden = document.getElementById('athlete-slug');
+  const sportSel = document.getElementById('athlete-sport');
+  const posInput = document.getElementById('athlete-position');
+  const resolved = document.getElementById('athlete-resolved');
+  if (search) search.value = p.name || '';
+  if (hidden) hidden.value = p.slug || '';
+  if (sportSel && p.sport) sportSel.value = p.sport;
+  if (posInput && p.position) posInput.value = p.position;
+  if (resolved) {
+    resolved.style.display = 'block';
+    resolved.innerHTML = `✓ Calibrating to <strong>${escapeHtml(p.name || '')}</strong>${p.school ? ' · ' + escapeHtml(p.school) : ''}${p.tier ? ' · <strong>' + escapeHtml(p.tier) + '</strong>' : ''}`;
+  }
+  hideAc();
+}
+
+function hideAc() {
+  const dd = document.getElementById('athlete-ac-dropdown');
+  if (dd) dd.classList.remove('show');
+  acActiveIdx = -1;
+}
+
+function moveAc(dir) {
+  const dd = document.getElementById('athlete-ac-dropdown');
+  if (!dd || acVisibleItems.length === 0) return;
+  acActiveIdx = (acActiveIdx + dir + acVisibleItems.length) % acVisibleItems.length;
+  dd.querySelectorAll('.ac-item').forEach((el, i) => el.classList.toggle('active', i === acActiveIdx));
+  const activeEl = dd.querySelector('.ac-item.active');
+  if (activeEl) activeEl.scrollIntoView({ block: 'nearest' });
+}
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// v0.30.5.473 — URL PARAM PREFILL + AUTO-SKIP STEP 1
+// When pathway is opened from a verdict page with ?slug=...&sport=...,
+// pre-fill Step 1 and jump straight to Step 2 (role-model picker).
+// "Ask just a few questions and give the pathway."
+// ════════════════════════════════════════════════════════════════════════
+function applyUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  const urlSlug = params.get('slug');
+  const urlSport = params.get('sport');
+  const urlPosition = params.get('position');
+  const urlName = params.get('name');
+  const urlSchool = params.get('school');
+  const urlToken = params.get('token');
+
+  // Shared pathway via token — existing flow
+  if (urlToken) {
+    loadSharedPathway(urlToken);
+    return false; // don't auto-skip
+  }
+
+  let prefilled = false;
+  if (urlSport) {
+    const sportSel = document.getElementById('athlete-sport');
+    if (sportSel) sportSel.value = urlSport;
+    state.athlete.sport = urlSport;
+    prefilled = true;
+  }
+  if (urlPosition) {
+    const posInput = document.getElementById('athlete-position');
+    if (posInput) posInput.value = urlPosition;
+    state.athlete.position = urlPosition;
+    prefilled = true;
+  }
+  if (urlSlug) {
+    state.athlete.slug = urlSlug;
+    state.athlete.name = urlName || urlSlug;
+    state.athlete.school = urlSchool || '';
+    const search = document.getElementById('athlete-search');
+    const hidden = document.getElementById('athlete-slug');
+    const resolved = document.getElementById('athlete-resolved');
+    if (search) search.value = state.athlete.name;
+    if (hidden) hidden.value = urlSlug;
+    if (resolved) {
+      resolved.style.display = 'block';
+      resolved.innerHTML = `✓ Calibrating to <strong>${escapeHtml(state.athlete.name)}</strong>${state.athlete.school ? ' · ' + escapeHtml(state.athlete.school) : ''}`;
+    }
+    prefilled = true;
+  }
+
+  // If slug provided, skip Step 1 entirely — go directly to role-model picker
+  if (urlSlug) {
+    setTimeout(() => advanceToStep(2), 200);
+    return true;
+  }
+  return prefilled;
+}
+
+async function loadSharedPathway(token) {
+  // existing shared-pathway flow — leave to downstream init
+}
+
+function advanceToStep(n) {
+  if (n === 2) {
+    // Slug captured via autocomplete pick OR URL param OR free-typed name
+    const hidden = document.getElementById('athlete-slug');
+    const search = document.getElementById('athlete-search');
+    state.athlete.slug = (hidden && hidden.value) || state.athlete.slug || '';
+    if (!state.athlete.name && search) state.athlete.name = search.value.trim();
+    state.athlete.sport = document.getElementById('athlete-sport').value;
+    state.athlete.position = document.getElementById('athlete-position').value.trim();
+    loadRoleModelMenu();
+  }
+  if (n === 3 && state.selectedRoleModels.length === 0) { alert('Pick at least one role model.'); return; }
+  for (let i = 1; i <= 4; i++) {
+    const pill = document.getElementById('pill-' + i);
+    const panel = document.getElementById('panel-' + i);
+    pill.classList.remove('active', 'done');
+    panel.classList.remove('active');
+    if (i < n) pill.classList.add('done');
+    if (i === n) { pill.classList.add('active'); panel.classList.add('active'); }
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function loadRoleModelMenu() {
+  const container = document.getElementById('role-grid-container');
+  container.innerHTML = '<div class="role-empty">Loading role models for ' + state.athlete.sport + '...</div>';
+  try {
+    let url = `${PROXY}/agent/role-model-menu?sport=${encodeURIComponent(state.athlete.sport)}`;
+    if (state.athlete.position) url += '&position=' + encodeURIComponent(state.athlete.position);
+    const r = await fetch(url);
+    const d = await r.json();
+    if (!d.ok || !d.role_models || d.role_models.length === 0) {
+      const r2 = await fetch(`${PROXY}/agent/role-model-menu?sport=${encodeURIComponent(state.athlete.sport)}`);
+      const d2 = await r2.json();
+      state.roleModelMenu = d2.role_models || [];
+    } else state.roleModelMenu = d.role_models;
+    renderRoleGrid();
+  } catch (e) { container.innerHTML = `<div class="error">Could not load role models: ${e.message}</div>`; }
+}
+
+function renderRoleGrid() {
+  const container = document.getElementById('role-grid-container');
+  if (state.roleModelMenu.length === 0) {
+    container.innerHTML = '<div class="role-empty">No role-model anchors yet for this sport+position. Try a broader position search.</div>';
+    return;
+  }
+  container.innerHTML = '<div class="role-grid">' + state.roleModelMenu.map(rm => {
+    const selected = state.selectedRoleModels.find(s => s.slug === rm.slug);
+    return `<div class="role-card ${selected ? 'selected' : ''}" onclick="toggleRoleModel('${rm.slug}')">
+      ${rm.is_generational ? '<div class="role-gen-badge">GENERATIONAL</div>' : ''}
+      <div class="role-name">${rm.name}</div>
+      <div class="role-meta">${rm.position || '—'} · ${rm.school || ''}</div>
+      <div class="role-comp">COMPOSITE ${rm.composite || '—'} / 10</div>
+      <div class="role-summary">${(rm.pro_summary || '').slice(0, 140)}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function toggleRoleModel(slug) {
+  const idx = state.selectedRoleModels.findIndex(s => s.slug === slug);
+  if (idx >= 0) state.selectedRoleModels.splice(idx, 1);
+  else state.selectedRoleModels.push({ slug });
+  renderRoleGrid();
+  renderAdvanced();
+}
+
+function toggleAdvanced() {
+  state.advancedMode = !state.advancedMode;
+  document.getElementById('adv-state').textContent = state.advancedMode ? 'ON' : 'OFF';
+  document.getElementById('advanced-panel').classList.toggle('live', state.advancedMode);
+  if (state.advancedMode) renderAdvanced();
+}
+
+function renderAdvanced() {
+  if (!state.advancedMode) return;
+  const panel = document.getElementById('advanced-panel');
+  if (state.selectedRoleModels.length === 0) {
+    panel.innerHTML = '<div style="color:var(--text-3);font-style:italic;font-size:13px;">Select at least one role model to mix dimensions.</div>';
+    return;
+  }
+  panel.innerHTML = state.selectedRoleModels.map(sel => {
+    const rm = state.roleModelMenu.find(r => r.slug === sel.slug);
+    if (!rm) return '';
+    const dims = Object.keys(rm.dimensions || {});
+    const chosen = sel.dimensions || [];
+    return `<div class="advanced-row">
+      <div class="advanced-row-label"><strong>${rm.name}</strong> — pick dimensions:</div>
+      <div class="advanced-row-dims">
+        ${dims.map(d => `<div class="dim-chip ${chosen.includes(d) ? 'selected' : ''}" onclick="toggleDim('${sel.slug}','${d}')">${d} (${rm.dimensions[d]})</div>`).join('')}
+        <div class="dim-chip ${chosen.length === 0 ? 'selected' : ''}" onclick="clearDims('${sel.slug}')" style="font-style:italic;">all dimensions</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleDim(slug, dim) {
+  const sel = state.selectedRoleModels.find(s => s.slug === slug);
+  if (!sel) return;
+  if (!sel.dimensions) sel.dimensions = [];
+  const idx = sel.dimensions.indexOf(dim);
+  if (idx >= 0) sel.dimensions.splice(idx, 1);
+  else sel.dimensions.push(dim);
+  renderAdvanced();
+}
+function clearDims(slug) {
+  const sel = state.selectedRoleModels.find(s => s.slug === slug);
+  if (sel) delete sel.dimensions;
+  renderAdvanced();
+}
+
+document.querySelectorAll('#concerns-grid .chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    chip.classList.toggle('selected');
+    const c = chip.dataset.concern;
+    const idx = state.goals.primary_concerns.indexOf(c);
+    if (idx >= 0) state.goals.primary_concerns.splice(idx, 1);
+    else state.goals.primary_concerns.push(c);
+  });
+});
+
+async function generatePathway() {
+  state.goals.target_pathway = document.getElementById('goal-pathway').value;
+  state.goals.timeline_years = parseInt(document.getElementById('goal-timeline').value, 10);
+  state.goals.target_school = document.getElementById('goal-school').value.trim() || null;
+
+  advanceToStep(4);
+  const out = document.getElementById('blueprint-container');
+  out.innerHTML = '<div class="loading">Composing your pathway...</div>';
+
+  const payload = { athlete: state.athlete, role_models: state.selectedRoleModels, goals: state.goals };
+
+  try {
+    const r = await fetch(`${PROXY}/agent/pathway-personalized`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const d = await r.json();
+    if (!d.ok) { out.innerHTML = `<div class="error">${d.error}${d.note ? ' — ' + d.note : ''}</div>`; return; }
+    window._lastPathway = d;
+    renderPathway(d);
+    saveLocal(d, payload);
+  } catch (e) { out.innerHTML = `<div class="error">Generate failed: ${e.message}</div>`; }
+}
+
+function renderPathway(d) {
+  const out = document.getElementById('blueprint-container');
+  const gapsHTML = (d.gap_analysis || []).slice(0, 6).map(g =>
+    `<div class="bp-row"><span class="bp-row-dim">${g.dimension}</span><span class="bp-row-gap bp-priority-${g.priority}">${g.current ?? '?'} → ${g.target} ${g.gap != null ? '(gap ' + g.gap + ')' : ''}</span></div>`
+  ).join('');
+  const milestonesHTML = (d.milestones || []).map(m =>
+    `<div class="bp-milestone"><div class="bp-milestone-stage">${m.stage.replace(/_/g, ' ').toUpperCase()}</div><div>
+      <div class="bp-milestone-focus">${m.focus}</div>
+      <div class="bp-milestone-metric">${m.metric}</div>
+      ${m.accountability ? '<div class="bp-milestone-acc">' + m.accountability + '</div>' : ''}
+    </div></div>`).join('');
+  const actionsHTML = (d.actions || []).map(a => `<div class="bp-action">${a}</div>`).join('') || '<div class="bp-action">No sport-specific action prescription yet — generic concerns surfaced in milestones.</div>';
+  const roleModelLine = (d.role_models || []).map(r => `${r.name} (${(r.contribution || []).join(', ') || 'all dims'})`).join(' + ');
+
+  out.innerHTML = `
+    <div class="bp-header">
+      <div class="bp-subject-eyebrow">// PATHWAY · ${d.goals.target_pathway_label || d.goals.target_pathway}</div>
+      <div class="bp-subject-name">${d.athlete.name || (d.athlete.sport + ' · ' + (d.athlete.position || '—'))}</div>
+      <div class="bp-subject-meta"><strong>${d.athlete.sport}</strong> · ${d.athlete.position || '—'} · ${d.athlete.current_school || d.athlete.current_tier || '—'} · timeline ${d.goals.timeline_years}yr</div>
+    </div>
+
+    <div class="bp-composite">
+      <div class="bp-composite-eyebrow">// COMPOSITE TARGET MODEL</div>
+      <div class="bp-composite-name">${d.composite_target_model.name}</div>
+      <div class="bp-composite-sub">${roleModelLine} · ${d.composite_target_model.dimension_count} dimensions</div>
+    </div>
+
+    <div class="bp-summary">${d.composed_summary}</div>
+
+    <div class="bp-grid">
+      <div class="bp-card">
+        <div class="bp-card-eyebrow">// GAP ANALYSIS</div>
+        <div class="bp-card-title">What closes the <span class="serif">gap.</span></div>
+        ${gapsHTML || '<div class="bp-row-dim">No dimensional gaps to surface.</div>'}
+      </div>
+      <div class="bp-card">
+        <div class="bp-card-eyebrow">// PROGRESS</div>
+        <div class="bp-card-title">Are you <span class="serif">on pace?</span></div>
+        <div class="bp-row"><span class="bp-row-dim">Checkpoints logged</span><span class="bp-row-gap" id="cp-count">${d.progress.checkpoints_logged}</span></div>
+        <div class="bp-row"><span class="bp-row-dim">Progress score</span><span class="bp-row-gap" id="cp-score">${d.progress.progress_score} / 10</span></div>
+        <div class="bp-row"><span class="bp-row-dim">Interpretation</span><span class="bp-row-gap" id="cp-interp" style="font-style:italic;">${d.progress.score_interpretation}</span></div>
+        <div style="margin-top:14px;font-size:12px;color:var(--text-3);font-style:italic;">${d.ml_stub_note}</div>
+      </div>
+    </div>
+
+    <!-- v0.30.5.556–570 + v681 polish: CHECKPOINT LOG — "refines with every checkpoint" wired up -->
+    <div class="bp-checkpoint-card" id="cp-card">
+      <div class="bp-card-eyebrow">// CHECKPOINT</div>
+      <div class="bp-card-title">Log a checkpoint. <span class="serif">The plan sharpens.</span></div>
+      <p class="bp-checkpoint-sub">Award won. Dimension improved. Tier moved. Log it. After 3+ checkpoints, re-running pathway-diff shows what changed.</p>
+      <div class="cp-form" id="cp-form">
+        <select id="cp-type" aria-label="Checkpoint type">
+          <option value="award">Award won</option>
+          <option value="production">Production milestone</option>
+          <option value="tier_movement">Tier movement</option>
+          <option value="dimension_update">Dimension self-update</option>
+          <option value="milestone">General milestone</option>
+          <option value="note">Note</option>
+        </select>
+        <select id="cp-weight" aria-label="Checkpoint weight">
+          <option value="self_report">Self-report (0.5×)</option>
+          <option value="state">State (1.0×)</option>
+          <option value="regional">Regional (1.5×)</option>
+          <option value="conference">Conference (1.5×)</option>
+          <option value="national">National (2.5×)</option>
+          <option value="pro">Pro (3×)</option>
+          <option value="olympic">Olympic (3×)</option>
+        </select>
+        <input type="text" id="cp-label" class="cp-form-full" placeholder="Label — e.g. AVCA All-American, broke 9.0 vertical, started spring scrimmage" aria-label="Checkpoint label">
+        <input type="text" id="cp-evidence" class="cp-form-full" placeholder="Evidence URL (optional) — link to article, video, or official record" aria-label="Evidence URL">
+        <button class="cp-submit" onclick="logCheckpoint()">+ LOG CHECKPOINT</button>
+      </div>
+      <div class="cp-history" id="cp-history-wrap" style="display:none;">
+        <div class="cp-history-eyebrow" id="cp-history-eyebrow">CHECKPOINT HISTORY</div>
+        <div id="cp-history"></div>
+      </div>
+      <div class="cp-msg" id="cp-msg"></div>
+    </div>
+
+    <div class="bp-actions">
+      <div class="bp-actions-title">Action prescription.</div>
+      ${actionsHTML}
+    </div>
+
+    <div class="bp-milestones">
+      <div class="bp-milestones-title">Milestones.</div>
+      ${milestonesHTML}
+    </div>
+
+    <div class="bp-commitment">
+      <div class="bp-commitment-line">${d.commitment}</div>
+      <div class="bp-commitment-buttons">
+        <button class="btn btn-primary" onclick="restart()">NEW PATHWAY</button>
+        <button class="btn btn-secondary" onclick="sharePathway()">SHARE</button>
+        ${d.athlete.slug ? `<a class="btn btn-secondary" href="/verdict/${d.athlete.slug}">FULL VERDICT</a>` : ''}
+      </div>
+      <div class="bp-signature">SIGNED · ${d.signature.methodology} · ${d.signature.signed_at.slice(0, 19).replace('T', ' ')}</div>
+    </div>
+  `;
+  out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Load checkpoint history if we have a token saved (or generate one)
+  if (!window._pathwayCheckpointToken) {
+    // Generate a stable token from athlete slug+role-model fingerprint for this session
+    const fp = (d.athlete.slug || 'anon') + '-' + (d.role_models || []).map(r => r.slug || r.name).join('-');
+    let hash = 0;
+    for (let i = 0; i < fp.length; i++) { hash = ((hash << 5) - hash) + fp.charCodeAt(i); hash |= 0; }
+    window._pathwayCheckpointToken = Math.abs(hash).toString(16).padStart(8, '0').slice(0, 12);
+  }
+  refreshCheckpointHistory();
+}
+
+async function logCheckpoint() {
+  const type = document.getElementById('cp-type').value;
+  const weight = document.getElementById('cp-weight').value;
+  const label = document.getElementById('cp-label').value.trim();
+  const evidence = document.getElementById('cp-evidence').value.trim();
+  const msg = document.getElementById('cp-msg');
+  const setMsg = (text, kind) => {
+    msg.textContent = text;
+    msg.className = 'cp-msg show ' + (kind || 'info');
+  };
+  if (!label) { setMsg('Label is required.', 'error'); return; }
+  if (!window._pathwayCheckpointToken) { setMsg('No active pathway token.', 'error'); return; }
+  setMsg('Logging checkpoint…', 'info');
+  try {
+    const r = await fetch(`${PROXY}/pathway/checkpoint`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: window._pathwayCheckpointToken,
+        checkpoint: { type, weight, label, evidence_url: evidence || undefined, date: new Date().toISOString().slice(0, 10) }
+      })
+    });
+    const d = await r.json();
+    if (!d.ok) { setMsg('Error: ' + (d.error || 'unknown'), 'error'); return; }
+    setMsg(`✓ Logged. Progress score now ${d.progress_score}/10 — ${d.interpretation}`, 'success');
+    document.getElementById('cp-count').textContent = d.checkpoints_count;
+    document.getElementById('cp-score').textContent = d.progress_score + ' / 10';
+    document.getElementById('cp-interp').textContent = d.interpretation;
+    document.getElementById('cp-label').value = '';
+    document.getElementById('cp-evidence').value = '';
+    refreshCheckpointHistory();
+  } catch (e) {
+    setMsg('Network error: ' + e.message, 'error');
+  }
+}
+
+async function refreshCheckpointHistory() {
+  if (!window._pathwayCheckpointToken) return;
+  const wrap = document.getElementById('cp-history-wrap');
+  const hist = document.getElementById('cp-history');
+  const eyebrow = document.getElementById('cp-history-eyebrow');
+  if (!hist) return;
+  try {
+    const r = await fetch(`${PROXY}/pathway/checkpoint?token=${encodeURIComponent(window._pathwayCheckpointToken)}`);
+    const d = await r.json();
+    if (!d.ok || !d.checkpoints || d.checkpoints.length === 0) {
+      if (wrap) wrap.style.display = 'none';
+      return;
+    }
+    if (wrap) wrap.style.display = 'block';
+    if (eyebrow) eyebrow.textContent = `CHECKPOINT HISTORY · ${d.checkpoints.length}`;
+    hist.innerHTML = d.checkpoints.slice().reverse().map(c => `
+      <div class="cp-entry">
+        <div class="cp-entry-row">
+          <span class="cp-entry-label">${(c.label || '').replace(/[<>&]/g, ch => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[ch]))}</span>
+          <span class="cp-entry-date">${c.date || ''}</span>
+        </div>
+        <div class="cp-entry-meta">
+          ${c.type} · ${c.weight || 'self_report'}${c.evidence_url ? ' · <a href="' + c.evidence_url.replace(/"/g, '&quot;') + '" target="_blank" rel="noopener">evidence ↗</a>' : ''}
+        </div>
+      </div>
+    `).join('');
+  } catch (_) {
+    if (wrap) wrap.style.display = 'block';
+    hist.innerHTML = '<div class="cp-history-empty">Could not load history.</div>';
+  }
+}
+
+function restart() {
+  state.selectedRoleModels = [];
+  state.goals.primary_concerns = [];
+  document.querySelectorAll('#concerns-grid .chip').forEach(c => c.classList.remove('selected'));
+  advanceToStep(1);
+}
+
+function loadLocal() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; } }
+function saveLocal(d, payload) {
+  try {
+    const all = loadLocal();
+    const entry = { name: d.athlete.name || d.athlete.sport, pathway: d.goals.target_pathway, role_models: d.role_models.map(r => r.name).join(' + '), saved_at: new Date().toISOString(), payload };
+    all.unshift(entry);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(all.slice(0, 10)));
+    renderSaved();
+  } catch {}
+}
+function renderSaved() {
+  const all = loadLocal();
+  const sec = document.getElementById('saved-section');
+  if (all.length === 0) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  document.getElementById('saved-list').innerHTML = all.map((s, i) =>
+    `<div class="saved-chip" onclick="restoreSaved(${i})">${s.name} → ${s.pathway} · ${s.role_models}</div>`
+  ).join('');
+}
+async function restoreSaved(i) {
+  const all = loadLocal();
+  const s = all[i];
+  if (!s || !s.payload) return;
+  state = { ...state, athlete: s.payload.athlete, selectedRoleModels: s.payload.role_models, goals: s.payload.goals };
+  document.getElementById('athlete-slug').value = s.payload.athlete.slug || '';
+  document.getElementById('athlete-sport').value = s.payload.athlete.sport || 'football';
+  document.getElementById('athlete-position').value = s.payload.athlete.position || '';
+  document.getElementById('goal-pathway').value = s.payload.goals.target_pathway;
+  document.getElementById('goal-timeline').value = s.payload.goals.timeline_years;
+  document.getElementById('goal-school').value = s.payload.goals.target_school || '';
+  state.goals.primary_concerns.forEach(c => {
+    const chip = document.querySelector(`#concerns-grid .chip[data-concern="${c}"]`);
+    if (chip) chip.classList.add('selected');
+  });
+  await loadRoleModelMenu();
+  generatePathway();
+}
+
+async function sharePathway() {
+  if (!window._lastPathway) { alert('Generate a pathway first.'); return; }
+  // v0.30.5.650 — scope picker: ask user which view to share
+  const scope = await new Promise(resolve => {
+    const dialog = document.createElement('div');
+    dialog.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
+    dialog.innerHTML = `
+      <div style="background:#0a0a0a;border:1px solid #333;padding:32px;max-width:480px;width:100%;font-family:inherit;color:#fff;">
+        <div style="font-size:11px;letter-spacing:0.1em;opacity:0.6;margin-bottom:8px;">// SHARE</div>
+        <h3 style="font-size:22px;margin:0 0 4px 0;font-weight:500;">Who's this for?</h3>
+        <p style="font-size:13px;color:#999;margin:0 0 24px 0;">Each scope shows a different view of your pathway.</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <button data-scope="self"   style="text-align:left;padding:14px;background:transparent;color:#fff;border:1px solid #333;cursor:pointer;font-family:inherit;"><div style="font-size:14px;font-weight:500;">SELF</div><div style="font-size:12px;color:#999;margin-top:2px;">Full diagnostic. Everything.</div></button>
+          <button data-scope="coach"  style="text-align:left;padding:14px;background:transparent;color:#fff;border:1px solid #333;cursor:pointer;font-family:inherit;"><div style="font-size:14px;font-weight:500;">COACH</div><div style="font-size:12px;color:#999;margin-top:2px;">Full diagnostic + program context for coaching alignment.</div></button>
+          <button data-scope="parent" style="text-align:left;padding:14px;background:transparent;color:#fff;border:1px solid #333;cursor:pointer;font-family:inherit;"><div style="font-size:14px;font-weight:500;">PARENT</div><div style="font-size:12px;color:#999;margin-top:2px;">Full diagnostic, NIL/financial details redacted.</div></button>
+          <button data-scope="public" style="text-align:left;padding:14px;background:transparent;color:#fff;border:1px solid #333;cursor:pointer;font-family:inherit;"><div style="font-size:14px;font-weight:500;">PUBLIC</div><div style="font-size:12px;color:#999;margin-top:2px;">Composite headline only. Safe for social.</div></button>
+        </div>
+        <button data-scope="cancel" style="margin-top:16px;width:100%;padding:10px;background:transparent;color:#999;border:1px solid #333;cursor:pointer;font-family:inherit;font-size:12px;">Cancel</button>
+      </div>
+    `;
+    document.body.appendChild(dialog);
+    dialog.addEventListener('click', e => {
+      if (e.target === dialog) { document.body.removeChild(dialog); resolve(null); return; }
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      const s = btn.dataset.scope;
+      document.body.removeChild(dialog);
+      resolve(s === 'cancel' ? null : s);
+    });
+  });
+  if (!scope) return;
+
+  try {
+    // First, ensure the pathway is saved (gets a token)
+    const r = await fetch(`${PROXY}/pathway/save`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug: state.athlete.slug || ('anon-' + state.athlete.sport), target_tier: state.goals.target_pathway, blueprint: window._lastPathway })
+    });
+    const d = await r.json();
+    if (!d.ok) { alert('Share failed.'); return; }
+    // Build scope-specific URL
+    const tokenUrl = scope === 'self'
+      ? `${window.location.origin}/pathway?token=${d.token}`
+      : `${PROXY}/pathway/share-view?token=${d.token}&scope=${scope}`;
+    const label = scope.toUpperCase();
+    if (navigator.share) navigator.share({ title: `My FieldCheck Pathway (${label})`, url: tokenUrl });
+    else if (navigator.clipboard) { navigator.clipboard.writeText(tokenUrl); alert(`${label} share URL copied.\n\nToken: ${d.token}\n\nScope: ${scope}`); }
+    else prompt(`Copy this ${label} URL:`, tokenUrl);
+  } catch (e) { alert(`Share failed: ${e.message}`); }
+}
+
+renderSaved();
+
+// v0.30.5.473 — initialize autocomplete + URL param handling
+loadAthleteCache();
+const _initParams = new URLSearchParams(window.location.search);
+if (_initParams.get('token')) {
+  fetch(`${PROXY}/pathway/load?token=${encodeURIComponent(_initParams.get('token'))}`)
+    .then(r => r.json()).then(d => {
+      if (d.ok && d.blueprint) {
+        window._lastPathway = d.blueprint;
+        advanceToStep(4);
+        renderPathway(d.blueprint);
+      }
+    });
+} else {
+  // Non-token: handle ?slug=, ?sport=, ?position= from verdict-page hand-off
+  applyUrlParams();
+}
+
+// Wire athlete-search input to autocomplete
+(function wireAthleteSearch() {
+  const search = document.getElementById('athlete-search');
+  const sportSel = document.getElementById('athlete-sport');
+  if (!search) return;
+  search.addEventListener('input', async () => {
+    await loadAthleteCache();
+    // Clear hidden slug + resolved chip on any keystroke; user is searching anew
+    document.getElementById('athlete-slug').value = '';
+    state.athlete.slug = '';
+    const resolved = document.getElementById('athlete-resolved');
+    if (resolved) resolved.style.display = 'none';
+    renderAcItems(filterAthletes(search.value, sportSel ? sportSel.value : ''));
+  });
+  search.addEventListener('focus', async () => {
+    await loadAthleteCache();
+    renderAcItems(filterAthletes(search.value, sportSel ? sportSel.value : ''));
+  });
+  search.addEventListener('blur', () => { setTimeout(hideAc, 150); });
+  search.addEventListener('keydown', (e) => {
+    const dd = document.getElementById('athlete-ac-dropdown');
+    if (!dd || !dd.classList.contains('show')) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); moveAc(1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); moveAc(-1); }
+    else if (e.key === 'Escape') { e.preventDefault(); hideAc(); }
+    else if (e.key === 'Enter' && acActiveIdx >= 0) { e.preventDefault(); pickAthlete(acVisibleItems[acActiveIdx]); }
+  });
+  // Re-filter when sport changes
+  if (sportSel) {
+    sportSel.addEventListener('change', () => {
+      state.athlete.sport = sportSel.value;
+      if (search.value) renderAcItems(filterAthletes(search.value, sportSel.value));
+    });
+  }
+})();
+</script>
+
+
+<section class="pj-section" id="pj-section">
+  <div class="pj-header">
+    <div>
+      <div class="pj-eyebrow">// THE JOURNAL · YOUR DEVELOPMENTAL RECORD</div>
+      <h2 class="pj-h">A pathway is <span class="serif">a relationship.</span></h2>
+      <p class="pj-sub">Log every checkpoint. Tag the dimension. Watch the shape change over time. Stored on this device only — no login, no cloud. Powered by FieldCheck IQ.</p>
+    </div>
+    <div class="pj-count" id="pj-count">0 entries</div>
+  </div>
+
+  <div class="pj-add">
+    <input type="date" id="pj-date">
+    <select id="pj-dim">
+      <option value="PHYSICAL">Physical</option>
+      <option value="MINDSET">Mindset</option>
+      <option value="CHARACTER">Character</option>
+      <option value="PATHWAY">Pathway</option>
+      <option value="DEFENSE">Defense</option>
+      <option value="SCORING">Scoring / Production</option>
+      <option value="OTHER">Other milestone</option>
+    </select>
+    <input type="text" id="pj-text" placeholder="Hit a personal best on vertical · cleared 30 in" maxlength="220">
+    <button class="pj-btn" onclick="pjAdd()">Log →</button>
+  </div>
+
+  <div id="pj-empty" class="pj-empty">No checkpoints logged yet. Drop the first one above — even small wins move the shape.</div>
+  <div id="pj-timeline" class="pj-timeline"></div>
+
+  <div class="pj-stamp">// POWERED BY FIELDCHECK IQ · LONGITUDINAL DEVELOPMENTAL IDENTITY · v0.1</div>
+</section>
+
+<script>
+(function() {
+  const KEY = 'fc_pathway_journal_v1';
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e) { return []; } }
+  function save(items) { try { localStorage.setItem(KEY, JSON.stringify(items)); } catch(e) {} }
+  function esc(s) { return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function fmt(d) {
+    const dt = new Date(d + 'T00:00:00');
+    if (isNaN(dt)) return d;
+    return dt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).toUpperCase();
+  }
+  function render() {
+    const items = load().sort((a,b) => b.date.localeCompare(a.date));
+    const tl = document.getElementById('pj-timeline');
+    const empty = document.getElementById('pj-empty');
+    const count = document.getElementById('pj-count');
+    if (!tl) return;
+    count.textContent = items.length === 1 ? '1 entry' : items.length + ' entries';
+    empty.style.display = items.length === 0 ? 'block' : 'none';
+    tl.style.display = items.length === 0 ? 'none' : 'block';
+    tl.innerHTML = items.map((it, idx) => {
+      return '<div class="pj-entry">' +
+        '<button class="pj-entry-remove" onclick="pjRemove(' + idx + ')" title="Remove">×</button>' +
+        '<div class="pj-entry-row"><div class="pj-entry-date">' + fmt(it.date) + '</div><div class="pj-entry-dim">' + esc(it.dim) + '</div></div>' +
+        '<div class="pj-entry-text">' + esc(it.text) + '</div>' +
+      '</div>';
+    }).join('');
+  }
+  window.pjAdd = function() {
+    const dateEl = document.getElementById('pj-date');
+    const dimEl = document.getElementById('pj-dim');
+    const textEl = document.getElementById('pj-text');
+    const date = dateEl.value || new Date().toISOString().slice(0,10);
+    const dim = dimEl.value;
+    const text = textEl.value.trim();
+    if (!text) { textEl.focus(); return; }
+    const items = load();
+    items.push({ date, dim, text, added: Date.now() });
+    save(items);
+    textEl.value = '';
+    render();
+  };
+  window.pjRemove = function(idx) {
+    const items = load().sort((a,b) => b.date.localeCompare(a.date));
+    items.splice(idx, 1);
+    save(items);
+    render();
+  };
+  document.addEventListener('DOMContentLoaded', function() {
+    const dateEl = document.getElementById('pj-date');
+    if (dateEl) dateEl.value = new Date().toISOString().slice(0,10);
+    const textEl = document.getElementById('pj-text');
+    if (textEl) textEl.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); window.pjAdd(); }
+    });
+    render();
+  });
+})();
+</script>
+
+</body>
+</html>

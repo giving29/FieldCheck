@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FC16.S13 · EOD Handoff · May 18 → 19, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07060A;--bg1:#100F14;--bg2:#181620;
+  --ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);
+  --t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);
+  --gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);
+  --moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.30);
+  --teal:#4EC9C0;--teall:rgba(78,201,192,.3);
+  --red:#FF5C3A;--violet:#8B5CF6;--violetl:rgba(139,92,246,.3);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;min-height:100vh;line-height:1.6}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 30% at 50% 0%,rgba(245,184,0,.05) 0%,transparent 60%),linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+
+.hdr{position:relative;z-index:2;border-bottom:1px solid var(--ge);background:rgba(7,6,10,.86);backdrop-filter:blur(20px)}
+.hdr-i{max-width:1100px;margin:0 auto;padding:24px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.brand{font-family:'Anton',sans-serif;font-size:32px;letter-spacing:-.012em}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.hdr-tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:5px 12px;border-radius:9999px;background:var(--goldl);border:1px solid var(--goldl);color:var(--gold)}
+.hdr-meta{flex:1;text-align:right;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t3)}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 1.8s infinite;margin-right:6px;vertical-align:middle}
+
+.wrap{max-width:1100px;margin:0 auto;padding:50px 28px 90px;position:relative;z-index:1}
+
+.h-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-bottom:8px;display:flex;align-items:center}
+.h-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--moss);animation:pulse 1.8s infinite;margin-right:8px}
+.page-h{font-family:'Anton',sans-serif;font-size:clamp(46px,5.5vw,72px);letter-spacing:-.018em;line-height:.95;margin-bottom:14px}
+.page-h b{color:var(--gold)}
+.lede{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:var(--t2);line-height:1.55;margin-bottom:50px;max-width:780px}
+
+.morning{background:linear-gradient(135deg,rgba(245,184,0,.10),rgba(7,6,10,.7));border:1px solid var(--goldl);border-radius:18px;padding:32px 36px;margin-bottom:50px;position:relative;overflow:hidden}
+.morning::before{content:"";position:absolute;top:0;left:0;width:4px;height:100%;background:var(--gold)}
+.morning-l{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.morning-h{font-family:'Anton',sans-serif;font-size:30px;letter-spacing:-.012em;margin-bottom:16px}
+.morning-b{font-size:14.5px;color:var(--t);line-height:1.7;max-width:780px}
+.morning-b b{color:var(--gold)}
+.morning-b a{color:var(--gold);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.morning-b code{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold);background:rgba(245,184,0,.08);padding:2px 7px;border-radius:5px}
+
+.sec{margin-bottom:54px}
+.sec-h{font-family:'Anton',sans-serif;font-size:30px;letter-spacing:-.012em;margin-bottom:6px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.sec-h b{color:var(--gold)}
+.sec-h .num{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;letter-spacing:1.4px;color:var(--t4);background:var(--bg2);padding:6px 12px;border-radius:8px;border:1px solid var(--ge)}
+.sec-sub{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-bottom:24px}
+
+.bl{background:rgba(14,13,20,.6);border:1px solid var(--ge);border-radius:14px;padding:24px 26px;margin-bottom:14px}
+.bl.moss{border-color:var(--mossd);background:rgba(107,170,90,.04)}
+.bl.gold{border-color:var(--goldl);background:rgba(245,184,0,.04)}
+.bl.violet{border-color:var(--violetl);background:rgba(139,92,246,.03)}
+.bl.teal{border-color:var(--teall);background:rgba(78,201,192,.03)}
+.bl-h{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:-.009em;margin-bottom:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bl-h .pin{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;padding:4px 10px;border-radius:9999px;background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.bl-h .pin.gold{background:var(--golds);color:var(--gold);border-color:var(--goldl)}
+.bl-h .pin.violet{background:rgba(139,92,246,.12);color:var(--violet);border-color:var(--violetl)}
+.bl-h .pin.teal{background:rgba(78,201,192,.10);color:var(--teal);border-color:var(--teall)}
+.bl-h .pin.red{background:rgba(255,92,58,.12);color:var(--red);border-color:rgba(255,92,58,.3)}
+.bl-b{font-size:13.5px;color:var(--t2);line-height:1.7}
+.bl-b b{color:var(--t)}
+.bl-b code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);background:rgba(245,184,0,.07);padding:1px 6px;border-radius:4px}
+
+.check{list-style:none;padding-left:0;margin-top:14px}
+.check li{padding:10px 0 10px 30px;border-bottom:1px solid var(--ge2);font-size:13.5px;color:var(--t2);line-height:1.6;position:relative}
+.check li:last-child{border-bottom:none}
+.check li::before{content:"☐";position:absolute;left:4px;top:9px;color:var(--gold);font-size:15px;font-weight:700}
+.check li b{color:var(--t)}
+.check li code{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px}
+
+.cmd{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:rgba(0,0,0,.45);padding:14px 18px;border-radius:10px;margin:12px 0;color:var(--gold);border-left:3px solid var(--gold);overflow-x:auto;white-space:pre-wrap}
+.cmd .d{color:var(--t4)}
+
+.kv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:18px}
+.kv{background:rgba(14,13,20,.6);border:1px solid var(--ge);border-radius:10px;padding:14px 16px}
+.kv-l{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--t4);margin-bottom:5px}
+.kv-v{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);font-weight:700;line-height:1.45}
+
+.q-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.q{background:rgba(139,92,246,.04);border:1px solid var(--violetl);border-radius:12px;padding:18px 20px}
+.q-l{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--violet);margin-bottom:8px}
+.q-h{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:-.005em;margin-bottom:8px}
+.q-b{font-size:13px;color:var(--t2);line-height:1.6}
+.q-b code{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--violet);background:rgba(139,92,246,.08);padding:1px 5px;border-radius:4px}
+
+.tenet-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.tn{background:rgba(7,6,10,.5);border:1px solid var(--ge);border-radius:10px;padding:14px 16px}
+.tn-n{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.tn-h{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:-.003em;margin-bottom:6px}
+.tn-b{font-size:11.5px;color:var(--t3);line-height:1.55}
+
+.ftr{margin-top:80px;padding:34px 28px 28px;background:rgba(7,6,10,.7);border-top:1px solid var(--ge);text-align:center}
+.ftr-l{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t4);margin-bottom:10px}
+.ftr-b{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--t2);max-width:680px;margin:0 auto;line-height:1.5}
+
+@media(max-width:720px){.page-h{font-size:42px}.morning-h{font-size:24px}.lede{font-size:17px}.hdr-meta{text-align:left;width:100%}}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+
+<header class="hdr">
+  <div class="hdr-i">
+    <div class="brand">Field<b>Check</b><span class="iq">IQ</span></div>
+    <div class="hdr-tag">EOD Handoff · FC16.S13</div>
+    <div class="hdr-meta">May 18 → 19, 2026 · open this first tomorrow morning</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="h-eyebrow"><span class="dot"></span>DEV IS GREEN · PROMOTION DECISION PARKED · FRESH EYES TOMORROW</div>
+  <h1 class="page-h">Tonight <b>shipped</b>.</h1>
+  <p class="lede">FC16.S13 Phase A + Phase B both live on dev. Pulse pill in nav. Draft bar deleted. Orphan JS purged. Canonical state file locked. Tenet 16 violation closed. The whole sprint sits on dev waiting for fresh-eyes verification in the morning.</p>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- MORNING BLOCK · the first thing to read     -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="morning">
+    <div class="morning-l"><span class="live-dot"></span>WHEN YOU OPEN THIS TOMORROW MORNING</div>
+    <div class="morning-h">Don't promote. Don't sprint. Verify first.</div>
+    <div class="morning-b">
+      Before tomorrow's Claude touches anything, you open <b><a href="https://fieldcheck-dev--fieldcheck-app.netlify.app">fieldcheck-dev--fieldcheck-app.netlify.app</a></b> with fresh eyes and walk the desktop + 380px mobile checklist (Section 2 below).<br><br>
+      <b>Only after dev is fresh-eyes clean</b> does the promotion conversation start — and even then, the actual command comes from tomorrow's Claude as a single line on its own turn, with the gate you type at the prompt. You drive that decision; Claude doesn't propose it proactively. Tonight's no-prod rule sunsets at fresh morning.<br><br>
+      If anything's off — even one thing — that's the morning's work, not promotion.
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 1 · TONIGHT'S WINS                  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="num">01</span>Tonight's wins · <b>three shipped, one locked</b></div>
+    <div class="sec-sub">// What landed between ~21:00 and ~23:00 on May 18</div>
+
+    <div class="bl moss">
+      <div class="bl-h">FC16.S13 Phase A · 3 surgical removals on dev <span class="pin">SHIPPED</span></div>
+      <div class="bl-b">Industry-forgot inspo strip, live ticker marquee + JS, Gem of the Week / Peterson banner — all removed from <code>index.html</code>. Untouchables preserved: cinema, Player door, search, 4-doors, 5-metric, 4-features, footer. <b>122,131 B → 115,686 B · 1,893 → 1,812 lines.</b></div>
+    </div>
+
+    <div class="bl moss">
+      <div class="bl-h">FC16.S13 Phase B · pulse pill on dev <span class="pin">SHIPPED</span></div>
+      <div class="bl-b">Variant C integrated. <b>Sticky draft bar deleted entirely.</b> Pulse pill (<code>.dpill</code> · <code>.dpill-dot</code> · <code>.dpill-lbl</code>) inserted into <code>.nr</code> (right-side nav controls), before the <code>.nsrch</code> search button. Mobile choice (a): pill stays visible at 380px adjacent to the hamburger — live signal is never hidden behind a click. <code>@keyframes pulse</code> preserved (still used by <code>.cp-category.live</code> + <code>.search-mic.listening</code>). Orphan <code>updateCd()</code> countdown function purged. <b>115,686 B → 114,700 B · 1,812 → 1,792 lines.</b></div>
+    </div>
+
+    <div class="bl gold">
+      <div class="bl-h">FC_CANONICAL_STATE_V1.html · locked <span class="pin gold">TENET 16 VIOLATION CLOSED</span></div>
+      <div class="bl-b">12-tab single-source-of-truth captured. ROADMAP_V4 (Phase 4.7/4.8/4.9 inserts). Player Thesis v1.7 (25-PhD reset, R1-R6, 30-day train/test). 8-facet polygon spec. BACKEND_TO_UI_TRANSLATION_V1. FC17.S1–S8 sprint queue. Verdict page spec. Methodology page. Hidden Gems v2. Continuous learning loop. 10 pending decisions. Tenets 11–19. <b>89,887 B</b> · sitting at <code>~/Desktop/fieldcheck-proxy/FC_CANONICAL_STATE_V1.html</code> · in tarball <code>FCBase16_V001_20260518_2157.tar.gz</code>. <b>Tomorrow's Claude reads this before any strategic FieldCheck work — never chat memory alone.</b></div>
+    </div>
+
+    <div class="bl teal">
+      <div class="bl-h">Bonus pickup: fieldcheck-roadmap.html auto-deployed <span class="pin teal">VERIFY · DON'T ASSUME</span></div>
+      <div class="bl-b">The <code>deploy-dev.sh</code> script auto-picked up a <code>fieldcheck-roadmap.html</code> from your Downloads and shipped it to dev. Probably from your parallel chat's roadmap rebuild. <b>Verify <code>/roadmap</code> renders correctly on dev as part of tomorrow's checklist.</b> If it's stale, replace before promotion. If it's fresh, it's a free win.</div>
+    </div>
+
+    <div class="kv-grid">
+      <div class="kv"><div class="kv-l">Net size delta tonight</div><div class="kv-v">-7,431 B</div></div>
+      <div class="kv"><div class="kv-l">Net line delta tonight</div><div class="kv-v">-101 lines</div></div>
+      <div class="kv"><div class="kv-l">Current dev size</div><div class="kv-v">114,700 B · 1,792 lines</div></div>
+      <div class="kv"><div class="kv-l">Current baseline (frozen)</div><div class="kv-v">FCBase16_V001_20260518_2157</div></div>
+      <div class="kv"><div class="kv-l">Visual changes</div><div class="kv-v">5 elements removed · 1 added</div></div>
+      <div class="kv"><div class="kv-l">Process violations tonight</div><div class="kv-v">0 · all gates held</div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 2 · FRESH-EYES VERIFY CHECKLIST     -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="num">02</span>Fresh-eyes verify · <b>10 minutes, 2 viewports</b></div>
+    <div class="sec-sub">// Walk this before any promotion conversation tomorrow</div>
+
+    <div class="bl gold">
+      <div class="bl-h">Desktop checklist · <code>fieldcheck-dev--fieldcheck-app.netlify.app</code> <span class="pin gold">~5 MIN</span></div>
+      <div class="bl-b">Hard refresh first (Cmd+Shift+R) to bypass cache.</div>
+      <ul class="check">
+        <li><b>Pulse pill renders</b> on the right side of nav, between Discover dropdown and Search button</li>
+        <li><b>Gold dot pulses</b> at ~1.8s cycle (same rhythm as <code>.cp-category.live</code> indicators below)</li>
+        <li><b>Hover state</b> — pill background fills slightly, border brightens, smooth transition</li>
+        <li><b>Click pill</b> → routes to <code>/nba-draft</code> (page loads cleanly, no 404)</li>
+        <li><b>Top of page is reclaimed</b> — no sticky draft bar above nav anymore, hero starts immediately</li>
+        <li><b>Cinematic plays</b> — full 15-scene story still cycles, "scene N of 18" label visible</li>
+        <li><b>Search works</b> — type <code>jokic</code> in the search input, verdict triggers</li>
+        <li><b>Keyboard shortcut</b> — press <code>/</code> from anywhere, search input focuses</li>
+        <li><b>DevTools console clean</b> (Cmd+Opt+I) — no red errors, no orphan <code>dbarCd</code> warnings</li>
+        <li><b>All 4 nav dropdowns still work</b> — Player · Programs · Draft · Discover</li>
+      </ul>
+    </div>
+
+    <div class="bl gold">
+      <div class="bl-h">Mobile checklist · DevTools Device Toolbar · 380px <span class="pin gold">~3 MIN</span></div>
+      <div class="bl-b">Cmd+Opt+I → Cmd+Shift+M → set viewport to 380px (iPhone 14 Pro is 393px, close enough).</div>
+      <ul class="check">
+        <li><b>Pulse pill still visible</b> adjacent to the hamburger icon (option (a) committed)</li>
+        <li><b>Pulse dot still animating</b> at 380px</li>
+        <li><b>Click pill</b> on mobile → routes to <code>/nba-draft</code></li>
+        <li><b>Hamburger button works</b> — tap opens, tap closes the mobile menu</li>
+        <li><b>All 4 nav items present</b> inside the hamburger menu (Player · Programs · Draft · Discover)</li>
+        <li><b>Search button hidden at 380px</b> (existing <code>.nsrch{display:none}</code> rule at ≤860px — that's expected)</li>
+        <li><b>No horizontal overflow</b> — nav fits in 380px viewport without scrolling sideways</li>
+      </ul>
+    </div>
+
+    <div class="bl teal">
+      <div class="bl-h">Bonus: roadmap route check <span class="pin teal">~1 MIN</span></div>
+      <div class="bl-b">Open <code>fieldcheck-dev--fieldcheck-app.netlify.app/roadmap</code> in a new tab. Password <code>thinkdifferent2026</code>.</div>
+      <ul class="check">
+        <li><b>/roadmap loads</b> — password gate works, then content renders</li>
+        <li><b>Content matches expectation</b> — if stale (FC16.S13 not marked ✅) → tomorrow's Tenet 16 rebuild before promotion · if fresh → no action needed</li>
+        <li><b>Three tabs render</b> — ROADMAP_V3 · RELEASE_PLAYBOOK · GAME_PLAN (and if 4th tab present, check it)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 3 · IF DEV IS CLEAN                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="num">03</span>If dev is clean · <b>the post-verify sequence</b></div>
+    <div class="sec-sub">// Tomorrow's Claude will run these in order, one command per turn</div>
+
+    <div class="bl">
+      <div class="bl-h">Step A · Promotion (your decision · your command from tomorrow's Claude)</div>
+      <div class="bl-b">When you say "go," tomorrow's Claude hands you the single promotion command on its own turn. You type the confirmation gate yourself at the prompt. Tonight's session has no further authority over this — it's a fresh decision in a fresh session.</div>
+    </div>
+
+    <div class="bl">
+      <div class="bl-h">Step B · Freeze new baseline</div>
+      <div class="bl-b">After promotion lands cleanly:
+      <div class="cmd">cd ~/Desktop/fieldcheck-proxy && ./fc-freeze.sh</div>
+      Expected new baseline name: <code>FCBase17_V001_20260519_HHMM.tar.gz</code> (or whatever the next-tier baseline number is — tomorrow's Claude verifies via canonical state). <b>Promote to new tier only after this is the 3rd–5th clean ship since the previous baseline.</b></div>
+    </div>
+
+    <div class="bl">
+      <div class="bl-h">Step C · Memory update + Tenet 11 cleanup + Tenet 16 rebuild</div>
+      <div class="bl-b">
+      • Update memory with new baseline name (tomorrow's Claude does this via <code>memory_user_edits</code>)<br>
+      • Tenet 11: <code>rm ~/Downloads/index.html</code> (the patch file from tonight) — keep <code>FCBase*.tar.gz</code> forever<br>
+      • Tenet 16: rebuild <code>fieldcheck-roadmap.html</code> with FC16.S13 marked ✅ — then redeploy if the roadmap is served from this directory<br>
+      • Tenet 16: also rebuild the 3 markdown sources (ROADMAP_V3 / V4 · RELEASE_PLAYBOOK · GAME_PLAN) with sprint closure noted</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 4 · STRATEGIC QUEUE                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="num">04</span>What's next · <b>strategic queue prioritized</b></div>
+    <div class="sec-sub">// Pick one to open after FC16.S13 fully closes</div>
+
+    <div class="bl violet">
+      <div class="bl-h">★ FC17.S1 · 8-facet polygon prototype <span class="pin violet">STRATEGIC UNLOCK</span></div>
+      <div class="bl-b">
+      <b>Target per canonical state: May 25, 2026 (1 week out).</b><br><br>
+      <b>Standalone HTML, not integrated</b> — Tenet 17 prototype-first. Sridhar reviews. Approves. Then FC17.S2 integrates to <code>fieldcheck-verdict.html</code>.<br><br>
+      <b>Must include (verify exact spec from canonical state Pane 4 before building):</b>
+      <ul style="margin-left:18px;margin-top:8px">
+        <li>8 axes clockwise from top: Character (apex, weight 0.18) · Mindset · Mental Strength · Talent · Physical (bottom) · Mental/IQ · Coachability · Competitiveness</li>
+        <li>Shaded Bayesian CI bands per axis (not flat lines — color intensity = confidence)</li>
+        <li>Refinement icons R1–R6 where active (🩹⚖️🔄🎯📍⚖️)</li>
+        <li>Character sub-dim drill-in: 5-axis sub-polygon (Honesty · Harm-avoidance · Reliability · Loyalty · Composure)</li>
+        <li>Comparable trajectory ghost overlays (LeBron 2003 gold, Wiggins 2014 red)</li>
+        <li>Confidence disclosure section ("what we're confident about / not yet confident about / what would change this")</li>
+        <li>Continuous learning indicator at the bottom</li>
+      </ul>
+      <br><b>Test player: Cooper Flagg</b> (pre-registered May 17, 2026 · composite 9.30 · CI 8.46–9.95 · TIER: HOF LOCK near-INNER-CIRCLE · sub-dim breakdown in canonical state).<br><br>
+      <b>This is the visible artifact of the 25-PhD reset.</b> The strategic unlock for the next baseline.</div>
+    </div>
+
+    <div class="bl">
+      <div class="bl-h">Phase C · Programs door click freeze <span class="pin red">DIAGNOSIS PENDING</span></div>
+      <div class="bl-b">Parked tonight from FC16.S13. Clicking the Programs nav dropdown to <code>/coaches</code> freezes. Diagnosis per Tenet 18 hierarchy: (1) handler exists? (2) plain anchor → check <code>_redirects</code>? (3) route resolves to <code>/coaches</code> file → debug that file's init? (4) SPA fallback — re-running homepage init may BE the freeze. <b>Need <code>_redirects</code> contents + DevTools console/network output from clicking <code>/coaches</code> on dev to diagnose.</b></div>
+    </div>
+
+    <div class="bl">
+      <div class="bl-h">FC16.S12 · Real amateur photos (Wikimedia) <span class="pin">PARKED</span></div>
+      <div class="bl-b">15 cinematic-box players need real photos sourced from Wikimedia Commons. Dedicated photo-hunt session — best done in one focused block, not interleaved with sprint work.</div>
+    </div>
+
+    <div class="bl">
+      <div class="bl-h">FC16.S14 · Mobile responsiveness audit <span class="pin">QUEUED</span></div>
+      <div class="bl-b">Systematic CSS media query pass on <code>index.html</code> + <code>verdict</code>. iOS Safari + Chrome Android. Pulse pill at 380px is one item in this audit — but the broader pass is its own sprint.</div>
+    </div>
+
+    <div class="bl">
+      <div class="bl-h">10 pending strategic decisions <span class="pin">FROM ROADMAP V4</span></div>
+      <div class="bl-b">Captured in canonical state Pane 11. <b>4 critical</b> (FC17 sprint sequence approval · Phase 4.7/4.8/4.9 insertion · Continuous Learning Loop ownership · quarterly public dashboard commitment) · <b>3 strategic</b> (Hidden Gems v2 cost · Phase 5 priority · Block 14 nav redesign timing) · <b>3 operational</b> (FC16.S12–S14 sequencing · FCBase18 freeze trigger · methodology URL). <b>Review at top of any strategic session.</b></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 5 · OPEN QUESTIONS                  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="num">05</span>Open questions · <b>load into tomorrow's Claude</b></div>
+    <div class="sec-sub">// Things tonight surfaced that need fresh-eyes resolution</div>
+
+    <div class="q-grid">
+      <div class="q">
+        <div class="q-l">Q1 · auto-pickup</div>
+        <div class="q-h">Roadmap from Downloads — fresh or stale?</div>
+        <div class="q-b"><code>deploy-dev.sh</code> auto-picked up a <code>fieldcheck-roadmap.html</code> from your Downloads tonight. Was that intentional from your parallel chat's Tenet 16 rebuild, or leftover from earlier work? Verify on dev <code>/roadmap</code>. Decide: keep, rebuild, or replace before promotion.</div>
+      </div>
+
+      <div class="q">
+        <div class="q-l">Q2 · Programs door</div>
+        <div class="q-h">Does Phase C freeze still exist after pulse pill rebuild?</div>
+        <div class="q-b">Phase B changed the nav structure (removed <code>.dbar</code>, added <code>.dpill</code> inside <code>.nr</code>). It's possible the click freeze on <code>/coaches</code> was downstream of something that's now indirectly affected. <b>Test on dev tomorrow before opening Phase C as a separate sprint.</b> If freeze is gone, file closed for free.</div>
+      </div>
+
+      <div class="q">
+        <div class="q-l">Q3 · Block 14 nav redesign</div>
+        <div class="q-h">Does the pulse pill complicate the planned redesign?</div>
+        <div class="q-b">Block 14 pre-decided final nav: VERDICT · PROGRAMS · DRAFT · DISCOVER + How-it-works + Search. The pulse pill currently lives in <code>.nr</code> alongside Search/hamburger. <b>When Block 14 ships, decide:</b> pill stays in <code>.nr</code> · pill merges into DRAFT item · pill becomes a footer/secondary signal.</div>
+      </div>
+
+      <div class="q">
+        <div class="q-l">Q4 · countdown removal</div>
+        <div class="q-h">Anyone notice the countdown is gone?</div>
+        <div class="q-b">The old draft bar showed "36d 4h" countdown to June 23. Pulse pill shows date only ("Live Call · June 23"). Watch dev analytics for any signal — if there's no engagement drop, the countdown was decoration. If there's a drop, FC16.S15 could add a hover-revealed countdown to the pill.</div>
+      </div>
+
+      <div class="q">
+        <div class="q-l">Q5 · Mahomes search bug</div>
+        <div class="q-h">Still broken from May 18 morning?</div>
+        <div class="q-b">Memory captured "Mahomes Player search reported broken (May 18 on dev verify) — fold into next polygon rework cycle." That's still open. Verify on dev tomorrow as part of the search-works check. Fold into FC17.S1 cycle if still broken.</div>
+      </div>
+
+      <div class="q">
+        <div class="q-l">Q6 · Two-EOD-tasks from May 17</div>
+        <div class="q-h">Still pending — done or punt?</div>
+        <div class="q-b">Memory had two May 17 EOD tasks: (1) add "Paid Infra & Scale Opportunities" section starting with YouTube Data API v3 at $20/mo to <code>ROADMAP_V3.md</code> · (2) add "Hudl.com exhaustive site review" as Phase 6 sub-task. <b>Status unknown — captured in canonical state file?</b> Check tomorrow.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 6 · TENETS                          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="num">06</span>Tenets to remember · <b>for tomorrow's Claude</b></div>
+    <div class="sec-sub">// Read these into tomorrow's context before any work</div>
+
+    <div class="tenet-grid">
+      <div class="tn"><div class="tn-n">Never-Lose · Rule 2</div><div class="tn-h">Promotion is yours</div><div class="tn-b">Claude never proactively suggests <code>./deploy-prod.sh</code>. You ask, separate turn, you type the gate.</div></div>
+      <div class="tn"><div class="tn-n">Tenet 11</div><div class="tn-h">Downloads hygiene</div><div class="tn-b">After every sprint <code>cp</code>, delete the patch HTML from <code>~/Downloads/</code>. Keep <code>FCBase*.tar.gz</code> forever.</div></div>
+      <div class="tn"><div class="tn-n">Tenet 12</div><div class="tn-h">Pre-deploy verification</div><div class="tn-b">ls + grep before every <code>./deploy-dev.sh</code>. Mismatch = STOP. Tonight Tenet 12 caught a missed <code>cp</code> — held discipline.</div></div>
+      <div class="tn"><div class="tn-n">Tenet 15 + 15.1</div><div class="tn-h">Audit before patching</div><div class="tn-b">Grep ALL classes — wrapper AND children. Verify selectors AND function names against actual render code.</div></div>
+      <div class="tn"><div class="tn-n">Tenet 16</div><div class="tn-h">Doc rebuild after freeze</div><div class="tn-b">After every baseline freeze, update the 3 markdown sources AND rebuild the HTML roadmap hub. Announce per-doc changes.</div></div>
+      <div class="tn"><div class="tn-n">Tenet 17</div><div class="tn-h">Prototype before integrate</div><div class="tn-b">Standalone HTML for any UX/CX change. Sridhar previews. Approves. Then integrate. FC17.S1 is the prototype phase.</div></div>
+      <div class="tn"><div class="tn-n">Tenet 18</div><div class="tn-h">Continuous Learning Loop</div><div class="tn-b">Refinement is the engine. PhD team monthly · weights quarterly · refinements annually · majors every 5yr. Never push Sridhar out.</div></div>
+      <div class="tn"><div class="tn-n">Tenet 19</div><div class="tn-h">Predictions immutability</div><div class="tn-b">v1.7.A 50-player cohort locked May 17, 2026. Each prediction immutable. Cannot retroactively revise — that destroys the moat.</div></div>
+      <div class="tn"><div class="tn-n">HTML-first</div><div class="tn-h">Sridhar reads HTML</div><div class="tn-b">All roadmap / strategy / progress updates go into existing HTML files. Don't create new MD unless explicitly asked.</div></div>
+      <div class="tn"><div class="tn-n">Jobs Doctrine</div><div class="tn-h">Einstein inside · Apple outside</div><div class="tn-b">INSIDE = math depth (Bayesian, R1-R6, multi-dim Character). OUTSIDE = a 10-year-old could use it untaught.</div></div>
+      <div class="tn"><div class="tn-n">Canonical First</div><div class="tn-h">Read FC_CANONICAL_STATE_V1.html</div><div class="tn-b">BEFORE any strategic FieldCheck work, tomorrow's Claude reads the canonical state file from <code>~/Desktop/fieldcheck-proxy/</code>. Never chat memory alone.</div></div>
+      <div class="tn"><div class="tn-n">One command, one turn</div><div class="tn-h">No paste-blocks at deploy gates</div><div class="tn-b">Verification reads can batch. Deploy commands stand alone. No <code>./deploy-prod.sh</code> proximity to <code>./deploy-dev.sh</code> in any instruction.</div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 7 · QUICK COMMAND REFERENCE         -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="num">07</span>Quick command reference · <b>for fresh-session boot</b></div>
+    <div class="sec-sub">// Paste-ready blocks tomorrow's Claude will hand you one at a time</div>
+
+    <div class="bl">
+      <div class="bl-h">Open dev in browser <span class="pin">VERIFY</span></div>
+      <div class="cmd"><span class="d"># Hard refresh after open: Cmd+Shift+R</span>
+open https://fieldcheck-dev--fieldcheck-app.netlify.app</div>
+    </div>
+
+    <div class="bl">
+      <div class="bl-h">Verify current dev file state on Mac <span class="pin">SANITY</span></div>
+      <div class="cmd">ls -la ~/Desktop/fieldcheck-proxy/index.html
+grep -c "dbar" ~/Desktop/fieldcheck-proxy/index.html
+grep -c "dpill" ~/Desktop/fieldcheck-proxy/index.html</div>
+      <div class="bl-b">Expected: <code>114,700 B · 0 · 5</code></div>
+    </div>
+
+    <div class="bl">
+      <div class="bl-h">Read canonical state file <span class="pin">STRATEGIC</span></div>
+      <div class="cmd">ls -la ~/Desktop/fieldcheck-proxy/FC_CANONICAL_STATE_V1.html</div>
+      <div class="bl-b">Expected: <code>89,887 B</code> · 12 tabs · single source of truth for all strategic work. <b>Upload to tomorrow's Claude before any strategic FieldCheck conversation.</b></div>
+    </div>
+
+    <div class="bl">
+      <div class="bl-h">Verify last freeze baseline <span class="pin">REFERENCE</span></div>
+      <div class="cmd">ls -la ~/Desktop/fieldcheck-proxy/FCBase*.tar.gz | tail -5</div>
+      <div class="bl-b">Most recent should be <code>FCBase16_V001_20260518_2157.tar.gz</code>. After tomorrow's promotion + new freeze, a new tarball appears — that's the new baseline.</div>
+    </div>
+
+    <div class="bl">
+      <div class="bl-h">Open this handoff file again <span class="pin">REOPEN</span></div>
+      <div class="cmd">open ~/Desktop/fieldcheck-proxy/FC16_S13_HANDOFF.html</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 8 · BOOT MESSAGE                    -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="num">08</span>Boot message for tomorrow's Claude · <b>copy-paste this</b></div>
+    <div class="sec-sub">// First message of tomorrow's fresh session</div>
+
+    <div class="bl gold">
+      <div class="bl-h">Suggested opening prompt</div>
+      <div class="bl-b">
+        <div style="background:rgba(0,0,0,.4);padding:18px 22px;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--t2);line-height:1.7;margin-top:6px;white-space:pre-wrap">Picking up FieldCheck FC16.S13 from last night. State of play:
+
+- FC16.S13 Phase A + Phase B both on dev, untouched since ~23:00 May 18
+- Prod still on pre-tonight state (not promoted)
+- Canonical state: FC_CANONICAL_STATE_V1.html (89,887 B) locked at ~/Desktop/fieldcheck-proxy/
+- Last freeze: FCBase16_V001_20260518_2157.tar.gz
+- Patched index.html on dev: 114,700 B (down from 115,686 post-Phase-A · down from 122,131 pre-sprint)
+
+Read these in order before doing anything:
+1. ~/Desktop/fieldcheck-proxy/FC16_S13_HANDOFF.html (this morning's handoff with full sequence)
+2. ~/Desktop/fieldcheck-proxy/FC_CANONICAL_STATE_V1.html (single source of truth)
+
+I'll do fresh-eyes verify on dev first. After that's clean, we decide promotion.
+
+I'll upload both HTML files now.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="ftr">
+  <div class="ftr-l">FC16_S13_HANDOFF.html · May 18 → 19, 2026 · ThinkDifferent Holdings · FieldCheck IQ</div>
+  <div class="ftr-b">"The execution track has phases. The learning track has no end. Tonight's track has rest."</div>
+</footer>
+
+</body>
+</html>

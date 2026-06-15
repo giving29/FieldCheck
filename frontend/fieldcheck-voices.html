@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How FieldCheck grades · The methodology</title>
+<meta name="description" content="The 8 facets. The 16 voices. The Bayesian consensus. The walk-away default. How FieldCheck reaches a verdict — and what it deliberately refuses to do.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07060A; --bg-2: #0E0D14; --bg-3: #131220;
+  --line: #1F1E2C; --line-2: #2A2937;
+  --txt: #E8E6F0; --txt-2: #9C9AAE; --txt-3: #5E5C70;
+  --gold: #D4A24C; --gold-dim: rgba(212,162,76,0.18);
+  --moss: #6B8868; --rose: #B86B7A; --flame: #E07856;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { background: var(--bg); color: var(--txt); font-family: 'Newsreader', serif; font-weight: 400; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+/* HEADER */
+.h { padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(7,6,10,0.92); backdrop-filter: blur(12px); z-index: 50; }
+.brand { font-family: 'Anton'; font-size: 17px; letter-spacing: 1.2px; color: var(--txt); text-decoration: none; }
+.brand b { color: var(--gold); font-weight: 400; }
+.h-cta { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 1.5px; color: var(--gold); text-decoration: none; padding: 8px 14px; border: 1px solid var(--gold-dim); transition: all .15s; }
+.h-cta:hover { background: var(--gold-dim); }
+
+.section { max-width: 900px; margin: 0 auto; padding: 80px 28px; }
+.section-num { font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 3px; color: var(--gold); margin-bottom: 12px; text-transform: uppercase; }
+h1, h2, h3 { font-family: 'Anton'; line-height: 0.96; letter-spacing: -1px; }
+h1 em, h2 em, h3 em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--gold); font-weight: 500; }
+p { font-family: 'Newsreader'; font-size: 19px; line-height: 1.6; color: var(--txt); margin-bottom: 20px; }
+p.lede { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 24px; color: var(--txt-2); line-height: 1.45; margin-bottom: 28px; font-weight: 500; }
+p b { color: var(--gold); font-weight: 600; }
+p i { color: var(--txt-2); }
+
+/* HERO */
+.hero { padding: 110px 28px 80px; max-width: 900px; margin: 0 auto; }
+.hero-eyebrow { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 3.5px; color: var(--gold); margin-bottom: 22px; text-transform: uppercase; }
+.hero h1 { font-size: clamp(56px, 11vw, 112px); margin-bottom: 18px; letter-spacing: -2px; }
+.hero-deck { font-family: 'Cormorant Garamond'; font-style: italic; font-size: clamp(20px, 3.2vw, 30px); color: var(--txt-2); margin-bottom: 32px; line-height: 1.35; font-weight: 500; max-width: 740px; }
+
+.dvd { max-width: 900px; margin: 0 auto; height: 1px; background: var(--line); }
+
+/* THE 8 FACETS */
+.facet-h { font-size: clamp(40px, 7vw, 60px); margin-bottom: 14px; }
+.facets-poly-wrap { display: grid; grid-template-columns: 280px 1fr; gap: 40px; align-items: start; margin-top: 32px; }
+.facets-poly { width: 280px; height: 280px; }
+.facets-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.facet-pill {
+  padding: 14px 16px; background: var(--bg-2); border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+}
+.facet-pill-name { font-family: 'Anton'; font-size: 18px; letter-spacing: -0.2px; margin-bottom: 2px; }
+.facet-pill-name em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--gold); font-weight: 500; }
+.facet-pill-d { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--txt-3); letter-spacing: 0.3px; line-height: 1.45; }
+@media (max-width: 720px) {
+  .facets-poly-wrap { grid-template-columns: 1fr; gap: 24px; }
+  .facets-poly { margin: 0 auto; }
+  .facets-list { grid-template-columns: 1fr; }
+}
+
+/* THE 4 VOICE GROUPS */
+.voices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
+.voice-card { padding: 28px 24px; background: var(--bg-2); border: 1px solid var(--line); border-top: 3px solid var(--gold); }
+.voice-num { font-family: 'Anton'; font-size: 48px; color: var(--gold); line-height: 0.9; margin-bottom: 12px; }
+.voice-card h3 { font-family: 'Anton'; font-size: 22px; margin-bottom: 8px; letter-spacing: -0.3px; }
+.voice-card h3 em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--gold); font-weight: 500; }
+.voice-card p { font-family: 'Newsreader'; font-size: 15px; line-height: 1.55; color: var(--txt-2); margin-bottom: 12px; }
+.voice-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.voice-tag { font-family: 'JetBrains Mono'; font-size: 9px; color: var(--gold); background: var(--gold-dim); padding: 4px 8px; letter-spacing: 0.8px; }
+@media (max-width: 720px) { .voices-grid { grid-template-columns: 1fr; } }
+
+/* PULL QUOTE */
+.pq {
+  font-family: 'Cormorant Garamond'; font-style: italic; font-size: clamp(28px, 4.5vw, 42px);
+  line-height: 1.3; color: var(--gold); font-weight: 500;
+  padding: 56px 28px; margin: 0 auto;
+  text-align: center; max-width: 800px;
+}
+
+/* TIER BANDS */
+.tiers-list { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 24px; }
+.tier-row {
+  display: grid; grid-template-columns: 100px 140px 1fr; gap: 24px;
+  padding: 18px 0; border-bottom: 1px solid var(--line); align-items: center;
+}
+.tier-row:last-child { border-bottom: 0; }
+.tier-range { font-family: 'JetBrains Mono'; font-size: 14px; color: var(--gold); letter-spacing: 1px; }
+.tier-name { font-family: 'Anton'; font-size: 22px; letter-spacing: 0.5px; }
+.tier-desc { font-family: 'Newsreader'; font-size: 15px; color: var(--txt-2); line-height: 1.5; font-style: italic; }
+@media (max-width: 600px) {
+  .tier-row { grid-template-columns: 1fr; gap: 4px; padding: 14px 0; }
+}
+
+/* WHAT WE WON'T DO */
+.wonts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
+.wont-card { padding: 24px; background: var(--bg-2); border: 1px solid var(--line); border-left: 3px solid var(--rose); }
+.wont-tag { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--rose); letter-spacing: 1.5px; margin-bottom: 8px; }
+.wont-h { font-family: 'Anton'; font-size: 20px; margin-bottom: 6px; letter-spacing: -0.3px; }
+.wont-h em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--rose); font-weight: 500; }
+.wont-d { font-family: 'Newsreader'; font-size: 15px; color: var(--txt-2); line-height: 1.5; margin-bottom: 0; }
+@media (max-width: 720px) { .wonts { grid-template-columns: 1fr; } }
+
+/* CTA */
+.cta-block { text-align: center; padding: 80px 28px 100px; max-width: 700px; margin: 0 auto; }
+.cta-h { font-family: 'Anton'; font-size: clamp(40px, 7vw, 60px); line-height: 1; letter-spacing: -1px; margin-bottom: 16px; }
+.cta-h em { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--gold); font-weight: 500; }
+.cta-d { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 21px; color: var(--txt-2); margin-bottom: 36px; line-height: 1.4; }
+.cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 480px; margin: 0 auto; }
+.cta-btn { font-family: 'JetBrains Mono'; font-size: 12px; letter-spacing: 2px; font-weight: 700; padding: 20px 32px; border: 1px solid var(--gold); background: transparent; color: var(--gold); cursor: pointer; transition: all .15s; text-decoration: none; text-align: center; text-transform: uppercase; }
+.cta-btn.primary { background: var(--gold); color: var(--bg); }
+.cta-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(212,162,76,0.18); }
+@media (max-width: 480px) { .cta-row { grid-template-columns: 1fr; } }
+
+.foot { padding: 36px 28px; text-align: center; border-top: 1px solid var(--line); font-family: 'JetBrains Mono'; font-size: 10px; color: var(--txt-3); letter-spacing: 1.5px; }
+.foot a { color: var(--gold); text-decoration: none; margin: 0 10px; }
+</style>
+</head>
+<body>
+
+<header class="h">
+  <a class="brand" href="/">FieldCheck<b>IQ</b></a>
+  <a class="h-cta" href="/pitch">The thesis →</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">★ THE METHODOLOGY · HOW FIELDCHECK GRADES</div>
+  <h1>The <em>math</em> behind the verdict.</h1>
+  <p class="hero-deck">Every grade can be audited. Every voice can be challenged. Every tier band is published. If you want to know why an athlete is rated where they are, the answer is on this page.</p>
+</section>
+
+<div class="dvd"></div>
+
+<!-- THE 8 FACETS -->
+<section class="section">
+  <div class="section-num">01 · THE 8 FACETS</div>
+  <h2 class="facet-h">Every athlete is a <em>shape</em>.</h2>
+  <p class="lede">Not a single number. Not a Top-100 line. An eight-dimensional polygon that says where the athlete is strong, where they're average, and where the cap is real.</p>
+
+  <div class="facets-poly-wrap">
+    <svg class="facets-poly" viewBox="0 0 280 280">
+      <!-- spokes -->
+      <g stroke="#1F1E2C" stroke-width="1">
+        <line x1="140" y1="140" x2="140" y2="30"/>
+        <line x1="140" y1="140" x2="225" y2="65"/>
+        <line x1="140" y1="140" x2="250" y2="140"/>
+        <line x1="140" y1="140" x2="225" y2="215"/>
+        <line x1="140" y1="140" x2="140" y2="250"/>
+        <line x1="140" y1="140" x2="55" y2="215"/>
+        <line x1="140" y1="140" x2="30" y2="140"/>
+        <line x1="140" y1="140" x2="55" y2="65"/>
+      </g>
+      <!-- outer ring -->
+      <polygon points="140,30 225,65 250,140 225,215 140,250 55,215 30,140 55,65" fill="none" stroke="#2A2937" stroke-width="1"/>
+      <!-- inner rings -->
+      <polygon points="140,80 200,90 215,140 200,190 140,200 80,190 65,140 80,90" fill="none" stroke="#1F1E2C" stroke-width="1"/>
+      <!-- example shape -->
+      <polygon points="140,52 215,75 235,135 200,200 130,215 75,195 55,130 80,80" fill="rgba(212,162,76,0.22)" stroke="#D4A24C" stroke-width="1.5"/>
+      <!-- labels -->
+      <g font-family="JetBrains Mono" font-size="9" fill="#9C9AAE">
+        <text x="140" y="22" text-anchor="middle">SIZE</text>
+        <text x="232" y="58" text-anchor="middle">ATHL</text>
+        <text x="266" y="144" text-anchor="end">SPEED</text>
+        <text x="232" y="228" text-anchor="middle">PROD</text>
+        <text x="140" y="266" text-anchor="middle">SKILL</text>
+        <text x="48" y="228" text-anchor="middle">IQ</text>
+        <text x="14" y="144" text-anchor="start">GRIT</text>
+        <text x="48" y="58" text-anchor="middle">CHAR</text>
+      </g>
+    </svg>
+
+    <div class="facets-list">
+      <div class="facet-pill">
+        <div class="facet-pill-name"><em>Size</em></div>
+        <div class="facet-pill-d">Height, length, frame, leverage — the physical baseline.</div>
+      </div>
+      <div class="facet-pill">
+        <div class="facet-pill-name"><em>Athleticism</em></div>
+        <div class="facet-pill-d">Vertical, explosion, change-of-direction, sport-relative power.</div>
+      </div>
+      <div class="facet-pill">
+        <div class="facet-pill-name"><em>Speed</em></div>
+        <div class="facet-pill-d">Top speed, first step, reaction time, in-game velocity.</div>
+      </div>
+      <div class="facet-pill">
+        <div class="facet-pill-name"><em>Production</em></div>
+        <div class="facet-pill-d">Output that actually shows up in games and matters in context.</div>
+      </div>
+      <div class="facet-pill">
+        <div class="facet-pill-name"><em>Skill</em></div>
+        <div class="facet-pill-d">Sport-specific technical mastery — handle, touch, mechanics.</div>
+      </div>
+      <div class="facet-pill">
+        <div class="facet-pill-name"><em>IQ</em></div>
+        <div class="facet-pill-d">Read speed, decision quality, film-room signal, anticipation.</div>
+      </div>
+      <div class="facet-pill">
+        <div class="facet-pill-name"><em>Grit</em></div>
+        <div class="facet-pill-d">Compete, recovery, motor — the response-to-adversity profile.</div>
+      </div>
+      <div class="facet-pill">
+        <div class="facet-pill-name"><em>Character</em></div>
+        <div class="facet-pill-d">Coachability, leadership, team-first signal, off-field profile.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="dvd"></div>
+
+<!-- THE 16 VOICES -->
+<section class="section">
+  <div class="section-num">02 · THE 16 VOICES</div>
+  <h2 class="facet-h">Sixteen <em>analytical perspectives</em>. One verdict.</h2>
+  <p class="lede">No single model has the credibility to grade an athlete alone. FieldCheck synthesizes sixteen independent voices across four groups, then resolves disagreement through Bayesian consensus — not majority vote.</p>
+
+  <div class="voices-grid">
+    <div class="voice-card">
+      <div class="voice-num">04</div>
+      <h3>Statistical <em>voices</em></h3>
+      <p>The data-only models. Box-score, advanced metrics, opponent-adjusted production, on/off splits. They don't care what an athlete looks like — only what they did.</p>
+      <div class="voice-tags">
+        <span class="voice-tag">PRODUCTION</span>
+        <span class="voice-tag">EFFICIENCY</span>
+        <span class="voice-tag">OPP-ADJUSTED</span>
+        <span class="voice-tag">ON/OFF</span>
+      </div>
+    </div>
+
+    <div class="voice-card">
+      <div class="voice-num">04</div>
+      <h3>Scouting <em>voices</em></h3>
+      <p>The film-room perspective. Footwork, hands, decision speed, body control, finishing under contact, off-ball motion. The eye test, instrumented and made repeatable.</p>
+      <div class="voice-tags">
+        <span class="voice-tag">FILM</span>
+        <span class="voice-tag">FOOTWORK</span>
+        <span class="voice-tag">CONTACT</span>
+        <span class="voice-tag">OFF-BALL</span>
+      </div>
+    </div>
+
+    <div class="voice-card">
+      <div class="voice-num">04</div>
+      <h3>Physical <em>voices</em></h3>
+      <p>Biomechanical and physiological signals. Combine measurables, projected frame, injury profile, recovery indicators, comp athletes at the same physical level.</p>
+      <div class="voice-tags">
+        <span class="voice-tag">COMBINE</span>
+        <span class="voice-tag">FRAME</span>
+        <span class="voice-tag">INJURY</span>
+        <span class="voice-tag">RECOVERY</span>
+      </div>
+    </div>
+
+    <div class="voice-card">
+      <div class="voice-num">04</div>
+      <h3>Projection <em>voices</em></h3>
+      <p>The forward-looking voices. Trajectory models, peer-cohort outcomes, character signal, coachability read, and the comparable-trajectory database that lets us cap or lift the projection.</p>
+      <div class="voice-tags">
+        <span class="voice-tag">TRAJECTORY</span>
+        <span class="voice-tag">COHORT</span>
+        <span class="voice-tag">CHARACTER</span>
+        <span class="voice-tag">COMPS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pq">
+  Sixteen voices in a room. <br>One verdict on the page.
+</div>
+
+<div class="dvd"></div>
+
+<!-- TIER BANDS -->
+<section class="section">
+  <div class="section-num">03 · TIER BANDS</div>
+  <h2 class="facet-h">What the <em>numbers</em> actually mean.</h2>
+  <p class="lede">Every composite score (1–10) maps to a tier. The tier bands are published. They don't shift quarter-to-quarter to flatter anyone.</p>
+
+  <div class="tiers-list">
+    <div class="tier-row">
+      <div class="tier-range">9.5 — 10.0</div>
+      <div class="tier-name" style="color:var(--gold);">ICON</div>
+      <div class="tier-desc">Generational. The athletes a sport is built around for a decade.</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-range">9.0 — 9.4</div>
+      <div class="tier-name" style="color:var(--gold);">ELITE+</div>
+      <div class="tier-desc">All-time tier. Franchise cornerstone. Hall-of-fame trajectory.</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-range">7.5 — 8.9</div>
+      <div class="tier-name">ELITE</div>
+      <div class="tier-desc">All-pro / all-conference caliber. The level scouts plan around.</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-range">7.0 — 7.4</div>
+      <div class="tier-name">STAR</div>
+      <div class="tier-desc">Quality starter at the top tier of their sport. Drafted high, role secured.</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-range">5.5 — 6.9</div>
+      <div class="tier-name">PROSPECT</div>
+      <div class="tier-desc">Real upside, real path, real work still to do. The development zone.</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-range">3.5 — 5.4</div>
+      <div class="tier-name">SCOUT</div>
+      <div class="tier-desc">On the radar. Watching the trajectory. One facet away from a tier lift.</div>
+    </div>
+  </div>
+</section>
+
+<div class="dvd"></div>
+
+<!-- CONFIDENCE -->
+<section class="section">
+  <div class="section-num">04 · CONFIDENCE BANDS</div>
+  <h2 class="facet-h">When we <em>don't know</em>, we say so.</h2>
+  <p>Every FieldCheck verdict ships with a confidence band — not a point estimate dressed up as certainty. A Cooper Flagg verdict might read <b>9.3 ± 0.2</b>. An early HS prospect might read <b>6.5 ± 1.4</b>. The width of the band is part of the verdict, not a footnote to it.</p>
+  <p>If the band is wide enough to cross a tier line, the verdict says so. If the data is too thin to grade, the page says <i>walk away</i>. <b>We never invent precision we don't have.</b></p>
+</section>
+
+<div class="dvd"></div>
+
+<!-- WHAT WE WON'T DO -->
+<section class="section">
+  <div class="section-num">05 · WHAT WE WON'T DO</div>
+  <h2 class="facet-h">The four <em>refusals</em>.</h2>
+  <p class="lede">Every other ratings product compromises somewhere. We commit publicly to the opposite.</p>
+
+  <div class="wonts">
+    <div class="wont-card">
+      <div class="wont-tag">REFUSAL 01</div>
+      <h3 class="wont-h">No <em>payola</em>.</h3>
+      <p class="wont-d">Athletes, agents, schools, leagues — nobody can pay to raise a grade. Not as a sponsorship, not as a partnership, not as a "featured listing." Ever.</p>
+    </div>
+    <div class="wont-card">
+      <div class="wont-tag">REFUSAL 02</div>
+      <h3 class="wont-h">No <em>affiliate</em>.</h3>
+      <p class="wont-d">We don't recommend products we earn from. Our verdicts and our revenue never overlap. The recommendation is the product.</p>
+    </div>
+    <div class="wont-card">
+      <div class="wont-tag">REFUSAL 03</div>
+      <h3 class="wont-h">No <em>forced verdict</em>.</h3>
+      <p class="wont-d">When the model lacks confidence, the page says walk away. We don't invent precision to fill a page. Empty bands are a feature, not a bug.</p>
+    </div>
+    <div class="wont-card">
+      <div class="wont-tag">REFUSAL 04</div>
+      <h3 class="wont-h">No <em>locked</em> truth.</h3>
+      <p class="wont-d">The core verdict is free. Forever. Paid tiers add depth, comps, and trajectories — but the truth about the athlete is on the open page.</p>
+    </div>
+  </div>
+</section>
+
+<div class="dvd"></div>
+
+<!-- CTA -->
+<section class="cta-block">
+  <div class="section-num">06 · TRY IT</div>
+  <h2 class="cta-h">Read a <em>verdict</em>.</h2>
+  <p class="cta-d">The methodology is real. The verdicts are live. Read one and decide for yourself.</p>
+  <div class="cta-row">
+    <a class="cta-btn primary" href="/">★ Browse top verdicts</a>
+    <a class="cta-btn" href="/pitch">The thesis →</a>
+  </div>
+</section>
+
+<footer class="foot">
+  FIELDCHECK IQ · METHODOLOGY · 
+  <a href="/">Home</a> · 
+  <a href="/pitch">Thesis</a> · 
+  <a href="/shape">Find your shape</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Developmental OS — FieldCheck</title>
+<meta name="description" content="A grade is a snapshot. A pathway is a relationship. FieldCheck's Developmental OS shows what closes the gap to next tier.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --bg-2: #141414;
+  --text: #f5f1ea;
+  --text-2: #a8a39c;
+  --text-3: #6b6760;
+  --gold: #d4af37;
+  --rust: #c0533b;
+  --glass: rgba(255,255,255,0.02);
+  --glass-edge: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.nav {
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-brand {
+  font-family: "Anton", sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  text-decoration: none;
+}
+.nav-brand span { color: var(--gold); }
+.nav-links a {
+  color: var(--text-2);
+  text-decoration: none;
+  margin-left: 32px;
+  font-size: 13px;
+}
+.nav-links a:hover { color: var(--gold); }
+.hero {
+  padding: 120px 32px 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: left;
+}
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: "Anton", sans-serif;
+  font-size: clamp(48px, 9vw, 120px);
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  margin-bottom: 32px;
+}
+.hero h1 .serif {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: -0.01em;
+}
+.hero-sub {
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 760px;
+  margin-bottom: 48px;
+}
+.principle {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--gold);
+  padding-left: 24px;
+  border-left: 2px solid var(--gold);
+  max-width: 640px;
+  margin-bottom: 64px;
+}
+.features {
+  padding: 64px 32px;
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.features-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.features-h {
+  font-family: "Anton", sans-serif;
+  font-size: clamp(36px, 5vw, 56px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+.features-h .serif {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+}
+.features-sub {
+  color: var(--text-2);
+  font-size: 16px;
+  margin-bottom: 48px;
+  max-width: 640px;
+}
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.feature {
+  padding: 32px;
+  background: var(--glass);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 14px;
+}
+.feature-tag {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.feature h3 {
+  font-family: "Anton", sans-serif;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+.feature p {
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.principle-section {
+  padding: 96px 32px;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.principle-section .principle-line {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.3;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.principle-section .principle-line .gold {
+  color: var(--gold);
+}
+.cta {
+  padding: 80px 32px 120px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+}
+.cta-h {
+  font-family: "Anton", sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
+  margin-bottom: 16px;
+}
+.cta-sub {
+  color: var(--text-2);
+  margin-bottom: 32px;
+  font-size: 16px;
+}
+.cta-row { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.cta-btn {
+  display: inline-block;
+  padding: 14px 32px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.cta-btn:hover { background: var(--gold); color: var(--bg); }
+.cta-btn-primary { background: var(--gold); color: var(--bg); }
+.cta-btn-primary:hover { background: transparent; color: var(--gold); }
+footer {
+  padding: 32px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--text-3);
+  font-size: 12px;
+}
+@media (max-width: 720px) {
+  .nav { padding: 16px 18px; flex-wrap: wrap; gap: 12px; }
+  .nav-links a { margin-left: 16px; font-size: 12px; }
+  .hero { padding: 64px 18px 48px; }
+  .hero h1 { font-size: clamp(40px, 12vw, 64px); }
+  .hero-sub { font-size: 17px; }
+  .principle { font-size: 16px; }
+  .features { padding: 48px 18px; }
+  .features-h { font-size: clamp(28px, 8vw, 44px); }
+  .feature { padding: 24px; }
+  .feature h3 { font-size: 22px; }
+  .principle-section { padding: 64px 18px; }
+  .principle-section .principle-line { font-size: clamp(22px, 6vw, 32px); }
+  .cta { padding: 56px 18px 80px; }
+}
+</style>
+</head>
+<body>
+<!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+<section class="hero">
+  <div class="eyebrow">// DEVELOPMENTAL OS</div>
+  <h1>Don't rank.<br><span class="serif">Develop.</span></h1>
+  <p class="hero-sub">
+    Rankings get checked once. Pathways get checked weekly. Every athlete in FieldCheck doesn't just receive a tier — they receive a developmental path: what closes the gap to the next tier, who they track like at this point in their arc, and what the deliberate work looks like.
+  </p>
+  <p class="principle">
+    A grade is a snapshot. A pathway is a relationship. FieldCheck is built for the relationship.
+  </p>
+</section>
+
+<section class="features">
+  <div class="features-inner">
+    <h2 class="features-h">Three signature <span class="serif">features.</span></h2>
+    <p class="features-sub">
+      These aren't dashboard widgets. They're the reasons families come back every week.
+    </p>
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="feature-tag">TRAJECTORY DELTA ENGINE</div>
+        <h3>What closes the gap.</h3>
+        <p>Pick a target tier. Get back the specific dimensional moves that close the composite gap. Not "work hard." Not "improve route running." Specific. Per-dimension. With estimated composite lift.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-tag">DEVELOPMENTAL ARCHETYPE MATCH</div>
+        <h3>Who's the comp.</h3>
+        <p>"Your sophomore-year arc tracks like Foluke Akinradewo's." ICON-tier outcome-anchored heritage peers. Sport-aware, position-aware, class-year-aware. Emotional and analytical at once.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-tag">MOMENTUM</div>
+        <h3>Peaking or fading.</h3>
+        <p>Reads awards-by-year. Returns UP, FLAT, or DOWN trajectory with weighted explanation. Sport-aware. Powers the "is this athlete on the way up?" conversation honestly.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-tag">DIMENSION IMPROVEMENT</div>
+        <h3>One-dimension what-ifs.</h3>
+        <p>If a quarterback lifts decision-making 7.5 → 9.0, what does the tier projection become? Run scenarios on a single dimension without changing the underlying grid. The deliberate-practice loop.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-tag">RISK FLAGS</div>
+        <h3>Honest signal.</h3>
+        <p>Multi-transfer arc, durability concern, tier-composite mismatch. Not verdict, signal. Surfaces what every family deserves to hear before signing.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-tag">CAREER TRAJECTORY</div>
+        <h3>Multi-year projection.</h3>
+        <p>Year-over-year tier evolution. Pre-draft, draft year, pro year-1 projection. Anchored to historical comps. The longitudinal arc no static ranking captures.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="principle-section">
+  <p class="principle-line">
+    Generic AI says <span class="gold">"our AI knows."</span><br>
+    We say <span class="gold">"our AI can be audited."</span>
+  </p>
+  <p style="color: var(--text-2); font-size: 16px;">Every developmental recommendation is sourced. Every dimension change is reproducible. Every archetype match cites the heritage anchor. Every output carries a build hash. Trust is the product.</p>
+</section>
+
+<section class="cta">
+  <h2 class="cta-h">Try the Developmental OS</h2>
+  <p class="cta-sub">Live tools, real data, no signup wall.</p>
+  <div class="cta-row">
+    <a href="/portal" class="cta-btn cta-btn-primary">Open the Portal</a>
+    <a href="/methodology" class="cta-btn">Read the methodology</a>
+  </div>
+</section>
+
+<footer>
+  © 2026 FieldCheck. ThinkDifferent Holdings.<br>
+  Trust layer. Signed outputs. No payola. Audit-grade methodology.
+</footer>
+</body>
+</html>

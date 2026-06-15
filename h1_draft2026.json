@@ -1,0 +1,14 @@
+{
+  "horizon": "H1",
+  "batch": "draft2026",
+  "resolver_event": "2026 NBA Draft, June 24-25, 2026",
+  "system_note": "All six 2026 freshmen grade 7.4 STAR under the v1.7 amateur cap - predictions are tier-consistent; finer intra-tier calibration is a logged post-draft task.",
+  "predictions": [
+    { "athlete": "AJ Dybantsa", "sport": "mens-basketball", "composite": 7.4, "tier": "STAR", "prediction": "Drafted in Round 1, picks 1-5", "resolver": "2026 NBA Draft round 1", "resolve_by": "2026-06-25", "rationale": "STAR-tier freshman wing, premium versatility flag, consensus pressure-tested by our cap discipline" },
+    { "athlete": "Cameron Boozer", "sport": "mens-basketball", "composite": 7.4, "tier": "STAR", "prediction": "Drafted in Round 1, picks 1-7", "resolver": "2026 NBA Draft round 1", "resolve_by": "2026-06-25", "rationale": "STAR-tier production profile at Duke; tier-consistent lottery call" },
+    { "athlete": "Darryn Peterson", "sport": "mens-basketball", "composite": 7.4, "tier": "STAR", "prediction": "Drafted in Round 1, picks 1-10", "resolver": "2026 NBA Draft round 1", "resolve_by": "2026-06-25", "rationale": "STAR-tier guard; lottery-range call per tier conversion" },
+    { "athlete": "Mikel Brown Jr", "sport": "mens-basketball", "composite": 7.4, "tier": "STAR", "prediction": "Drafted in Round 1", "resolver": "2026 NBA Draft round 1", "resolve_by": "2026-06-25", "rationale": "STAR-tier point guard; first-round floor per tier" },
+    { "athlete": "Nate Ament", "sport": "mens-basketball", "composite": 7.4, "tier": "STAR", "prediction": "Drafted in Round 1", "resolver": "2026 NBA Draft round 1", "resolve_by": "2026-06-25", "rationale": "STAR-tier wing; first-round floor per tier" },
+    { "athlete": "Caleb Wilson", "sport": "mens-basketball", "composite": 7.4, "tier": "STAR", "prediction": "Drafted in Round 1", "resolver": "2026 NBA Draft round 1", "resolve_by": "2026-06-25", "rationale": "STAR-tier forward; first-round floor per tier" }
+  ]
+}

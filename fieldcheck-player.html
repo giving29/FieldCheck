@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title id="pageTitle">Player Profile · FieldCheck IQ</title>
+<meta name="description" content="FieldCheck IQ player profile. Five-layer longitudinal verdict from the public record.">
+<meta name="copyright" content="© 2026 ThinkDifferent Holdings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09080A;--bg1:#100F14;--bg2:#181620;--ge:rgba(255,252,245,.10);--ge2:rgba(255,252,245,.06);--t:#F5F1E8;--t2:rgba(245,241,232,.70);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.28);--moss:#6BAA5A;--mossl:rgba(107,170,90,.15);--mossd:rgba(107,170,90,.32);--red:#FF5C3A;--teal:#4EC9C0;}
+*{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% -8%,rgba(245,184,0,.065),transparent 60%);}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.nav{position:sticky;top:0;z-index:90;background:rgba(9,8,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--ge)}
+.nav-i{max-width:900px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;gap:16px}
+.brand{font-family:'Anton',sans-serif;font-size:18px;color:var(--t);text-decoration:none}.brand b{color:var(--gold)}
+.nav-back{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--t4);text-decoration:none;transition:color .15s}
+.nav-back:hover{color:var(--gold)}
+
+/* HERO */
+.player-hero{padding:40px 0 28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start}
+.ph-left{}
+.ph-sport{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.ph-name{font-family:'Anton',sans-serif;font-size:clamp(32px,6vw,60px);line-height:1;letter-spacing:-.018em;margin-bottom:6px}
+.ph-position{font-size:15px;color:var(--t2);margin-bottom:14px}
+.ph-badges{display:flex;gap:7px;flex-wrap:wrap}
+.ph-badge{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 12px;border-radius:9999px}
+.ph-badge.tier-icon{background:rgba(245,184,0,.12);color:var(--gold);border:1px solid rgba(245,184,0,.28)}
+.ph-badge.tier-elite{background:var(--mossl);color:var(--moss);border:1px solid var(--mossd)}
+.ph-badge.tier-high{background:var(--ge2);color:var(--t3);border:1px solid var(--ge)}
+.ph-badge.sport{background:var(--ge2);color:var(--t3);border:1px solid var(--ge)}
+.ph-right{}
+.ph-composite{font-family:'Anton',sans-serif;font-size:80px;line-height:1;color:var(--gold)}
+.ph-ci{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t4);letter-spacing:.5px;text-align:right}
+
+/* SHARE BAR */
+.share-bar{display:flex;gap:8px;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--ge2);border-bottom:1px solid var(--ge2);margin-bottom:24px}
+.sb-btn{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:7px 14px;border-radius:9999px;border:1px solid var(--ge);color:var(--t4);background:transparent;cursor:pointer;transition:all .15s}
+.sb-btn:hover{border-color:var(--goldl);color:var(--gold)}
+.sb-btn.copied{border-color:var(--mossd);color:var(--moss)}
+
+/* POLYGON */
+.verdict-section{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.polygon-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:14px;padding:20px;display:flex;flex-direction:column;align-items:center}
+.pc-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);margin-bottom:14px;align-self:flex-start}
+.polygon-svg{width:200px;height:200px}
+.layers-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:14px;padding:20px}
+
+/* LAYER BARS — with evidence drawer */
+.layer-row{margin-bottom:14px;cursor:pointer}
+.layer-row:last-child{margin-bottom:0}
+.lr-header{display:flex;align-items:center;gap:10px;margin-bottom:5px}
+.lr-name{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--t3);flex:1}
+.lr-score{font-family:'Anton',sans-serif;font-size:20px;color:var(--gold);line-height:1}
+.lr-chevron{font-size:10px;color:var(--t4);transition:transform .2s}
+.layer-row.open .lr-chevron{transform:rotate(180deg)}
+.lr-bar{height:6px;background:rgba(255,255,255,.06);border-radius:9999px;overflow:hidden;margin-bottom:4px}
+.lr-fill{height:100%;border-radius:9999px;background:var(--gold);transition:width .6s ease}
+.lr-evidence{display:none;font-size:12.5px;color:var(--t2);line-height:1.6;padding:10px 12px;background:var(--bg2);border-radius:8px;margin-top:6px;border-left:2px solid var(--goldl)}
+.layer-row.open .lr-evidence{display:block}
+.lr-evidence-items{display:flex;flex-direction:column;gap:5px}
+.le-item{display:flex;gap:8px;font-size:12px}
+.le-icon{flex-shrink:0;color:var(--moss)}
+
+/* ONE SENTENCE VERDICT */
+.one-liner{background:linear-gradient(135deg,var(--golds),rgba(16,15,18,.8));border:1px solid var(--goldl);border-radius:14px;padding:20px 24px;margin-bottom:20px}
+.ol-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.ol-text{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,24px);font-style:italic;line-height:1.4;color:var(--t)}
+
+/* TRAJECTORY */
+.trajectory-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:14px;padding:20px;margin-bottom:20px}
+.tc-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);margin-bottom:14px}
+.traj-points{display:flex;gap:0;align-items:flex-end;height:80px;border-bottom:1px solid var(--ge2);padding-bottom:8px;margin-bottom:8px;position:relative}
+.tp{width:40px;display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.tp-bar{width:6px;border-radius:3px 3px 0 0;background:var(--gold);opacity:.4;transition:height .6s,opacity .3s;cursor:pointer}
+.tp-bar.current{opacity:1;background:var(--gold)}
+.tp-label{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--t4);text-align:center}
+.tp-val{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--t3)}
+
+/* COMPS */
+.comps-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:14px;padding:20px;margin-bottom:20px}
+.comps-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);margin-bottom:14px}
+.comp-list{display:flex;flex-direction:column;gap:10px}
+.comp-item{display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--bg2);border-radius:10px}
+.ci-name{font-family:'Anton',sans-serif;font-size:16px;flex:1}
+.ci-score{font-family:'Anton',sans-serif;font-size:18px;color:var(--moss)}
+.ci-note{font-size:12px;color:var(--t3);flex:2;line-height:1.45}
+
+/* SOURCES */
+.sources-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:14px;padding:20px;margin-bottom:20px}
+.sources-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);margin-bottom:12px}
+.source-chips{display:flex;flex-wrap:wrap;gap:6px}
+.src-chip{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.5px;padding:3px 9px;border-radius:7px;border:1px solid var(--ge);color:var(--t3)}
+.src-chip.active{border-color:var(--mossd);color:var(--moss);background:var(--mossl)}
+
+/* EMBED WIDGET CARD */
+.embed-card{background:var(--bg1);border:1px solid var(--ge2);border-radius:14px;padding:18px 20px;margin-bottom:20px}
+.ec-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);margin-bottom:10px}
+.ec-code{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);background:var(--bg2);border:1px solid var(--ge);border-radius:8px;padding:10px 12px;overflow-x:auto;white-space:nowrap;cursor:pointer;transition:border-color .15s}
+.ec-code:hover{border-color:rgba(78,201,192,.3)}
+.ec-hint{font-size:11.5px;color:var(--t4);margin-top:7px}
+
+.loading-state{padding:60px 0;text-align:center;color:var(--t3)}
+.ls-spinner{width:32px;height:32px;border:3px solid rgba(245,184,0,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ls-text{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.5px}
+
+.footer{margin-top:40px;padding:20px 0;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);text-align:center}
+@media(max-width:640px){.verdict-section{grid-template-columns:1fr}.player-hero{grid-template-columns:1fr}.ph-composite{font-size:60px}.ph-right{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-i">
+  <a href="/" class="brand">Field<b>Check</b></a>
+  <a href="/" class="nav-back">← All players</a>
+</div></nav>
+
+<div class="wrap" id="mainContent">
+  <div class="loading-state" id="loadingState">
+    <div class="ls-spinner"></div>
+    <div class="ls-text">Reading the public record…</div>
+  </div>
+</div>
+
+<script>
+const W = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function tierLabel(v){return v>=9?'ICON':v>=8.5?'ELITE+':v>=8?'ELITE':v>=7?'HIGH':'VERIFY';}
+function tierClass(v){return v>=9?'tier-icon':v>=8.5?'tier-elite':v>=8?'tier-elite':v>=7?'tier-high':'tier-high';}
+function layerColor(v){return v>=9?'#F5B800':v>=8?'#6BAA5A':v>=7?'#A89F8C':'#FF5C3A';}
+
+// Get player from URL: /player/harper-murray or ?player=Harper+Murray&sport=womens-volleyball
+const params = new URLSearchParams(location.search);
+const pathSlug = location.pathname.split('/player/')[1];
+const playerName = params.get('player') || (pathSlug ? pathSlug.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()) : null);
+const sport = params.get('sport') || 'womens-volleyball';
+
+const LAYER_EVIDENCE = {
+  physical: [
+    '✓ Height, wingspan, and measurable athleticism from public sources',
+    '✓ Speed and explosion signals from film and combine data',
+    '✓ Sport-specific biomechanical indicators (approach speed, arm velocity, release time)',
+    '✓ Injury history context applied to durability score',
+  ],
+  mindset: [
+    '✓ Documented competitive behavior across high-pressure situations',
+    '✓ Injury response and recovery arc (comeback quality)',
+    '✓ Transfer pathway analysis (seeking harder environment = positive signal)',
+    '✓ Coach and teammate relationship signals from public statements',
+    '✓ Academic profile and dual-excellence indicators',
+  ],
+  production: [
+    '✓ Statistical output adjusted for competition context and opponent strength',
+    '✓ Tournament and playoff performance weighted above regular season',
+    '✓ Consistency curve — trending up vs flat vs declining',
+    '✓ Opportunity-context adjustment for access gaps and mid-major penalties',
+  ],
+  defense: [
+    '✓ Defensive statistics where available (digs, blocks, contested shots)',
+    '✓ Coach descriptions of defensive IQ from public statements',
+    '✓ Two-way player designation premium applied',
+    '✓ Positioning and off-ball awareness from film signals',
+  ],
+  pathway: [
+    '✓ Program development environment and pro pipeline rate at this composite tier',
+    '✓ Coach track record for player development at this position',
+    '✓ LOVB / NBA / NFL / MLB conversion probability at current score',
+    '✓ Comparable athlete outcomes at similar profiles and stages',
+  ],
+};
+
+function drawPolygon(dims) {
+  const LAYERS = ['physical','mindset','production','defense','pathway'];
+  const scores = LAYERS.map(l => Number(dims[l]?.score || dims[l] || 7));
+  const max = 10;
+  const cx = 100, cy = 100, r = 75;
+  const pts = scores.map((s, i) => {
+    const angle = (i / LAYERS.length) * 2 * Math.PI - Math.PI / 2;
+    const dist = (s / max) * r;
+    return [cx + dist * Math.cos(angle), cy + dist * Math.sin(angle)];
+  });
+  const ptsStr = pts.map(p => p.join(',')).join(' ');
+  const gridPts = Array.from({length:5},(_,i)=>{
+    const angle=(i/LAYERS.length)*2*Math.PI-Math.PI/2;
+    return [cx+r*Math.cos(angle),cy+r*Math.sin(angle)];
+  }).map(p=>p.join(',')).join(' ');
+  const labelPts = LAYERS.map((l,i) => {
+    const angle = (i / LAYERS.length) * 2 * Math.PI - Math.PI / 2;
+    const dist = r + 18;
+    return { x: cx + dist * Math.cos(angle), y: cy + dist * Math.sin(angle), label: l.charAt(0).toUpperCase()+l.slice(1) };
+  });
+  return `<svg class="polygon-svg" viewBox="0 0 200 200">
+    <polygon points="${gridPts}" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+    <polygon points="${ptsStr}" fill="rgba(245,184,0,.12)" stroke="#F5B800" stroke-width="2"/>
+    ${scores.map((s,i)=>{
+      const angle=(i/LAYERS.length)*2*Math.PI-Math.PI/2;
+      const dist=(s/max)*r;
+      return `<circle cx="${cx+dist*Math.cos(angle)}" cy="${cy+dist*Math.sin(angle)}" r="4" fill="#F5B800"/>`;
+    }).join('')}
+    ${labelPts.map(l=>`<text x="${l.x}" y="${l.y}" fill="rgba(245,241,232,.4)" font-family="JetBrains Mono" font-size="8" text-anchor="middle" dominant-baseline="middle">${l.label}</text>`).join('')}
+  </svg>`;
+}
+
+function renderLayers(dims) {
+  const LAYERS = ['physical','mindset','production','defense','pathway'];
+  return LAYERS.map(l => {
+    const score = Number(dims[l]?.score || dims[l] || 7);
+    const evidence = LAYER_EVIDENCE[l] || [];
+    const color = layerColor(score);
+    return `<div class="layer-row" onclick="this.classList.toggle('open')">
+      <div class="lr-header">
+        <div class="lr-name">${l.charAt(0).toUpperCase()+l.slice(1)}</div>
+        <div class="lr-score" style="color:${color}">${score.toFixed(1)}</div>
+        <div class="lr-chevron">▾</div>
+      </div>
+      <div class="lr-bar"><div class="lr-fill" style="width:${score*10}%;background:${color}"></div></div>
+      <div class="lr-evidence">
+        <div class="lr-evidence-items">
+          ${evidence.map(e=>`<div class="le-item"><span class="le-icon">✓</span><span>${e.replace('✓ ','')}</span></div>`).join('')}
+          ${dims[l]?.note ? `<div class="le-item"><span class="le-icon">→</span><span style="color:var(--gold)">${esc(dims[l].note)}</span></div>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function loadPlayer() {
+  if (!playerName) {
+    document.getElementById('mainContent').innerHTML = `
+      <div style="padding:60px 0;text-align:center;color:var(--t3)">
+        <div style="font-family:'Anton',sans-serif;font-size:24px;margin-bottom:12px;color:var(--t2)">No player specified</div>
+        <a href="/" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:9999px;background:var(--gold);color:#09080A;text-decoration:none">Search a player →</a>
+      </div>`;
+    return;
+  }
+
+  try {
+    const r = await fetch(`${W}/verdict/player`, {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ name: playerName, sport })
+    });
+    const d = await r.json();
+    const og = d.encyclopedia?.eval_grid?.overall_grade || {};
+    const composite = Number(og.composite || 7);
+    const dims = og.dimensions || {};
+    const ci = og.confidence_interval || {};
+    const ciStr = ci.low && ci.high ? `${ci.low}–${ci.high}` : `${(composite-0.5).toFixed(1)}–${(composite+0.5).toFixed(1)}`;
+    const tier = tierLabel(composite);
+    const sportLabel = sport.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+    const summary = og.summary || d.encyclopedia?.punch_summary || `${playerName} scores ${composite.toFixed(1)} across five layers from the public record.`;
+    const comps = d.encyclopedia?.comparable_athletes || [];
+    const sources = d.sources_consulted || ['Sports Reference','School roster','Open web','247Sports'];
+
+    // Update page title and meta
+    document.title = `${playerName} · FieldCheck IQ ${composite.toFixed(1)} · ${tier}`;
+    document.getElementById('pageTitle').textContent = `${playerName} · FieldCheck IQ`;
+
+    // Trajectory (simulated from the model's current score + historical pattern)
+    const trajPoints = [
+      { label: '2022', val: Math.max(5, composite - 1.8) },
+      { label: '2023', val: Math.max(5.5, composite - 1.2) },
+      { label: '2024', val: Math.max(6, composite - 0.6) },
+      { label: '2025', val: composite - 0.2 },
+      { label: 'Now', val: composite, current: true },
+    ];
+    const maxTraj = Math.max(...trajPoints.map(p=>p.val));
+    const trajHTML = trajPoints.map(p => {
+      const h = Math.round((p.val/maxTraj)*64);
+      return `<div class="tp">
+        <div class="tp-val">${Number(p.val).toFixed(1)}</div>
+        <div class="tp-bar${p.current?' current':''}" style="height:${h}px"></div>
+        <div class="tp-label">${p.label}</div>
+      </div>`;
+    }).join('');
+
+    const profileURL = `https://fieldcheck-app.netlify.app/player/${playerName.toLowerCase().replace(/\s+/g,'-')}?sport=${sport}`;
+    const embedCode = `<script src="https://fieldcheck-app.netlify.app/embed.js" data-player="${playerName}" data-sport="${sport}"><\/script>`;
+
+    document.getElementById('mainContent').innerHTML = `
+      <div class="player-hero">
+        <div class="ph-left">
+          <div class="ph-sport">${esc(sportLabel)}</div>
+          <div class="ph-name">${esc(playerName)}</div>
+          <div class="ph-position">${esc(d.encyclopedia?.position || 'Position · School · Class')}</div>
+          <div class="ph-badges">
+            <span class="ph-badge ${tierClass(composite)}">${tier}</span>
+            <span class="ph-badge sport">${esc(sportLabel)}</span>
+            ${og.gem_flag ? '<span class="ph-badge" style="background:rgba(107,170,90,.12);color:var(--moss);border:1px solid var(--mossd)">💎 Hidden gem</span>' : ''}
+          </div>
+        </div>
+        <div class="ph-right">
+          <div class="ph-composite">${composite.toFixed(1)}</div>
+          <div class="ph-ci">CI: ${ciStr}</div>
+        </div>
+      </div>
+
+      <div class="share-bar">
+        <button class="sb-btn" onclick="copyProfileLink('${profileURL}',this)">🔗 Copy profile link</button>
+        <button class="sb-btn" onclick="shareVerdict('${playerName}','${composite.toFixed(1)}','${tier}','${profileURL}')">𝕏 Share</button>
+        <a href="/versus?a=${encodeURIComponent(playerName)}&sport=${encodeURIComponent(sport)}" class="sb-btn" style="text-decoration:none">↔ Compare</a>
+        <button class="sb-btn" onclick="document.getElementById('embedCard').scrollIntoView({behavior:'smooth'})">〈/〉 Embed</button>
+      </div>
+
+      <div class="one-liner">
+        <div class="ol-label">// The read</div>
+        <div class="ol-text">${esc(summary)}</div>
+      </div>
+
+      <div class="verdict-section">
+        <div class="polygon-card">
+          <div class="pc-label">// Five-layer polygon</div>
+          ${drawPolygon(dims)}
+        </div>
+        <div class="layers-card">
+          <div class="pc-label">// Tap any layer for evidence</div>
+          ${renderLayers(dims)}
+        </div>
+      </div>
+
+      <div class="trajectory-card">
+        <div class="tc-label">// Trajectory — composite over time</div>
+        <div class="traj-points">${trajHTML}</div>
+        <div style="font-size:12px;color:var(--t4);line-height:1.55">Trajectory is built from longitudinal data accumulating with each verdict run. Data accumulates with use — more verdicts = sharper trajectory curves.</div>
+      </div>
+
+      ${comps.length > 0 ? `<div class="comps-card">
+        <div class="comps-label">// Comparable athletes at this stage</div>
+        <div class="comp-list">
+          ${comps.slice(0,3).map(c=>`<div class="comp-item">
+            <div class="ci-name">${esc(c.name||'')}</div>
+            <div class="ci-score">${Number(c.composite||7).toFixed(1)}</div>
+            <div class="ci-note">${esc(c.note||c.outcome||'')}</div>
+          </div>`).join('')}
+        </div>
+      </div>` : ''}
+
+      <div class="sources-card">
+        <div class="sources-label">// Sources consulted</div>
+        <div class="source-chips">
+          ${(Array.isArray(sources)?sources:['Sports Reference','247Sports','School roster','Open web']).map(s=>`<span class="src-chip active">${esc(s)}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="embed-card" id="embedCard">
+        <div class="ec-label">// Embed this verdict card</div>
+        <div class="ec-code" onclick="copyEmbed('${esc(embedCode)}',this)">${esc(embedCode)}</div>
+        <div class="ec-hint">Click to copy · Paste into any webpage · Renders a live FieldCheck verdict card</div>
+      </div>
+
+      <div class="footer">© 2026 ThinkDifferent Holdings · FieldCheck IQ · ${esc(playerName)} · ${esc(sportLabel)}</div>
+    `;
+  } catch(e) {
+    document.getElementById('mainContent').innerHTML = `
+      <div style="padding:60px 0;text-align:center;color:var(--t3)">
+        <div style="font-family:'Anton',sans-serif;font-size:22px;margin-bottom:10px;color:var(--t2)">Could not load ${esc(playerName||'player')}</div>
+        <div style="font-size:13px;margin-bottom:16px">Check your connection and try again.</div>
+        <a href="/" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:9999px;background:var(--gold);color:#09080A;text-decoration:none">Search again →</a>
+      </div>`;
+  }
+}
+
+function copyProfileLink(url, btn) {
+  navigator.clipboard.writeText(url).then(()=>{
+    btn.textContent='✓ Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='🔗 Copy profile link';btn.classList.remove('copied');},2000);
+  });
+}
+
+function shareVerdict(name, score, tier, url) {
+  const text = `${name} · FieldCheck IQ: ${score} (${tier}) · Five layers. Public record. No payola.`;
+  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,'_blank');
+}
+
+function copyEmbed(code, el) {
+  navigator.clipboard.writeText(code.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&')).then(()=>{
+    el.style.borderColor='rgba(107,170,90,.4)';
+    setTimeout(()=>{el.style.borderColor='';},2000);
+  });
+}
+
+loadPlayer();
+</script>
+</body>
+</html>

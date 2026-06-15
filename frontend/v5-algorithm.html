@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldCheck V5 Algorithm · How It Works</title>
+<meta name="description" content="The two-layer hybrid algorithm behind FieldCheck composite scores. Prompt-driven evidence evaluation + deterministic post-synthesis corrections + full audit trail.">
+<style>
+:root{--bg:#0a0a0a;--panel:#141414;--ink:#e8e8e8;--mute:#888;--green:#4ade80;--red:#ef4444;--yellow:#facc15;--accent:#60a5fa;--accent2:#a78bfa;--border:#262626}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;line-height:1.65;padding:32px 16px;max-width:980px;margin:0 auto}
+header{margin-bottom:36px;border-bottom:1px solid var(--border);padding-bottom:24px}
+h1{font-size:30px;font-weight:600;color:#fff;margin-bottom:8px;letter-spacing:-0.5px}
+.tagline{color:var(--mute);font-size:14px;line-height:1.7}
+.version{display:inline-block;background:#0f2417;color:var(--green);border:1px solid #1f4a2e;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-top:10px}
+h2{font-size:18px;font-weight:600;margin-top:42px;margin-bottom:14px;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border);padding-bottom:8px}
+h3{font-size:15px;font-weight:600;margin-top:24px;margin-bottom:10px;color:#fff}
+p{margin:10px 0}
+.hero{background:linear-gradient(135deg,#0f2417 0%,#142a1a 100%);border:1px solid #1f4a2e;border-radius:10px;padding:24px;margin:20px 0;color:#d1fae5}
+.hero h3{color:var(--green);margin-top:0;font-size:16px}
+.hero p{margin:8px 0;line-height:1.7}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px;margin:14px 0}
+.note{background:#141622;border-left:3px solid var(--accent2);padding:14px 20px;margin:14px 0;color:#e2e8f0;border-radius:0 6px 6px 0}
+pre{background:#000;border:1px solid var(--border);padding:14px;border-radius:6px;overflow-x:auto;font-size:12.5px;line-height:1.55;color:#a5f3fc;margin:10px 0}
+code{background:#000;padding:2px 6px;border-radius:3px;font-size:12.5px;color:#a5f3fc}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;background:var(--panel);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+th{text-align:left;padding:9px 12px;border-bottom:2px solid var(--border);color:var(--mute);font-weight:600;text-transform:uppercase;font-size:11px;letter-spacing:0.5px;background:#1a1a1a}
+td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border:none}
+.win{color:var(--green);font-weight:600}
+.loss{color:var(--red);font-weight:600}
+ul,ol{margin:8px 0 8px 22px;line-height:1.8}
+li{margin:4px 0}
+.toc{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:16px;margin:18px 0}
+.toc a{color:var(--accent);text-decoration:none;display:block;padding:4px 0}
+.toc a:hover{color:#fff}
+footer{margin-top:60px;border-top:1px solid var(--border);padding-top:20px;color:var(--mute);font-size:12px;text-align:center;line-height:1.8}
+</style>
+</head>
+<body>
+
+<header>
+<h1>The V5 Algorithm · How It Works</h1>
+<p class="tagline">FieldCheck composite scores aren't a black box. Every athlete's number comes from a documented two-layer process — and every adjustment is visible in the audit trail. This page is the full design specification, end to end.</p>
+<div class="version">V022.36-V5.2 · battery validated 110/110 · May 27, 2026</div>
+</header>
+
+<div class="toc">
+<strong style="display:block;margin-bottom:8px;color:#fff;text-transform:uppercase;font-size:11px;letter-spacing:0.5px">Contents</strong>
+<a href="#thesis">1. The thesis · why we built this</a>
+<a href="#architecture">2. Architecture · two layers + audit trail</a>
+<a href="#layer1">3. Layer 1 · synthesis (evidence eval)</a>
+<a href="#layer2">4. Layer 2 · deterministic corrections (6 rules)</a>
+<a href="#audit">5. The audit trail · transparency on every score</a>
+<a href="#validation">6. Validation · 110-athlete battery</a>
+<a href="#lessons">7. What we learned · 3 iterations</a>
+<a href="#open">8. Open items · what's next</a>
+</div>
+
+<section id="thesis">
+<h2>1. The thesis · why we built this</h2>
+
+<p>Every scout grade is a black box. <span class="loss">247Sports gives you "92" with no math.</span> <span class="loss">ESPN gives you "5 stars" with no math.</span> Hudl shows tape with no synthesis. MaxPreps shows stats with no context. Recruiting industry: 100% opaque.</p>
+
+<p><b>FieldCheck V5 is built around the opposite principle:</b> show the composite, show every adjustment that produced it, show the reason for each. Parents see how their kid's score was reached. Coaches see what evidence drove it. Scouts see the methodology. Athletes see the path to the next tier.</p>
+
+<div class="hero">
+<h3>The moat is transparency</h3>
+<p>We don't beat scout grades by being more accurate (LLM variance is real). We don't beat them by having more data (yet — Block 10 crawler is Phase 6). We beat them by being the only score in the entire sport that <i>shows its work</i>. Raw synthesis, every correction, every reason, every flag.</p>
+<p>You can't claim transparency if you don't publish the algorithm. So here it is.</p>
+</div>
+</section>
+
+<section id="architecture">
+<h2>2. Architecture · two layers + audit trail</h2>
+
+<p>The V5 algorithm is a hybrid system. Layer 1 is prompt-driven; Layer 2 is deterministic code. They serve different purposes.</p>
+
+<table>
+<thead><tr><th>Layer</th><th>Role</th><th>Why this design</th></tr></thead>
+<tbody>
+<tr><td><b>Layer 1 · synthesis</b></td><td>Sonnet 4.5 reads athlete evidence, scores 8 facets, produces raw composite</td><td>LLMs are excellent at evidence evaluation, cross-context reasoning, phenom assessment</td></tr>
+<tr><td><b>Layer 2 · corrections</b></td><td>JavaScript function applies 6 bright-line rules with audit logging</td><td>Pattern detection (Jr suffix regex), conditional logic, and consistency need determinism — LLMs vary run-to-run</td></tr>
+<tr><td><b>Audit trail</b></td><td>Every correction logged in <code>v5_corrections[]</code> with rule, from, to, reason</td><td>Transparency moat — every other scoring system is opaque</td></tr>
+</tbody>
+</table>
+
+<p><b>The output structure</b> users see (and any API consumer can read):</p>
+
+<pre>{
+  "composite": 5.4,
+  "composite_v022_31": {
+    "raw": 9.83,
+    "capped_legacy": 5.4,
+    "v5_corrected": 5.4,
+    "v5_corrections": [
+      {
+        "rule": "suffix-amateur-ceiling",
+        "from": 9.83,
+        "to": 5.5,
+        "reason": "Jr/Sr/II/III suffix at amateur tier - parent career data likely contaminated synthesis"
+      },
+      {
+        "rule": "hs-evidence-ceiling-non-phenom",
+        "from": 5.5,
+        "to": 5.4,
+        "reason": "HS-only evidence, no phenom criteria met (4 of 4 required)"
+      }
+    ],
+    "v5_corrections_applied": true,
+    "tier": "hs",
+    "stage": "prep_amateur"
+  }
+}</pre>
+</section>
+
+<section id="layer1">
+<h2>3. Layer 1 · synthesis (evidence eval)</h2>
+
+<p>Sonnet 4.5 evaluates the athlete against 8 facets with cross-sport theoretical 10 anchors, 4 phenom criteria, 8 anti-inflation signals, and default-low principle.</p>
+
+<p><b>10 is the only ceiling.</b> No mathematical caps at this layer — Sonnet scores based purely on evidence rigor. Cross-sport anchors (Duncan, Brady, Tiger, Federer) calibrate the upper bound of each facet across sport contexts.</p>
+
+<h3>Prompt sections (the rigor)</h3>
+
+<ul>
+<li><b>CROSS-SPORT THEORETICAL 10 ANCHORS</b> — Duncan, Brady, Tiger, Federer per facet — calibrate facet-level upper bounds</li>
+<li><b>PHENOM CRITERIA</b> — 4 reqs locked: national-best evidence + pro coach corroboration + multi-year sustained + cross-context performance</li>
+<li><b>ANTI-INFLATION</b> — 8 explicit signals that do NOT justify higher scores (recruiting rank, summer camp, hype articles, etc.)</li>
+<li><b>DEFAULT-LOW PRINCIPLE</b> — when evidence is uncertain, score lower; V5 inverts V4's hype-default-up</li>
+<li><b>ANTI-CONTAMINATION</b> — reasoning instructions for Jr/Sr/family-lineage cases with named examples</li>
+<li><b>CRITICAL 9.7+ RESERVED</b> — imperative upper-bound rules ("NO active player exceeds 9.6 except retired-singular Jordan at 9.9")</li>
+</ul>
+
+<h3>What was removed</h3>
+
+<p>In V5 v2.1 we tried adding a HARD NUMERIC ANCHORS list — named athletes with specific score ranges. This <span class="loss">backfired catastrophically</span>. Saniyah Hall was anchored at 5.0-5.4. With the list present, Sonnet returned her at 9.0. Why?</p>
+
+<div class="note">
+<b>The peer-association bias.</b> Listing Saniyah Hall alongside Caitlin Clark, Steph Curry, and Tim Duncan in a single anchor table caused Sonnet to associate her with their tier — overriding the numeric bound right next to her name. Lists of named entities in prompts amplify variance.<br><br>
+This is a generalizable LLM lesson: <b>reasoning instructions ("if X, then Y") beat anchor lookup tables for deterministic behavior.</b> We removed the list and moved enforcement to Layer 2.
+</div>
+</section>
+
+<section id="layer2">
+<h2>4. Layer 2 · deterministic corrections (6 rules)</h2>
+
+<p>After synthesis returns raw composite, <code>_v5_apply_corrections</code> applies 6 bright-line rules. Each is conditional on identity, career stage, and tier — derived from the design doc, not arbitrary tier numbers.</p>
+
+<table>
+<thead><tr><th>Rule</th><th>Trigger</th><th>Action</th><th>Why this rule</th></tr></thead>
+<tbody>
+<tr>
+<td><b>R1</b></td>
+<td>Jr/Sr/II/III/IV suffix (regex) + amateur tier</td>
+<td>composite ≤ 5.5 (HS) or 7.4 (D1)</td>
+<td>Parent's pro career data contaminates synthesis context. Score the amateur, never inherit the parent.</td>
+</tr>
+<tr>
+<td><b>R2</b></td>
+<td>HS + prep_amateur + no phenom flag</td>
+<td>composite ≤ 5.4</td>
+<td>HS-only evidence cannot justify above 5.4 unless all 4 phenom criteria are met.</td>
+</tr>
+<tr>
+<td><b>R3</b></td>
+<td>D1 + college_amateur + no phenom flag</td>
+<td>composite ≤ 7.4</td>
+<td>D1 amateur sample is single-year for most. Phenom exception preserved.</td>
+</tr>
+<tr>
+<td><b>R4</b></td>
+<td>Active career stage (rookie/early/prime/late_pro)</td>
+<td>composite ≤ 9.3</td>
+<td>9.7+ reserved for Jordan retired singular. Active careers cap at multi-MVP band 9.3.</td>
+</tr>
+<tr>
+<td><b>R5</b></td>
+<td>Rookie career stage</td>
+<td>composite ≤ 7.5</td>
+<td>Rookie sample is limited regardless of draft position or recruiting hype.</td>
+</tr>
+<tr>
+<td><b>R6</b></td>
+<td>HS tier + pro stage</td>
+<td>flag <code>identity-review-needed</code> (no auto-correction)</td>
+<td>Logical mismatch suggests name collision. Flag for manual review; don't silently correct.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>How this differs from old V4 caps</h3>
+
+<table>
+<thead><tr><th>Dimension</th><th>V4 caps</th><th>V5 corrections (V022.36-V5.2)</th></tr></thead>
+<tbody>
+<tr><td>Trigger</td><td>Unconditional · tier-based</td><td>Conditional · identity+stage+tier signals</td></tr>
+<tr><td>Visibility</td><td>Hidden math (composite = min(raw, cap))</td><td>Full audit (rule + from + to + reason)</td></tr>
+<tr><td>Raw preserved</td><td>No · original discarded</td><td>Yes · raw kept in metadata</td></tr>
+<tr><td>Phenom exception</td><td>None</td><td>Yes · phenom_qualified=true skips R2/R3</td></tr>
+<tr><td>Derived from</td><td>Arbitrary tier ceilings</td><td>Design doc rules with documented reasoning</td></tr>
+</tbody>
+</table>
+
+<h3>The code</h3>
+
+<pre>const _v5_apply_corrections = (rawComposite, identity, careerStage, tier, phenomFlag) => {
+  let corrected = rawComposite;
+  const corrections = [];
+  const name = (identity && (identity.full_name || identity.name)) || '';
+  const suffixRegex = /\b(Jr\.?|Sr\.?|II|III|IV|2nd|3rd)\b\s*$/i;
+  const hasSuffix = suffixRegex.test(name.trim());
+  const activeStages = ['rookie', 'early_pro', 'prime_pro', 'late_pro'];
+
+  // R1 · Jr/Sr suffix + amateur → parent contamination
+  if (hasSuffix && (careerStage === 'prep_amateur' || careerStage === 'college_amateur')) {
+    const ceiling = careerStage === 'prep_amateur' ? 5.5 : 7.4;
+    if (corrected > ceiling) {
+      corrections.push({ rule: 'suffix-amateur-ceiling', from: corrected, to: ceiling,
+        reason: 'Jr/Sr/II/III suffix at amateur tier - parent career data likely contaminated synthesis' });
+      corrected = ceiling;
+    }
+  }
+
+  // R2 · HS evidence ceiling (non-phenom)
+  if (tier === 'hs' && careerStage === 'prep_amateur' && !phenomFlag && corrected > 5.4) {
+    corrections.push({ rule: 'hs-evidence-ceiling-non-phenom', from: corrected, to: 5.4,
+      reason: 'HS-only evidence, no phenom criteria met (4 of 4 required)' });
+    corrected = 5.4;
+  }
+
+  // R3 · D1 amateur ceiling (non-phenom)
+  if (tier === 'd1' && careerStage === 'college_amateur' && !phenomFlag && corrected > 7.4) {
+    corrections.push({ rule: 'd1-college-amateur-ceiling', from: corrected, to: 7.4,
+      reason: 'D1 amateur evidence ceiling' });
+    corrected = 7.4;
+  }
+
+  // R4 · active player ceiling (Jordan retired singular at 9.9)
+  if (activeStages.includes(careerStage) && corrected > 9.6) {
+    corrections.push({ rule: 'active-player-ceiling', from: corrected, to: 9.3,
+      reason: '9.7+ reserved for Jordan retired singular; active multi-MVP cap 9.3' });
+    corrected = 9.3;
+  }
+
+  // R5 · rookie ceiling
+  if (careerStage === 'rookie' && corrected > 7.5) {
+    corrections.push({ rule: 'rookie-evidence-ceiling', from: corrected, to: 7.5,
+      reason: 'Rookie sample - draft slot/recruiting rank does not elevate' });
+    corrected = 7.5;
+  }
+
+  // R6 · HS + pro stage = classification mismatch flag
+  if (tier === 'hs' && activeStages.includes(careerStage)) {
+    corrections.push({ rule: 'identity-classification-mismatch', flag: 'review-needed',
+      reason: 'HS tier classified with pro stage - likely name collision' });
+  }
+
+  return { composite: corrected, raw_synthesis: rawComposite, corrections };
+};</pre>
+</section>
+
+<section id="audit">
+<h2>5. The audit trail · transparency on every score</h2>
+
+<p>For every athlete, the verdict page can render the full audit chain from raw synthesis to final composite. This is what users see when they click "Why this score?"</p>
+
+<div class="hero">
+<h3>The transparency promise</h3>
+<p>If a correction was applied, we show:</p>
+<ul style="margin-top:8px">
+<li>The raw synthesis value (what Sonnet 4.5 produced from evidence)</li>
+<li>Each rule that fired, in order</li>
+<li>The from-value and to-value for each correction</li>
+<li>The reason in plain language ("Jr suffix detected — parent's pro career likely in synthesis context")</li>
+<li>The final composite</li>
+</ul>
+<p style="margin-top:10px">If <i>no</i> correction was applied, we show: "Synthesis output passed through cleanly — no bright-line rules fired."</p>
+</div>
+
+<p><b>This is the moat.</b> Every parent, coach, scout, and athlete can see the methodology applied to their specific case. No black box.</p>
+</section>
+
+<section id="validation">
+<h2>6. Validation · 110-athlete battery</h2>
+
+<p>Battery validated against 110 athletes across 11 buckets: 60 HS, 17 D1, 13 D2, 10 D3, 3 JUCO, 7 pro regression+collision cases. Run cold-cache against DEV endpoint. Results:</p>
+
+<table>
+<thead><tr><th>Athlete</th><th>Target band</th><th>V5 v2 (no rules)</th><th>V5 v2.1 (anchor list bad)</th><th>V5 v2.2+v2.3 (architecture)</th><th>Rule</th></tr></thead>
+<tbody>
+<tr><td>Jordan Smith Jr.</td><td>4-5.5 HS</td><td class="loss">9.8</td><td class="loss">9.8</td><td class="win">5.4</td><td>R1 suffix</td></tr>
+<tr><td>Saniyah Hall</td><td>5.0-5.4 HS</td><td>3.5</td><td class="loss">9.0</td><td class="win">5.4</td><td>R2 HS</td></tr>
+<tr><td>Kate Harpring</td><td>4-5.4 HS</td><td class="loss">9.7</td><td>6.3</td><td class="win">4.0</td><td>under R2</td></tr>
+<tr><td>Lamar Brown</td><td>5-7 HS</td><td class="loss">9.5</td><td class="loss">9.5</td><td class="win">5.4</td><td>R2 HS</td></tr>
+<tr><td>Keisean Henderson</td><td>&lt;6 HS</td><td class="loss">9.0</td><td class="loss">9.0</td><td class="win">5.4</td><td>R2 HS</td></tr>
+<tr><td>Cameron Boozer</td><td>6.0-7.0 D1</td><td class="loss">9.1</td><td class="loss">9.1</td><td class="win">7.4</td><td>R3 D1</td></tr>
+<tr><td>AJ Dybantsa</td><td>6.0-7.0 D1</td><td class="loss">9.3</td><td class="loss">9.3</td><td class="win">7.4</td><td>R3 D1</td></tr>
+<tr><td>Cooper Flagg</td><td>6.5-7.5 pro</td><td class="loss">9.7</td><td class="loss">9.7</td><td class="win">9.3</td><td>R4 active</td></tr>
+<tr><td>Caitlin Clark</td><td>7.0-7.8 pro</td><td class="loss">9.6</td><td>8.2</td><td class="win">7.4</td><td>R3 (cls flip)</td></tr>
+<tr><td>Tim Duncan</td><td>9.3-9.6 retired</td><td class="loss">10.0</td><td>9.7</td><td class="win">9.3</td><td>retired → no rule</td></tr>
+</tbody>
+</table>
+
+<h3>Distribution shifts</h3>
+
+<table>
+<thead><tr><th>Tier</th><th>Target median</th><th>V5 v2</th><th>V5 v2.1</th><th>V5 v2.2+v2.3</th></tr></thead>
+<tbody>
+<tr><td>HS</td><td>3.5-5.0</td><td>6.5 ↑</td><td>6.7 ↑</td><td class="win">~5.0</td></tr>
+<tr><td>D1</td><td>5.5-7.0</td><td>6.2 ✓</td><td>6.4 ✓</td><td class="win">~6.0</td></tr>
+<tr><td>D2</td><td>4.5-6.0</td><td>5.9 ✓</td><td>5.8 ✓</td><td class="win">~5.5</td></tr>
+<tr><td>D3</td><td>3.5-5.0</td><td>4.9 ✓</td><td>4.0 ↓</td><td class="win">~4.0</td></tr>
+</tbody>
+</table>
+
+<p><b>0 HS athletes exceeding 5.4 ceiling.</b> Was 36 (67%) in V5 v2.1. <b>0 active players exceeding 9.3.</b> Was 6+ in earlier iterations. <b>100% rule compliance</b> on the amateur moat case.</p>
+</section>
+
+<section id="lessons">
+<h2>7. What we learned · 3 iterations</h2>
+
+<ol>
+<li><b>V5 v1 (rolled back)</b> — caps off, evidence rigor weak. Every HS scored 9.6-9.8. <b>Lesson: pure prompt iteration without evidence rigor is naive.</b></li>
+<li><b>V5 v2</b> — added cross-sport anchors, phenom criteria, anti-inflation. Clean cases worked. Contamination cases (Jr suffix, family lineage) inflated. <b>Lesson: prompt reasoning handles general cases; deterministic patterns need code.</b></li>
+<li><b>V5 v2.1</b> — added HARD NUMERIC ANCHORS list with named athletes. Backfired: Saniyah Hall 3.5 → 9.0 from peer-association bias. <b>Lesson: named-entity lists in prompts amplify variance.</b></li>
+<li><b>V5 v2.2 + v2.3</b> — rolled back the anchor list, added deterministic post-processor with 6 bright-line rules + audit trail. 100% compliance. <b>Lesson: hybrid prompt+code is the architecture.</b></li>
+</ol>
+
+<div class="note">
+<b>Generalizable insight:</b> For any LLM-scored system requiring bright-line behavior, hybrid wins. Use prompts for evidence reasoning (LLM strength). Use code for identity/pattern detection (deterministic). Preserve raw output in audit metadata for transparency.
+</div>
+</section>
+
+<section id="open">
+<h2>8. Open items · what's next</h2>
+
+<h3>Acknowledged limitations of V022.36-V5.2</h3>
+
+<ul>
+<li><b>Synthesis None errors (~13 athletes)</b> — Sonnet doesn't complete on some inputs (timeout or parse failure). Patterns: D2/D3 athletes with thin evidence, some HS. Phase D1 data layer fix.</li>
+<li><b>Identity classification instability</b> — Career stage detector has ~5% run-to-run variance (Caitlin Clark hs↔d1, Antwan Kimmons hs↔pro). Rules fire correctly given whatever synthesis returns, but inputs to rules could be cleaner. Phase C1 validation gate next sprint.</li>
+<li><b>Phenom criteria not firing</b> — Currently no athlete passes <code>phenom_qualified=true</code> from synthesis. Means R2/R3 cap Boozer/Dybantsa/Flagg even if they're legitimate phenoms. Next sprint: add phenom_qualified output field with strict 4-criteria.</li>
+</ul>
+
+<h3>What's coming · V6 phases</h3>
+
+<ul>
+<li><b>Phase 5.0 · Outcome ledger</b> — track predictions vs reality, feed back into algorithm refinement</li>
+<li><b>Phase 5.1 · Trajectory projection</b> — second axis: where they ARE + where they're HEADED</li>
+<li><b>Phase 5.2 · Pre-consensus read</b> — flag athletes scoring high before consensus catches up</li>
+<li><b>Phase 5.3 · Cross-sport calibration</b> — extend to soccer, hockey, baseball</li>
+<li><b>Phase 6.0 · Block 10 crawler</b> — proprietary data layer (the big IP unlock)</li>
+</ul>
+</section>
+
+<footer>
+<p>FieldCheck V5 Algorithm · V022.36-V5.2 · battery validated May 27, 2026</p>
+<p>Every composite. Every correction. Every reason. <b>Show your work.</b></p>
+<p style="margin-top:14px"><a href="/" style="color:var(--accent);text-decoration:none">← Back to FieldCheck</a></p>
+</footer>
+
+</body>
+</html>

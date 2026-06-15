@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>FieldCheck IQ · Try Anyone, Any Sport</title>
+<meta name="description" content="Check any athlete · any sport · any level. The framework treats D1 stars and D3 unknowns the same way: real evidence, honest score, scout-decision-worthy.">
+<meta property="og:title" content="FieldCheck IQ · Try Anyone, Any Sport">
+<meta property="og:description" content="Same depth for the D1 star and the D3 unknown. Click any name to see their FieldCheck verdict, or search anyone.">
+<meta property="og:type" content="website">
+<style>
+/* ─── RESET + BASE ───────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --g:#0a0a0a; --g2:#141414; --g3:#1f1f1f; --g4:#262626;
+  --t:#f8f4ed; --t2:#bbb; --t3:#888; --t4:#555;
+  --gold:#f5b800; --gold-h:#ffce4d;
+  --moss:#6baa5a; --violet:#a37ee0; --red:#e07e7e; --cyan:#7eccd6;
+  --bd:#2a2a2a; --bd-h:#3a3a3a;
+  --tap:44px; /* iOS touch target minimum */
+}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  background:var(--g); color:var(--t);
+  min-height:100dvh; line-height:1.55;
+  font-feature-settings:'kern' 1,'liga' 1;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+a{color:inherit; text-decoration:none}
+
+.wrap{max-width:1280px; margin:0 auto; padding:24px 18px 80px}
+
+/* ─── TOP STRIP ──────────────────────────────────────── */
+.top-strip{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:36px; padding-bottom:18px;
+  border-bottom:1px solid var(--bd);
+}
+.brand{
+  font-family:'Anton','Inter',sans-serif;
+  font-size:18px; letter-spacing:.5px; color:var(--gold);
+}
+.brand b{color:var(--t); font-weight:inherit}
+.top-strip a.link{
+  color:var(--t2); font-family:'JetBrains Mono',monospace;
+  font-size:11px; letter-spacing:1px; text-transform:uppercase;
+  padding:8px 12px; min-height:var(--tap); display:inline-flex; align-items:center;
+}
+.top-strip a.link:hover{color:var(--gold)}
+
+/* ─── HERO ───────────────────────────────────────────── */
+.hero{margin-bottom:56px}
+.eyebrow{
+  color:var(--gold); font-size:11px; letter-spacing:2.5px;
+  text-transform:uppercase; font-family:'JetBrains Mono',monospace;
+  margin-bottom:14px;
+}
+.h1{
+  font-family:'Anton','Inter',sans-serif; font-weight:400;
+  font-size:clamp(36px, 8vw, 64px);
+  line-height:1.02; letter-spacing:-1.2px;
+  margin-bottom:18px; max-width:920px;
+}
+.h1 span{color:var(--gold)}
+.lede{
+  font-size:clamp(15px, 2.2vw, 19px);
+  color:var(--t2); max-width:760px;
+  line-height:1.55; margin-bottom:24px;
+}
+.lede b{color:var(--t); font-weight:600}
+.cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:22px}
+.cta-primary{
+  background:var(--gold); color:#111;
+  padding:14px 22px; font-weight:700;
+  font-family:'JetBrains Mono',monospace; font-size:12px;
+  letter-spacing:1.6px; text-transform:uppercase;
+  border-radius:8px;
+  display:inline-flex; align-items:center; gap:8px;
+  min-height:var(--tap);
+}
+.cta-primary:hover,.cta-primary:active{background:var(--gold-h)}
+.cta-secondary{
+  background:transparent; color:var(--t);
+  padding:13px 20px; font-weight:600;
+  font-family:'JetBrains Mono',monospace; font-size:12px;
+  letter-spacing:1.4px; text-transform:uppercase;
+  border:1px solid var(--bd); border-radius:8px;
+  min-height:var(--tap);
+  display:inline-flex; align-items:center;
+}
+.cta-secondary:hover{border-color:var(--gold); color:var(--gold)}
+
+/* ─── MOAT BANNER ────────────────────────────────────── */
+.moat-banner{
+  background:linear-gradient(135deg, rgba(245,184,0,.08), rgba(107,170,90,.04));
+  border:1px solid rgba(245,184,0,.3);
+  border-radius:14px;
+  padding:24px 22px;
+  margin-bottom:28px;
+}
+.moat-banner h3{
+  font-family:'Anton',sans-serif; font-size:clamp(22px,4vw,28px); font-weight:400;
+  letter-spacing:-.3px; margin-bottom:10px; line-height:1.1;
+}
+.moat-banner h3 span{color:var(--gold)}
+.moat-banner p{
+  color:var(--t2); max-width:780px;
+  font-size:clamp(13.5px, 1.6vw, 15px); line-height:1.6;
+}
+.moat-banner p b{color:var(--t); font-weight:600}
+
+/* ─── SECTION ────────────────────────────────────────── */
+.section{margin-top:64px}
+.sect-eyebrow{
+  color:var(--gold); font-size:10.5px; letter-spacing:2.5px;
+  text-transform:uppercase; font-family:'JetBrains Mono',monospace;
+  margin-bottom:8px;
+}
+.sect-eyebrow.moss{color:var(--moss)}
+.sect-eyebrow.violet{color:var(--violet)}
+.sect-eyebrow.cyan{color:var(--cyan)}
+.h2{
+  font-family:'Anton','Inter',sans-serif; font-weight:400;
+  font-size:clamp(26px, 5vw, 40px);
+  letter-spacing:-.5px; line-height:1.05;
+  margin-bottom:14px;
+}
+.h2 span{color:var(--gold)}
+.sect-sub{
+  color:var(--t2); max-width:780px;
+  font-size:clamp(13.5px, 1.6vw, 15px); line-height:1.55;
+  margin-bottom:24px;
+}
+
+/* ─── ATHLETE CARDS ──────────────────────────────────── */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+  gap:12px;
+}
+.grid.cols-4{grid-template-columns:repeat(auto-fill, minmax(230px, 1fr))}
+.card{
+  background:var(--g2);
+  border:1px solid var(--bd);
+  border-radius:12px;
+  padding:16px 16px 14px;
+  color:var(--t);
+  display:flex; flex-direction:column;
+  transition:border-color .15s, transform .15s, background .15s;
+  min-height:var(--tap);
+}
+.card:hover,.card:active{
+  border-color:var(--gold);
+  transform:translateY(-2px);
+  background:var(--g3);
+}
+.card-head{
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:8px; margin-bottom:9px;
+}
+.card-name{
+  font-family:'Anton',sans-serif; font-weight:400;
+  font-size:19px; letter-spacing:0; line-height:1.1;
+  flex:1; min-width:0;
+}
+.card-tier{
+  display:inline-block; padding:3px 7px;
+  font-family:'JetBrains Mono',monospace; font-size:9px;
+  font-weight:600; letter-spacing:1px; text-transform:uppercase;
+  border-radius:3px; flex-shrink:0; white-space:nowrap;
+}
+.t-elite    {background:rgba(245,184,0,.18); color:var(--gold)}
+.t-star     {background:rgba(107,170,90,.18); color:var(--moss)}
+.t-prospect {background:rgba(163,126,224,.18); color:var(--violet)}
+.t-tracked  {background:rgba(190,190,190,.12); color:var(--t2)}
+.t-icon     {background:rgba(245,184,0,.32); color:#fff8e5}
+.t-edge     {background:rgba(126,204,214,.20); color:var(--cyan)}
+.card-meta{
+  color:var(--t3); font-size:10.5px;
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:.5px; margin-bottom:9px;
+  text-transform:uppercase;
+}
+.card-school{
+  color:var(--t); font-size:13px;
+  font-weight:600; margin-bottom:10px; line-height:1.3;
+}
+.card-color{
+  color:var(--t2); font-size:13px;
+  line-height:1.55; flex-grow:1;
+}
+.card-arrow{
+  margin-top:12px; color:var(--gold);
+  font-family:'JetBrains Mono',monospace; font-size:10.5px;
+  letter-spacing:1.2px; text-transform:uppercase;
+}
+.card:hover .card-arrow,.card:active .card-arrow{color:var(--gold-h)}
+
+/* ─── SEARCH CTA ─────────────────────────────────────── */
+.search-cta{
+  background:var(--g2);
+  border:1px solid var(--bd);
+  border-radius:16px;
+  padding:32px 24px;
+  text-align:center;
+  margin-top:56px;
+  scroll-margin-top:20px;
+}
+.search-cta h2{
+  font-family:'Anton',sans-serif; font-weight:400;
+  font-size:clamp(28px, 6vw, 44px);
+  letter-spacing:-.6px; margin-bottom:8px; line-height:1.05;
+}
+.search-cta h2 span{color:var(--gold)}
+.search-cta p{
+  color:var(--t2); font-size:clamp(14px, 1.8vw, 16px);
+  max-width:640px; margin:0 auto 24px;
+  line-height:1.55;
+}
+.search-form{
+  display:flex; flex-direction:column; gap:10px;
+  max-width:480px; margin:0 auto;
+}
+.search-form input{
+  width:100%;
+  background:#0a0a0a; color:var(--t);
+  border:1px solid var(--bd);
+  padding:14px 16px; font-size:16px; /* 16px+ prevents iOS zoom */
+  font-family:inherit; border-radius:10px;
+  min-height:var(--tap);
+}
+.search-form input:focus{
+  outline:none; border-color:var(--gold);
+}
+.search-form input::placeholder{color:var(--t3)}
+.search-form button{
+  background:var(--gold); color:#111;
+  border:none; padding:16px 28px;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:700; font-size:13px;
+  letter-spacing:1.5px; text-transform:uppercase;
+  border-radius:10px; cursor:pointer;
+  min-height:48px;
+  width:100%;
+}
+.search-form button:hover,.search-form button:active{background:var(--gold-h)}
+.search-note{
+  font-size:12px; color:var(--t3);
+  margin-top:14px; line-height:1.5;
+  max-width:480px; margin-left:auto; margin-right:auto;
+}
+.search-note b{color:var(--gold); font-weight:600}
+
+/* ─── SPORTS COVERAGE PILLS ─────────────────────────── */
+.pill-row{
+  display:flex; flex-wrap:wrap; gap:7px;
+  margin:12px 0 24px;
+}
+.pill{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--bd);
+  padding:7px 13px;
+  border-radius:30px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px; color:var(--t2);
+  letter-spacing:1px; text-transform:uppercase;
+  white-space:nowrap;
+}
+.pill.active{
+  background:rgba(245,184,0,.1);
+  border-color:rgba(245,184,0,.4);
+  color:var(--gold);
+}
+
+/* ─── BG/MOAT CARDS ─────────────────────────────────── */
+.bg-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(270px, 1fr));
+  gap:12px;
+}
+.bg-card{
+  background:var(--g2);
+  border:1px solid var(--bd);
+  border-radius:12px;
+  padding:22px 20px;
+}
+.bg-card h4{
+  font-family:'Anton',sans-serif; font-weight:400;
+  font-size:21px; letter-spacing:-.2px;
+  margin-bottom:10px; color:var(--gold);
+  line-height:1.15;
+}
+.bg-card h4.moss{color:var(--moss)}
+.bg-card h4.violet{color:var(--violet)}
+.bg-card h4.cyan{color:var(--cyan)}
+.bg-card p{
+  color:var(--t2); font-size:13.5px; line-height:1.6;
+}
+.bg-card p strong{color:var(--t)}
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+.foot{
+  margin-top:72px; padding-top:24px;
+  border-top:1px solid var(--bd);
+  color:var(--t3); font-size:11.5px;
+  display:flex; justify-content:space-between;
+  flex-wrap:wrap; gap:12px; line-height:1.55;
+}
+.foot a{color:var(--gold)}
+.foot a:hover{text-decoration:underline}
+.foot .lo span{color:var(--t4)}
+.foot .ri a{margin:0 2px}
+
+/* ─── MOBILE OVERRIDES ──────────────────────────────── */
+@media (max-width:680px){
+  .wrap{padding:16px 14px 56px}
+  .top-strip{margin-bottom:24px; padding-bottom:14px}
+  .hero{margin-bottom:36px}
+  .h1{margin-bottom:14px}
+  .lede{font-size:15.5px; margin-bottom:18px}
+  .cta-row{gap:10px}
+  .cta-primary,.cta-secondary{font-size:11.5px; padding:12px 18px; letter-spacing:1.3px}
+  .moat-banner{padding:20px 18px; border-radius:12px}
+  .section{margin-top:48px}
+  .h2{margin-bottom:10px}
+  .sect-sub{margin-bottom:18px}
+  .grid,.grid.cols-4{grid-template-columns:1fr; gap:10px}
+  .card{padding:16px 16px 14px}
+  .card-name{font-size:18px}
+  .card-tier{font-size:8.5px; padding:3px 6px}
+  .card-color{font-size:12.5px}
+  .search-cta{padding:28px 18px; margin-top:40px; border-radius:14px}
+  .search-form{max-width:100%}
+  .bg-grid{grid-template-columns:1fr; gap:10px}
+  .bg-card{padding:20px 18px}
+  .bg-card h4{font-size:19px}
+  .pill{font-size:9.5px; padding:6px 11px}
+  .foot{flex-direction:column; align-items:flex-start}
+}
+
+@media (min-width:681px){
+  .search-form{flex-direction:row; align-items:stretch}
+  .search-form input{flex:1}
+  .search-form button{width:auto; flex-shrink:0; padding:14px 28px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .card{transition:none}
+  .card:hover{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ─── TOP STRIP ─── -->
+  <div class="top-strip">
+    <a href="/" class="brand">FieldCheck<b>IQ</b></a>
+    <a href="/methodology" class="link">How it works</a>
+  </div>
+
+  <!-- ─── HERO ─── -->
+  <header class="hero">
+    <div class="eyebrow">// FIELDCHECK IQ · TRY ANYONE</div>
+    <h1 class="h1">Same depth for the <span>D1 star</span> and the <span>D3 unknown</span>.</h1>
+    <p class="lede">
+      Click any athlete below to see their FieldCheck verdict — composite score, polygon shape, eval grid, decision anchors, source-grounded interpretation. Or <b>type any name</b> at the bottom. The framework treats Cooper Flagg and Tate Ivanyo the same way: real evidence, honest score, scout-decision-worthy output.
+    </p>
+    <div class="cta-row">
+      <a href="#try-anyone" class="cta-primary">Try Your Own ↓</a>
+      <a href="#how-it-works" class="cta-secondary">How It Works</a>
+    </div>
+  </header>
+
+  <!-- ─── THE MOAT ─── -->
+  <div class="moat-banner">
+    <h3>The moat: <span>unknown athletes made visible</span></h3>
+    <p>Most scouting tools recycle the same D1 names you already know. FieldCheck IQ extracts decision-worthy verdicts for the long tail — D3 conference standouts, D2 transfer candidates, HS hidden gems. Below: 5 athletes who have <b>no Wikipedia article</b>, <b>no national ranking</b>, <b>no recruiting service profile</b>. The framework still grades them.</p>
+  </div>
+
+  <!-- ─── 5 MOAT ATHLETES ─── -->
+  <div class="grid">
+
+    <a class='card' href='/fieldcheck-verdict?q=Tate%20Ivanyo&school=Anderson%20University'>
+      <div class="card-head">
+        <div class="card-name">Tate Ivanyo</div>
+        <span class="card-tier t-elite">ELITE 7.8</span>
+      </div>
+      <div class="card-meta">Men's Basketball · D3 · HCAC</div>
+      <div class="card-school">Anderson University</div>
+      <div class="card-color">School-record 3PT shooter (40.2% career), Jostens Trophy nominee, NABC First-Team All-American. Character + shooting + durability all ceiling-grade. The reason the moat exists.</div>
+      <div class="card-arrow">See verdict →</div>
+    </a>
+
+    <a class='card' href='/fieldcheck-verdict?q=Antwan%20Kimmons&school=Concordia-St.%20Paul'>
+      <div class="card-head">
+        <div class="card-name">Antwan Kimmons</div>
+        <span class="card-tier t-tracked">TRACKED</span>
+      </div>
+      <div class="card-meta">Men's Basketball · D2 · NSIC</div>
+      <div class="card-school">Concordia-St. Paul</div>
+      <div class="card-color">NSIC Golden Bears multi-year contributor. Roster confirmed via cspbears.com. Framework grades the body of work, not the highlight reel.</div>
+      <div class="card-arrow">See verdict →</div>
+    </a>
+
+    <a class='card' href='/fieldcheck-verdict?q=Jeremy%20Dent-Smith&school=Cal%20State%20Dominguez%20Hills'>
+      <div class="card-head">
+        <div class="card-name">Jeremy Dent-Smith</div>
+        <span class="card-tier t-prospect">PROSPECT</span>
+      </div>
+      <div class="card-meta">Men's Basketball · D2 · CCAA</div>
+      <div class="card-school">Cal State Dominguez Hills</div>
+      <div class="card-color">CCAA standout — the school doesn't make headlines, but the production does. Real verdict, real number, real decision possible.</div>
+      <div class="card-arrow">See verdict →</div>
+    </a>
+
+    <a class='card' href='/fieldcheck-verdict?q=Cedric%20Tomes&school=East%20Ridge%20HS'>
+      <div class="card-head">
+        <div class="card-name">Cedric Tomes</div>
+        <span class="card-tier t-star">STAR TRAJ</span>
+      </div>
+      <div class="card-meta">Men's Basketball · High School</div>
+      <div class="card-school">East Ridge HS</div>
+      <div class="card-color">An HS player with no national service profile. Most platforms can't grade him. The framework can — gives a scout a real anchor to decide whether to make the call.</div>
+      <div class="card-arrow">See verdict →</div>
+    </a>
+
+    <a class='card' href='/fieldcheck-verdict?q=Donovan%20Dent&school=UCLA'>
+      <div class="card-head">
+        <div class="card-name">Donovan Dent</div>
+        <span class="card-tier t-star">STAR TRAJ</span>
+      </div>
+      <div class="card-meta">Men's Basketball · D1 · Transfer</div>
+      <div class="card-school">UCLA (via New Mexico)</div>
+      <div class="card-color">The framework correctly identifies the transfer to UCLA. D1-attractor logic surfaces where he plays NOW. Transfer-portal scouting actually works.</div>
+      <div class="card-arrow">See verdict →</div>
+    </a>
+
+  </div>
+
+  <!-- ─── FOOTBALL — REAL SCOUT NAMES ─── -->
+  <div class="section">
+    <div class="sect-eyebrow">// FOOTBALL · 2026 CLASS</div>
+    <h2 class="h2"><span>Football</span> recruits the way scouts actually find them.</h2>
+    <p class="sect-sub">Type a name from any 247Sports or ESPN recruit-rankings page. The framework auto-detects the sport and surfaces a structured verdict. No sport selector required.</p>
+    <div class="grid cols-4">
+
+      <a class='card' href='/fieldcheck-verdict?q=Jared%20Curtis&school=Vanderbilt'>
+        <div class="card-head"><div class="card-name">Jared Curtis</div><span class="card-tier t-edge">5★ QB</span></div>
+        <div class="card-meta">Football · 2026 · SEC</div>
+        <div class="card-school">Vanderbilt</div>
+        <div class="card-color">ESPN's No. 1 QB in 2026. Vandy's biggest get of the cycle.</div>
+        <div class="card-arrow">See verdict →</div>
+      </a>
+
+      <a class='card' href='/fieldcheck-verdict?q=Chris%20Henry%20Jr.&school=Ohio%20State'>
+        <div class="card-head"><div class="card-name">Chris Henry Jr.</div><span class="card-tier t-edge">5★ WR</span></div>
+        <div class="card-meta">Football · 2026 · Big Ten</div>
+        <div class="card-school">Ohio State</div>
+        <div class="card-color">No. 1 prospect in the class. Son of late Bengals WR Chris Henry. Legacy + length.</div>
+        <div class="card-arrow">See verdict →</div>
+      </a>
+
+      <a class='card' href='/fieldcheck-verdict?q=Jackson%20Cantwell&school=Miami'>
+        <div class="card-head"><div class="card-name">Jackson Cantwell</div><span class="card-tier t-edge">5★ OT</span></div>
+        <div class="card-meta">Football · 2026 · ACC</div>
+        <div class="card-school">Miami</div>
+        <div class="card-color">No. 2 overall. Anchor of Miami's offensive-line rebuild.</div>
+        <div class="card-arrow">See verdict →</div>
+      </a>
+
+      <a class='card' href='/fieldcheck-verdict?q=Hayden%20Lowe&school=Miami'>
+        <div class="card-head"><div class="card-name">Hayden Lowe</div><span class="card-tier t-tracked">VERIFY</span></div>
+        <div class="card-meta">Football · DE · Freshman</div>
+        <div class="card-school">Miami</div>
+        <div class="card-color">5-star recruit who flipped to Miami Nov '24, S-E injury Sept '25 as true freshman. ESPN under-the-radar 2026 watch list — the framework knows.</div>
+        <div class="card-arrow">See verdict →</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ─── MEN'S BASKETBALL · KNOWN NAMES ─── -->
+  <div class="section">
+    <div class="sect-eyebrow moss">// MEN'S BASKETBALL · KNOWN NAMES</div>
+    <h2 class="h2">When the world <span>already knows the name</span>, the framework still does the work.</h2>
+    <p class="sect-sub">D1-P5 stars and top HS recruits. Verifiable verdicts you can compare against consensus.</p>
+    <div class="grid cols-4">
+
+      <a class='card' href='/fieldcheck-verdict?q=Cooper%20Flagg&school=Duke'>
+        <div class="card-head"><div class="card-name">Cooper Flagg</div><span class="card-tier t-icon">ICON 9.6</span></div>
+        <div class="card-meta">D1-P5 · ACC</div>
+        <div class="card-school">Duke → NBA</div>
+        <div class="card-color">EDGE_DETECTED · No. 1 NBA prospect. The upper-end proof point.</div>
+        <div class="card-arrow">See verdict →</div>
+      </a>
+
+      <a class='card' href='/fieldcheck-verdict?q=Tyran%20Stokes&school=Kansas'>
+        <div class="card-head"><div class="card-name">Tyran Stokes</div><span class="card-tier t-icon">5★</span></div>
+        <div class="card-meta">2026 Class · D1-P5</div>
+        <div class="card-school">Kansas (commit)</div>
+        <div class="card-color">No. 1 in '26 class. 6'7" jumbo initiator. Built like a four-man, playmakes like a lead guard.</div>
+        <div class="card-arrow">See verdict →</div>
+      </a>
+
+      <a class='card' href='/fieldcheck-verdict?q=Cameron%20Boozer&school=Duke'>
+        <div class="card-head"><div class="card-name">Cameron Boozer</div><span class="card-tier t-edge">5★ PF</span></div>
+        <div class="card-meta">2026 Class · ACC</div>
+        <div class="card-school">Columbus HS → Duke</div>
+        <div class="card-color">Legacy + production. Framework sees both.</div>
+        <div class="card-arrow">See verdict →</div>
+      </a>
+
+      <a class='card' href='/fieldcheck-verdict?q=AJ%20Dybantsa&school=BYU'>
+        <div class="card-head"><div class="card-name">AJ Dybantsa</div><span class="card-tier t-edge">EDGE</span></div>
+        <div class="card-meta">D1-P5 · Big 12</div>
+        <div class="card-school">BYU</div>
+        <div class="card-color">Top freshman recruit. Positional creator at scale.</div>
+        <div class="card-arrow">See verdict →</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ─── WOMEN'S BASKETBALL ─── -->
+  <div class="section">
+    <div class="sect-eyebrow violet">// WOMEN'S BASKETBALL · SAME FRAMEWORK</div>
+    <h2 class="h2">Sport-adaptive: <span>same depth</span>, gender-aware language.</h2>
+    <p class="sect-sub">Closer DNA · Captain DNA · Recovery + resilience — the 8 facets adapt to sport context while the underlying model stays unified.</p>
+    <div class="grid cols-4">
+
+      <a class='card' href='/fieldcheck-verdict?q=Caitlin%20Clark&school=Iowa'>
+        <div class="card-head"><div class="card-name">Caitlin Clark</div><span class="card-tier t-icon">GR 9.4</span></div>
+        <div class="card-meta">D1-P5 · Big Ten</div>
+        <div class="card-school">Iowa → WNBA</div>
+        <div class="card-color">Generational scorer. NCAA all-time scoring. Indiana Fever.</div>
+        <div class="card-arrow">See verdict →</div>
+      </a>
+
+      <a class='card' href='/fieldcheck-verdict?q=Paige%20Bueckers&school=UConn'>
+        <div class="card-head"><div class="card-name">Paige Bueckers</div><span class="card-tier t-icon">GR 9.0</span></div>
+        <div class="card-meta">D1-P5 · Big East</div>
+        <div class="card-school">UConn</div>
+        <div class="card-color">2025 NCAA Champion. WNBA Rookie of the Year favorite.</div>
+        <div class="card-arrow">See verdict →</div>
+      </a>
+
+      <a class='card' href='/fieldcheck-verdict?q=JuJu%20Watkins&school=USC'>
+        <div class="card-head"><div class="card-name">JuJu Watkins</div><span class="card-tier t-edge">EDGE 9.5</span></div>
+        <div class="card-meta">D1-P5 · Big Ten</div>
+        <div class="card-school">USC</div>
+        <div class="card-color">Sophomore phenom. Scoring + defensive impact at the top.</div>
+        <div class="card-arrow">See verdict →</div>
+      </a>
+
+      <a class='card' href='/fieldcheck-verdict?q=Hannah%20Hidalgo&school=Notre%20Dame'>
+        <div class="card-head"><div class="card-name">Hannah Hidalgo</div><span class="card-tier t-star">GR 8.7</span></div>
+        <div class="card-meta">D1-P5 · ACC</div>
+        <div class="card-school">Notre Dame</div>
+        <div class="card-color">ACC standout. Defensive-pressure profile.</div>
+        <div class="card-arrow">See verdict →</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ─── SPORTS COVERED ─── -->
+  <div class="section">
+    <div class="sect-eyebrow cyan">// SPORTS WE COVER</div>
+    <h2 class="h2">Beyond basketball: <span>football, baseball, volleyball, soccer, tennis</span>.</h2>
+    <p class="sect-sub">Same 8-facet framework. Same 5-layer model. Same polygon. Sport adapters tune language (Closer DNA for hoops, Pocket Presence for football) — the math is unified.</p>
+    <div class="pill-row">
+      <span class="pill active">Men's Basketball</span>
+      <span class="pill active">Women's Basketball</span>
+      <span class="pill active">Football</span>
+      <span class="pill active">Baseball</span>
+      <span class="pill active">Men's Volleyball</span>
+      <span class="pill active">Women's Volleyball</span>
+      <span class="pill active">Men's Soccer</span>
+      <span class="pill active">Women's Soccer</span>
+      <span class="pill active">Tennis</span>
+    </div>
+  </div>
+
+  <!-- ─── TRY ANYONE ─── -->
+  <div class="search-cta" id="try-anyone">
+    <h2>Try <span>anyone</span>.</h2>
+    <p>Type any athlete name. The framework auto-detects the sport from public sources. Adding a school helps disambiguate when names collide.</p>
+    <div class="search-form">
+      <input id="trySearchName" type="text" placeholder="Athlete name (e.g. Hayden Lowe)" autocomplete="off" autocapitalize="words" spellcheck="false" />
+      <input id="trySearchSchool" type="text" placeholder="School (optional)" autocomplete="off" autocapitalize="words" spellcheck="false" />
+      <button id="trySearchGo" type="button">Check →</button>
+    </div>
+    <p class="search-note">
+      <b>Auto-sport-detect</b> is on. Football, basketball, baseball, volleyball, soccer, tennis — the worker probes public sources to figure it out before running the eval grid.
+    </p>
+  </div>
+
+  <!-- ─── HOW IT WORKS ─── -->
+  <div class="section" id="how-it-works">
+    <div class="sect-eyebrow">// HOW IT WORKS</div>
+    <h2 class="h2">The framework <span>under the hood</span>.</h2>
+    <p class="sect-sub">Five layers of evidence. Eight canonical facets. Sixteen voices. One polygon. One number.</p>
+    <div class="bg-grid">
+      <div class="bg-card">
+        <h4>5-layer evidence</h4>
+        <p>Identity · Pathway · Refinement · Resilience · Opportunity. Wikipedia, school roster, conference stats, scout dossier, open-web. Triangulated before grading.</p>
+      </div>
+      <div class="bg-card">
+        <h4 class="moss">8 canonical facets</h4>
+        <p>Character · Mindset · Mental Strength · Talent · Physical · Mental/IQ · Coachability · Competitiveness. Every sport, same eight. The polygon shape across facets is the verdict.</p>
+      </div>
+      <div class="bg-card">
+        <h4 class="violet">16 coach voices</h4>
+        <p>Simulated voices from program archetypes (Saban-style, Kerr-style, Pop, Belichick). Each voice weighs facets differently. <strong>Disagreement is signal.</strong></p>
+      </div>
+      <div class="bg-card">
+        <h4 class="cyan">Composite + polygon + anchors</h4>
+        <p>A scout sees three things: <strong>composite</strong> (one number), <strong>polygon</strong> (8 facets visualized), <strong>decision anchors</strong> (1–3 specific actions tied to evidence). That's enough to make a call.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── THE MOAT ─── -->
+  <div class="section">
+    <div class="sect-eyebrow moss">// WHY THIS IS DIFFERENT</div>
+    <h2 class="h2">The <span>moat</span>: depth at the long tail.</h2>
+    <p class="sect-sub">Anyone can grade Cooper Flagg. The hard part is grading an athlete the world hasn't noticed yet.</p>
+    <div class="bg-grid">
+      <div class="bg-card">
+        <h4>Auto-sport-detect</h4>
+        <p>Scout types just a name. Framework probes Wikipedia + public sources, identifies the sport, runs the right eval grid. <strong>No sport-picker round-trip.</strong></p>
+      </div>
+      <div class="bg-card">
+        <h4 class="moss">Dynamic school resolution</h4>
+        <p>116-school D2/D3 athletics-site map + DDG dynamic resolver + KV cache. Say "Anderson University" — we find <strong>athletics.anderson.edu</strong> automatically.</p>
+      </div>
+      <div class="bg-card">
+        <h4 class="violet">Source-cache resilience</h4>
+        <p>External APIs fail. Wikipedia bounces. Conference sites timeout. We <strong>cache every successful fetch for 5-21 days</strong> so verdicts stay stable as APIs degrade.</p>
+      </div>
+      <div class="bg-card">
+        <h4 class="cyan">Pre-registered predictions</h4>
+        <p>50 v1.7.A cohort predictions locked May 17 2026. First check-in August 15 2028. We publish the wrong ones, <strong>by name</strong>, on the public ledger.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── FOOTER ─── -->
+  <div class="foot">
+    <div class="lo">
+      FieldCheck IQ · v1.7.A cohort · 50 predictions locked May 17 2026 · check-in Aug 15 2028<br>
+      <span>Framework V021.21 · Canonical V5.0 · ThinkDifferent Holdings</span>
+    </div>
+    <div class="ri">
+      <a href="/">Home</a> ·
+      <a href="/canonical">Canonical doc</a> ·
+      <a href="/compare">Compare</a> ·
+      <a href="/source-dashboard">Sources</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function _enc(s){ return encodeURIComponent((s||'').trim()); }
+function _go(){
+  var name = document.getElementById('trySearchName').value.trim();
+  if(!name){
+    document.getElementById('trySearchName').focus();
+    return;
+  }
+  var school = document.getElementById('trySearchSchool').value.trim();
+  // V021.21: no sport in URL — worker auto-detects from name + school
+  var u = '/fieldcheck-verdict.html?q=' + _enc(name);
+  if(school) u += '&school=' + _enc(school);
+  window.location.href = u;
+}
+document.getElementById('trySearchGo').addEventListener('click', _go);
+['trySearchName','trySearchSchool'].forEach(function(id){
+  document.getElementById(id).addEventListener('keypress', function(e){ if(e.key==='Enter') _go(); });
+});
+</script>
+</body>
+</html>

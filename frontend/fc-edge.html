@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FieldCheck Edge · Intelligence licensed to institutions</title>
+  <meta name="description" content="FieldCheck Edge — the FieldCheck IQ engine licensed to athletic departments, NIL collectives, and pro clubs. Audited intelligence at organizational scale.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #0d0d0d; --bg-2: #161616; --bg-3: #1d1d1d;
+  --text: #F5F1E8; --text-2: #b8b8b8; --text-3: #888;
+  --gold: #d4af37; --moss: #95d5b2; --teal: #4ec9c0; --rust: #c45132;
+  --border: rgba(255,255,255,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+.fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+.fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+.fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+.fc-canonical-wordmark { font-size: 18px; }
+.fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+.fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+.fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+.fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+.fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.fc-canonical-nav .nav-more-wrap { display: none; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.nav-primary:hover { color: #ffc94a; }
+.nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.nav-more-wrap { position: relative; display: inline-block; }
+.nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-wrap { display: none; }
+.nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.nav-more-chev { transform: rotate(180deg); }
+.nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.nav-more-group { padding: 6px 4px; }
+.nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+
+
+.edge-hero { max-width: 1000px; margin: 0 auto; padding: 80px 32px 36px; text-align: center; }
+.edge-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 16px; }
+.edge-title { font-family: 'Anton', sans-serif; font-size: clamp(46px, 7.5vw, 92px); line-height: 0.96; letter-spacing: -0.012em; margin-bottom: 22px; }
+.edge-title .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.edge-sub { font-size: 18px; color: var(--text-2); max-width: 720px; margin: 0 auto 14px; line-height: 1.55; }
+.edge-coda { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-size: 16px; max-width: 580px; margin: 0 auto; }
+
+.edge-buyer-band { max-width: 1180px; margin: 36px auto; padding: 0 24px; }
+.edge-buyer-eyebrow { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--text-3); font-weight: 700; margin-bottom: 24px; }
+.edge-buyer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.edge-buyer-card { padding: 28px 26px; background: linear-gradient(135deg, rgba(212,175,55,0.04), rgba(20,17,12,0.5)); border: 1px solid rgba(212,175,55,0.22); border-radius: 14px; }
+.edge-buyer-icon { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: var(--gold); margin-bottom: 14px; font-weight: 700; }
+.edge-buyer-h { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1.1; margin-bottom: 8px; letter-spacing: -0.005em; }
+.edge-buyer-desc { font-size: 13.5px; color: var(--text-2); line-height: 1.55; }
+
+.edge-platform { max-width: 1100px; margin: 56px auto; padding: 0 24px; }
+.edge-platform-eyebrow { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 16px; }
+.edge-platform-h { font-family: 'Anton', sans-serif; font-size: clamp(34px, 5vw, 56px); line-height: 1; text-align: center; margin-bottom: 38px; letter-spacing: -0.01em; }
+.edge-platform-h .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.edge-feature-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.edge-feature { padding: 22px 26px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; }
+.edge-feature-tag { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.8px; color: var(--moss); font-weight: 700; margin-bottom: 8px; }
+.edge-feature-h { font-family: 'Anton', sans-serif; font-size: 19px; margin-bottom: 8px; letter-spacing: -0.005em; }
+.edge-feature-desc { font-size: 13.5px; color: var(--text-2); line-height: 1.55; }
+
+.edge-difference { max-width: 980px; margin: 56px auto; padding: 32px 36px; background: linear-gradient(135deg, rgba(78,201,192,0.04), rgba(20,17,12,0.4)); border: 1px solid rgba(78,201,192,0.28); border-radius: 16px; }
+.edge-diff-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--teal); font-weight: 700; margin-bottom: 16px; text-align: center; }
+.edge-diff-h { font-family: 'Anton', sans-serif; font-size: clamp(28px, 4vw, 44px); line-height: 1.05; text-align: center; margin-bottom: 22px; letter-spacing: -0.005em; }
+.edge-diff-h .iq-italic { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--teal); font-weight: 400; }
+.edge-diff-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.edge-diff-col { padding: 20px 22px; background: rgba(0,0,0,0.3); border-radius: 10px; }
+.edge-diff-col h4 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; }
+.edge-diff-col.them h4 { color: var(--rust); }
+.edge-diff-col.us h4 { color: var(--gold); }
+.edge-diff-col ul { list-style: none; padding: 0; }
+.edge-diff-col ul li { padding: 6px 0 6px 18px; position: relative; font-size: 13.5px; line-height: 1.55; color: var(--text-2); }
+.edge-diff-col.them ul li::before { content: '✕'; position: absolute; left: 0; top: 6px; color: var(--rust); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+.edge-diff-col.us ul li::before { content: '✓'; position: absolute; left: 0; top: 6px; color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+.edge-pricing { max-width: 1100px; margin: 56px auto; padding: 0 24px; }
+.edge-pricing-eyebrow { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 16px; }
+.edge-pricing-h { font-family: 'Anton', sans-serif; font-size: clamp(32px, 4.5vw, 50px); text-align: center; margin-bottom: 30px; line-height: 1; letter-spacing: -0.01em; }
+.edge-pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.edge-tier { padding: 30px 26px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 14px; position: relative; }
+.edge-tier.featured { background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(20,17,12,0.5)); border-color: var(--gold); }
+.edge-tier-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.8px; color: var(--text-3); font-weight: 700; margin-bottom: 14px; }
+.edge-tier.featured .edge-tier-label { color: var(--gold); }
+.edge-tier-price { font-family: 'Anton', sans-serif; font-size: 38px; line-height: 1; margin-bottom: 4px; letter-spacing: -0.01em; }
+.edge-tier-period { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); margin-bottom: 16px; }
+.edge-tier-desc { font-size: 13px; color: var(--text-2); line-height: 1.55; margin-bottom: 16px; min-height: 60px; }
+.edge-tier ul { list-style: none; padding: 0; margin-bottom: 18px; }
+.edge-tier ul li { padding: 5px 0 5px 18px; position: relative; font-size: 12.5px; color: var(--text-2); line-height: 1.5; }
+.edge-tier ul li::before { content: '·'; position: absolute; left: 6px; color: var(--gold); font-weight: 700; }
+.edge-tier-cta { display: block; text-align: center; padding: 10px; background: rgba(212,175,55,0.1); color: var(--gold); border: 1px solid rgba(212,175,55,0.35); border-radius: 8px; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; transition: background 0.15s; }
+.edge-tier.featured .edge-tier-cta { background: var(--gold); color: var(--bg); }
+
+.edge-cta-block { max-width: 880px; margin: 64px auto; padding: 36px; text-align: center; background: linear-gradient(135deg, rgba(212,175,55,0.06), rgba(20,17,12,0.5)); border: 1px solid rgba(212,175,55,0.35); border-radius: 16px; }
+.edge-cta-h { font-family: 'Anton', sans-serif; font-size: clamp(28px, 4vw, 42px); line-height: 1.05; margin-bottom: 14px; letter-spacing: -0.005em; }
+.edge-cta-h .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.edge-cta-sub { color: var(--text-2); font-size: 15px; line-height: 1.55; margin-bottom: 22px; max-width: 600px; margin-left: auto; margin-right: auto; }
+.edge-cta-btn { display: inline-block; padding: 16px 32px; background: var(--gold); color: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 1.8px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 10px; transition: transform 0.2s; margin: 0 6px; }
+.edge-cta-btn:hover { transform: translateY(-1px); }
+.edge-cta-btn.outline { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+
+@media (max-width: 760px) {
+  .edge-hero { padding: 52px 22px 22px; }
+  .edge-feature-list, .edge-diff-row, .edge-pricing-grid { grid-template-columns: 1fr; }
+}
+  </style>
+</head>
+<body>
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="edge-hero">
+  <div class="edge-eyebrow">// FIELDCHECK EDGE · INTELLIGENCE LICENSED TO INSTITUTIONS</div>
+  <h1 class="edge-title">The intelligence engine,<br><span class="iq-italic">at organizational scale.</span></h1>
+  <p class="edge-sub">FieldCheck IQ powers the consumer site. <strong style="color:var(--text)">FieldCheck Edge</strong> powers the institutions that need to make recruiting decisions every week. Same audit. Same citations. Same confidence math. Built for athletic departments, NIL collectives, and pro clubs.</p>
+  <p class="edge-coda">"For the ten people in a department who need to read 400 athletes a season — not one."</p>
+</section>
+
+<section class="edge-buyer-band">
+  <div class="edge-buyer-eyebrow">// EDGE IS BUILT FOR</div>
+  <div class="edge-buyer-grid">
+    <div class="edge-buyer-card">
+      <div class="edge-buyer-icon">// 01 · ATHLETIC DEPARTMENTS</div>
+      <div class="edge-buyer-h">P5 + Group of 6</div>
+      <div class="edge-buyer-desc">Head coach + position coaches + GM + analytics + compliance — one workspace, IQ-audited, dispute-pipelined. The room reads from the same page.</div>
+    </div>
+    <div class="edge-buyer-card">
+      <div class="edge-buyer-icon">// 02 · NIL COLLECTIVES</div>
+      <div class="edge-buyer-h">Capital allocators</div>
+      <div class="edge-buyer-desc">An audited valuation framework that doesn't get retracted. NIL Score + confidence interval + reasoning trace. Defensible to boosters, donors, and counsel.</div>
+    </div>
+    <div class="edge-buyer-card">
+      <div class="edge-buyer-icon">// 03 · PRO CLUBS</div>
+      <div class="edge-buyer-h">LOVB · USL · NWSL · pro pathways</div>
+      <div class="edge-buyer-desc">Founding-athlete archetype matching, cross-sport portability scores, transfer-readiness models. The intelligence layer behind every contract conversation.</div>
+    </div>
+    <div class="edge-buyer-card">
+      <div class="edge-buyer-icon">// 04 · COACHING NETWORKS</div>
+      <div class="edge-buyer-h">Multi-program orgs</div>
+      <div class="edge-buyer-desc">Private boards across staffs. Trust Graph rolled up across alumni networks. IQ-stamped exports for every recommendation memo.</div>
+    </div>
+  </div>
+</section>
+
+<section class="edge-platform">
+  <div class="edge-platform-eyebrow">// THE EDGE PLATFORM</div>
+  <h2 class="edge-platform-h">Same engine, <span class="iq-italic">org-scale surface.</span></h2>
+  <div class="edge-feature-list">
+    <div class="edge-feature">
+      <div class="edge-feature-tag">// COACH WORKSPACE v2+</div>
+      <div class="edge-feature-h">Multi-user boards</div>
+      <div class="edge-feature-desc">Watchlists, candidate boards, IQ Compare, IQ-stamped exports — shared across head coach, position coaches, GM, analytics. Roles + permissions.</div>
+    </div>
+    <div class="edge-feature">
+      <div class="edge-feature-tag">// TRUST GRAPH PRO</div>
+      <div class="edge-feature-h">Network intelligence at scale</div>
+      <div class="edge-feature-desc">Full coach → program → athlete graph for your sport. Filter by tier, region, archetype. Every edge cited. Drill into the audit.</div>
+    </div>
+    <div class="edge-feature">
+      <div class="edge-feature-tag">// IQ API</div>
+      <div class="edge-feature-h">Embed the engine</div>
+      <div class="edge-feature-desc">REST endpoints for verdict, comparable, NIL Score, trust graph. Audit JSON on every response. SHA-256 signed. SLA-backed.</div>
+    </div>
+    <div class="edge-feature">
+      <div class="edge-feature-tag">// DISPUTE PIPELINE</div>
+      <div class="edge-feature-h">5-business-day SLA</div>
+      <div class="edge-feature-desc">Any verdict, anytime. Methodology desk responds within 5 business days. The receipts are part of the product.</div>
+    </div>
+    <div class="edge-feature">
+      <div class="edge-feature-tag">// SSO + SECURITY</div>
+      <div class="edge-feature-h">SAML · audit logs · DPA</div>
+      <div class="edge-feature-desc">Enterprise SSO. Comprehensive audit logs. Data processing agreement on file. Compliance-grade infrastructure.</div>
+    </div>
+    <div class="edge-feature">
+      <div class="edge-feature-tag">// METHODOLOGY DESK</div>
+      <div class="edge-feature-h">Direct channel</div>
+      <div class="edge-feature-desc">Your AD, GM, and compliance lead get a direct line to the methodology team. Quarterly model briefings. No black box.</div>
+    </div>
+  </div>
+</section>
+
+<section class="edge-difference">
+  <div class="edge-diff-eyebrow">// WHY EDGE EXISTS</div>
+  <h2 class="edge-diff-h">A recruiting tool. <span class="iq-italic">Or an audited intelligence layer.</span></h2>
+  <div class="edge-diff-row">
+    <div class="edge-diff-col them">
+      <h4>// MOST RECRUITING SAAS</h4>
+      <ul>
+        <li>Profiles + messaging UI</li>
+        <li>Opinion-driven rankings</li>
+        <li>Opaque methodology</li>
+        <li>No audit trail</li>
+        <li>Engagement-optimized</li>
+        <li>Sells to fans, masquerades as a tool</li>
+      </ul>
+    </div>
+    <div class="edge-diff-col us">
+      <h4>// FIELDCHECK EDGE</h4>
+      <ul>
+        <li>Audited verdict + 5-layer moat per athlete</li>
+        <li>Citation per claim, confidence per projection</li>
+        <li>Published methodology, open weights</li>
+        <li>SHA-256 audit JSON, reproducible</li>
+        <li>Decision-quality optimized</li>
+        <li>Built for the people who make the call</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="edge-pricing">
+  <div class="edge-pricing-eyebrow">// EDGE PRICING</div>
+  <h2 class="edge-pricing-h">Three tiers. One promise: <span style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400">the read is the product.</span></h2>
+  <div class="edge-pricing-grid">
+    <div class="edge-tier">
+      <div class="edge-tier-label">// EDGE · DEPT</div>
+      <div class="edge-tier-price">$99<span style="font-size:22px;color:#888">/mo</span></div>
+      <div class="edge-tier-period">PER USER · ANNUAL</div>
+      <div class="edge-tier-desc">For single coaching staffs. Workspace v2, Compare, Exports, Trust Graph.</div>
+      <ul>
+        <li>Coach Workspace v2 + Compare</li>
+        <li>IQ-Stamped exports unlimited</li>
+        <li>Trust Graph (sport scope)</li>
+        <li>5-day dispute SLA</li>
+        <li>Up to 10 seats</li>
+      </ul>
+      <a href="mailto:edge@fieldcheck.ai?subject=FieldCheck%20Edge%20-%20Dept" class="edge-tier-cta">Start a trial →</a>
+    </div>
+    <div class="edge-tier featured">
+      <div class="edge-tier-label">// EDGE · INSTITUTION</div>
+      <div class="edge-tier-price">CUSTOM</div>
+      <div class="edge-tier-period">ANNUAL CONTRACT · FROM $36K</div>
+      <div class="edge-tier-desc">For athletic departments + NIL collectives running real allocation decisions.</div>
+      <ul>
+        <li>Everything in Dept, multi-staff</li>
+        <li>Cross-sport Trust Graph rollups</li>
+        <li>IQ API access (REST, SHA-256)</li>
+        <li>SSO + audit logs + DPA</li>
+        <li>Direct methodology desk line</li>
+        <li>Quarterly model briefings</li>
+      </ul>
+      <a href="mailto:edge@fieldcheck.ai?subject=FieldCheck%20Edge%20-%20Institution" class="edge-tier-cta">Talk to us →</a>
+    </div>
+    <div class="edge-tier">
+      <div class="edge-tier-label">// EDGE · PRO</div>
+      <div class="edge-tier-price">CUSTOM</div>
+      <div class="edge-tier-period">ANNUAL CONTRACT · FROM $96K</div>
+      <div class="edge-tier-desc">For pro clubs, leagues, agencies running contract-decision pipelines.</div>
+      <ul>
+        <li>Everything in Institution</li>
+        <li>Founding-athlete archetype API</li>
+        <li>Cross-sport portability scoring</li>
+        <li>NIL Score + reasoning trace</li>
+        <li>White-label embed option</li>
+        <li>Dedicated solutions engineer</li>
+      </ul>
+      <a href="mailto:edge@fieldcheck.ai?subject=FieldCheck%20Edge%20-%20Pro" class="edge-tier-cta">Talk to us →</a>
+    </div>
+  </div>
+</section>
+
+<section class="edge-cta-block">
+  <h2 class="edge-cta-h">Read 400 athletes a season. <span class="iq-italic">Audit every read.</span></h2>
+  <p class="edge-cta-sub">Edge starts with a conversation, not a credit card. Tell us what you're allocating against — we'll show you what the engine reads on a few of your priority targets, with the audit trail attached.</p>
+  <a href="mailto:edge@fieldcheck.ai?subject=FieldCheck%20Edge%20-%20Inquiry" class="edge-cta-btn">Email edge@fieldcheck.ai</a>
+  <a href="/iq" class="edge-cta-btn outline">See how IQ reads →</a>
+</section>
+
+<div style="text-align:center;padding:24px 32px 60px;color:#888;font-size:11px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:1.2px">
+  FieldCheck Edge · ThinkDifferent Holdings · © 2026 · Built on the TD Trust Engine · v0.30.5.2229
+</div>
+
+<script>
+function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('fc-nav-more-wrap');
+  if (!wrap) return;
+  if (!wrap.contains(e.target)) {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+</body>
+</html>

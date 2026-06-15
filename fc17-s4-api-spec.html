@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FC17.S4 / Phase 4.7 · API Spec · v1.7 Posterior Service</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06050A;--bg1:#0D0C12;
+  --ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);
+  --t:#F5F1E8;--t2:rgba(245,241,232,.74);--t3:rgba(245,241,232,.46);--t4:rgba(245,241,232,.24);
+  --gold:#F5B800;--goldb:#FFD24A;--golds:rgba(245,184,0,.09);--goldl:rgba(245,184,0,.28);
+  --moss:#6BAA5A;--mossl:rgba(107,170,90,.14);--mossd:rgba(107,170,90,.30);
+  --teal:#4EC9C0;--teall:rgba(78,201,192,.3);
+  --violet:#8B5CF6;--violetl:rgba(139,92,246,.3);
+  --red:#FF5C3A;--redd:rgba(255,92,58,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;background:var(--bg)}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;min-height:100vh;line-height:1.65}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 35% at 50% 0%,rgba(78,201,192,.04) 0%,transparent 65%),radial-gradient(ellipse 60% 50% at 100% 100%,rgba(245,184,0,.025) 0%,transparent 60%),linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+.hdr{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--ge);background:rgba(6,5,10,.86);backdrop-filter:blur(24px)}
+.hdr-i{max-width:1200px;margin:0 auto;padding:18px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.brand{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:-.012em}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.hdr-tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:5px 12px;border-radius:9999px;background:rgba(78,201,192,.10);border:1px solid var(--teall);color:var(--teal)}
+.hdr-meta{flex:1;text-align:right;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t3)}
+.wrap{max-width:1200px;margin:0 auto;padding:50px 28px 90px;position:relative;z-index:1}
+.hero{margin-bottom:42px;padding-bottom:28px;border-bottom:1px solid var(--ge)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--teal);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";display:inline-block;width:18px;height:1px;background:var(--teal)}
+h1{font-family:'Anton',sans-serif;font-size:clamp(38px,4.6vw,60px);letter-spacing:-.014em;line-height:.98;margin-bottom:10px}
+h1 b{color:var(--teal)}
+.lede{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:var(--t2);line-height:1.55;max-width:780px}
+.lede b{color:var(--t);font-style:normal;font-weight:600}
+.section{margin-bottom:48px}
+.section-h{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:-.01em;margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.section-h b{color:var(--teal)}
+.section-h .pin{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;padding:4px 10px;border-radius:9999px;background:var(--golds);color:var(--gold);border:1px solid var(--goldl)}
+.section-h .pin.teal{background:rgba(78,201,192,.10);color:var(--teal);border-color:var(--teall)}
+.section-h .pin.violet{background:rgba(139,92,246,.10);color:var(--violet);border-color:var(--violetl)}
+.section-sub{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t3);margin-bottom:22px;letter-spacing:.4px}
+p{color:var(--t2);margin-bottom:14px;max-width:880px}
+p b{color:var(--t)}
+ul{padding-left:0;list-style:none;margin-bottom:14px}
+ul li{color:var(--t2);padding:4px 0;padding-left:18px;position:relative;line-height:1.65}
+ul li::before{content:"·";color:var(--teal);font-weight:700;position:absolute;left:6px}
+ul li b{color:var(--t)}
+.card{background:rgba(13,12,18,.55);border:1px solid var(--ge);border-radius:14px;padding:24px 28px;margin-bottom:18px}
+.card-h{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.card-h::before{content:"";display:inline-block;width:10px;height:10px;background:var(--teal);border-radius:2px}
+.endpoint{background:rgba(13,12,18,.65);border:1px solid var(--ge);border-radius:14px;padding:0;margin-bottom:22px;overflow:hidden}
+.endpoint-hdr{padding:20px 26px;background:linear-gradient(135deg,rgba(78,201,192,.08),rgba(13,12,18,.4));border-bottom:1px solid var(--ge);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.endpoint-method{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;padding:4px 10px;border-radius:6px;background:rgba(107,170,90,.14);color:var(--moss);border:1px solid var(--mossd)}
+.endpoint-path{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--t);font-weight:600;letter-spacing:.3px}
+.endpoint-path .param{color:var(--gold)}
+.endpoint-desc{flex:1;min-width:200px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t3);letter-spacing:.3px;text-align:right}
+.endpoint-body{padding:24px 26px}
+.sub-h{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-bottom:8px;margin-top:18px}
+.sub-h:first-child{margin-top:0}
+pre{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--t2);background:rgba(6,5,10,.65);border:1px solid var(--ge);border-radius:8px;padding:16px 18px;overflow-x:auto;line-height:1.55;margin-bottom:14px;white-space:pre}
+pre .k{color:var(--teal);font-weight:600}
+pre .s{color:var(--gold)}
+pre .n{color:var(--violet)}
+pre .c{color:var(--t4);font-style:italic}
+pre .ret{color:var(--moss);font-weight:600}
+.code-inline{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 6px;border-radius:4px}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px}
+.tbl th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);padding:12px 14px;border-bottom:1px solid var(--ge)}
+.tbl td{padding:13px 14px;border-bottom:1px solid var(--ge2);color:var(--t2);vertical-align:top;line-height:1.55}
+.tbl tr:hover td{background:rgba(255,252,245,.012)}
+.tbl .nm{font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;letter-spacing:.4px;white-space:nowrap;font-size:12px}
+.tbl code{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);background:rgba(245,184,0,.06);padding:1px 5px;border-radius:4px}
+.phase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+@media(max-width:820px){.phase-grid{grid-template-columns:1fr}}
+.phase{padding:18px 20px;background:rgba(13,12,18,.55);border:1px solid var(--ge);border-radius:12px;border-top:3px solid var(--teal)}
+.phase.now{border-top-color:var(--gold);background:rgba(245,184,0,.04)}
+.phase.future{border-top-color:var(--violet);opacity:.82}
+.phase-l{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.phase.now .phase-l{color:var(--gold)}
+.phase.future .phase-l{color:var(--violet)}
+.phase-h{font-family:'Anton',sans-serif;font-size:19px;letter-spacing:-.005em;margin-bottom:10px}
+.phase-b{font-size:12.5px;color:var(--t2);line-height:1.6}
+.callout{padding:18px 22px;background:rgba(245,184,0,.05);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;margin-bottom:18px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--t2);line-height:1.55}
+.callout b{color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;font-style:normal}
+.ftr{margin-top:60px;padding-top:30px;border-top:1px solid var(--ge);text-align:center}
+.ftr-l{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t4);margin-bottom:8px}
+.ftr-b{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+
+<header class="hdr">
+  <div class="hdr-i">
+    <div class="brand">Field<b>Check</b><span class="iq">IQ</span></div>
+    <div class="hdr-tag">FC17.S4 · Phase 4.7 · API Spec</div>
+    <div class="hdr-meta">May 19, 2026 · Parallel track to FC17.S2A/B/S3 · Target Aug 15, 2026</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">// FC17.S4 · The backend track</div>
+    <h1>v1.7 Posterior <b>Service</b></h1>
+    <p class="lede">Three endpoints. One worker route fork. Phased data layer: hardcoded → KV → D1. Designed to run <b>parallel to FC17.S2A/B/S3 front-end work</b> so the moment Phase 3 ships globally, the front end can retire hardcoded data and start fetching live.</p>
+  </div>
+
+  <!-- ── OVERVIEW ── -->
+  <div class="section">
+    <div class="section-h">Overview <span class="pin teal">3 endpoints</span></div>
+
+    <p>The new polygon needs structured v1.7 data — Bayesian posterior, refinement metadata, comparable trajectories. Three endpoints serve this; the existing <code class="code-inline">fieldcheck-proxy.sridhar-nallani.workers.dev</code> worker gets a new route fork at <code class="code-inline">/api/v17/*</code>. All other existing routes untouched.</p>
+
+    <table class="tbl">
+      <thead><tr><th style="width:70px">Method</th><th>Path</th><th>Returns</th><th style="width:160px">Used by</th></tr></thead>
+      <tbody>
+        <tr><td class="nm">GET</td><td><code>/api/v17/posterior/:player</code></td><td>Composite mean + CI + tier distribution + 8 pillars with sub-dims</td><td>Polygon · composite display · tier bars</td></tr>
+        <tr><td class="nm">GET</td><td><code>/api/v17/refinements/:player</code></td><td>R1-R6 active/inactive flags + per-pillar refinement details</td><td>Refinement panel · polygon icons · tooltips</td></tr>
+        <tr><td class="nm">GET</td><td><code>/api/v17/comparables/:player</code></td><td>Comparable trajectory profiles (e.g., LeBron 2003, Wiggins 2014)</td><td>Ghost polygon overlays</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <b>Design principle</b> · Stateless · cacheable · player-keyed · framework-versioned. Front end fetches all 3 in parallel on verdict page load and renders progressively. Cache hits at the edge serve in &lt;50 ms.
+    </div>
+  </div>
+
+  <!-- ── PHASED DATA LAYER ── -->
+  <div class="section">
+    <div class="section-h">Data layer · phased rollout</div>
+    <div class="phase-grid">
+      <div class="phase now">
+        <div class="phase-l">PHASE 1 · NOW</div>
+        <div class="phase-h">Hardcoded</div>
+        <div class="phase-b"><b>Worker-embedded JS object.</b> Cooper Flagg + maybe 2-5 calibration anchors. Zero ops cost. Ship in days. Ideal for FC17.S2B Flagg integration.</div>
+      </div>
+      <div class="phase">
+        <div class="phase-l">PHASE 2 · WEEKS</div>
+        <div class="phase-h">Cloudflare KV</div>
+        <div class="phase-b"><b>KV namespace per resource.</b> <code>v17_posterior:{player}</code> · <code>v17_refinements:{player}</code> · <code>v17_comparables:{player}</code>. Read-heavy. 25ms global. Player data ingested by ETL job from internal JSON.</div>
+      </div>
+      <div class="phase future">
+        <div class="phase-l">PHASE 3 · POST-v1.7 LOCK</div>
+        <div class="phase-h">D1 + posterior</div>
+        <div class="phase-b"><b>Cloudflare D1 database</b> with computed posterior service. Real Bayesian sampler runs on schedule (weekly), writes results to D1. Worker reads + caches.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ENDPOINT 1 ── -->
+  <div class="section">
+    <div class="section-h">Endpoint 1 · <b>posterior</b></div>
+
+    <div class="endpoint">
+      <div class="endpoint-hdr">
+        <div class="endpoint-method">GET</div>
+        <div class="endpoint-path">/api/v17/posterior/<span class="param">:player</span></div>
+        <div class="endpoint-desc">Cache-Control: public, max-age=300</div>
+      </div>
+      <div class="endpoint-body">
+        <div class="sub-h">Path param</div>
+        <ul><li><code class="code-inline">:player</code> · player slug (e.g., <code class="code-inline">cooper_flagg</code>, <code class="code-inline">stephen_curry</code>). Lowercase snake_case.</li></ul>
+
+        <div class="sub-h">Response · 200 OK</div>
+<pre><span class="k">{</span>
+  <span class="k">"player_id"</span>: <span class="s">"cooper_flagg"</span>,
+  <span class="k">"display_name"</span>: <span class="s">"Cooper Flagg"</span>,
+  <span class="k">"framework_version"</span>: <span class="s">"1.7"</span>,
+  <span class="k">"computed_at"</span>: <span class="s">"2026-05-17T00:00:00Z"</span>,
+  <span class="k">"pre_registered"</span>: <span class="s">"2026-05-17"</span>,
+  <span class="k">"next_checkin"</span>: <span class="s">"2028-08-15"</span>,
+
+  <span class="k">"composite"</span>: <span class="k">{</span>
+    <span class="k">"mean"</span>: <span class="n">9.30</span>,
+    <span class="k">"sd"</span>: <span class="n">0.38</span>,
+    <span class="k">"ci_low"</span>: <span class="n">8.46</span>,
+    <span class="k">"ci_high"</span>: <span class="n">9.95</span>,
+    <span class="k">"tier_label"</span>: <span class="s">"hof_lock_near_ic"</span>
+  <span class="k">}</span>,
+
+  <span class="k">"tier_distribution"</span>: <span class="k">{</span>
+    <span class="k">"pantheon"</span>: <span class="n">0.22</span>,
+    <span class="k">"inner_circle_hof"</span>: <span class="n">0.34</span>,
+    <span class="k">"hof_lock"</span>: <span class="n">0.30</span>,
+    <span class="k">"multi_all_star"</span>: <span class="n">0.11</span>,
+    <span class="k">"solid_starter"</span>: <span class="n">0.03</span>,
+    <span class="k">"below"</span>: <span class="n">0.01</span>
+  <span class="k">}</span>,
+
+  <span class="k">"pillars"</span>: <span class="k">{</span>
+    <span class="k">"character"</span>: <span class="k">{</span>
+      <span class="k">"mean"</span>: <span class="n">8.5</span>, <span class="k">"sd"</span>: <span class="n">0.45</span>,
+      <span class="k">"ci_low"</span>: <span class="n">7.6</span>, <span class="k">"ci_high"</span>: <span class="n">9.0</span>,
+      <span class="k">"confidence"</span>: <span class="n">0.72</span>, <span class="k">"weight"</span>: <span class="n">0.18</span>,
+      <span class="k">"function"</span>: <span class="s">"min"</span>,
+      <span class="k">"sub_dims"</span>: <span class="k">[</span>
+        <span class="k">{</span> <span class="k">"key"</span>: <span class="s">"honesty"</span>, <span class="k">"mean"</span>: <span class="n">8.5</span>, <span class="k">"conf"</span>: <span class="n">0.75</span>, <span class="k">"flag"</span>: <span class="k">null</span> <span class="k">}</span>,
+        <span class="k">{</span> <span class="k">"key"</span>: <span class="s">"harm_avoidance"</span>, <span class="k">"mean"</span>: <span class="n">8.5</span>, <span class="k">"conf"</span>: <span class="n">0.65</span>, <span class="k">"flag"</span>: <span class="s">"untested_adult_stress"</span> <span class="k">}</span>,
+        <span class="k">{</span> <span class="k">"key"</span>: <span class="s">"reliability"</span>, <span class="k">"mean"</span>: <span class="n">9.5</span>, <span class="k">"conf"</span>: <span class="n">0.90</span>, <span class="k">"flag"</span>: <span class="k">null</span> <span class="k">}</span>,
+        <span class="k">{</span> <span class="k">"key"</span>: <span class="s">"loyalty"</span>, <span class="k">"mean"</span>: <span class="n">9.0</span>, <span class="k">"conf"</span>: <span class="n">0.75</span>, <span class="k">"flag"</span>: <span class="k">null</span> <span class="k">}</span>,
+        <span class="k">{</span> <span class="k">"key"</span>: <span class="s">"composure"</span>, <span class="k">"mean"</span>: <span class="n">9.3</span>, <span class="k">"conf"</span>: <span class="n">0.80</span>, <span class="k">"flag"</span>: <span class="k">null</span> <span class="k">}</span>
+      <span class="k">]</span>,
+      <span class="k">"categorical_events"</span>: <span class="k">[]</span>     <span class="c">// Yamamoto mandate: separate from score</span>
+    <span class="k">}</span>,
+    <span class="k">"mindset"</span>: <span class="k">{</span> <span class="k">"mean"</span>: <span class="n">9.5</span>, <span class="k">"sd"</span>: <span class="n">0.22</span>, <span class="k">"ci_low"</span>: <span class="n">9.1</span>, <span class="k">"ci_high"</span>: <span class="n">9.9</span>, <span class="k">"confidence"</span>: <span class="n">0.91</span>, <span class="k">"weight"</span>: <span class="n">0.12</span> <span class="k">}</span>,
+    <span class="c">// ...mental_str, talent, physical, mental_iq, coachability, competitive</span>
+  <span class="k">}</span>,
+
+  <span class="k">"interpretation"</span>: <span class="k">{</span>
+    <span class="k">"confidence"</span>: <span class="s">"HIGH"</span>,
+    <span class="k">"generated_at"</span>: <span class="s">"2026-05-17T00:00:00Z"</span>,
+    <span class="k">"body"</span>: <span class="s">"Cooper Flagg is the strongest pre-NBA profile we've scored since LeBron 2003..."</span>
+  <span class="k">}</span>
+<span class="k">}</span></pre>
+
+        <div class="sub-h">Error responses</div>
+        <ul>
+          <li><b>404</b> · <code class="code-inline">{"error":"player_not_found"}</code> · player slug not in dataset</li>
+          <li><b>500</b> · <code class="code-inline">{"error":"posterior_compute_failed"}</code> · backend posterior service unavailable (Phase 3 only)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ENDPOINT 2 ── -->
+  <div class="section">
+    <div class="section-h">Endpoint 2 · <b>refinements</b></div>
+
+    <div class="endpoint">
+      <div class="endpoint-hdr">
+        <div class="endpoint-method">GET</div>
+        <div class="endpoint-path">/api/v17/refinements/<span class="param">:player</span></div>
+        <div class="endpoint-desc">Cache-Control: public, max-age=600</div>
+      </div>
+      <div class="endpoint-body">
+        <div class="sub-h">Response · 200 OK</div>
+<pre><span class="k">{</span>
+  <span class="k">"player_id"</span>: <span class="s">"cooper_flagg"</span>,
+  <span class="k">"active"</span>: <span class="k">[</span><span class="s">"R1"</span>, <span class="s">"R4"</span>, <span class="s">"R5"</span><span class="k">]</span>,
+  <span class="k">"inactive"</span>: <span class="k">[</span><span class="s">"R2"</span>, <span class="s">"R3"</span>, <span class="s">"R6"</span><span class="k">]</span>,
+  <span class="k">"details"</span>: <span class="k">{</span>
+    <span class="k">"R1"</span>: <span class="k">{</span>
+      <span class="k">"name"</span>: <span class="s">"Physical injury risk"</span>,
+      <span class="k">"icon"</span>: <span class="s">"🩹"</span>,
+      <span class="k">"applies_to"</span>: <span class="s">"physical"</span>,
+      <span class="k">"explanation"</span>: <span class="s">"Injury risk applied · effective = substrate × (1 − risk)"</span>,
+      <span class="k">"calc"</span>: <span class="k">{</span> <span class="k">"substrate"</span>: <span class="n">9.5</span>, <span class="k">"risk"</span>: <span class="n">0.04</span>, <span class="k">"effective"</span>: <span class="n">9.3</span> <span class="k">}</span>
+    <span class="k">}</span>,
+    <span class="k">"R4"</span>: <span class="k">{</span>
+      <span class="k">"name"</span>: <span class="s">"Coachability bias correction"</span>,
+      <span class="k">"icon"</span>: <span class="s">"🎯"</span>,
+      <span class="k">"applies_to"</span>: <span class="s">"coachability"</span>,
+      <span class="k">"explanation"</span>: <span class="s">"Bias-corrected blend of coach quotes (9.4) + anonymous teammates (8.8) + independent observers (9.0)"</span>
+    <span class="k">}</span>,
+    <span class="k">"R5"</span>: <span class="k">{</span>
+      <span class="k">"name"</span>: <span class="s">"Context risk widening"</span>,
+      <span class="k">"icon"</span>: <span class="s">"📍"</span>,
+      <span class="k">"applies_to"</span>: <span class="s">"character.harm_avoidance"</span>,
+      <span class="k">"explanation"</span>: <span class="s">"CI widened on Harm-avoidance · adult-stress untested"</span>
+    <span class="k">}</span>
+  <span class="k">}</span>
+<span class="k">}</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ENDPOINT 3 ── -->
+  <div class="section">
+    <div class="section-h">Endpoint 3 · <b>comparables</b></div>
+
+    <div class="endpoint">
+      <div class="endpoint-hdr">
+        <div class="endpoint-method">GET</div>
+        <div class="endpoint-path">/api/v17/comparables/<span class="param">:player</span></div>
+        <div class="endpoint-desc">Cache-Control: public, max-age=3600</div>
+      </div>
+      <div class="endpoint-body">
+        <div class="sub-h">Response · 200 OK</div>
+<pre><span class="k">{</span>
+  <span class="k">"player_id"</span>: <span class="s">"cooper_flagg"</span>,
+  <span class="k">"comparables"</span>: <span class="k">[</span>
+    <span class="k">{</span>
+      <span class="k">"name"</span>: <span class="s">"LeBron James 2003"</span>,
+      <span class="k">"slug"</span>: <span class="s">"lebron_2003"</span>,
+      <span class="k">"age_at_snapshot"</span>: <span class="n">19</span>,
+      <span class="k">"career_composite"</span>: <span class="n">9.95</span>,
+      <span class="k">"color"</span>: <span class="s">"gold"</span>,
+      <span class="k">"style"</span>: <span class="s">"dashed"</span>,
+      <span class="k">"pillars"</span>: <span class="k">{</span>
+        <span class="k">"character"</span>: <span class="n">9.0</span>, <span class="k">"mindset"</span>: <span class="n">9.5</span>,
+        <span class="k">"mental_str"</span>: <span class="n">9.7</span>, <span class="k">"talent"</span>: <span class="n">9.9</span>,
+        <span class="k">"physical"</span>: <span class="n">9.8</span>, <span class="k">"mental_iq"</span>: <span class="n">9.6</span>,
+        <span class="k">"coachability"</span>: <span class="n">9.0</span>, <span class="k">"competitive"</span>: <span class="n">9.8</span>
+      <span class="k">}</span>
+    <span class="k">}</span>,
+    <span class="k">{</span>
+      <span class="k">"name"</span>: <span class="s">"Andrew Wiggins 2014"</span>,
+      <span class="k">"slug"</span>: <span class="s">"wiggins_2014"</span>,
+      <span class="k">"age_at_snapshot"</span>: <span class="n">19</span>,
+      <span class="k">"career_composite"</span>: <span class="n">7.40</span>,
+      <span class="k">"color"</span>: <span class="s">"red"</span>,
+      <span class="k">"style"</span>: <span class="s">"dashed"</span>,
+      <span class="k">"pillars"</span>: <span class="k">{</span>
+        <span class="k">"character"</span>: <span class="n">7.5</span>, <span class="k">"mindset"</span>: <span class="n">6.8</span>,
+        <span class="k">"mental_str"</span>: <span class="n">6.5</span>, <span class="k">"talent"</span>: <span class="n">9.2</span>,
+        <span class="k">"physical"</span>: <span class="n">9.0</span>, <span class="k">"mental_iq"</span>: <span class="n">7.0</span>,
+        <span class="k">"coachability"</span>: <span class="n">7.5</span>, <span class="k">"competitive"</span>: <span class="n">6.5</span>
+      <span class="k">}</span>
+    <span class="k">}</span>
+  <span class="k">]</span>
+<span class="k">}</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WORKER INTEGRATION ── -->
+  <div class="section">
+    <div class="section-h">Worker integration <span class="pin">Cloudflare</span></div>
+    <div class="section-sub">Adds a new route fork at <code class="code-inline">/api/v17/*</code> to the existing <code class="code-inline">fieldcheck-proxy</code> worker. All existing routes untouched.</div>
+
+    <div class="card">
+      <div class="card-h">Drop-in handler · add to existing worker.js</div>
+<pre><span class="c">// ── FC17.S4 / Phase 4.7 · v17 API additions ──────────────</span>
+<span class="c">// Add this block to existing fieldcheck-proxy worker.js</span>
+<span class="c">// Goes BEFORE the existing catch-all fetch(request) at the end</span>
+
+<span class="c">// Phase 1: hardcoded data. See FLAGG_V17 in fc17-s2b-flagg-data.js</span>
+<span class="k">import</span> { FLAGG_V17 } <span class="k">from</span> <span class="s">'./fc17-s2b-flagg-data.js'</span>;
+
+<span class="k">const</span> PLAYERS = {
+  <span class="s">'cooper_flagg'</span>: FLAGG_V17,
+  <span class="c">// add stephen_curry, madisen_skinner, etc as data prepared</span>
+};
+
+<span class="k">function</span> json(body, status = <span class="n">200</span>, extra = {}) {
+  <span class="k">return new</span> Response(JSON.stringify(body), {
+    status,
+    headers: {
+      <span class="s">'Content-Type'</span>: <span class="s">'application/json'</span>,
+      <span class="s">'Cache-Control'</span>: <span class="s">'public, max-age=300'</span>,
+      <span class="s">'Access-Control-Allow-Origin'</span>: <span class="s">'*'</span>,
+      <span class="s">'X-Framework-Version'</span>: <span class="s">'1.7'</span>,
+      ...extra
+    }
+  });
+}
+
+<span class="k">function</span> handleV17(request, url) {
+  <span class="k">const</span> path = url.pathname;
+  <span class="k">const</span> match = path.match(<span class="s">/^\/api\/v17\/(posterior|refinements|comparables)\/([a-z_]+)$/</span>);
+  <span class="k">if</span> (!match) <span class="k">return</span> json({ error: <span class="s">'invalid_v17_route'</span> }, <span class="n">404</span>);
+
+  <span class="k">const</span> [, resource, player] = match;
+  <span class="k">const</span> data = PLAYERS[player];
+  <span class="k">if</span> (!data) <span class="k">return</span> json({ error: <span class="s">'player_not_found'</span>, player }, <span class="n">404</span>);
+
+  <span class="k">if</span> (resource === <span class="s">'posterior'</span>) <span class="k">return</span> json(data.posterior);
+  <span class="k">if</span> (resource === <span class="s">'refinements'</span>) <span class="k">return</span> json(data.refinements,
+    <span class="n">200</span>, { <span class="s">'Cache-Control'</span>: <span class="s">'public, max-age=600'</span> });
+  <span class="k">if</span> (resource === <span class="s">'comparables'</span>) <span class="k">return</span> json(data.comparables,
+    <span class="n">200</span>, { <span class="s">'Cache-Control'</span>: <span class="s">'public, max-age=3600'</span> });
+}
+
+<span class="c">// In the main fetch handler, add early:</span>
+<span class="k">if</span> (url.pathname.startsWith(<span class="s">'/api/v17/'</span>)) {
+  <span class="ret">return</span> handleV17(request, url);
+}
+<span class="c">// ...existing routes follow unchanged</span></pre>
+    </div>
+
+    <div class="callout">
+      <b>Phase 2 migration path</b> · When KV is ready, swap the <code style="font-style:normal">PLAYERS</code> object lookup for <code style="font-style:normal">await env.V17_KV.get(`posterior:${player}`)</code>. The handler signature doesn't change — front end keeps fetching the same URLs.
+    </div>
+  </div>
+
+  <!-- ── FRONTEND INTEGRATION ── -->
+  <div class="section">
+    <div class="section-h">Frontend integration pattern</div>
+
+    <div class="card">
+      <div class="card-h">Verdict page fetch · parallel + progressive render</div>
+<pre><span class="c">// In fieldcheck-verdict.html · replaces hardcoded FLAGG_V17 once Phase 4.7 ships</span>
+
+<span class="k">async function</span> loadV17(playerSlug) {
+  <span class="k">const</span> base = <span class="s">'https://fieldcheck-proxy.sridhar-nallani.workers.dev/api/v17'</span>;
+  <span class="k">const</span> [posterior, refinements, comparables] = <span class="k">await</span> Promise.all([
+    fetch(<span class="s">`${base}/posterior/${playerSlug}`</span>).then(r =&gt; r.json()),
+    fetch(<span class="s">`${base}/refinements/${playerSlug}`</span>).then(r =&gt; r.json()),
+    fetch(<span class="s">`${base}/comparables/${playerSlug}`</span>).then(r =&gt; r.json())
+  ]);
+  <span class="ret">return</span> { posterior, refinements, comparables };
+}
+
+<span class="c">// Player-gated rendering: new polygon if v17 data available, else old polygon</span>
+<span class="k">const</span> v17 = <span class="k">await</span> loadV17(playerSlug).catch(() =&gt; <span class="k">null</span>);
+<span class="k">if</span> (v17 &amp;&amp; v17.posterior &amp;&amp; !v17.posterior.error) {
+  renderV17Polygon(v17);
+} <span class="k">else</span> {
+  renderLegacyPolygon();
+}</pre>
+    </div>
+  </div>
+
+  <!-- ── CROSS-CUTTING ── -->
+  <div class="section">
+    <div class="section-h">Cross-cutting concerns</div>
+
+    <table class="tbl">
+      <thead><tr><th style="width:160px">Concern</th><th>Decision</th></tr></thead>
+      <tbody>
+        <tr><td class="nm">CORS</td><td><code>Access-Control-Allow-Origin: *</code> · same-origin not required · public read-only data</td></tr>
+        <tr><td class="nm">Auth</td><td>None for reads (public verdicts). When Pro tier ships → bearer token for premium endpoints (separate spec).</td></tr>
+        <tr><td class="nm">Rate limits</td><td>Cloudflare default per-IP limits. Cache hits don't count. If abuse → add per-IP quota in worker.</td></tr>
+        <tr><td class="nm">Versioning</td><td>URL path versioned (<code>/api/v17/</code>). Future v1.8 = <code>/api/v18/</code>. <code>X-Framework-Version</code> header echoes for clients.</td></tr>
+        <tr><td class="nm">Cache strategy</td><td>Posterior 5 min · refinements 10 min · comparables 1 hr (changes least). Bust by KV write timestamp (Phase 2+).</td></tr>
+        <tr><td class="nm">Observability</td><td>Cloudflare Worker analytics for hit rate + latency. Custom metric: <code>v17_endpoint_calls</code> counter per endpoint.</td></tr>
+        <tr><td class="nm">Error budget</td><td>99.5% uptime for read endpoints (well within Cloudflare SLA). Posterior service (Phase 3) has separate SLA.</td></tr>
+        <tr><td class="nm">Schema evolution</td><td>Additive only within v17. Breaking change = new path (e.g. <code>/api/v17.1/</code> or jump to <code>/api/v18/</code>).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── TEST STRATEGY ── -->
+  <div class="section">
+    <div class="section-h">Test strategy</div>
+    <ul>
+      <li><b>Unit:</b> Route matcher regex · response shape validators · error path coverage</li>
+      <li><b>Integration:</b> curl-based smoke tests post-deploy · all 3 endpoints for cooper_flagg return 200 + valid JSON</li>
+      <li><b>Visual:</b> Front end polygon renders identically whether data is hardcoded (S2B) or fetched (S4)</li>
+      <li><b>Cache hit ratio:</b> Track via Cloudflare analytics · target &gt;80% by week 2</li>
+      <li><b>Per-player smoke:</b> Every new player added to PLAYERS dict gets a smoke-tested all-3-endpoints check before "migrated" tier flag flips</li>
+    </ul>
+  </div>
+
+  <!-- ── ROLLOUT PLAN ── -->
+  <div class="section">
+    <div class="section-h">Rollout plan · parallel to FC17.S2A/B/S3</div>
+    <table class="tbl">
+      <thead><tr><th style="width:120px">Week of</th><th>FC17.S4 milestone</th><th>Concurrent main track</th></tr></thead>
+      <tbody>
+        <tr><td class="nm">May 20</td><td><b>Phase 1 scaffold</b> · worker route fork added · Flagg hardcoded · all 3 endpoints return 200 for cooper_flagg</td><td>FC17.S2A (verdict page mod) starts</td></tr>
+        <tr><td class="nm">May 27</td><td><b>Phase 1 hardened</b> · error paths · CORS · cache headers · curl smoke tests pass</td><td>FC17.S2B (Flagg integration) ships</td></tr>
+        <tr><td class="nm">Jun 03</td><td><b>Phase 2 kickoff</b> · KV namespace created · ETL plan drafted for next 25 players</td><td>FC17.S3 (sport-axis decision · batch rollout) begins</td></tr>
+        <tr><td class="nm">Jun 24</td><td><b>Phase 2 live</b> · 30+ players in KV · front end can switch from hardcoded to API for these players · feature flag controls cutover</td><td>FC17.S3 mid · half the cohort migrated</td></tr>
+        <tr><td class="nm">Aug 15</td><td><b>v1.7 LOCK milestone</b> · all 50 cohort players in KV · audit gate ready to flip · D1 + posterior service spec'd for Phase 3</td><td>FC17.S6 bias audit · global flip</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer class="ftr">
+    <div class="ftr-l">FieldCheck IQ · FC17.S4 · Phase 4.7 · v1.7 Posterior Service</div>
+    <div class="ftr-b">"The math behind the polygon."</div>
+  </footer>
+
+</div>
+
+</body>
+</html>

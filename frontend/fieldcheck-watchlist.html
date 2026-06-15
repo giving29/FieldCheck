@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watchlist · FieldCheck</title>
+<meta name="description" content="Your watched athletes — track verdict changes, last-visit history, and discover updates across your follow list.">
+<!-- FCBase42 . Phase 5 close-out . Standalone Watchlist Page (2026-06-08) . closes FCBase40 watchlist v2 banner dead-end UX -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Big+Shoulders+Display:wght@400;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07060a;
+    --bg2: #11101a;
+    --bg3: #1a1825;
+    --gold: #f0c66e;
+    --gold-d: #d4a24c;
+    --gold-soft: rgba(240, 198, 110, 0.12);
+    --gold-line: rgba(240, 198, 110, 0.22);
+    --t1: #ffffff;
+    --t2: rgba(255, 255, 255, 0.78);
+    --t3: rgba(255, 255, 255, 0.5);
+    --t4: rgba(255, 255, 255, 0.32);
+    --ge: rgba(255, 255, 255, 0.08);
+    --icon: #fbbf24;
+    --elite-plus: #93c5fd;
+    --elite: #c4b5fd;
+    --star: #86efac;
+    --prospect: #fde68a;
+    --scout: #fca5a5;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--t1); font-family: "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { min-height: 100vh; padding: 28px 20px 80px; }
+
+  .wrap { max-width: 1200px; margin: 0 auto; }
+
+  /* Top nav */
+  .topnav { display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; margin-bottom: 26px; border-bottom: 1px solid var(--ge); }
+  .topnav a.brand { font-family: "Big Shoulders Display", "Anton", sans-serif; font-weight: 900; font-size: 22px; letter-spacing: 0.04em; color: var(--gold); text-decoration: none; }
+  .topnav a.brand:hover { color: #fff; }
+  .topnav .nav-right { display: flex; gap: 16px; align-items: center; }
+  .topnav .nav-right a { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--t3); text-decoration: none; text-transform: uppercase; transition: color 0.18s ease; }
+  .topnav .nav-right a:hover { color: var(--gold); }
+
+  /* Header */
+  .hdr { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 30px; }
+  .hdr-l { flex: 1; min-width: 280px; }
+  .hdr-eyebrow { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; letter-spacing: 0.18em; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+  .hdr-title { font-family: "Big Shoulders Display", "Anton", sans-serif; font-weight: 900; font-size: clamp(42px, 7vw, 72px); line-height: 0.92; letter-spacing: -0.01em; margin: 0; color: var(--t1); }
+  .hdr-sub { margin-top: 12px; color: var(--t2); font-size: 14.5px; line-height: 1.5; max-width: 560px; }
+  .hdr-r { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .pill { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; background: rgba(255,255,255,0.04); border: 1px solid var(--ge); border-radius: 999px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--t2); }
+  .pill strong { color: var(--gold); font-weight: 700; }
+  .sort-btn { background: transparent; border: 1px solid var(--gold-line); color: var(--gold); padding: 8px 14px; border-radius: 8px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.18s ease; }
+  .sort-btn:hover { background: var(--gold-soft); }
+
+  /* Grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+
+  /* Card */
+  .card { background: linear-gradient(180deg, var(--bg2) 0%, var(--bg3) 100%); border: 1px solid var(--ge); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; transition: all 0.22s ease; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold) 0%, transparent 100%); opacity: 0; transition: opacity 0.22s ease; }
+  .card:hover { border-color: var(--gold-line); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(0,0,0,0.4); }
+  .card:hover::before { opacity: 1; }
+  .card-top { display: flex; gap: 14px; align-items: flex-start; }
+  .card-photo { width: 72px; height: 72px; border-radius: 50%; background: var(--bg2); border: 2px solid var(--gold-line); flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: "Anton", sans-serif; font-size: 30px; color: var(--t4); }
+  .card-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .card-ident { flex: 1; min-width: 0; }
+  .card-name { font-family: "Big Shoulders Display", "Anton", sans-serif; font-weight: 700; font-size: 22px; line-height: 1.1; color: var(--t1); margin: 0 0 4px; letter-spacing: -0.005em; word-break: break-word; }
+  .card-meta { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; color: var(--t3); letter-spacing: 0.04em; line-height: 1.5; }
+  .card-meta strong { color: var(--t2); font-weight: 600; }
+
+  .card-stats { display: flex; gap: 8px; align-items: center; }
+  .composite-chip { display: inline-flex; align-items: baseline; gap: 6px; padding: 6px 11px; background: rgba(240,198,110,0.06); border: 1px solid var(--gold-line); border-radius: 8px; }
+  .composite-chip .num { font-family: "Big Shoulders Display", "Bebas Neue", system-ui, sans-serif; font-size: 22px; font-weight: 900; color: var(--gold); line-height: 1; }
+  .composite-chip .lbl { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9px; color: var(--t3); letter-spacing: 0.12em; text-transform: uppercase; }
+  .tier-pill { display: inline-flex; padding: 5px 9px; border-radius: 4px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  .tier-pill[data-tier="ICON"] { background: rgba(251,191,36,0.10); color: var(--icon); border: 1px solid rgba(251,191,36,0.30); }
+  .tier-pill[data-tier="ELITE+"] { background: rgba(147,197,253,0.08); color: var(--elite-plus); border: 1px solid rgba(147,197,253,0.28); }
+  .tier-pill[data-tier="ELITE"] { background: rgba(196,181,253,0.08); color: var(--elite); border: 1px solid rgba(196,181,253,0.28); }
+  .tier-pill[data-tier="STAR"] { background: rgba(134,239,172,0.08); color: var(--star); border: 1px solid rgba(134,239,172,0.28); }
+  .tier-pill[data-tier="PROSPECT"] { background: rgba(253,230,138,0.08); color: var(--prospect); border: 1px solid rgba(253,230,138,0.28); }
+  .tier-pill[data-tier="SCOUT"] { background: rgba(252,165,165,0.08); color: var(--scout); border: 1px solid rgba(252,165,165,0.28); }
+
+  .card-visit { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; color: var(--t3); padding-top: 12px; border-top: 1px solid var(--ge); display: flex; align-items: center; gap: 8px; }
+  .card-visit.fresh { color: var(--star); }
+  .card-visit.stale { color: var(--scout); }
+  .card-visit-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--t4); flex-shrink: 0; }
+  .card-visit.fresh .card-visit-dot { background: var(--star); box-shadow: 0 0 8px var(--star); }
+  .card-visit.stale .card-visit-dot { background: var(--scout); }
+
+  .card-actions { display: flex; gap: 8px; }
+  .card-action { flex: 1; padding: 9px 12px; border-radius: 8px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.18s ease; border: 1px solid; }
+  .card-action.primary { background: var(--gold-soft); border-color: var(--gold-line); color: var(--gold); }
+  .card-action.primary:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+  .card-action.secondary { background: transparent; border-color: var(--ge); color: var(--t3); flex: 0 0 auto; padding: 9px 13px; }
+  .card-action.secondary:hover { background: rgba(252,165,165,0.08); border-color: rgba(252,165,165,0.30); color: var(--scout); }
+
+  /* Empty state */
+  .empty { text-align: center; padding: 80px 20px; max-width: 480px; margin: 40px auto; }
+  .empty-icon { font-size: 56px; color: var(--gold); opacity: 0.6; margin-bottom: 20px; line-height: 1; }
+  .empty-title { font-family: "Big Shoulders Display", "Anton", sans-serif; font-weight: 700; font-size: 32px; color: var(--t1); margin: 0 0 12px; }
+  .empty-body { color: var(--t2); font-size: 15px; line-height: 1.6; margin-bottom: 28px; }
+  .empty-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 22px; background: var(--gold); color: var(--bg); border-radius: 999px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; text-decoration: none; transition: all 0.2s ease; }
+  .empty-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(240,198,110,0.30); }
+
+  /* Footer */
+  .foot { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--ge); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; color: var(--t4); letter-spacing: 0.06em; }
+  .foot button.danger { background: transparent; border: 1px solid rgba(252,165,165,0.30); color: var(--scout); padding: 8px 14px; border-radius: 8px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; letter-spacing: 0.10em; text-transform: uppercase; cursor: pointer; transition: all 0.18s ease; }
+  .foot button.danger:hover { background: rgba(252,165,165,0.10); }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    body { padding: 20px 14px 60px; }
+    .topnav { margin-bottom: 20px; }
+    .grid { grid-template-columns: 1fr; gap: 14px; }
+    .card { padding: 16px; }
+    .card-photo { width: 60px; height: 60px; font-size: 26px; }
+    .card-name { font-size: 19px; }
+    .composite-chip .num { font-size: 19px; }
+  }
+
+/* ════ Phase 6.4 · Watchlist v2 ════ */
+.fc-wl2-count {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 2px 10px;
+  border-radius: 10px;
+  background: rgba(240, 198, 110, 0.15);
+  color: #f0c66e;
+  font-size: 12px;
+  font-weight: 600;
+}
+.fc-wl2-toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 14px 0 18px;
+  align-items: center;
+}
+.fc-wl2-toolbar select,
+.fc-wl2-toolbar button {
+  font-family: inherit;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(232, 217, 197, 0.2);
+  background: rgba(232, 217, 197, 0.05);
+  color: #e8d9c5;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.fc-wl2-toolbar select:hover,
+.fc-wl2-toolbar button:hover {
+  background: rgba(240, 198, 110, 0.1);
+  border-color: rgba(240, 198, 110, 0.4);
+  color: #f0c66e;
+}
+.fc-wl2-toolbar .danger:hover {
+  background: rgba(212, 96, 60, 0.15);
+  border-color: rgba(212, 96, 60, 0.4);
+  color: #d4603c;
+}
+.fc-wl2-toolbar .spacer { flex: 1; }
+.fc-wl2-toolbar .selection-info {
+  font-size: 12px;
+  color: rgba(232, 217, 197, 0.55);
+}
+.fc-wl2-card { position: relative; }
+.fc-wl2-card .check {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(232, 217, 197, 0.3);
+  border-radius: 5px;
+  background: rgba(28, 21, 13, 0.85);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  font-size: 14px;
+  font-weight: 700;
+  z-index: 4;
+  transition: background 0.15s;
+}
+.fc-wl2-card.selected .check {
+  background: #f0c66e;
+  color: #1c150d;
+  border-color: #f0c66e;
+}
+.fc-wl2-card .traj {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 4;
+}
+.fc-wl2-card .traj.up   { background: rgba(176, 104, 232, 0.22); color: #b068e8; }
+.fc-wl2-card .traj.down { background: rgba(212, 152, 96, 0.20); color: #d49860; }
+.fc-wl2-card .traj.flat { background: rgba(232, 217, 197, 0.10); color: rgba(232, 217, 197, 0.55); }
+.fc-wl2-card .traj.new  { background: rgba(240, 198, 110, 0.18); color: #f0c66e; }
+.fc-wl2-card .days-watched {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-size: 10px;
+  color: rgba(232, 217, 197, 0.4);
+  letter-spacing: 0.03em;
+}
+
+.fc-wl2-empty {
+  text-align: center;
+  padding: 60px 30px;
+  border: 1px dashed rgba(232, 217, 197, 0.15);
+  border-radius: 14px;
+  margin: 30px 0;
+}
+.fc-wl2-empty h3 {
+  font-family: 'Anton', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  color: #f0c66e;
+  margin: 0 0 12px;
+}
+.fc-wl2-empty p {
+  color: rgba(232, 217, 197, 0.6);
+  font-size: 14px;
+  line-height: 1.55;
+  max-width: 420px;
+  margin: 0 auto 18px;
+}
+.fc-wl2-empty .examples {
+  display: inline-flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.fc-wl2-empty .examples a {
+  padding: 5px 12px;
+  border: 1px solid rgba(240, 198, 110, 0.3);
+  border-radius: 14px;
+  font-size: 12px;
+  color: #f0c66e;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.fc-wl2-empty .examples a:hover {
+  background: rgba(240, 198, 110, 0.15);
+}
+
+.fc-wl2-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  opacity: 0;
+  padding: 10px 18px;
+  border-radius: 24px;
+  background: rgba(28, 21, 13, 0.95);
+  border: 1px solid rgba(240, 198, 110, 0.4);
+  color: #f0c66e;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 100;
+  transition: opacity 0.25s, transform 0.25s;
+}
+.fc-wl2-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 600px) {
+  .fc-wl2-toolbar { gap: 6px; }
+  .fc-wl2-toolbar select,
+  .fc-wl2-toolbar button { font-size: 12px; padding: 5px 10px; }
+}
+</style>
+</head>
+<body>
+<!-- FCBase47 . shared resolver for watchlist (same source list as verdict) -->
+<script>
+(function(){
+  if (window._fcPhotoResolver) return;
+  var INDEX = {
+    'Cameron Boozer|mens-basketball': { direct: 'https://dxbhsrqyrr690.cloudfront.net/sidearm.nextgen.sites/goduke.com/images/2025/9/15/Headshots_4x6_Boozer__Cameron_bCXS6.jpg', wikiSlug: 'Cameron_Boozer' },
+    'Cooper Flagg|mens-basketball':   { espnId: '5041939', espnSport: 'nba', wikiSlug: 'Cooper_Flagg' },
+    'LeBron James|mens-basketball':   { espnId: '1966',    espnSport: 'nba', wikiSlug: 'LeBron_James' },
+    'Stephen Curry|mens-basketball':  { espnId: '3975',    espnSport: 'nba', wikiSlug: 'Stephen_Curry' },
+    'Kevin Durant|mens-basketball':   { espnId: '3202',    espnSport: 'nba', wikiSlug: 'Kevin_Durant' },
+    'Jayson Tatum|mens-basketball':   { espnId: '4065648', espnSport: 'nba', wikiSlug: 'Jayson_Tatum' },
+    'Anthony Davis|mens-basketball':  { espnId: '6583',    espnSport: 'nba', wikiSlug: 'Anthony_Davis' },
+    'Tom Brady|football':             { espnId: '2330',    espnSport: 'nfl', wikiSlug: 'Tom_Brady' },
+    'Patrick Mahomes|football':       { espnId: '3139477', espnSport: 'nfl', wikiSlug: 'Patrick_Mahomes' }
+  };
+  function _svg(name){
+    var ini = (name||'?').trim().split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();
+    return 'data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><rect width="240" height="240" fill="#2a1f0f"/><text x="120" y="120" font-family="Anton, Bebas Neue, sans-serif" font-size="110" fill="#f0c66e" text-anchor="middle" dy=".34em" font-weight="700" letter-spacing="2">'+ini+'</text></svg>');
+  }
+  window._fcPhotoResolver = {
+    bestUrl: function(name, sport){
+      var e = INDEX[name+'|'+(sport||'')] || {};
+      if (e.direct) return e.direct;
+      if (e.espnId && e.espnSport) return 'https://a.espncdn.com/i/headshots/'+e.espnSport+'/players/full/'+e.espnId+'.png';
+      return _svg(name);
+    },
+    inlineSvg: _svg
+  };
+})();
+</script>
+
+<div class="wrap">
+
+<div class="topnav">
+  <a class="brand" href="/">FIELDCHECK</a>
+  <div class="nav-right">
+    <a href="/">← Verdicts</a>
+    <a href="/deck">Deck</a>
+  </div>
+</div>
+
+<header class="hdr">
+  <div class="hdr-l">
+    <div class="hdr-eyebrow">// Your Watchlist</div>
+    <h1 class="hdr-title">Athletes you're tracking</h1>
+    <p class="hdr-sub" id="hdr-sub">Loading watchlist…</p>
+  </div>
+  <div class="hdr-r" id="hdr-r">
+    <!-- count pill + sort button injected -->
+  </div>
+</header>
+
+<div id="content"><!-- grid or empty state --></div>
+
+<div class="foot" id="foot" style="display:none;">
+  <div>FieldCheck · Athletic intelligence layer</div>
+  <button class="danger" id="clearAll">Clear All Watched</button>
+</div>
+
+</div>
+
+<script>
+(function(){
+  var WATCHLIST_KEY = 'fc_watchlist';
+  var VISITS_KEY = 'fc_watchlist_visits';
+  var SORT_KEY = 'fc_watchlist_sort';
+  var sortMode = (function(){ try { return localStorage.getItem(SORT_KEY) || 'added'; } catch(e){ return 'added'; } })();
+
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  function getWatchlist(){
+    try { var r = localStorage.getItem(WATCHLIST_KEY); return r ? JSON.parse(r) : []; }
+    catch(e) { return []; }
+  }
+  function setWatchlist(l){ try { localStorage.setItem(WATCHLIST_KEY, JSON.stringify(l)); } catch(e){} }
+  function getVisits(){
+    try { var r = localStorage.getItem(VISITS_KEY); return r ? JSON.parse(r) : {}; }
+    catch(e) { return {}; }
+  }
+  function setVisits(v){ try { localStorage.setItem(VISITS_KEY, JSON.stringify(v)); } catch(e){} }
+  function visitKey(name, sport){ return (name + '|' + sport).toLowerCase().trim(); }
+
+  function timeAgo(ms){
+    if (!ms || ms <= 0) return null;
+    var diff = Date.now() - ms;
+    if (diff < 0) return 'just now';
+    var mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return mins + ' min' + (mins === 1 ? '' : 's') + ' ago';
+    var hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs + ' hour' + (hrs === 1 ? '' : 's') + ' ago';
+    var days = Math.floor(hrs / 24);
+    if (days < 7) return days + ' day' + (days === 1 ? '' : 's') + ' ago';
+    var wks = Math.floor(days / 7);
+    if (wks < 4) return wks + ' week' + (wks === 1 ? '' : 's') + ' ago';
+    var mos = Math.floor(days / 30);
+    return mos + ' month' + (mos === 1 ? '' : 's') + ' ago';
+  }
+
+  function visitFreshness(ms){
+    if (!ms) return 'never';
+    var diffDays = (Date.now() - ms) / 86400000;
+    if (diffDays < 1) return 'fresh';
+    if (diffDays >= 2) return 'stale';
+    return 'normal';
+  }
+
+  function buildPhotoSrc(name, sport, photoUrl){
+    if (photoUrl && photoUrl.length > 4) return photoUrl;
+    /* FCBase47 . use multi-source resolver if loaded */
+    if (window._fcPhotoResolver) return window._fcPhotoResolver.bestUrl(name, sport || '');
+    /* fallback if resolver not yet present (defensive) */
+    var ini = (name || '?').trim().split(/\s+/).map(function(w){ return w.charAt(0); }).join('').slice(0, 2).toUpperCase();
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">' +
+      '<rect width="240" height="240" fill="#2a1f0f"/>' +
+      '<text x="120" y="120" font-family="Anton, Bebas Neue, sans-serif" font-size="110" fill="#f0c66e" text-anchor="middle" dy=".34em" font-weight="700" letter-spacing="2">' + ini + '</text>' +
+      '</svg>'
+    );
+  }
+
+  function sortList(list, mode){
+    var visits = getVisits();
+    var copy = list.slice();
+    if (mode === 'visited') {
+      copy.sort(function(a, b){
+        var av = visits[visitKey(a.name, a.sport)] || 0;
+        var bv = visits[visitKey(b.name, b.sport)] || 0;
+        return bv - av;
+      });
+    } else if (mode === 'composite') {
+      copy.sort(function(a, b){ return (b.composite || 0) - (a.composite || 0); });
+    } else { /* added (newest first) */
+      copy.sort(function(a, b){ return (b.addedAt || 0) - (a.addedAt || 0); });
+    }
+    return copy;
+  }
+
+  function renderCard(athlete){
+    var visits = getVisits();
+    var lastVisit = visits[visitKey(athlete.name, athlete.sport)] || 0;
+    var freshness = visitFreshness(lastVisit);
+    var visitLbl = lastVisit ? ('Last visited ' + timeAgo(lastVisit)) : 'Not yet visited';
+
+    var sport = athlete.sport || '';
+    var sportShort = sport.replace('mens-', "M ").replace('womens-', "W ").replace('-', ' ').toUpperCase();
+    var schoolPos = [athlete.school, athlete.position].filter(Boolean).join(' · ');
+    var compositeStr = (athlete.composite != null && !isNaN(athlete.composite))
+      ? Number(athlete.composite).toFixed(1) : '—';
+    var tier = (athlete.tier || '').toUpperCase();
+
+    var photoSrc = buildPhotoSrc(athlete.name, athlete.sport, athlete.photoUrl);
+    var verdictHref = '/fieldcheck-verdict.html?q=' + encodeURIComponent(athlete.name) + '&sport=' + encodeURIComponent(sport);
+
+    return '' +
+      '<div class="card" data-name="' + esc(athlete.name) + '" data-sport="' + esc(sport) + '">' +
+        '<div class="card-top">' +
+          '<div class="card-photo">' +
+            '<img src="' + esc(photoSrc) + '" alt="' + esc(athlete.name) + '" onerror="this.parentElement.innerHTML=&quot;' + esc((athlete.name || '?').charAt(0).toUpperCase()) + '&quot;">' +
+          '</div>' +
+          '<div class="card-ident">' +
+            '<h3 class="card-name">' + esc(athlete.name) + '</h3>' +
+            '<div class="card-meta">' +
+              (schoolPos ? '<strong>' + esc(schoolPos) + '</strong><br>' : '') +
+              esc(sportShort) +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="card-stats">' +
+          '<div class="composite-chip">' +
+            '<span class="num">' + esc(compositeStr) + '</span>' +
+            '<span class="lbl">composite</span>' +
+          '</div>' +
+          (tier ? '<span class="tier-pill" data-tier="' + esc(tier) + '">' + esc(tier) + '</span>' : '') +
+        '</div>' +
+        '<div class="card-visit ' + freshness + '">' +
+          '<span class="card-visit-dot"></span>' +
+          '<span>' + esc(visitLbl) + '</span>' +
+        '</div>' +
+        '<div class="card-actions">' +
+          '<a class="card-action primary" href="' + esc(verdictHref) + '">View verdict →</a>' +
+          '<button class="card-action secondary" data-remove="' + esc(athlete.name) + '|' + esc(sport) + '" title="Remove from watchlist">×</button>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function render(){
+    var list = getWatchlist();
+    var hdrSub = document.getElementById('hdr-sub');
+    var hdrR = document.getElementById('hdr-r');
+    var content = document.getElementById('content');
+    var foot = document.getElementById('foot');
+
+    if (!list.length) {
+      hdrSub.textContent = 'Nothing tracked yet. Add athletes by tapping the ♡ button on any verdict.';
+      hdrR.innerHTML = '';
+      content.innerHTML =
+        '<div class="empty">' +
+          '<div class="empty-icon">♡</div>' +
+          '<h2 class="empty-title">No athletes watched yet</h2>' +
+          '<p class="empty-body">Start watching from any verdict page. Tap the ♡ Watch button to add athletes here. We\u2019ll alert you when their verdict changes or shifts tier.</p>' +
+          '<a class="empty-cta" href="/">Browse verdicts →</a>' +
+        '</div>';
+      foot.style.display = 'none';
+      return;
+    }
+
+    var visits = getVisits();
+    var stale = list.filter(function(a){
+      var v = visits[visitKey(a.name, a.sport)] || 0;
+      return (Date.now() - v) > 2 * 86400000;
+    }).length;
+
+    hdrSub.innerHTML = 'Tracking <strong style="color:#f0c66e">' + list.length + '</strong> athlete' + (list.length === 1 ? '' : 's') +
+      (stale > 0 ? ' · <strong style="color:#fca5a5">' + stale + '</strong> not visited in 2+ days' : '');
+
+    hdrR.innerHTML =
+      '<span class="pill"><strong>' + list.length + '</strong> watching</span>' +
+      '<button class="sort-btn" id="sortBtn">Sort: ' +
+        (sortMode === 'added' ? 'Recently added' : sortMode === 'visited' ? 'Last visited' : 'Composite') +
+      ' ↻</button>';
+
+    var sorted = sortList(list, sortMode);
+    content.innerHTML = '<div class="grid">' + sorted.map(renderCard).join('') + '</div>';
+    foot.style.display = 'flex';
+
+    /* Wire interactions */
+    document.getElementById('sortBtn').addEventListener('click', function(){
+      var modes = ['added', 'visited', 'composite'];
+      var idx = modes.indexOf(sortMode);
+      sortMode = modes[(idx + 1) % modes.length];
+      try { localStorage.setItem(SORT_KEY, sortMode); } catch(e){}
+      render();
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-remove]'), function(btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        e.preventDefault();
+        var parts = btn.getAttribute('data-remove').split('|');
+        var name = parts[0]; var sport = parts[1];
+        if (!confirm('Remove ' + name + ' from watchlist?')) return;
+        var current = getWatchlist();
+        var next = current.filter(function(a){ return !(a.name === name && a.sport === sport); });
+        setWatchlist(next);
+        /* Clean up visits too */
+        var v = getVisits(); delete v[visitKey(name, sport)]; setVisits(v);
+        render();
+      });
+    });
+  }
+
+  document.getElementById('clearAll').addEventListener('click', function(){
+    var list = getWatchlist();
+    if (!list.length) return;
+    if (!confirm('Clear all ' + list.length + ' watched athletes? This cannot be undone.')) return;
+    setWatchlist([]); setVisits({});
+    render();
+  });
+
+  /* Initial render */
+  render();
+
+  /* Re-render if storage changes from another tab */
+  window.addEventListener('storage', function(e){
+    if (e.key === WATCHLIST_KEY || e.key === VISITS_KEY) render();
+  });
+})();
+</script>
+<!-- FCBase54 . Phase 6.4 . Watchlist v2 . rich cards, 5 sorts, share, compare, bulk -->
+<script>
+(function(){
+  if (window._fcWatchlistV2Init) return;
+  window._fcWatchlistV2Init = true;
+
+  /* Trajectory tracking: snapshot composite per athlete on first watch.
+     On render, compare current composite (from card data) to snapshot. */
+  var SNAPSHOTS_KEY = 'fc_wl_snapshots';
+  function _loadSnaps(){
+    try { return JSON.parse(localStorage.getItem(SNAPSHOTS_KEY) || '{}'); } catch(e) { return {}; }
+  }
+  function _saveSnaps(s){
+    try { localStorage.setItem(SNAPSHOTS_KEY, JSON.stringify(s)); } catch(e) {}
+  }
+
+  function _toast(msg, opts){
+    opts = opts || {};
+    var t = document.createElement('div');
+    t.className = 'fc-wl2-toast';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function(){ t.classList.add('show'); });
+    setTimeout(function(){
+      t.classList.remove('show');
+      setTimeout(function(){ t.remove(); }, 300);
+    }, opts.duration || 2200);
+  }
+
+  function _enhanceCards(){
+    /* Find watchlist card grid. */
+    var cards = document.querySelectorAll('.fc-watch-card, [data-fc-watch-athlete]');
+    if (!cards.length) return;
+
+    var snaps = _loadSnaps();
+    var snapsChanged = false;
+
+    cards.forEach(function(card){
+      if (card.dataset.fcWl2 === '1') return;
+      card.dataset.fcWl2 = '1';
+      card.classList.add('fc-wl2-card');
+
+      /* Extract identifying info */
+      var name = card.getAttribute('data-fc-name') ||
+                 (card.querySelector('.name, .athlete-name, h3') || {}).textContent || '';
+      var sport = card.getAttribute('data-fc-sport') || '';
+      var compText = (card.querySelector('.composite, .comp, .score') || {}).textContent || '';
+      var composite = parseFloat(compText) || null;
+      var key = name.trim().toLowerCase().replace(/\s+/g, '_') + '|' + sport;
+      if (!name) return;
+
+      /* Days-watched */
+      var snap = snaps[key];
+      var nowISO = new Date().toISOString();
+      if (!snap) {
+        snaps[key] = { added: nowISO, composite: composite, last_seen: nowISO };
+        snapsChanged = true;
+      } else {
+        snaps[key].last_seen = nowISO;
+        snapsChanged = true;
+      }
+      var addedAt = (snaps[key] && snaps[key].added) || nowISO;
+      var daysWatched = Math.floor((Date.now() - new Date(addedAt).getTime()) / 86400000);
+      var daysEl = document.createElement('div');
+      daysEl.className = 'days-watched';
+      daysEl.textContent = daysWatched === 0 ? 'added today'
+                         : daysWatched === 1 ? 'watched 1 day'
+                         : 'watched ' + daysWatched + ' days';
+      card.appendChild(daysEl);
+
+      /* Trajectory chip (only if we have a composite to compare) */
+      var snapComp = snaps[key] && snaps[key].composite;
+      if (composite != null && snapComp != null) {
+        var traj = document.createElement('div');
+        traj.className = 'traj';
+        var delta = composite - snapComp;
+        if (daysWatched < 1) {
+          traj.classList.add('new');
+          traj.textContent = 'NEW';
+        } else if (delta > 0.15) {
+          traj.classList.add('up');
+          traj.textContent = '+' + delta.toFixed(1);
+        } else if (delta < -0.15) {
+          traj.classList.add('down');
+          traj.textContent = delta.toFixed(1);
+        } else {
+          traj.classList.add('flat');
+          traj.textContent = '=';
+        }
+        card.appendChild(traj);
+      } else if (composite != null) {
+        /* Just-added card . capture the snapshot */
+        snaps[key].composite = composite;
+        snapsChanged = true;
+        var newChip = document.createElement('div');
+        newChip.className = 'traj new';
+        newChip.textContent = 'NEW';
+        card.appendChild(newChip);
+      }
+
+      /* Selection checkbox */
+      var check = document.createElement('div');
+      check.className = 'check';
+      check.setAttribute('role', 'checkbox');
+      check.setAttribute('aria-checked', 'false');
+      check.textContent = '✓';
+      check.addEventListener('click', function(e){
+        e.stopPropagation();
+        e.preventDefault();
+        card.classList.toggle('selected');
+        check.setAttribute('aria-checked', card.classList.contains('selected') ? 'true' : 'false');
+        _updateSelectionInfo();
+      });
+      card.appendChild(check);
+    });
+
+    if (snapsChanged) _saveSnaps(snaps);
+  }
+
+  function _updateSelectionInfo(){
+    var sel = document.querySelectorAll('.fc-wl2-card.selected');
+    var info = document.querySelector('.fc-wl2-selection-info');
+    if (info) {
+      info.textContent = sel.length > 0 ? sel.length + ' selected' : '';
+    }
+    var compareBtn = document.querySelector('.fc-wl2-compare-btn');
+    if (compareBtn) {
+      compareBtn.disabled = sel.length < 2 || sel.length > 3;
+      compareBtn.style.opacity = compareBtn.disabled ? '0.4' : '1';
+      compareBtn.style.cursor = compareBtn.disabled ? 'not-allowed' : 'pointer';
+    }
+  }
+
+  function _renderToolbar(){
+    if (document.querySelector('.fc-wl2-toolbar')) return;
+    var anchor = document.querySelector('.fc-watch-grid, .athletes-grid, .cards-grid') ||
+                 document.querySelector('main') || document.body;
+    var toolbar = document.createElement('div');
+    toolbar.className = 'fc-wl2-toolbar';
+    toolbar.innerHTML =
+      '<label style="font-size:12px;color:rgba(232,217,197,0.55);margin-right:4px;">Sort</label>' +
+      '<select class="fc-wl2-sort">' +
+        '<option value="recent">Recently added</option>' +
+        '<option value="composite">Composite (high \u2192 low)</option>' +
+        '<option value="tier">Tier (best first)</option>' +
+        '<option value="alpha">Alphabetical</option>' +
+        '<option value="trajectory">Trajectory (biggest move)</option>' +
+      '</select>' +
+      '<button class="fc-wl2-compare-btn" disabled style="opacity:0.4;">Compare selected</button>' +
+      '<button class="fc-wl2-share">\u2197 Share watchlist</button>' +
+      '<button class="fc-wl2-export">Export JSON</button>' +
+      '<div class="spacer"></div>' +
+      '<div class="selection-info fc-wl2-selection-info"></div>' +
+      '<button class="fc-wl2-clear danger">Clear all</button>';
+    anchor.parentNode.insertBefore(toolbar, anchor);
+
+    toolbar.querySelector('.fc-wl2-sort').addEventListener('change', function(e){
+      _applySort(e.target.value);
+    });
+    toolbar.querySelector('.fc-wl2-compare-btn').addEventListener('click', _compareSelected);
+    toolbar.querySelector('.fc-wl2-share').addEventListener('click', _shareList);
+    toolbar.querySelector('.fc-wl2-export').addEventListener('click', _exportJSON);
+    toolbar.querySelector('.fc-wl2-clear').addEventListener('click', _clearAll);
+  }
+
+  /* Sort orders */
+  var TIER_RANK = { 'ICON': 6, 'ELITE+': 5, 'ELITE': 4, 'STAR': 3, 'PROSPECT': 2, 'SCOUT': 1 };
+  function _applySort(mode){
+    var grid = document.querySelector('.fc-watch-grid, .athletes-grid, .cards-grid');
+    if (!grid) return;
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.fc-wl2-card'));
+    var snaps = _loadSnaps();
+    cards.sort(function(a, b){
+      var an = (a.getAttribute('data-fc-name') || '').toLowerCase();
+      var bn = (b.getAttribute('data-fc-name') || '').toLowerCase();
+      var as = a.getAttribute('data-fc-sport') || '';
+      var bs = b.getAttribute('data-fc-sport') || '';
+      var ak = an.replace(/\s+/g,'_') + '|' + as;
+      var bk = bn.replace(/\s+/g,'_') + '|' + bs;
+      var aSnap = snaps[ak] || {};
+      var bSnap = snaps[bk] || {};
+      var ac = parseFloat((a.querySelector('.composite,.comp,.score')||{}).textContent) || 0;
+      var bc = parseFloat((b.querySelector('.composite,.comp,.score')||{}).textContent) || 0;
+      var at = ((a.querySelector('.tier,.htier')||{}).textContent||'').trim().toUpperCase();
+      var bt = ((b.querySelector('.tier,.htier')||{}).textContent||'').trim().toUpperCase();
+
+      if (mode === 'composite') return bc - ac;
+      if (mode === 'tier') return (TIER_RANK[bt]||0) - (TIER_RANK[at]||0) || bc - ac;
+      if (mode === 'alpha') return an.localeCompare(bn);
+      if (mode === 'trajectory') {
+        var ad = (ac - (aSnap.composite || ac));
+        var bd = (bc - (bSnap.composite || bc));
+        return Math.abs(bd) - Math.abs(ad);
+      }
+      /* recent (default) */
+      var ai = new Date(aSnap.added || 0).getTime();
+      var bi = new Date(bSnap.added || 0).getTime();
+      return bi - ai;
+    });
+    cards.forEach(function(c){ grid.appendChild(c); });
+    try { localStorage.setItem('fc_wl_sort', mode); } catch(e) {}
+  }
+
+  /* Compare selected (max 3) */
+  function _compareSelected(){
+    var sel = document.querySelectorAll('.fc-wl2-card.selected');
+    if (sel.length < 2 || sel.length > 3) {
+      _toast('Select 2 or 3 athletes to compare');
+      return;
+    }
+    var names = [];
+    sel.forEach(function(c){
+      var n = c.getAttribute('data-fc-name') || (c.querySelector('.name,.athlete-name,h3')||{}).textContent;
+      if (n) names.push(n.trim());
+    });
+    var sport = sel[0].getAttribute('data-fc-sport') || '';
+    var params = new URLSearchParams();
+    params.set('a', names[0]);
+    params.set('b', names[1]);
+    if (names[2]) params.set('c', names[2]);
+    if (sport) params.set('sport', sport);
+    window.location.href = '/fieldcheck-versus.html?' + params.toString();
+  }
+
+  /* Share watchlist . encode names+sports in URL hash, copy to clipboard */
+  function _shareList(){
+    var cards = document.querySelectorAll('.fc-wl2-card');
+    if (!cards.length) {
+      _toast('Your watchlist is empty');
+      return;
+    }
+    var entries = [];
+    cards.forEach(function(c){
+      var n = c.getAttribute('data-fc-name') || '';
+      var s = c.getAttribute('data-fc-sport') || '';
+      if (n) entries.push(n + (s ? '|' + s : ''));
+    });
+    var payload = entries.join(';');
+    var encoded = btoa(unescape(encodeURIComponent(payload)));
+    var url = window.location.origin + '/fieldcheck-watchlist.html#w=' + encoded;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function(){
+        _toast('Watchlist link copied');
+      }, function(){
+        prompt('Copy this link:', url);
+      });
+    } else {
+      prompt('Copy this link:', url);
+    }
+  }
+
+  /* Import from URL hash */
+  function _importFromHash(){
+    var hash = window.location.hash;
+    var m = hash.match(/[#&]w=([^&]+)/);
+    if (!m) return;
+    try {
+      var decoded = decodeURIComponent(escape(atob(m[1])));
+      var entries = decoded.split(';').filter(Boolean);
+      if (entries.length === 0) return;
+      /* Merge into existing watchlist (don't overwrite). */
+      var existing = [];
+      try { existing = JSON.parse(localStorage.getItem('fc_watchlist') || '[]'); } catch(e) {}
+      var existingKeys = {};
+      existing.forEach(function(e){
+        if (e && e.name) existingKeys[(e.name.toLowerCase() + '|' + (e.sport || '')).replace(/\s+/g, '_')] = true;
+      });
+      var added = 0;
+      entries.forEach(function(entry){
+        var parts = entry.split('|');
+        var name = parts[0];
+        var sport = parts[1] || '';
+        var k = (name.toLowerCase() + '|' + sport).replace(/\s+/g, '_');
+        if (!existingKeys[k]) {
+          existing.push({ name: name, sport: sport, added_at: new Date().toISOString(), shared_import: true });
+          added++;
+        }
+      });
+      if (added > 0) {
+        localStorage.setItem('fc_watchlist', JSON.stringify(existing));
+        _toast('Imported ' + added + ' new athlete' + (added === 1 ? '' : 's'));
+        /* Clear hash and reload so cards render */
+        history.replaceState(null, '', window.location.pathname);
+        setTimeout(function(){ window.location.reload(); }, 400);
+      } else {
+        _toast('Shared list already in your watchlist');
+        history.replaceState(null, '', window.location.pathname);
+      }
+    } catch(e) {
+      console.warn('watchlist import failed', e);
+    }
+  }
+
+  /* Export as JSON download */
+  function _exportJSON(){
+    var data = {
+      exported_at: new Date().toISOString(),
+      watchlist: JSON.parse(localStorage.getItem('fc_watchlist') || '[]'),
+      snapshots: _loadSnaps()
+    };
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'fieldcheck-watchlist-' + new Date().toISOString().slice(0, 10) + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    _toast('Exported');
+  }
+
+  /* Clear all */
+  function _clearAll(){
+    if (!confirm('Clear your entire watchlist? This cannot be undone.')) return;
+    localStorage.removeItem('fc_watchlist');
+    localStorage.removeItem(SNAPSHOTS_KEY);
+    _toast('Watchlist cleared');
+    setTimeout(function(){ window.location.reload(); }, 600);
+  }
+
+  /* Empty state */
+  function _renderEmptyIfNeeded(){
+    var list;
+    try { list = JSON.parse(localStorage.getItem('fc_watchlist') || '[]'); } catch(e) { list = []; }
+    if (list.length > 0) return;
+    var grid = document.querySelector('.fc-watch-grid, .athletes-grid, .cards-grid');
+    if (!grid) return;
+    if (grid.querySelector('.fc-wl2-empty')) return;
+    grid.innerHTML =
+      '<div class="fc-wl2-empty">' +
+        '<h3>Your watchlist is empty</h3>' +
+        '<p>Add athletes from any verdict page by tapping the heart. The watchlist remembers their tier at the moment you added them, then surfaces moves on revisit.</p>' +
+        '<div class="examples">' +
+          '<a href="/fieldcheck-verdict.html?q=Cameron+Boozer&sport=mens-basketball">Try Cameron Boozer</a>' +
+          '<a href="/fieldcheck-verdict.html?q=Faizon+Brandon&sport=football">Try Faizon Brandon</a>' +
+          '<a href="/fieldcheck-verdict.html?q=Cooper+Flagg&sport=mens-basketball">Try Cooper Flagg</a>' +
+        '</div>' +
+      '</div>';
+  }
+
+  /* Count chip in header */
+  function _renderCountChip(){
+    if (document.querySelector('.fc-wl2-count')) return;
+    var list;
+    try { list = JSON.parse(localStorage.getItem('fc_watchlist') || '[]'); } catch(e) { list = []; }
+    var header = document.querySelector('h1, h2, .page-title');
+    if (!header) return;
+    var chip = document.createElement('span');
+    chip.className = 'fc-wl2-count';
+    chip.textContent = list.length + (list.length === 1 ? ' athlete' : ' athletes');
+    header.appendChild(chip);
+  }
+
+  /* Init */
+  function _init(){
+    _importFromHash();
+    _renderCountChip();
+    _renderEmptyIfNeeded();
+    _renderToolbar();
+    _enhanceCards();
+    /* Restore last sort */
+    try {
+      var lastSort = localStorage.getItem('fc_wl_sort');
+      if (lastSort) {
+        var sel = document.querySelector('.fc-wl2-sort');
+        if (sel) { sel.value = lastSort; _applySort(lastSort); }
+      }
+    } catch(e) {}
+    /* Re-enhance on watchlist mutation */
+    var mo = new MutationObserver(function(){ _enhanceCards(); });
+    var grid = document.querySelector('.fc-watch-grid, .athletes-grid, .cards-grid');
+    if (grid) mo.observe(grid, { childList: true, subtree: false });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', _init);
+  } else {
+    setTimeout(_init, 50);
+  }
+})();
+</script>
+
+<!-- FCBase54 . Phase 6.4 . Watchlist v2 (2026-06-09) . rich card decorations (trajectory chip, days-watched) . 5 sort modes (recent/composite/tier/alpha/trajectory) . bulk-select with compare . share via URL hash . export JSON . count chip in header . empty state with onboarding suggestions -->
+</body>
+</html>

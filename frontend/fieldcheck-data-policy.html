@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data Policy · FieldCheck IQ</title>
+<meta name="description" content="How FieldCheck IQ sources, processes, and refreshes data. The honest version.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060A;--bg1:#100F14;--ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);--t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:60px 30px 100px}
+.brand-row{display:flex;align-items:center;gap:18px;margin-bottom:40px}
+.brand{font-family:'Anton',sans-serif;font-size:22px;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none}
+.back:hover{color:var(--gold)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(40px,5vw,64px);letter-spacing:-.014em;line-height:1;margin-bottom:18px}
+h1 .em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--gold)}
+.last-update{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-bottom:30px;letter-spacing:.5px}
+h2{font-family:'Anton',sans-serif;font-size:24px;letter-spacing:-.005em;margin:40px 0 12px;padding-top:20px;border-top:1px solid var(--ge)}
+h2:first-of-type{border-top:none;padding-top:0;margin-top:32px}
+h3{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin:18px 0 8px}
+p{font-size:15px;color:var(--t2);margin-bottom:14px}
+p b{color:var(--t)}
+p a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--goldl)}
+ul,ol{margin:10px 0 18px 22px;color:var(--t2);font-size:14.5px}
+ul li,ol li{margin-bottom:6px;line-height:1.65}
+.footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t4);letter-spacing:.6px}
+.footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="wrap">
+  <div class="brand-row">
+    <a class="brand" href="/"><b>Field</b>Check<span class="iq">IQ</span></a>
+    <a class="back" href="/">← all players</a>
+  </div>
+  <div class="eyebrow">Data policy</div>
+  <h1><span class="em">Data</span> policy.</h1>
+  <div class="last-update">Last updated: June 9 2026</div>
+  
+  <p>FieldCheck operates on publicly available data. This page describes how we source it, how we process it, how often we refresh it, and how we handle conflicts.</p>
+
+  <h2>Data sources</h2>
+  <p>FieldCheck cascades through many sources. See the full source list and tier breakdown on the <a href="/coverage">coverage map</a>.</p>
+  <p>Tier 1 (primary): official school athletic sites, 247sports, On3, MaxPreps, ESPN, Sports Reference.</p>
+  <p>Tier 2 (cross-validation): CFBD, NBA/WNBA/NHL/MLB APIs, official athletic federation pages.</p>
+  <p>Tier 3 (context): Wikipedia, public news + press, curated PhD priors.</p>
+
+  <h2>What we never use</h2>
+  <ul>
+    <li>Paywalled content we can't replicate.</li>
+    <li>Anonymous source quotes that can't be triangulated.</li>
+    <li>Private DM or off-record conversations.</li>
+    <li>Hacked / leaked private data.</li>
+    <li>Social media virality as a signal.</li>
+  </ul>
+
+  <h2>Refresh cadence</h2>
+  <ul>
+    <li><b>Photos</b> · daily cascade refresh via worker proxy; 30-day edge cache, immutable.</li>
+    <li><b>Roster + recruit profiles</b> · daily worker fetch.</li>
+    <li><b>Stats</b> · real-time during in-season; daily off-season.</li>
+    <li><b>Verdicts</b> · monthly PhD panel round for marquees; quarterly for full cohort.</li>
+    <li><b>Calibration weights</b> · quarterly recalibration; weight updates published on the changelog.</li>
+  </ul>
+
+  <h2>Conflict resolution</h2>
+  <p>When sources disagree (e.g. 247 ranks #1, On3 ranks #3), we cite both, prefer the higher-tier source, and surface the disagreement on the verdict's source-citation block. <b>Disagreements aren't hidden; they're surfaced.</b> Same logic applies to stats discrepancies, height/weight differences, etc.</p>
+
+  <h2>Multi-source first (Tenet 53)</h2>
+  <p>For any data type — photos, stats, bio, news, NIL — default to many sources with cascade. Never one. Wikipedia is one of many, not the default. <b>Single-source dependency is a known failure mode</b>; the multi-source cascade is the architectural defense.</p>
+
+  <h2>If we got it wrong</h2>
+  <p>Submit a correction via any verdict page's contact form. The dispute is reviewed by the PhD panel; if warranted, a versioned re-grade is issued publicly. We don't silently revise. We don't pretend the original verdict didn't exist. <b>Versioned re-grades with diff notes are the standard.</b></p>
+
+  <h2>Data we make available</h2>
+  <p>Every verdict surfaces:</p>
+  <ul>
+    <li>The 8-facet eval grid with per-facet scores</li>
+    <li>Source citations on every claim</li>
+    <li>Tier rationale</li>
+    <li>Confidence band on the composite</li>
+    <li>Calibration version that produced the grade</li>
+  </ul>
+  <p>We don't paywall any of this. If you can read the verdict, you can read the sources.</p>
+
+  <div class="footer">
+    FieldCheck IQ · <a href="/">home</a> · <a href="/privacy">privacy</a> · <a href="/terms">terms</a> · <a href="/security">security</a> · <a href="/data-policy">data policy</a>
+  </div>
+</div>
+</body>
+</html>

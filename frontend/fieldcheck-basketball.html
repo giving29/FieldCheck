@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Basketball · In the queue · FieldCheck Sports</title>
+<meta name="description" content="Basketball on the platform — both men's and women's. NCAA, WNBA, NBA, international pathways. Position taxonomy scaffolded, archetype framework defined. Ship target: 2027.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3889_SPORTS_BASKETBALL">
+<meta property="og:title" content="Basketball · In the queue · FieldCheck Sports">
+<meta property="og:description" content="Basketball scaffold. NCAA + WNBA + NBA + international. Ship target: 2027.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:0.75}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+.nav-global{position:sticky;top:0;z-index:100;background:rgba(10,9,8,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--line)}
+.nav-global-inner{max-width:1240px;margin:0 auto;padding:0 32px;display:flex;align-items:center;height:60px}
+.nav-global-brand{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--text);font-weight:500;margin-right:auto;text-decoration:none;display:flex;align-items:center;gap:6px}
+.nav-global-brand b{color:var(--gold);font-weight:500}
+.nav-global-brand .sep{color:var(--text-3);margin:0 2px}
+.nav-global-brand .ctx{color:var(--teal)}
+.nav-global-main{display:flex;align-items:center}
+.nav-global-item{position:relative}
+.nav-global-link{display:flex;align-items:center;gap:6px;padding:0 20px;height:60px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-2);background:none;border:0;cursor:pointer;transition:color .2s}
+.nav-global-link:hover,.nav-global-link.open{color:var(--text)}
+.nav-global-caret{font-size:7px;opacity:.6;transition:transform .2s}
+.nav-global-link.open .nav-global-caret{transform:rotate(180deg)}
+.nav-global-cta{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--gold);color:var(--gold);border-radius:2px;margin-left:18px;text-decoration:none;transition:all .2s}
+.nav-global-cta:hover{background:var(--gold);color:var(--bg)}
+.nav-global-mega{position:absolute;top:60px;left:50%;transform:translateX(-50%) translateY(-6px);min-width:440px;background:rgba(16,14,12,.97);backdrop-filter:blur(28px);border:1px solid var(--line);border-radius:6px;padding:24px;opacity:0;pointer-events:none;transition:all .22s;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+.nav-global-item.open .nav-global-mega{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nav-global-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 22px}
+.nav-global-col-head{grid-column:span 2;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.nav-global-mega a{display:flex;flex-direction:column;padding:9px 10px;border-radius:3px;text-decoration:none}
+.nav-global-mega a strong{font-family:'Crimson Pro',serif;font-size:15px;font-weight:500;color:var(--text)}
+.nav-global-mega a span{font-family:'Instrument Serif',serif;font-style:italic;font-size:12.5px;color:var(--text-2);margin-top:1px;line-height:1.3}
+.nav-global-mega a:hover{background:rgba(245,241,232,.06)}
+.nav-global-mega a:hover strong{color:var(--gold)}
+@media(max-width:880px){.nav-global-main,.nav-global-cta{display:none}}
+
+.hero{padding:64px 0 48px;border-bottom:1px solid var(--line)}
+.hero-status{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(212,200,173,0.08);border:1px solid var(--line-2);border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.8px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:18px}
+.hero-status::before{content:'○';color:var(--text-3)}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(48px,8vw,108px);line-height:0.94;letter-spacing:-0.022em;margin-bottom:24px;max-width:1080px}
+.hero h1 .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.hero-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(20px,2.4vw,28px);line-height:1.4;color:var(--text-2);max-width:880px}
+
+.section{padding:56px 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:none}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.section-num .gold{color:var(--gold)}
+.section-h{font-family:'Anton',sans-serif;font-size:clamp(30px,4.2vw,48px);line-height:1.02;letter-spacing:-0.016em;margin-bottom:16px}
+.section-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.section-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;line-height:1.45;color:var(--text-2);max-width:780px;margin-bottom:28px}
+
+.ship-bar{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.ship-cell{padding:22px 22px;border-right:1px solid var(--line);background:rgba(20,17,12,0.45)}
+.ship-cell:last-child{border-right:none}
+.ship-cell.done{background:linear-gradient(180deg,rgba(127,168,110,0.08),rgba(20,17,12,0.45))}
+.ship-stage{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:6px}
+.ship-cell.done .ship-stage{color:var(--green)}
+.ship-when{font-family:'Anton',sans-serif;font-size:22px;line-height:1;letter-spacing:-0.01em;color:var(--text);margin-bottom:6px}
+.ship-cell.done .ship-when{color:var(--green)}
+.ship-detail{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2)}
+@media(max-width:780px){.ship-bar{grid-template-columns:repeat(2,1fr)}.ship-cell:nth-child(2n){border-right:none}.ship-cell:nth-child(n+3){border-top:1px solid var(--line)}}
+
+.court-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.court-cell{padding:24px 22px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center}
+.court-pos{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1.8px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:6px}
+.court-num{font-family:'Anton',sans-serif;font-size:42px;line-height:1;color:var(--text);letter-spacing:-0.02em;margin-bottom:6px}
+.court-name{font-family:'Anton',sans-serif;font-size:16px;line-height:1.05;color:var(--text);margin-bottom:8px;letter-spacing:-0.005em}
+.court-detail{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-2);line-height:1.45}
+
+.pipelines{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.pipe{padding:24px 26px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pipe-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:10px}
+.pipe-name{font-family:'Anton',sans-serif;font-size:20px;line-height:1.05;letter-spacing:-0.008em;color:var(--text);margin-bottom:8px}
+.pipe-name .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.pipe-detail{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2)}
+.pipe-detail b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:14px}
+
+.arch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.arch-card{padding:20px 22px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:5px;display:flex;flex-direction:column;gap:8px}
+.arch-pos{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.arch-name{font-family:'Anton',sans-serif;font-size:20px;line-height:1.05;letter-spacing:-0.008em;color:var(--text)}
+.arch-detail{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2);font-style:italic}
+
+.notify-block{padding:32px 36px;background:linear-gradient(180deg,rgba(255,201,74,0.04),rgba(20,17,12,0.4));border:1px solid var(--gold-edge);border-radius:6px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.notify-text{font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;color:var(--text-2);line-height:1.45;flex:1 1 360px}
+.notify-text b{font-family:'Anton',sans-serif;font-style:normal;font-weight:normal;color:var(--text);font-size:22px}
+.notify-form{display:flex;gap:8px;flex-wrap:wrap}
+.notify-input{padding:13px 16px;background:var(--bg-2);border:1px solid var(--line-2);border-radius:3px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--text);min-width:220px}
+.notify-input:focus{outline:none;border-color:var(--gold)}
+.notify-btn{padding:13px 20px;background:var(--gold);color:var(--bg);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border-radius:3px;border:none;cursor:pointer}
+.notify-btn:hover{box-shadow:0 0 16px var(--gold-glow)}
+
+.footer{padding:56px 0 72px;border-top:1px solid var(--line);background:rgba(20,17,12,0.5)}
+.footer-display{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer p{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.65;color:var(--text-2);max-width:780px;margin-bottom:12px}
+.footer-disclaimer{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-4);margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav-global">
+  <div class="nav-global-inner">
+    <a href="/" class="nav-global-brand">Field<b>Check</b><span class="sep">·</span><span class="ctx">Basketball</span></a>
+    <div class="nav-global-main">
+      <div class="nav-global-item">
+        <button class="nav-global-link">Sports <span class="nav-global-caret">▼</span></button>
+        <div class="nav-global-mega"><div class="nav-global-grid">
+          <div class="nav-global-col-head">Sports we cover</div>
+          <a href="/lovb"><strong>Women's Volleyball</strong><span>LOVB · Live, deepest coverage</span></a>
+          <a href="/sports/football"><strong>Football</strong><span>NCAA + recruiting</span></a>
+          <a href="/sports/basketball"><strong>Basketball</strong><span>NCAA + transfer portal</span></a>
+          <a href="/sports/soccer"><strong>Soccer</strong><span>College + MLS pathway</span></a>
+        </div></div>
+      </div>
+      <div class="nav-global-item">
+        <button class="nav-global-link">LOVB <span class="nav-global-caret">▼</span></button>
+        <div class="nav-global-mega"><div class="nav-global-grid">
+          <div class="nav-global-col-head">The four tools</div>
+          <a href="/lovb/projection"><strong>Pro Fit Score</strong><span>Project any player's LOVB tier</span></a>
+          <a href="/lovb/match"><strong>FA Match</strong><span>Find the Founding Athlete comp</span></a>
+          <a href="/lovb/fit"><strong>Market Fit</strong><span>Score all six markets</span></a>
+          <a href="/lovb/roster"><strong>Roster Analyzer</strong><span>Grade any team's depth</span></a>
+          <div class="nav-global-col-head" style="margin-top:14px">Explore</div>
+          <a href="/lovb"><strong>The Hub</strong><span>Overview, this week, the league</span></a>
+          <a href="/lovb/archive"><strong>Archive</strong><span>40+ reference surfaces</span></a>
+        </div></div>
+      </div>
+      <div class="nav-global-item">
+        <button class="nav-global-link">About <span class="nav-global-caret">▼</span></button>
+        <div class="nav-global-mega" style="min-width:380px"><div class="nav-global-grid">
+          <div class="nav-global-col-head">FieldCheck</div>
+          <a href="/about"><strong>What FieldCheck is</strong><span>The thing in one page</span></a>
+          <a href="/about/methodology"><strong>Methodology</strong><span>How we score and cite</span></a>
+          <a href="/about/sources"><strong>Sources</strong><span>What's public-record</span></a>
+          <a href="/about/api"><strong>API</strong><span>Embed the data</span></a>
+        </div></div>
+      </div>
+    </div>
+    <a href="/lovb/projection" class="nav-global-cta">Try the tools →</a>
+  </div>
+</nav>
+
+  <section class="hero">
+    <div class="hero-status">QUEUED · BEHIND FOOTBALL</div>
+    <h1>Basketball, <span class="italic">in the queue.</span></h1>
+    <p class="hero-deck">Basketball ships after football. Position taxonomy is the easy part — five positions plus modern hybrids. The harder part: <em>which league anchors the pathway?</em> NCAA → WNBA, NCAA → NBA, NCAA → G League, or NCAA → overseas. We'll surface all four honestly.</p>
+  </section>
+</div>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">I</span> · Ship trajectory</div>
+    <h2 class="section-h">Behind football, <span class="italic">ahead of soccer.</span></h2>
+    <p class="section-deck">Basketball follows football. The well-developed public data layer (NCAA + Combine + Draft) makes scaffolding faster than football; we'll likely ship more compressed.</p>
+
+    <div class="ship-bar">
+      <div class="ship-cell done">
+        <div class="ship-stage">// Stage 1 · Done</div>
+        <div class="ship-when">Taxonomy</div>
+        <div class="ship-detail">5 traditional positions + modern hybrids (combo G, stretch 4, point F). Both men's and women's.</div>
+      </div>
+      <div class="ship-cell">
+        <div class="ship-stage">// Stage 2 · Next</div>
+        <div class="ship-when">Pipelines</div>
+        <div class="ship-detail">NCAA → WNBA + NBA + G League + overseas pathways. Combine data layers.</div>
+      </div>
+      <div class="ship-cell">
+        <div class="ship-stage">// Stage 3 · Then</div>
+        <div class="ship-when">Archetypes</div>
+        <div class="ship-detail">Per position; men's and women's separate. Career-arc anchored. Physical priors more reliable than football.</div>
+      </div>
+      <div class="ship-cell">
+        <div class="ship-stage">// Stage 4 · Ship</div>
+        <div class="ship-when">2027</div>
+        <div class="ship-detail">First public basketball surface. Likely concurrent with WNBA / NBA off-season for fresh recruiting data.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">II</span> · Position taxonomy</div>
+    <h2 class="section-h">Five positions, <span class="italic">several hybrids.</span></h2>
+    <p class="section-deck">The traditional five positions remain useful as the spine of the taxonomy. Modern basketball is increasingly position-fluid — our archetype layer accommodates hybrids without forcing rigid role definitions.</p>
+
+    <div class="court-grid">
+      <div class="court-cell">
+        <div class="court-pos">// 1</div>
+        <div class="court-num">PG</div>
+        <div class="court-name">Point Guard</div>
+        <div class="court-detail">Primary ball-handler. Reads defense, runs offense.</div>
+      </div>
+      <div class="court-cell">
+        <div class="court-pos">// 2</div>
+        <div class="court-num">SG</div>
+        <div class="court-name">Shooting Guard</div>
+        <div class="court-detail">Off-ball scoring. 3-point + mid-range threat.</div>
+      </div>
+      <div class="court-cell">
+        <div class="court-pos">// 3</div>
+        <div class="court-num">SF</div>
+        <div class="court-name">Small Forward</div>
+        <div class="court-detail">Wing. Two-way perimeter player.</div>
+      </div>
+      <div class="court-cell">
+        <div class="court-pos">// 4</div>
+        <div class="court-num">PF</div>
+        <div class="court-name">Power Forward</div>
+        <div class="court-detail">Inside-outside. Modern: stretch four.</div>
+      </div>
+      <div class="court-cell">
+        <div class="court-pos">// 5</div>
+        <div class="court-num">C</div>
+        <div class="court-name">Center</div>
+        <div class="court-detail">Paint anchor. Modern: floor-spacer or rim-runner.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">III</span> · Anchor pipelines</div>
+    <h2 class="section-h">Where the <span class="italic">data lives.</span></h2>
+    <p class="section-deck">Basketball's data landscape is the most developed of any sport we'll cover. Multiple competing combines (NBA + NBPA + Top 100). Two strong pro leagues (NBA and WNBA). Multiple alternate pathways (G League, overseas, NIL-major-college).</p>
+
+    <div class="pipelines">
+      <div class="pipe">
+        <div class="pipe-eyebrow">// MEN'S · D1 / NBA</div>
+        <div class="pipe-name">The <span class="italic">flagship.</span></div>
+        <div class="pipe-detail"><b>362 D1 men's programs.</b> NBA Combine + Draft (60 picks). G League as fallback. Publicly indexed throughout. Strongest data anchor of any sport.</div>
+      </div>
+      <div class="pipe">
+        <div class="pipe-eyebrow">// WOMEN'S · D1 / WNBA</div>
+        <div class="pipe-name">The <span class="italic">fastest-growing.</span></div>
+        <div class="pipe-detail"><b>362 D1 women's programs.</b> WNBA Draft (36 picks · increasingly competitive). <b>NCAA Tournament viewership now rivals men's;</b> drafting and recruiting attention follows.</div>
+      </div>
+      <div class="pipe">
+        <div class="pipe-eyebrow">// PHYSICAL PRIORS</div>
+        <div class="pipe-name">The <span class="italic">strongest signal.</span></div>
+        <div class="pipe-detail"><b>Wingspan, vertical, 40-foot sprint.</b> More predictive than football combine data because basketball-specific tests map cleanly to game performance. <em>Wingspan especially.</em></div>
+      </div>
+      <div class="pipe">
+        <div class="pipe-eyebrow">// G LEAGUE / OVERSEAS</div>
+        <div class="pipe-name">The <span class="italic">alt-pathway layer.</span></div>
+        <div class="pipe-detail">Unlike volleyball, basketball has <b>multiple viable pro pathways at varying compensation</b>. G League · EuroLeague · Spanish ACB · Australian NBL · NIL-major-college. We'll surface all of them honestly.</div>
+      </div>
+      <div class="pipe">
+        <div class="pipe-eyebrow">// EXCLUDED · TRACKING SERVICES</div>
+        <div class="pipe-name">What we <span class="italic">won't use.</span></div>
+        <div class="pipe-detail"><b>247Sports, On3, Synergy paid rankings.</b> All paid commercial products. We'll cite their existence; we won't anchor scoring on them.</div>
+      </div>
+      <div class="pipe">
+        <div class="pipe-eyebrow">// EXCLUDED · NIL</div>
+        <div class="pipe-name">Why we <span class="italic">stay out.</span></div>
+        <div class="pipe-detail"><b>NIL deal values are too opaque + inconsistent</b> to anchor pathway predictions. We may surface publicly disclosed deals; we won't use NIL as an archetype input.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">IV</span> · Archetype skeleton</div>
+    <h2 class="section-h">PG archetypes, <span class="italic">first cut.</span></h2>
+    <p class="section-deck">A first-pass sample. PG is the position most subject to archetype debate; if our framework holds here, it holds everywhere.</p>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <div class="arch-pos">// PG · Archetype 1</div>
+        <div class="arch-name">The <span style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)">Pure</span> Floor General</div>
+        <div class="arch-detail">Pass-first. Decision-making over scoring. Court-vision elite. <em>Career arc anchor: CP3, Stockton, women's: Sue Bird.</em></div>
+      </div>
+      <div class="arch-card">
+        <div class="arch-pos">// PG · Archetype 2</div>
+        <div class="arch-name">The <span style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)">Scoring</span> One</div>
+        <div class="arch-detail">Shoot-first PG. Three-level scoring. Volume threat. <em>Career arc anchor: Steph, Damian, women's: Diana Taurasi.</em></div>
+      </div>
+      <div class="arch-card">
+        <div class="arch-pos">// PG · Archetype 3</div>
+        <div class="arch-name">The <span style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)">Defense-First</span> One</div>
+        <div class="arch-detail">Defensive specialist on-ball. Pesky, pressuring. Scoring as bonus. <em>Career arc anchor: Avery Bradley, Pat Bev, women's: Briann January.</em></div>
+      </div>
+      <div class="arch-card">
+        <div class="arch-pos">// PG · Archetype 4</div>
+        <div class="arch-name">The <span style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)">Hybrid</span> Combo</div>
+        <div class="arch-detail">PG/SG hybrid. Sometimes lead handler, sometimes off-ball threat. <em>Career arc anchor: Kyrie, Trae Young, women's: Sabrina.</em></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">V</span> · Get notified</div>
+    <h2 class="section-h">When basketball <span class="italic">ships.</span></h2>
+    <p class="section-deck">One email when the first basketball surface goes live. No marketing list, no follow-up. Same independence pledge.</p>
+
+    <div class="notify-block">
+      <div class="notify-text"><b>One email, one time.</b> When basketball ships, you'll know. We won't add you to any other list.</div>
+      <div class="notify-form">
+        <input type="email" class="notify-input" placeholder="your@email.com">
+        <button class="notify-btn" onclick="alert('Noted. We\\'ll let you know when basketball ships.')">Notify me</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-display">Basketball · Queued · Behind Football · Ahead of Soccer</div>
+    <p>Why scaffold basketball now? Because the <b>multi-sport platform thesis</b> requires showing what each sport will look like — not just the one we shipped first. Volleyball is the proof. Football is the next deep execution. Basketball validates the pattern at scale.</p>
+    <p><a href="/lovb">See the volleyball platform</a> to understand what basketball will look like at maturity. Same identity, same rigor, same independence.</p>
+    <div class="footer-disclaimer">Independent platform. NCAA, WNBA, NBA, EuroLeague references are descriptive; marks belong to their respective owners.</div>
+  </div>
+</footer>
+
+
+<script>
+document.querySelectorAll('.nav-global-item').forEach(item => {
+  const link = item.querySelector('.nav-global-link');
+  let timeout;
+  item.addEventListener('mouseenter', () => { clearTimeout(timeout); document.querySelectorAll('.nav-global-item.open').forEach(o => { if(o!==item) o.classList.remove('open'); o.querySelector('.nav-global-link').classList.remove('open'); }); item.classList.add('open'); link.classList.add('open'); });
+  item.addEventListener('mouseleave', () => { timeout = setTimeout(() => { item.classList.remove('open'); link.classList.remove('open'); }, 150); });
+  link.addEventListener('click', e => { e.preventDefault(); item.classList.toggle('open'); link.classList.toggle('open'); });
+});
+</script>
+</body>
+</html>

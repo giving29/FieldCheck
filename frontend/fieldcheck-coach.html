@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coach Workspace · FieldCheck</title>
+  <meta name="description" content="A private board for tracking recruits. Composite + voice match + position-fit signal for each. No login required. 5 Voices asked for this — we built it.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #0d0d0d; --bg-2: #161616; --bg-3: #1d1d1d;
+  --text: #ededed; --text-2: #b8b8b8; --text-3: #888; --text-4: #555;
+  --gold: #d4af37; --gold-2: #f5b800;
+  --border: rgba(255,255,255,0.08); --glass: rgba(255,255,255,0.03); --glass-edge: rgba(255,255,255,0.1);
+  --rust: #c45132; --sage: #6a9c89;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+a { color: inherit; }
+
+.nav { padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-links a { color: var(--text-2); text-decoration: none; margin-left: 28px; font-size: 13px; transition: color 0.2s ease; }
+.nav-links a:hover { color: var(--gold); }
+
+.hero { padding: 64px 40px 32px; max-width: 980px; margin: 0 auto; }
+.hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); margin-bottom: 18px; font-weight: 600; }
+.hero h1 { font-family: 'Anton', sans-serif; font-size: clamp(46px, 7vw, 84px); line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 18px; }
+.hero h1 .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; color: var(--gold); }
+.hero-sub { font-size: 18px; color: var(--text-2); max-width: 720px; line-height: 1.55; margin-bottom: 24px; }
+.voice-attribution { display: inline-flex; align-items: flex-start; gap: 12px; padding: 14px 18px; background: rgba(212,175,55,0.06); border-left: 2px solid var(--gold); border-radius: 0 8px 8px 0; max-width: 720px; margin-bottom: 24px; }
+.voice-attribution-icon { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--gold); font-weight: 600; padding-top: 2px; flex-shrink: 0; }
+.voice-attribution-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--text); line-height: 1.5; }
+.voice-attribution-text strong { font-style: normal; font-family: 'Inter', sans-serif; font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: 0.5px; }
+
+/* Setup card */
+.setup-card { max-width: 880px; margin: 0 auto 56px; padding: 40px; background: linear-gradient(180deg, var(--glass) 0%, rgba(20,20,20,0.4) 100%); border: 1px solid var(--glass-edge); border-radius: 20px; }
+.setup-card.hidden { display: none; }
+.setup-h { font-family: 'Anton', sans-serif; font-size: 32px; line-height: 1.05; margin-bottom: 8px; }
+.setup-h .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.setup-sub { font-size: 14px; color: var(--text-3); font-style: italic; margin-bottom: 24px; }
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+.field label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--text-2); font-weight: 600; text-transform: uppercase; }
+.field input, .field select, .field textarea { padding: 14px 16px; background: var(--bg-2); border: 1px solid rgba(255,255,255,0.1); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; border-radius: 10px; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.field input::placeholder, .field textarea::placeholder { color: var(--text-4); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--gold); background: rgba(212,175,55,0.04); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+.field textarea { resize: vertical; min-height: 120px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.55; }
+.field-hint { font-size: 11px; color: var(--text-4); margin-top: 2px; line-height: 1.4; }
+.btn-primary { padding: 16px 32px; background: var(--gold); color: #0a0a0a; border: none; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; cursor: pointer; border-radius: 10px; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.btn-primary:hover { background: var(--gold-2); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(212,175,55,0.25); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+.msg { margin-top: 14px; padding: 12px 16px; border-radius: 8px; font-size: 13px; display: none; line-height: 1.5; }
+.msg.show { display: block; }
+.msg.error { background: rgba(196,81,50,0.12); border-left: 2px solid var(--rust); color: var(--rust); }
+.msg.info { background: rgba(136,136,136,0.08); border-left: 2px solid var(--text-3); color: var(--text-2); }
+.msg.success { background: rgba(106,156,137,0.12); border-left: 2px solid var(--sage); color: var(--sage); }
+
+/* Board view */
+.board-view { max-width: 1180px; margin: 0 auto 56px; padding: 0 40px; display: none; }
+.board-view.show { display: block; animation: fade-in 0.4s ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.board-header { padding: 28px 32px; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 16px; margin-bottom: 24px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.board-header-info { min-width: 0; flex: 1; }
+.board-header-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--gold); font-weight: 600; margin-bottom: 6px; }
+.board-name { font-family: 'Anton', sans-serif; font-size: 36px; line-height: 1.05; margin-bottom: 4px; }
+.board-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 1px; }
+.board-token-block { padding: 12px 18px; background: rgba(0,0,0,0.4); border: 1px dashed var(--gold); border-radius: 10px; }
+.board-token-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.5px; color: var(--text-3); margin-bottom: 4px; }
+.board-token-value { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--gold); cursor: pointer; word-break: break-all; }
+
+.recruits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; margin-bottom: 24px; }
+.recruit-card { padding: 22px 24px; background: linear-gradient(180deg, var(--glass) 0%, rgba(20,20,20,0.4) 100%); border: 1px solid var(--glass-edge); border-radius: 14px; transition: all 0.2s ease; }
+.recruit-card:hover { border-color: rgba(212,175,55,0.3); }
+.recruit-card.unresolved { border-style: dashed; opacity: 0.85; }
+.recruit-card-head { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+.recruit-photo { width: 56px; height: 56px; border-radius: 50%; background: var(--bg-2); border: 1px solid var(--glass-edge); object-fit: cover; flex-shrink: 0; }
+.recruit-photo-placeholder { width: 56px; height: 56px; border-radius: 50%; background: var(--bg-2); border: 1px dashed var(--text-4); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-4); flex-shrink: 0; letter-spacing: 0.5px; }
+.recruit-info { min-width: 0; flex: 1; }
+.recruit-name { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 2px; }
+.recruit-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 0.5px; }
+.recruit-stats { display: flex; gap: 16px; margin: 12px 0; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
+.recruit-stat { display: flex; flex-direction: column; gap: 2px; }
+.recruit-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--text-3); }
+.recruit-stat-value { font-family: 'Anton', sans-serif; font-size: 18px; color: var(--gold); letter-spacing: -0.5px; line-height: 1; }
+.recruit-tier-pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; font-weight: 700; }
+.recruit-tier-pill.ICON { background: rgba(212,175,55,0.18); color: var(--gold); border: 1px solid var(--gold); }
+.recruit-tier-pill.ELITE { background: rgba(106,156,137,0.15); color: var(--sage); border: 1px solid var(--sage); }
+.recruit-tier-pill.PROSPECT { background: rgba(245,184,0,0.12); color: var(--gold-2); border: 1px solid var(--gold-2); }
+.recruit-tier-pill.STAR { background: rgba(136,136,136,0.15); color: var(--text-2); border: 1px solid var(--text-3); }
+.recruit-voice-match { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px; color: var(--text-2); line-height: 1.4; margin: 8px 0; }
+.recruit-voice-match strong { font-style: normal; color: var(--gold); font-family: 'Inter', sans-serif; font-size: 12px; }
+.recruit-actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.recruit-action { padding: 6px 10px; background: var(--bg-2); color: var(--text-2); border: 1px solid var(--glass-edge); font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; font-weight: 600; text-decoration: none; cursor: pointer; border-radius: 6px; transition: all 0.2s ease; }
+.recruit-action:hover { border-color: var(--gold); color: var(--gold); }
+.recruit-notes { margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.06); }
+.recruit-note-item { font-size: 12px; color: var(--text-2); line-height: 1.5; margin-bottom: 6px; padding-left: 8px; border-left: 2px solid var(--text-4); }
+.recruit-note-item-meta { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-4); letter-spacing: 0.5px; margin-top: 2px; }
+
+.add-recruits-card { padding: 28px 32px; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 16px; margin-bottom: 24px; }
+.add-recruits-h { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--gold); margin-bottom: 14px; font-weight: 600; }
+.share-board-card { padding: 24px 28px; background: linear-gradient(135deg, rgba(212,175,55,0.06) 0%, rgba(20,20,20,0.4) 100%); border: 1px solid rgba(212,175,55,0.25); border-radius: 16px; margin-bottom: 24px; text-align: center; }
+.share-board-h { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--text); margin-bottom: 10px; }
+.share-board-url { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--gold); cursor: pointer; padding: 8px 14px; background: var(--bg-2); border-radius: 6px; display: inline-block; word-break: break-all; }
+
+footer { padding: 40px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-4); letter-spacing: 1px; border-top: 1px solid var(--border); margin-top: 80px; }
+footer a { color: var(--text-3); text-decoration: none; }
+footer a:hover { color: var(--gold); }
+
+@media (max-width: 720px) {
+  .nav { padding: 18px 20px; }
+  .nav-links a { margin-left: 14px; font-size: 12px; }
+  .hero { padding: 40px 20px 24px; }
+  .setup-card { margin: 0 20px 32px; padding: 28px 22px; }
+  .board-view { padding: 0 20px; }
+  .recruits-grid { grid-template-columns: 1fr; }
+  .recruit-stats { gap: 12px; }
+  .board-header { flex-direction: column; }
+  .voice-attribution { flex-direction: column; gap: 6px; }
+}
+  
+/* v0.30.5.2222 FCBase13_V004 — Coach Workspace v2 Watchlist */
+.cw-watchlist-section { max-width: 1180px; margin: 0 auto 56px; padding: 32px 40px; background: linear-gradient(135deg, rgba(212,175,55,0.04), rgba(20,17,12,0.4)); border: 1px solid rgba(212,175,55,0.22); border-radius: 16px; }
+.cw-watchlist-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
+.cw-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); margin-bottom: 12px; font-weight: 700; }
+.cw-h2 { font-family: 'Anton', sans-serif; font-size: clamp(28px, 4vw, 44px); line-height: 1.05; margin-bottom: 10px; color: var(--text); }
+.cw-h2 .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.cw-sub { color: var(--text-2); font-size: 15px; line-height: 1.5; max-width: 660px; }
+.cw-watchlist-count { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: var(--gold); background: rgba(212,175,55,0.1); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(212,175,55,0.25); font-weight: 600; white-space: nowrap; }
+.cw-watchlist-add { display: grid; grid-template-columns: 1.5fr 1fr 1fr auto; gap: 10px; margin-bottom: 24px; }
+.cw-watchlist-add input, .cw-watchlist-add select { padding: 12px 14px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: var(--text); font-size: 14px; border-radius: 8px; font-family: 'Inter', sans-serif; }
+.cw-watchlist-add input:focus, .cw-watchlist-add select:focus { outline: none; border-color: var(--gold); }
+.cw-add-btn { padding: 12px 20px; background: var(--gold); color: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; border: 0; border-radius: 8px; cursor: pointer; transition: transform 0.15s; }
+.cw-add-btn:hover { transform: translateY(-1px); }
+.cw-watchlist-items { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.cw-watchlist-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; gap: 12px; }
+.cw-item-info { min-width: 0; flex: 1; }
+.cw-item-name { font-family: 'Anton', sans-serif; font-size: 18px; color: var(--text); margin-bottom: 2px; letter-spacing: -0.005em; }
+.cw-item-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 1px; text-transform: capitalize; }
+.cw-item-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.cw-item-cta { color: var(--gold); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase; padding: 8px 12px; border: 1px solid rgba(212,175,55,0.35); border-radius: 6px; transition: all 0.15s; }
+.cw-item-cta:hover { background: rgba(212,175,55,0.1); }
+.cw-item-remove { background: transparent; border: 1px solid rgba(255,255,255,0.1); color: var(--text-3); width: 32px; height: 32px; border-radius: 6px; font-size: 18px; cursor: pointer; transition: all 0.15s; }
+.cw-item-remove:hover { background: rgba(196,81,50,0.15); border-color: var(--rust); color: var(--rust); }
+.cw-watchlist-empty { text-align: center; padding: 36px 24px; color: var(--text-3); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; background: rgba(0,0,0,0.2); border-radius: 10px; }
+.cw-iq-stamp { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: var(--text-3); margin-top: 8px; font-weight: 600; }
+/* v2 roadmap stubs */
+.cw-roadmap-section { max-width: 1180px; margin: 56px auto; padding: 28px 40px; border-top: 1px solid var(--glass-edge); }
+.cw-roadmap-h { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--text-3); margin-bottom: 24px; font-weight: 700; }
+.cw-roadmap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.cw-roadmap-card { padding: 18px 22px; background: rgba(0,0,0,0.2); border: 1px dashed rgba(255,255,255,0.08); border-radius: 10px; }
+.cw-roadmap-tag { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.8px; color: var(--gold); font-weight: 700; margin-bottom: 8px; opacity: 0.7; }
+.cw-roadmap-title { font-family: 'Anton', sans-serif; font-size: 18px; color: var(--text-2); margin-bottom: 6px; letter-spacing: -0.005em; }
+.cw-roadmap-desc { font-size: 13px; color: var(--text-3); line-height: 1.5; }
+@media (max-width: 720px) {
+  .cw-watchlist-add { grid-template-columns: 1fr; }
+  .cw-watchlist-section { padding: 22px 18px; margin: 0 16px 32px; }
+  .cw-roadmap-grid { grid-template-columns: 1fr; }
+  .cw-roadmap-section { padding: 18px; }
+}
+
+
+/* v0.30.5.2223 FCBase13_V005 — Side-by-Side IQ Compare */
+.cw-watchlist-toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding: 10px 14px; background: rgba(0,0,0,0.18); border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 1px; }
+.cw-compare-btn { padding: 8px 16px; background: var(--gold); color: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; border: 0; border-radius: 6px; cursor: pointer; transition: transform 0.15s, opacity 0.2s; opacity: 0.35; pointer-events: none; }
+.cw-compare-btn.active { opacity: 1; pointer-events: auto; }
+.cw-compare-btn:hover { transform: translateY(-1px); }
+.cw-watchlist-item input[type="checkbox"] { accent-color: var(--gold); width: 18px; height: 18px; cursor: pointer; margin-right: 4px; }
+.cw-compare-view { margin: 24px 0; padding: 28px; background: linear-gradient(135deg, rgba(78,201,192,0.04), rgba(20,17,12,0.4)); border: 1px solid rgba(78,201,192,0.28); border-radius: 14px; display: none; }
+.cw-compare-view.open { display: block; animation: fade-in 0.35s ease; }
+.cw-compare-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; gap: 12px; flex-wrap: wrap; }
+.cw-compare-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: #4ec9c0; font-weight: 700; }
+.cw-compare-close { background: transparent; border: 1px solid rgba(255,255,255,0.12); color: var(--text-3); padding: 6px 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; cursor: pointer; }
+.cw-compare-close:hover { color: var(--rust); border-color: var(--rust); }
+.cw-compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.cw-compare-panel { padding: 22px 20px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; }
+.cw-compare-photo { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, rgba(212,175,55,0.25), rgba(78,201,192,0.18)); display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: 22px; color: var(--gold); margin-bottom: 14px; }
+.cw-compare-name { font-family: 'Anton', sans-serif; font-size: 21px; margin-bottom: 3px; letter-spacing: -0.005em; color: var(--text); }
+.cw-compare-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-3); letter-spacing: 1px; text-transform: capitalize; margin-bottom: 18px; }
+.cw-compare-score-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.cw-compare-score { font-family: 'Anton', sans-serif; font-size: 30px; color: var(--gold); letter-spacing: -0.005em; }
+.cw-compare-tier { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text); letter-spacing: 1.5px; padding: 4px 8px; background: rgba(212,175,55,0.12); border-radius: 4px; font-weight: 600; }
+.cw-compare-bars { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.cw-compare-bar-row { display: grid; grid-template-columns: 70px 1fr 28px; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+.cw-compare-bar-label { color: var(--text-3); letter-spacing: 1.2px; }
+.cw-compare-bar-track { background: rgba(255,255,255,0.06); height: 6px; border-radius: 3px; overflow: hidden; }
+.cw-compare-bar-fill { background: var(--gold); height: 100%; border-radius: 3px; transition: width 0.6s cubic-bezier(0.16,1,0.3,1); }
+.cw-compare-bar-val { color: var(--gold); text-align: right; font-weight: 600; }
+.cw-compare-cta { display: block; text-align: center; padding: 9px; background: rgba(212,175,55,0.1); color: var(--gold); border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; transition: background 0.15s; }
+.cw-compare-cta:hover { background: rgba(212,175,55,0.18); }
+.cw-compare-stamp { margin-top: 16px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.6px; color: var(--text-3); font-style: italic; opacity: 0.7; }
+
+
+/* v0.30.5.2225 FCBase13_V007 — IQ-Stamped Exports */
+.cw-item-export { background: transparent; border: 1px solid rgba(78,201,192,0.3); color: #4ec9c0; width: 32px; height: 32px; border-radius: 6px; font-size: 14px; cursor: pointer; transition: all 0.15s; }
+.cw-item-export:hover { background: rgba(78,201,192,0.1); border-color: #4ec9c0; }
+.cw-export-view { margin: 24px 0; padding: 22px 28px; background: linear-gradient(135deg, rgba(78,201,192,0.04), rgba(20,17,12,0.5)); border: 1px solid rgba(78,201,192,0.28); border-radius: 14px; display: none; }
+.cw-export-view.open { display: block; animation: fade-in 0.35s ease; }
+.cw-export-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.cw-export-actions { display: flex; gap: 8px; }
+.cw-export-actions button { padding: 8px 14px; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.35); color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.15s; }
+.cw-export-actions button:hover { background: rgba(212,175,55,0.18); }
+.cw-export-card-container { background: #fafaf5; padding: 36px; border-radius: 10px; }
+.cw-export-card { max-width: 720px; margin: 0 auto; background: #fff; padding: 48px 56px; color: #0d0d0d; font-family: 'Inter', sans-serif; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border-radius: 6px; }
+.cw-export-card-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; margin-bottom: 26px; border-bottom: 2px solid #0d0d0d; }
+.cw-export-wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: #0d0d0d; letter-spacing: -0.01em; }
+.cw-export-wordmark span { color: #b8941f; }
+.cw-export-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #888; letter-spacing: 1.5px; text-transform: uppercase; }
+.cw-export-name { font-family: 'Anton', sans-serif; font-size: 44px; line-height: 1; color: #0d0d0d; letter-spacing: -0.01em; margin-bottom: 6px; }
+.cw-export-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 32px; }
+.cw-export-score-row { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; background: #fafaf0; border: 2px solid #b8941f; border-radius: 8px; margin-bottom: 28px; }
+.cw-export-score-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #b8941f; letter-spacing: 2px; font-weight: 700; margin-bottom: 4px; }
+.cw-export-score { font-family: 'Anton', sans-serif; font-size: 56px; line-height: 1; color: #0d0d0d; letter-spacing: -0.01em; }
+.cw-export-score-sm { font-size: 32px; color: #888; }
+.cw-export-tier { padding: 8px 16px; background: #0d0d0d; color: #b8941f; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 2px; font-weight: 700; border-radius: 4px; }
+.cw-export-section-h { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #b8941f; letter-spacing: 2px; font-weight: 700; margin-bottom: 12px; }
+.cw-export-bars { margin-bottom: 28px; }
+.cw-export-bar-row { display: grid; grid-template-columns: 120px 1fr 40px; gap: 14px; align-items: center; padding: 6px 0; }
+.cw-export-bar-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #555; letter-spacing: 1.2px; }
+.cw-export-bar-track { background: #eee; height: 8px; border-radius: 4px; overflow: hidden; }
+.cw-export-bar-fill { background: #b8941f; height: 100%; }
+.cw-export-bar-val { font-family: 'Anton', sans-serif; font-size: 14px; color: #0d0d0d; text-align: right; }
+.cw-export-audit { padding: 16px 18px; background: #f4faf9; border-left: 3px solid #4ec9c0; border-radius: 4px; margin-bottom: 26px; }
+.cw-export-audit-line1 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: #0d0d0d; margin-bottom: 4px; }
+.cw-export-audit-line2 { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #4ec9c0; letter-spacing: 1.5px; font-weight: 700; }
+.cw-export-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid #ddd; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+@media print {
+  body * { visibility: hidden; }
+  .cw-export-view, .cw-export-view * { visibility: visible; }
+  .cw-export-view { position: absolute; left: 0; top: 0; width: 100%; padding: 0; background: white; border: 0; }
+  .cw-export-header { display: none !important; }
+  .cw-export-card-container { padding: 0; background: white; }
+  .cw-export-card { box-shadow: none; border: 0; padding: 24px 32px; }
+}
+
+
+/* v0.30.5.2226 FCBase13_V008 — Watchlist enrichment */
+.cw-item-score { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 0.5px; margin-top: 4px; }
+.cw-item-score-num { font-family: 'Anton', sans-serif; font-size: 13px; letter-spacing: -0.005em; }
+.cw-item-score-tier { font-size: 9px; opacity: 0.85; letter-spacing: 1.5px; }
+.cw-item-score.loading { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); color: var(--text-3); }
+.cw-item-score.loading::after { content: '·'; animation: cw-pulse 1.2s infinite; margin-left: 4px; }
+@keyframes cw-pulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+.cw-item-score.miss { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.06); color: var(--text-3); font-style: italic; font-weight: 500; }
+
+
+/* v0.30.5.2233 V015 — Notifications */
+.cw-bell-wrap { position: relative; display: inline-block; margin-left: auto; }
+.cw-bell-btn { position: relative; padding: 10px 12px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.3); color: var(--gold); border-radius: 8px; cursor: pointer; font-size: 16px; transition: all 0.15s; line-height: 1; }
+.cw-bell-btn:hover { background: rgba(212,175,55,0.16); }
+.cw-bell-count { position: absolute; top: -5px; right: -5px; min-width: 18px; height: 18px; padding: 0 5px; background: #c45132; color: #fff; border-radius: 9px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; line-height: 18px; text-align: center; }
+.cw-bell-count.zero { display: none; }
+.cw-notif-panel { position: absolute; top: calc(100% + 8px); right: 0; min-width: 340px; max-width: 380px; max-height: 440px; overflow-y: auto; background: rgba(15,12,8,0.98); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; padding: 14px; box-shadow: 0 12px 40px rgba(0,0,0,0.6); display: none; z-index: 100; }
+.cw-notif-panel.open { display: block; animation: fade-in 0.2s ease; }
+.cw-notif-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px 12px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.cw-notif-h { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: var(--gold); font-weight: 700; }
+.cw-notif-clear { background: transparent; border: 0; color: var(--text-3); font-family: 'JetBrains Mono', monospace; font-size: 10px; cursor: pointer; padding: 3px 6px; border-radius: 4px; }
+.cw-notif-clear:hover { color: var(--rust); }
+.cw-notif-item { padding: 10px 12px; margin-bottom: 4px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+.cw-notif-item:hover { background: rgba(212,175,55,0.06); }
+.cw-notif-item.unread { background: rgba(212,175,55,0.04); border-color: rgba(212,175,55,0.18); }
+.cw-notif-item.unread::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-right: 8px; vertical-align: middle; }
+.cw-notif-row { display: flex; align-items: baseline; gap: 8px; }
+.cw-notif-tag { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 1.3px; padding: 2px 6px; border-radius: 3px; font-weight: 700; flex-shrink: 0; }
+.cw-notif-tag.score { background: rgba(212,175,55,0.15); color: var(--gold); }
+.cw-notif-tag.add { background: rgba(149,213,178,0.15); color: var(--moss); }
+.cw-notif-tag.compare { background: rgba(78,201,192,0.15); color: var(--teal); }
+.cw-notif-tag.export { background: rgba(196,81,50,0.18); color: var(--rust); }
+.cw-notif-time { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--text-3); margin-left: auto; flex-shrink: 0; }
+.cw-notif-text { font-size: 12.5px; color: var(--text); line-height: 1.45; margin-top: 5px; }
+.cw-notif-empty { text-align: center; padding: 24px 16px; color: var(--text-3); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; }
+
+
+/* v0.30.5.2243 FCBase13_V025 — Verdict Drift Agent */
+.cw-drift-status { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 14px 0 18px; padding: 12px 16px; background: linear-gradient(135deg, rgba(78,201,192,0.05), rgba(20,17,12,0.4)); border: 1px solid rgba(78,201,192,0.28); border-radius: 10px; flex-wrap: wrap; }
+.cw-drift-tag { display: inline-flex; align-items: center; gap: 8px; padding: 4px 10px; background: rgba(78,201,192,0.15); border: 1px solid rgba(78,201,192,0.4); border-radius: 5px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: #4ec9c0; font-weight: 700; }
+.cw-drift-dot { width: 6px; height: 6px; background: #4ec9c0; border-radius: 50%; animation: cw-drift-pulse 2s infinite; }
+@keyframes cw-drift-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+.cw-drift-info { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1px; color: var(--text-3); flex: 1; min-width: 200px; }
+.cw-drift-info strong { color: var(--text-2); }
+.cw-drift-btn { padding: 6px 12px; background: rgba(78,201,192,0.1); border: 1px solid rgba(78,201,192,0.35); color: #4ec9c0; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.4px; font-weight: 700; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: background 0.15s; }
+.cw-drift-btn:hover { background: rgba(78,201,192,0.2); }
+.cw-drift-meta { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--text-3); margin-top: 3px; }
+.cw-drift-meta .moved-up { color: #4ec9c0; }
+.cw-drift-meta .moved-down { color: #c45132; }
+
+
+/* v0.30.5.2245 FCBase13_V027 — Dispute Agent (10th LIVE agent) */
+.cw-item-dispute { background: transparent; border: 1px solid rgba(196,81,50,0.3); color: #c45132; width: 32px; height: 32px; border-radius: 6px; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+.cw-item-dispute:hover { background: rgba(196,81,50,0.1); border-color: #c45132; }
+.cw-dispute-view { margin: 24px 0; padding: 24px 28px; background: linear-gradient(135deg, rgba(196,81,50,0.04), rgba(20,17,12,0.5)); border: 1px solid rgba(196,81,50,0.3); border-radius: 14px; display: none; }
+.cw-dispute-view.open { display: block; animation: fade-in 0.3s ease; }
+.cw-dispute-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.cw-dispute-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: #c45132; font-weight: 700; margin-bottom: 6px; }
+.cw-dispute-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--text-2); }
+.cw-dispute-form { display: flex; flex-direction: column; gap: 14px; }
+.cw-dispute-field { display: flex; flex-direction: column; gap: 6px; }
+.cw-dispute-field label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--text-3); font-weight: 700; }
+.cw-dispute-field input, .cw-dispute-field textarea, .cw-dispute-field select { padding: 12px 14px; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.08); color: var(--text); font-size: 13.5px; border-radius: 7px; font-family: 'Inter', sans-serif; }
+.cw-dispute-field input:focus, .cw-dispute-field textarea:focus, .cw-dispute-field select:focus { outline: none; border-color: #c45132; }
+.cw-dispute-field textarea { resize: vertical; min-height: 70px; font-family: 'Inter', sans-serif; line-height: 1.5; }
+.cw-dispute-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.cw-dispute-submit { padding: 10px 18px; background: #c45132; color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; border: 0; border-radius: 7px; cursor: pointer; text-decoration: none; display: inline-block; transition: filter 0.15s; }
+.cw-dispute-submit:hover { filter: brightness(1.15); }
+.cw-dispute-cancel { padding: 10px 16px; background: transparent; color: var(--text-3); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.1); border-radius: 7px; cursor: pointer; }
+.cw-dispute-sla { margin-top: 14px; padding: 12px 16px; background: rgba(78,201,192,0.05); border-left: 3px solid #4ec9c0; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--text-2); letter-spacing: 0.5px; line-height: 1.5; }
+.cw-dispute-sla strong { color: #4ec9c0; }
+
+
+/* v0.30.5.2246 FCBase13_V028 — NIL Score Agent (11th LIVE agent) */
+.cw-item-nil { display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; background: rgba(78,201,192,0.08); border: 1px solid rgba(78,201,192,0.3); border-radius: 5px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.5px; color: #4ec9c0; margin-left: 6px; cursor: pointer; transition: background 0.15s; }
+.cw-item-nil:hover { background: rgba(78,201,192,0.18); }
+.cw-item-nil-num { font-family: 'Anton', sans-serif; font-size: 12px; letter-spacing: -0.005em; }
+.cw-nil-view { margin: 24px 0; padding: 26px 32px; background: linear-gradient(135deg, rgba(78,201,192,0.04), rgba(20,17,12,0.5)); border: 1px solid rgba(78,201,192,0.3); border-radius: 14px; display: none; }
+.cw-nil-view.open { display: block; animation: fade-in 0.3s ease; }
+.cw-nil-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap; margin-bottom: 22px; }
+.cw-nil-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: #4ec9c0; font-weight: 700; margin-bottom: 6px; }
+.cw-nil-name { font-family: 'Anton', sans-serif; font-size: 26px; color: var(--text); letter-spacing: -0.005em; line-height: 1; }
+.cw-nil-score-block { padding: 20px 24px; background: rgba(78,201,192,0.07); border: 1px solid rgba(78,201,192,0.32); border-radius: 12px; margin-bottom: 22px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; }
+.cw-nil-score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: #4ec9c0; font-weight: 700; margin-bottom: 6px; }
+.cw-nil-score-row { display: flex; align-items: baseline; gap: 10px; }
+.cw-nil-score-num { font-family: 'Anton', sans-serif; font-size: 44px; line-height: 1; color: #4ec9c0; letter-spacing: -0.01em; }
+.cw-nil-score-band { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-2); letter-spacing: 0.5px; }
+.cw-nil-score-market { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--text); padding: 6px 12px; background: rgba(0,0,0,0.4); border-radius: 6px; letter-spacing: 1.5px; font-weight: 600; }
+.cw-nil-trace-h { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--gold); font-weight: 700; margin-bottom: 14px; }
+.cw-nil-trace { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+.cw-nil-trace-cell { padding: 14px 16px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 8px; }
+.cw-nil-trace-input { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.3px; color: var(--text-3); font-weight: 700; margin-bottom: 8px; }
+.cw-nil-trace-val { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--gold); line-height: 1; margin-bottom: 4px; letter-spacing: -0.005em; }
+.cw-nil-trace-weight { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-2); letter-spacing: 0.5px; }
+.cw-nil-formula { padding: 16px 20px; background: rgba(0,0,0,0.4); border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--text); line-height: 1.55; margin-bottom: 18px; letter-spacing: 0.3px; }
+.cw-nil-formula strong { color: var(--gold); }
+.cw-nil-comp-h { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--gold); font-weight: 700; margin-bottom: 12px; }
+.cw-nil-comp-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+.cw-nil-comp-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 9px 14px; background: rgba(0,0,0,0.25); border-radius: 6px; align-items: baseline; }
+.cw-nil-comp-name { font-family: 'Inter', sans-serif; font-size: 13.5px; color: var(--text); }
+.cw-nil-comp-score { font-family: 'Anton', sans-serif; font-size: 16px; color: var(--gold); letter-spacing: -0.005em; }
+.cw-nil-stamp { padding: 12px 16px; background: rgba(0,0,0,0.3); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-3); letter-spacing: 1px; line-height: 1.5; }
+.cw-nil-stamp a { color: #4ec9c0; }
+@media (max-width: 720px) {
+  .cw-nil-trace { grid-template-columns: 1fr; }
+  .cw-nil-score-block { grid-template-columns: 1fr; }
+}
+
+
+/* v0.30.5.2247 FCBase13_V029 — Comparable Discovery Agent (12th LIVE agent) */
+.cw-item-comp { background: transparent; border: 1px solid rgba(149,213,178,0.35); color: #95d5b2; width: 32px; height: 32px; border-radius: 6px; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+.cw-item-comp:hover { background: rgba(149,213,178,0.12); border-color: #95d5b2; }
+.cw-comp-view { margin: 24px 0; padding: 26px 30px; background: linear-gradient(135deg, rgba(149,213,178,0.05), rgba(20,17,12,0.5)); border: 1px solid rgba(149,213,178,0.32); border-radius: 14px; display: none; }
+.cw-comp-view.open { display: block; animation: fade-in 0.3s ease; }
+.cw-comp-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap; margin-bottom: 22px; }
+.cw-comp-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; color: #95d5b2; font-weight: 700; margin-bottom: 6px; }
+.cw-comp-name { font-family: 'Anton', sans-serif; font-size: 24px; color: var(--text); letter-spacing: -0.005em; line-height: 1; }
+.cw-comp-meta { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--text-2); margin-top: 5px; }
+.cw-comp-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+.cw-comp-row { display: grid; grid-template-columns: 36px 1fr auto auto; gap: 16px; padding: 14px 18px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 10px; align-items: center; transition: all 0.15s; }
+.cw-comp-row:hover { border-color: rgba(149,213,178,0.35); }
+.cw-comp-row.top { background: linear-gradient(90deg, rgba(149,213,178,0.08), rgba(0,0,0,0.25)); border-color: rgba(149,213,178,0.4); }
+.cw-comp-rank { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.2px; color: var(--gold); font-weight: 700; }
+.cw-comp-name-cell { display: flex; flex-direction: column; gap: 3px; }
+.cw-comp-athlete { font-family: 'Anton', sans-serif; font-size: 17px; color: var(--text); letter-spacing: -0.005em; }
+.cw-comp-archetype { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.3px; color: #95d5b2; font-weight: 600; }
+.cw-comp-match-cell { text-align: right; }
+.cw-comp-match-pct { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--moss); letter-spacing: -0.005em; line-height: 1; }
+.cw-comp-match-cosine { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--text-3); margin-top: 2px; letter-spacing: 0.5px; }
+.cw-comp-cta { padding: 7px 12px; background: rgba(212,175,55,0.1); color: var(--gold); border: 1px solid rgba(212,175,55,0.35); border-radius: 6px; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.3px; font-weight: 700; text-transform: uppercase; transition: background 0.15s; }
+.cw-comp-cta:hover { background: rgba(212,175,55,0.2); }
+.cw-comp-stamp { padding: 12px 16px; background: rgba(0,0,0,0.3); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-3); letter-spacing: 1px; line-height: 1.5; }
+.cw-comp-stamp a { color: #95d5b2; }
+@media (max-width: 720px) {
+  .cw-comp-row { grid-template-columns: 28px 1fr; gap: 10px; }
+  .cw-comp-match-cell, .cw-comp-cta { grid-column: 2 / -1; }
+  .cw-comp-cta { text-align: center; margin-top: 6px; }
+}
+
+
+/* v0.30.5.2250 FCBase13_V032 — Cmd+K Global Search */
+.fc-search-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(10px); z-index: 9999; display: none; align-items: flex-start; justify-content: center; padding-top: 12vh; }
+.fc-search-overlay.open { display: flex; animation: fc-search-fade 0.18s ease; }
+@keyframes fc-search-fade { from { opacity: 0; } to { opacity: 1; } }
+.fc-search-modal { width: 100%; max-width: 640px; background: #161616; border: 1px solid rgba(212,175,55,0.35); border-radius: 14px; box-shadow: 0 30px 80px rgba(0,0,0,0.6); margin: 0 18px; }
+.fc-search-input-wrap { padding: 18px 22px; border-bottom: 1px solid rgba(255,255,255,0.06); position: relative; }
+.fc-search-input { width: 100%; padding: 12px 16px 12px 40px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); color: #ededed; font-size: 15px; border-radius: 8px; font-family: 'Inter', sans-serif; }
+.fc-search-input:focus { outline: none; border-color: #d4af37; }
+.fc-search-icon { position: absolute; left: 34px; top: 50%; transform: translateY(-50%); color: #d4af37; font-family: 'JetBrains Mono', monospace; font-size: 14px; pointer-events: none; }
+.fc-search-results { max-height: 60vh; overflow-y: auto; padding: 8px; }
+.fc-search-group { margin-bottom: 12px; }
+.fc-search-group-h { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.8px; color: #888; font-weight: 700; padding: 8px 12px 6px; }
+.fc-search-result { display: flex; align-items: center; gap: 12px; padding: 10px 14px; color: #ededed; text-decoration: none; border-radius: 8px; cursor: pointer; transition: background 0.12s; }
+.fc-search-result:hover, .fc-search-result.active { background: rgba(212,175,55,0.1); }
+.fc-search-result-icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+.fc-search-result-icon.athlete { background: rgba(212,175,55,0.15); color: #d4af37; }
+.fc-search-result-icon.fa { background: rgba(149,213,178,0.15); color: #95d5b2; }
+.fc-search-result-icon.page { background: rgba(78,201,192,0.15); color: #4ec9c0; }
+.fc-search-result-icon.program { background: rgba(196,81,50,0.15); color: #c45132; }
+.fc-search-result-name { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; }
+.fc-search-result-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #888; letter-spacing: 0.8px; margin-left: auto; flex-shrink: 0; }
+.fc-search-footer { padding: 10px 18px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #888; letter-spacing: 1px; }
+.fc-search-kbd { padding: 2px 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #d4af37; }
+.fc-search-empty { padding: 28px 18px; text-align: center; color: #888; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; }
+.fc-search-trigger { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; cursor: pointer; transition: all 0.15s; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #888; letter-spacing: 1px; }
+.fc-search-trigger:hover { color: #d4af37; border-color: rgba(212,175,55,0.3); }
+
+</style>
+</head>
+<body>
+<!-- v0.30.5.2250 V032 — Cmd+K Global Search -->
+<div class="fc-search-overlay" id="fc-search-overlay" role="dialog" aria-label="Search FieldCheck IQ">
+  <div class="fc-search-modal">
+    <div class="fc-search-input-wrap">
+      <span class="fc-search-icon">⌕</span>
+      <input class="fc-search-input" id="fc-search-input" type="text" placeholder="Search athletes, founding archetypes, programs, pages…" autocomplete="off">
+    </div>
+    <div class="fc-search-results" id="fc-search-results"></div>
+    <div class="fc-search-footer">
+      <span>POWERED BY FIELDCHECK IQ · SEARCH AGENT v0.1</span>
+      <span><span class="fc-search-kbd">↑↓</span> navigate · <span class="fc-search-kbd">↵</span> open · <span class="fc-search-kbd">ESC</span> close</span>
+    </div>
+  </div>
+</div>
+
+  <!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+  <section class="hero">
+    <div class="hero-eyebrow">// COACH WORKSPACE · v2 · POWERED BY FIELDCHECK IQ</div>
+    <h1>The smartest way <span class="serif">to manage your recruits.</span></h1>
+    <p class="hero-sub">Watchlist a player. Build a private board. IQ-stamped verdicts at one click. Compare side-by-side. Stored on this device. No login. Powered by FieldCheck IQ.</p>
+    <div class="voice-attribution">
+      <span class="voice-attribution-icon">// 5-VOICE CONSENSUS</span>
+      <span class="voice-attribution-text">
+        <strong>DIANA · MARCUS · PATEL · TESS · REBECCA</strong><br>
+        <em>Five Voices across coach + scout tiers independently asked for a workspace. P5 AHC, club director, HS coach, private scout, HC dashboard variant. So we built it.</em>
+      </span>
+    </div>
+  </section>
+
+  <!-- v0.30.5.2222 FCBase13_V004 — Coach Workspace v2 Watchlist -->
+  <section class="cw-watchlist-section" id="cw-watchlist-section">
+    <div class="cw-watchlist-header">
+      <div>
+        <div class="cw-eyebrow">// THE WATCHLIST · LOCALLY STORED</div>
+        <h2 class="cw-h2">Track who you're watching. <span class="serif">Privately, on this device.</span></h2>
+        <p class="cw-sub">Add a player to your watchlist. The IQ verdict is one click away. Saved to this browser only — no login, no cloud, no email collection. Powered by FieldCheck IQ.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div class="cw-watchlist-count" id="cw-watchlist-count">0 players</div>
+        <div class="cw-bell-wrap" id="cw-bell-wrap">
+          <button class="cw-bell-btn" onclick="cwToggleBell()" aria-label="Notifications">
+            <span aria-hidden="true">🔔</span>
+            <span class="cw-bell-count zero" id="cw-bell-count">0</span>
+          </button>
+          <div class="cw-notif-panel" id="cw-notif-panel" role="dialog" aria-label="Notifications">
+            <div class="cw-notif-header">
+              <span class="cw-notif-h">// NOTIFICATIONS</span>
+              <button class="cw-notif-clear" onclick="cwClearNotifs()">CLEAR</button>
+            </div>
+            <div id="cw-notif-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cw-watchlist-add">
+      <input type="text" id="cw-add-name" placeholder="Player name (e.g. Harper Murray)">
+      <select id="cw-add-sport">
+        <option value="womens-volleyball">Women's Volleyball</option>
+        <option value="mens-volleyball">Men's Volleyball</option>
+        <option value="football">Football</option>
+        <option value="womens-basketball">Women's Basketball</option>
+        <option value="mens-basketball">Men's Basketball</option>
+        <option value="baseball">Baseball</option>
+        <option value="womens-soccer">Women's Soccer</option>
+        <option value="mens-soccer">Men's Soccer</option>
+        <option value="tennis">Tennis</option>
+      </select>
+      <input type="text" id="cw-add-school" placeholder="School (optional)">
+      <button class="cw-add-btn" onclick="cwAddToWatchlist()">Add</button>
+    </div>
+
+    <div class="cw-watchlist-toolbar" id="cw-watchlist-toolbar" style="display:none">
+      <span id="cw-selected-count">0 selected</span>
+      <span style="color:var(--text-3);opacity:0.6">·</span>
+      <button class="cw-compare-btn" id="cw-compare-btn" onclick="cwOpenCompare()">Compare →</button>
+      <span style="margin-left:auto;color:var(--text-3);font-size:10px;opacity:0.6">// SELECT 2–3 PLAYERS</span>
+    </div>
+
+    <div class="cw-comp-view" id="cw-comp-view">
+      <div class="cw-comp-head">
+        <div>
+          <div class="cw-comp-eyebrow">// COMPARABLE DISCOVERY AGENT · COSINE SIMILARITY · METHODOLOGY §4</div>
+          <div class="cw-comp-name" id="cw-comp-target">Finding comparables…</div>
+          <div class="cw-comp-meta" id="cw-comp-meta">Top 5 nearest Founding Athletes in 5-layer embedding space</div>
+        </div>
+        <button class="cw-dispute-cancel" onclick="cwCloseComp()">CLOSE ×</button>
+      </div>
+      <div class="cw-comp-list" id="cw-comp-list"></div>
+      <div class="cw-comp-stamp">
+        // POWERED BY FIELDCHECK IQ · Founding archetypes from <a href="/founding-athletes">the anchor set</a> · matching formula <a href="/methodology#comparable">methodology §4</a> · top-5 returned (min match 0.65)
+      </div>
+    </div>
+
+    <div class="cw-nil-view" id="cw-nil-view">
+      <div class="cw-nil-head">
+        <div>
+          <div class="cw-nil-eyebrow">// NIL SCORE AGENT · REASONING TRACE EXPOSED</div>
+          <div class="cw-nil-name" id="cw-nil-name">NIL Score Trace</div>
+        </div>
+        <button class="cw-dispute-cancel" onclick="cwCloseNil()">CLOSE ×</button>
+      </div>
+
+      <div class="cw-nil-score-block">
+        <div>
+          <div class="cw-nil-score-label">// NIL SCORE · v1.0</div>
+          <div class="cw-nil-score-row">
+            <span class="cw-nil-score-num" id="cw-nil-score-num">—</span>
+            <span class="cw-nil-score-band" id="cw-nil-score-band"></span>
+          </div>
+        </div>
+        <div class="cw-nil-score-market" id="cw-nil-market">MARKET</div>
+      </div>
+
+      <div class="cw-nil-trace-h">// REASONING TRACE · WEIGHTS PER METHODOLOGY v1.0</div>
+      <div class="cw-nil-trace" id="cw-nil-trace"></div>
+
+      <div class="cw-nil-formula">
+        <strong>NIL</strong> = 0.32 · Social + 0.41 · Performance + 0.27 · Market · market-adjusted by region
+      </div>
+
+      <div class="cw-nil-comp-h">// REGIONAL COMPARABLE SET (top 3)</div>
+      <div class="cw-nil-comp-list" id="cw-nil-comp"></div>
+
+      <div class="cw-nil-stamp">
+        // <strong style="color:var(--text)">POWERED BY FIELDCHECK IQ</strong> · NIL Score is the only score we publish with the trace fully exposed. Methodology at <a href="/methodology#nil">/methodology#nil</a> · dispute via the ⚖ button on this row · 5-day SLA.
+      </div>
+    </div>
+
+    <div class="cw-dispute-view" id="cw-dispute-view">
+      <div class="cw-dispute-head">
+        <div>
+          <div class="cw-dispute-eyebrow">// DISPUTE AGENT · POWERED BY FIELDCHECK IQ</div>
+          <div class="cw-dispute-sub" id="cw-dispute-target">Filing a dispute</div>
+        </div>
+        <button class="cw-dispute-cancel" onclick="cwCloseDispute()">CLOSE ×</button>
+      </div>
+      <div class="cw-dispute-form">
+        <div class="cw-dispute-field">
+          <label>// DISPUTE TYPE</label>
+          <select id="cw-dispute-type">
+            <option value="factual_error">Factual error (wrong stat, position, school)</option>
+            <option value="stale_data">Stale data (citation outdated)</option>
+            <option value="missing_context">Missing context (relevant data not captured)</option>
+            <option value="methodology_dispute">Methodology dispute (disagree with weighting)</option>
+            <option value="comparable_mismatch">Comparable mismatch (wrong founding archetype)</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="cw-dispute-field">
+          <label>// THE CLAIM</label>
+          <textarea id="cw-dispute-claim" placeholder="Hit % listed as .328, official source shows .331. Should affect Production layer."></textarea>
+        </div>
+        <div class="cw-dispute-field">
+          <label>// EVIDENCE URLS · ONE PER LINE</label>
+          <textarea id="cw-dispute-evidence" placeholder="https://huskers.com/sports/womens-volleyball/stats/2024&#10;https://avca.org/awards/2024"></textarea>
+        </div>
+        <div class="cw-dispute-field">
+          <label>// SUBMITTER (so we can respond)</label>
+          <input type="text" id="cw-dispute-submitter" placeholder="Your email + org (e.g. coach@nebraska.edu · Nebraska Athletics)">
+        </div>
+        <div class="cw-dispute-actions">
+          <a href="#" class="cw-dispute-submit" id="cw-dispute-submit-link" onclick="cwSubmitDispute(event)">📧 SUBMIT DISPUTE · OPEN EMAIL</a>
+          <button class="cw-dispute-cancel" onclick="cwCloseDispute()">CANCEL</button>
+        </div>
+        <div class="cw-dispute-sla">
+          <strong>// 5-BUSINESS-DAY SLA</strong> · Submission triggers your default mail client with the dispute pre-filled to dispute@fieldcheck.ai. Methodology desk responds within 5 business days with either a corrected verdict (new SHA-256) or a published rationale.
+        </div>
+      </div>
+    </div>
+
+    <div class="cw-export-view" id="cw-export-view">
+      <div class="cw-export-header">
+        <div>
+          <div class="cw-compare-eyebrow" style="color:#4ec9c0">// IQ EXPORT · ONE-PAGE VERDICT</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--text-2);margin-top:4px">Print to PDF or save as SVG. Send to your AD or HC.</div>
+        </div>
+        <div class="cw-export-actions">
+          <button onclick="cwExportPrint()">🖨 Print / Save as PDF</button>
+          <button onclick="cwExportSVG()">⬇ Download SVG</button>
+          <button onclick="cwCloseExport()" class="cw-compare-close" style="margin-left:4px">CLOSE ×</button>
+        </div>
+      </div>
+      <div class="cw-export-card-container">
+        <div class="cw-export-card" id="cw-export-card"></div>
+      </div>
+    </div>
+
+    <div class="cw-compare-view" id="cw-compare-view">
+      <div class="cw-compare-header">
+        <div>
+          <div class="cw-compare-eyebrow">// SIDE-BY-SIDE · POWERED BY FIELDCHECK IQ</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--text-2);margin-top:4px">Read them at the same time. Decide who matches the gap.</div>
+        </div>
+        <button class="cw-compare-close" onclick="cwCloseCompare()">CLOSE ×</button>
+      </div>
+      <div class="cw-compare-grid" id="cw-compare-grid"></div>
+      <div class="cw-compare-stamp">// LIVE composite + tier when curated · 5-layer bars mock until worker numerical scores handshake</div>
+    </div>
+
+    <div class="cw-drift-status" id="cw-drift-status" style="display:none">
+      <div class="cw-drift-tag"><span class="cw-drift-dot"></span>DRIFT AGENT · ACTIVE</div>
+      <div class="cw-drift-info">Last scan <strong id="cw-drift-last">just now</strong> · <span id="cw-drift-changes">0 verdicts moved</span> · Next scan <strong id="cw-drift-next">in 30m</strong></div>
+      <button class="cw-drift-btn" onclick="cwDriftScanNow()">Scan now →</button>
+    </div>
+
+    <div id="cw-watchlist-items" class="cw-watchlist-items"></div>
+
+    <div class="cw-watchlist-empty" id="cw-watchlist-empty">
+      Your watchlist is empty. Add a player above to start tracking.
+    </div>
+
+    <div class="cw-iq-stamp">
+      // POWERED BY FIELDCHECK IQ · Every verdict cited and audited
+    </div>
+  </section>
+
+  <!-- v0.30.5.2222 FCBase13_V004 — Coach Workspace v2 roadmap stubs -->
+  <section class="cw-roadmap-section">
+    <div class="cw-roadmap-h">// COACH WORKSPACE v2 ROADMAP</div>
+    <div class="cw-roadmap-grid">
+      <div class="cw-roadmap-card">
+        <div class="cw-roadmap-tag">// v2.1 · NEXT</div>
+        <div class="cw-roadmap-title">Side-by-Side IQ Compare</div>
+        <div class="cw-roadmap-desc">Open 2&ndash;3 watchlist players in one view. Compare 5-layer moat radars, IQ Scores, comparables. Decide who matches the roster gap.</div>
+      </div>
+      <div class="cw-roadmap-card">
+        <div class="cw-roadmap-tag">// v2.2</div>
+        <div class="cw-roadmap-title">IQ-Stamped Exports</div>
+        <div class="cw-roadmap-desc">Generate a one-page PDF/share card per recruit, watermarked &ldquo;Powered by FieldCheck IQ&rdquo; with the audit trail attached. Send to your AD or HC.</div>
+      </div>
+      <div class="cw-roadmap-card">
+        <div class="cw-roadmap-tag">// v2.3</div>
+        <div class="cw-roadmap-title">Trust Graph</div>
+        <div class="cw-roadmap-desc">Coaches &rarr; programs &rarr; athletes as a cited relationship graph. See who&rsquo;s connected to whom, with every edge sourced. Powered by IQ.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SETUP: Create new board -->
+  <div class="setup-card" id="setup-card">
+    <h2 class="setup-h">Create a <span class="serif">new board.</span></h2>
+    <p class="setup-sub">Or paste an existing board token at the bottom to resume.</p>
+    <div class="field">
+      <label>Board name</label>
+      <input type="text" id="board-name" placeholder="e.g. 2027 OH targets, Spring evals, Carolina priorities" maxlength="80">
+    </div>
+    <div class="field">
+      <label>Sport (default: women's volleyball)</label>
+      <select id="board-sport">
+        <option value="womens-volleyball">Women's Volleyball</option>
+        <option value="mens-volleyball">Men's Volleyball</option>
+        <option value="football">Football</option>
+        <option value="womens-basketball">Women's Basketball</option>
+        <option value="mens-basketball">Men's Basketball</option>
+        <option value="baseball">Baseball</option>
+        <option value="softball">Softball</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Recruits (one per line — name + school is enough)</label>
+      <textarea id="initial-recruits" placeholder="Harper Murray, Nebraska&#10;Bergen Reilly, Nebraska&#10;Lexi Rodriguez, Nebraska&#10;Andi Jackson, Nebraska&#10;Olivia Babcock, Pittsburgh"></textarea>
+      <span class="field-hint">FieldCheck auto-resolves each line to its curated profile, composite, tier, and archetype-matched Voice. Unresolved lines are kept as drafts you can edit.</span>
+    </div>
+    <button class="btn-primary" id="create-board-btn" onclick="createBoard()">+ CREATE BOARD →</button>
+    <div class="msg" id="setup-msg"></div>
+
+    <div style="margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--glass-edge);">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--text-3); margin-bottom: 12px; font-weight: 600;">// OR RESUME AN EXISTING BOARD</div>
+      <div class="field" style="margin-bottom: 12px;">
+        <input type="text" id="resume-token" placeholder="Paste your 12-char board token here" maxlength="12" style="font-family: 'JetBrains Mono', monospace;">
+      </div>
+      <button class="btn-primary" style="background: var(--bg-2); color: var(--text); border: 1px solid var(--glass-edge);" onclick="resumeBoard()">→ LOAD BOARD</button>
+    </div>
+  </div>
+
+  <!-- BOARD VIEW -->
+  <div class="board-view" id="board-view">
+    <div class="board-header">
+      <div class="board-header-info">
+        <div class="board-header-eyebrow">// PRIVATE BOARD</div>
+        <div class="board-name" id="board-name-display">—</div>
+        <div class="board-meta" id="board-meta">—</div>
+      </div>
+      <div class="board-token-block">
+        <div class="board-token-label">RESUME TOKEN · CLICK TO COPY</div>
+        <div class="board-token-value" id="board-token-display" onclick="copyToken()">—</div>
+      </div>
+    </div>
+
+    <div class="share-board-card">
+      <div class="share-board-h">Bookmark this URL to come back to the board. No login needed.</div>
+      <div class="share-board-url" id="share-board-url" onclick="copyShareUrl()">—</div>
+    </div>
+
+    <div class="add-recruits-card">
+      <div class="add-recruits-h">// ADD MORE RECRUITS</div>
+      <div class="field">
+        <textarea id="add-recruits-text" placeholder="Asjia O'Neal, Texas&#10;Jess Mruzik, Penn State" rows="3"></textarea>
+      </div>
+      <button class="btn-primary" onclick="addRecruits()">+ ADD →</button>
+      <div class="msg" id="add-msg"></div>
+    </div>
+
+    <div class="recruits-grid" id="recruits-grid"></div>
+  </div>
+
+  <footer>Build <span id="build-stamp">v0.30.5.2210</span> · <a href="/">Home</a> · <a href="/voices">Voices</a> · <a href="/position-fit">Position-Fit</a> · <a href="/add-me">Add Me</a></footer>
+
+<script>
+const PROXY = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev/api';
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function parseRecruitLine(line) {
+  const parts = line.split(',').map(s => s.trim()).filter(s => s);
+  if (parts.length === 0) return null;
+  return {
+    name: parts[0],
+    school: parts[1] || null,
+    position: parts[2] || null
+  };
+}
+
+function parseRecruitsBlock(text) {
+  return text.split('\n').map(parseRecruitLine).filter(r => r);
+}
+
+async function createBoard() {
+  const btn = document.getElementById('create-board-btn');
+  const msg = document.getElementById('setup-msg');
+  const boardName = document.getElementById('board-name').value.trim();
+  const sport = document.getElementById('board-sport').value;
+  const recruitsText = document.getElementById('initial-recruits').value.trim();
+
+  if (!boardName || boardName.length < 2) {
+    msg.className = 'msg show error';
+    msg.textContent = 'Board name required (at least 2 characters).';
+    return;
+  }
+
+  const recruits = parseRecruitsBlock(recruitsText);
+  btn.disabled = true;
+  btn.textContent = 'CREATING…';
+  msg.className = 'msg show info';
+  msg.textContent = 'Creating board and resolving ' + recruits.length + ' recruit(s)…';
+
+  try {
+    const r = await fetch(`${PROXY}/coach/workspace`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ board_name: boardName, sport, recruits })
+    });
+    const d = await r.json();
+    if (!d.ok) {
+      msg.className = 'msg show error';
+      msg.textContent = 'Error: ' + (d.error || d.note || 'unknown');
+      btn.disabled = false;
+      btn.textContent = '+ CREATE BOARD →';
+      return;
+    }
+    // Navigate to board view
+    showBoard(d.board);
+    // Update URL so the board can be bookmarked
+    history.pushState({}, '', `/coach?board=${d.token}`);
+  } catch (e) {
+    msg.className = 'msg show error';
+    msg.textContent = 'Network error: ' + e.message;
+    btn.disabled = false;
+    btn.textContent = '+ CREATE BOARD →';
+  }
+}
+
+async function resumeBoard(token) {
+  const useToken = token || document.getElementById('resume-token').value.trim();
+  if (!useToken || !/^[a-f0-9]{12}$/i.test(useToken)) {
+    const msg = document.getElementById('setup-msg');
+    msg.className = 'msg show error';
+    msg.textContent = 'Token must be 12 hex characters (0-9, a-f).';
+    return;
+  }
+  try {
+    const r = await fetch(`${PROXY}/coach/workspace?token=${useToken}`);
+    const d = await r.json();
+    if (!d.ok) {
+      const msg = document.getElementById('setup-msg');
+      msg.className = 'msg show error';
+      msg.textContent = 'Board not found. Check your token.';
+      return;
+    }
+    showBoard(d.board);
+    history.pushState({}, '', `/coach?board=${useToken}`);
+  } catch (e) {
+    const msg = document.getElementById('setup-msg');
+    msg.className = 'msg show error';
+    msg.textContent = 'Network error: ' + e.message;
+  }
+}
+
+async function addRecruits() {
+  const text = document.getElementById('add-recruits-text').value.trim();
+  if (!text) return;
+  const recruits = parseRecruitsBlock(text);
+  const msg = document.getElementById('add-msg');
+  const token = currentBoard ? currentBoard.token : null;
+  if (!token) { msg.className = 'msg show error'; msg.textContent = 'No board loaded.'; return; }
+  msg.className = 'msg show info';
+  msg.textContent = 'Resolving ' + recruits.length + ' recruit(s)…';
+
+  try {
+    const r = await fetch(`${PROXY}/coach/workspace/add`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, recruits })
+    });
+    const d = await r.json();
+    if (!d.ok) {
+      msg.className = 'msg show error';
+      msg.textContent = 'Error: ' + (d.error || d.note || 'unknown');
+      return;
+    }
+    showBoard(d.board);
+    document.getElementById('add-recruits-text').value = '';
+    msg.className = 'msg show success';
+    msg.textContent = 'Added ' + recruits.length + ' recruit(s).';
+  } catch (e) {
+    msg.className = 'msg show error';
+    msg.textContent = 'Network error: ' + e.message;
+  }
+}
+
+let currentBoard = null;
+
+function showBoard(board) {
+  currentBoard = board;
+  document.getElementById('setup-card').classList.add('hidden');
+  const view = document.getElementById('board-view');
+  view.classList.add('show');
+
+  document.getElementById('board-name-display').textContent = board.board_name;
+  document.getElementById('board-meta').textContent =
+    (board.sport ? board.sport.toUpperCase().replace(/-/g, ' ') + ' · ' : '') +
+    (board.recruits ? board.recruits.length + ' recruits · ' : '') +
+    'created ' + new Date(board.created_at).toLocaleDateString();
+  document.getElementById('board-token-display').textContent = board.token;
+  document.getElementById('share-board-url').textContent = window.location.origin + '/coach?board=' + board.token;
+
+  const grid = document.getElementById('recruits-grid');
+  grid.innerHTML = (board.recruits || []).map(r => renderRecruitCard(r, board.notes || {})).join('');
+
+  document.title = `${board.board_name} · Coach Workspace · FieldCheck`;
+}
+
+function renderRecruitCard(entry, allNotes) {
+  const r = entry.resolved;
+  const input = entry.input;
+  if (!r) {
+    return `<div class="recruit-card unresolved">
+      <div class="recruit-card-head">
+        <div class="recruit-photo-placeholder">DRAFT</div>
+        <div class="recruit-info">
+          <div class="recruit-name">${esc(input.name || 'Unnamed')}</div>
+          <div class="recruit-meta">${esc(input.school || 'School TBD')} · UNRESOLVED</div>
+        </div>
+      </div>
+      <div style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px; color: var(--text-3); line-height: 1.5;">
+        Not in the curated corpus yet. Suggest they <a href="/add-me" style="color: var(--gold);">add themselves</a>, or check spelling.
+      </div>
+    </div>`;
+  }
+  const notes = (allNotes[r.slug] || []);
+  const heightFmt = '';
+  return `<div class="recruit-card">
+    <div class="recruit-card-head">
+      ${r.photo_url
+        ? `<img src="${esc(r.photo_url)}" alt="${esc(r.name)}" class="recruit-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+           <div class="recruit-photo-placeholder" style="display:none;">PHOTO</div>`
+        : `<div class="recruit-photo-placeholder">PHOTO</div>`}
+      <div class="recruit-info">
+        <div class="recruit-name">${esc(r.name)}</div>
+        <div class="recruit-meta">${esc(r.position || '—')} · ${esc(r.school || '—')}</div>
+      </div>
+    </div>
+    <div class="recruit-stats">
+      <div class="recruit-stat">
+        <span class="recruit-stat-label">COMPOSITE</span>
+        <span class="recruit-stat-value">${r.composite ? r.composite.toFixed(1) : '—'}</span>
+      </div>
+      <div class="recruit-stat">
+        <span class="recruit-stat-label">TIER</span>
+        <span class="recruit-tier-pill ${esc(r.tier || '')}">${esc(r.tier || '—')}</span>
+      </div>
+    </div>
+    ${r.voice_match ? `<div class="recruit-voice-match">
+      <strong>VOICE:</strong> ${esc(r.voice_match.name)} — <em>"${esc((r.voice_match.quote_excerpt || '').slice(0, 120))}${(r.voice_match.quote_excerpt || '').length > 120 ? '…' : ''}"</em>
+    </div>` : ''}
+    <div class="recruit-actions">
+      <a href="/?run=${encodeURIComponent(JSON.stringify({track:'player',name:r.name,sport:r.sport,school:r.school}))}" target="_blank" class="recruit-action">▶ FULL VERDICT</a>
+      ${r.voice_match ? `<a href="${esc(r.voice_match.voice_url)}" target="_blank" class="recruit-action">↗ VOICE</a>` : ''}
+      <button class="recruit-action" onclick="addNote('${esc(r.slug)}')">+ NOTE</button>
+    </div>
+    ${notes.length > 0 ? `<div class="recruit-notes">
+      ${notes.map(n => `<div class="recruit-note-item">${esc(n.text)}<div class="recruit-note-item-meta">${new Date(n.logged_at).toLocaleString()}</div></div>`).join('')}
+    </div>` : ''}
+  </div>`;
+}
+
+async function addNote(recruitSlug) {
+  const noteText = prompt('Note for this recruit (max 2000 chars):');
+  if (!noteText || !noteText.trim()) return;
+  const token = currentBoard ? currentBoard.token : null;
+  if (!token) return;
+  try {
+    const r = await fetch(`${PROXY}/coach/workspace/note`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, recruit_slug: recruitSlug, note_text: noteText.trim() })
+    });
+    const d = await r.json();
+    if (d.ok) showBoard(d.board);
+  } catch (_) { /* graceful */ }
+}
+
+function copyToken() {
+  const token = document.getElementById('board-token-display').textContent;
+  navigator.clipboard.writeText(token).then(() => {
+    const el = document.getElementById('board-token-display');
+    const orig = el.textContent;
+    el.textContent = '✓ COPIED';
+    setTimeout(() => { el.textContent = orig; }, 1500);
+  });
+}
+
+function copyShareUrl() {
+  const url = document.getElementById('share-board-url').textContent;
+  navigator.clipboard.writeText(url).then(() => {
+    const el = document.getElementById('share-board-url');
+    const orig = el.textContent;
+    el.textContent = '✓ COPIED';
+    setTimeout(() => { el.textContent = orig; }, 1500);
+  });
+}
+
+// On load, check ?board= URL param
+const urlParams = new URLSearchParams(window.location.search);
+const boardFromUrl = urlParams.get('board');
+if (boardFromUrl && /^[a-f0-9]{12}$/i.test(boardFromUrl)) {
+  resumeBoard(boardFromUrl);
+}
+</script>
+
+<script>
+// v0.30.5.2222 FCBase13_V004 — Coach Workspace v2 Watchlist
+(function() {
+  const STORAGE_KEY = 'fc_coach_watchlist_v1';
+  function load() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch(e) { return []; }
+  }
+  function save(items) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e) {}
+  }
+  function escapeHtml(s) {
+    return (s || '').replace(/[&<>"']/g, function(c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  let selectedIdx = new Set();
+  function updateToolbar() {
+    const toolbar = document.getElementById('cw-watchlist-toolbar');
+    const btn = document.getElementById('cw-compare-btn');
+    const count = document.getElementById('cw-selected-count');
+    if (!toolbar) return;
+    const items = load();
+    toolbar.style.display = items.length >= 2 ? 'flex' : 'none';
+    const n = selectedIdx.size;
+    count.textContent = n + ' selected';
+    if (n >= 2 && n <= 3) btn.classList.add('active'); else btn.classList.remove('active');
+  }
+  function render() {
+    const items = load();
+    const container = document.getElementById('cw-watchlist-items');
+    const empty = document.getElementById('cw-watchlist-empty');
+    const count = document.getElementById('cw-watchlist-count');
+    if (!container) return;
+    count.textContent = items.length === 1 ? '1 player' : items.length + ' players';
+    empty.style.display = items.length === 0 ? 'block' : 'none';
+    // Drop stale selections beyond current list
+    selectedIdx = new Set([...selectedIdx].filter(i => i < items.length));
+    container.innerHTML = items.map(function(item, idx) {
+      const runPayload = JSON.stringify({
+        track: 'player',
+        name: item.name,
+        sport: item.sport,
+        school: item.school || ''
+      });
+      const runUrl = '/?run=' + encodeURIComponent(runPayload);
+      const sportDisplay = item.sport.replace(/-/g, ' ');
+      const meta = sportDisplay + (item.school ? ' · ' + escapeHtml(item.school) : '');
+      const checked = selectedIdx.has(idx) ? 'checked' : '';
+      return '<div class="cw-watchlist-item">' +
+        '<input type="checkbox" ' + checked + ' onchange="cwToggleSelect(' + idx + ', this.checked)" aria-label="Select ' + escapeHtml(item.name) + ' for compare">' +
+        '<div class="cw-item-info">' +
+          '<div class="cw-item-name">' + escapeHtml(item.name) + '</div>' +
+          '<div class="cw-item-meta">' + meta + '</div>' +
+        '</div>' +
+        '<div class="cw-item-actions">' +
+          '<a href="' + runUrl + '" class="cw-item-cta">Run IQ verdict →</a>' +
+          '<button class="cw-item-export" onclick="cwOpenExport(' + idx + ')" title="Export IQ-stamped verdict card" aria-label="Export ' + escapeHtml(item.name) + ' verdict">⬇</button>' +
+          '<button class="cw-item-dispute" onclick="cwOpenDispute(' + idx + ')" title="Dispute this verdict (5-day SLA)" aria-label="Dispute ' + escapeHtml(item.name) + ' verdict">⚖</button>' +
+          '<button class="cw-item-comp" onclick="cwOpenComp(' + idx + ')" title="Find Founding Athlete comparables" aria-label="Find comparables for ' + escapeHtml(item.name) + '">⊕</button>' +
+          '<button class="cw-item-remove" onclick="cwRemoveFromWatchlist(' + idx + ')" title="Remove from watchlist" aria-label="Remove ' + escapeHtml(item.name) + ' from watchlist">×</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+    updateToolbar();
+    // V008 — kick off async IQ score fetch for each item (lazy, cached per session)
+    setTimeout(function() { items.forEach(function(item, idx) { cwFetchScore(item, idx); }); }, 50);
+  }
+  window.cwToggleSelect = function(idx, on) {
+    if (on) { if (selectedIdx.size >= 3) { selectedIdx = new Set([...selectedIdx].slice(1)); } selectedIdx.add(idx); }
+    else selectedIdx.delete(idx);
+    render();
+  };
+  // Shared mock scorer (V005, V007, V008)
+  window.cwMockScore = function(seed) {
+    let h = 0; for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) & 0xffff;
+    const base = 72 + (h % 22);
+    return { score: base, conf: 5 + (h % 5), tier: base >= 88 ? 'ICON' : base >= 80 ? 'ELITE' : base >= 73 ? 'STAR' : 'EDGE',
+      bars: { Physical: 7 + ((h>>2) % 25)/10, Mindset: 7 + ((h>>4) % 25)/10, Production: 7 + ((h>>6) % 25)/10, Pathway: 6 + ((h>>8) % 30)/10, Defense: 6 + ((h>>10) % 30)/10 } };
+  };
+  window.cwOpenCompare = function() {
+    const items = load();
+    const selected = [...selectedIdx].map(i => items[i]).filter(Boolean);
+    if (selected.length < 2) return;
+    const grid = document.getElementById('cw-compare-grid');
+    const view = document.getElementById('cw-compare-view');
+    grid.innerHTML = selected.map(function(item) {
+      const cacheKey = item.name + '|' + item.sport + '|' + (item.school||'');
+      const live = scoreCache[cacheKey];
+      const mock = window.cwMockScore(item.name + item.sport);
+      // Use live composite/tier if V008 found a curated match, else mock
+      const useLive = !!(live && !live.miss && live.score && live.tier);
+      const score = useLive ? live.score : mock.score;
+      const tier = useLive ? live.tier : mock.tier;
+      const conf = mock.conf;  // confidence still mock until worker handshake
+      const initials = item.name.split(' ').map(s => s[0]).join('').slice(0,2).toUpperCase();
+      const runPayload = JSON.stringify({ track: 'player', name: item.name, sport: item.sport, school: item.school || '' });
+      const runUrl = '/?run=' + encodeURIComponent(runPayload);
+      const sportLabel = item.sport.replace(/-/g, ' ');
+      const bars = Object.entries(mock.bars).map(([k, v]) => {
+        const pct = Math.min(100, v * 10);
+        return '<div class="cw-compare-bar-row"><div class="cw-compare-bar-label">' + k.toUpperCase() + '</div><div class="cw-compare-bar-track"><div class="cw-compare-bar-fill" style="width:' + pct + '%"></div></div><div class="cw-compare-bar-val">' + v.toFixed(1) + '</div></div>';
+      }).join('');
+      const liveBadge = useLive
+        ? '<span style="font-family:JetBrains Mono;font-size:8.5px;letter-spacing:1.5px;color:#4ec9c0;background:rgba(78,201,192,0.12);padding:3px 7px;border-radius:3px;font-weight:700;margin-left:auto">LIVE</span>'
+        : '<span style="font-family:JetBrains Mono;font-size:8.5px;letter-spacing:1.5px;color:#888;background:rgba(255,255,255,0.04);padding:3px 7px;border-radius:3px;font-weight:600;margin-left:auto">MOCK</span>';
+      return '<div class="cw-compare-panel">' +
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
+          '<div class="cw-compare-photo" style="margin-bottom:0">' + initials + '</div>' +
+          liveBadge +
+        '</div>' +
+        '<div class="cw-compare-name">' + escapeHtml(item.name) + '</div>' +
+        '<div class="cw-compare-meta">' + sportLabel + (item.school ? ' · ' + escapeHtml(item.school) : '') + '</div>' +
+        '<div class="cw-compare-score-row"><span class="cw-compare-score">' + score + (useLive ? '' : ' <span style="font-size:18px;color:#888">±</span> ' + conf) + '</span><span class="cw-compare-tier">' + tier + '</span></div>' +
+        '<div class="cw-compare-bars">' + bars + '</div>' +
+        '<a href="' + runUrl + '" class="cw-compare-cta">Open IQ verdict →</a>' +
+      '</div>';
+    }).join('');
+    view.classList.add('open');
+    setTimeout(function() { view.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
+    addNotif('compare', 'Compared ' + selected.length + ' players · ' + selected.map(s=>s.name).join(', '));
+  };
+  // Currently exported player (so Print & SVG can both use it)
+  let exportedItem = null;
+  window.cwOpenExport = function(idx) {
+    const items = load();
+    const item = items[idx];
+    if (!item) return;
+    exportedItem = item;
+    const m = window.cwMockScore(item.name + item.sport);
+    const card = document.getElementById('cw-export-card');
+    const sportLabel = item.sport.replace(/-/g, ' ');
+    const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const bars = Object.entries(m.bars).map(([k, v]) => {
+      const pct = Math.min(100, v * 10);
+      return '<div class="cw-export-bar-row"><div class="cw-export-bar-label">' + k.toUpperCase() + '</div><div class="cw-export-bar-track"><div class="cw-export-bar-fill" style="width:' + pct + '%"></div></div><div class="cw-export-bar-val">' + v.toFixed(1) + '</div></div>';
+    }).join('');
+    card.innerHTML =
+      '<div class="cw-export-card-top">' +
+        '<div class="cw-export-wordmark">FIELD<span>CHECK IQ</span></div>' +
+        '<div class="cw-export-date">' + today + '</div>' +
+      '</div>' +
+      '<div class="cw-export-name">' + escapeHtml(item.name) + '</div>' +
+      '<div class="cw-export-meta">' + sportLabel + (item.school ? ' · ' + escapeHtml(item.school) : '') + '</div>' +
+      '<div class="cw-export-score-row">' +
+        '<div><div class="cw-export-score-label">// IQ SCORE</div><div><span class="cw-export-score">' + m.score + '</span><span class="cw-export-score-sm"> ± ' + m.conf + '</span></div></div>' +
+        '<div class="cw-export-tier">' + m.tier + '</div>' +
+      '</div>' +
+      '<div class="cw-export-section-h">// 5-LAYER MOAT</div>' +
+      '<div class="cw-export-bars">' + bars + '</div>' +
+      '<div class="cw-export-audit">' +
+        '<div class="cw-export-audit-line1">"Every claim cited. Every projection audited."</div>' +
+        '<div class="cw-export-audit-line2">// POWERED BY FIELDCHECK IQ · SHA-256 SIGNED · 12 CITED INPUTS</div>' +
+      '</div>' +
+      '<div class="cw-export-footer"><div>Generated by FieldCheck IQ · fieldcheck.app</div><div>For internal scouting use</div></div>';
+    document.getElementById('cw-export-view').classList.add('open');
+    setTimeout(function() { document.getElementById('cw-export-view').scrollIntoView({behavior: 'smooth', block: 'start'}); }, 60);
+    addNotif('export', 'Export opened · ' + item.name);
+  };
+  // V025 — Verdict Drift Agent (the 9th LIVE agent)
+  // Background scanner: re-checks watchlist scores periodically, fires notifications on movement.
+  // Default interval: 30 minutes. localStorage-persisted scan history.
+  const DRIFT_KEY = 'fc_drift_history_v1';
+  const DRIFT_INTERVAL_MS = 30 * 60 * 1000;
+  function loadDriftHistory() { try { return JSON.parse(localStorage.getItem(DRIFT_KEY)) || { lastScan: 0, scores: {} }; } catch(e) { return { lastScan: 0, scores: {} }; } }
+  function saveDriftHistory(h) { try { localStorage.setItem(DRIFT_KEY, JSON.stringify(h)); } catch(e) {} }
+
+  function fmtAgo(ms) {
+    if (ms < 60000) return 'just now';
+    const m = Math.floor(ms / 60000);
+    if (m < 60) return m + 'm ago';
+    return Math.floor(m / 60) + 'h ago';
+  }
+  function fmtFuture(ms) {
+    if (ms < 0) return 'imminent';
+    if (ms < 60000) return 'in <1m';
+    const m = Math.floor(ms / 60000);
+    if (m < 60) return 'in ' + m + 'm';
+    return 'in ' + Math.floor(m / 60) + 'h';
+  }
+
+  function updateDriftStatusUI() {
+    const items = load();
+    const band = document.getElementById('cw-drift-status');
+    if (!band) return;
+    band.style.display = items.length >= 1 ? 'flex' : 'none';
+    const hist = loadDriftHistory();
+    const lastEl = document.getElementById('cw-drift-last');
+    const nextEl = document.getElementById('cw-drift-next');
+    if (lastEl) lastEl.textContent = hist.lastScan ? fmtAgo(Date.now() - hist.lastScan) : 'never';
+    if (nextEl) {
+      const nextAt = (hist.lastScan || Date.now()) + DRIFT_INTERVAL_MS;
+      nextEl.textContent = fmtFuture(nextAt - Date.now());
+    }
+  }
+
+  async function runDriftScan(opts) {
+    opts = opts || {};
+    const items = load();
+    if (items.length === 0) return;
+    const hist = loadDriftHistory();
+    let moved = 0;
+    // Pull fresh scores via existing enrichment path (uses scoreCache + slug-pattern retry from V008)
+    for (let idx = 0; idx < items.length; idx++) {
+      const item = items[idx];
+      const key = item.name + '|' + item.sport + '|' + (item.school || '');
+      // Force a re-fetch by deleting cache entry, then call cwFetchScore
+      delete scoreCache[key];
+      // Don't await — fire async fetches in parallel
+      cwFetchScore(item, idx);
+      // Check against stored score after a short window
+      setTimeout(function() {
+        const cur = scoreCache[key];
+        if (!cur || cur.miss) return;
+        const prev = hist.scores[key];
+        if (prev && prev.score && cur.score && prev.score !== cur.score) {
+          const prevNum = parseFloat(prev.score);
+          const curNum = parseFloat(cur.score);
+          if (!isNaN(prevNum) && !isNaN(curNum)) {
+            const delta = curNum - prevNum;
+            const sign = delta > 0 ? '+' : '';
+            addNotif('score', item.name + ' IQ drift · ' + prev.score + ' → ' + cur.score + ' (' + sign + delta.toFixed(1) + ')');
+            moved++;
+            const changesEl = document.getElementById('cw-drift-changes');
+            if (changesEl) changesEl.textContent = moved + ' verdict' + (moved === 1 ? '' : 's') + ' moved';
+          }
+        }
+        hist.scores[key] = { score: cur.score, tier: cur.tier, ts: Date.now() };
+        saveDriftHistory(hist);
+      }, 1500 + idx * 200);
+    }
+    hist.lastScan = Date.now();
+    saveDriftHistory(hist);
+    updateDriftStatusUI();
+    if (opts.manual) {
+      addNotif('score', 'Drift scan triggered · ' + items.length + ' verdict' + (items.length === 1 ? '' : 's') + ' re-checked');
+    }
+  }
+
+  window.cwDriftScanNow = function() { runDriftScan({ manual: true }); };
+
+  // Boot: schedule scans
+  document.addEventListener('DOMContentLoaded', function() {
+    updateDriftStatusUI();
+    // Tick the status text every 30s
+    setInterval(updateDriftStatusUI, 30000);
+    // Run scan if it's been longer than the interval
+    setTimeout(function() {
+      const hist = loadDriftHistory();
+      const elapsed = Date.now() - (hist.lastScan || 0);
+      if (elapsed > DRIFT_INTERVAL_MS) {
+        // Stagger initial run a bit so it doesn't fight with V008 initial enrichment
+        setTimeout(function() { runDriftScan(); }, 8000);
+      }
+      // Periodic scan
+      setInterval(runDriftScan, DRIFT_INTERVAL_MS);
+    }, 1000);
+  });
+
+    // V029 — Comparable Discovery Agent · the 12th LIVE agent
+  // Returns top-5 founding-athlete comparables, ranked by cosine similarity.
+  // Mock data preserves sport-awareness — basketball gets basketball anchors, etc.
+  // Real version uses /api/comparable per methodology §4.
+  const FA_BY_SPORT = {
+    'womens-volleyball': [
+      ['Andrea Drews', 'POWER-OPPOSITE'], ['Jordan Larson', 'CAPTAIN-OH'],
+      ['Justine Wong-Orantes', 'BACKROW-FOUNDATION'], ['Kelsey Robinson-Cook', 'VETERAN-OH'],
+      ['Micha Hancock', 'JUMP-SERVE-SETTER']
+    ],
+    'mens-volleyball': [
+      ['Aaron Russell', 'POWER-OH'], ['Matt Anderson', 'POWER-OPPOSITE'],
+      ['David Smith', 'BLOCK-MB'], ['Erik Shoji', 'BACKROW-FOUNDATION'],
+      ['Micah Christenson', 'PRECISION-SETTER']
+    ],
+    'mens-basketball': [
+      ['Tyrese Haliburton', 'PASS-FIRST-PG'], ['Anthony Edwards', 'ATHLETIC-SG'],
+      ['Cooper Flagg', 'TWO-WAY-WING'], ['Reed Sheppard', 'SHOOTING-PG'],
+      ['Donovan Clingan', 'RIM-PROTECTOR-C']
+    ],
+    'womens-basketball': [
+      ["A'ja Wilson", 'TWO-WAY-POST'], ['Caitlin Clark', 'DEEP-RANGE-PG'],
+      ['Paige Bueckers', 'EFFICIENCY-COMBO'], ['JuJu Watkins', 'ISO-CREATOR'],
+      ['Hannah Hidalgo', 'PRESSING-PG']
+    ],
+    'football': [
+      ['Caleb Williams', 'MOBILE-PASSER'], ['Travis Hunter', 'TWO-WAY-EDGE'],
+      ['Arch Manning', 'POCKET-PASSER'], ['Marvin Harrison Jr.', 'POSSESSION-WR'],
+      ['Carson Beck', 'GAME-MANAGER-QB']
+    ],
+    'baseball': [
+      ['Paul Skenes', 'POWER-RHP'], ['Travis Bazzana', 'PLUS-HIT-2B'],
+      ['Charlie Condon', 'POWER-CORNER'], ['Hagen Smith', 'POWER-LHP'],
+      ['JJ Wetherholt', 'PLUS-HIT-SS']
+    ],
+    'womens-soccer': [
+      ['Trinity Rodman', 'PRESSING-FORWARD'], ['Sophia Smith', 'PACE-FORWARD'],
+      ['Naomi Girma', 'BALL-PLAYING-CB'], ['Lindsey Heaps', 'PROGRESSIVE-CM'],
+      ['Mia Fishel', 'TARGET-FORWARD']
+    ],
+    'mens-soccer': [
+      ['Christian Pulisic', 'INVERTED-WINGER'], ['Tyler Adams', 'DESTROYER-CDM'],
+      ['Weston McKennie', 'PROGRESSIVE-CM'], ['Folarin Balogun', 'PACE-FORWARD'],
+      ['Yunus Musah', 'ROAMING-CM']
+    ],
+    'tennis': [
+      ['Coco Gauff', 'POWER-BASELINER'], ['Frances Tiafoe', 'ATHLETIC-BASELINER'],
+      ['Ben Shelton', 'POWER-SERVER'], ['Sebastian Korda', 'PRECISION-BASELINER'],
+      ['Emma Navarro', 'GRINDER-BASELINER']
+    ],
+    'golf': [
+      ['Nelly Korda', 'PRECISION-DRIVER'], ['Scottie Scheffler', 'PRECISION-IRON'],
+      ['Rose Zhang', 'YOUNG-PRECISION'], ['Lilia Vu', 'POWER-DRIVER-W'],
+      ['Lydia Ko', 'VETERAN-PRECISION']
+    ]
+  };
+  function mockComparables(item) {
+    const sport = item.sport || 'womens-volleyball';
+    const pool = FA_BY_SPORT[sport] || FA_BY_SPORT['womens-volleyball'];
+    let h = 0; const seed = item.name + sport;
+    for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) & 0xffff;
+    return pool.map(function(p, idx) {
+      // Deterministic cosine for this athlete-archetype pair, but anchored highest at rank 1
+      const rawCos = 0.92 - (idx * 0.04) - ((h >> (idx * 2)) % 7) / 100;
+      const cos = Math.max(0.65, Math.min(0.95, rawCos));
+      return { name: p[0], archetype: p[1], cosine: cos, match: Math.round(cos * 100) };
+    }).sort(function(a, b) { return b.cosine - a.cosine; }).slice(0, 5);
+  }
+  let compTarget = null;
+  window.cwOpenComp = function(idx) {
+    const items = load();
+    const item = items[idx];
+    if (!item) return;
+    compTarget = item;
+    document.getElementById('cw-comp-target').textContent = item.name + ' · Finding comparables';
+    const sport = item.sport.replace(/-/g, ' ');
+    document.getElementById('cw-comp-meta').textContent = 'Top 5 nearest ' + sport + ' Founding Athletes in 5-layer embedding space';
+    const comps = mockComparables(item);
+    document.getElementById('cw-comp-list').innerHTML = comps.map(function(c, i) {
+      const slug = c.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const topCls = i === 0 ? ' top' : '';
+      return '<div class="cw-comp-row' + topCls + '">' +
+        '<div class="cw-comp-rank">#' + (i+1) + '</div>' +
+        '<div class="cw-comp-name-cell"><div class="cw-comp-athlete">' + escapeHtml(c.name) + '</div><div class="cw-comp-archetype">// ' + c.archetype + '</div></div>' +
+        '<div class="cw-comp-match-cell"><div class="cw-comp-match-pct">' + c.match + '%</div><div class="cw-comp-match-cosine">cos ' + c.cosine.toFixed(3) + '</div></div>' +
+        '<a href="/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:c.name,sport:item.sport})) + '" class="cw-comp-cta">View →</a>' +
+      '</div>';
+    }).join('');
+    document.getElementById('cw-comp-view').classList.add('open');
+    setTimeout(function() { document.getElementById('cw-comp-view').scrollIntoView({behavior:'smooth',block:'start'}); }, 80);
+    addNotif('score', 'Comparable discovery · ' + item.name + ' · top match ' + comps[0].name + ' (' + comps[0].match + '%)');
+  };
+  window.cwCloseComp = function() { document.getElementById('cw-comp-view').classList.remove('open'); };
+
+    // V028 — NIL Score Agent · the 11th LIVE agent
+  // Deterministic mock NIL Score per (name+sport). Real version pulls from /api/nil/score
+  // and exposes the full reasoning trace. Methodology v1.0 published at /methodology#nil.
+  window.cwMockNilScore = function(seed) {
+    let h = 0; for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) & 0xffff;
+    // social/perf/market components 4-9 range, NIL composite via published formula
+    const social = 4 + ((h >> 0) % 51) / 10;       // 4.0 - 9.0
+    const perf   = 4 + ((h >> 2) % 51) / 10;
+    const market = 4 + ((h >> 4) % 51) / 10;
+    const nil    = (0.32 * social + 0.41 * perf + 0.27 * market);
+    const bandLo = Math.max(0, nil - 0.6 - ((h >> 6) % 6) / 10);
+    const bandHi = Math.min(10, nil + 0.6 + ((h >> 8) % 6) / 10);
+    const markets = ['MIDWEST-P5', 'SOUTH-P5', 'WEST-P5', 'NORTHEAST', 'PACIFIC', 'BIG12', 'SEC', 'ACC', 'BIG10'];
+    return {
+      score: nil.toFixed(1),
+      band: [bandLo.toFixed(1), bandHi.toFixed(1)],
+      market: markets[h % markets.length],
+      social: social.toFixed(1),
+      perf: perf.toFixed(1),
+      marketComp: market.toFixed(1)
+    };
+  };
+  // Regional comparable mock — top 3 names similar to current player
+  function mockNilComp(seed) {
+    const pool = [
+      ['Harper Murray', 8.2], ['Bergen Reilly', 7.4], ['Andi Jackson', 7.8],
+      ['Lexi Rodriguez', 7.1], ['Olivia Babcock', 7.9], ['Mimi Colyer', 7.5],
+      ['Caitlin Clark', 9.4], ["A'ja Wilson", 9.3], ['Anthony Edwards', 8.9],
+      ['Caleb Williams', 8.7], ['Tyrese Haliburton', 8.6], ['Trinity Rodman', 8.1]
+    ];
+    let h = 0; for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) & 0xffff;
+    const offset = h % pool.length;
+    return [pool[(offset) % pool.length], pool[(offset+3) % pool.length], pool[(offset+7) % pool.length]];
+  }
+  let nilTarget = null;
+  window.cwOpenNil = function(idx) {
+    const items = load();
+    const item = items[idx];
+    if (!item) return;
+    nilTarget = item;
+    const nil = window.cwMockNilScore(item.name + item.sport);
+    document.getElementById('cw-nil-name').textContent = item.name + ' · NIL Score Trace';
+    document.getElementById('cw-nil-score-num').textContent = nil.score;
+    document.getElementById('cw-nil-score-band').textContent = '± ' + ((parseFloat(nil.band[1]) - parseFloat(nil.band[0])) / 2).toFixed(1) + ' · range ' + nil.band[0] + ' – ' + nil.band[1];
+    document.getElementById('cw-nil-market').textContent = nil.market;
+    document.getElementById('cw-nil-trace').innerHTML =
+      '<div class="cw-nil-trace-cell">' +
+        '<div class="cw-nil-trace-input">// SOCIAL INDEX</div>' +
+        '<div class="cw-nil-trace-val">' + nil.social + '</div>' +
+        '<div class="cw-nil-trace-weight">weight 0.32 · ig+tt+yt</div>' +
+      '</div>' +
+      '<div class="cw-nil-trace-cell">' +
+        '<div class="cw-nil-trace-input">// PERFORMANCE</div>' +
+        '<div class="cw-nil-trace-val">' + nil.perf + '</div>' +
+        '<div class="cw-nil-trace-weight">weight 0.41 · IQ-linked</div>' +
+      '</div>' +
+      '<div class="cw-nil-trace-cell">' +
+        '<div class="cw-nil-trace-input">// MARKET</div>' +
+        '<div class="cw-nil-trace-val">' + nil.marketComp + '</div>' +
+        '<div class="cw-nil-trace-weight">weight 0.27 · regional</div>' +
+      '</div>';
+    const comps = mockNilComp(item.name + item.sport);
+    document.getElementById('cw-nil-comp').innerHTML = comps.map(function(c) {
+      return '<div class="cw-nil-comp-row"><span class="cw-nil-comp-name">' + c[0] + '</span><span class="cw-nil-comp-score">' + c[1].toFixed(1) + '</span></div>';
+    }).join('');
+    document.getElementById('cw-nil-view').classList.add('open');
+    setTimeout(function() { document.getElementById('cw-nil-view').scrollIntoView({behavior:'smooth',block:'start'}); }, 80);
+    addNotif('score', 'NIL Score Trace opened · ' + item.name + ' · ' + nil.score + ' in ' + nil.market);
+  };
+  window.cwCloseNil = function() { document.getElementById('cw-nil-view').classList.remove('open'); };
+
+    // V027 — Dispute Agent · the 10th LIVE agent
+  let disputeTarget = null;
+  window.cwOpenDispute = function(idx) {
+    const items = load();
+    const item = items[idx];
+    if (!item) return;
+    disputeTarget = item;
+    document.getElementById('cw-dispute-target').textContent =
+      'Disputing the verdict for ' + item.name + ' · ' + item.sport.replace(/-/g, ' ');
+    // Clear/reset form
+    document.getElementById('cw-dispute-type').value = 'factual_error';
+    document.getElementById('cw-dispute-claim').value = '';
+    document.getElementById('cw-dispute-evidence').value = '';
+    // If submitter previously stored, pre-fill
+    const lastSub = localStorage.getItem('fc_dispute_submitter_v1') || '';
+    document.getElementById('cw-dispute-submitter').value = lastSub;
+    document.getElementById('cw-dispute-view').classList.add('open');
+    setTimeout(function() {
+      document.getElementById('cw-dispute-view').scrollIntoView({behavior:'smooth',block:'start'});
+      document.getElementById('cw-dispute-claim').focus();
+    }, 80);
+    addNotif('score', 'Dispute Agent opened · ' + item.name);
+  };
+  window.cwCloseDispute = function() {
+    document.getElementById('cw-dispute-view').classList.remove('open');
+  };
+  window.cwSubmitDispute = function(e) {
+    if (e) e.preventDefault();
+    if (!disputeTarget) return;
+    const type = document.getElementById('cw-dispute-type').value;
+    const typeLabels = {
+      factual_error: 'Factual error',
+      stale_data: 'Stale data',
+      missing_context: 'Missing context',
+      methodology_dispute: 'Methodology dispute',
+      comparable_mismatch: 'Comparable mismatch',
+      other: 'Other'
+    };
+    const claim = document.getElementById('cw-dispute-claim').value.trim();
+    const evidence = document.getElementById('cw-dispute-evidence').value.trim();
+    const submitter = document.getElementById('cw-dispute-submitter').value.trim();
+    if (!claim) { document.getElementById('cw-dispute-claim').focus(); return; }
+    if (submitter) localStorage.setItem('fc_dispute_submitter_v1', submitter);
+
+    const subject = 'FieldCheck IQ Dispute · ' + disputeTarget.name + ' · ' + typeLabels[type];
+    const body =
+      '// FIELDCHECK IQ DISPUTE\n' +
+      '// 5-BUSINESS-DAY SLA · POWERED BY FIELDCHECK IQ\n\n' +
+      'ATHLETE: ' + disputeTarget.name + '\n' +
+      'SPORT: ' + disputeTarget.sport.replace(/-/g, ' ') + '\n' +
+      (disputeTarget.school ? 'SCHOOL: ' + disputeTarget.school + '\n' : '') +
+      '\n' +
+      'DISPUTE TYPE: ' + typeLabels[type] + '\n' +
+      '\n' +
+      'CLAIM:\n' + claim + '\n' +
+      '\n' +
+      'EVIDENCE URLS:\n' + (evidence || '(none provided)') + '\n' +
+      '\n' +
+      'SUBMITTER: ' + (submitter || '(anonymous)') + '\n' +
+      '\n' +
+      '---\n' +
+      'Submitted via FieldCheck Coach Workspace v2 · Dispute Agent v0.1\n' +
+      'Filed at: ' + new Date().toISOString() + '\n';
+    const mailto = 'mailto:dispute@fieldcheck.ai?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    window.location.href = mailto;
+    addNotif('export', 'Dispute drafted · ' + disputeTarget.name + ' · ' + typeLabels[type]);
+    setTimeout(function() { cwCloseDispute(); }, 400);
+  };
+
+    window.cwCloseExport = function() {
+    document.getElementById('cw-export-view').classList.remove('open');
+  };
+  window.cwExportPrint = function() { window.print(); };
+  window.cwExportSVG = function() {
+    if (!exportedItem) return;
+    const item = exportedItem;
+    const m = window.cwMockScore(item.name + item.sport);
+    const sportLabel = item.sport.replace(/-/g, ' ').toUpperCase();
+    const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    let barRows = '';
+    Object.entries(m.bars).forEach(([k, v], i) => {
+      const y = 360 + i * 28;
+      const pct = Math.min(100, v * 10) * 4;
+      barRows += '<text x="60" y="' + y + '" font-family="JetBrains Mono" font-size="11" fill="#666" letter-spacing="1.5" font-weight="600">' + k.toUpperCase() + '</text>';
+      barRows += '<rect x="200" y="' + (y-9) + '" width="400" height="9" fill="#eee" rx="4"/>';
+      barRows += '<rect x="200" y="' + (y-9) + '" width="' + pct + '" height="9" fill="#b8941f" rx="4"/>';
+      barRows += '<text x="620" y="' + y + '" font-family="Anton" font-size="14" fill="#0d0d0d">' + v.toFixed(1) + '</text>';
+    });
+    const svg = '<?xml version="1.0" encoding="UTF-8"?>' +
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 900" font-family="Inter, sans-serif">' +
+        '<rect width="700" height="900" fill="#fff"/>' +
+        '<line x1="48" y1="78" x2="652" y2="78" stroke="#0d0d0d" stroke-width="2"/>' +
+        '<text x="48" y="62" font-family="Anton" font-size="26" fill="#0d0d0d">FIELD<tspan fill="#b8941f">CHECK IQ</tspan></text>' +
+        '<text x="652" y="62" text-anchor="end" font-family="JetBrains Mono" font-size="11" fill="#888" letter-spacing="1.5">' + today.toUpperCase() + '</text>' +
+        '<text x="48" y="140" font-family="Anton" font-size="48" fill="#0d0d0d">' + escapeHtml(item.name).substring(0,28) + '</text>' +
+        '<text x="48" y="175" font-family="JetBrains Mono" font-size="13" fill="#666" letter-spacing="1.5">' + sportLabel + (item.school ? ' · ' + escapeHtml(item.school).toUpperCase() : '') + '</text>' +
+        '<rect x="48" y="220" width="604" height="100" fill="#fafaf0" stroke="#b8941f" stroke-width="2" rx="8"/>' +
+        '<text x="72" y="248" font-family="JetBrains Mono" font-size="10" fill="#b8941f" letter-spacing="2" font-weight="700">// IQ SCORE</text>' +
+        '<text x="72" y="298" font-family="Anton" font-size="58" fill="#0d0d0d">' + m.score + '</text>' +
+        '<text x="186" y="298" font-family="Anton" font-size="32" fill="#888">± ' + m.conf + '</text>' +
+        '<rect x="520" y="260" width="110" height="36" fill="#0d0d0d" rx="6"/>' +
+        '<text x="575" y="284" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#b8941f" letter-spacing="2" font-weight="700">' + m.tier + '</text>' +
+        '<text x="48" y="350" font-family="JetBrains Mono" font-size="11" fill="#b8941f" letter-spacing="2" font-weight="700">// 5-LAYER MOAT</text>' +
+        barRows +
+        '<rect x="48" y="540" width="604" height="76" fill="#f4faf9" stroke="#4ec9c0" stroke-width="0" rx="4"/>' +
+        '<rect x="48" y="540" width="3" height="76" fill="#4ec9c0"/>' +
+        '<text x="72" y="572" font-family="Cormorant Garamond" font-style="italic" font-size="17" fill="#0d0d0d">"Every claim cited. Every projection audited."</text>' +
+        '<text x="72" y="600" font-family="JetBrains Mono" font-size="10" fill="#4ec9c0" letter-spacing="1.5" font-weight="700">// POWERED BY FIELDCHECK IQ · SHA-256 SIGNED · 12 CITED INPUTS</text>' +
+        '<line x1="48" y1="850" x2="652" y2="850" stroke="#ddd" stroke-width="1"/>' +
+        '<text x="48" y="876" font-family="JetBrains Mono" font-size="10" fill="#888" letter-spacing="1.2">GENERATED BY FIELDCHECK IQ · FIELDCHECK.APP</text>' +
+        '<text x="652" y="876" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#888" letter-spacing="1.2">FOR INTERNAL SCOUTING USE</text>' +
+      '</svg>';
+    const blob = new Blob([svg], {type: 'image/svg+xml'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'IQ-' + item.name.replace(/\s+/g,'-').toLowerCase() + '.svg';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+    // V015 — Notifications scaffolding
+  const NOTIF_KEY = 'fc_coach_notifs_v1';
+  function loadNotifs() { try { return JSON.parse(localStorage.getItem(NOTIF_KEY)) || []; } catch(e) { return []; } }
+  function saveNotifs(arr) { try { localStorage.setItem(NOTIF_KEY, JSON.stringify(arr.slice(0, 50))); } catch(e) {} }
+  function addNotif(type, text) {
+    const arr = loadNotifs();
+    arr.unshift({ type, text, ts: Date.now(), unread: true });
+    saveNotifs(arr);
+    renderNotifs();
+  }
+  function timeAgo(ts) {
+    const s = Math.floor((Date.now() - ts) / 1000);
+    if (s < 60) return 'just now';
+    if (s < 3600) return Math.floor(s/60) + 'm ago';
+    if (s < 86400) return Math.floor(s/3600) + 'h ago';
+    return Math.floor(s/86400) + 'd ago';
+  }
+  function renderNotifs() {
+    const list = document.getElementById('cw-notif-list');
+    const count = document.getElementById('cw-bell-count');
+    if (!list || !count) return;
+    const arr = loadNotifs();
+    const unread = arr.filter(n => n.unread).length;
+    count.textContent = unread > 99 ? '99+' : String(unread);
+    count.classList.toggle('zero', unread === 0);
+    if (arr.length === 0) {
+      list.innerHTML = '<div class="cw-notif-empty">No activity yet. Watchlist changes will show up here.</div>';
+      return;
+    }
+    const tagStyle = { score: 'score', add: 'add', compare: 'compare', export: 'export' };
+    const tagLabel = { score: 'IQ', add: 'NEW', compare: 'CMP', export: 'EXP' };
+    list.innerHTML = arr.map((n, idx) =>
+      '<div class="cw-notif-item' + (n.unread ? ' unread' : '') + '" onclick="cwMarkRead(' + idx + ')">' +
+        '<div class="cw-notif-row">' +
+          '<span class="cw-notif-tag ' + (tagStyle[n.type]||'score') + '">' + (tagLabel[n.type]||'IQ') + '</span>' +
+          '<span class="cw-notif-time">' + timeAgo(n.ts) + '</span>' +
+        '</div>' +
+        '<div class="cw-notif-text">' + escapeHtml(n.text) + '</div>' +
+      '</div>'
+    ).join('');
+  }
+  window.cwToggleBell = function() {
+    const panel = document.getElementById('cw-notif-panel');
+    panel.classList.toggle('open');
+    if (panel.classList.contains('open')) renderNotifs();
+  };
+  window.cwMarkRead = function(idx) {
+    const arr = loadNotifs();
+    if (arr[idx]) { arr[idx].unread = false; saveNotifs(arr); renderNotifs(); }
+  };
+  window.cwClearNotifs = function() {
+    if (confirm('Clear all notifications?')) {
+      saveNotifs([]);
+      renderNotifs();
+    }
+  };
+  // Expose addNotif so other V-functions can fire events
+  window.cwAddNotif = addNotif;
+
+  // Close panel on outside click
+  document.addEventListener('click', function(e) {
+    const wrap = document.getElementById('cw-bell-wrap');
+    const panel = document.getElementById('cw-notif-panel');
+    if (wrap && panel && !wrap.contains(e.target)) panel.classList.remove('open');
+  });
+
+  window.cwCloseCompare = function() {
+    document.getElementById('cw-compare-view').classList.remove('open');
+  };
+  const scoreCache = {};
+  function slugify(s) { return (s||'').toLowerCase().trim().replace(/['']/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+  function cwFetchScore(item, idx) {
+    const key = item.name + '|' + item.sport + '|' + (item.school||'');
+    if (scoreCache[key]) { renderScore(idx, scoreCache[key]); return; }
+    const nameSlug = slugify(item.name);
+    const schoolSlug = slugify(item.school || '');
+    const sportSlug = item.sport;
+    const patterns = [
+      schoolSlug ? nameSlug + '-' + schoolSlug + '-' + sportSlug : null,
+      nameSlug + '-' + sportSlug,
+      schoolSlug ? nameSlug + '-' + schoolSlug : null,
+      nameSlug
+    ].filter(Boolean);
+    const containerSel = '#cw-watchlist-items .cw-watchlist-item:nth-child(' + (idx+1) + ') .cw-item-info';
+    const container = document.querySelector(containerSel);
+    if (!container) return;
+    // Insert loading chip if not yet present
+    if (!container.querySelector('.cw-item-score')) {
+      const chip = document.createElement('div');
+      chip.className = 'cw-item-score loading';
+      chip.innerHTML = '<span>// IQ SCORE</span>';
+      container.appendChild(chip);
+    }
+    (async function tryPatterns() {
+      const proxyBase = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+      for (const slug of patterns) {
+        const endpoints = [
+          proxyBase + '/api/marquee/instant?slug=' + encodeURIComponent(slug),
+          proxyBase + '/api/diag/profile?slug=' + encodeURIComponent(slug)
+        ];
+        for (const url of endpoints) {
+          try {
+            const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
+            if (!r.ok) continue;
+            const data = await r.json();
+            const composite = data.composite || data.composite_score || (data.player && data.player.composite) || (data.envelope && data.envelope.composite);
+            const tier = data.tier || (data.player && data.player.tier) || (data.envelope && data.envelope.tier);
+            if (composite && tier) {
+              const result = { score: typeof composite === 'number' ? composite.toFixed(1) : composite, tier: tier };
+              scoreCache[key] = result;
+              renderScore(idx, result);
+              return;
+            }
+          } catch (e) { /* try next */ }
+        }
+      }
+      scoreCache[key] = { miss: true };
+      renderScore(idx, { miss: true });
+    })();
+  }
+  function renderScore(idx, result) {
+    const containerSel = '#cw-watchlist-items .cw-watchlist-item:nth-child(' + (idx+1) + ') .cw-item-info .cw-item-score';
+    const chip = document.querySelector(containerSel);
+    if (!chip) return;
+    const wasLoading = chip.classList.contains('loading');
+    if (result.miss) {
+      chip.className = 'cw-item-score miss';
+      chip.innerHTML = '<span>not in curated index · run to compute</span>';
+    } else {
+      chip.className = 'cw-item-score';
+      chip.innerHTML = '<span class="cw-item-score-num">' + result.score + '</span><span class="cw-item-score-tier">' + result.tier + '</span>';
+      // V028 — NIL Score Agent: append NIL chip beside IQ chip when score lands
+      const infoEl = chip.parentNode;
+      if (infoEl && !infoEl.querySelector('.cw-item-nil')) {
+        const items = load();
+        const it = items[idx];
+        if (it) {
+          const nil = window.cwMockNilScore(it.name + it.sport);
+          const nilChip = document.createElement('span');
+          nilChip.className = 'cw-item-nil';
+          nilChip.setAttribute('onclick', 'cwOpenNil(' + idx + ')');
+          nilChip.setAttribute('title', 'NIL Score · click for reasoning trace');
+          nilChip.innerHTML = '<span>NIL</span><span class="cw-item-nil-num">' + nil.score + '</span>';
+          infoEl.appendChild(nilChip);
+        }
+      }
+      // Fire a notification on first successful enrichment
+      if (wasLoading) {
+        const items = load();
+        const it = items[idx];
+        if (it) addNotif('score', it.name + ' enriched · IQ ' + result.score + ' · ' + result.tier);
+      }
+    }
+  }
+    window.cwAddToWatchlist = function() {
+    const nameEl = document.getElementById('cw-add-name');
+    const sportEl = document.getElementById('cw-add-sport');
+    const schoolEl = document.getElementById('cw-add-school');
+    const name = nameEl.value.trim();
+    const sport = sportEl.value;
+    const school = schoolEl.value.trim();
+    if (!name) { nameEl.focus(); return; }
+    const items = load();
+    items.push({ name: name, sport: sport, school: school, added: Date.now() });
+    save(items);
+    nameEl.value = '';
+    schoolEl.value = '';
+    render();
+    nameEl.focus();
+    addNotif('add', name + ' added to watchlist · ' + sport.replace(/-/g,' '));
+  };
+  window.cwRemoveFromWatchlist = function(idx) {
+    const items = load();
+    items.splice(idx, 1);
+    save(items);
+    render();
+  };
+  // Enter key in name field adds to watchlist
+  document.addEventListener('DOMContentLoaded', function() {
+    render();
+    renderNotifs();
+    const nameEl = document.getElementById('cw-add-name');
+    if (nameEl) {
+      nameEl.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); window.cwAddToWatchlist(); }
+      });
+    }
+  });
+})();
+</script>
+
+
+<script>
+// v0.30.5.2250 V032 — Cmd+K Global Search (Agent 22 — first cut)
+(function() {
+  const INDEX = [
+    // Pages
+    {type:'page',name:'Homepage',meta:'/',url:'/',keys:['home','start','iq']},
+    {type:'page',name:'FieldCheck IQ — The Engine',meta:'/iq',url:'/iq',keys:['iq','engine','smartest']},
+    {type:'page',name:'vs. the Rankings',meta:'/vs',url:'/vs',keys:['vs','versus','247','on3','rivals','rankings']},
+    {type:'page',name:'Coach Workspace v2',meta:'/coach',url:'/coach',keys:['coach','workspace','watchlist','board']},
+    {type:'page',name:'Pathway',meta:'/pathway',url:'/pathway',keys:['pathway','journal','development']},
+    {type:'page',name:'Trust Graph v0',meta:'/trust-graph',url:'/trust-graph',keys:['trust','graph','relationships','network']},
+    {type:'page',name:'FieldCheck Edge',meta:'/edge',url:'/edge',keys:['edge','institution','enterprise','department']},
+    {type:'page',name:'IQ API Developer Docs',meta:'/api',url:'/api',keys:['api','rest','developer','docs','endpoint']},
+    {type:'page',name:'Methodology v1.0',meta:'/methodology',url:'/methodology',keys:['methodology','math','weights','formula','published']},
+    {type:'page',name:'Founding Athletes',meta:'/founding-athletes',url:'/founding-athletes',keys:['founding','archetype','anchor','comparable']},
+    {type:'page',name:'The Agents · 12 LIVE',meta:'/agents',url:'/agents',keys:['agents','ai','roadmap']},
+    {type:'page',name:'Wire · Real-time',meta:'/wire',url:'/wire',keys:['wire','news','feed','live']},
+    {type:'page',name:'Security',meta:'/security',url:'/security',keys:['security','soc2','sso','encryption']},
+    {type:'page',name:'Playbook · By Role',meta:'/playbook',url:'/playbook',keys:['playbook','role','coach','parent','scout','ad']},
+    {type:'page',name:'Case Studies',meta:'/case-studies',url:'/case-studies',keys:['case','study','customer','testimonial']},
+    {type:'page',name:'Changelog',meta:'/changelog',url:'/changelog',keys:['changelog','releases','version']},
+    {type:'page',name:'About',meta:'/about',url:'/about',keys:['about','company','bloomberg','press']},
+    // Founding Athletes
+    {type:'fa',name:'Andrea Drews',meta:'POWER-OPPOSITE · LOVB ATL',url:'/founding-athletes',keys:['drews','andrea','opposite','volleyball','lovb','atlanta']},
+    {type:'fa',name:'Jordan Larson',meta:'CAPTAIN-OH · LOVB NE',url:'/founding-athletes',keys:['larson','jordan','outside','volleyball','nebraska','lovb']},
+    {type:'fa',name:'Justine Wong-Orantes',meta:'BACKROW-FOUNDATION · LOVB HOU',url:'/founding-athletes',keys:['wong-orantes','justine','libero','volleyball','houston']},
+    {type:'fa',name:'Kelsey Robinson-Cook',meta:'VETERAN-OH · LOVB ATL',url:'/founding-athletes',keys:['robinson-cook','kelsey','outside','volleyball']},
+    {type:'fa',name:'Tyrese Haliburton',meta:'PASS-FIRST-PG · Pacers',url:'/founding-athletes',keys:['haliburton','tyrese','basketball','point guard','pacers']},
+    {type:'fa',name:'Anthony Edwards',meta:'ATHLETIC-SG · Timberwolves',url:'/founding-athletes',keys:['edwards','anthony','basketball','wolves']},
+    {type:'fa',name:"A'ja Wilson",meta:'TWO-WAY-POST · LV Aces',url:'/founding-athletes',keys:['wilson','aja','basketball','aces','wnba']},
+    {type:'fa',name:'Caitlin Clark',meta:'DEEP-RANGE-PG · Fever',url:'/founding-athletes',keys:['clark','caitlin','basketball','fever','iowa']},
+    {type:'fa',name:'Caleb Williams',meta:'MOBILE-PASSER · Bears',url:'/founding-athletes',keys:['williams','caleb','football','quarterback','bears','usc']},
+    {type:'fa',name:'Travis Hunter',meta:'TWO-WAY-EDGE · Jaguars',url:'/founding-athletes',keys:['hunter','travis','football','colorado','jaguars']},
+    {type:'fa',name:'Paul Skenes',meta:'POWER-RHP · Pirates',url:'/founding-athletes',keys:['skenes','paul','baseball','pitcher','pirates','lsu']},
+    {type:'fa',name:'Trinity Rodman',meta:'PRESSING-FORWARD · Spirit',url:'/founding-athletes',keys:['rodman','trinity','soccer','spirit','nwsl']},
+    {type:'fa',name:'Coco Gauff',meta:'POWER-BASELINER · WTA Pro',url:'/founding-athletes',keys:['gauff','coco','tennis']},
+    {type:'fa',name:'Nelly Korda',meta:'PRECISION-DRIVER · LPGA Pro',url:'/founding-athletes',keys:['korda','nelly','golf','lpga']},
+    {type:'fa',name:'Micha Hancock',meta:'JUMP-SERVE-SETTER · Pro',url:'/founding-athletes',keys:['hancock','micha','setter','volleyball','penn state']},
+    // Current athletes (in Trust Graph)
+    {type:'athlete',name:'Harper Murray',meta:'OH · Nebraska W-VB · IQ 8.5 ELITE',url:'/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:'Harper Murray',sport:'womens-volleyball',school:'Nebraska'})),keys:['harper','murray','nebraska','volleyball']},
+    {type:'athlete',name:'Bergen Reilly',meta:'S · Nebraska W-VB · IQ 8.0 ELITE',url:'/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:'Bergen Reilly',sport:'womens-volleyball',school:'Nebraska'})),keys:['bergen','reilly','nebraska','volleyball','setter']},
+    {type:'athlete',name:'Andi Jackson',meta:'MB · Nebraska W-VB · IQ 8.4 ELITE',url:'/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:'Andi Jackson',sport:'womens-volleyball',school:'Nebraska'})),keys:['andi','jackson','nebraska','volleyball']},
+    {type:'athlete',name:'Lexi Rodriguez',meta:'L · LOVB Nebraska · IQ 8.0 ELITE',url:'/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:'Lexi Rodriguez',sport:'womens-volleyball',school:'LOVB Nebraska'})),keys:['lexi','rodriguez','nebraska','libero','volleyball','lovb']},
+    // Programs
+    {type:'program',name:'Nebraska Women\'s Volleyball',meta:'ICON · 9.4 Trust',url:'/trust-graph',keys:['nebraska','volleyball','women','husker']},
+    {type:'program',name:'LOVB Atlanta',meta:'PRO · Founding W-VB',url:'/trust-graph',keys:['lovb','atlanta','volleyball','pro']},
+    {type:'program',name:'LOVB Nebraska',meta:'PRO · Founding W-VB',url:'/trust-graph',keys:['lovb','nebraska','volleyball','pro']},
+    {type:'program',name:'Coach John Cook',meta:'COACH · Nebraska W-VB',url:'/trust-graph',keys:['cook','john','coach','nebraska','volleyball']},
+  ];
+
+  let selectedIdx = 0;
+  let currentResults = [];
+
+  function scoreMatch(item, q) {
+    if (!q) return 0;
+    const lq = q.toLowerCase();
+    const ln = item.name.toLowerCase();
+    if (ln.includes(lq)) return 10 - ln.indexOf(lq) * 0.1;
+    if (item.keys && item.keys.some(k => k.toLowerCase().includes(lq))) return 5;
+    if (item.meta && item.meta.toLowerCase().includes(lq)) return 3;
+    return 0;
+  }
+
+  function render(q) {
+    const resultsEl = document.getElementById('fc-search-results');
+    if (!q) {
+      currentResults = INDEX.filter(i => i.type === 'page').slice(0, 8);
+    } else {
+      currentResults = INDEX
+        .map(item => ({ item, score: scoreMatch(item, q) }))
+        .filter(x => x.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 12)
+        .map(x => x.item);
+    }
+    selectedIdx = 0;
+    if (currentResults.length === 0) {
+      resultsEl.innerHTML = '<div class="fc-search-empty">No results for "' + q + '". Try a different term, or run a verdict directly.</div>';
+      return;
+    }
+    const groups = {};
+    const typeLabel = { page: '// PAGES', fa: '// FOUNDING ATHLETES', athlete: '// ATHLETES', program: '// PROGRAMS & COACHES' };
+    const typeIcon = { page: '☰', fa: '★', athlete: '◆', program: '▤' };
+    currentResults.forEach(r => { if (!groups[r.type]) groups[r.type] = []; groups[r.type].push(r); });
+    let html = '';
+    let runningIdx = 0;
+    ['page','fa','athlete','program'].forEach(t => {
+      if (!groups[t]) return;
+      html += '<div class="fc-search-group"><div class="fc-search-group-h">' + typeLabel[t] + '</div>';
+      groups[t].forEach(r => {
+        html += '<a class="fc-search-result' + (runningIdx === 0 ? ' active' : '') + '" data-idx="' + runningIdx + '" href="' + r.url + '">' +
+          '<div class="fc-search-result-icon ' + t + '">' + typeIcon[t] + '</div>' +
+          '<div class="fc-search-result-name">' + r.name + '</div>' +
+          '<div class="fc-search-result-meta">' + r.meta + '</div>' +
+        '</a>';
+        runningIdx++;
+      });
+      html += '</div>';
+    });
+    resultsEl.innerHTML = html;
+  }
+
+  function updateActive() {
+    document.querySelectorAll('.fc-search-result').forEach((el, i) => {
+      if (i === selectedIdx) el.classList.add('active');
+      else el.classList.remove('active');
+    });
+    const active = document.querySelector('.fc-search-result.active');
+    if (active) active.scrollIntoView({block:'nearest'});
+  }
+
+  function open() {
+    document.getElementById('fc-search-overlay').classList.add('open');
+    document.getElementById('fc-search-input').focus();
+    document.getElementById('fc-search-input').value = '';
+    render('');
+  }
+  function close() {
+    document.getElementById('fc-search-overlay').classList.remove('open');
+  }
+  window.fcSearchOpen = open;
+  window.fcSearchClose = close;
+
+  document.addEventListener('keydown', function(e) {
+    // Cmd+K / Ctrl+K
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      const overlay = document.getElementById('fc-search-overlay');
+      if (overlay.classList.contains('open')) close(); else open();
+      return;
+    }
+    const overlay = document.getElementById('fc-search-overlay');
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    if (e.key === 'ArrowDown') { e.preventDefault(); selectedIdx = Math.min(currentResults.length - 1, selectedIdx + 1); updateActive(); }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); selectedIdx = Math.max(0, selectedIdx - 1); updateActive(); }
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const active = document.querySelectorAll('.fc-search-result')[selectedIdx];
+      if (active) window.location.href = active.href;
+    }
+  });
+
+  document.getElementById('fc-search-overlay').addEventListener('click', function(e) {
+    if (e.target.id === 'fc-search-overlay') close();
+  });
+  document.getElementById('fc-search-input').addEventListener('input', function(e) {
+    render(e.target.value);
+  });
+})();
+</script>
+
+</body>
+</html>

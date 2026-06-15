@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Movement Alerts Architecture V1 - FieldCheck IQ Internal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0908;--rule:rgba(248,244,237,.12);--t:#F5F1E8;--t2:rgba(245,241,232,.74);--t3:rgba(245,241,232,.46);--gold:#D4A24C;--gold-hi:#EEC067;--golds:rgba(212,162,76,.10);--moss:#7C9B6E}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ink);color:var(--t);font-family:Inter,sans-serif;line-height:1.6;font-size:14px}
+.wrap{max-width:880px;margin:0 auto;padding:30px 26px 70px}
+h1{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600}
+.sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin:4px 0 26px}
+h2{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--gold);margin:32px 0 12px;border-bottom:1px solid var(--rule);padding-bottom:8px}
+p,li{color:var(--t2);font-weight:300}
+b{color:var(--t)}
+ul{margin:8px 0 8px 20px}
+.box{border:1px solid var(--rule);border-radius:6px;padding:16px 18px;margin:10px 0}
+.box .bh{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold-hi);margin-bottom:6px}
+code{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--moss);background:rgba(124,155,110,.08);padding:1px 6px;border-radius:3px}
+.warn{border-left:3px solid var(--gold);background:var(--golds);padding:12px 16px;border-radius:4px;margin:12px 0}
+.ph{display:grid;grid-template-columns:90px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid rgba(248,244,237,.06)}
+.ph .pn{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--gold-hi)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Movement Alerts \u00b7 Architecture V1</h1>
+<div class="sub">Internal design doc \u00b7 Phase 5 completion \u00b7 June 11 2026 \u00b7 "your number moved" engine</div>
+
+<h2>0 \u00b7 The product law (non-negotiable)</h2>
+<div class="warn"><b>No fake movement, ever.</b> An alert fires only when a real re-evaluation produced a real delta from a real event. One synthetic "your number moved" notification destroys the entire accountability brand. Silence beats noise.</div>
+
+<h2>1 \u00b7 What counts as movement</h2>
+<ul>
+<li><b>Tier jump</b> \u2014 composite crosses a tier boundary in either direction (the headline event; FCBase53 alert UI already exists).</li>
+<li><b>Facet delta</b> \u2014 any facet moves \u2265 0.2 on re-evaluation ("Mental IQ 5.9 \u2192 6.2 after state semifinal").</li>
+<li><b>Path delta</b> \u2014 gap-to-target-rung shrinks/grows ("you are now 0.1 from STAR" \u2014 derived, costs nothing extra).</li>
+<li><b>Coverage event</b> \u2014 athlete enters the index for the first time ("your first verdict exists" \u2014 the acquisition alert).</li>
+</ul>
+
+<h2>2 \u00b7 Event sources (what triggers re-evaluation)</h2>
+<div class="box"><div class="bh">S1 \u00b7 Release re-runs (live today)</div><p>Every FCBase release re-runs the 110 battery + curated sets. Deltas between release N-1 and N are real movement. <b>Zero new infrastructure \u2014 this is the V1 trigger.</b></p></div>
+<div class="box"><div class="bh">S2 \u00b7 Scheduled refresh (cron exists)</div><p>The worker already has cron triggers (<code>*/30 * * * *</code>, <code>0 9 * * 1</code>). Weekly: re-evaluate the watchlisted + marquee cohort (bounded cost), diff, emit events.</p></div>
+<div class="box"><div class="bh">S3 \u00b7 Game-data ingestion (Ph7, later)</div><p>Post-game stat deltas via multi-source cascade (Tenet 53) trigger targeted re-evals. Design now, build after Friday \u2014 this is where "after every game" becomes literal.</p></div>
+
+<h2>3 \u00b7 Pipeline (all on existing stack \u2014 Worker + KV, no new vendors)</h2>
+<p><code>re-eval \u2192 diff vs KV snapshot \u2192 movement event \u2192 KV append \u2192 surfaces read</code></p>
+<ul>
+<li><b>Snapshot:</b> <code>mv:snap:{slug}</code> \u2192 {composite, tier, facets[8], release, ts}. Written on every evaluation.</li>
+<li><b>Events:</b> <code>mv:events:{slug}</code> \u2192 capped list (last 20) of {type, from, to, delta, reason, release, ts}.</li>
+<li><b>Feed:</b> <code>mv:feed:global</code> \u2192 last 100 events across the index (powers a public "Movement" wire \u2014 the dopamine page).</li>
+<li><b>Diff rule:</b> only S1/S2 evaluations write events; ad-hoc page views never do (idempotent, no view-triggered noise).</li>
+</ul>
+
+<h2>4 \u00b7 Surfaces (ship order \u2014 in-product first, push later)</h2>
+<div class="ph"><div class="pn">M1</div><div><b>Verdict banner.</b> "\u25b2 Moved since last release: Mental IQ +0.3" strip atop THE PATH, from <code>mv:events</code>. Pure read, additive patch to my own Path block.</div></div>
+<div class="ph"><div class="pn">M2</div><div><b>Watchlist badges.</b> Existing watchlist v2 rows get \u25b2/\u25bc deltas \u2014 the reason to keep a watchlist.</div></div>
+<div class="ph"><div class="pn">M3</div><div><b>/movement wire.</b> Public global feed page \u2014 "who moved this week" \u2014 newsroom-style. Shareable, SEO, recurring visit driver.</div></div>
+<div class="ph"><div class="pn">M4</div><div><b>Email/push opt-in.</b> "Alert me when my number moves" \u2014 the retention contract. Needs provider choice (Netlify Forms \u2192 Resend, or Web Push). Post-Friday decision.</div></div>
+
+<h2>5 \u00b7 Honest-data guardrails</h2>
+<ul>
+<li>Derived (seeded) facets <b>never</b> emit facet-delta events \u2014 only curated/evaluated athletes do; derived athletes are eligible for tier + coverage events only (composite is real).</li>
+<li>Every event carries <code>reason</code> + <code>release</code> \u2014 auditable on /agent-transparency principles.</li>
+<li>Negative movement publishes identically. The ledger does not flinch.</li>
+</ul>
+
+<h2>6 \u00b7 Ship plan</h2>
+<div class="ph"><div class="pn">FCBase82</div><div>Worker: snapshot writes + diff-on-release + KV schema + <code>/movement/feed</code> + <code>/movement/{slug}</code> endpoints. (Worker-only, dev\u2192prod, no frontend risk.)</div></div>
+<div class="ph"><div class="pn">FCBase83</div><div>M1 verdict banner + M2 watchlist badges (frontend, additive, byte-guarded).</div></div>
+<div class="ph"><div class="pn">FCBase84</div><div>M3 /movement public wire page + cross-links + whats-new entry.</div></div>
+<div class="ph"><div class="pn">FCBase85</div><div>M4 opt-in alerts (provider decision required from Sridhar).</div></div>
+<p style="margin-top:14px"><b>Timing call:</b> FCBase82 is safe to build any time (worker-only). FCBase83\u201385 wait until after Friday \u2014 the demo surface stays frozen.</p>
+</div>
+</body>
+</html>

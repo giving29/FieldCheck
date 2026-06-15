@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FieldCheck IQ · The smartest way to read an athlete</title>
+  <meta name="description" content="FieldCheck IQ is the intelligence engine inside FieldCheck. Audited reasoning. Cited claims. Confidence intervals shown. The smartest way to read an athlete across sports.">
+  <meta property="og:title" content="FieldCheck IQ · The smartest way to read an athlete">
+  <meta property="og:description" content="Anyone can chase a ranking. FieldCheck shows its work. Audit-first athlete intelligence.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #0d0d0d; --bg-2: #161616; --bg-3: #1d1d1d;
+  --text: #ededed; --text-2: #b8b8b8; --text-3: #888; --text-4: #555;
+  --gold: #d4af37; --gold-2: #f5b800;
+  --border: rgba(255,255,255,0.08); --glass: rgba(255,255,255,0.03); --glass-edge: rgba(255,255,255,0.1);
+  --rust: #c45132; --sage: #6a9c89; --moss: #95d5b2; --teal: #4ec9c0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+.fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+.fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+.fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+.fc-canonical-wordmark { font-size: 18px; }
+.fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+.fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+.fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+.fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+.fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.fc-canonical-nav .nav-more-wrap { display: none; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.nav-primary:hover { color: #ffc94a; }
+.nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.nav-more-wrap { position: relative; display: inline-block; }
+.nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-wrap { display: none; }
+.nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.nav-more-chev { transform: rotate(180deg); }
+.nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.nav-more-group { padding: 6px 4px; }
+.nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+
+
+.iq-hero { padding: 120px 32px 60px; max-width: 1020px; margin: 0 auto; text-align: center; }
+.iq-hero-eyebrow {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.28em; font-weight: 700;
+  color: var(--gold); margin-bottom: 22px;
+  padding: 7px 14px;
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 6px;
+}
+.iq-hero-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(56px, 8.5vw, 108px);
+  line-height: 0.95; letter-spacing: -0.012em;
+  margin-bottom: 26px; color: var(--text);
+}
+.iq-hero-title .iq-italic {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic; color: var(--gold); font-weight: 400;
+}
+.iq-hero-sub {
+  font-size: 20px; line-height: 1.55; color: var(--text-2);
+  max-width: 720px; margin: 0 auto 18px;
+}
+.iq-hero-strap {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 17px; color: var(--gold);
+  max-width: 660px; margin: 0 auto;
+}
+
+/* ── DATA · TECH · AUDIT deep pillars ── */
+.iq-pillars { padding: 60px 32px 30px; max-width: 1180px; margin: 0 auto; }
+.iq-pillars-eyebrow {
+  text-align: center; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.22em; font-weight: 700;
+  color: var(--gold); margin-bottom: 22px; text-transform: uppercase;
+}
+.iq-pillars-h {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(38px, 5.5vw, 64px); line-height: 1.02;
+  letter-spacing: -0.008em; text-align: center;
+  max-width: 880px; margin: 0 auto 40px;
+}
+.iq-pillars-h .iq-italic {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  color: var(--gold); font-weight: 400;
+}
+.iq-pillars-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.iq-pillar {
+  padding: 36px 30px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.04), rgba(20, 17, 12, 0.4));
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  border-radius: 16px;
+}
+.iq-pillar-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.22em; font-weight: 700;
+  color: var(--gold); margin-bottom: 18px; text-transform: uppercase;
+}
+.iq-pillar-h {
+  font-family: 'Anton', sans-serif;
+  font-size: 30px; line-height: 1.1;
+  letter-spacing: -0.005em; margin-bottom: 14px; color: var(--text);
+}
+.iq-pillar-body {
+  font-size: 15px; line-height: 1.6; color: var(--text-2);
+  margin-bottom: 18px;
+}
+.iq-pillar-list {
+  list-style: none; padding: 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 14px;
+}
+.iq-pillar-list li {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; line-height: 1.6; color: var(--text-3);
+  padding: 6px 0; padding-left: 18px; position: relative;
+}
+.iq-pillar-list li::before {
+  content: "·"; position: absolute; left: 0; top: 6px;
+  color: var(--gold); font-weight: 700;
+}
+
+/* ── 5-Layer Moat section ── */
+.iq-moat-section { padding: 80px 32px 40px; max-width: 1180px; margin: 0 auto; }
+.iq-moat-eyebrow {
+  text-align: center; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.22em; font-weight: 700;
+  color: var(--gold); margin-bottom: 22px;
+}
+.iq-moat-h {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(38px, 5.5vw, 64px); line-height: 1.02;
+  letter-spacing: -0.008em; text-align: center;
+  max-width: 880px; margin: 0 auto 32px;
+}
+.iq-moat-h .iq-italic {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  color: var(--gold); font-weight: 400;
+}
+.iq-moat-sub {
+  font-size: 17px; line-height: 1.6; color: var(--text-2);
+  text-align: center; max-width: 720px; margin: 0 auto 44px;
+}
+.iq-moat-layers {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 12px; margin-top: 32px;
+}
+.iq-moat-layer {
+  padding: 24px 18px; background: var(--bg-2);
+  border: 1px solid var(--glass-edge);
+  border-radius: 12px; text-align: center;
+}
+.iq-moat-layer-num {
+  font-family: 'Anton', sans-serif;
+  font-size: 28px; color: var(--gold); margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.iq-moat-layer-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.18em; font-weight: 700;
+  color: var(--text); margin-bottom: 10px; text-transform: uppercase;
+}
+.iq-moat-layer-body {
+  font-size: 13px; line-height: 1.5; color: var(--text-3);
+}
+.iq-moat-foot {
+  margin-top: 28px; text-align: center;
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 16px; color: var(--gold);
+  max-width: 720px; margin-left: auto; margin-right: auto;
+}
+
+/* ── The 4 IQ tools ── */
+.iq-tools-section { padding: 80px 32px 40px; max-width: 1180px; margin: 0 auto; }
+.iq-tools-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 18px; margin-top: 28px;
+}
+.iq-tool-card {
+  padding: 30px 28px;
+  background: var(--bg-2);
+  border: 1px solid var(--glass-edge);
+  border-radius: 14px;
+  text-decoration: none; color: var(--text);
+  transition: transform 0.2s, border-color 0.2s;
+  display: block;
+}
+.iq-tool-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+.iq-tool-card-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.22em; font-weight: 700;
+  color: var(--gold); margin-bottom: 14px; text-transform: uppercase;
+}
+.iq-tool-card-h {
+  font-family: 'Anton', sans-serif;
+  font-size: 26px; line-height: 1.1;
+  letter-spacing: -0.005em; margin-bottom: 10px;
+}
+.iq-tool-card-body {
+  font-size: 14.5px; line-height: 1.5; color: var(--text-2);
+  margin-bottom: 14px;
+}
+.iq-tool-card-output {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; color: var(--gold);
+  padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ── Static verdict snapshot ── */
+.iq-snapshot-section { padding: 80px 32px 40px; max-width: 1020px; margin: 0 auto; }
+.iq-snapshot {
+  background: linear-gradient(135deg, rgba(20, 17, 12, 0.8), rgba(13, 13, 13, 0.6));
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 18px;
+  padding: 36px;
+}
+.iq-snap-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 1px solid var(--glass-edge);
+  padding-bottom: 16px; margin-bottom: 22px;
+}
+.iq-snap-name {
+  font-family: 'Anton', sans-serif; font-size: 28px;
+  letter-spacing: -0.005em;
+}
+.iq-snap-mark {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: 0.18em; color: var(--gold); font-weight: 700;
+}
+.iq-snap-row {
+  display: grid; grid-template-columns: 110px 1fr 60px;
+  gap: 18px; align-items: center; padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.iq-snap-layer {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: 0.16em; color: var(--text-3);
+  text-transform: uppercase; font-weight: 600;
+}
+.iq-snap-bar { height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; position: relative; }
+.iq-snap-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--gold); border-radius: 3px; }
+.iq-snap-num {
+  font-family: 'Anton', sans-serif; font-size: 18px;
+  color: var(--gold); text-align: right;
+}
+.iq-snap-footer {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid var(--glass-edge);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.iq-snap-foot-l {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  color: var(--text-3); letter-spacing: 0.04em;
+}
+.iq-snap-foot-r {
+  font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+  color: var(--gold); letter-spacing: 0.22em; font-weight: 700;
+}
+
+/* ── CTA + Coda ── */
+.iq-cta { text-align: center; padding: 50px 32px 30px; max-width: 800px; margin: 0 auto; }
+.iq-cta-h {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(34px, 5vw, 56px); line-height: 1.02;
+  margin-bottom: 14px;
+}
+.iq-cta-h .iq-italic {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  color: var(--gold); font-weight: 400;
+}
+.iq-cta-sub {
+  font-size: 16px; color: var(--text-2);
+  margin-bottom: 28px; max-width: 540px; margin-left: auto; margin-right: auto;
+}
+.iq-cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.iq-cta-btn {
+  display: inline-block; padding: 16px 32px;
+  background: var(--gold); color: var(--bg);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; letter-spacing: 0.18em; font-weight: 700;
+  text-transform: uppercase; text-decoration: none;
+  border-radius: 10px; transition: transform 0.2s;
+}
+.iq-cta-btn:hover { transform: translateY(-1px); }
+.iq-cta-btn-alt {
+  background: transparent; color: var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+.iq-coda {
+  padding: 36px 32px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 12.5px; color: var(--text-3); line-height: 1.6;
+  max-width: 760px; margin: 40px auto 0;
+}
+
+@media (max-width: 880px) {
+  .iq-pillars-grid { grid-template-columns: 1fr; gap: 14px; }
+  .iq-moat-layers { grid-template-columns: repeat(2, 1fr); }
+  .iq-tools-grid { grid-template-columns: 1fr; }
+  .iq-hero { padding: 80px 22px 40px; }
+}
+@media (max-width: 480px) {
+  .iq-moat-layers { grid-template-columns: 1fr; }
+}
+  
+/* v0.30.5.2224 FCBase13_V006 — Mimicked product walkthrough */
+.iq-walkthrough { max-width: 1100px; margin: 64px auto; padding: 0 32px; }
+.iq-walkthrough-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: #d4af37; margin-bottom: 14px; font-weight: 700; text-align: center; }
+.iq-walkthrough-h { font-family: 'Anton', sans-serif; font-size: clamp(34px, 5vw, 56px); line-height: 1; text-align: center; margin-bottom: 38px; color: #ededed; letter-spacing: -0.01em; }
+.iq-walkthrough-h .iq-italic { font-family: 'Cormorant Garamond', serif; font-style: italic; color: #d4af37; font-weight: 400; }
+.iq-browser { max-width: 920px; margin: 0 auto; background: #0a0a0a; border-radius: 12px; box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06); overflow: hidden; position: relative; }
+.iq-browser-chrome { display: flex; align-items: center; gap: 6px; padding: 12px 16px; background: linear-gradient(180deg, #1a1a1a, #0f0f0f); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.iq-browser-dot { width: 11px; height: 11px; border-radius: 50%; }
+.iq-browser-dot.r { background: #ff5f57; }
+.iq-browser-dot.y { background: #febc2e; }
+.iq-browser-dot.g { background: #28c840; }
+.iq-browser-url { margin-left: 14px; flex: 1; padding: 5px 12px; background: #1f1f1f; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #888; letter-spacing: 0.5px; }
+.iq-browser-url::before { content: '🔒'; margin-right: 8px; opacity: 0.7; }
+.iq-browser-stage { position: relative; height: 480px; background: #0d0d0d; overflow: hidden; }
+.iq-cursor { position: absolute; width: 18px; height: 22px; pointer-events: none; z-index: 100; transform-origin: top left; }
+.iq-cursor svg { width: 100%; height: 100%; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8)); }
+.iq-stage-frame { position: absolute; inset: 0; padding: 28px 36px; opacity: 0; }
+.iq-stage-frame.f-active { opacity: 1; }
+/* === Scene 1: type search === */
+.iq-frame-search-h { font-family: 'Anton', sans-serif; font-size: 30px; color: #ededed; margin-bottom: 8px; letter-spacing: -0.01em; }
+.iq-frame-search-sub { color: #888; font-size: 13px; margin-bottom: 26px; }
+.iq-search-bar { display: flex; gap: 10px; max-width: 600px; }
+.iq-search-input { flex: 1; padding: 14px 18px; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #ededed; font-size: 15px; font-family: 'Inter', sans-serif; position: relative; }
+.iq-search-input::after { content: ''; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); width: 1.5px; height: 18px; background: #d4af37; opacity: 0; }
+.iq-search-input.typing::after { opacity: 1; animation: iq-blink 0.7s infinite; }
+@keyframes iq-blink { 50% { opacity: 0; } }
+.iq-search-btn { padding: 14px 28px; background: #d4af37; color: #0d0d0d; border: 0; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.8px; font-weight: 700; cursor: pointer; }
+.iq-typed { display: inline-block; min-height: 18px; }
+.iq-typed::after { content: ''; display: inline-block; width: 1.5px; height: 18px; background: #d4af37; margin-left: 2px; vertical-align: text-bottom; animation: iq-blink 0.7s infinite; }
+/* === Scene 2: verdict rendering === */
+.iq-verdict-header { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.iq-verdict-photo { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #d4af37, #4ec9c0); display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: 26px; color: #0d0d0d; }
+.iq-verdict-name { font-family: 'Anton', sans-serif; font-size: 26px; color: #ededed; letter-spacing: -0.005em; }
+.iq-verdict-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+.iq-verdict-score-box { margin-left: auto; padding: 12px 20px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.35); border-radius: 10px; text-align: right; }
+.iq-verdict-score-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #d4af37; letter-spacing: 2px; font-weight: 700; margin-bottom: 4px; }
+.iq-verdict-score-big { font-family: 'Anton', sans-serif; font-size: 36px; color: #d4af37; letter-spacing: -0.01em; }
+.iq-verdict-tier { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #ededed; letter-spacing: 1.5px; font-weight: 600; margin-left: 6px; }
+.iq-verdict-bars { display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px; }
+.iq-verdict-bar-row { display: grid; grid-template-columns: 110px 1fr 36px; align-items: center; gap: 14px; }
+.iq-verdict-bar-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #888; letter-spacing: 1.2px; }
+.iq-verdict-bar-track { background: rgba(255,255,255,0.06); height: 7px; border-radius: 4px; overflow: hidden; }
+.iq-verdict-bar-fill { background: #d4af37; height: 100%; border-radius: 4px; width: 0; }
+.iq-verdict-bar-val { font-family: 'Anton', sans-serif; font-size: 13px; color: #d4af37; }
+.iq-audit-stamp { padding: 14px 18px; background: rgba(78,201,192,0.05); border: 1px solid rgba(78,201,192,0.25); border-radius: 8px; display: flex; align-items: center; gap: 14px; }
+.iq-audit-stamp-icon { width: 32px; height: 32px; border-radius: 50%; background: rgba(78,201,192,0.15); display: flex; align-items: center; justify-content: center; font-size: 16px; color: #4ec9c0; }
+.iq-audit-stamp-text { flex: 1; }
+.iq-audit-stamp-line1 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: #ededed; }
+.iq-audit-stamp-line2 { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #4ec9c0; letter-spacing: 1.5px; font-weight: 700; margin-top: 3px; }
+
+/* ───── ORCHESTRATION ─── 22s loop ─────
+   0-1.5s   Frame 1 visible, cursor enters
+   1.5-2.0s Cursor moves to input
+   2.0-5.0s Text types "Harper Murray" letter by letter
+   5.0-6.0s Cursor to button, click
+   6.0-7.0s Transition to verdict frame
+   7.0-9.0s Verdict header + score appear
+   9.0-13.0s Bars fill one by one
+   13.0-15.0s Audit stamp slides in
+   15.0-20.0s Hold final verdict
+   20.0-22.0s Fade to loop
+*/
+@keyframes iq-loop {
+  0%, 100% { opacity: 0; }
+  3%, 27% { opacity: 1; }
+  31%, 100% { opacity: 0; }
+}
+.iq-stage-frame-1 { animation: iq-loop 22s infinite; animation-fill-mode: both; }
+@keyframes iq-loop-2 {
+  0%, 31% { opacity: 0; }
+  34%, 90% { opacity: 1; }
+  95%, 100% { opacity: 0; }
+}
+.iq-stage-frame-2 { animation: iq-loop-2 22s infinite; animation-fill-mode: both; }
+
+/* Cursor path */
+@keyframes iq-cursor-path {
+  0% { transform: translate(440px, 280px); opacity: 0; }
+  3% { opacity: 1; }
+  7% { transform: translate(200px, 200px); }
+  22% { transform: translate(220px, 200px); }
+  26% { transform: translate(520px, 200px); }
+  31% { transform: translate(520px, 205px); }  /* click */
+  34% { opacity: 1; transform: translate(700px, 240px); }
+  40% { transform: translate(680px, 320px); }
+  60% { transform: translate(420px, 380px); }
+  90% { transform: translate(420px, 380px); opacity: 1; }
+  95%, 100% { opacity: 0; }
+}
+.iq-cursor { animation: iq-cursor-path 22s infinite; }
+
+/* Typing illusion via width animation on iq-typed */
+@keyframes iq-type {
+  0%, 9% { width: 0; }
+  10% { width: 0.5ch; }
+  11% { width: 1ch; }
+  12% { width: 1.5ch; }
+  13% { width: 2ch; }
+  14% { width: 2.5ch; }
+  15% { width: 3ch; }
+  16% { width: 3.5ch; }
+  17% { width: 4ch; }
+  18% { width: 4.5ch; }
+  19% { width: 5ch; }
+  20% { width: 5.5ch; }
+  21% { width: 6ch; }
+  22% { width: 6.5ch; }
+  23% { width: 13.5ch; }
+  100% { width: 13.5ch; }
+}
+.iq-typed { width: 0; overflow: hidden; white-space: nowrap; animation: iq-type 22s infinite steps(1); color: #ededed; }
+
+/* Bar fills in scene 2 - start at 7s = 32% */
+@keyframes iq-bar-1 { 0%, 36% { width: 0; } 42%, 100% { width: 86%; } }
+@keyframes iq-bar-2 { 0%, 40% { width: 0; } 46%, 100% { width: 91%; } }
+@keyframes iq-bar-3 { 0%, 44% { width: 0; } 50%, 100% { width: 84%; } }
+@keyframes iq-bar-4 { 0%, 48% { width: 0; } 54%, 100% { width: 79%; } }
+.iq-verdict-bar-fill.b1 { animation: iq-bar-1 22s infinite; }
+.iq-verdict-bar-fill.b2 { animation: iq-bar-2 22s infinite; }
+.iq-verdict-bar-fill.b3 { animation: iq-bar-3 22s infinite; }
+.iq-verdict-bar-fill.b4 { animation: iq-bar-4 22s infinite; }
+
+/* Score reveal */
+@keyframes iq-score-pop { 0%, 38% { opacity: 0; transform: scale(0.85); } 44%, 100% { opacity: 1; transform: scale(1); } }
+.iq-verdict-score-box { animation: iq-score-pop 22s infinite; transform-origin: center; }
+
+/* Audit stamp slide in */
+@keyframes iq-audit-slide { 0%, 58% { opacity: 0; transform: translateY(12px); } 64%, 100% { opacity: 1; transform: translateY(0); } }
+.iq-audit-stamp { animation: iq-audit-slide 22s infinite; }
+
+.iq-walk-coda { text-align: center; margin-top: 22px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: #b8b8b8; max-width: 640px; margin-left: auto; margin-right: auto; }
+.iq-walk-coda strong { font-style: normal; color: #d4af37; font-weight: 600; }
+
+@media (max-width: 760px) {
+  .iq-browser-stage { height: 420px; }
+  .iq-walkthrough { padding: 0 16px; }
+}
+
+
+/* v0.30.5.2258 FCBase13_V040 — collapsible dense sections (Hudl pattern: crisp by default, detail on demand) */
+.iq-collapse-toggle {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin: 14px 0 0 0; padding: 9px 16px;
+  background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 8px; cursor: pointer;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 1.4px; text-transform: uppercase; color: var(--gold, #d4af37);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.iq-collapse-toggle:hover { background: rgba(212,175,55,0.16); border-color: rgba(212,175,55,0.5); }
+.iq-collapse-body {
+  max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height 0.55s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease, margin-top 0.4s ease;
+  margin-top: 0;
+}
+section.iq-open .iq-collapse-body { max-height: 5000px; opacity: 1; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="iq-hero">
+  <div class="iq-hero-eyebrow">// FIELDCHECK IQ</div>
+  <h1 class="iq-hero-title">The smartest way<br><span class="iq-italic">to read an athlete.</span></h1>
+  <p class="iq-hero-sub">The intelligence engine inside FieldCheck — cross-sport, audit-first, every claim cited.</p>
+  <p class="iq-hero-strap">Anyone can chase a ranking. FieldCheck shows its work.</p>
+</section>
+
+<section class="iq-pillars" data-iq-collapsible>
+  <div class="iq-pillars-eyebrow">// THE THREE LEGS OF IQ</div>
+  <h2 class="iq-pillars-h">Every incumbent has data and tech.<br><span class="iq-italic">The third leg is audit.</span></h2>
+
+  <div class="iq-pillars-grid">
+    <div class="iq-pillar">
+      <div class="iq-pillar-label">// DATA</div>
+      <h3 class="iq-pillar-h">Public-record only.</h3>
+      <p class="iq-pillar-body">Source-tier taxonomy with 9 canonical classes. No paid sources. No undisclosed partnerships. No affiliate revenue ever.</p>
+      <ul class="iq-pillar-list">
+        <li>Cross-sport — 8 sports, NCAA D-I + pro leagues</li>
+        <li>Tier-graded sources, signed audit JSON per claim</li>
+        <li>Weekly drift report — public</li>
+        <li>Dispute pipeline · 5-business-day SLA</li>
+      </ul>
+    </div>
+
+    <div class="iq-pillar">
+      <div class="iq-pillar-label">// TECH</div>
+      <h3 class="iq-pillar-h">Archetype models.</h3>
+      <p class="iq-pillar-body">AI-powered, archetype-driven, position-aware. Confidence intervals are how the engine talks — not decoration, substrate.</p>
+      <ul class="iq-pillar-list">
+        <li>5-layer moat: Physical · Mindset · Character · Pathway · Defense</li>
+        <li>Sport-aware production layer (Attacking · Scoring · Hitting · Command)</li>
+        <li>Wilson-score 95% confidence math, published</li>
+        <li>Longitudinal progression engine — trajectories, not snapshots</li>
+      </ul>
+    </div>
+
+    <div class="iq-pillar">
+      <div class="iq-pillar-label">// AUDIT</div>
+      <h3 class="iq-pillar-h">Citation per claim.</h3>
+      <p class="iq-pillar-body">Every verdict is reproducible. Every claim is sourced. Every projection is auditable. Methodology is open and falsifiable.</p>
+      <ul class="iq-pillar-list">
+        <li>SHA-256-signed audit JSON per verdict</li>
+        <li>Reasoning trace visible — no black box</li>
+        <li>Three things that would move the score — shown</li>
+        <li>Tier-match rate published — Wilson-score 95%</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="iq-moat-section">
+  <div class="iq-moat-eyebrow">// HOW IQ READS AN ATHLETE</div>
+  <h2 class="iq-moat-h">Five layers.<br><span class="iq-italic">Sport-aware. Position-aware.</span></h2>
+  <p class="iq-moat-sub">The same five layers apply across every sport. The attribute names inside them adapt — because Defense in football is not Defense in volleyball, and Pathway means different things for a setter than a quarterback.</p>
+
+  <div class="iq-moat-layers">
+    <div class="iq-moat-layer">
+      <div class="iq-moat-layer-num">01</div>
+      <div class="iq-moat-layer-name">Physical</div>
+      <div class="iq-moat-layer-body">Body, athleticism, measurables. Sport-aware attributes inside.</div>
+    </div>
+    <div class="iq-moat-layer">
+      <div class="iq-moat-layer-num">02</div>
+      <div class="iq-moat-layer-name">Mindset</div>
+      <div class="iq-moat-layer-body">Resilience. Comeback. Grit. Never-give-up. The intangible the rankings miss.</div>
+    </div>
+    <div class="iq-moat-layer">
+      <div class="iq-moat-layer-num">03</div>
+      <div class="iq-moat-layer-name">Character</div>
+      <div class="iq-moat-layer-body">Leadership, coachability, team-first. Sourced from coach + peer record.</div>
+    </div>
+    <div class="iq-moat-layer">
+      <div class="iq-moat-layer-num">04</div>
+      <div class="iq-moat-layer-name">Pathway</div>
+      <div class="iq-moat-layer-body">Trajectory and projectability. Where this athlete is going, not just where they are.</div>
+    </div>
+    <div class="iq-moat-layer">
+      <div class="iq-moat-layer-num">05</div>
+      <div class="iq-moat-layer-name">Defense</div>
+      <div class="iq-moat-layer-body">Two-way impact. The half of the game the production stat doesn't capture.</div>
+    </div>
+  </div>
+
+  <p class="iq-moat-foot">Plus one sport-aware production layer per sport: Attacking for volleyball and soccer, Scoring for basketball, Hitting and Command for baseball, Competition for tennis, Tournament for golf, Production for football.</p>
+</section>
+
+<section class="iq-tools-section" data-iq-collapsible>
+  <div class="iq-pillars-eyebrow">// POWERED BY FIELDCHECK IQ</div>
+  <h2 class="iq-pillars-h">Four tools.<br><span class="iq-italic">One intelligence engine.</span></h2>
+
+  <div class="iq-tools-grid">
+    <a class="iq-tool-card" href="/lovb/projection">
+      <div class="iq-tool-card-eyebrow">// IQ SCORE</div>
+      <h3 class="iq-tool-card-h">Pro projection.</h3>
+      <p class="iq-tool-card-body">8-dimensional, position-weighted, confidence-bounded. Quantify pro readiness before the contract conversation.</p>
+      <div class="iq-tool-card-output">Pro Fit Score 84 ± 6 · LOVB tier-2</div>
+    </a>
+    <a class="iq-tool-card" href="/lovb/match">
+      <div class="iq-tool-card-eyebrow">// IQ MATCH</div>
+      <h3 class="iq-tool-card-h">Archetype match.</h3>
+      <p class="iq-tool-card-body">Cosine similarity against the entire founding cohort. Find the closest comparables — and their actual outcomes.</p>
+      <div class="iq-tool-card-output">87% match · Andrea Drews · ATL</div>
+    </a>
+    <a class="iq-tool-card" href="/lovb/fit">
+      <div class="iq-tool-card-eyebrow">// IQ FIT</div>
+      <h3 class="iq-tool-card-h">Market fit.</h3>
+      <p class="iq-tool-card-body">Weighted scoring across 6 markets. Where does this athlete actually fit on the map?</p>
+      <div class="iq-tool-card-output">Best fit · LOVB Salt Lake · 0.81</div>
+    </a>
+    <a class="iq-tool-card" href="/lovb/roster">
+      <div class="iq-tool-card-eyebrow">// IQ ROSTER</div>
+      <h3 class="iq-tool-card-h">Roster gap.</h3>
+      <p class="iq-tool-card-body">Position-by-position gap analysis for every team. See where depth charts are thin — and who could fill them.</p>
+      <div class="iq-tool-card-output">Atlanta · OH gap · 2.4 depth score</div>
+    </a>
+  </div>
+</section>
+
+<section class="iq-snapshot-section" data-iq-collapsible>
+  <div class="iq-pillars-eyebrow" style="text-align:center">// WHAT AN IQ VERDICT LOOKS LIKE</div>
+  <h2 class="iq-pillars-h">A verdict you can <span class="iq-italic">audit.</span></h2>
+
+  <div class="iq-snapshot">
+    <div class="iq-snap-head">
+      <div class="iq-snap-name">Jade Nilsson · OPPOSITE · Nebraska</div>
+      <div class="iq-snap-mark">// FIELDCHECK IQ · v0.30.5</div>
+    </div>
+
+    <div class="iq-snap-row">
+      <div class="iq-snap-layer">Physical</div>
+      <div class="iq-snap-bar"><div class="iq-snap-fill" style="width: 86%"></div></div>
+      <div class="iq-snap-num">8.6</div>
+    </div>
+    <div class="iq-snap-row">
+      <div class="iq-snap-layer">Mindset</div>
+      <div class="iq-snap-bar"><div class="iq-snap-fill" style="width: 91%"></div></div>
+      <div class="iq-snap-num">9.1</div>
+    </div>
+    <div class="iq-snap-row">
+      <div class="iq-snap-layer">Character</div>
+      <div class="iq-snap-bar"><div class="iq-snap-fill" style="width: 88%"></div></div>
+      <div class="iq-snap-num">8.8</div>
+    </div>
+    <div class="iq-snap-row">
+      <div class="iq-snap-layer">Attacking</div>
+      <div class="iq-snap-bar"><div class="iq-snap-fill" style="width: 84%"></div></div>
+      <div class="iq-snap-num">8.4</div>
+    </div>
+    <div class="iq-snap-row">
+      <div class="iq-snap-layer">Pathway</div>
+      <div class="iq-snap-bar"><div class="iq-snap-fill" style="width: 82%"></div></div>
+      <div class="iq-snap-num">8.2</div>
+    </div>
+    <div class="iq-snap-row">
+      <div class="iq-snap-layer">Defense</div>
+      <div class="iq-snap-bar"><div class="iq-snap-fill" style="width: 79%"></div></div>
+      <div class="iq-snap-num">7.9</div>
+    </div>
+
+    <div class="iq-snap-footer">
+      <div class="iq-snap-foot-l">IQ Score: 84 ± 6 · ELITE · 12 cited inputs · 87% match Andrea Drews</div>
+      <div class="iq-snap-foot-r">// POWERED BY FIELDCHECK IQ</div>
+    </div>
+  </div>
+</section>
+
+
+<section class="iq-walkthrough" data-iq-collapsible>
+  <div class="iq-walkthrough-eyebrow">// THE 22-SECOND WALKTHROUGH</div>
+  <h2 class="iq-walkthrough-h">A verdict, <span class="iq-italic">as it actually forms.</span></h2>
+
+  <div class="iq-browser" aria-label="Simulated product walkthrough: searching a player and watching the IQ verdict render">
+    <div class="iq-browser-chrome">
+      <div class="iq-browser-dot r"></div>
+      <div class="iq-browser-dot y"></div>
+      <div class="iq-browser-dot g"></div>
+      <div class="iq-browser-url">fieldcheck.app/run</div>
+    </div>
+    <div class="iq-browser-stage">
+
+      <!-- Mouse cursor SVG (animated path overlay) -->
+      <div class="iq-cursor" aria-hidden="true">
+        <svg viewBox="0 0 18 22" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1 L1 17 L5.5 13.5 L8 19 L10 18 L7.5 12.5 L13 12.5 Z" fill="#ffffff" stroke="#0d0d0d" stroke-width="0.8" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <!-- Scene 1: type search -->
+      <div class="iq-stage-frame iq-stage-frame-1">
+        <div class="iq-frame-search-h">Run an IQ verdict</div>
+        <div class="iq-frame-search-sub">Type any name. Every claim cited. Every projection audited.</div>
+        <div class="iq-search-bar">
+          <div class="iq-search-input" style="display:flex;align-items:center"><span class="iq-typed">Harper Murray</span></div>
+          <button class="iq-search-btn">VET →</button>
+        </div>
+      </div>
+
+      <!-- Scene 2: verdict rendering -->
+      <div class="iq-stage-frame iq-stage-frame-2">
+        <div class="iq-verdict-header">
+          <div class="iq-verdict-photo">HM</div>
+          <div>
+            <div class="iq-verdict-name">Harper Murray</div>
+            <div class="iq-verdict-meta">Outside Hitter · Nebraska · Women's Volleyball</div>
+          </div>
+          <div class="iq-verdict-score-box">
+            <div class="iq-verdict-score-label">// IQ SCORE</div>
+            <div><span class="iq-verdict-score-big">85</span><span style="font-size:22px;color:#888;margin:0 4px">±</span><span style="font-family:Anton;font-size:24px;color:#d4af37">6</span><span class="iq-verdict-tier">ELITE</span></div>
+          </div>
+        </div>
+        <div class="iq-verdict-bars">
+          <div class="iq-verdict-bar-row"><div class="iq-verdict-bar-label">PHYSICAL</div><div class="iq-verdict-bar-track"><div class="iq-verdict-bar-fill b1"></div></div><div class="iq-verdict-bar-val">8.6</div></div>
+          <div class="iq-verdict-bar-row"><div class="iq-verdict-bar-label">MINDSET</div><div class="iq-verdict-bar-track"><div class="iq-verdict-bar-fill b2"></div></div><div class="iq-verdict-bar-val">9.1</div></div>
+          <div class="iq-verdict-bar-row"><div class="iq-verdict-bar-label">ATTACKING</div><div class="iq-verdict-bar-track"><div class="iq-verdict-bar-fill b3"></div></div><div class="iq-verdict-bar-val">8.4</div></div>
+          <div class="iq-verdict-bar-row"><div class="iq-verdict-bar-label">DEFENSE</div><div class="iq-verdict-bar-track"><div class="iq-verdict-bar-fill b4"></div></div><div class="iq-verdict-bar-val">7.9</div></div>
+        </div>
+        <div class="iq-audit-stamp">
+          <div class="iq-audit-stamp-icon">⚖</div>
+          <div class="iq-audit-stamp-text">
+            <div class="iq-audit-stamp-line1">"Every claim cited. Every projection audited."</div>
+            <div class="iq-audit-stamp-line2">// POWERED BY FIELDCHECK IQ · SHA-256 SIGNED · 12 CITED INPUTS</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <p class="iq-walk-coda">No frame is staged separately. <strong>This is what your screen does</strong> the second you press Vet.</p>
+</section>
+
+<section class="iq-cta">
+  <h2 class="iq-cta-h">Read an athlete.<br><span class="iq-italic">Audit the verdict.</span></h2>
+  <p class="iq-cta-sub">Run an IQ Score on any athlete. See the reasoning. Open the audit. Compare the comparable. Every claim cited — or it doesn't ship.</p>
+  <div class="iq-cta-row">
+    <a href="/" class="iq-cta-btn">Run an IQ verdict →</a>
+    <a href="/vs" class="iq-cta-btn iq-cta-btn-alt">FieldCheck IQ vs. the rankings</a>
+  </div>
+</section>
+
+<div class="iq-coda">
+  FieldCheck IQ is the intelligence engine inside FieldCheck.<br>
+  No affiliate revenue. No payola. No pay-to-rank. Ever.<br>
+  FieldCheck · ThinkDifferent Holdings · © 2026 · v0.30.5.2259_FCBase14_V001
+</div>
+
+<script>
+function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('fc-nav-more-wrap');
+  if (!wrap) return;
+  if (!wrap.contains(e.target)) {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+
+<script>
+// v0.30.5.2258 FCBase13_V040 — auto-collapse dense /iq sections
+(function() {
+  function initCollapse() {
+    var secs = document.querySelectorAll('section[data-iq-collapsible]');
+    secs.forEach(function(sec) {
+      var h = sec.querySelector('h2');
+      if (!h) return;
+      var body = document.createElement('div');
+      body.className = 'iq-collapse-body';
+      var node = h.nextElementSibling;
+      while (node) {
+        var next = node.nextElementSibling;
+        body.appendChild(node);
+        node = next;
+      }
+      var toggle = document.createElement('button');
+      toggle.className = 'iq-collapse-toggle';
+      toggle.type = 'button';
+      toggle.textContent = '+ Show detail';
+      toggle.setAttribute('aria-expanded', 'false');
+      h.insertAdjacentElement('afterend', toggle);
+      toggle.insertAdjacentElement('afterend', body);
+      toggle.addEventListener('click', function() {
+        var open = sec.classList.toggle('iq-open');
+        toggle.textContent = open ? '\u2212 Hide detail' : '+ Show detail';
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCollapse);
+  } else {
+    initCollapse();
+  }
+})();
+</script>
+</body>
+</html>

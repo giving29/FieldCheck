@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compare athletes · FieldCheck IQ</title>
+<meta name="description" content="Side-by-side comparison of 2 or 3 athletes. Same 8 facets. Cross-sport, cross-tier, cross-cohort comparisons.">
+<meta property="og:title" content="FieldCheck Compare">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060A;--bg1:#100F14;--ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);--t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);--moss:#6BAA5A;--teal:#4EC9C0;--violet:#8B5CF6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 30% at 50% 0%,rgba(245,184,0,.04) 0%,transparent 60%),linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+.wrap{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:50px 24px 80px}
+.brand-row{display:flex;align-items:center;gap:18px;margin-bottom:36px}
+.brand{font-family:'Anton',sans-serif;font-size:22px;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(38px,5vw,62px);letter-spacing:-.014em;line-height:1;margin-bottom:24px}
+h1 .em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--gold)}
+.empty{padding:60px 30px;text-align:center;border:1px dashed var(--ge);border-radius:14px;margin:30px 0}
+.empty h3{font-family:'Anton',sans-serif;font-size:24px;color:var(--gold);margin-bottom:14px}
+.empty p{color:var(--t2);max-width:520px;margin:0 auto 18px}
+
+.compare-grid{display:grid;gap:14px;margin:30px 0}
+.compare-grid.two{grid-template-columns:repeat(2, 1fr)}
+.compare-grid.three{grid-template-columns:repeat(3, 1fr)}
+@media (max-width:780px){.compare-grid.three,.compare-grid.two{grid-template-columns:1fr}}
+
+.ath-col{padding:24px;border:1px solid var(--ge);border-radius:14px;background:rgba(255,252,245,.015)}
+.ath-col .photo{width:80px;height:80px;border-radius:50%;background:rgba(245,184,0,.1);display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:28px;color:var(--gold);border:1px solid var(--goldl);overflow:hidden;margin-bottom:16px}
+.ath-col .photo img{width:100%;height:100%;object-fit:cover}
+.ath-col .name{font-family:'Anton',sans-serif;font-size:24px;letter-spacing:-.008em;line-height:1.1;margin-bottom:4px}
+.ath-col .sport{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t3);letter-spacing:.6px;text-transform:uppercase;margin-bottom:14px}
+.ath-col .composite{font-family:'Anton',sans-serif;font-size:54px;letter-spacing:-.012em;color:var(--gold);line-height:1}
+.ath-col .tier-row{display:flex;align-items:center;gap:8px;margin-top:8px}
+.tier-pill{padding:3px 10px;border-radius:9999px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase}
+.tier-pill.icon{background:rgba(245,184,0,.18);color:var(--gold);border:1px solid var(--goldl)}
+.tier-pill.eliteplus{background:rgba(78,201,192,.15);color:var(--teal);border:1px solid rgba(78,201,192,.3)}
+.tier-pill.elite{background:rgba(139,92,246,.15);color:var(--violet);border:1px solid rgba(139,92,246,.3)}
+.tier-pill.star{background:rgba(107,170,90,.18);color:var(--moss);border:1px solid rgba(107,170,90,.3)}
+.tier-pill.prospect{background:rgba(224,120,86,.15);color:#E07856;border:1px solid rgba(224,120,86,.3)}
+.tier-pill.scout{background:rgba(245,241,232,.08);color:var(--t3);border:1px solid var(--ge)}
+
+.facet-table{width:100%;border-collapse:collapse;margin:30px 0;font-size:13px}
+.facet-table th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);padding:12px 14px;border-bottom:1px solid var(--ge)}
+.facet-table th.athlete-col{text-align:center}
+.facet-table td{padding:12px 14px;border-bottom:1px solid var(--ge2);vertical-align:top;line-height:1.5}
+.facet-table .facet-name{font-family:'JetBrains Mono',monospace;color:var(--gold);font-weight:700;font-size:11.5px;letter-spacing:.5px;text-transform:uppercase}
+.facet-table .facet-desc{font-size:11px;color:var(--t3);font-family:'Inter',sans-serif;text-transform:none;letter-spacing:0;font-weight:400;margin-top:4px;line-height:1.5}
+.facet-table .score{text-align:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:18px;color:var(--t)}
+.facet-table .score.high{color:#6BAA5A}
+.facet-table .score.mid{color:var(--gold)}
+.facet-table .score.low{color:#E07856}
+.facet-table .winner-mark{display:inline-block;font-size:9px;color:var(--gold);margin-left:4px;vertical-align:top}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 28px}
+.actions a,.actions button{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);background:var(--golds);border:1px solid var(--goldl);padding:10px 18px;border-radius:9999px;text-decoration:none;cursor:pointer;transition:background .15s}
+.actions a:hover,.actions button:hover{background:rgba(245,184,0,.18)}
+
+.callout{margin:30px 0;padding:24px 28px;border-radius:12px;background:var(--golds);border:1px solid var(--goldl);border-left:3px solid var(--gold);font-size:14.5px;line-height:1.6;color:var(--t)}
+.callout .label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block}
+
+.footer{margin-top:80px;padding-top:30px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t4);letter-spacing:.6px}
+.footer a{color:var(--gold);text-decoration:none}
+
+/* FCBase59 . Agent on this page */
+.fc-agent-pill{position:fixed;bottom:24px;right:24px;background:linear-gradient(135deg,#f0c66e,#d49b48);color:#1c150d;border:0;border-radius:9999px;padding:14px 22px;font-family:'Inter',-apple-system,sans-serif;font-size:14px;font-weight:700;cursor:pointer;z-index:60;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(245,184,0,.35),0 0 0 1px rgba(245,184,0,.5);transition:transform .18s;animation:fc-agent-pulse 3s ease-in-out infinite}
+.fc-agent-pill:hover{transform:translateY(-2px)}
+.fc-agent-pill .icon{font-size:18px;line-height:1}
+.fc-agent-pill .label{font-weight:700;letter-spacing:.01em}
+@keyframes fc-agent-pulse{0%,100%{box-shadow:0 4px 20px rgba(245,184,0,.35),0 0 0 1px rgba(245,184,0,.5)}50%{box-shadow:0 4px 28px rgba(245,184,0,.55),0 0 0 1px rgba(245,184,0,.75)}}
+.fc-agent-pill.open{display:none}
+.fc-agent-panel{position:fixed;bottom:0;right:24px;width:420px;max-width:calc(100vw - 48px);height:600px;max-height:80vh;background:#0e0d14;border:1px solid rgba(245,184,0,.3);border-bottom:0;border-radius:16px 16px 0 0;z-index:60;display:none;flex-direction:column;box-shadow:0 -8px 40px rgba(0,0,0,.5)}
+.fc-agent-panel.open{display:flex}
+.fc-agent-header{padding:16px 20px 14px;border-bottom:1px solid rgba(245,241,232,.08);display:flex;align-items:flex-start;justify-content:space-between}
+.fc-agent-header h3{font-size:17px;color:#f5f1e8;margin:0 0 4px 0;font-weight:700;letter-spacing:-.005em}
+.fc-agent-header .sub{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,241,232,.45);font-family:monospace}
+.fc-agent-close{background:transparent;border:0;color:rgba(245,241,232,.55);cursor:pointer;font-size:22px;padding:0;width:28px;height:28px;border-radius:50%}
+.fc-agent-close:hover{background:rgba(245,241,232,.08);color:#f0c66e}
+.fc-agent-body{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px}
+.fc-agent-msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.55}
+.fc-agent-msg.user{align-self:flex-end;background:rgba(245,184,0,.12);border:1px solid rgba(245,184,0,.22);color:#f5f1e8;border-bottom-right-radius:4px}
+.fc-agent-msg.bot{align-self:flex-start;background:rgba(245,241,232,.05);border:1px solid rgba(245,241,232,.10);color:#f5f1e8;border-bottom-left-radius:4px;white-space:pre-wrap}
+.fc-agent-msg.bot.streaming::after{content:'▍';color:#f0c66e;animation:fc-agent-cursor .9s steps(2) infinite}
+.fc-agent-msg.bot.error{background:rgba(212,96,60,.08);border-color:rgba(212,96,60,.3);color:#f5b8a8}
+@keyframes fc-agent-cursor{0%,50%{opacity:1}51%,100%{opacity:0}}
+.fc-agent-empty{font-size:13px;line-height:1.55;color:rgba(245,241,232,.6);text-align:center;padding:24px 12px}
+.fc-agent-empty b{color:#f0c66e;display:block;font-size:15px;font-weight:700;margin-bottom:8px}
+.fc-agent-suggestions{display:flex;flex-wrap:wrap;gap:6px;padding:0 20px 14px;border-bottom:1px solid rgba(245,241,232,.06)}
+.fc-agent-suggestions button{background:rgba(245,184,0,.06);border:1px solid rgba(245,184,0,.18);color:#f0c66e;font-size:11.5px;padding:6px 11px;border-radius:9999px;cursor:pointer;font-weight:500}
+.fc-agent-suggestions button:hover{background:rgba(245,184,0,.14)}
+.fc-agent-input-row{padding:14px 16px 16px;display:flex;gap:8px;border-top:1px solid rgba(245,241,232,.06)}
+.fc-agent-input{flex:1;background:rgba(245,241,232,.04);border:1px solid rgba(245,241,232,.1);border-radius:10px;padding:10px 14px;color:#f5f1e8;font-size:13.5px;resize:none;max-height:100px;min-height:40px;font-family:inherit;outline:none}
+.fc-agent-input:focus{border-color:rgba(245,184,0,.45)}
+.fc-agent-send{background:linear-gradient(135deg,#f0c66e,#d49b48);color:#1c150d;border:0;border-radius:10px;width:40px;height:40px;font-size:18px;cursor:pointer}
+.fc-agent-send:disabled{opacity:.35;cursor:not-allowed}
+.fc-agent-footer{padding:0 16px 12px;font-size:9px;text-align:center;color:rgba(245,241,232,.3);letter-spacing:.08em;text-transform:uppercase;font-family:monospace}
+@media (max-width:600px){.fc-agent-pill{bottom:16px;right:16px;left:16px;justify-content:center}.fc-agent-panel{right:0;left:0;width:100%;max-width:100%;height:75vh}}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="wrap">
+  <div class="brand-row">
+    <a class="brand" href="/"><b>Field</b>Check<span class="iq">IQ</span></a>
+    <a class="back" href="/">← all players</a>
+  </div>
+  <div class="eyebrow">Versus · 2-way + 3-way compare</div>
+  <h1>Compare <span class="em">athletes</span>.</h1>
+
+  <div id="compare-root"></div>
+
+  <div class="footer">
+    FieldCheck IQ · compare · <a href="/">home</a> · <a href="/methodology">methodology</a> · <a href="/fieldcheck-watchlist">watchlist</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* CORPUS . embedded marquees for instant client-side compare.
+     In production this would hydrate from /verdict/player API. */
+  var CORPUS = {
+    'cameron boozer': {name:'Cameron Boozer',sport:'mens-basketball',school:'Duke University',composite:7.4,tier:'STAR',facets:{character:7.8,mindset:7.6,mental_strength:7.4,talent:8.2,physical:8.0,mental_iq:7.6,coachability:7.8,competitiveness:7.4}},
+    'faizon brandon': {name:'Faizon Brandon',sport:'football',school:'Grimsley HS → Tennessee',composite:5.3,tier:'SCOUT',facets:{character:5.6,mindset:5.4,mental_strength:5.0,talent:6.4,physical:6.2,mental_iq:5.0,coachability:5.4,competitiveness:5.2}},
+    'aj dybantsa': {name:'AJ Dybantsa',sport:'mens-basketball',school:'BYU',composite:7.4,tier:'STAR',facets:{character:7.0,mindset:7.4,mental_strength:7.6,talent:8.4,physical:8.0,mental_iq:7.2,coachability:7.0,competitiveness:7.4}},
+    'tyran stokes': {name:'Tyran Stokes',sport:'mens-basketball',school:'Notre Dame HS → Kansas',composite:5.4,tier:'SCOUT',facets:{character:5.0,mindset:5.4,mental_strength:5.6,talent:6.4,physical:6.2,mental_iq:4.8,coachability:5.2,competitiveness:5.6}},
+    'cooper flagg': {name:'Cooper Flagg',sport:'mens-basketball',school:'Duke University',composite:9.3,tier:'ELITE+',facets:{character:9.4,mindset:9.2,mental_strength:9.3,talent:9.5,physical:9.0,mental_iq:9.4,coachability:9.5,competitiveness:9.6}},
+    'lebron james': {name:'LeBron James',sport:'mens-basketball',school:'Los Angeles Lakers',composite:9.8,tier:'ICON',facets:{character:9.6,mindset:9.8,mental_strength:9.9,talent:9.9,physical:9.7,mental_iq:9.9,coachability:9.4,competitiveness:9.8}},
+    'tom brady': {name:'Tom Brady',sport:'football',school:'Tampa Bay Buccaneers',composite:9.8,tier:'ICON',facets:{character:9.6,mindset:9.9,mental_strength:9.9,talent:9.4,physical:9.0,mental_iq:9.9,coachability:9.8,competitiveness:9.9}},
+    'patrick mahomes': {name:'Patrick Mahomes',sport:'football',school:'Kansas City Chiefs',composite:9.7,tier:'ICON',facets:{character:9.5,mindset:9.8,mental_strength:9.8,talent:9.9,physical:9.4,mental_iq:9.8,coachability:9.5,competitiveness:9.8}},
+    'jordan smith jr': {name:'Jordan Smith Jr',sport:'mens-basketball',school:'University of Florida',composite:5.3,tier:'SCOUT',facets:{character:5.2,mindset:5.4,mental_strength:5.2,talent:6.0,physical:5.8,mental_iq:5.4,coachability:5.6,competitiveness:5.4}},
+    'cameron williams': {name:'Cameron Williams',sport:'mens-basketball',school:'Duke University',composite:5.4,tier:'SCOUT',facets:{character:5.4,mindset:5.6,mental_strength:5.4,talent:6.2,physical:6.0,mental_iq:5.2,coachability:5.6,competitiveness:5.4}},
+    'juju watkins': {name:'JuJu Watkins',sport:'womens-basketball',school:'USC Trojans',composite:7.4,tier:'STAR',facets:{character:7.4,mindset:7.6,mental_strength:7.4,talent:8.2,physical:7.6,mental_iq:7.4,coachability:7.2,competitiveness:7.6}},
+    'paige bueckers': {name:'Paige Bueckers',sport:'womens-basketball',school:'Dallas Wings',composite:8.4,tier:'ELITE',facets:{character:8.6,mindset:8.4,mental_strength:8.6,talent:8.6,physical:8.0,mental_iq:8.8,coachability:8.6,competitiveness:8.4}},
+    'harper murray': {name:'Harper Murray',sport:'womens-volleyball',school:'Nebraska',composite:7.4,tier:'STAR',facets:{character:7.4,mindset:7.6,mental_strength:7.4,talent:7.8,physical:7.6,mental_iq:7.4,coachability:7.4,competitiveness:7.4}},
+  };
+
+  var FACET_DEFS = [
+    ['Character', 'character', 'Public-record behavior under pressure'],
+    ['Mindset', 'mindset', 'Approach to growth, failure, identity'],
+    ['Mental Strength', 'mental_strength', 'Resilience in adversity, comebacks'],
+    ['Talent', 'talent', 'Natural ceiling, skill arcs'],
+    ['Physical', 'physical', 'Measurables vs. tier-target median'],
+    ['Mental / IQ', 'mental_iq', 'Game IQ, reads, decision quality'],
+    ['Coachability', 'coachability', 'Listens, adjusts, demonstrably improves'],
+    ['Competitiveness', 'competitiveness', "Doesn't take possessions off"],
+  ];
+
+  function tierClass(tier){
+    return ({'ICON':'icon','ELITE+':'eliteplus','ELITE':'elite','STAR':'star','PROSPECT':'prospect','SCOUT':'scout'})[tier] || 'scout';
+  }
+
+  function scoreClass(s){
+    if (s >= 7.5) return 'high';
+    if (s >= 5.5) return 'mid';
+    return 'low';
+  }
+
+  function lookup(name){
+    var k = (name || '').trim().toLowerCase();
+    return CORPUS[k] || null;
+  }
+
+  function workerBase(){
+    return location.hostname.indexOf('fieldcheck-dev') >= 0
+      ? 'https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev'
+      : 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+  }
+
+  function renderCompare(){
+    var params = new URLSearchParams(location.search);
+    var names = [params.get('a'), params.get('b'), params.get('c')].filter(Boolean);
+    if (names.length === 0) {
+      renderEmpty();
+      return;
+    }
+    var athletes = names.map(lookup).filter(Boolean);
+    if (athletes.length < 2) {
+      renderError(names);
+      return;
+    }
+    renderGrid(athletes);
+  }
+
+  function renderEmpty(){
+    document.getElementById('compare-root').innerHTML =
+      '<div class="empty">' +
+        '<h3>No athletes selected.</h3>' +
+        '<p>Add athletes to your watchlist and use bulk-select compare, or pass <code>?a=Name&amp;b=Name&amp;c=Name</code> to this page.</p>' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px;">' +
+          '<a href="?a=Cameron+Boozer&b=AJ+Dybantsa&c=Tyran+Stokes" style="font-family:JetBrains Mono;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#f0c66e;text-decoration:none;padding:8px 14px;border:1px solid rgba(240,198,110,0.3);border-radius:9999px;">Try: Boozer · Dybantsa · Stokes</a>' +
+          '<a href="?a=Cooper+Flagg&b=LeBron+James" style="font-family:JetBrains Mono;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#f0c66e;text-decoration:none;padding:8px 14px;border:1px solid rgba(240,198,110,0.3);border-radius:9999px;">Try: Flagg vs LeBron</a>' +
+          '<a href="?a=Tom+Brady&b=Patrick+Mahomes" style="font-family:JetBrains Mono;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#f0c66e;text-decoration:none;padding:8px 14px;border:1px solid rgba(240,198,110,0.3);border-radius:9999px;">Try: Brady vs Mahomes</a>' +
+          '<a href="?a=Faizon+Brandon&b=Tom+Brady" style="font-family:JetBrains Mono;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#f0c66e;text-decoration:none;padding:8px 14px;border:1px solid rgba(240,198,110,0.3);border-radius:9999px;">Cross-time: Brandon vs Brady</a>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function renderError(names){
+    document.getElementById('compare-root').innerHTML =
+      '<div class="empty">' +
+        '<h3>Not enough athletes found.</h3>' +
+        '<p>Looked up: ' + names.map(function(n){return '<b>' + n + '</b>';}).join(', ') + '. Currently the compare corpus only contains marquee polish-set athletes. Full lookup expansion is queued for Phase 9.2.</p>' +
+        '<a href="?a=Cameron+Boozer&b=AJ+Dybantsa" style="font-family:JetBrains Mono;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#f0c66e;text-decoration:none;padding:10px 18px;border:1px solid rgba(240,198,110,0.3);border-radius:9999px;display:inline-block;margin-top:14px;">Try sample compare →</a>' +
+      '</div>';
+  }
+
+  function renderGrid(athletes){
+    var n = athletes.length;
+    var cls = n === 3 ? 'three' : 'two';
+    var wb = workerBase();
+
+    var cols = athletes.map(function(a){
+      var initials = a.name.split(' ').slice(0,2).map(function(w){return w[0]||'';}).join('').toUpperCase();
+      var photoUrl = wb + '/photo?q=' + encodeURIComponent(a.name) + '&sport=' + encodeURIComponent(a.sport);
+      var sportLabel = a.sport.replace(/-/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});
+      return '<div class="ath-col">' +
+        '<div class="photo"><img src="' + photoUrl + '" alt="' + a.name + '" onerror="this.style.display=\'none\';this.parentNode.textContent=\'' + initials + '\'"></div>' +
+        '<div class="name">' + a.name + '</div>' +
+        '<div class="sport">' + sportLabel + ' · ' + a.school + '</div>' +
+        '<div class="composite">' + a.composite.toFixed(1) + '</div>' +
+        '<div class="tier-row"><span class="tier-pill ' + tierClass(a.tier) + '">' + a.tier + '</span></div>' +
+      '</div>';
+    }).join('');
+
+    /* Facet table */
+    var facetRows = FACET_DEFS.map(function(def){
+      var label = def[0], key = def[1], desc = def[2];
+      var scores = athletes.map(function(a){ return a.facets[key]; });
+      var max = Math.max.apply(null, scores);
+      var cells = athletes.map(function(a, i){
+        var s = scores[i];
+        var winner = s === max && scores.filter(function(x){return x === max;}).length === 1 ? ' <span class="winner-mark">●</span>' : '';
+        return '<td class="score ' + scoreClass(s) + '">' + s.toFixed(1) + winner + '</td>';
+      }).join('');
+      return '<tr>' +
+        '<td><div class="facet-name">' + label + '</div><div class="facet-desc">' + desc + '</div></td>' +
+        cells +
+      '</tr>';
+    }).join('');
+
+    /* Composite winner */
+    var composites = athletes.map(function(a){return a.composite;});
+    var maxComp = Math.max.apply(null, composites);
+    var winnerIdx = composites.indexOf(maxComp);
+    var winner = athletes[winnerIdx];
+
+    var html =
+      '<div class="compare-grid ' + cls + '">' + cols + '</div>' +
+      '<div class="callout">' +
+        '<span class="label">Composite leader</span>' +
+        '<b>' + winner.name + '</b> leads on composite at <b>' + winner.composite.toFixed(1) + '</b>' +
+        (n > 1 ? ' (vs ' + athletes.filter(function(a){return a !== winner;}).map(function(a){return a.name + ' ' + a.composite.toFixed(1);}).join(', ') + ')' : '') +
+        '. Facet-level breakdown below.' +
+      '</div>' +
+      '<table class="facet-table">' +
+        '<thead><tr>' +
+          '<th style="width:35%">Facet</th>' +
+          athletes.map(function(a){ return '<th class="athlete-col">' + a.name + '</th>'; }).join('') +
+        '</tr></thead>' +
+        '<tbody>' + facetRows + '</tbody>' +
+      '</table>' +
+      '<div class="actions">' +
+        athletes.map(function(a){
+          return '<a href="/fieldcheck-verdict.html?q=' + encodeURIComponent(a.name) + '&sport=' + encodeURIComponent(a.sport) + '">' + a.name + ' verdict →</a>';
+        }).join('') +
+        '<button onclick="navigator.clipboard.writeText(location.href);this.textContent=\'Copied!\';setTimeout(()=>{this.textContent=\'Share this compare\'},1500)">Share this compare</button>' +
+      '</div>';
+
+    document.getElementById('compare-root').innerHTML = html;
+  }
+
+  renderCompare();
+})();
+</script>
+<!-- FCBase59 . Agent on fieldcheck-versus.html (mode=comparison) -->
+<button class="fc-agent-pill" id="fc-agent-pill"><span class="icon">✨</span><span class="label">Ask about this comparison</span></button>
+<div class="fc-agent-panel" id="fc-agent-panel">
+  <div class="fc-agent-header">
+    <div>
+      <h3>Ask about this comparison</h3>
+      <div class="sub">Cross-athlete analysis</div>
+    </div>
+    <button class="fc-agent-close" id="fc-agent-close">×</button>
+  </div>
+  <div class="fc-agent-suggestions" id="fc-agent-suggestions"></div>
+  <div class="fc-agent-body" id="fc-agent-body">
+    <div class="fc-agent-empty" id="fc-agent-empty">
+      <b>Ask about the comparison</b>
+      Facet-level differences, era / sport context, where the data is thin. The agent picks up athletes from the URL parameters.
+    </div>
+  </div>
+  <div class="fc-agent-input-row">
+    <textarea class="fc-agent-input" id="fc-agent-input" placeholder="Type a question…" rows="1" maxlength="500"></textarea>
+    <button class="fc-agent-send" id="fc-agent-send" disabled>↑</button>
+  </div>
+  <div class="fc-agent-footer">Powered by Claude · 10 questions/day · <a href="/agent-transparency" style="color:rgba(245,184,0,.6);text-decoration:none">see the prompt</a></div>
+</div>
+<script>
+(function(){
+  if (window._fcAgentInit) return;
+  window._fcAgentInit = true;
+  function init() {
+    var pill=document.getElementById('fc-agent-pill'),panel=document.getElementById('fc-agent-panel'),closeBtn=document.getElementById('fc-agent-close'),input=document.getElementById('fc-agent-input'),sendBtn=document.getElementById('fc-agent-send'),body=document.getElementById('fc-agent-body'),emptyState=document.getElementById('fc-agent-empty'),suggestionsEl=document.getElementById('fc-agent-suggestions');
+    if(!pill||!panel)return;
+    var WORKER_BASE=(location.hostname.indexOf('fieldcheck-dev')>=0)?'https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev':'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+    var suggestions=['Who has the higher Mental Strength?',
+      'Is this comparison fair across eras?',
+      'Where is the data thinnest?',
+      'What facet is the biggest gap?',
+      'Does the amateur cap apply?'];
+    var html='';for(var i=0;i<suggestions.length;i++){html+='<button data-q="'+suggestions[i].replace(/"/g,'&quot;')+'">'+suggestions[i]+'</button>';}
+    suggestionsEl.innerHTML=html;
+    var btns=suggestionsEl.querySelectorAll('button');
+    for(var k=0;k<btns.length;k++){btns[k].addEventListener('click',function(){input.value=this.getAttribute('data-q');updateSendState();input.focus();});}
+    var histKey='fc_agent_hist:comparison';
+    function loadHist(){try{return JSON.parse(localStorage.getItem(histKey)||'[]');}catch(e){return[];}}
+    function saveHist(h){try{localStorage.setItem(histKey,JSON.stringify(h.slice(-3)));}catch(e){}}
+    function renderHistory(){var hist=loadHist();if(hist.length===0){emptyState.style.display='';return;}emptyState.style.display='none';for(var i=0;i<hist.length;i++){if(hist[i].q)appendMsg(hist[i].q,'user');if(hist[i].a)appendMsg(hist[i].a,'bot');}}
+    function appendMsg(text,kind){emptyState.style.display='none';var m=document.createElement('div');m.className='fc-agent-msg '+kind;m.textContent=text;body.appendChild(m);body.scrollTop=body.scrollHeight;return m;}
+    pill.addEventListener('click',function(){panel.classList.add('open');pill.classList.add('open');renderHistory();input.focus();});
+    closeBtn.addEventListener('click',function(){panel.classList.remove('open');pill.classList.remove('open');});
+    function updateSendState(){sendBtn.disabled=!input.value.trim()||sending;input.style.height='auto';input.style.height=Math.min(input.scrollHeight,100)+'px';}
+    input.addEventListener('input',updateSendState);
+    input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();if(!sendBtn.disabled)send();}});
+    var sending=false;sendBtn.addEventListener('click',send);
+    function send(){
+      var question=input.value.trim();if(!question||sending)return;sending=true;
+      appendMsg(question,'user');input.value='';updateSendState();
+      var botMsg=appendMsg('','bot');botMsg.classList.add('streaming');
+      var hist=loadHist();
+    // FCBase59 · comparison mode . extract athletes from URL params
+    var urlParams = new URLSearchParams(location.search);
+    var athletes = [];
+    ['a', 'b', 'c'].forEach(function(k) {
+      var n = urlParams.get(k);
+      if (n) athletes.push({ name: n });
+    });
+    var verdictData = { athletes: athletes };
+      var payload={question:question,athlete:'FieldCheck comparison',sport:null,history:hist,verdict_data:verdictData,mode:'comparison'};
+      fetch(WORKER_BASE+'/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){
+        if(!r.ok||!r.body)throw new Error('HTTP '+r.status);
+        var reader=r.body.getReader(),decoder=new TextDecoder(),buffer='',full='',err=false;
+        function readChunk(){return reader.read().then(function(res){
+          if(res.done){botMsg.classList.remove('streaming');sending=false;updateSendState();if(!err&&full){hist.push({q:question,a:full});saveHist(hist);}return;}
+          buffer+=decoder.decode(res.value,{stream:true});var events=buffer.split('\n\n');buffer=events.pop()||'';
+          for(var i=0;i<events.length;i++){var lines=events[i].split('\n'),dp=null;for(var j=0;j<lines.length;j++){if(lines[j].indexOf('data: ')===0)dp=lines[j].slice(6);}if(!dp)continue;
+            try{var ev=JSON.parse(dp);
+              if(ev.type==='chunk'&&ev.text){full+=ev.text;botMsg.textContent=full;body.scrollTop=body.scrollHeight;}
+              else if(ev.type==='error'||ev.type==='rate_limit'||ev.type==='config_error'){err=true;botMsg.classList.add('error');botMsg.classList.remove('streaming');botMsg.textContent=ev.message||'Error';}
+              else if(ev.type==='done'){botMsg.classList.remove('streaming');}
+            }catch(e){}}
+          return readChunk();});}
+        return readChunk();
+      }).catch(function(e){botMsg.classList.remove('streaming');botMsg.classList.add('error');botMsg.textContent='Connection error: '+(e.message||'failed');sending=false;updateSendState();});
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(init,300);});}else{setTimeout(init,300);}
+})();
+</script>
+<!-- FCBase59 . agent UI mode=comparison . streams Claude Haiku via /agent endpoint . localStorage history . 10/IP/day rate limit -->
+</body>
+</html>

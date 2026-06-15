@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For Players · FieldCheck</title>
+<meta name="description" content="Whatever your level — USA pool, P5 recruit, unranked overlooked, or post-grad pro — FieldCheck is built for you. Find yourself below.">
+<meta name="theme-color" content="#0A0908">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0908; --bg-2: #14110c; --bg-3: #1d1812;
+  --text: #fbf6ea; --text-2: #d4c8ad; --text-3: #a89b78; --text-4: #6b6049;
+  --gold: #ffc94a; --gold-2: #ffd66a; --gold-deep: #d49b1f;
+  --gold-soft: rgba(255,201,74,0.12); --gold-edge: rgba(255,201,74,0.30);
+  --rust: #ff8c52; --coral: #ff7e9b; --sage: #95d5b2; --emerald: #6ed2a9;
+  --plum: #d8a3d8; --rose: #f4a8b8; --azure: #8ec4e8; --sky: #a8d0f0;
+  --amber: #ffb85c; --crimson: #ff6b6b;
+  --border: rgba(255,201,74,0.10); --glass: rgba(255,231,170,0.03);
+  --shadow: 0 20px 50px rgba(0,0,0,0.5);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; min-height: 100vh; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+
+/* Nav */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(180deg, rgba(10,9,8,0.85), rgba(10,9,8,0.4)); backdrop-filter: blur(24px) saturate(160%); }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 24px; letter-spacing: -0.005em; }
+.wordmark .gold { color: var(--gold); }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a { color: var(--text-2); font-size: 13px; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+/* Hero */
+.hero {
+  min-height: 80vh; display: flex; flex-direction: column; justify-content: center;
+  padding: 110px 32px 60px; position: relative;
+  background: radial-gradient(ellipse 70% 50% at 30% 30%, rgba(255,201,74,0.10), transparent 60%), radial-gradient(ellipse 60% 50% at 75% 75%, rgba(149,213,178,0.07), transparent 60%);
+}
+.hero-inner { max-width: 1080px; margin: 0 auto; width: 100%; }
+.eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 3px; color: var(--gold); font-weight: 700; margin-bottom: 22px; display: inline-flex; align-items: center; gap: 12px; }
+.eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
+h1 { font-family: 'Anton', sans-serif; font-size: clamp(52px, 8vw, 108px); line-height: 0.94; letter-spacing: -0.015em; margin-bottom: 22px; }
+h1 .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--gold); }
+.lead { font-size: clamp(17px, 1.7vw, 21px); color: var(--text-2); max-width: 780px; line-height: 1.7; }
+.hero-actions { margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-primary { padding: 14px 24px; background: var(--gold); color: #1a1410; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; border-radius: 99px; border: none; cursor: pointer; transition: all 0.2s ease; }
+.btn-primary:hover { background: var(--gold-2); transform: translateY(-1px); }
+.btn-ghost { padding: 14px 24px; background: transparent; color: var(--text); font-weight: 600; font-size: 14px; letter-spacing: 0.5px; border-radius: 99px; border: 1px solid rgba(255,255,255,0.15); cursor: pointer; transition: all 0.2s ease; }
+.btn-ghost:hover { border-color: var(--gold-edge); color: var(--gold); }
+
+/* Tier picker */
+.picker { padding: 60px 32px; max-width: 1080px; margin: 0 auto; }
+.picker-h { font-family: 'Anton', sans-serif; font-size: clamp(32px, 4vw, 48px); line-height: 1.0; letter-spacing: -0.01em; margin-bottom: 12px; }
+.picker-h .serif { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.picker-sub { font-size: 16px; color: var(--text-2); margin-bottom: 32px; max-width: 720px; }
+.tier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.tier-pill { padding: 28px 24px; background: linear-gradient(180deg, var(--glass), rgba(20,17,12,0.5)); border: 1px solid var(--border); border-radius: 16px; text-align: left; cursor: pointer; transition: all 0.25s var(--ease-out); position: relative; overflow: hidden; }
+.tier-pill::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.tier-pill.icon::before { background: linear-gradient(to right, var(--gold), transparent); }
+.tier-pill.elite::before { background: linear-gradient(to right, var(--sage), transparent); }
+.tier-pill.prospect::before { background: linear-gradient(to right, var(--amber), transparent); }
+.tier-pill.star::before { background: linear-gradient(to right, var(--plum), transparent); }
+.tier-pill:hover { transform: translateY(-3px); border-color: var(--gold-edge); box-shadow: var(--shadow); }
+.tier-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; font-weight: 700; margin-bottom: 12px; }
+.tier-pill.icon .tier-label { color: var(--gold); }
+.tier-pill.elite .tier-label { color: var(--sage); }
+.tier-pill.prospect .tier-label { color: var(--amber); }
+.tier-pill.star .tier-label { color: var(--plum); }
+.tier-name { font-family: 'Anton', sans-serif; font-size: 28px; line-height: 1.0; letter-spacing: -0.005em; margin-bottom: 8px; }
+.tier-desc { font-size: 13.5px; color: var(--text-2); line-height: 1.5; }
+.tier-anchor { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 14px; color: var(--text-3); margin-top: 12px; }
+
+/* Journey sections */
+.journey { padding: 80px 32px; max-width: 1180px; margin: 0 auto; }
+.journey.icon-bg { background: radial-gradient(ellipse 80% 60% at top, rgba(255,201,74,0.08), transparent 65%); }
+.journey.elite-bg { background: radial-gradient(ellipse 80% 60% at top right, rgba(149,213,178,0.07), transparent 65%); }
+.journey.prospect-bg { background: radial-gradient(ellipse 80% 60% at top left, rgba(255,184,92,0.07), transparent 65%); }
+.journey.star-bg { background: radial-gradient(ellipse 80% 60% at top, rgba(216,163,216,0.07), transparent 65%); }
+.journey-head { display: grid; grid-template-columns: 280px 1fr; gap: 56px; align-items: flex-start; margin-bottom: 56px; }
+.journey-portrait { padding: 32px 28px; border-radius: 20px; border: 1px solid var(--border); }
+.journey.icon-bg .journey-portrait { background: linear-gradient(180deg, rgba(255,201,74,0.08), rgba(20,17,12,0.6)); border-color: var(--gold-edge); }
+.journey.elite-bg .journey-portrait { background: linear-gradient(180deg, rgba(149,213,178,0.07), rgba(20,17,12,0.6)); border-color: rgba(149,213,178,0.30); }
+.journey.prospect-bg .journey-portrait { background: linear-gradient(180deg, rgba(255,184,92,0.07), rgba(20,17,12,0.6)); border-color: rgba(255,184,92,0.30); }
+.journey.star-bg .journey-portrait { background: linear-gradient(180deg, rgba(216,163,216,0.07), rgba(20,17,12,0.6)); border-color: rgba(216,163,216,0.30); }
+.portrait-tier-label { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; font-weight: 700; margin-bottom: 10px; }
+.journey.icon-bg .portrait-tier-label { color: var(--gold); }
+.journey.elite-bg .portrait-tier-label { color: var(--sage); }
+.journey.prospect-bg .portrait-tier-label { color: var(--amber); }
+.journey.star-bg .portrait-tier-label { color: var(--plum); }
+.portrait-name { font-family: 'Anton', sans-serif; font-size: 38px; line-height: 0.98; letter-spacing: -0.01em; margin-bottom: 10px; }
+.portrait-frame { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 16px; color: var(--text-2); line-height: 1.5; margin-bottom: 16px; }
+.portrait-stat-row { display: flex; gap: 16px; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid var(--border); }
+.portrait-stat { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--text-3); letter-spacing: 1.2px; }
+.portrait-stat strong { color: var(--text); font-weight: 700; display: block; font-size: 14px; margin-top: 3px; }
+.journey-narrative-block { padding-top: 6px; }
+.journey-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; font-weight: 700; margin-bottom: 14px; }
+.journey.icon-bg .journey-eyebrow { color: var(--gold); }
+.journey.elite-bg .journey-eyebrow { color: var(--sage); }
+.journey.prospect-bg .journey-eyebrow { color: var(--amber); }
+.journey.star-bg .journey-eyebrow { color: var(--plum); }
+.journey-h { font-family: 'Anton', sans-serif; font-size: clamp(36px, 5vw, 56px); line-height: 1.0; letter-spacing: -0.01em; margin-bottom: 18px; }
+.journey-h .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+.journey.icon-bg .journey-h .serif { color: var(--gold); }
+.journey.elite-bg .journey-h .serif { color: var(--sage); }
+.journey.prospect-bg .journey-h .serif { color: var(--amber); }
+.journey.star-bg .journey-h .serif { color: var(--plum); }
+.journey-lede { font-size: 17px; color: var(--text-2); line-height: 1.7; }
+
+/* Pain → Solution rows */
+.psr { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 36px; }
+.psr-card { padding: 26px 28px; border-radius: 14px; }
+.psr-pain { background: linear-gradient(135deg, rgba(255,140,82,0.08), rgba(20,17,12,0.5)); border: 1px solid rgba(255,140,82,0.25); border-left: 3px solid var(--rust); border-radius: 0 14px 14px 0; }
+.psr-solution { background: linear-gradient(135deg, rgba(149,213,178,0.08), rgba(20,17,12,0.5)); border: 1px solid rgba(149,213,178,0.25); border-left: 3px solid var(--sage); border-radius: 0 14px 14px 0; }
+.psr-label { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 2px; font-weight: 700; margin-bottom: 10px; }
+.psr-pain .psr-label { color: var(--rust); }
+.psr-solution .psr-label { color: var(--sage); }
+.psr-h { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1.1; margin-bottom: 10px; letter-spacing: -0.005em; }
+.psr-body { font-size: 14.5px; color: var(--text-2); line-height: 1.6; }
+.psr-body strong { color: var(--text); }
+
+/* Hero moment quote */
+.hero-moment { margin-top: 48px; padding: 44px 40px; border-radius: 20px; position: relative; overflow: hidden; }
+.journey.icon-bg .hero-moment { background: linear-gradient(135deg, rgba(255,201,74,0.12), rgba(20,17,12,0.6)); border: 1px solid var(--gold-edge); }
+.journey.elite-bg .hero-moment { background: linear-gradient(135deg, rgba(149,213,178,0.12), rgba(20,17,12,0.6)); border: 1px solid rgba(149,213,178,0.35); }
+.journey.prospect-bg .hero-moment { background: linear-gradient(135deg, rgba(255,184,92,0.12), rgba(20,17,12,0.6)); border: 1px solid rgba(255,184,92,0.35); }
+.journey.star-bg .hero-moment { background: linear-gradient(135deg, rgba(216,163,216,0.12), rgba(20,17,12,0.6)); border: 1px solid rgba(216,163,216,0.35); }
+.hero-moment-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; font-weight: 700; margin-bottom: 16px; }
+.journey.icon-bg .hero-moment-eyebrow { color: var(--gold); }
+.journey.elite-bg .hero-moment-eyebrow { color: var(--sage); }
+.journey.prospect-bg .hero-moment-eyebrow { color: var(--amber); }
+.journey.star-bg .hero-moment-eyebrow { color: var(--plum); }
+.hero-moment-text { font-family: 'Instrument Serif', serif; font-style: italic; font-size: clamp(22px, 2.8vw, 32px); line-height: 1.3; color: var(--text); font-weight: 500; }
+.hero-moment-text .accent { font-style: normal; font-weight: 600; }
+.journey.icon-bg .hero-moment-text .accent { color: var(--gold); }
+.journey.elite-bg .hero-moment-text .accent { color: var(--sage); }
+.journey.prospect-bg .hero-moment-text .accent { color: var(--amber); }
+.journey.star-bg .hero-moment-text .accent { color: var(--plum); }
+
+/* Tool list */
+.tools { margin-top: 48px; }
+.tools-h { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 2px; color: var(--text-3); font-weight: 700; margin-bottom: 18px; }
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.tool { padding: 20px 22px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; transition: all 0.2s ease; }
+.tool:hover { border-color: var(--gold-edge); transform: translateY(-2px); }
+.tool-name { font-family: 'Anton', sans-serif; font-size: 19px; line-height: 1.1; margin-bottom: 6px; letter-spacing: -0.005em; }
+.tool-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; margin-bottom: 12px; }
+.tool-cta { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.2px; color: var(--gold); font-weight: 600; }
+.tool-cta::after { content: ' →'; }
+
+/* Promise band */
+.promise { padding: 100px 32px; text-align: center; background: radial-gradient(ellipse 80% 60% at center, rgba(255,201,74,0.08), transparent 65%); }
+.promise-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 3px; color: var(--gold); font-weight: 700; margin-bottom: 22px; }
+.promise-h { font-family: 'Anton', sans-serif; font-size: clamp(40px, 6vw, 72px); line-height: 0.98; letter-spacing: -0.015em; margin-bottom: 22px; }
+.promise-h .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--gold); }
+.promise-body { font-size: 18px; color: var(--text-2); max-width: 760px; margin: 0 auto 36px; line-height: 1.7; }
+.promise-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* Footer */
+footer { padding: 50px 32px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-4); letter-spacing: 1.2px; border-top: 1px solid var(--border); }
+footer a { color: var(--text-3); }
+footer a:hover { color: var(--gold); }
+
+@media (max-width: 920px) {
+  .nav { padding: 14px 18px; }
+  .nav-links { display: none; }
+  .picker { padding: 40px 18px; }
+  .tier-grid { grid-template-columns: repeat(2, 1fr); }
+  .journey { padding: 50px 18px; }
+  .journey-head { grid-template-columns: 1fr; gap: 28px; }
+  .psr { grid-template-columns: 1fr; }
+  .promise { padding: 70px 18px; }
+}
+@media (max-width: 540px) {
+  .tier-grid { grid-template-columns: 1fr; }
+  .hero { padding: 90px 20px 50px; min-height: auto; }
+}
+</style>
+<script>
+// FieldCheck CX library · Apple-grade polish · v1770
+// Loading states, empty states, success moments, error states, toast notifications
+(function() {
+  // Inject base styles once
+  if (document.getElementById('fc-cx-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'fc-cx-styles';
+  style.textContent = `
+    /* Loading skeleton */
+    .fc-skeleton {
+      display: inline-block;
+      background: linear-gradient(90deg, rgba(255,201,74,0.04) 0%, rgba(255,201,74,0.10) 50%, rgba(255,201,74,0.04) 100%);
+      background-size: 200% 100%;
+      animation: fc-skeleton-shimmer 1.4s ease-in-out infinite;
+      border-radius: 6px;
+      height: 1em;
+      min-width: 60px;
+    }
+    @keyframes fc-skeleton-shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .fc-skeleton-block { display: block; height: 1em; margin-bottom: 8px; }
+    .fc-skeleton-block:last-child { width: 60%; }
+
+    /* Empty state */
+    .fc-empty {
+      padding: 60px 32px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(255,201,74,0.03), transparent);
+      border: 1px dashed rgba(255,201,74,0.25);
+      border-radius: 16px;
+    }
+    .fc-empty-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: rgba(255,201,74,0.6);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .fc-empty-h {
+      font-family: 'Anton', sans-serif;
+      font-size: 26px;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      color: #f4ead5;
+    }
+    .fc-empty-body {
+      font-size: 15px;
+      color: rgba(244,234,213,0.7);
+      max-width: 480px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+    }
+    .fc-empty-cta {
+      display: inline-block;
+      padding: 12px 22px;
+      background: #e8b948;
+      color: #1a1410;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .fc-empty-cta:hover { background: #f5c950; transform: translateY(-1px); }
+
+    /* Toast */
+    .fc-toast-stack {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+      max-width: calc(100vw - 32px);
+    }
+    .fc-toast {
+      padding: 14px 22px;
+      background: rgba(20,17,12,0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,201,74,0.30);
+      border-left: 3px solid #e8b948;
+      border-radius: 12px;
+      color: #f4ead5;
+      font-size: 14px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      pointer-events: auto;
+      animation: fc-toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      max-width: 480px;
+    }
+    .fc-toast.success { border-left-color: #95d5b2; }
+    .fc-toast.error { border-left-color: #ff8c52; }
+    .fc-toast.info { border-left-color: #8ec4e8; }
+    .fc-toast.out { animation: fc-toast-out 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes fc-toast-in {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fc-toast-out {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+
+    /* Spinner */
+    .fc-spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,201,74,0.2);
+      border-top-color: #e8b948;
+      border-radius: 50%;
+      animation: fc-spin 0.7s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes fc-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Page transition */
+    body.fc-fade-in { animation: fc-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes fc-fade-in {
+      0% { opacity: 0; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Focus ring (accessibility) */
+    *:focus-visible {
+      outline: 2px solid #e8b948;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      .fc-skeleton, .fc-toast, .fc-spinner, body.fc-fade-in { animation: none !important; }
+      * { transition-duration: 0.01ms !important; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Toast API
+  function ensureToastStack() {
+    let stack = document.getElementById('fc-toast-stack');
+    if (!stack) {
+      stack = document.createElement('div');
+      stack.id = 'fc-toast-stack';
+      stack.className = 'fc-toast-stack';
+      document.body.appendChild(stack);
+    }
+    return stack;
+  }
+
+  function toast(message, opts) {
+    opts = opts || {};
+    const variant = opts.variant || 'info';
+    const duration = opts.duration || 3500;
+    const stack = ensureToastStack();
+    const t = document.createElement('div');
+    t.className = 'fc-toast ' + variant;
+    t.textContent = message;
+    stack.appendChild(t);
+    setTimeout(() => {
+      t.classList.add('out');
+      setTimeout(() => t.remove(), 280);
+    }, duration);
+    return t;
+  }
+
+  // Skeleton helper
+  function skeleton(target, lines) {
+    if (typeof target === 'string') target = document.querySelector(target);
+    if (!target) return;
+    lines = lines || 3;
+    const blocks = Array.from({ length: lines }, () => '<span class="fc-skeleton fc-skeleton-block"></span>').join('');
+    target.innerHTML = blocks;
+  }
+
+  // Empty state helper
+  function emptyState(target, opts) {
+    if (typeof target === 'string') target = document.querySelector(target);
+    if (!target) return;
+    opts = opts || {};
+    target.innerHTML = `
+      <div class="fc-empty">
+        <div class="fc-empty-icon">${opts.icon || '// NOTHING HERE YET'}</div>
+        <div class="fc-empty-h">${opts.title || 'Nothing yet.'}</div>
+        <div class="fc-empty-body">${opts.body || ''}</div>
+        ${opts.ctaText ? `<a href="${opts.ctaHref || '#'}" class="fc-empty-cta">${opts.ctaText}</a>` : ''}
+      </div>
+    `;
+  }
+
+  // Spinner helper
+  function spinner(text) {
+    return `<span class="fc-spinner"></span>${text ? ' ' + text : ''}`;
+  }
+
+  // Fade-in on body
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('fc-fade-in');
+  });
+
+  window.FieldCheckCX = { toast, skeleton, emptyState, spinner };
+})();
+</script>
+</head>
+<body>
+<!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+<!-- LOVB TOOLS BANNER · added 2026-05-13 -->
+<div style="background:linear-gradient(180deg,rgba(255,201,74,0.06),rgba(20,17,12,0.4));border-bottom:1px solid rgba(255,201,74,0.32);padding:18px 0">
+  <div style="max-width:1180px;margin:0 auto;padding:0 32px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:#ffc94a;font-weight:700;background:rgba(255,201,74,0.18);border:1px solid rgba(255,201,74,0.32);padding:4px 10px;border-radius:2px">NEW · MAY 2026</span>
+      <span style="font-family:'Anton',sans-serif;font-size:18px;letter-spacing:-0.005em;color:#fbf6ea">The <span style="font-family:'Instrument Serif',serif;font-style:italic;color:#ffc94a">LOVB Pathway</span> tool is live.</span>
+      <span style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:rgba(212,200,173,0.78)">60-second input → honest probability bands, archetype matches, gaps.</span>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="/lovb/pathway" style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.8px;color:#0a0908;background:#ffc94a;padding:9px 16px;text-decoration:none;border-radius:3px;font-weight:700;text-transform:uppercase">Try Pathway →</a>
+      <a href="/lovb" style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.8px;color:#ffc94a;background:transparent;border:1px solid rgba(255,201,74,0.32);padding:8px 16px;text-decoration:none;border-radius:3px;font-weight:700;text-transform:uppercase">LOVB Hub</a>
+    </div>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">// FOR PLAYERS · ALL LEVELS · ALL JOURNEYS</div>
+    <h1>Whatever your level,<br><span class="serif">FieldCheck is built for you.</span></h1>
+    <p class="lead">USA pool. P5 recruit. Unranked and overlooked. Post-grad navigating pro. The system was built around what each of you actually needs — not around what makes us money. Find yourself below.</p>
+    <div class="hero-actions">
+      <a href="#pick" class="btn-primary">Find your journey ↓</a>
+      <a href="/add-me" class="btn-ghost">Submit my profile</a>
+    </div>
+  </div>
+</section>
+
+<section class="picker" id="pick">
+  <div class="eyebrow" style="display:inline-flex;margin-bottom:18px">// PICK YOUR JOURNEY</div>
+  <div class="picker-h">Four players. Four journeys.<br><span class="serif">One platform built for all of them.</span></div>
+  <p class="picker-sub">Every player FieldCheck serves falls into one of four tiers — not a ranking, an archetype. Tap your tier to see how FieldCheck is built specifically for you.</p>
+
+  <div class="tier-grid">
+    <a href="#sofia" class="tier-pill icon">
+      <div class="tier-label">// ICON</div>
+      <div class="tier-name">USA pool</div>
+      <div class="tier-desc">Already on the radar. National team trajectory. Heritage-anchor calibration.</div>
+      <div class="tier-anchor">"Sofia Chen"</div>
+    </a>
+    <a href="#maya" class="tier-pill elite">
+      <div class="tier-label">// ELITE</div>
+      <div class="tier-name">P5 recruit</div>
+      <div class="tier-desc">Power-5 college bound. Multiple offers. Navigating the next jump.</div>
+      <div class="tier-anchor">"Maya Rodriguez"</div>
+    </a>
+    <a href="#kayla" class="tier-pill prospect">
+      <div class="tier-label">// PROSPECT</div>
+      <div class="tier-name">Unranked &amp; overlooked</div>
+      <div class="tier-desc">The system missed you. We see you. Time to be findable.</div>
+      <div class="tier-anchor">"Kayla Williams"</div>
+    </a>
+    <a href="#olivia" class="tier-pill star">
+      <div class="tier-label">// STAR</div>
+      <div class="tier-name">Post-grad pro</div>
+      <div class="tier-desc">College is over. The road keeps going. We built the map.</div>
+      <div class="tier-anchor">"Olivia Chen"</div>
+    </a>
+  </div>
+</section>
+
+<!-- ─────────── SOFIA · ICON ─────────── -->
+<section class="journey icon-bg" id="sofia">
+  <div class="journey-head">
+    <div class="journey-portrait">
+      <div class="portrait-tier-label">// ICON · USA POOL</div>
+      <div class="portrait-name">Sofia.</div>
+      <div class="portrait-frame">17. USA Junior National Team. Stanford verbal. Every scout knows her name. Her phone won't stop.</div>
+      <div class="portrait-stat-row">
+        <div class="portrait-stat">PATHWAY<strong>Olympic pool</strong></div>
+        <div class="portrait-stat">ANCHOR<strong>Foluke arc</strong></div>
+        <div class="portrait-stat">VOICE<strong>#1 of 16</strong></div>
+      </div>
+    </div>
+    <div class="journey-narrative-block">
+      <div class="journey-eyebrow">// JOURNEY 01</div>
+      <h2 class="journey-h">The press writes what they want.<br><span class="serif">Your truth lives here.</span></h2>
+      <p class="journey-lede">When you're already on the radar, your problem isn't visibility. It's <strong style="color:var(--text)">noise</strong>. Scout DMs that ignore your boundaries. Recruiting sites that publish your "ranking" without ever talking to you. Random strangers asking if you're "the next" someone. FieldCheck is the audited record that lets you stop chasing the narrative — the narrative comes here.</p>
+    </div>
+  </div>
+
+  <div class="psr">
+    <div class="psr-card psr-pain">
+      <div class="psr-label">// WHAT'S BROKEN</div>
+      <div class="psr-h">No control over the public narrative.</div>
+      <p class="psr-body">Every recruiting site runs your name through their ranking algorithm. Your social DMs are unmanageable. Your private peer questions ("how did you handle the visa transition for Italy?") have to be asked publicly, which means they become the story.</p>
+    </div>
+    <div class="psr-card psr-solution">
+      <div class="psr-label">// WHAT FIELDCHECK GIVES YOU</div>
+      <div class="psr-h">A calm, audited public profile + a private peer network.</div>
+      <p class="psr-body">Your <strong>FieldCheck profile</strong> is the auditable source of record — heritage-anchored, methodology-signed, no engagement-bait. The <strong>ICON Network</strong> (invite-only, hex-token gated, zero public discovery) gives you a place to ask other ICON-tier players the questions you can't ask publicly.</p>
+    </div>
+  </div>
+
+  <div class="hero-moment">
+    <div class="hero-moment-eyebrow">// THE MOMENT</div>
+    <p class="hero-moment-text">"The press can write what they want about me. <span class="accent">My truth lives on FieldCheck.</span> Auditable. On the record. And when I need to ask a real question, I have a real peer space — not a comments section."</p>
+  </div>
+
+  <div class="tools">
+    <div class="tools-h">// YOUR TOOLS</div>
+    <div class="tools-grid">
+      <a href="/m/sofia-chen-usa-national-team-pool" class="tool"><div class="tool-name">Your Profile</div><div class="tool-desc">Heritage-anchored, methodology-signed, audited. Yours.</div><div class="tool-cta">View profile</div></a>
+      <a href="/icon-network" class="tool"><div class="tool-name">ICON Network</div><div class="tool-desc">Invite-only peer space. No leaderboards. No public discovery.</div><div class="tool-cta">Request invite</div></a>
+      <a href="/accuracy" class="tool"><div class="tool-name">Track Record</div><div class="tool-desc">Where FieldCheck has been right. Where we've been wrong.</div><div class="tool-cta">See accuracy</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── MAYA · ELITE ─────────── -->
+<section class="journey elite-bg" id="maya">
+  <div class="journey-head">
+    <div class="journey-portrait">
+      <div class="portrait-tier-label">// ELITE · P5 RECRUIT</div>
+      <div class="portrait-name">Maya.</div>
+      <div class="portrait-frame">16. Multiple P5 offers on the table. Big jump coming. Has a clear archetype but doesn't know which programs are the fit.</div>
+      <div class="portrait-stat-row">
+        <div class="portrait-stat">PATHWAY<strong>P5 → pro</strong></div>
+        <div class="portrait-stat">ANCHOR<strong>Plummer arc</strong></div>
+        <div class="portrait-stat">VOICE<strong>#2 of 16</strong></div>
+      </div>
+    </div>
+    <div class="journey-narrative-block">
+      <div class="journey-eyebrow">// JOURNEY 02</div>
+      <h2 class="journey-h">See who you play like.<br><span class="serif">See where they went. See where you're going.</span></h2>
+      <p class="journey-lede">You're not invisible. You're not yet a household name. You're in the most important development zone in your career — and the decisions you make in the next 12 months shape everything. Most recruiting tools throw rankings at you. FieldCheck throws <strong style="color:var(--text)">archetype comparisons</strong>, <strong style="color:var(--text)">progression trajectories</strong>, and <strong style="color:var(--text)">pathway maps</strong>. Use the same toolkit P5 coaches use.</p>
+    </div>
+  </div>
+
+  <div class="psr">
+    <div class="psr-card psr-pain">
+      <div class="psr-label">// WHAT'S BROKEN</div>
+      <div class="psr-h">Recruiting hype doesn't equal recruiting clarity.</div>
+      <p class="psr-body">The rankings sites tell you you're top-50. Your club coach says you'll be a star. Five different P5 programs say you'll start as a freshman. Nobody is telling you <strong>which program is actually the development fit</strong> — and which program is just trying to land you for their roster.</p>
+    </div>
+    <div class="psr-card psr-solution">
+      <div class="psr-label">// WHAT FIELDCHECK GIVES YOU</div>
+      <div class="psr-h">Archetype matches, real trajectories, real pathways.</div>
+      <p class="psr-body">The <strong>Archetype Similarity engine</strong> shows you which past ELITE recruits play like you. The <strong>Progression engine</strong> shows you what their actual 4-year trajectory looked like. The <strong>Pathway tool</strong> maps the realistic next 12, 24, 48 months. Every output cites the methodology.</p>
+    </div>
+  </div>
+
+  <div class="hero-moment">
+    <div class="hero-moment-eyebrow">// THE MOMENT</div>
+    <p class="hero-moment-text">"I saw three other players who play exactly like me. I saw which programs they chose. I saw <span class="accent">what actually happened to them over four years.</span> The recruiting hype became real decisions I could make with my eyes open."</p>
+  </div>
+
+  <div class="tools">
+    <div class="tools-h">// YOUR TOOLS</div>
+    <div class="tools-grid">
+      <a href="/position-fit" class="tool"><div class="tool-name">Position-Fit Oracle</div><div class="tool-desc">Are you really an OH? Or an opposite in disguise? Find out.</div><div class="tool-cta">Run oracle</div></a>
+      <a href="/m/maya-rodriguez-elite-p5-recruit" class="tool"><div class="tool-name">Archetype Similarity</div><div class="tool-desc">Top 5 players who play like you. With outcomes.</div><div class="tool-cta">See matches</div></a>
+      <a href="/coaches" class="tool"><div class="tool-name">Coach Culture</div><div class="tool-desc">28 coaches scored. Development, retention, honesty. No leaderboard.</div><div class="tool-cta">Explore coaches</div></a>
+      <a href="/pathway" class="tool"><div class="tool-name">Realistic Pathway</div><div class="tool-desc">12, 24, 48-month plans tied to your archetype + budget.</div><div class="tool-cta">Build pathway</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── KAYLA · PROSPECT ─────────── -->
+<section class="journey prospect-bg" id="kayla">
+  <div class="journey-head">
+    <div class="journey-portrait">
+      <div class="portrait-tier-label">// PROSPECT · UNRANKED</div>
+      <div class="portrait-name">Kayla.</div>
+      <div class="portrait-frame">15. Defensive specialist with elite ball control. Doesn't show up on any ranking. Played out-of-position her whole HS career as a "small OH."</div>
+      <div class="portrait-stat-row">
+        <div class="portrait-stat">PATHWAY<strong>D1 libero</strong></div>
+        <div class="portrait-stat">ANCHOR<strong>Wong-Orantes arc</strong></div>
+        <div class="portrait-stat">VOICE<strong>#3 of 16</strong></div>
+      </div>
+    </div>
+    <div class="journey-narrative-block">
+      <div class="journey-eyebrow">// JOURNEY 03</div>
+      <h2 class="journey-h">The rankings missed you.<br><span class="serif">We see you. The system is built to find you.</span></h2>
+      <p class="journey-lede">You play a real position. You have real skills. The industry treats you as a footnote because you don't fit the rankings template. Every other site asks you to <strong style="color:var(--text)">pay to be visible</strong>. FieldCheck inverts the entire model — submit your profile in 90 seconds, and the system actively works to find you.</p>
+    </div>
+  </div>
+
+  <div class="psr">
+    <div class="psr-card psr-pain">
+      <div class="psr-label">// WHAT'S BROKEN</div>
+      <div class="psr-h">Discovery is paywalled. Rankings are political.</div>
+      <p class="psr-body">The recruiting industry hides you behind paywalls. Rankings reward club affiliation and tournament exposure, not skill. Your high school coach lists you as an OH because that's what your roster needs — even though you've been a textbook libero since you were 12.</p>
+    </div>
+    <div class="psr-card psr-solution">
+      <div class="psr-label">// WHAT FIELDCHECK GIVES YOU</div>
+      <div class="psr-h">Free public profile + a Position Oracle that sees what you actually are.</div>
+      <p class="psr-body">Submit via <strong>Add-Me</strong> in 90 seconds, no email gate, no PII overcollection. Your profile is live, public, free forever. The <strong>Position-Fit Oracle</strong> reads your measurements and stats the way college coaches do — and tells you what position you actually fit. Often it's not what your HS roster says.</p>
+    </div>
+  </div>
+
+  <div class="hero-moment">
+    <div class="hero-moment-eyebrow">// THE MOMENT</div>
+    <p class="hero-moment-text">"I submitted in 90 seconds. The oracle ran my numbers and told me <span class="accent">I'm a libero, not a small OH.</span> My profile went live. A D1 mid-major coach found me through the platform two weeks later. The rankings missed me. FieldCheck didn't."</p>
+  </div>
+
+  <div class="tools">
+    <div class="tools-h">// YOUR TOOLS</div>
+    <div class="tools-grid">
+      <a href="/add-me" class="tool"><div class="tool-name">Add Me</div><div class="tool-desc">90 seconds. No email. Public profile, free forever.</div><div class="tool-cta">Submit profile</div></a>
+      <a href="/position-fit" class="tool"><div class="tool-name">Position-Fit Oracle</div><div class="tool-desc">What position are you actually? The oracle reads the numbers like coaches do.</div><div class="tool-cta">Run oracle</div></a>
+      <a href="/pathway" class="tool"><div class="tool-name">Realistic Pathway</div><div class="tool-desc">D1, D2, D3, NAIA, juco — real options based on your real archetype.</div><div class="tool-cta">Build pathway</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── OLIVIA · STAR ─────────── -->
+<section class="journey star-bg" id="olivia">
+  <div class="journey-head">
+    <div class="journey-portrait">
+      <div class="portrait-tier-label">// STAR · POST-GRAD PRO</div>
+      <div class="portrait-name">Olivia.</div>
+      <div class="portrait-frame">22. Just graduated from a strong P5 program. Decent senior season. Wants to play professionally. Has no idea which overseas league is the right starting point.</div>
+      <div class="portrait-stat-row">
+        <div class="portrait-stat">PATHWAY<strong>Italy A2 → A1</strong></div>
+        <div class="portrait-stat">ANCHOR<strong>Stivrins arc</strong></div>
+        <div class="portrait-stat">VOICE<strong>#4 of 16</strong></div>
+      </div>
+    </div>
+    <div class="journey-narrative-block">
+      <div class="journey-eyebrow">// JOURNEY 04</div>
+      <h2 class="journey-h">The road doesn't end at graduation.<br><span class="serif">Someone built the map.</span></h2>
+      <p class="journey-lede">College is over. The recruiting industry forgets about you the day after graduation. Agents start calling — most of them you've never heard of. You don't know if a $40K rookie contract in Germany is great or terrible. You don't know if you should sign with LOVB at home or chase the Italian A2 promotion path. <strong style="color:var(--text)">Nobody built this map. Until now.</strong></p>
+    </div>
+  </div>
+
+  <div class="psr">
+    <div class="psr-card psr-pain">
+      <div class="psr-label">// WHAT'S BROKEN</div>
+      <div class="psr-h">Post-college is a black box.</div>
+      <p class="psr-body">Agents tell you what they're paid to tell you. Former teammates tell you what worked for them — which may not apply to you. Recruiting sites have stopped covering you the moment your eligibility expired. The most important career decisions of your professional life are happening with no data infrastructure to support them.</p>
+    </div>
+    <div class="psr-card psr-solution">
+      <div class="psr-label">// WHAT FIELDCHECK GIVES YOU</div>
+      <div class="psr-h">Post-College Compass + Alumni-in-Pro tracker.</div>
+      <p class="psr-body">The <strong>Post-College Compass</strong> scores 7 pro leagues on 6 dimensions (compensation floor, ceiling, competitive density, Olympic pipeline strength, career longevity, visa friction). The <strong>Alumni-in-Pro tracker</strong> shows you exactly where players from your college program landed — and how their careers unfolded. Decisions you can make with eyes open.</p>
+    </div>
+  </div>
+
+  <div class="hero-moment">
+    <div class="hero-moment-eyebrow">// THE MOMENT</div>
+    <p class="hero-moment-text">"I saw the real numbers — Italy A2 rookies at $25-60K, A1 rookies at $80-180K, Turkey ceiling at $1M for stars. I saw where my Cal teammates went. I picked Italy A2 because of <span class="accent">the promotion pathway the data showed me.</span> The road kept going. FieldCheck mapped it."</p>
+  </div>
+
+  <div class="tools">
+    <div class="tools-h">// YOUR TOOLS</div>
+    <div class="tools-grid">
+      <a href="/lovb" class="tool"><div class="tool-name">Pro League Audit</div><div class="tool-desc">7 pro leagues scored. Compensation, density, Olympic pipeline. No agent spin.</div><div class="tool-cta">Compare leagues</div></a>
+      <a href="/m/jordan-tanaka-cal-womens-volleyball" class="tool"><div class="tool-name">Alumni Tracker</div><div class="tool-desc">Where players from your program landed. Where they ended up.</div><div class="tool-cta">See alumni</div></a>
+      <a href="/voices" class="tool"><div class="tool-name">Voices</div><div class="tool-desc">Mei-Lin Tanaka. Other STAR Voices. They've walked this.</div><div class="tool-cta">Meet voices</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── PROMISE ─────────── -->
+<section class="promise">
+  <div class="promise-eyebrow">// THE PROMISE</div>
+  <h2 class="promise-h">FieldCheck wins<br><span class="serif">when you do.</span></h2>
+  <p class="promise-body">Free profiles. Forever. No paywalls. No ads. No PII resale. No engagement-bait. No rankings disguised as rankings. The coaches pay us so you don't have to. Whatever tier you're in, whatever sport you play, whatever level you're aiming for — we built this for you. That's the whole point.</p>
+  <div class="promise-actions">
+    <a href="/add-me" class="btn-primary">Add me to the corpus →</a>
+    <a href="/moat" class="btn-ghost">What we will never build</a>
+  </div>
+</section>
+
+<footer>
+  Build · LIVE IN PRODUCTION · <a href="/">Home</a> · <a href="/voices">Voices</a> · <a href="/coaches">Culture</a> · <a href="/accuracy">Track Record</a> · <a href="/moat">Moat</a> · <a href="/about">About</a>
+</footer>
+</body>
+</html>

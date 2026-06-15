@@ -1,0 +1,39 @@
+# secrets — never commit
+.dev.vars
+.env
+.env.*
+*.secret
+# wrangler local state
+.wrangler/
+# big freeze tarballs + backups — local rollback only, not source
+*.tar.gz
+*.tar.gz.*
+*.replaced.*
+freezes/
+backups/
+# all backup/stale files
+*.bak
+*.bak2
+*.bak3
+*.bak4
+*.bak5
+*.s2c-bak
+*.s2d-bak
+*.bak-*
+*.bak.*
+*.pre-*
+*.backup-*
+# dead/duplicate snapshots — NOT live source
+frontend-broken-1711/
+frontend-60-crawled-1735/
+worker-PRE_*.js
+worker-v022.30.js
+worker.finepass.js
+worker.js.pre-*
+frontend/worker.js.pre-*
+# regenerable battery dumps (huge)
+fc-batch-test-results-v2/
+frontend/fc-batch-test-results-v2/
+# deps + os junk
+node_modules/
+.DS_Store

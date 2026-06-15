@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Moat · FieldCheck</title>
+  <meta name="description" content="FieldCheck's data moat at a glance: curated profiles, outcomes corpus, verdict logging, calibration accuracy, drift detection.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=General+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --text: #f0eee7;
+      --text-2: #b8b5ad;
+      --text-3: #7d7a72;
+      --gold: #d4af37;
+      --gold-light: #e4c75e;
+      --moss: #6a8359;
+      --glass: rgba(255, 255, 255, 0.04);
+      --glass-edge: rgba(255, 255, 255, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "General Sans", -apple-system, system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      min-height: 100vh;
+      padding: 48px 24px 96px;
+    }
+    .container { max-width: 1080px; margin: 0 auto; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 36px; }
+    .topbar a {
+      color: var(--text-2);
+      text-decoration: none;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid var(--glass-edge);
+      padding: 8px 14px;
+      border-radius: 6px;
+    }
+    .topbar a:hover { color: var(--text); border-color: var(--text-2); }
+    .wordmark {
+      font-family: "Anton", sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+    .wordmark .gold { color: var(--gold); }
+
+    h1 {
+      font-family: "Anton", sans-serif;
+      font-size: clamp(48px, 8vw, 100px);
+      line-height: 0.95;
+      letter-spacing: -0.012em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h1 .serif {
+      font-family: "Instrument Serif", serif;
+      font-style: italic;
+      text-transform: none;
+      letter-spacing: -0.02em;
+      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      line-height: 1.0;
+    }
+    .sub {
+      font-size: clamp(18px, 2vw, 24px);
+      color: var(--text-2);
+      margin-bottom: 56px;
+      max-width: 760px;
+      line-height: 1.42;
+    }
+    .sub .accent { color: var(--gold); font-style: italic; font-family: "Instrument Serif", serif; }
+
+    .section { margin-bottom: 64px; }
+    .section-h {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: "Anton", sans-serif;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 0.96;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .section-title .serif {
+      font-family: "Instrument Serif", serif;
+      font-style: italic;
+      text-transform: none;
+      color: var(--gold);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .cell {
+      padding: 22px 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-edge);
+      border-radius: 10px;
+    }
+    .cell-num {
+      font-family: "Anton", sans-serif;
+      font-size: 44px;
+      letter-spacing: -0.01em;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .cell-num.small { font-size: 28px; }
+    .cell-label {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-3);
+    }
+    .cell-sub {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+    .pill-live { background: rgba(106, 131, 89, 0.16); border: 1px solid rgba(106, 131, 89, 0.45); color: #8ea876; }
+    .pill-queued { background: rgba(212, 175, 55, 0.10); border: 1px solid rgba(212, 175, 55, 0.35); color: var(--gold); }
+    .pill-shipped { background: rgba(106, 131, 89, 0.16); border: 1px solid rgba(106, 131, 89, 0.45); color: #8ea876; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--glass);
+      border: 1px solid var(--glass-edge);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--glass-edge);
+      font-size: 14px;
+    }
+    th {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-3);
+      background: rgba(255,255,255,0.02);
+    }
+    tr:last-child td { border-bottom: none; }
+    td.num { font-family: "JetBrains Mono", monospace; color: var(--gold); }
+    td.sport { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--text-2); }
+
+    .ml-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .ml-cell {
+      padding: 18px;
+      background: var(--glass);
+      border: 1px solid var(--glass-edge);
+      border-radius: 10px;
+    }
+    .ml-cell-name {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .ml-cell-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.45;
+    }
+
+    .footnote {
+      font-size: 13px;
+      color: var(--text-3);
+      line-height: 1.55;
+      padding: 24px;
+      background: rgba(212, 175, 55, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 10px;
+      margin-top: 24px;
+    }
+    .footnote strong { color: var(--gold); }
+
+    .loading {
+      padding: 64px;
+      text-align: center;
+      color: var(--text-3);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 720px) {
+      body { padding: 24px 16px 64px; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      th, td { padding: 10px 8px; font-size: 12px; }
+      .cell-num { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+
+    <h1>The moat,<br><span class="serif">measured.</span></h1>
+    <p class="sub">
+      What lives inside the trust engine — <span class="accent">curated profiles, verified outcomes, calibration signals, drift detection</span>. Updated live from the production database.
+    </p>
+
+    <div id="content" class="loading">Loading moat status...</div>
+
+    <div class="footnote">
+      <strong>How this updates.</strong> Every number on this page reflects the live state of the production database, fetched from <code>/api/admin/moat-status</code>. Curated profile counts increment with every release. Outcomes corpus increments with every draft. Verdict log size increments with every search. The D1 migration plan is at <a href="/about" style="color: var(--gold);">/about</a>.
+    </div>
+  </div>
+
+  <script>
+    const PROXY = 'https://fieldcheck-proxy.sridhar-nallani.workers.dev/api';
+
+    function el(tag, attrs = {}, ...children) {
+      const e = document.createElement(tag);
+      for (const [k, v] of Object.entries(attrs)) {
+        if (k === 'class') e.className = v;
+        else if (k === 'html') e.innerHTML = v;
+        else e.setAttribute(k, v);
+      }
+      for (const c of children) {
+        if (typeof c === 'string') e.appendChild(document.createTextNode(c));
+        else if (c) e.appendChild(c);
+      }
+      return e;
+    }
+
+    function sportLabel(s) {
+      return ({
+        'football': 'FOOTBALL',
+        'mens-basketball': 'M-BASKETBALL',
+        'womens-basketball': 'W-BASKETBALL',
+        'baseball': 'BASEBALL',
+        'womens-volleyball': 'W-VOLLEYBALL',
+        'tennis': 'TENNIS',
+        'mens-soccer': 'M-SOCCER',
+        'womens-soccer': 'W-SOCCER'
+      })[s] || (s || '').toUpperCase();
+    }
+
+    function load() {
+      fetch(PROXY + '/admin/moat-status')
+        .then(r => r.json())
+        .then(data => {
+          if (!data.ok || !data.moat) { showError(); return; }
+          const m = data.moat;
+          const root = document.getElementById('content');
+          root.className = '';
+          root.innerHTML = '';
+
+          // ────────────── CURATED DB SECTION ──────────────
+          const dbSec = el('section', { class: 'section' });
+          dbSec.appendChild(el('div', { class: 'section-h' }, '// Curated database'));
+          dbSec.appendChild(el('h2', { class: 'section-title', html: 'Every profile <span class="serif">hand-earned.</span>' }));
+          const dbGrid = el('div', { class: 'grid' });
+          dbGrid.appendChild(el('div', { class: 'cell' },
+            el('div', { class: 'cell-num' }, String(m.curated_db.total_profiles)),
+            el('div', { class: 'cell-label' }, 'Total profiles')));
+          dbGrid.appendChild(el('div', { class: 'cell' },
+            el('div', { class: 'cell-num small' }, (m.curated_db.mean_completeness != null ? m.curated_db.mean_completeness + '%' : '—')),
+            el('div', { class: 'cell-label' }, 'Mean completeness'),
+            el('div', { class: 'cell-sub' }, m.curated_db.ready_for_d1 ? 'D1-migration ready' : 'Approaching D1-ready')));
+          dbGrid.appendChild(el('div', { class: 'cell' },
+            el('div', { class: 'cell-num small' }, Object.keys(m.curated_db.by_sport || {}).length + ' sports'),
+            el('div', { class: 'cell-label' }, 'Coverage breadth')));
+          dbSec.appendChild(dbGrid);
+
+          // Sport breakdown table
+          const sportBreak = el('table');
+          sportBreak.style.marginTop = '24px';
+          sportBreak.appendChild(el('thead', {}, el('tr', {},
+            el('th', {}, 'Sport'), el('th', {}, 'Profiles'))));
+          const sBody = el('tbody');
+          const sorted = Object.entries(m.curated_db.by_sport || {}).sort((a, b) => b[1] - a[1]);
+          for (const [s, n] of sorted) {
+            sBody.appendChild(el('tr', {},
+              el('td', { class: 'sport' }, sportLabel(s)),
+              el('td', { class: 'num' }, String(n))));
+          }
+          sportBreak.appendChild(sBody);
+          dbSec.appendChild(sportBreak);
+          root.appendChild(dbSec);
+
+          // ────────────── OUTCOMES SECTION ──────────────
+          const outSec = el('section', { class: 'section' });
+          outSec.appendChild(el('div', { class: 'section-h' }, '// Outcomes corpus'));
+          outSec.appendChild(el('h2', { class: 'section-title', html: 'Every read, <span class="serif">retroactively measured.</span>' }));
+          const oGrid = el('div', { class: 'grid' });
+          oGrid.appendChild(el('div', { class: 'cell' },
+            el('div', { class: 'cell-num' }, String(m.outcomes_corpus.total)),
+            el('div', { class: 'cell-label' }, 'Verified outcomes')));
+          const yr = m.outcomes_corpus.year_range || {};
+          oGrid.appendChild(el('div', { class: 'cell' },
+            el('div', { class: 'cell-num small' }, (yr.earliest != null && yr.latest != null) ? (yr.earliest + '–' + yr.latest) : '—'),
+            el('div', { class: 'cell-label' }, 'Year range')));
+          oGrid.appendChild(el('div', { class: 'cell' },
+            el('div', { class: 'cell-num small' }, Object.keys(m.outcomes_corpus.by_sport || {}).length + ' sports'),
+            el('div', { class: 'cell-label' }, 'Sports anchored')));
+          outSec.appendChild(oGrid);
+
+          const outBreak = el('table');
+          outBreak.style.marginTop = '24px';
+          outBreak.appendChild(el('thead', {}, el('tr', {},
+            el('th', {}, 'Sport'), el('th', {}, 'Outcomes'))));
+          const oBody = el('tbody');
+          const osorted = Object.entries(m.outcomes_corpus.by_sport || {}).sort((a, b) => b[1] - a[1]);
+          for (const [s, n] of osorted) {
+            oBody.appendChild(el('tr', {},
+              el('td', { class: 'sport' }, sportLabel(s)),
+              el('td', { class: 'num' }, String(n))));
+          }
+          outBreak.appendChild(oBody);
+          outSec.appendChild(outBreak);
+          root.appendChild(outSec);
+
+          // ────────────── ML TRAINING SIGNALS ──────────────
+          const mlSec = el('section', { class: 'section' });
+          mlSec.appendChild(el('div', { class: 'section-h' }, '// ML training signals'));
+          mlSec.appendChild(el('h2', { class: 'section-title', html: 'The engine <span class="serif">learns in public.</span>' }));
+          const mlGrid = el('div', { class: 'ml-grid' });
+          const signals = m.ml_training_signals || {};
+          const signalsList = [
+            { k: 'verdict_logging_live', label: 'Verdict logging', desc: 'Every verdict served writes a record to KV. The ML training corpus accumulates on every search.' },
+            { k: 'nil_band_tracking_live', label: 'NIL band tracking', desc: 'Every NIL band prediction logged with inputs. Future recalibration against actual disclosures.' },
+            { k: 'accuracy_endpoint', label: 'Accuracy engine', desc: 'Public /accuracy page renders tier-by-tier prediction accuracy retroactively.' },
+            { k: 'calibration_drift_endpoint', label: 'Drift detection', desc: 'Flags where pre-draft tier diverges from actual outcome. Training signals surfaced.' },
+            { k: 'ingestion_endpoint', label: 'Outcomes ingestion', desc: 'Real-time outcome capture. Drafts as they happen, no redeploy.' }
+          ];
+          for (const sig of signalsList) {
+            const cell = el('div', { class: 'ml-cell' });
+            cell.appendChild(el('div', { class: 'ml-cell-name' }, sig.label.toUpperCase()));
+            cell.appendChild(el('div', { class: 'ml-cell-desc' }, sig.desc));
+            const live = signals[sig.k];
+            cell.appendChild(el('div', { class: 'pill ' + (live ? 'pill-live' : 'pill-queued') }, live ? '● LIVE' : '○ QUEUED'));
+            mlGrid.appendChild(cell);
+          }
+          mlSec.appendChild(mlGrid);
+          root.appendChild(mlSec);
+
+          // ────────────── D1 MIGRATION STATUS ──────────────
+          const d1Sec = el('section', { class: 'section' });
+          d1Sec.appendChild(el('div', { class: 'section-h' }, '// Deeper moat'));
+          d1Sec.appendChild(el('h2', { class: 'section-title', html: 'What unlocks <span class="serif">at D1.</span>' }));
+          const d1Cell = el('div', { class: 'ml-cell' });
+          d1Cell.style.gridColumn = '1 / -1';
+          d1Cell.appendChild(el('div', { class: 'ml-cell-name' }, 'D1 MIGRATION'));
+          d1Cell.appendChild(el('div', { class: 'ml-cell-desc' },
+            'When the D1 migration ships, the JS const profile store and the KV verdict log collapse into a relational corpus. SQL queries unlock real ML: tier prior recalibration, drift event timelines, NIL band regression against actual disclosures, multi-year trajectory rollups.'));
+          const status = m.d1_migration && m.d1_migration.status === 'awaiting_greenlight' ? 'queued' : 'shipped';
+          d1Cell.appendChild(el('div', { class: 'pill ' + (status === 'shipped' ? 'pill-shipped' : 'pill-queued') },
+            status === 'shipped' ? '● SHIPPED' : '○ AWAITING GREENLIGHT'));
+          d1Sec.appendChild(d1Cell);
+          root.appendChild(d1Sec);
+        })
+        .catch(err => { console.error('moat load failed:', err); showError(); });
+    }
+
+    function showError() {
+      document.getElementById('content').innerHTML =
+        '<div class="loading">Could not load moat status right now. Try refreshing.</div>';
+    }
+
+    load();
+  </script>
+</body>
+</html>

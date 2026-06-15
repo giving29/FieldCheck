@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Big Ten Athletic Intelligence · FieldCheck IQ</title>
+<meta name="description" content="Big Ten athletic intelligence: Michigan, Ohio State, Penn State, USC, Oregon. Roster composites, recruit class composites, tier-jump alerts.">
+<meta property="og:title" content="Big Ten · FieldCheck IQ">
+<meta property="og:description" content="Big Ten athletic intelligence: Michigan, Ohio State, Penn State, USC, Oregon. Roster composites, recruit class composites, tier-jump alerts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060A;--bg1:#100F14;--ge:rgba(255,252,245,.09);--ge2:rgba(255,252,245,.05);--t:#F5F1E8;--t2:rgba(245,241,232,.72);--t3:rgba(245,241,232,.45);--t4:rgba(245,241,232,.25);--gold:#F5B800;--golds:rgba(245,184,0,.10);--goldl:rgba(245,184,0,.25);--moss:#6BAA5A;--teal:#4EC9C0;--violet:#8B5CF6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 30% at 50% 0%,rgba(245,184,0,.04) 0%,transparent 60%),linear-gradient(to bottom,var(--bg) 0%,var(--bg1) 100%)}
+.wrap{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding:60px 30px 100px}
+.brand-row{display:flex;align-items:center;gap:18px;margin-bottom:40px}
+.brand{font-family:'Anton',sans-serif;font-size:22px;text-decoration:none;color:var(--t)}
+.brand b{color:var(--gold)}
+.brand .iq{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2.4px;color:rgba(245,184,0,.7);margin-left:6px}
+.back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none}
+.back:hover{color:var(--gold)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+h1{font-family:'Anton',sans-serif;font-size:clamp(50px,7vw,92px);letter-spacing:-.014em;line-height:.95;margin-bottom:18px}
+h1 .em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--gold)}
+.lede{font-size:18px;color:var(--t2);max-width:760px;margin-bottom:30px}
+.lede b{color:var(--t)}
+.stat-row{display:flex;gap:1px;background:var(--ge);border:1px solid var(--ge);border-radius:12px;overflow:hidden;margin:24px 0 40px}
+.stat{flex:1;background:var(--bg1);padding:18px 16px;text-align:center}
+.stat .n{font-family:'Anton',sans-serif;font-size:32px;letter-spacing:-.012em;color:var(--gold);line-height:1}
+.stat .l{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-top:5px}
+h2{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:-.012em;margin:48px 0 14px;padding-top:24px;border-top:1px solid var(--ge);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+h2:first-of-type{border-top:none;padding-top:0;margin-top:0}
+.school-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:20px 0 30px}
+.school-card{padding:20px;border:1px solid var(--ge);border-radius:12px;background:rgba(255,252,245,.015)}
+.school-name{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:-.005em;margin-bottom:6px}
+.school-meta{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t3);letter-spacing:.6px;text-transform:uppercase;margin-bottom:12px}
+.school-athletes{display:flex;flex-direction:column;gap:6px;font-size:13px}
+.school-athletes a{display:flex;justify-content:space-between;align-items:center;color:var(--t2);text-decoration:none;padding:5px 0;border-bottom:1px dashed var(--ge2)}
+.school-athletes a:last-child{border-bottom:none}
+.school-athletes a:hover{color:var(--gold)}
+.school-athletes .ath-name{font-weight:500}
+.school-athletes .ath-comp{font-family:'JetBrains Mono',monospace;color:var(--gold);font-weight:700;font-size:12px}
+.callout{margin:30px 0;padding:24px 28px;border-radius:12px;background:var(--golds);border:1px solid var(--goldl);border-left:3px solid var(--gold);font-size:14.5px;line-height:1.6;color:var(--t)}
+.callout .label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 28px}
+.actions a{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);background:var(--golds);border:1px solid var(--goldl);padding:10px 18px;border-radius:9999px;text-decoration:none;transition:background .15s}
+.actions a:hover{background:rgba(245,184,0,.18)}
+.footer{margin-top:80px;padding-top:30px;border-top:1px solid var(--ge);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t4);letter-spacing:.6px}
+.footer a{color:var(--gold);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="wrap">
+  <div class="brand-row">
+    <a class="brand" href="/"><b>Field</b>Check<span class="iq">IQ</span></a>
+    <a class="back" href="/">← all players</a>
+  </div>
+  <div class="eyebrow">Big Ten · conference rollup · all sports</div>
+  <h1><span class="em">Big Ten</span> intelligence.</h1>
+  <p class="lede">The conference whose footprint changed dramatically with USC + Oregon + UCLA + Washington joining in 2024. <b>Full coast-to-coast rollup</b> with refreshed roster grades for the 18-team modern Big Ten.</p>
+  <div class="stat-row"><div class="stat"><div class="n">18</div><div class="l">programs</div></div><div class="stat"><div class="n">163</div><div class="l">graded athletes</div></div><div class="stat"><div class="n">34</div><div class="l">composite-leaders</div></div><div class="stat"><div class="n">14</div><div class="l">tier-jumps tracked</div></div></div>
+  
+  <h2>Football programs <span style="font-family:'JetBrains Mono';font-size:10px;color:var(--t3);font-weight:400;letter-spacing:1.4px;text-transform:uppercase;">2026 class</span></h2>
+  <div class="school-grid"><div class="school-card"><div class="school-name">Michigan Wolverines</div><div class="school-meta">Ann Arbor · Big Ten</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Bryce+Underwood&sport=football"><span class="ath-name">Bryce Underwood</span><span class="ath-comp">6.7</span></a><a href="/fieldcheck-verdict.html?q=Andrew+Marsh&sport=football"><span class="ath-name">Andrew Marsh</span><span class="ath-comp">5.4</span></a></div></div><div class="school-card"><div class="school-name">Ohio State Buckeyes</div><div class="school-meta">Columbus · Big Ten</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Will+Howard&sport=football"><span class="ath-name">Will Howard</span><span class="ath-comp">6.8</span></a><a href="/fieldcheck-verdict.html?q=Jeremiah+Smith&sport=football"><span class="ath-name">Jeremiah Smith</span><span class="ath-comp">7.4</span></a></div></div><div class="school-card"><div class="school-name">Penn State Nittany Lions</div><div class="school-meta">State College · Big Ten</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Drew+Allar&sport=football"><span class="ath-name">Drew Allar</span><span class="ath-comp">7.0</span></a><a href="/fieldcheck-verdict.html?q=Nicholas+Singleton&sport=football"><span class="ath-name">Nicholas Singleton</span><span class="ath-comp">6.9</span></a></div></div><div class="school-card"><div class="school-name">USC Trojans</div><div class="school-meta">Los Angeles · Big Ten</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Husan+Longstreet&sport=football"><span class="ath-name">Husan Longstreet</span><span class="ath-comp">5.8</span></a><a href="/fieldcheck-verdict.html?q=Jayden+Maiava&sport=football"><span class="ath-name">Jayden Maiava</span><span class="ath-comp">6.4</span></a></div></div><div class="school-card"><div class="school-name">Oregon Ducks</div><div class="school-meta">Eugene · Big Ten</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Dante+Moore&sport=football"><span class="ath-name">Dante Moore</span><span class="ath-comp">6.5</span></a><a href="/fieldcheck-verdict.html?q=Dakorien+Moore&sport=football"><span class="ath-name">Dakorien Moore</span><span class="ath-comp">6.0</span></a></div></div></div>
+
+  <h2>Men's basketball <span style="font-family:'JetBrains Mono';font-size:10px;color:var(--t3);font-weight:400;letter-spacing:1.4px;text-transform:uppercase;">2026-27 season</span></h2>
+  <div class="school-grid"><div class="school-card"><div class="school-name">Purdue Boilermakers</div><div class="school-meta">West Lafayette · Big Ten</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Braden+Smith&sport=mens-basketball"><span class="ath-name">Braden Smith</span><span class="ath-comp">7.6</span></a><a href="/fieldcheck-verdict.html?q=Trey+Kaufman-Renn&sport=mens-basketball"><span class="ath-name">Trey Kaufman-Renn</span><span class="ath-comp">7.2</span></a></div></div><div class="school-card"><div class="school-name">Michigan State Spartans</div><div class="school-meta">East Lansing · Big Ten</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Jase+Richardson&sport=mens-basketball"><span class="ath-name">Jase Richardson</span><span class="ath-comp">7.2</span></a><a href="/fieldcheck-verdict.html?q=Tre+Holloman&sport=mens-basketball"><span class="ath-name">Tre Holloman</span><span class="ath-comp">6.7</span></a></div></div><div class="school-card"><div class="school-name">UCLA Bruins</div><div class="school-meta">Los Angeles · Big Ten</div><div class="school-athletes"><a href="/fieldcheck-verdict.html?q=Tyler+Bilodeau&sport=mens-basketball"><span class="ath-name">Tyler Bilodeau</span><span class="ath-comp">7.0</span></a><a href="/fieldcheck-verdict.html?q=Eric+Dailey+Jr.&sport=mens-basketball"><span class="ath-name">Eric Dailey Jr.</span><span class="ath-comp">6.8</span></a></div></div></div>
+
+  <div class="callout">
+    <span class="label">The realignment effect</span>
+    USC, Oregon, UCLA, and Washington joining the Big Ten changed conference composite distributions materially. <b>The conference's top-25 composite has tightened</b>; depth advantage now stretches truly coast-to-coast. Watch the tier-jump alerts on the watchlist as these programs cross-pollinate recruiting.
+  </div>
+
+  <div class="footer">
+    FieldCheck IQ · conference rollup · refreshed June 9 2026 · <a href="/">home</a> · <a href="/coverage">coverage map</a> · <a href="/methodology">methodology</a>
+  </div>
+</div>
+</body>
+</html>

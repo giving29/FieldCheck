@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent transparency · FieldCheck IQ</title>
+<meta name="description" content="The exact system prompts the FieldCheck AI agent operates under. No black box. See the rules, the constraints, the doctrine - the same words the agent reads before every answer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0d14;
+  --bg-card: #16141e;
+  --bg-card-hover: #1c1a28;
+  --border: rgba(245, 241, 232, 0.08);
+  --border-strong: rgba(245, 241, 232, 0.15);
+  --text: #f5f1e8;
+  --text-muted: rgba(245, 241, 232, 0.55);
+  --text-faint: rgba(245, 241, 232, 0.35);
+  --gold: #f0c66e;
+  --gold-dim: #d49b48;
+  --moss: #7fb069;
+  --orange: #e08e45;
+  --red: #d4603c;
+  --code-bg: #0a0810;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 980px; margin: 0 auto; padding: 48px 24px 80px; }
+
+/* Header */
+.hd { border-bottom: 1px solid var(--border); padding-bottom: 32px; margin-bottom: 48px; }
+.hd .tag {
+  display: inline-block; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold); background: rgba(245, 184, 0, 0.08);
+  border: 1px solid rgba(245, 184, 0, 0.22);
+  padding: 5px 12px; border-radius: 9999px; margin-bottom: 20px;
+}
+.hd h1 {
+  font-family: 'Anton', sans-serif; font-weight: 400;
+  font-size: clamp(36px, 6vw, 56px);
+  letter-spacing: -0.015em; line-height: 1.05;
+  margin-bottom: 16px;
+}
+.hd p {
+  font-size: 17px; line-height: 1.55; color: var(--text-muted);
+  max-width: 720px;
+}
+.hd p b { color: var(--text); font-weight: 600; }
+
+/* Stats strip */
+.stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--border); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; margin: 32px 0;
+}
+.stat {
+  background: var(--bg-card); padding: 20px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.stat .v {
+  font-family: 'Anton', sans-serif; font-size: 32px;
+  letter-spacing: -0.005em; line-height: 1; color: var(--gold);
+}
+.stat .l {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+@media (max-width: 600px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Section */
+.sec { margin-bottom: 56px; }
+.sec h2 {
+  font-family: 'Anton', sans-serif; font-weight: 400;
+  font-size: 28px; letter-spacing: -0.005em;
+  margin-bottom: 8px;
+}
+.sec .sec-desc {
+  color: var(--text-muted); margin-bottom: 24px;
+  font-size: 15px; line-height: 1.55;
+}
+
+/* Prompt card */
+.prompt-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  margin-bottom: 20px;
+}
+.prompt-head {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 16px; flex-wrap: wrap;
+}
+.prompt-head .left { flex: 1; min-width: 200px; }
+.prompt-head .mode-name {
+  font-family: 'Anton', sans-serif; font-size: 20px;
+  letter-spacing: -0.005em; color: var(--text);
+  margin-bottom: 4px;
+}
+.prompt-head .mode-where {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: 0.08em; color: var(--text-faint);
+  text-transform: uppercase;
+}
+.prompt-head .try-btn {
+  background: rgba(245, 184, 0, 0.1);
+  border: 1px solid rgba(245, 184, 0, 0.3);
+  color: var(--gold); padding: 8px 16px;
+  border-radius: 9999px; font-size: 12px; font-weight: 600;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+  text-decoration: none; display: inline-block;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.prompt-head .try-btn:hover {
+  background: rgba(245, 184, 0, 0.18);
+  border-color: rgba(245, 184, 0, 0.5);
+}
+
+.prompt-body {
+  background: var(--code-bg);
+  padding: 20px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px; line-height: 1.7;
+  color: var(--text);
+  white-space: pre-wrap;
+  overflow-x: auto;
+  max-height: 360px;
+  overflow-y: auto;
+}
+.prompt-body::-webkit-scrollbar { width: 8px; height: 8px; }
+.prompt-body::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+
+.toggle {
+  padding: 12px 24px; background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  text-align: center; cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text-faint);
+}
+.toggle:hover { color: var(--gold); }
+
+/* Constraints panel */
+.constraints {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px 28px; margin: 24px 0;
+}
+.constraints h3 {
+  font-family: 'Anton', sans-serif; font-weight: 400;
+  font-size: 18px; margin-bottom: 16px; color: var(--gold);
+}
+.constraints ul { list-style: none; padding: 0; margin: 0; }
+.constraints li {
+  padding: 6px 0; padding-left: 24px; position: relative;
+  font-size: 14px; line-height: 1.6; color: var(--text-muted);
+}
+.constraints li::before {
+  content: ''; position: absolute; left: 0; top: 14px;
+  width: 12px; height: 1px; background: var(--gold);
+}
+.constraints li b { color: var(--text); font-weight: 600; }
+
+/* Cost transparency */
+.cost-row {
+  display: grid; grid-template-columns: 1fr auto; gap: 16px;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.cost-row:last-child { border-bottom: 0; }
+.cost-row .label { color: var(--text-muted); }
+.cost-row .val { font-family: 'JetBrains Mono', monospace; color: var(--gold); }
+
+/* Footer */
+.foot {
+  margin-top: 64px; padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 24px;
+  font-size: 13px; color: var(--text-faint);
+}
+.foot a { color: var(--text-muted); text-decoration: none; }
+.foot a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hd">
+    <span class="tag">FCBase60 · Phase 9.4 · Agent transparency</span>
+    <h1>The exact instructions our AI agent operates under.</h1>
+    <p>
+      Most AI products hide their system prompts. We publish ours. <b>Every word the FieldCheck agent reads before answering you</b> — the doctrine, the guardrails, the explicit DO and DO NOT rules. If you think the agent ever drifts, you can audit. If you want to know why it refuses certain questions, the answer is here.
+    </p>
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat">
+      <div class="v" id="stat-today">–</div>
+      <div class="l">Questions today</div>
+    </div>
+    <div class="stat">
+      <div class="v" id="stat-7d">–</div>
+      <div class="l">Last 7 days</div>
+    </div>
+    <div class="stat">
+      <div class="v" id="stat-30d">–</div>
+      <div class="l">Last 30 days</div>
+    </div>
+    <div class="stat">
+      <div class="v" id="stat-cost">–</div>
+      <div class="l">Cost (last 30d)</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>What the agent is</h2>
+    <p class="sec-desc">
+      Claude Haiku 4.5 (Anthropic), called via a Cloudflare Worker. Each visitor question goes through one of 5 mode-specific system prompts depending on which page they ask from. The agent has access to <b>only the athlete or page context</b> we pass it — no browsing, no live data, no memory of other visitors.
+    </p>
+  </div>
+
+  <div class="sec">
+    <h2>The 5 modes</h2>
+    <p class="sec-desc">
+      Each page that hosts the agent uses a different system prompt. Click <b>try</b> to test that mode on its native page.
+    </p>
+
+    <!-- Verdict mode -->
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <div class="left">
+          <div class="mode-name">Verdict mode</div>
+          <div class="mode-where">/fieldcheck-verdict.html · per-athlete · most-used</div>
+        </div>
+        <a href="/fieldcheck-verdict.html?q=Cooper+Flagg&sport=mens-basketball" class="try-btn">Try → Flagg</a>
+      </div>
+      <div class="prompt-body" id="p-verdict">Loading…</div>
+    </div>
+
+    <!-- Methodology mode -->
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <div class="left">
+          <div class="mode-name">Methodology mode</div>
+          <div class="mode-where">/methodology · general rules and explanations</div>
+        </div>
+        <a href="/methodology" class="try-btn">Try → methodology</a>
+      </div>
+      <div class="prompt-body" id="p-methodology">Loading…</div>
+    </div>
+
+    <!-- Predictions mode -->
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <div class="left">
+          <div class="mode-name">Predictions mode</div>
+          <div class="mode-where">/predictions · sealed ledger explainer</div>
+        </div>
+        <a href="/predictions" class="try-btn">Try → ledger</a>
+      </div>
+      <div class="prompt-body" id="p-predictions">Loading…</div>
+    </div>
+
+    <!-- Coverage mode -->
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <div class="left">
+          <div class="mode-name">Coverage mode</div>
+          <div class="mode-where">/coverage · scope and source transparency</div>
+        </div>
+        <a href="/coverage" class="try-btn">Try → coverage</a>
+      </div>
+      <div class="prompt-body" id="p-coverage">Loading…</div>
+    </div>
+
+    <!-- Comparison mode -->
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <div class="left">
+          <div class="mode-name">Comparison mode</div>
+          <div class="mode-where">/versus · cross-athlete analysis</div>
+        </div>
+        <a href="/versus?a=Cooper+Flagg&b=LeBron+James" class="try-btn">Try → Flagg vs LeBron</a>
+      </div>
+      <div class="prompt-body" id="p-comparison">Loading…</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Guardrails that apply across every mode</h2>
+    <div class="constraints">
+      <ul>
+        <li><b>Hard cap on output:</b> 1024 max tokens per answer (prevents runaway cost; ~2-3 paragraphs max).</li>
+        <li><b>Hard cap on input:</b> 500 chars per question. Anything longer is rejected with HTTP 400.</li>
+        <li><b>Rate limit:</b> 10 questions per IP per day. The 11th returns "rate limit exceeded" inline. Resets at midnight UTC.</li>
+        <li><b>No browsing.</b> No live data. No memory across sessions or across visitors.</li>
+        <li><b>localStorage history</b> only — last 3 Q&As per athlete on the visitor's own device. We never see it.</li>
+        <li><b>No advice.</b> The agent will refuse recruiting decisions, draft predictions in a betting sense, NIL valuations, contract speculation, and personal-life questions.</li>
+        <li><b>Refuses out-of-scope.</b> Methodology-page agent will not rate specific athletes. Predictions-page agent will not modify the ledger. Comparison-page agent will not pick a "winner" when composite gaps are under 0.3.</li>
+        <li><b>Sources are cited honestly.</b> When the agent has thin data, it says so. A fully-sourced PROSPECT is treated as more reliable than a thinly-sourced STAR.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Cost transparency</h2>
+    <p class="sec-desc">
+      Claude Haiku 4.5 pricing as of June 2026. We publish our spend so you can verify the agent isn't running up costs we'd later need to recover.
+    </p>
+    <div class="constraints">
+      <div class="cost-row"><span class="label">Per question (1024 max output + ~2K input)</span><span class="val" id="cost-per-q">~$0.003</span></div>
+      <div class="cost-row"><span class="label">Cost today (so far)</span><span class="val" id="cost-today">–</span></div>
+      <div class="cost-row"><span class="label">Cost last 30 days</span><span class="val" id="cost-30d">–</span></div>
+      <div class="cost-row"><span class="label">Maximum theoretical daily cost (rate limit × visitors)</span><span class="val">unbounded by design — capped per-IP, not per-day</span></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>How to audit</h2>
+    <p class="sec-desc">
+      If you ever think the agent is misbehaving, here's what to do.
+    </p>
+    <div class="constraints">
+      <ul>
+        <li><b>Open your browser dev tools</b> on any page hosting the agent (e.g. <a href="/methodology" style="color:var(--gold)">/methodology</a>).</li>
+        <li><b>Tap the gold pill</b> to open the chat panel.</li>
+        <li><b>Network tab</b> → filter on <code style="color:var(--gold)">/agent</code>. You'll see the POST request with the exact mode + payload sent.</li>
+        <li><b>Console tab</b> → check for any errors that came back as SSE events.</li>
+        <li><b>If the agent claimed something we don't grade,</b> compare against the prompt above. The agent is constrained by these words — if the answer drifted, that's a real bug we want to know about.</li>
+        <li><b>Stats endpoint:</b> <a href="https://fieldcheck-proxy.sridhar-nallani.workers.dev/agent/stats" target="_blank" style="color:var(--gold)">/agent/stats</a> returns aggregate usage counts (no PII).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot">
+    <a href="/">Home</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/velocity">Velocity</a>
+    <a href="/predictions">Predictions</a>
+    <a href="/coverage">Coverage</a>
+    <a href="/privacy">Privacy</a>
+    <a href="/security">Security</a>
+    <a href="/whats-new">What's new</a>
+    <a href="/outcomes">Outcomes</a>
+    <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px;">FCBase60 · June 9 2026</span>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ── Fetch live stats from /agent/stats ──
+  var WORKER_BASE = (location.hostname.indexOf('fieldcheck-dev') >= 0)
+    ? 'https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev'
+    : 'https://fieldcheck-proxy.sridhar-nallani.workers.dev';
+
+  fetch(WORKER_BASE + '/agent/stats')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      document.getElementById('stat-today').textContent = data.today_count || '0';
+      document.getElementById('stat-7d').textContent = data.last_7_days || '0';
+      document.getElementById('stat-30d').textContent = data.last_30_days || '0';
+      document.getElementById('stat-cost').textContent = '$' + (data.cost_estimate_usd_last30 || '0.00');
+      document.getElementById('cost-today').textContent = '$' + (data.cost_estimate_usd_today || '0.000');
+      document.getElementById('cost-30d').textContent = '$' + (data.cost_estimate_usd_last30 || '0.00');
+    })
+    .catch(function() {
+      // Stats unavailable - show dashes (no error to user)
+      ['stat-today', 'stat-7d', 'stat-30d', 'stat-cost', 'cost-today', 'cost-30d'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el && el.textContent === '–') el.textContent = '—';
+      });
+    });
+
+  // ── Render the actual system prompts inline ──
+  // (Same text as in the worker - kept in sync via /agent-transparency page check)
+
+  var PROMPTS = {
+    verdict: [
+      'You are the FieldCheck IQ AI scout-agent. You help visitors understand a specific athlete verdict in conversation.',
+      '',
+      '# Athlete in this conversation',
+      '- Name: [injected from page context]',
+      '- Sport: [injected]',
+      '- School/Team: [injected]',
+      '- Position: [injected]',
+      '- Composite: [injected]',
+      '- Tier: [injected]',
+      '- 8-Facet scores: [injected]',
+      '',
+      '# The 8 canonical facets (same across every sport)',
+      '1. Character - behavior under pressure when no one is keeping score',
+      '2. Mindset - approach to growth, failure, identity',
+      '3. Mental Strength - resilience in adversity, comebacks',
+      '4. Talent - natural ceiling, skill arcs',
+      '5. Physical - measurables vs tier-target median',
+      '6. Mental/IQ - game IQ, reads, decision quality',
+      '7. Coachability - listens, adjusts, demonstrably improves',
+      '8. Competitiveness - does not take possessions off',
+      '',
+      '# Tier ladder',
+      '- ICON: 9.5-10.0 (generational, ~1 per sport per generation)',
+      '- ELITE+: 9.0-9.4 (hall-of-fame trajectory)',
+      '- ELITE: 7.5-8.9 (all-pro / all-conference, multi-year impact)',
+      '- STAR: 7.0-7.4 (starter at top pro level. Cap for college freshmen.)',
+      '- PROSPECT: 5.5-6.9 (high floor, real upside, development band)',
+      '- SCOUT: 3.5-5.4 (on the radar. Cap for HS recruits.)',
+      '',
+      '# Amateur cap doctrine (CRITICAL)',
+      '- HS amateurs CANNOT score above SCOUT (5.4). They have not proven against college defenders yet.',
+      '- College freshmen CANNOT score above STAR (7.4). They have not proven against pro athletes yet.',
+      '- This is deliberate honesty about ceiling-visibility, not pessimism.',
+      '- When projecting upward, ALWAYS frame as "expected to move up by year X" not "is actually a [higher tier]".',
+      '',
+      '# Multi-source first (Tenet 53)',
+      '- Every facet uses 3+ independent sources. If thin, the facet is marked partial.',
+      '- A fully-sourced PROSPECT is MORE reliable than a thinly-sourced STAR.',
+      '',
+      '# DO',
+      '- Stay conversational. 2-4 sentences per answer typically.',
+      '- Cite specific facet scores when relevant ("his Physical is 8.0 and his Mental/IQ is 7.6").',
+      '- Acknowledge uncertainty honestly ("we do not have enough sources to grade X with confidence").',
+      '- Surface known dissent or counterarguments.',
+      '- Frame pro projections within the amateur cap doctrine.',
+      '',
+      '# DO NOT',
+      '- Fabricate data not in the context provided.',
+      '- Give recruiting advice ("X should commit to Y").',
+      '- Give draft predictions in a betting sense.',
+      '- Provide NIL valuations or contract advice.',
+      '- Speculate about injuries, personal life, or off-record events.',
+      '- Pretend to know things outside this verdict\'s source set.',
+      '- Use tables or heavy formatting. Plain conversational paragraphs only.',
+      '',
+      '# Format',
+      'Respond in 1-3 short paragraphs. No headers, no tables, no bullet lists unless directly asked. Keep it focused.',
+      'If the question is outside FieldCheck\'s scope or data, say so plainly and suggest what is in scope.'
+    ].join('\n'),
+
+    methodology: [
+      'You are the FieldCheck IQ AI assistant on the /methodology page. Visitors are here to understand HOW the rating system works, not to ask about specific athletes.',
+      '',
+      '# Your purpose',
+      'Explain the FieldCheck methodology clearly and conversationally. Cite specific rules, tier thresholds, and doctrine principles. Use examples to illustrate. Be precise but accessible.',
+      '',
+      '# The 8 canonical facets (same across every sport, weights vary)',
+      '1. Character  2. Mindset  3. Mental Strength  4. Talent',
+      '5. Physical  6. Mental/IQ  7. Coachability  8. Competitiveness',
+      '',
+      '# Tier ladder',
+      '- ICON: 9.5-10.0 (generational)',
+      '- ELITE+: 9.0-9.4 (hall-of-fame trajectory)',
+      '- ELITE: 7.5-8.9 (all-pro / all-conference)',
+      '- STAR: 7.0-7.4 (top-level starter. Cap for college freshmen.)',
+      '- PROSPECT: 5.5-6.9 (real upside, development band)',
+      '- SCOUT: 3.5-5.4 (on the radar. Cap for HS recruits.)',
+      '',
+      '# Amateur cap doctrine',
+      '- HS amateurs CANNOT score above SCOUT (5.4).',
+      '- College freshmen CANNOT score above STAR (7.4).',
+      '- This is deliberate honesty about ceiling-visibility, not pessimism.',
+      '',
+      '# DO',
+      '- Explain mechanically and clearly',
+      '- Give concrete examples when useful',
+      '- Acknowledge the limits of the system honestly',
+      '- Direct the visitor to a specific verdict page when they want to ask about an athlete',
+      '',
+      '# DO NOT',
+      '- Rate specific athletes (point them to a verdict page if they ask)',
+      '- Make up new rules or thresholds',
+      '- Give betting / draft predictions',
+      '- Compare to specific competing systems by name'
+    ].join('\n'),
+
+    predictions: [
+      'You are the FieldCheck IQ AI assistant on the /predictions page. Visitors are here to understand the sealed predictions ledger.',
+      '',
+      '# Your purpose',
+      'Explain the 50 sealed predictions for Aug 15 2028, how they will be verified, and the confidence framework. Be specific about methodology.',
+      '',
+      '# The ledger',
+      '- 50 total predictions, 12 publicly visible with confidence levels',
+      '- 38 sealed with SHA-256 hash stubs (cryptographic commitment that we cannot change them)',
+      '- All resolve on Aug 15, 2028 - the resolution date is fixed and public',
+      '- Confidence bands: HIGH (90%+) / MEDIUM (70-90%) / LOW (50-70%)',
+      '',
+      '# The integrity claim',
+      '- Cryptographic hashes prevent retroactive editing of sealed predictions',
+      '- Public visibility on the 12 high-confidence calls lets visitors hold us accountable',
+      '- Failure rate is part of the ledger - we publish what we got wrong, with the same prominence',
+      '',
+      '# DO NOT',
+      '- Add new predictions or modify existing ones (the ledger is sealed)',
+      '- Give betting advice or odds',
+      '- Make new claims about specific athletes (redirect to verdict pages)'
+    ].join('\n'),
+
+    coverage: [
+      'You are the FieldCheck IQ AI assistant on the /coverage page. Visitors are here to understand WHO and HOW MUCH FieldCheck covers.',
+      '',
+      '# Current coverage',
+      '- 5 sports: mens-basketball (82), football (56), womens-basketball (34), womens-volleyball (24), baseball (18)',
+      '- Total: 214 athletes with full 8-facet verdicts',
+      '- 11 data source tiers: from Tier-1 (direct interviews, in-person evaluation) to Tier-11 (aggregate forum mentions)',
+      '- Refresh cadence: marquee athletes weekly, full corpus monthly',
+      '',
+      '# Source quality',
+      '- Every facet aims for 3+ independent sources',
+      '- Sources flagged as Partial when below threshold',
+      '- Multi-source first (Tenet 53) - no single-source verdicts',
+      '',
+      '# Known gaps',
+      '- International recruits less covered than US-based',
+      '- Lower-division programs sparsely represented',
+      '- Some niche positions (kickers, long snappers) have thinner data',
+      '- Womens sports outside basketball / volleyball not yet graded',
+      '',
+      '# DO NOT',
+      '- Inflate coverage claims',
+      '- Promise coverage we have not committed to',
+      '- Give pricing or business model answers'
+    ].join('\n'),
+
+    comparison: [
+      'You are the FieldCheck IQ AI assistant on the /versus comparison page. Visitors are here to compare athletes side-by-side.',
+      '',
+      '# Athletes in this comparison',
+      '[injected from URL params - up to 3 athletes]',
+      '',
+      '# Comparison doctrine',
+      '- Cross-era comparisons (HS vs pro veteran) MUST acknowledge the amateur cap context',
+      '- Cross-sport comparisons MUST acknowledge that facet weights differ by sport',
+      '- A 7.4 STAR in basketball does NOT equal a 7.4 STAR in football (different baselines)',
+      '- Composite difference under 0.3 is NOT meaningfully different - acknowledge this',
+      '',
+      '# DO',
+      '- Identify specific facet gaps with numbers',
+      '- Frame differences within tier-context',
+      '- Cite which athlete has more source-depth',
+      '- Surface where the comparison is unfair',
+      '',
+      '# DO NOT',
+      '- Pick a "winner" definitively when the composite gap is under 0.3',
+      '- Compare careers without that context',
+      '- Make recruiting or draft predictions',
+      '- Use the comparison to give betting odds'
+    ].join('\n')
+  };
+
+  for (var key in PROMPTS) {
+    var el = document.getElementById('p-' + key);
+    if (el) el.textContent = PROMPTS[key];
+  }
+})();
+</script>
+<!-- FCBase60 . Phase 9.4 . Agent transparency page . shows all 5 mode-specific system prompts publicly . live stats from /agent/stats endpoint . cost transparency (~$0.003/Q) . audit instructions . unique trust positioning -->
+</body>
+</html>

@@ -1,0 +1,4045 @@
+{
+  "applied_at": "2026-05-27",
+  "version": "v3",
+  "total_candidates": 469,
+  "updated": [
+    {
+      "slug": "harper-murray-nebraska-womens-volleyball",
+      "name": "Harper Murray",
+      "school": "University of Nebraska",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.5,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "madisen-skinner-lovb-austin-womens-volleyball",
+      "name": "Madisen Skinner",
+      "school": "LOVB Austin (pro)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "logan-eggleston-lovb-austin-womens-volleyball",
+      "name": "Logan Eggleston",
+      "school": "LOVB Austin (pro)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.0,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "lauren-carlini-lovb-madison-womens-volleyball",
+      "name": "Lauren Carlini",
+      "school": "LOVB Madison (pro)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 8.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "bergen-reilly-nebraska-womens-volleyball",
+      "name": "Bergen Reilly",
+      "school": "University of Nebraska",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.0,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.6
+    },
+    {
+      "slug": "andi-jackson-nebraska-womens-volleyball",
+      "name": "Andi Jackson",
+      "school": "University of Nebraska",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "olivia-babcock-pittsburgh-womens-volleyball",
+      "name": "Olivia Babcock",
+      "school": "University of Pittsburgh",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "kennedi-orr-nebraska-womens-volleyball",
+      "name": "Kennedi Orr",
+      "school": "University of Nebraska",
+      "class_year": "Senior",
+      "before": {
+        "composite": 7.5,
+        "tier": "STAR"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.1
+    },
+    {
+      "slug": "asjia-oneal-lovb-austin-womens-volleyball",
+      "name": "Asjia O\\u2019Neal",
+      "school": "LOVB Austin (pro)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 8.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "jess-mruzik-penn-state-womens-volleyball",
+      "name": "Jess Mruzik",
+      "school": "Penn State (graduate)",
+      "class_year": "Graduate",
+      "before": {
+        "composite": 8.8,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "sarah-franklin-wisconsin-womens-volleyball",
+      "name": "Sarah Franklin",
+      "school": "University of Wisconsin",
+      "class_year": "Senior",
+      "before": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "devyn-robinson-wisconsin-womens-volleyball",
+      "name": "Devyn Robinson",
+      "school": "University of Wisconsin",
+      "class_year": "Senior",
+      "before": {
+        "composite": 8.0,
+        "tier": "STAR"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.6
+    },
+    {
+      "slug": "anna-debeer-louisville-womens-volleyball",
+      "name": "Anna DeBeer",
+      "school": "University of Louisville",
+      "class_year": "Graduate",
+      "before": {
+        "composite": 8.6,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.2
+    },
+    {
+      "slug": "eva-hudson-purdue-womens-volleyball",
+      "name": "Eva Hudson",
+      "school": "Purdue University",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.6,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.2
+    },
+    {
+      "slug": "jordan-larson-lovb-nebraska-womens-volleyball",
+      "name": "Jordan Larson",
+      "school": "LOVB Nebraska (pro + part owner)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 9.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.1
+    },
+    {
+      "slug": "kelsey-robinson-cook-lovb-atlanta-womens-volleyball",
+      "name": "Kelsey Robinson-Cook",
+      "school": "LOVB Atlanta (pro)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.2,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "jordan-thompson-lovb-houston-womens-volleyball",
+      "name": "Jordan Thompson",
+      "school": "LOVB Houston (pro)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.2,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "manami-kojima-lovb-salt-lake-womens-volleyball",
+      "name": "Manami Kojima",
+      "school": "LOVB Salt Lake (pro)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 8.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 8.0,
+        "tier": "ELITE"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "amber-igiede-lovb-houston-womens-volleyball",
+      "name": "Amber Igiede",
+      "school": "LOVB Houston (pro)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 8.6,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 8.6,
+        "tier": "ELITE"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "carli-lloyd-lovb-austin-womens-volleyball",
+      "name": "Carli Lloyd",
+      "school": "LOVB Austin (pro + captain)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 8.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "justine-wong-orantes-lovb-houston-womens-volleyball",
+      "name": "Justine Wong-Orantes",
+      "school": "LOVB Houston (pro)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 8.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 8.5,
+        "tier": "ELITE"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "arch-manning-texas-football",
+      "name": "Arch Manning",
+      "school": "University of Texas",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "jeremiah-smith-ohio-state-football",
+      "name": "Jeremiah Smith",
+      "school": "Ohio State University",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 9.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -2.0
+    },
+    {
+      "slug": "dj-lagway-florida-football",
+      "name": "DJ Lagway",
+      "school": "University of Florida",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 8.5,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "bryce-underwood-michigan-football",
+      "name": "Bryce Underwood",
+      "school": "University of Michigan",
+      "class_year": "Freshman",
+      "before": {
+        "composite": 8.3,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.9
+    },
+    {
+      "slug": "carson-beck-miami-football",
+      "name": "Carson Beck",
+      "school": "University of Miami",
+      "class_year": "Senior",
+      "before": {
+        "composite": 7.9,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.5
+    },
+    {
+      "slug": "drew-allar-penn-state-football",
+      "name": "Drew Allar",
+      "school": "Penn State University",
+      "class_year": "Senior",
+      "before": {
+        "composite": 8.6,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.2
+    },
+    {
+      "slug": "dylan-raiola-nebraska-football",
+      "name": "Dylan Raiola",
+      "school": "University of Nebraska",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 7.8,
+        "tier": "TOP_PROSPECT"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.4
+    },
+    {
+      "slug": "caden-durham-lsu-football",
+      "name": "Caden Durham",
+      "school": "Louisiana State University",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 8.1,
+        "tier": "TOP_PROSPECT"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.7
+    },
+    {
+      "slug": "colin-simmons-texas-football",
+      "name": "Colin Simmons",
+      "school": "University of Texas",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 8.9,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.5
+    },
+    {
+      "slug": "caleb-downs-ohio-state-football",
+      "name": "Caleb Downs",
+      "school": "Ohio State University",
+      "class_year": "Junior",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.9
+    },
+    {
+      "slug": "jeremiyah-love-notre-dame-football",
+      "name": "Jeremiyah Love",
+      "school": "University of Notre Dame",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "kaliq-lockett-texas-football",
+      "name": "Kaliq Lockett",
+      "school": "University of Texas",
+      "class_year": "Freshman",
+      "before": {
+        "composite": 8.2,
+        "tier": "TOP_PROSPECT"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.8
+    },
+    {
+      "slug": "kaytron-allen-penn-state-football",
+      "name": "Kaytron Allen",
+      "school": "Penn State University",
+      "class_year": "Senior",
+      "before": {
+        "composite": 7.9,
+        "tier": "TOP_PROSPECT"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.5
+    },
+    {
+      "slug": "peter-woods-alabama-football",
+      "name": "Peter Woods",
+      "school": "University of Alabama",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "dante-moore-oregon-football",
+      "name": "Dante Moore",
+      "school": "University of Oregon",
+      "class_year": "Junior",
+      "before": {
+        "composite": 7.9,
+        "tier": "TOP_PROSPECT"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.5
+    },
+    {
+      "slug": "caleb-williams-usc-football",
+      "name": "Caleb Williams",
+      "school": "University of Southern California",
+      "class_year": "Senior (2023)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "jayden-daniels-lsu-football",
+      "name": "Jayden Daniels",
+      "school": "Louisiana State University",
+      "class_year": "Senior (2023)",
+      "before": {
+        "composite": 8.8,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "drake-maye-unc-football",
+      "name": "Drake Maye",
+      "school": "University of North Carolina",
+      "class_year": "Junior (2023)",
+      "before": {
+        "composite": 8.6,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.2
+    },
+    {
+      "slug": "marvin-harrison-jr-ohio-state-football",
+      "name": "Marvin Harrison Jr.",
+      "school": "Ohio State University",
+      "class_year": "Junior (2023)",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.8
+    },
+    {
+      "slug": "joe-alt-notre-dame-football",
+      "name": "Joe Alt",
+      "school": "University of Notre Dame",
+      "class_year": "Junior (2023)",
+      "before": {
+        "composite": 9.1,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.7
+    },
+    {
+      "slug": "malik-nabers-lsu-football",
+      "name": "Malik Nabers",
+      "school": "Louisiana State University",
+      "class_year": "Junior (2023)",
+      "before": {
+        "composite": 8.8,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "jc-latham-alabama-football",
+      "name": "JC Latham",
+      "school": "University of Alabama",
+      "class_year": "Junior (2023)",
+      "before": {
+        "composite": 8.6,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.2
+    },
+    {
+      "slug": "michael-penix-jr-washington-football",
+      "name": "Michael Penix Jr.",
+      "school": "University of Washington",
+      "class_year": "Senior (2023)",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "bo-nix-oregon-football",
+      "name": "Bo Nix",
+      "school": "University of Oregon",
+      "class_year": "Senior (2023)",
+      "before": {
+        "composite": 8.2,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.8
+    },
+    {
+      "slug": "quinn-ewers-texas-football",
+      "name": "Quinn Ewers",
+      "school": "University of Texas",
+      "class_year": "Senior (2024)",
+      "before": {
+        "composite": 7.7,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.3
+    },
+    {
+      "slug": "cam-ward-miami-football",
+      "name": "Cam Ward",
+      "school": "University of Miami",
+      "class_year": "Senior (2024)",
+      "before": {
+        "composite": 8.8,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "garrett-nussmeier-lsu-football",
+      "name": "Garrett Nussmeier",
+      "school": "Louisiana State University",
+      "class_year": "Senior (2024)",
+      "before": {
+        "composite": 8.1,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.7
+    },
+    {
+      "slug": "will-howard-ohio-state-football",
+      "name": "Will Howard",
+      "school": "Ohio State University",
+      "class_year": "Senior (2024)",
+      "before": {
+        "composite": 7.9,
+        "tier": "TOP_PROSPECT"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.5
+    },
+    {
+      "slug": "riley-leonard-notre-dame-football",
+      "name": "Riley Leonard",
+      "school": "University of Notre Dame",
+      "class_year": "Senior (2024)",
+      "before": {
+        "composite": 8.0,
+        "tier": "TOP_PROSPECT"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.6
+    },
+    {
+      "slug": "avery-johnson-kansas-state-football",
+      "name": "Avery Johnson",
+      "school": "Kansas State University",
+      "class_year": "Sophomore (2024)",
+      "before": {
+        "composite": 8.0,
+        "tier": "TOP_PROSPECT"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.6
+    },
+    {
+      "slug": "aj-dybantsa-byu-mens-basketball",
+      "name": "AJ Dybantsa",
+      "school": "Brigham Young University",
+      "class_year": "Freshman",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.9
+    },
+    {
+      "slug": "cameron-boozer-duke-mens-basketball",
+      "name": "Cameron Boozer",
+      "school": "Duke University",
+      "class_year": "Freshman",
+      "before": {
+        "composite": 9.1,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.7
+    },
+    {
+      "slug": "darryn-peterson-kansas-mens-basketball",
+      "name": "Darryn Peterson",
+      "school": "University of Kansas",
+      "class_year": "Freshman",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "mikel-brown-jr-louisville-mens-basketball",
+      "name": "Mikel Brown Jr.",
+      "school": "University of Louisville",
+      "class_year": "Freshman",
+      "before": {
+        "composite": 8.5,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "nate-ament-tennessee-mens-basketball",
+      "name": "Nate Ament",
+      "school": "University of Tennessee",
+      "class_year": "Freshman",
+      "before": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "caleb-wilson-unc-mens-basketball",
+      "name": "Caleb Wilson",
+      "school": "University of North Carolina",
+      "class_year": "Freshman",
+      "before": {
+        "composite": 8.6,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.2
+    },
+    {
+      "slug": "jayden-quaintance-arizona-state-mens-basketball",
+      "name": "Jayden Quaintance",
+      "school": "Arizona State University",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 8.9,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.5
+    },
+    {
+      "slug": "vj-edgecombe-baylor-mens-basketball",
+      "name": "VJ Edgecombe",
+      "school": "Baylor University",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 8.9,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.5
+    },
+    {
+      "slug": "cooper-flagg-duke-mens-basketball",
+      "name": "Cooper Flagg",
+      "school": "Duke University (NBA-bound)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 9.6,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.3
+    },
+    {
+      "slug": "jt-toppin-texas-tech-mens-basketball",
+      "name": "JT Toppin",
+      "school": "Texas Tech University",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "braden-smith-purdue-mens-basketball",
+      "name": "Braden Smith",
+      "school": "Purdue University",
+      "class_year": "Senior",
+      "before": {
+        "composite": 7.8,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.4
+    },
+    {
+      "slug": "mark-sears-alabama-mens-basketball",
+      "name": "Mark Sears",
+      "school": "University of Alabama",
+      "class_year": "Senior",
+      "before": {
+        "composite": 7.6,
+        "tier": "TOP_PROSPECT"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.2
+    },
+    {
+      "slug": "tahaad-pettiford-auburn-mens-basketball",
+      "name": "Tahaad Pettiford",
+      "school": "Auburn University",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 8.1,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.7
+    },
+    {
+      "slug": "kasparas-jakucionis-illinois-mens-basketball",
+      "name": "Kasparas Jakucionis",
+      "school": "University of Illinois",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "roch-cholowsky-ucla-baseball",
+      "name": "Roch Cholowsky",
+      "school": "UCLA",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.9,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.5
+    },
+    {
+      "slug": "aiva-arquette-oregon-state-baseball",
+      "name": "Aiva Arquette",
+      "school": "Oregon State",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.8,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "jamie-arnold-florida-state-baseball",
+      "name": "Jamie Arnold",
+      "school": "Florida State",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.8,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "jace-laviolette-texas-am-baseball",
+      "name": "Jace LaViolette",
+      "school": "Texas A&M",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.9,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.5
+    },
+    {
+      "slug": "brendan-lawson-vanderbilt-baseball",
+      "name": "Brendan Lawson",
+      "school": "Vanderbilt",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "kade-anderson-lsu-baseball",
+      "name": "Kade Anderson",
+      "school": "LSU",
+      "class_year": "Junior",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.8
+    },
+    {
+      "slug": "ethan-petry-south-carolina-baseball",
+      "name": "Ethan Petry",
+      "school": "South Carolina",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.5,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "gavin-kilen-tennessee-baseball",
+      "name": "Gavin Kilen",
+      "school": "Tennessee",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "henry-allen-virginia-baseball",
+      "name": "Henry Allen",
+      "school": "Virginia",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.4,
+        "tier": "TOP_PROSPECT"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "reed-sheppard-kentucky-mens-basketball",
+      "name": "Reed Sheppard",
+      "school": "University of Kentucky",
+      "class_year": "Freshman (2023-24)",
+      "before": {
+        "composite": 8.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "stephon-castle-uconn-mens-basketball",
+      "name": "Stephon Castle",
+      "school": "University of Connecticut",
+      "class_year": "Freshman (2023-24)",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "donovan-clingan-uconn-mens-basketball",
+      "name": "Donovan Clingan",
+      "school": "University of Connecticut",
+      "class_year": "Sophomore (2023-24)",
+      "before": {
+        "composite": 8.2,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.8
+    },
+    {
+      "slug": "cody-williams-colorado-mens-basketball",
+      "name": "Cody Williams",
+      "school": "University of Colorado",
+      "class_year": "Freshman (2023-24)",
+      "before": {
+        "composite": 7.8,
+        "tier": "TOP_PROSPECT"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.4
+    },
+    {
+      "slug": "kon-knueppel-duke-mens-basketball",
+      "name": "Kon Knueppel",
+      "school": "Duke University",
+      "class_year": "Freshman (2024-25)",
+      "before": {
+        "composite": 8.3,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.9
+    },
+    {
+      "slug": "khaman-maluach-duke-mens-basketball",
+      "name": "Khaman Maluach",
+      "school": "Duke University",
+      "class_year": "Freshman (2024-25)",
+      "before": {
+        "composite": 8.5,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "jeremiah-fears-oklahoma-mens-basketball",
+      "name": "Jeremiah Fears",
+      "school": "University of Oklahoma",
+      "class_year": "Freshman (2024-25)",
+      "before": {
+        "composite": 8.0,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.6
+    },
+    {
+      "slug": "walter-clayton-jr-florida-mens-basketball",
+      "name": "Walter Clayton Jr.",
+      "school": "University of Florida",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 8.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "johni-broome-auburn-mens-basketball",
+      "name": "Johni Broome",
+      "school": "Auburn University",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "collin-murray-boyles-south-carolina-mens-basketball",
+      "name": "Collin Murray-Boyles",
+      "school": "University of South Carolina",
+      "class_year": "Sophomore (2024-25)",
+      "before": {
+        "composite": 8.2,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.8
+    },
+    {
+      "slug": "juju-watkins-usc-womens-basketball",
+      "name": "JuJu Watkins",
+      "school": "University of Southern California",
+      "class_year": "Junior",
+      "before": {
+        "composite": 9.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -2.1
+    },
+    {
+      "slug": "lauren-betts-ucla-womens-basketball",
+      "name": "Lauren Betts",
+      "school": "UCLA",
+      "class_year": "Senior",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.9
+    },
+    {
+      "slug": "hannah-hidalgo-notre-dame-womens-basketball",
+      "name": "Hannah Hidalgo",
+      "school": "University of Notre Dame",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "madison-booker-texas-womens-basketball",
+      "name": "Madison Booker",
+      "school": "University of Texas",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.8,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "olivia-miles-tcu-womens-basketball",
+      "name": "Olivia Miles",
+      "school": "Texas Christian University",
+      "class_year": "Senior",
+      "before": {
+        "composite": 8.5,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "sarah-strong-uconn-womens-basketball",
+      "name": "Sarah Strong",
+      "school": "University of Connecticut",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.8
+    },
+    {
+      "slug": "mikaylah-williams-lsu-womens-basketball",
+      "name": "Mikaylah Williams",
+      "school": "Louisiana State University",
+      "class_year": "Junior",
+      "before": {
+        "composite": 8.5,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "joyce-edwards-south-carolina-womens-basketball",
+      "name": "Joyce Edwards",
+      "school": "University of South Carolina",
+      "class_year": "Sophomore",
+      "before": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "caitlin-clark-iowa-womens-basketball",
+      "name": "Caitlin Clark",
+      "school": "University of Iowa",
+      "class_year": "Senior (2023-24)",
+      "before": {
+        "composite": 9.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -2.0
+    },
+    {
+      "slug": "cameron-brink-stanford-womens-basketball",
+      "name": "Cameron Brink",
+      "school": "Stanford University",
+      "class_year": "Senior (2023-24)",
+      "before": {
+        "composite": 8.8,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "kamilla-cardoso-south-carolina-womens-basketball",
+      "name": "Kamilla Cardoso",
+      "school": "University of South Carolina",
+      "class_year": "Senior (2023-24)",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "angel-reese-lsu-womens-basketball",
+      "name": "Angel Reese",
+      "school": "Louisiana State University",
+      "class_year": "Senior (2023-24)",
+      "before": {
+        "composite": 8.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "paige-bueckers-uconn-womens-basketball",
+      "name": "Paige Bueckers",
+      "school": "University of Connecticut",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "azzi-fudd-uconn-womens-basketball",
+      "name": "Azzi Fudd",
+      "school": "University of Connecticut",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 8.2,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.8
+    },
+    {
+      "slug": "aneesah-morrow-lsu-womens-basketball",
+      "name": "Aneesah Morrow",
+      "school": "Louisiana State University",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 8.5,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "aaliyah-edwards-uconn-womens-basketball",
+      "name": "Aaliyah Edwards",
+      "school": "University of Connecticut",
+      "class_year": "Senior (2023-24)",
+      "before": {
+        "composite": 8.6,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.2
+    },
+    {
+      "slug": "sonia-citron-notre-dame-womens-basketball",
+      "name": "Sonia Citron",
+      "school": "University of Notre Dame",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 8.5,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "milaysia-fulwiley-south-carolina-womens-basketball",
+      "name": "MiLaysia Fulwiley",
+      "school": "University of South Carolina",
+      "class_year": "Sophomore (2024-25)",
+      "before": {
+        "composite": 8.2,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.8
+    },
+    {
+      "slug": "travis-bazzana-oregon-state-baseball",
+      "name": "Travis Bazzana",
+      "school": "Oregon State University",
+      "class_year": "Junior (2023-24)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "chase-burns-wake-forest-baseball",
+      "name": "Chase Burns",
+      "school": "Wake Forest University",
+      "class_year": "Junior (2023-24)",
+      "before": {
+        "composite": 8.9,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.5
+    },
+    {
+      "slug": "charlie-condon-georgia-baseball",
+      "name": "Charlie Condon",
+      "school": "University of Georgia",
+      "class_year": "Sophomore (2023-24)",
+      "before": {
+        "composite": 8.8,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "hagen-smith-arkansas-baseball",
+      "name": "Hagen Smith",
+      "school": "University of Arkansas",
+      "class_year": "Junior (2023-24)",
+      "before": {
+        "composite": 8.6,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.2
+    },
+    {
+      "slug": "jj-wetherholt-west-virginia-baseball",
+      "name": "JJ Wetherholt",
+      "school": "West Virginia University",
+      "class_year": "Junior (2023-24)",
+      "before": {
+        "composite": 8.6,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.2
+    },
+    {
+      "slug": "ben-shelton-florida-tennis",
+      "name": "Ben Shelton",
+      "school": "University of Florida",
+      "class_year": "Sophomore (2021-22, turned pro)",
+      "before": {
+        "composite": 8.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "ethan-quinn-georgia-tennis",
+      "name": "Ethan Quinn",
+      "school": "University of Georgia",
+      "class_year": "Sophomore (2022-23, turned pro)",
+      "before": {
+        "composite": 8.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "emma-navarro-virginia-tennis",
+      "name": "Emma Navarro",
+      "school": "University of Virginia",
+      "class_year": "Junior (2022-23, turned pro)",
+      "before": {
+        "composite": 8.6,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.2
+    },
+    {
+      "slug": "cameron-norrie-tcu-tennis",
+      "name": "Cameron Norrie",
+      "school": "Texas Christian University",
+      "class_year": "Junior (2016-17, turned pro)",
+      "before": {
+        "composite": 8.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "jacen-russell-rowe-georgetown-mens-soccer",
+      "name": "Jacen Russell-Rowe",
+      "school": "Georgetown University",
+      "class_year": "Senior (2022)",
+      "before": {
+        "composite": 8.3,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.9
+    },
+    {
+      "slug": "daniel-edelman-indiana-mens-soccer",
+      "name": "Daniel Edelman",
+      "school": "Indiana University",
+      "class_year": "Sophomore (2022)",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "tani-oluwaseyi-st-johns-mens-soccer",
+      "name": "Tani Oluwaseyi",
+      "school": "St. John\\u2019s University",
+      "class_year": "Senior (2023)",
+      "before": {
+        "composite": 8.3,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.9
+    },
+    {
+      "slug": "patrick-agyemang-charlotte-mens-soccer",
+      "name": "Patrick Agyemang",
+      "school": "University of Rhode Island",
+      "class_year": "Senior (2022)",
+      "before": {
+        "composite": 8.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "sergio-ors-navarro-stanford-mens-soccer",
+      "name": "Sergio Ors Navarro",
+      "school": "Stanford University",
+      "class_year": "Senior (2023)",
+      "before": {
+        "composite": 8.1,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.7
+    },
+    {
+      "slug": "croix-bethune-georgia-womens-soccer",
+      "name": "Croix Bethune",
+      "school": "University of Georgia",
+      "class_year": "Senior (2023)",
+      "before": {
+        "composite": 8.9,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.5
+    },
+    {
+      "slug": "jenna-nighswonger-florida-state-womens-soccer",
+      "name": "Jenna Nighswonger",
+      "school": "Florida State University",
+      "class_year": "Senior (2022)",
+      "before": {
+        "composite": 8.6,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.2
+    },
+    {
+      "slug": "jac-caglianone-florida-baseball",
+      "name": "Jac Caglianone",
+      "school": "University of Florida",
+      "class_year": "Junior (2023-24)",
+      "before": {
+        "composite": 8.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "christian-moore-tennessee-baseball",
+      "name": "Christian Moore",
+      "school": "University of Tennessee",
+      "class_year": "Junior (2023-24)",
+      "before": {
+        "composite": 8.5,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "cam-smith-florida-state-baseball",
+      "name": "Cam Smith",
+      "school": "Florida State University",
+      "class_year": "Junior (2023-24)",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "james-tibbs-iii-florida-state-baseball",
+      "name": "James Tibbs III",
+      "school": "Florida State University",
+      "class_year": "Junior (2023-24)",
+      "before": {
+        "composite": 8.2,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.8
+    },
+    {
+      "slug": "brody-brecht-iowa-baseball",
+      "name": "Brody Brecht",
+      "school": "University of Iowa",
+      "class_year": "Junior (2023-24)",
+      "before": {
+        "composite": 8.0,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.6
+    },
+    {
+      "slug": "carson-benge-oklahoma-state-baseball",
+      "name": "Carson Benge",
+      "school": "Oklahoma State University",
+      "class_year": "Junior (2023-24)",
+      "before": {
+        "composite": 8.2,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.8
+    },
+    {
+      "slug": "travis-hunter-colorado-football",
+      "name": "Travis Hunter",
+      "school": "University of Colorado",
+      "class_year": "Junior (2024)",
+      "before": {
+        "composite": 9.1,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.7
+    },
+    {
+      "slug": "abdul-carter-penn-state-football",
+      "name": "Abdul Carter",
+      "school": "Penn State University",
+      "class_year": "Junior (2024)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "mason-graham-michigan-football",
+      "name": "Mason Graham",
+      "school": "University of Michigan",
+      "class_year": "Junior (2024)",
+      "before": {
+        "composite": 8.8,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "will-johnson-michigan-football",
+      "name": "Will Johnson",
+      "school": "University of Michigan",
+      "class_year": "Junior (2024)",
+      "before": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "ashton-jeanty-boise-state-football",
+      "name": "Ashton Jeanty",
+      "school": "Boise State University",
+      "class_year": "Junior (2024)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "dylan-harper-rutgers-mens-basketball",
+      "name": "Dylan Harper",
+      "school": "Rutgers University",
+      "class_year": "Freshman (2024-25)",
+      "before": {
+        "composite": 8.8,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "dominique-malonga-asvel-womens-basketball",
+      "name": "Dominique Malonga",
+      "school": "ASVEL (France, international pathway)",
+      "class_year": "Pro (drafted at 19)",
+      "before": {
+        "composite": 8.8,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 8.8,
+        "tier": "ELITE"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "saniya-rivers-nc-state-womens-basketball",
+      "name": "Saniya Rivers",
+      "school": "NC State University",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "hailey-van-lith-tcu-womens-basketball",
+      "name": "Hailey Van Lith",
+      "school": "Texas Christian University",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 8.0,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.6
+    },
+    {
+      "slug": "janiah-barker-ucla-womens-basketball",
+      "name": "Janiah Barker",
+      "school": "UCLA",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "trey-yesavage-east-carolina-baseball",
+      "name": "Trey Yesavage",
+      "school": "East Carolina University",
+      "class_year": "Junior (2023-24)",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "seaver-king-wake-forest-baseball",
+      "name": "Seaver King",
+      "school": "Wake Forest University",
+      "class_year": "Junior (2023-24)",
+      "before": {
+        "composite": 8.3,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.9
+    },
+    {
+      "slug": "cole-bassett-stanford-mens-soccer",
+      "name": "Cole Bassett",
+      "school": "Stanford University",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 8.2,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.8
+    },
+    {
+      "slug": "ozan-baris-michigan-state-tennis",
+      "name": "Ozan Baris",
+      "school": "Michigan State University",
+      "class_year": "Sophomore (2024-25)",
+      "before": {
+        "composite": 8.1,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.7
+    },
+    {
+      "slug": "stefan-dostanic-usc-tennis",
+      "name": "Stefan Dostanic",
+      "school": "University of Southern California",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 7.9,
+        "tier": "STAR"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -0.5
+    },
+    {
+      "slug": "erik-shoji-stanford-mens-volleyball",
+      "name": "Erik Shoji",
+      "school": "Stanford University (alum)",
+      "class_year": "Pro / Olympic team",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.0,
+        "tier": "ELITE+"
+      },
+      "classification": "legacy_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "matt-anderson-penn-state-mens-volleyball",
+      "name": "Matt Anderson",
+      "school": "Penn State University (alum)",
+      "class_year": "Pro / Olympic team",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.0,
+        "tier": "ELITE+"
+      },
+      "classification": "legacy_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "tiare-jennings-oklahoma-softball",
+      "name": "Tiare Jennings",
+      "school": "University of Oklahoma",
+      "class_year": "Senior (2024)",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.8
+    },
+    {
+      "slug": "jordy-bahl-nebraska-softball",
+      "name": "Jordy Bahl",
+      "school": "University of Nebraska",
+      "class_year": "Junior (2024)",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.9
+    },
+    {
+      "slug": "erin-matson-north-carolina-field-hockey",
+      "name": "Erin Matson",
+      "school": "University of North Carolina (alumna)",
+      "class_year": "Pro / Head Coach",
+      "before": {
+        "composite": 9.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.4,
+        "tier": "ELITE+"
+      },
+      "classification": "legacy_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "ashley-hoffman-north-carolina-field-hockey",
+      "name": "Ashley Hoffman",
+      "school": "University of North Carolina (alumna)",
+      "class_year": "Pro / USA national",
+      "before": {
+        "composite": 9.1,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.1,
+        "tier": "ELITE+"
+      },
+      "classification": "legacy_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "aaron-russell-penn-state-mens-volleyball",
+      "name": "Aaron Russell",
+      "school": "Penn State University (alum)",
+      "class_year": "Pro / Olympic team",
+      "before": {
+        "composite": 9.1,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.1,
+        "tier": "ELITE+"
+      },
+      "classification": "legacy_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "taylor-sander-byu-mens-volleyball",
+      "name": "Taylor Sander",
+      "school": "Brigham Young University (alum)",
+      "class_year": "Pro / Olympic team",
+      "before": {
+        "composite": 8.8,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 8.8,
+        "tier": "ELITE"
+      },
+      "classification": "legacy_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "kami-miner-stanford-womens-volleyball",
+      "name": "Kami Miner",
+      "school": "Stanford University",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "ayden-ames-tennessee-womens-volleyball",
+      "name": "Ayden Ames",
+      "school": "University of Tennessee",
+      "class_year": "Junior (2024-25)",
+      "before": {
+        "composite": 9.1,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.7
+    },
+    {
+      "slug": "joe-burrow-lsu-football",
+      "name": "Joe Burrow",
+      "school": "LSU (alumnus)",
+      "class_year": "Pro (Cincinnati Bengals)",
+      "before": {
+        "composite": 9.6,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.3
+    },
+    {
+      "slug": "trevor-lawrence-clemson-football",
+      "name": "Trevor Lawrence",
+      "school": "Clemson (alumnus)",
+      "class_year": "Pro (Jacksonville Jaguars)",
+      "before": {
+        "composite": 9.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.2
+    },
+    {
+      "slug": "cj-stroud-ohio-state-football",
+      "name": "CJ Stroud",
+      "school": "Ohio State (alumnus)",
+      "class_year": "Pro (Houston Texans)",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "bryce-young-alabama-football",
+      "name": "Bryce Young",
+      "school": "Alabama (alumnus)",
+      "class_year": "Pro (Carolina Panthers)",
+      "before": {
+        "composite": 8.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "zion-williamson-duke-mens-basketball",
+      "name": "Zion Williamson",
+      "school": "Duke (alumnus)",
+      "class_year": "Pro (New Orleans Pelicans)",
+      "before": {
+        "composite": 9.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.1
+    },
+    {
+      "slug": "cade-cunningham-oklahoma-state-mens-basketball",
+      "name": "Cade Cunningham",
+      "school": "Oklahoma State (alumnus)",
+      "class_year": "Pro (Detroit Pistons)",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.2,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "paolo-banchero-duke-mens-basketball",
+      "name": "Paolo Banchero",
+      "school": "Duke (alumnus)",
+      "class_year": "Pro (Orlando Magic)",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.2,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "victor-wembanyama-metropolitans-92-mens-basketball",
+      "name": "Victor Wembanyama",
+      "school": "Metropolitans 92 (French pro)",
+      "class_year": "Pro (San Antonio Spurs)",
+      "before": {
+        "composite": 9.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.4
+    },
+    {
+      "slug": "spencer-torkelson-arizona-state-baseball",
+      "name": "Spencer Torkelson",
+      "school": "Arizona State (alumnus)",
+      "class_year": "Pro (Detroit Tigers)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.0,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "adley-rutschman-oregon-state-baseball",
+      "name": "Adley Rutschman",
+      "school": "Oregon State (alumnus)",
+      "class_year": "Pro (Baltimore Orioles)",
+      "before": {
+        "composite": 9.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.1
+    },
+    {
+      "slug": "asia-reno-texas-womens-volleyball",
+      "name": "Asia Reno",
+      "school": "University of Texas",
+      "class_year": "Sophomore (2024-25)",
+      "before": {
+        "composite": 8.7,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.3
+    },
+    {
+      "slug": "caroline-crawford-wisconsin-womens-volleyball",
+      "name": "Caroline Crawford",
+      "school": "University of Wisconsin",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 8.9,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.5
+    },
+    {
+      "slug": "eden-wilson-tcu-womens-volleyball",
+      "name": "Eden Wilson",
+      "school": "Texas Christian University",
+      "class_year": "Sophomore (2024-25)",
+      "before": {
+        "composite": 8.5,
+        "tier": "STAR"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.1
+    },
+    {
+      "slug": "kennedi-evans-florida-womens-volleyball",
+      "name": "Kennedi Evans",
+      "school": "University of Florida",
+      "class_year": "Junior (2024-25)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "norah-sis-creighton-womens-volleyball",
+      "name": "Norah Sis",
+      "school": "Creighton University",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "marin-grote-texas-womens-volleyball",
+      "name": "Marin Grote",
+      "school": "University of Texas",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 8.9,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.5
+    },
+    {
+      "slug": "charitie-luper-stanford-womens-volleyball",
+      "name": "Charitie Luper",
+      "school": "Stanford University",
+      "class_year": "Freshman (2024-25)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "travon-walker-georgia-football",
+      "name": "Travon Walker",
+      "school": "Georgia (alumnus)",
+      "class_year": "Pro (Jacksonville Jaguars)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 9.0,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "brock-bowers-georgia-football",
+      "name": "Brock Bowers",
+      "school": "Georgia (alumnus)",
+      "class_year": "Pro (Las Vegas Raiders)",
+      "before": {
+        "composite": 9.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.1
+    },
+    {
+      "slug": "aidan-hutchinson-michigan-football",
+      "name": "Aidan Hutchinson",
+      "school": "Michigan (alumnus)",
+      "class_year": "Pro (Detroit Lions)",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "anthony-edwards-georgia-mens-basketball",
+      "name": "Anthony Edwards",
+      "school": "Georgia (alumnus)",
+      "class_year": "Pro (Minnesota Timberwolves)",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "ja-morant-murray-state-mens-basketball",
+      "name": "Ja Morant",
+      "school": "Murray State (alumnus)",
+      "class_year": "Pro (Memphis Grizzlies)",
+      "before": {
+        "composite": 9.1,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.1,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "jayson-tatum-duke-mens-basketball",
+      "name": "Jayson Tatum",
+      "school": "Duke (alumnus)",
+      "class_year": "Pro (Boston Celtics)",
+      "before": {
+        "composite": 9.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.2
+    },
+    {
+      "slug": "luka-doncic-real-madrid-mens-basketball",
+      "name": "Luka Don\\u010di\\u0107",
+      "school": "Real Madrid (Spanish pro / EuroLeague)",
+      "class_year": "Pro (Dallas Mavericks)",
+      "before": {
+        "composite": 9.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.2
+    },
+    {
+      "slug": "bobby-witt-jr-colleyville-heritage-baseball",
+      "name": "Bobby Witt Jr.",
+      "school": "Colleyville Heritage HS (no NCAA \\u2014 prep-to-pro)",
+      "class_year": "Pro (Kansas City Royals)",
+      "before": {
+        "composite": 9.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.2
+    },
+    {
+      "slug": "marcelo-mayer-eastlake-baseball",
+      "name": "Marcelo Mayer",
+      "school": "Eastlake HS (no NCAA \\u2014 prep-to-pro)",
+      "class_year": "Pro (Boston Red Sox)",
+      "before": {
+        "composite": 9.1,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 9.1,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "logan-tom-stanford-womens-volleyball",
+      "name": "Logan Tom",
+      "school": "Stanford (alumna)",
+      "class_year": "Pro / 4\\u00d7 Olympian",
+      "before": {
+        "composite": 9.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.4,
+        "tier": "ELITE+"
+      },
+      "classification": "legacy_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "destinee-hooker-texas-womens-volleyball",
+      "name": "Destinee Hooker",
+      "school": "Texas (alumna)",
+      "class_year": "Pro / Olympic Silver 2012",
+      "before": {
+        "composite": 9.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.4,
+        "tier": "ELITE+"
+      },
+      "classification": "legacy_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "cade-klubnik-clemson-football",
+      "name": "Cade Klubnik",
+      "school": "Clemson University",
+      "class_year": "Senior (2025-26)",
+      "before": {
+        "composite": 8.8,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "jalen-milroe-alabama-football",
+      "name": "Jalen Milroe",
+      "school": "Alabama (alumnus)",
+      "class_year": "Pro (Seattle Seahawks)",
+      "before": {
+        "composite": 8.3,
+        "tier": "STAR"
+      },
+      "after": {
+        "composite": 8.3,
+        "tier": "ELITE"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "nico-iamaleava-ucla-football",
+      "name": "Nico Iamaleava",
+      "school": "UCLA (2025-)",
+      "class_year": "Junior (2025-26)",
+      "before": {
+        "composite": 8.8,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "tetairoa-mcmillan-arizona-football",
+      "name": "Tetairoa McMillan",
+      "school": "Arizona (alumnus)",
+      "class_year": "Pro (New Orleans Saints)",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.2,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "james-pearce-jr-tennessee-football",
+      "name": "James Pearce Jr.",
+      "school": "University of Tennessee",
+      "class_year": "Junior (2025-26)",
+      "before": {
+        "composite": 9.1,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.7
+    },
+    {
+      "slug": "liam-doyle-tennessee-baseball",
+      "name": "Liam Doyle",
+      "school": "University of Tennessee (alumnus)",
+      "class_year": "Pro (Oakland Athletics)",
+      "before": {
+        "composite": 9.1,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.1,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "aja-wilson-south-carolina-womens-basketball",
+      "name": "A\\u2019ja Wilson",
+      "school": "South Carolina (alumna)",
+      "class_year": "Pro (Las Vegas Aces)",
+      "before": {
+        "composite": 9.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.4
+    },
+    {
+      "slug": "breanna-stewart-uconn-womens-basketball",
+      "name": "Breanna Stewart",
+      "school": "UConn (alumna)",
+      "class_year": "Pro (New York Liberty)",
+      "before": {
+        "composite": 9.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.4
+    },
+    {
+      "slug": "campbell-flynn-wisconsin-womens-volleyball",
+      "name": "Campbell Flynn",
+      "school": "University of Wisconsin",
+      "class_year": "Junior (2024-25)",
+      "before": {
+        "composite": 8.9,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.5
+    },
+    {
+      "slug": "teraya-sigler-pittsburgh-womens-volleyball",
+      "name": "Teraya Sigler",
+      "school": "University of Pittsburgh",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 9.3,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.9
+    },
+    {
+      "slug": "sam-leavitt-arizona-state-football",
+      "name": "Sam Leavitt",
+      "school": "Arizona State University",
+      "class_year": "Sophomore (2024-25 starter)",
+      "before": {
+        "composite": 8.9,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.5
+    },
+    {
+      "slug": "lanorris-sellers-south-carolina-football",
+      "name": "LaNorris Sellers",
+      "school": "University of South Carolina",
+      "class_year": "Sophomore (2024-25 starter)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "emeka-egbuka-ohio-state-football",
+      "name": "Emeka Egbuka",
+      "school": "Ohio State (alumnus)",
+      "class_year": "Pro (Seattle Seahawks)",
+      "before": {
+        "composite": 9.1,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.1,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "anthony-davis-kentucky-mens-basketball",
+      "name": "Anthony Davis",
+      "school": "Kentucky (alumnus)",
+      "class_year": "Pro (Dallas Mavericks)",
+      "before": {
+        "composite": 9.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.2
+    },
+    {
+      "slug": "kevin-durant-texas-mens-basketball",
+      "name": "Kevin Durant",
+      "school": "Texas (alumnus)",
+      "class_year": "Pro (Phoenix Suns)",
+      "before": {
+        "composite": 9.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.4
+    },
+    {
+      "slug": "bryce-harper-college-southern-nevada-baseball",
+      "name": "Bryce Harper",
+      "school": "College of Southern Nevada (JUCO)",
+      "class_year": "Pro (Philadelphia Phillies)",
+      "before": {
+        "composite": 9.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.2
+    },
+    {
+      "slug": "quinshon-judkins-ohio-state-football",
+      "name": "Quinshon Judkins",
+      "school": "Ohio State (alumnus)",
+      "class_year": "Pro (Cleveland Browns)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 9.0,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "treveyon-henderson-ohio-state-football",
+      "name": "TreVeyon Henderson",
+      "school": "Ohio State (alumnus)",
+      "class_year": "Pro (New England Patriots)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.0,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "boogie-fland-florida-mens-basketball",
+      "name": "Boogie Fland",
+      "school": "University of Florida",
+      "class_year": "Sophomore (2025-26)",
+      "before": {
+        "composite": 8.4,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.0
+    },
+    {
+      "slug": "asa-newell-georgia-mens-basketball",
+      "name": "Asa Newell",
+      "school": "Georgia (alumnus)",
+      "class_year": "Pro (Atlanta Hawks)",
+      "before": {
+        "composite": 8.9,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 8.9,
+        "tier": "ELITE"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "chiaka-ogbogu-texas-womens-volleyball",
+      "name": "Chiaka Ogbogu",
+      "school": "Texas (alumna)",
+      "class_year": "Pro / USA Olympic gold",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "legacy_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "micha-hancock-penn-state-womens-volleyball",
+      "name": "Micha Hancock",
+      "school": "Penn State (alumna)",
+      "class_year": "Pro / USA national team",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.2,
+        "tier": "ELITE+"
+      },
+      "classification": "legacy_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "jihaad-campbell-alabama-football",
+      "name": "Jihaad Campbell",
+      "school": "Alabama (alumnus)",
+      "class_year": "Pro (Philadelphia Eagles)",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.2,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "anna-smrek-wisconsin-womens-volleyball",
+      "name": "Anna Smrek",
+      "school": "University of Wisconsin",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 9.1,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.7
+    },
+    {
+      "slug": "anna-stevenson-louisville-womens-volleyball",
+      "name": "Anna Stevenson",
+      "school": "University of Louisville",
+      "class_year": "Senior (2024-25)",
+      "before": {
+        "composite": 9.2,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.8
+    },
+    {
+      "slug": "lebron-james-st-vincent-st-mary-mens-basketball",
+      "name": "LeBron James",
+      "school": "St. Vincent\\u2013St. Mary HS (no NCAA)",
+      "class_year": "Pro (Los Angeles Lakers)",
+      "before": {
+        "composite": 9.9,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.6
+    },
+    {
+      "slug": "carmelo-anthony-syracuse-mens-basketball",
+      "name": "Carmelo Anthony",
+      "school": "Syracuse (alumnus)",
+      "class_year": "Pro (retired 2023)",
+      "before": {
+        "composite": 9.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.4,
+        "tier": "ELITE+"
+      },
+      "classification": "retired_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "jasper-johnson-kentucky-mens-basketball",
+      "name": "Jasper Johnson",
+      "school": "University of Kentucky",
+      "class_year": "Freshman (2025-26)",
+      "before": {
+        "composite": 8.9,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.5
+    },
+    {
+      "slug": "otega-oweh-kentucky-mens-basketball",
+      "name": "Otega Oweh",
+      "school": "University of Kentucky",
+      "class_year": "Senior (2025-26)",
+      "before": {
+        "composite": 8.8,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.4
+    },
+    {
+      "slug": "ryan-williams-alabama-football",
+      "name": "Ryan Williams",
+      "school": "University of Alabama",
+      "class_year": "Sophomore (2025-26)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "patrick-mahomes-texas-tech-football",
+      "name": "Patrick Mahomes",
+      "school": "Texas Tech (alumnus)",
+      "class_year": "Pro (Kansas City Chiefs)",
+      "before": {
+        "composite": 9.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.4
+    },
+    {
+      "slug": "lamar-jackson-louisville-football",
+      "name": "Lamar Jackson",
+      "school": "Louisville (alumnus)",
+      "class_year": "Pro (Baltimore Ravens)",
+      "before": {
+        "composite": 9.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.2
+    },
+    {
+      "slug": "josh-allen-wyoming-football",
+      "name": "Josh Allen",
+      "school": "Wyoming (alumnus)",
+      "class_year": "Pro (Buffalo Bills)",
+      "before": {
+        "composite": 9.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.2
+    },
+    {
+      "slug": "novak-djokovic-pro-tennis",
+      "name": "Novak Djokovic",
+      "school": "No NCAA \\u2014 pro pathway from Serbia",
+      "class_year": "Pro",
+      "before": {
+        "composite": 9.8,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.5
+    },
+    {
+      "slug": "bill-walton-ucla-mens-basketball",
+      "name": "Bill Walton",
+      "school": "UCLA (alumnus)",
+      "class_year": "Pro (retired 1988)",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.2,
+        "tier": "ELITE+"
+      },
+      "classification": "retired_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "stephen-curry-davidson-mens-basketball",
+      "name": "Stephen Curry",
+      "school": "Davidson (alumnus)",
+      "class_year": "Pro (Golden State Warriors)",
+      "before": {
+        "composite": 9.6,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.3
+    },
+    {
+      "slug": "kim-hill-pepperdine-womens-volleyball",
+      "name": "Kim Hill",
+      "school": "Pepperdine (alumna)",
+      "class_year": "Pro (retired 2022)",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "retired_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "sophia-smith-stanford-womens-soccer",
+      "name": "Sophia Smith",
+      "school": "Stanford (alumna)",
+      "class_year": "Pro (Portland Thorns FC)",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "trinity-rodman-washington-spirit-womens-soccer",
+      "name": "Trinity Rodman",
+      "school": "Washington State (one season, departed early)",
+      "class_year": "Pro (Washington Spirit)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.0,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "naomi-girma-stanford-womens-soccer",
+      "name": "Naomi Girma",
+      "school": "Stanford (alumna)",
+      "class_year": "Pro (San Diego Wave \\u2192 Chelsea FCW)",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "lindsey-horan-no-ncaa-womens-soccer",
+      "name": "Lindsey Horan",
+      "school": "No NCAA \\u2014 PSG academy (first US-born woman to skip college for European pro)",
+      "class_year": "Pro (Lyon)",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "cat-osterman-texas-softball",
+      "name": "Cat Osterman",
+      "school": "Texas (alumna)",
+      "class_year": "Pro (retired 2021)",
+      "before": {
+        "composite": 9.4,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.4,
+        "tier": "ELITE+"
+      },
+      "classification": "retired_pro_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "monica-abbott-tennessee-softball",
+      "name": "Monica Abbott",
+      "school": "Tennessee (alumna)",
+      "class_year": "Pro (Athletes Unlimited Softball)",
+      "before": {
+        "composite": 9.5,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.2
+    },
+    {
+      "slug": "jocelyn-alo-oklahoma-softball",
+      "name": "Jocelyn Alo",
+      "school": "Oklahoma (alumna)",
+      "class_year": "Pro (Athletes Unlimited Softball)",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.2,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "lauren-moyer-maryland-field-hockey",
+      "name": "Lauren Moyer",
+      "school": "Maryland (alumna)",
+      "class_year": "Pro (USWNT)",
+      "before": {
+        "composite": 9.0,
+        "tier": "ELITE"
+      },
+      "after": {
+        "composite": 9.0,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "eva-de-goede-pro-netherlands-field-hockey",
+      "name": "Eva de Goede",
+      "school": "No NCAA \\u2014 KZ + Amsterdam HC (Netherlands)",
+      "class_year": "Pro",
+      "before": {
+        "composite": 9.7,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.4
+    },
+    {
+      "slug": "lionel-messi-pro-mens-soccer",
+      "name": "Lionel Messi",
+      "school": "No NCAA \\u2014 La Masia academy",
+      "class_year": "Pro",
+      "before": {
+        "composite": 9.8,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": -0.5
+    },
+    {
+      "slug": "micah-christenson-usc-mens-volleyball",
+      "name": "Micah Christenson",
+      "school": "USC (alumnus)",
+      "class_year": "Pro (USA Senior National Team)",
+      "before": {
+        "composite": 9.3,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.3,
+        "tier": "ELITE+"
+      },
+      "classification": "pro_active_R4",
+      "delta": 0.0
+    },
+    {
+      "slug": "mira-tanaka-cal-womens-volleyball",
+      "name": "Mira Tanaka",
+      "school": "Cal Berkeley",
+      "class_year": "",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 9.0,
+        "tier": "ELITE+"
+      },
+      "classification": "unclassified_unchanged",
+      "delta": 0.0
+    },
+    {
+      "slug": "emory-king-nebraska-womens-volleyball",
+      "name": "Emory King",
+      "school": "Nebraska",
+      "class_year": "",
+      "before": {
+        "composite": 9.2,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.8
+    },
+    {
+      "slug": "jayden-rashid-lsu-football",
+      "name": "Jayden Rashid",
+      "school": "LSU",
+      "class_year": "",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    },
+    {
+      "slug": "isabella-okafor-stanford-womens-volleyball",
+      "name": "Isabella Okafor",
+      "school": "Stanford",
+      "class_year": "",
+      "before": {
+        "composite": 9.1,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.7
+    },
+    {
+      "slug": "marcus-johnson-michigan-football",
+      "name": "Marcus Johnson",
+      "school": "Michigan",
+      "class_year": "",
+      "before": {
+        "composite": 9.0,
+        "tier": "ICON"
+      },
+      "after": {
+        "composite": 7.4,
+        "tier": "STAR"
+      },
+      "classification": "college_amateur_R3",
+      "delta": -1.6
+    }
+  ],
+  "unchanged": [
+    {
+      "slug": "lexi-rodriguez-lovb-nebraska-womens-volleyball",
+      "name": "Lexi Rodriguez",
+      "school": "LOVB Nebraska (pro)",
+      "class_year": "Pro",
+      "composite": 8.0,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "merritt-beason-lovb-atlanta-womens-volleyball",
+      "name": "Merritt Beason",
+      "school": "LOVB Atlanta (pro)",
+      "class_year": "Pro",
+      "composite": 8.4,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "alexa-gray-lovb-salt-lake-womens-volleyball",
+      "name": "Alexa Gray",
+      "school": "LOVB Salt Lake (pro)",
+      "class_year": "Pro",
+      "composite": 8.6,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "tre-johnson-texas-mens-basketball",
+      "name": "Tre Johnson",
+      "school": "University of Texas (NBA-bound)",
+      "class_year": "Pro",
+      "composite": 8.7,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "matt-shaw-maryland-baseball",
+      "name": "Matt Shaw",
+      "school": "Maryland",
+      "class_year": "Pro",
+      "composite": 8.5,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "lexi-sun-nebraska-womens-volleyball",
+      "name": "Lexi Sun",
+      "school": "Nebraska (alumna)",
+      "class_year": "Pro (Overseas + USA pool)",
+      "composite": 8.9,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "foluke-akinradewo-stanford-womens-volleyball",
+      "name": "Foluke Akinradewo Gunderson",
+      "school": "Stanford (alumna)",
+      "class_year": "Pro / USA Olympic gold medalist",
+      "composite": 9.7,
+      "tier": "ICON",
+      "classification": "legacy_pro_unchanged"
+    },
+    {
+      "slug": "anthony-richardson-florida-football",
+      "name": "Anthony Richardson",
+      "school": "Florida (alumnus)",
+      "class_year": "Pro (Indianapolis Colts)",
+      "composite": 8.4,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "jj-mccarthy-michigan-football",
+      "name": "J.J. McCarthy",
+      "school": "Michigan (alumnus)",
+      "class_year": "Pro (Minnesota Vikings)",
+      "composite": 8.8,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "andrew-vaughn-california-baseball",
+      "name": "Andrew Vaughn",
+      "school": "California (alumnus)",
+      "class_year": "Pro (Chicago White Sox)",
+      "composite": 8.6,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "henry-davis-louisville-baseball",
+      "name": "Henry Davis",
+      "school": "Louisville (alumnus)",
+      "class_year": "Pro (Pittsburgh Pirates)",
+      "composite": 8.6,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "misty-may-treanor-long-beach-state-womens-volleyball",
+      "name": "Misty May-Treanor",
+      "school": "Long Beach State (alumna)",
+      "class_year": "Pro / 3\\u00d7 Olympic Gold (beach)",
+      "composite": 9.7,
+      "tier": "ICON",
+      "classification": "legacy_pro_unchanged"
+    },
+    {
+      "slug": "kerri-walsh-jennings-stanford-womens-volleyball",
+      "name": "Kerri Walsh Jennings",
+      "school": "Stanford (alumna)",
+      "class_year": "Pro / 3\\u00d7 Olympic Gold + 1 Bronze (beach)",
+      "composite": 9.8,
+      "tier": "ICON",
+      "classification": "legacy_pro_unchanged"
+    },
+    {
+      "slug": "jaxson-dart-ole-miss-football",
+      "name": "Jaxson Dart",
+      "school": "Ole Miss (alumnus)",
+      "class_year": "Pro (New York Giants)",
+      "composite": 8.7,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "devin-taylor-indiana-baseball",
+      "name": "Devin Taylor",
+      "school": "Indiana University (alumnus)",
+      "class_year": "Pro (Kansas City Royals)",
+      "composite": 8.9,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "diana-taurasi-uconn-womens-basketball",
+      "name": "Diana Taurasi",
+      "school": "UConn (alumna)",
+      "class_year": "Pro (Phoenix Mercury, retired 2024)",
+      "composite": 9.8,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "maya-moore-uconn-womens-basketball",
+      "name": "Maya Moore",
+      "school": "UConn (alumna)",
+      "class_year": "Pro (Minnesota Lynx, retired 2018)",
+      "composite": 9.5,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "tre-harris-ole-miss-football",
+      "name": "Tre Harris",
+      "school": "Ole Miss (alumnus)",
+      "class_year": "Pro (Los Angeles Chargers)",
+      "composite": 8.9,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "stephen-strasburg-san-diego-state-baseball",
+      "name": "Stephen Strasburg",
+      "school": "San Diego State (alumnus)",
+      "class_year": "Pro (Washington Nationals, retired 2024)",
+      "composite": 9.5,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "matthew-golden-texas-football",
+      "name": "Matthew Golden",
+      "school": "Texas (alumnus)",
+      "class_year": "Pro (Green Bay Packers)",
+      "composite": 8.9,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "candace-parker-tennessee-womens-basketball",
+      "name": "Candace Parker",
+      "school": "Tennessee (alumna)",
+      "class_year": "Pro (retired 2024)",
+      "composite": 9.6,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "sue-bird-uconn-womens-basketball",
+      "name": "Sue Bird",
+      "school": "UConn (alumna)",
+      "class_year": "Pro (Seattle Storm, retired 2022)",
+      "composite": 9.5,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "cam-skattebo-arizona-state-football",
+      "name": "Cam Skattebo",
+      "school": "Arizona State (alumnus)",
+      "class_year": "Pro (New York Giants)",
+      "composite": 8.8,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "michael-jordan-unc-mens-basketball",
+      "name": "Michael Jordan",
+      "school": "UNC (alumnus)",
+      "class_year": "Pro (retired 2003)",
+      "composite": 9.8,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "magic-johnson-michigan-state-mens-basketball",
+      "name": "Magic Johnson",
+      "school": "Michigan State (alumnus)",
+      "class_year": "Pro (retired 1996)",
+      "composite": 9.7,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "roger-federer-pro-tennis",
+      "name": "Roger Federer",
+      "school": "No NCAA \\u2014 pro pathway from Switzerland",
+      "class_year": "Pro (retired 2022)",
+      "composite": 9.7,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "rafael-nadal-pro-tennis",
+      "name": "Rafael Nadal",
+      "school": "No NCAA \\u2014 pro pathway from Spain",
+      "class_year": "Pro (retired 2024)",
+      "composite": 9.6,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "serena-williams-pro-tennis",
+      "name": "Serena Williams",
+      "school": "No NCAA \\u2014 pro pathway from Florida",
+      "class_year": "Pro (retired 2022)",
+      "composite": 9.7,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "larry-bird-indiana-state-mens-basketball",
+      "name": "Larry Bird",
+      "school": "Indiana State (alumnus)",
+      "class_year": "Pro (retired 1992)",
+      "composite": 9.5,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "bill-russell-san-francisco-mens-basketball",
+      "name": "Bill Russell",
+      "school": "San Francisco (alumnus)",
+      "class_year": "Pro (retired 1969)",
+      "composite": 9.6,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "kareem-abdul-jabbar-ucla-mens-basketball",
+      "name": "Kareem Abdul-Jabbar",
+      "school": "UCLA (alumnus)",
+      "class_year": "Pro (retired 1989)",
+      "composite": 9.8,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "kobe-bryant-pro-mens-basketball",
+      "name": "Kobe Bryant",
+      "school": "Lower Merion HS (no NCAA)",
+      "class_year": "Pro (retired 2016)",
+      "composite": 9.7,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "tom-brady-michigan-football",
+      "name": "Tom Brady",
+      "school": "Michigan (alumnus)",
+      "class_year": "Pro (retired 2022)",
+      "composite": 9.8,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "peyton-manning-tennessee-football",
+      "name": "Peyton Manning",
+      "school": "Tennessee (alumnus)",
+      "class_year": "Pro (retired 2016)",
+      "composite": 9.7,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "mia-hamm-north-carolina-womens-soccer",
+      "name": "Mia Hamm",
+      "school": "North Carolina (alumna)",
+      "class_year": "Pro (retired 2004)",
+      "composite": 9.6,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "jennie-finch-arizona-softball",
+      "name": "Jennie Finch",
+      "school": "Arizona (alumna)",
+      "class_year": "Pro (retired 2010)",
+      "composite": 9.5,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    },
+    {
+      "slug": "bonnie-hartmann-maryland-field-hockey",
+      "name": "Bonnie Hartmann",
+      "school": "Maryland (alumna)",
+      "class_year": "Pro",
+      "composite": 8.7,
+      "tier": "ELITE",
+      "classification": "pro_active_R4"
+    },
+    {
+      "slug": "karch-kiraly-ucla-mens-volleyball",
+      "name": "Karch Kiraly",
+      "school": "UCLA (alumnus)",
+      "class_year": "Pro/Coach (retired, USAV W head coach)",
+      "composite": 9.8,
+      "tier": "ICON",
+      "classification": "retired_pro_unchanged"
+    }
+  ],
+  "skipped_no_eval_grid": [
+    "taniya-latson-south-carolina-womens-basketball",
+    "flaujae-johnson-lsu-womens-basketball"
+  ],
+  "tier_changes": {
+    "ELITE \u2192 STAR": 90,
+    "ICON \u2192 ELITE+": 61,
+    "ICON \u2192 ELITE": 10,
+    "STAR \u2192 STAR": 4,
+    "ICON \u2192 STAR": 49,
+    "TOP_PROSPECT \u2192 STAR": 11,
+    "ELITE \u2192 ELITE+": 4,
+    "STAR \u2192 ELITE": 1
+  }
+}

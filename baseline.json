@@ -1,0 +1,356 @@
+[
+ {
+  "name": "Tyran Stokes",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Jordan Smith Jr.",
+  "sport": "mens-basketball",
+  "composite": 5.3,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Cameron Williams",
+  "sport": "mens-basketball",
+  "composite": 5.2,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Babatunde Oladotun",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Jason Crowe",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Caleb Holt",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Bruce Branch III",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Alijah Arenas",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Caleb Gaskins",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Oliviyah Edwards",
+  "sport": "womens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Deron Rippey Jr.",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Saniyah Hall",
+  "sport": "womens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Jordyn Jackson",
+  "sport": "womens-basketball",
+  "composite": 3.3,
+  "tier": "DEV"
+ },
+ {
+  "name": "Olivia Vukosa",
+  "sport": "womens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Kate Harpring",
+  "sport": "womens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Maddyn Greenway",
+  "sport": "womens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Danielle Osho",
+  "sport": "womens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Emily McDonald",
+  "sport": "womens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Manuella Fernandez",
+  "sport": "womens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Faizon Brandon",
+  "sport": "football",
+  "composite": 5.3,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Chris Henry Jr.",
+  "sport": "football",
+  "composite": 6.5,
+  "tier": "PROSPECT"
+ },
+ {
+  "name": "Keisean Henderson",
+  "sport": "football",
+  "composite": 7.4,
+  "tier": "STAR"
+ },
+ {
+  "name": "Lamar Brown",
+  "sport": "football",
+  "composite": 7.4,
+  "tier": "STAR"
+ },
+ {
+  "name": "John Meredith",
+  "sport": "football",
+  "composite": 3.4,
+  "tier": "DEV"
+ },
+ {
+  "name": "Jacob Lombard",
+  "sport": "baseball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Eric Booth Jr.",
+  "sport": "baseball",
+  "composite": 3.5,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Trevor Condon",
+  "sport": "baseball",
+  "composite": 7.4,
+  "tier": "STAR"
+ },
+ {
+  "name": "Carlos Medlock Jr.",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Brandon Bass Jr.",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Austin Goosby",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Fred Smith Jr.",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Bo Ogden",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Anthony Brown Jr.",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Jasiah Jervis",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Quentin Coleman",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Cedric Tomes",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Antwan Kimmons",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Donovan Dent",
+  "sport": "mens-basketball",
+  "composite": 9.3,
+  "tier": "ELITE+"
+ },
+ {
+  "name": "Jeremy Dent-Smith",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Tate Ivanyo",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "DeJour Reaves",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Robbie Avila",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Jack Karasinski",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Terrence Hill Jr.",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Cole McCormick",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Kenyon Goodin",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Javion Guy-King",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Kent Jackson",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Kenneth Chime",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Cameron Boozer",
+  "sport": "mens-basketball",
+  "composite": 7.4,
+  "tier": "STAR"
+ },
+ {
+  "name": "AJ Dybantsa",
+  "sport": "mens-basketball",
+  "composite": 7.4,
+  "tier": "STAR"
+ },
+ {
+  "name": "JT Toppin",
+  "sport": "mens-basketball",
+  "composite": 7.4,
+  "tier": "STAR"
+ },
+ {
+  "name": "Jeremy Fears Jr.",
+  "sport": "mens-basketball",
+  "composite": 7.4,
+  "tier": "STAR"
+ },
+ {
+  "name": "Caitlin Clark",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Cooper Flagg",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Elyjah Freeman",
+  "sport": "mens-basketball",
+  "composite": 4.0,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Benjamin Bill",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Ben Pearce",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ },
+ {
+  "name": "Chris Bryant",
+  "sport": "mens-basketball",
+  "composite": 5.4,
+  "tier": "SCOUT"
+ }
+]

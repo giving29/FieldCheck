@@ -1,0 +1,8 @@
+{
+  "horizon": "H2",
+  "batch": "vbopeners2026",
+  "resolver_event": "NCAA Women's Volleyball season opening month, Aug-Sep 2026",
+  "predictions": [
+    { "athlete": "FILL graded WVB athlete", "sport": "womens-volleyball", "composite": 0.0, "tier": "FILL", "prediction": "FILL e.g. Starts opening weekend; top-3 on team in kills by Sep 30", "resolver": "Official box scores through 2026-09-30", "resolve_by": "2026-10-01", "rationale": "FILL from verdict page" }
+  ]
+}

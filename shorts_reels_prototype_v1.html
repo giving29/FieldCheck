@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FieldCheck · News & Video · Jordan Smith Jr. (Shorts/Reels prototype)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ─────────────────────────────────────────────────────────────────────
+     FIELDCHECK · News & Video · Shorts/Reels Prototype
+     Standalone preview · 2026-06-06
+     Editorial sports premium · dark with gold accents
+  ───────────────────────────────────────────────────────────────────── */
+
+  :root {
+    --bg: #0a0a0c;
+    --bg-elev: #15151a;
+    --bg-card: #1c1c22;
+    --border: #2a2a32;
+    --border-soft: #1f1f26;
+    --ink: #ece9e1;
+    --ink-mute: #9a9690;
+    --ink-low: #5e5b56;
+    --gold: #c9a96b;
+    --gold-bright: #f0c66e;
+    --gold-soft: rgba(201, 169, 107, 0.12);
+    --hot: #ff5a3c;
+    --cool: #5bb4ff;
+    --green: #5cdc8a;
+
+    --sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+    --display: 'Big Shoulders Display', 'DM Sans', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    --radius: 10px;
+    --radius-lg: 14px;
+    --radius-pill: 999px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 var(--sans);
+    font-feature-settings: 'ss01', 'ss03';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse 90% 60% at 50% -10%, rgba(201, 169, 107, 0.06), transparent 60%),
+      radial-gradient(ellipse 80% 40% at 100% 40%, rgba(91, 180, 255, 0.03), transparent 70%);
+  }
+
+  /* Page chrome --------------------------------------------------------- */
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  .top-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 0 28px;
+    border-bottom: 1px solid var(--border-soft);
+    margin-bottom: 28px;
+  }
+  .brand {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .brand span { color: var(--gold); }
+  .back {
+    color: var(--ink-mute); font-size: 13px;
+    text-decoration: none;
+  }
+  .back:hover { color: var(--ink); }
+
+  .preview-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--gold-soft);
+    border: 1px solid rgba(201, 169, 107, 0.3);
+    border-radius: var(--radius-pill);
+    color: var(--gold-bright);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+
+  /* Player header ------------------------------------------------------- */
+
+  .player-hd {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: end;
+    padding: 0 0 28px;
+    border-bottom: 1px solid var(--border-soft);
+    margin-bottom: 28px;
+  }
+  .served-by {
+    color: var(--ink-low);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .served-by .dot { color: var(--gold); }
+  .sport-tag {
+    display: inline-block;
+    padding: 3px 9px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    color: var(--ink-mute);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .player-name {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(40px, 7vw, 64px);
+    line-height: 0.96;
+    letter-spacing: -0.005em;
+    margin: 0 0 10px;
+  }
+  .player-meta {
+    color: var(--ink-mute);
+    font-size: 14px;
+    max-width: 540px;
+  }
+  .player-meta strong { color: var(--ink); font-weight: 500; }
+
+  .verdict-block {
+    text-align: right;
+  }
+  .composite {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 78px;
+    line-height: 1;
+    color: var(--gold);
+    margin: 0;
+  }
+  .tier-pill {
+    display: inline-block;
+    padding: 5px 14px;
+    margin-top: 6px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: var(--radius-pill);
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+  }
+
+  /* Tab strip ---------------------------------------------------------- */
+
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 36px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 12px 14px;
+    color: var(--ink-mute);
+    font-size: 13px;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active {
+    color: var(--gold-bright);
+    border-bottom-color: var(--gold);
+  }
+
+  /* Section heads ------------------------------------------------------- */
+
+  .sec-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 0 0 18px;
+  }
+  .sec-title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .sec-title .gold { color: var(--gold); }
+  .sec-aside {
+    color: var(--ink-low);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ─── HOT REELS  (NEW) ───────────────────────────────────────────── */
+
+  .reels-row {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 0 18px;
+    margin-bottom: 36px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .reels-row::-webkit-scrollbar { height: 6px; }
+  .reels-row::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  .reels-row::-webkit-scrollbar-track { background: transparent; }
+
+  .reel-card {
+    flex: 0 0 168px;
+    aspect-ratio: 9 / 16;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    scroll-snap-align: start;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid var(--border-soft);
+  }
+  .reel-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -16px rgba(0,0,0,0.7);
+  }
+
+  /* Each card gets its own thematic gradient based on platform */
+  .reel-card.yt {
+    background:
+      linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.85) 100%),
+      linear-gradient(135deg, #2a1010 0%, #5a1a1a 100%);
+  }
+  .reel-card.ig {
+    background:
+      linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.85) 100%),
+      linear-gradient(135deg, #401040 0%, #6a2050 60%, #d04030 100%);
+  }
+  .reel-card.tt {
+    background:
+      linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.85) 100%),
+      linear-gradient(135deg, #0a2030 0%, #1a4060 100%);
+  }
+
+  .reel-platform {
+    position: absolute; top: 10px; left: 10px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    color: white;
+    padding: 3px 8px;
+    border-radius: var(--radius-pill);
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .reel-duration {
+    position: absolute; top: 10px; right: 10px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    color: white;
+    padding: 3px 7px;
+    border-radius: var(--radius-pill);
+    font-family: var(--mono);
+    font-size: 10px;
+  }
+  .reel-play {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    color: #111;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .reel-card:hover .reel-play {
+    transform: translate(-50%, -50%) scale(1.08);
+    background: var(--gold-bright);
+  }
+  .reel-play svg { width: 18px; height: 18px; margin-left: 2px; }
+
+  .reel-meta {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 12px 12px 14px;
+    color: white;
+  }
+  .reel-caption {
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1.32;
+    margin: 0 0 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .reel-creator {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* ─── HIGHLIGHTS  (curated long-form videos) ─────────────────────── */
+
+  .vid-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+  @media (max-width: 640px) { .vid-grid { grid-template-columns: 1fr; } }
+
+  .vid-card {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 14px;
+    padding: 12px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .vid-card:hover { border-color: var(--border); background: var(--bg-card); }
+
+  .vid-thumb {
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+    background:
+      linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%),
+      linear-gradient(135deg, #2a1010 0%, #4a1a1a 100%);
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .vid-thumb .icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    color: #111;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .vid-thumb .icon svg { width: 12px; height: 12px; margin-left: 2px; }
+
+  .vid-meta { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
+  .vid-title {
+    font-size: 13.5px; font-weight: 500; line-height: 1.36;
+    margin: 0 0 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .vid-source {
+    color: var(--ink-low);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── RECENT NEWS  (curated news mentions) ───────────────────────── */
+
+  .news-list { list-style: none; padding: 0; margin: 0 0 36px; }
+  .news-item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .news-item:first-child { padding-top: 0; }
+  .news-item:last-child { border-bottom: none; }
+  .news-headline {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--ink);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .news-headline:hover { color: var(--gold-bright); }
+  .news-byline {
+    color: var(--ink-low);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+  }
+  .news-byline .pub { color: var(--ink-mute); }
+
+  /* ─── FOLLOW THE ATHLETE  (NEW) ──────────────────────────────────── */
+
+  .follow-block {
+    background: linear-gradient(135deg,
+      rgba(201, 169, 107, 0.05) 0%,
+      rgba(201, 169, 107, 0.01) 100%);
+    border: 1px solid rgba(201, 169, 107, 0.15);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 36px;
+  }
+  .follow-head {
+    margin-bottom: 16px;
+  }
+  .follow-prompt {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 24px;
+    margin: 0 0 4px;
+  }
+  .follow-prompt .gold { color: var(--gold); }
+  .follow-sub {
+    color: var(--ink-mute);
+    font-size: 13px;
+  }
+  .follow-chips {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  .follow-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 12px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-pill);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 13.5px;
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .follow-chip:hover {
+    transform: translateY(-1px);
+    border-color: var(--gold);
+    background: var(--bg-card);
+  }
+  .follow-chip .logo {
+    width: 26px; height: 26px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-ig {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  }
+  .logo-tt {
+    background: #000;
+    border: 1px solid #2a2a2a;
+  }
+  .logo-x {
+    background: #000;
+    border: 1px solid #2a2a2a;
+  }
+  .logo svg { width: 14px; height: 14px; }
+  .follow-chip .handle { font-family: var(--mono); font-size: 12.5px; color: var(--ink-mute); }
+
+  /* ─── PUBLIC RECORD  (existing fallback row) ─────────────────────── */
+
+  .pubrec-block {
+    border-top: 1px solid var(--border-soft);
+    padding-top: 22px;
+  }
+  .pubrec-head {
+    color: var(--ink-low);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .pubrec-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pubrec-chip {
+    padding: 7px 12px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    color: var(--ink-mute);
+    text-decoration: none;
+    font-size: 12px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .pubrec-chip:hover { color: var(--ink); border-color: var(--ink-low); }
+
+  /* ─── Mobile tweaks ─────────────────────────────────────────────── */
+
+  @media (max-width: 640px) {
+    .player-hd { grid-template-columns: 1fr; align-items: start; }
+    .verdict-block { text-align: left; }
+    .composite { font-size: 56px; }
+    .reel-card { flex-basis: 148px; }
+    .follow-block { padding: 22px; }
+    .vid-card { grid-template-columns: 1fr; }
+    .vid-thumb { aspect-ratio: 16 / 9; }
+  }
+
+  /* ─── Subtle reveal animation ───────────────────────────────────── */
+
+  .reveal { animation: rise 0.6s ease-out backwards; }
+  .reveal-1 { animation-delay: 0.05s; }
+  .reveal-2 { animation-delay: 0.12s; }
+  .reveal-3 { animation-delay: 0.20s; }
+  .reveal-4 { animation-delay: 0.28s; }
+  .reveal-5 { animation-delay: 0.36s; }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- top bar -->
+  <header class="top-bar">
+    <div class="brand">Field<span>Check</span></div>
+    <a class="back" href="#">← all players</a>
+  </header>
+
+  <div class="preview-badge">Prototype · News &amp; Video tab · Shorts/Reels v1</div>
+
+  <!-- player header -->
+  <section class="player-hd reveal reveal-1">
+    <div>
+      <div class="served-by">
+        <span class="dot">●</span> edge-served · curated marquee profile · verified 2026-05-10
+      </div>
+      <div class="sport-tag">Mens Basketball</div>
+      <h1 class="player-name">Jordan Smith Jr.</h1>
+      <p class="player-meta">
+        <strong>Paul VI Catholic (Chantilly, VA)</strong> — Arkansas signee · Combo Guard · HS Senior
+      </p>
+    </div>
+    <div class="verdict-block">
+      <div class="composite">5.3</div>
+      <div class="tier-pill">SCOUT</div>
+    </div>
+  </section>
+
+  <!-- tab strip -->
+  <nav class="tabs reveal reveal-2">
+    <div class="tab">Summary</div>
+    <div class="tab">Eval Grid</div>
+    <div class="tab">Stats &amp; Awards</div>
+    <div class="tab">NIL &amp; Market</div>
+    <div class="tab active">News &amp; Video</div>
+    <div class="tab">Sources</div>
+  </nav>
+
+  <!-- ────────────  HOT REELS  ──────────── -->
+  <section class="reveal reveal-3">
+    <div class="sec-head">
+      <h2 class="sec-title">Hot Reels <span class="gold">·</span> short-form</h2>
+      <div class="sec-aside">YT Shorts · IG · TikTok</div>
+    </div>
+
+    <div class="reels-row">
+
+      <a class="reel-card yt" href="#">
+        <div class="reel-platform">YT Shorts</div>
+        <div class="reel-duration">0:42</div>
+        <div class="reel-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="reel-meta">
+          <p class="reel-caption">39 PTS double-OT vs St. John's — the WCAC title shot</p>
+          <div class="reel-creator">@PaulVIHoops</div>
+        </div>
+      </a>
+
+      <a class="reel-card ig" href="#">
+        <div class="reel-platform">IG Reel</div>
+        <div class="reel-duration">0:28</div>
+        <div class="reel-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="reel-meta">
+          <p class="reel-caption">5AM gym session before Naismith ceremony</p>
+          <div class="reel-creator">@jordansmithjr</div>
+        </div>
+      </a>
+
+      <a class="reel-card tt" href="#">
+        <div class="reel-platform">TikTok</div>
+        <div class="reel-duration">0:34</div>
+        <div class="reel-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="reel-meta">
+          <p class="reel-caption">When Coach Cal called — live reaction</p>
+          <div class="reel-creator">@jsj_hoops</div>
+        </div>
+      </a>
+
+      <a class="reel-card yt" href="#">
+        <div class="reel-platform">YT Shorts</div>
+        <div class="reel-duration">0:55</div>
+        <div class="reel-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="reel-meta">
+          <p class="reel-caption">Top 5 plays from senior season · 26.6 PPG</p>
+          <div class="reel-creator">@OvertimeBBall</div>
+        </div>
+      </a>
+
+      <a class="reel-card ig" href="#">
+        <div class="reel-platform">IG Reel</div>
+        <div class="reel-duration">0:19</div>
+        <div class="reel-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="reel-meta">
+          <p class="reel-caption">Family signing day · Arkansas red &amp; tears</p>
+          <div class="reel-creator">@jordansmithjr</div>
+        </div>
+      </a>
+
+      <a class="reel-card tt" href="#">
+        <div class="reel-platform">TikTok</div>
+        <div class="reel-duration">0:46</div>
+        <div class="reel-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="reel-meta">
+          <p class="reel-caption">Mock draft talk · "lottery pick by 2027" — reaction</p>
+          <div class="reel-creator">@hooper.io</div>
+        </div>
+      </a>
+
+      <a class="reel-card yt" href="#">
+        <div class="reel-platform">YT Shorts</div>
+        <div class="reel-duration">0:38</div>
+        <div class="reel-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="reel-meta">
+          <p class="reel-caption">EYBL highlight · Team Takeover deep run</p>
+          <div class="reel-creator">@NikeEYBL</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ────────────  HIGHLIGHTS  ──────────── -->
+  <section class="reveal reveal-4">
+    <div class="sec-head">
+      <h2 class="sec-title">Highlights <span class="gold">·</span> long-form</h2>
+      <div class="sec-aside">4 curated</div>
+    </div>
+
+    <div class="vid-grid">
+
+      <a class="vid-card" href="#">
+        <div class="vid-thumb">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="vid-meta">
+          <p class="vid-title">Calipari picks up 5-star Jordan Smith Jr · Arkansas commit reaction</p>
+          <div class="vid-source">2026 · Aaron Torres Sports</div>
+        </div>
+      </a>
+
+      <a class="vid-card" href="#">
+        <div class="vid-thumb">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="vid-meta">
+          <p class="vid-title">Is Jordan Smith Jr. the best prospect in the country? · Senior Highlights</p>
+          <div class="vid-source">2026 · Hoop Scene</div>
+        </div>
+      </a>
+
+      <a class="vid-card" href="#">
+        <div class="vid-thumb">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="vid-meta">
+          <p class="vid-title">Jordan Smith EYBL Highlights · ESPN's #3 ranked recruit in the nation</p>
+          <div class="vid-source">2025 · EYBL</div>
+        </div>
+      </a>
+
+      <a class="vid-card" href="#">
+        <div class="vid-thumb">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="vid-meta">
+          <p class="vid-title">Future Arkansas SG Jordan Smith Jr. is a lottery pick — full breakdown</p>
+          <div class="vid-source">2026 · Hoop Tape</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ────────────  RECENT NEWS  ──────────── -->
+  <section class="reveal reveal-5">
+    <div class="sec-head">
+      <h2 class="sec-title">Recent News <span class="gold">·</span> signal</h2>
+      <div class="sec-aside">4 curated</div>
+    </div>
+
+    <ul class="news-list">
+      <li class="news-item">
+        <a class="news-headline" href="#">2026 Naismith National POY · Gatorade National POY · MaxPreps National POY · Sporting News &amp; USA Today National POY</a>
+        <div class="news-byline"><span class="pub">Whole Hog Sports / Arkansas Razorbacks</span> · 2026-03-17</div>
+      </li>
+      <li class="news-item">
+        <a class="news-headline" href="#">Senior year: 26.6 PPG · 6.3 RPG · 5.6 APG · 3.2 SPG · 56.0% FG · 36.9% 3PT · 72.4% FT</a>
+        <div class="news-byline"><span class="pub">Arkansas Razorbacks (official)</span> · 2026-04-22</div>
+      </li>
+      <li class="news-item">
+        <a class="news-headline" href="#">McDonald's All-American · 2x FIBA World Cup gold medalist (Team USA)</a>
+        <div class="news-byline"><span class="pub">Sports Illustrated / SBLive</span> · 2026-02-14</div>
+      </li>
+      <li class="news-item">
+        <a class="news-headline" href="#">39 PTS in WCAC title double-OT win over St. John's · 82-76</a>
+        <div class="news-byline"><span class="pub">MaxPreps</span> · 2026-02-22</div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ────────────  FOLLOW  ──────────── -->
+  <section class="follow-block reveal reveal-5">
+    <div class="follow-head">
+      <p class="follow-prompt">Follow <span class="gold">Jordan</span> for what's next</p>
+      <p class="follow-sub">Highlights drop in real time. Tap a handle to follow on the platform.</p>
+    </div>
+    <div class="follow-chips">
+      <a class="follow-chip" href="https://instagram.com/jordansmithjr">
+        <span class="logo logo-ig">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M12 2.2c3.2 0 3.6 0 4.8.07 1.2.05 1.8.25 2.2.42.6.22 1 .5 1.5 1s.78.9 1 1.5c.17.4.37 1 .42 2.2.06 1.2.07 1.6.07 4.8s0 3.6-.07 4.8c-.05 1.2-.25 1.8-.42 2.2-.22.6-.5 1-1 1.5s-.9.78-1.5 1c-.4.17-1 .37-2.2.42-1.2.06-1.6.07-4.8.07s-3.6 0-4.8-.07c-1.2-.05-1.8-.25-2.2-.42-.6-.22-1-.5-1.5-1s-.78-.9-1-1.5c-.17-.4-.37-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.8c.05-1.2.25-1.8.42-2.2.22-.6.5-1 1-1.5s.9-.78 1.5-1c.4-.17 1-.37 2.2-.42C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.5 0-4.7.07-1.1.05-1.7.23-2.1.38-.5.2-.86.43-1.25.82s-.62.75-.82 1.25c-.15.4-.33 1-.38 2.1C2.68 8.5 2.67 8.85 2.67 12s0 3.5.07 4.7c.05 1.1.23 1.7.38 2.1.2.5.43.86.82 1.25s.75.62 1.25.82c.4.15 1 .33 2.1.38 1.2.06 1.55.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.23 2.1-.38.5-.2.86-.43 1.25-.82s.62-.75.82-1.25c.15-.4.33-1 .38-2.1.06-1.2.07-1.55.07-4.7s0-3.5-.07-4.7c-.05-1.1-.23-1.7-.38-2.1-.2-.5-.43-.86-.82-1.25s-.75-.62-1.25-.82c-.4-.15-1-.33-2.1-.38-1.2-.06-1.55-.07-4.7-.07zm0 3.06A5.06 5.06 0 1 1 12 17.12 5.06 5.06 0 0 1 12 7.06zm0 8.34a3.28 3.28 0 1 0 0-6.56 3.28 3.28 0 0 0 0 6.56zm6.43-8.55a1.18 1.18 0 1 1-2.37 0 1.18 1.18 0 0 1 2.37 0z"/></svg>
+        </span>
+        <span>Instagram</span>
+        <span class="handle">@jordansmithjr</span>
+      </a>
+
+      <a class="follow-chip" href="https://tiktok.com/@jsj_hoops">
+        <span class="logo logo-tt">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M19.6 7.7a6.2 6.2 0 0 1-4.4-2v8.5a5.7 5.7 0 1 1-5-5.6v2.8a2.9 2.9 0 1 0 2.2 2.8V2h2.8a4.2 4.2 0 0 0 4.4 4.2v2.5z"/></svg>
+        </span>
+        <span>TikTok</span>
+        <span class="handle">@jsj_hoops</span>
+      </a>
+
+      <a class="follow-chip" href="https://x.com/JordanSmithJr">
+        <span class="logo logo-x">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </span>
+        <span>X</span>
+        <span class="handle">@JordanSmithJr</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ────────────  PUBLIC RECORD FALLBACK  (existing) ──────────── -->
+  <section class="pubrec-block">
+    <div class="pubrec-head">// More · search the public record</div>
+    <div class="pubrec-chips">
+      <a class="pubrec-chip" href="#">▶ Search YouTube</a>
+      <a class="pubrec-chip" href="#">📰 Google News</a>
+      <a class="pubrec-chip" href="#">🏟 Official roster</a>
+      <a class="pubrec-chip" href="#">📖 Wikipedia</a>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

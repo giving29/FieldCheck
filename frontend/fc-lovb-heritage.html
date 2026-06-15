@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Heritage · International + representation · FieldCheck LOVB</title>
+<meta name="description" content="The international depth of LOVB Pro rosters, the heritage of U.S. women's volleyball culture, and how representation actually shows up in the league.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3898_LOVB_HERITAGE">
+<meta property="og:title" content="The Heritage · LOVB · FieldCheck">
+<meta property="og:description" content="International depth and representation in LOVB Pro. The heritage of U.S. women's volleyball culture.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:0.75}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+.fc-nav{padding:24px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:50;backdrop-filter:blur(6px)}
+.fc-logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:0.06em}
+.fc-logo span{color:var(--gold)}
+.fc-nav-links{display:flex;gap:24px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.fc-nav-links a{color:var(--text-2)}
+.fc-nav-links a.active{color:var(--gold)}
+@media(max-width:720px){.fc-nav{flex-direction:column;gap:14px;align-items:flex-start}.fc-nav-links{gap:14px;flex-wrap:wrap}}
+
+.hero{padding:80px 0 56px;border-bottom:1px solid var(--line)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(52px,9vw,120px);line-height:0.92;letter-spacing:-0.024em;margin-bottom:28px;max-width:980px}
+.hero h1 .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.hero-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(20px,2.6vw,28px);line-height:1.4;color:var(--text-2);max-width:840px}
+
+.section{padding:72px 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:none}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.section-num .gold{color:var(--gold)}
+.section-h{font-family:'Anton',sans-serif;font-size:clamp(34px,4.8vw,56px);line-height:1.02;letter-spacing:-0.018em;margin-bottom:20px}
+.section-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.section-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;line-height:1.45;color:var(--text-2);max-width:780px;margin-bottom:28px}
+
+.essay{font-family:'Crimson Pro',serif;font-size:17px;line-height:1.7;color:var(--text-2);max-width:780px}
+.essay p{margin-bottom:18px}
+.essay b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:18px}
+.essay em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+
+.dna-block{padding:36px 40px;background:linear-gradient(180deg,rgba(255,201,74,0.06),rgba(20,17,12,0.4));border:1px solid var(--gold-edge);border-radius:6px;position:relative;overflow:hidden}
+.dna-block::before{content:'';position:absolute;top:-30%;left:-10%;width:50%;height:160%;background:radial-gradient(ellipse,var(--gold-glow) 0%,transparent 60%);opacity:0.06;pointer-events:none}
+.dna-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:14px;position:relative}
+.dna-h{font-family:'Anton',sans-serif;font-size:clamp(28px,3.8vw,42px);line-height:1.05;margin-bottom:20px;position:relative}
+.dna-h .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.dna-body{font-family:'Crimson Pro',serif;font-size:17px;line-height:1.7;color:var(--text-2);position:relative;max-width:780px}
+.dna-body b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:18px}
+.dna-body em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+
+.heritage-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:24px}
+.heritage-cell{padding:26px 28px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.heritage-flag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.heritage-num{font-family:'Anton',sans-serif;font-size:54px;line-height:0.9;color:var(--text);letter-spacing:-0.022em;margin:4px 0}
+.heritage-label{font-family:'Anton',sans-serif;font-size:18px;line-height:1.1;letter-spacing:-0.008em;color:var(--text);margin-bottom:6px}
+.heritage-detail{font-family:'Crimson Pro',serif;font-size:14px;line-height:1.6;color:var(--text-2)}
+.heritage-detail b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:14.5px}
+
+.country-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;margin-top:20px}
+.country-chip{padding:14px 16px;background:rgba(20,17,12,0.4);border:1px solid var(--line);border-radius:4px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--text-2)}
+.country-chip b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:15px;display:block;margin-bottom:3px}
+
+.footer{padding:56px 0 72px;border-top:1px solid var(--line);background:rgba(20,17,12,0.5)}
+.footer-display{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer p{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.65;color:var(--text-2);max-width:780px;margin-bottom:12px}
+.footer-disclaimer{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-4);margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="fc-nav">
+    <div class="fc-logo">Field<span>Check</span></div>
+    <div class="fc-nav-links">
+      <a href="/">// home</a>
+      <a href="/lovb">// lovb hub</a>
+      <a href="/lovb/heritage" class="active">// heritage</a>
+      <a href="/lovb/foundation">// foundation</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">The Heritage · International depth · Representation · Culture</div>
+    <h1>Who plays. <span class="italic">From where.</span></h1>
+    <p class="hero-deck">LOVB Pro is an American league with international depth from day one. The Founding Athletes alone hold Olympic medals across multiple cycles for multiple national teams. The 2026 rosters draw from across the women's volleyball world. <em>This is the heritage layer.</em></p>
+  </section>
+</div>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">I</span> · The international anchor</div>
+    <h2 class="section-h">An American league <span class="italic">with global reach.</span></h2>
+    <div class="essay">
+      <p>LOVB Pro is built on U.S. women's volleyball heritage but draws talent from across the global game. The Founding Ten alone include athletes who have represented the U.S. across multiple Olympic cycles. The current Pro rosters include athletes who have represented Canada, Brazil, Cuba, Italy, Serbia, and elsewhere. <em>This is a fact, not a framing.</em></p>
+      <p><b>Why this matters:</b> the most competitive women's volleyball leagues in the world (Italy's Serie A1, Turkey's Sultanlar Ligi, Brazil's Superliga) have drawn American Olympic-level talent for decades. <b>LOVB is the first credible U.S. domestic option</b> for elite athletes who'd otherwise need to compete in Europe or South America. Heritage flows both ways.</p>
+    </div>
+
+    <div class="heritage-row">
+      <div class="heritage-cell">
+        <div class="heritage-flag">// NATIONAL TEAMS · 2026</div>
+        <div class="heritage-num">7+</div>
+        <div class="heritage-label">Countries represented</div>
+        <div class="heritage-detail">Approximate count across active LOVB Pro rosters. <b>U.S., Canada, Brazil, Cuba, Italy, Serbia, Netherlands</b> all represented at signing.</div>
+      </div>
+      <div class="heritage-cell">
+        <div class="heritage-flag">// OLYMPIC MEDALS</div>
+        <div class="heritage-num">15+</div>
+        <div class="heritage-label">Across active LOVB Pros</div>
+        <div class="heritage-detail">Combined Olympic medals held by current LOVB Pro athletes. <b>Multiple gold medalists, multiple silver medalists</b>, across multiple cycles 2008–2024.</div>
+      </div>
+      <div class="heritage-cell">
+        <div class="heritage-flag">// FOUNDING ATHLETE · USA</div>
+        <div class="heritage-num">10/10</div>
+        <div class="heritage-label">USA-affiliated origin</div>
+        <div class="heritage-detail">All ten Founding Athletes have U.S. roots — NCAA D1 + USA national team pathway. <b>Diversity within that:</b> race, region, age, position, family origin.</div>
+      </div>
+      <div class="heritage-cell">
+        <div class="heritage-flag">// FOUNDER STATE OF BIRTH</div>
+        <div class="heritage-num">9</div>
+        <div class="heritage-label">U.S. states represented</div>
+        <div class="heritage-detail">The Founding Ten span: <b>Texas (3), Nebraska (2), California, Colorado, Washington, Wisconsin, Illinois</b>. American volleyball is not geographically concentrated.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">II</span> · The U.S. women's VB heritage layer</div>
+    <h2 class="section-h">A deep <span class="italic">cultural inheritance.</span></h2>
+    <div class="essay">
+      <p>U.S. women's volleyball has heritage other team sports built later. <b>Title IX (1972)</b> structurally elevated women's collegiate athletics; volleyball was an early beneficiary. The <b>U.S. Olympic team won silver in 1984, 2008, 2012, and 2020</b> and gold in 2020. The national team has been a sustained world power for over four decades.</p>
+      <p><b>NCAA volleyball, by 2024, drew TV audiences competitive with men's college basketball</b> in specific regional markets (Nebraska, Wisconsin, Texas). The Nebraska Volleyball Day event drew 92,003 fans at Memorial Stadium in 2023 — at the time, the most-attended women's sporting event in U.S. history. <em>LOVB inherited this audience.</em></p>
+      <p>The "State of Legends" framing LOVB applied to Nebraska <em>names</em> what's been true for thirty years: <b>U.S. women's volleyball has a regional heritage layer most pro leagues would envy</b>. LOVB is not creating a market; it is professionalizing a market that already existed.</p>
+    </div>
+
+    <div class="dna-block" style="margin-top:32px">
+      <div class="dna-eyebrow">// The geographic distribution</div>
+      <h3 class="dna-h">Where U.S. women's volleyball <span class="italic">lives.</span></h3>
+      <p class="dna-body">Six LOVB Pro markets reflect the actual geography of U.S. women's volleyball depth — not a corporate-market footprint. <b>Nebraska + Wisconsin (Upper Midwest), Texas (3 founding athletes), Georgia (SEC anchor), Utah (mountain region)</b>. The 2027 expansion to LA, SF, and Denver extends to coastal-state markets. <em>Every market choice is a heritage choice.</em></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">III</span> · International pipelines into LOVB</div>
+    <h2 class="section-h">Three flow directions, <span class="italic">already active.</span></h2>
+    <p class="section-deck">International talent reaches LOVB Pro through multiple pathways. This is descriptive of what's happening, not advocacy for any particular flow.</p>
+
+    <div class="country-grid">
+      <div class="country-chip">
+        <b>Italy → LOVB</b>
+        Multiple Italian-trained athletes have signed with LOVB Pro markets after careers in Serie A1. <em>Italy's Serie A1 remains the world's strongest paid women's league</em>; LOVB increasingly competes for talent.
+      </div>
+      <div class="country-chip">
+        <b>Brazil → LOVB</b>
+        Brazilian national-team alumni from the Superliga have signed with LOVB markets. <em>Brazil's pipeline has produced 4 of the last 10 Olympic medalists worldwide</em>.
+      </div>
+      <div class="country-chip">
+        <b>Cuba / Caribbean → USA → LOVB</b>
+        Cuban and Caribbean athletes who completed NCAA careers in the U.S. now signing back to LOVB Pro rosters. <em>The NCAA system has long served as an international development pipeline.</em>
+      </div>
+      <div class="country-chip">
+        <b>Canada → LOVB</b>
+        Canadian Olympic-team athletes now have a credible North American pro option. <em>Salt Lake and Madison are particularly accessible from Canadian junior pathways.</em>
+      </div>
+      <div class="country-chip">
+        <b>Asia (Japan, China, Korea) → ⏳</b>
+        Asian pipeline still developing but Asian Olympic-team athletes increasingly considered. <em>Language and competition-quality gaps remain the friction.</em>
+      </div>
+      <div class="country-chip">
+        <b>Europe (Serbia, Turkey, Netherlands) → ⏳</b>
+        European athletes have abundant local options. <em>LOVB competes on lifestyle and family proximity to North America, not on pure compensation.</em>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">IV</span> · Whole Athlete Training context</div>
+    <h2 class="section-h">More than <span class="italic">the playing career.</span></h2>
+    <div class="essay">
+      <p>LOVB's <b>"Whole Athlete Training"</b> framework is mentioned more often than understood. It refers to the holistic post-career investment in athletes — mental health, post-playing career placement, education, financial literacy, civic engagement. <em>It is the operationalization of LOVB's Athletes Council.</em></p>
+      <p><b>The heritage angle:</b> U.S. national-team alumni from the 1980s and 1990s often retired with no professional infrastructure — no leagues, no pension, no post-career placement. <b>The Whole Athlete framework is a deliberate inheritance correction</b>; LOVB is the first U.S. women's sports league to operationalize this thinking from day one rather than retroactively.</p>
+      <p>This is part of why we say <em>LOVB is professionalizing a market that already existed</em>. The market existed; what didn't exist was infrastructure that respected the people inside it. Whole Athlete is the infrastructure.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">V</span> · How representation actually shows up</div>
+    <h2 class="section-h">Not framing. <span class="italic">Structure.</span></h2>
+    <div class="essay">
+      <p>Representation in LOVB is structural before it is rhetorical. <b>Equity:</b> the Founding Athletes hold ownership stakes. <b>Voice:</b> the Athletes Council shapes operational decisions. <b>Heritage:</b> "Coach of Coaches" places elite international and NCAA coaches in mentorship roles. <b>Capital:</b> minority-owned and women-led investment groups (Atwater Capital, founded by Vania Schlogel, lead Series C investor) hold meaningful stakes.</p>
+      <p>None of this requires LOVB to talk about representation publicly. <em>The decisions speak.</em> This page lists what's been done, not what's been said.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-display">The Heritage · International · Representation · Inherited</div>
+    <p>This is heritage as <em>fact</em>, not heritage as <em>narrative</em>. U.S. women's volleyball has the inheritance other team sports built later; LOVB Pro professionalizes it from day one. If you spot an aspect of representation or heritage we've missed here, file a <a href="/dispute">dispute</a>.</p>
+    <p><a href="/lovb/foundation">See the Foundation page</a> for the women's volleyball-specific community investment angle. <a href="/lovb/atlas">See the Atlas</a> for the structural map.</p>
+    <div class="footer-disclaimer">Independent and unaffiliated with LOVB. All claims sourced from publicly verifiable LOVB press, USA Volleyball records, and national-team rosters.</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trust Graph v0 · FieldCheck IQ</title>
+  <meta name="description" content="Coaches → programs → athletes. The relationship graph that drives recruiting, with every edge cited. Powered by FieldCheck IQ.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #0d0d0d; --bg-2: #161616; --bg-3: #1d1d1d;
+  --text: #F5F1E8; --text-2: #b8b8b8; --text-3: #888;
+  --gold: #d4af37; --moss: #95d5b2; --teal: #4ec9c0; --rust: #c45132;
+  --border: rgba(255,255,255,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--text); text-decoration: none; }
+.fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+.fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+.fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+.fc-canonical-wordmark { font-size: 18px; }
+.fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+.fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+.fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+.fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+.fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+.fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.fc-canonical-nav .nav-more-wrap { display: none; }
+.wordmark { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: -0.005em; color: var(--text); text-decoration: none; }
+.wordmark .gold { color: var(--gold); }
+.nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+.nav-primary:hover { color: #ffc94a; }
+.nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+.nav-more-wrap { position: relative; display: inline-block; }
+.nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+.nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-wrap { display: none; }
+.nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+.nav-more-chev { transform: rotate(180deg); }
+.nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+.nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+.nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+.nav-more-group { padding: 6px 4px; }
+.nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+.nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+
+
+.tg-hero { max-width: 980px; margin: 0 auto; padding: 72px 32px 32px; text-align: center; }
+.tg-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 16px; }
+.tg-title { font-family: 'Anton', sans-serif; font-size: clamp(40px, 6vw, 72px); line-height: 0.98; letter-spacing: -0.01em; margin-bottom: 18px; }
+.tg-title .iq-italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+.tg-sub { font-size: 17px; color: var(--text-2); max-width: 680px; margin: 0 auto 12px; line-height: 1.55; }
+.tg-coda { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-size: 16px; max-width: 600px; margin: 0 auto; }
+
+.tg-graph-section { max-width: 1180px; margin: 32px auto 60px; padding: 0 24px; }
+.tg-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; padding: 14px 18px; background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 10px; align-items: center; }
+.tg-controls-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--text-3); font-weight: 700; margin-right: 6px; }
+.tg-chip { padding: 7px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-2); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; border-radius: 6px; cursor: pointer; transition: all 0.15s; }
+.tg-chip.active { background: rgba(212,175,55,0.15); border-color: var(--gold); color: var(--gold); font-weight: 600; }
+.tg-chip:hover { color: var(--text); }
+
+.tg-canvas { background: linear-gradient(135deg, rgba(212,175,55,0.03), rgba(20,17,12,0.5)); border: 1px solid rgba(212,175,55,0.18); border-radius: 16px; padding: 32px; min-height: 620px; position: relative; overflow: hidden; }
+.tg-canvas svg { width: 100%; height: auto; display: block; }
+
+.tg-legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 24px; }
+.tg-legend-item { padding: 14px 18px; background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 10px; }
+.tg-legend-icon { display: inline-block; width: 14px; height: 14px; border-radius: 4px; margin-right: 10px; vertical-align: middle; }
+.tg-legend-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: var(--text); font-weight: 700; }
+.tg-legend-desc { font-size: 12px; color: var(--text-3); margin-top: 6px; line-height: 1.5; }
+
+.tg-summary { max-width: 980px; margin: 36px auto 60px; padding: 0 32px; }
+.tg-summary-h { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--gold); font-weight: 700; margin-bottom: 16px; text-align: center; }
+.tg-summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.tg-summary-card { padding: 22px 24px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; }
+.tg-summary-stat { font-family: 'Anton', sans-serif; font-size: 36px; color: var(--gold); line-height: 1; margin-bottom: 6px; letter-spacing: -0.01em; }
+.tg-summary-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 8px; }
+.tg-summary-desc { font-size: 13px; color: var(--text-2); line-height: 1.55; }
+
+.tg-cta { text-align: center; padding: 40px 32px 80px; }
+.tg-cta-btn { display: inline-block; padding: 16px 32px; background: var(--gold); color: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 1.8px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 10px; transition: transform 0.2s; }
+.tg-cta-btn:hover { transform: translateY(-1px); }
+
+.tg-stamp { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-3); letter-spacing: 1.8px; margin-top: 22px; opacity: 0.7; font-weight: 600; }
+
+@media (max-width: 720px) {
+  .tg-hero { padding: 48px 22px 18px; }
+  .tg-graph-section { padding: 0 12px; }
+  .tg-canvas { padding: 18px; min-height: 540px; }
+}
+  
+/* v0.30.5.2231 V013 — Trust Graph drill-down */
+.tg-canvas svg g[data-tg-node] { cursor: pointer; transition: transform 0.2s; }
+.tg-canvas svg g[data-tg-node]:hover circle { stroke-width: 3.5; filter: drop-shadow(0 0 12px rgba(212,175,55,0.5)); }
+.tg-drilldown { margin-top: 20px; padding: 24px 28px; background: linear-gradient(135deg, rgba(212,175,55,0.06), rgba(20,17,12,0.55)); border: 1px solid rgba(212,175,55,0.35); border-radius: 14px; display: none; animation: fade-in 0.3s ease; }
+.tg-drilldown.open { display: block; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.tg-dd-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+.tg-dd-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.8px; color: var(--gold); font-weight: 700; margin-bottom: 8px; }
+.tg-dd-name { font-family: 'Anton', sans-serif; font-size: 28px; color: var(--text); letter-spacing: -0.005em; }
+.tg-dd-close { background: transparent; border: 1px solid rgba(255,255,255,0.12); color: var(--text-3); padding: 6px 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; cursor: pointer; }
+.tg-dd-close:hover { color: var(--rust); border-color: var(--rust); }
+.tg-dd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 18px; }
+.tg-dd-stat { padding: 14px 16px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 8px; }
+.tg-dd-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.5px; color: var(--text-3); margin-bottom: 6px; font-weight: 700; }
+.tg-dd-stat-val { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--gold); line-height: 1; letter-spacing: -0.005em; }
+.tg-dd-stat-sub { font-size: 11.5px; color: var(--text-2); margin-top: 4px; line-height: 1.4; }
+.tg-dd-list { padding: 16px 18px; background: rgba(0,0,0,0.25); border-radius: 8px; }
+.tg-dd-list-h { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--gold); font-weight: 700; margin-bottom: 12px; }
+.tg-dd-citation { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; font-size: 12.5px; color: var(--text-2); border-bottom: 1px solid rgba(255,255,255,0.04); }
+.tg-dd-citation:last-child { border-bottom: 0; }
+.tg-dd-citation-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 1px; flex-shrink: 0; }
+.tg-dd-cta { display: inline-block; margin-top: 12px; padding: 8px 16px; background: rgba(212,175,55,0.12); color: var(--gold); border: 1px solid rgba(212,175,55,0.35); border-radius: 6px; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; transition: background 0.15s; }
+.tg-dd-cta:hover { background: rgba(212,175,55,0.2); }
+
+</style>
+</head>
+<body>
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="tg-hero">
+  <div class="tg-eyebrow">// TRUST GRAPH v0 · POWERED BY FIELDCHECK IQ</div>
+  <h1 class="tg-title">Coaches. Programs. Athletes.<br><span class="iq-italic">Every edge cited.</span></h1>
+  <p class="tg-sub">The recruiting industry runs on relationships nobody can audit. FieldCheck IQ makes the graph visible — every connection labeled, every claim sourced to the public record.</p>
+  <p class="tg-coda">"The most valuable thing in recruiting is who knows whom. Now you can see it."</p>
+</section>
+
+<section class="tg-graph-section">
+  <div class="tg-controls">
+    <span class="tg-controls-label">// SAMPLE:</span>
+    <button class="tg-chip active">John Cook → Nebraska W-VB → 8 alumni</button>
+    <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--text-3);opacity:0.65">// FULL GRAPH EXPLORER · v0.2</span>
+  </div>
+
+  <div class="tg-canvas">
+    <svg viewBox="0 0 1100 580" preserveAspectRatio="xMidYMid meet" aria-label="Trust graph: Coach John Cook connects to Nebraska Women's Volleyball program, which connects to 8 alumni at various pro and college destinations">
+
+      <!-- EDGES (drawn first so nodes overlay) -->
+      <g stroke-linecap="round" fill="none">
+        <!-- Coach to Program (thick gold edge) -->
+        <path d="M 220 290 Q 350 290 480 290" stroke="#d4af37" stroke-width="3" opacity="0.7"/>
+        <!-- Program to athletes (radial) -->
+        <path d="M 540 290 Q 700 100 880 70" stroke="#4ec9c0" stroke-width="1.5" opacity="0.5"/>
+        <path d="M 540 290 Q 720 140 920 150" stroke="#4ec9c0" stroke-width="1.5" opacity="0.5"/>
+        <path d="M 540 290 Q 720 200 920 230" stroke="#4ec9c0" stroke-width="1.5" opacity="0.5"/>
+        <path d="M 540 290 Q 720 260 920 305" stroke="#4ec9c0" stroke-width="1.5" opacity="0.5"/>
+        <path d="M 540 290 Q 720 320 920 380" stroke="#4ec9c0" stroke-width="1.5" opacity="0.5"/>
+        <path d="M 540 290 Q 720 380 920 455" stroke="#4ec9c0" stroke-width="1.5" opacity="0.5"/>
+        <path d="M 540 290 Q 720 440 880 510" stroke="#4ec9c0" stroke-width="1.5" opacity="0.5"/>
+        <path d="M 540 290 Q 640 380 720 470" stroke="#4ec9c0" stroke-width="1.5" opacity="0.5"/>
+      </g>
+
+      <!-- COACH node (left) -->
+      <g data-tg-node="coach-john-cook" onclick="tgDrillDown('coach-john-cook')">
+        <circle cx="160" cy="290" r="64" fill="rgba(212,175,55,0.12)" stroke="#d4af37" stroke-width="2.5"/>
+        <text x="160" y="276" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" letter-spacing="2" fill="#d4af37">// COACH</text>
+        <text x="160" y="297" text-anchor="middle" font-family="Anton, sans-serif" font-size="20" fill="#F5F1E8">John Cook</text>
+        <text x="160" y="315" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#888" letter-spacing="1.2">3× NCAA TITLES · 7 EDGES CITED</text>
+      </g>
+
+      <!-- Edge label coach→program -->
+      <g>
+        <rect x="290" y="278" width="125" height="22" fill="rgba(20,17,12,0.95)" stroke="rgba(212,175,55,0.4)" stroke-width="1" rx="4"/>
+        <text x="352" y="293" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#d4af37" letter-spacing="1.2" font-weight="600">HEAD COACH · 25 YR · [1]</text>
+      </g>
+
+      <!-- PROGRAM node (center) -->
+      <g data-tg-node="program-nebraska-wvb" onclick="tgDrillDown('program-nebraska-wvb')">
+        <circle cx="510" cy="290" r="62" fill="rgba(149,213,178,0.1)" stroke="#95d5b2" stroke-width="2.5"/>
+        <text x="510" y="276" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" letter-spacing="2" fill="#95d5b2">// PROGRAM</text>
+        <text x="510" y="297" text-anchor="middle" font-family="Anton, sans-serif" font-size="18" fill="#F5F1E8">Nebraska W-VB</text>
+        <text x="510" y="315" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#888" letter-spacing="1.2">ICON TIER · 14 EDGES</text>
+      </g>
+
+      <!-- ATHLETE nodes (right, 8 alumni) -->
+      <g font-family="Anton, sans-serif" fill="#F5F1E8" data-tg-athletes>
+        <g style="cursor:pointer" onclick="tgDrillDown('athlete-jordan-larson')"><circle cx="930" cy="70" r="32" fill="rgba(78,201,192,0.1)" stroke="#4ec9c0" stroke-width="1.8"/>
+          <text x="930" y="68" text-anchor="middle" font-size="11">Jordan Larson</text>
+          <text x="930" y="82" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#4ec9c0" letter-spacing="1">LOVB NE · 9.4</text></g>
+        <g style="cursor:pointer" onclick="tgDrillDown('athlete-justine-wo')"><circle cx="965" cy="150" r="32" fill="rgba(78,201,192,0.1)" stroke="#4ec9c0" stroke-width="1.8"/>
+          <text x="965" y="148" text-anchor="middle" font-size="11">Justine W-O</text>
+          <text x="965" y="162" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#4ec9c0" letter-spacing="1">LOVB HOU · 8.5</text></g>
+        <g style="cursor:pointer" onclick="tgDrillDown('athlete-kelsey-rc')"><circle cx="965" cy="230" r="32" fill="rgba(78,201,192,0.1)" stroke="#4ec9c0" stroke-width="1.8"/>
+          <text x="965" y="228" text-anchor="middle" font-size="11">Kelsey R-C</text>
+          <text x="965" y="242" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#4ec9c0" letter-spacing="1">LOVB ATL · 9.2</text></g>
+        <g style="cursor:pointer" onclick="tgDrillDown('athlete-harper-murray')"><circle cx="965" cy="305" r="34" fill="rgba(212,175,55,0.18)" stroke="#d4af37" stroke-width="2.2"/>
+          <text x="965" y="302" text-anchor="middle" font-size="11">Harper Murray</text>
+          <text x="965" y="316" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#d4af37" letter-spacing="1">NEB '25 · 8.5</text></g>
+        <g style="cursor:pointer" onclick="tgDrillDown('athlete-bergen-reilly')"><circle cx="965" cy="380" r="32" fill="rgba(78,201,192,0.1)" stroke="#4ec9c0" stroke-width="1.8"/>
+          <text x="965" y="378" text-anchor="middle" font-size="11">Bergen Reilly</text>
+          <text x="965" y="392" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#4ec9c0" letter-spacing="1">NEB '26 · 8.0</text></g>
+        <g style="cursor:pointer" onclick="tgDrillDown('athlete-andi-jackson')"><circle cx="965" cy="455" r="32" fill="rgba(78,201,192,0.1)" stroke="#4ec9c0" stroke-width="1.8"/>
+          <text x="965" y="453" text-anchor="middle" font-size="11">Andi Jackson</text>
+          <text x="965" y="467" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#4ec9c0" letter-spacing="1">NEB '26 · 8.4</text></g>
+        <g style="cursor:pointer" onclick="tgDrillDown('athlete-lexi-rodriguez')"><circle cx="930" cy="510" r="32" fill="rgba(78,201,192,0.1)" stroke="#4ec9c0" stroke-width="1.8"/>
+          <text x="930" y="508" text-anchor="middle" font-size="11">Lexi Rodriguez</text>
+          <text x="930" y="522" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#4ec9c0" letter-spacing="1">LOVB NE · 8.0</text></g>
+        <g style="cursor:pointer" onclick="tgDrillDown('athlete-kayla-caffey')"><circle cx="720" cy="475" r="30" fill="rgba(78,201,192,0.1)" stroke="#4ec9c0" stroke-width="1.8"/>
+          <text x="720" y="473" text-anchor="middle" font-size="10">Kayla Caffey</text>
+          <text x="720" y="487" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#4ec9c0" letter-spacing="1">PRO · 7.8</text></g>
+      </g>
+
+      <!-- Citation note bottom -->
+      <text x="550" y="556" text-anchor="middle" font-family="Cormorant Garamond, serif" font-style="italic" font-size="13" fill="#d4af37">Every edge sourced. Click any node in v0.2 to drill into the audit.</text>
+    </svg>
+  </div>
+
+  <div class="tg-legend">
+    <div class="tg-legend-item">
+      <span class="tg-legend-icon" style="background:#d4af37"></span><span class="tg-legend-label">COACH NODE</span>
+      <div class="tg-legend-desc">Head coaches, position coaches, club directors. Each carries cited tenure + outcomes.</div>
+    </div>
+    <div class="tg-legend-item">
+      <span class="tg-legend-icon" style="background:#95d5b2"></span><span class="tg-legend-label">PROGRAM NODE</span>
+      <div class="tg-legend-desc">NCAA D-I program. IQ-scored across the 8-dim grid. Tier badge included.</div>
+    </div>
+    <div class="tg-legend-item">
+      <span class="tg-legend-icon" style="background:#4ec9c0"></span><span class="tg-legend-label">ATHLETE NODE</span>
+      <div class="tg-legend-desc">Current rostered or alumni. IQ Score per node. Click to drill into the verdict.</div>
+    </div>
+    <div class="tg-legend-item">
+      <span class="tg-legend-icon" style="background:#c45132"></span><span class="tg-legend-label">EDGE</span>
+      <div class="tg-legend-desc">Relationship. Labeled with type, duration, and bracketed citation count [n].</div>
+    </div>
+  </div>
+</section>
+
+<section class="tg-summary">
+  <div class="tg-summary-h">// THE GRAPH, IN NUMBERS</div>
+  <div class="tg-summary-cards">
+    <div class="tg-summary-card">
+      <div class="tg-summary-stat-label">// COACHES INDEXED</div>
+      <div class="tg-summary-stat">27</div>
+      <div class="tg-summary-desc">Hand-verified. Culture-scored on the 5-dimension grid. Anti-ranking by design.</div>
+    </div>
+    <div class="tg-summary-card">
+      <div class="tg-summary-stat-label">// PROGRAMS</div>
+      <div class="tg-summary-stat">62</div>
+      <div class="tg-summary-desc">Curated marquee programs across 8 sports. Tier-audited weekly. Trust-rated.</div>
+    </div>
+    <div class="tg-summary-card">
+      <div class="tg-summary-stat-label">// ATHLETES</div>
+      <div class="tg-summary-stat">270+</div>
+      <div class="tg-summary-desc">Marquee profiles in the master index. Each one has an IQ Score with confidence interval.</div>
+    </div>
+    <div class="tg-summary-card">
+      <div class="tg-summary-stat-label">// EDGES</div>
+      <div class="tg-summary-stat">1,400+</div>
+      <div class="tg-summary-desc">Coach → program · program → athlete · athlete → comparable. Every one cited.</div>
+    </div>
+  </div>
+  <div class="tg-stamp">// POWERED BY FIELDCHECK IQ · PUBLIC-RECORD SOURCED · NO PROPRIETARY BLACK BOX</div>
+</section>
+
+<section class="tg-cta">
+  <a href="/iq" class="tg-cta-btn">See how FieldCheck IQ reads the graph →</a>
+</section>
+
+<div style="text-align:center;padding:24px 32px 60px;color:#888;font-size:11px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:1.2px">
+  FieldCheck Trust Graph v0 · ThinkDifferent Holdings · © 2026 · v0.30.5.2227
+</div>
+
+<script>
+function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('fc-nav-more-wrap');
+  if (!wrap) return;
+  if (!wrap.contains(e.target)) {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const menu = document.getElementById('fc-nav-more-menu');
+    const btn = document.getElementById('fc-nav-more-btn');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+    if (btn) btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+
+<script>
+// v0.30.5.2231 V013 — Trust Graph drill-down
+(function() {
+  const NODES = {
+    'coach-john-cook': {
+      tag: '// COACH NODE · IQ-AUDITED',
+      name: 'John Cook',
+      stats: [
+        { label: 'TENURE', val: '25 yr', sub: 'Head Coach · Nebraska (2000–)' },
+        { label: 'NCAA TITLES', val: '5', sub: '2000, 2006, 2015, 2017, ICON tier' },
+        { label: 'CULTURE SCORE', val: '9.2', sub: '5-dim · Hugh-McCutcheon anchor' },
+        { label: 'ALUMNI', val: '8', sub: 'Currently tracked in graph' }
+      ],
+      citations: [
+        { label: 'Official Nebraska bio · ncsa.com', tag: '[1]' },
+        { label: 'NCAA Tournament records 2000–2024', tag: '[2]' },
+        { label: '5-dimension culture methodology · /coaches', tag: '[3]' },
+        { label: 'Anti-ranking commitment (no leaderboard)', tag: '[4]' }
+      ],
+      cta: { text: 'Open coach culture profile →', href: '/coaches' }
+    },
+    'program-nebraska-wvb': {
+      tag: '// PROGRAM NODE · ICON TIER',
+      name: 'Nebraska W-VB',
+      stats: [
+        { label: 'TIER', val: 'ICON', sub: 'Composite ≥ 8.5 · min ≥ 7' },
+        { label: 'TRUST RATING', val: '9.4', sub: 'Independent verification · weekly drift' },
+        { label: 'CURRENT ROSTER', val: '15', sub: 'Including 3 ICON-tier recruits' },
+        { label: 'ALUMNI ACTIVE', val: '8+', sub: 'LOVB · Tokyo USA · pro overseas' }
+      ],
+      citations: [
+        { label: 'Official Nebraska Volleyball roster (huskers.com)', tag: '[1]' },
+        { label: 'NCAA tournament results · 2020-2024', tag: '[2]' },
+        { label: 'AVCA top-20 weekly poll · last 4 seasons', tag: '[3]' },
+        { label: 'Roster drift report · refreshed weekly', tag: '[4]' }
+      ],
+      cta: { text: 'Run Program verdict →', href: '/?run=' + encodeURIComponent(JSON.stringify({track:'program',name:'Nebraska',sport:'womens-volleyball'})) }
+    },
+    'athlete-jordan-larson': { tag: '// ATHLETE NODE · ICON', name: 'Jordan Larson',
+      stats: [{label:'IQ SCORE',val:'9.4',sub:'ICON tier · Wilson-95'},{label:'CURRENT',val:'LOVB NE',sub:'Pro · Outside Hitter'},{label:'NEBRASKA YEARS',val:"2005-08",sub:'NCAA Champion 2006'},{label:'OLYMPICS',val:'3',sub:'Gold 2024 · USA captain'}],
+      citations: [{label:'USA Volleyball roster (usavolleyball.org)',tag:'[1]'},{label:'LOVB Nebraska 2025 roster',tag:'[2]'},{label:'NCAA 2006 Championship records',tag:'[3]'}],
+      cta: { text: 'Open IQ verdict →', href: '/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:'Jordan Larson',sport:'womens-volleyball',school:'LOVB Nebraska'})) }
+    },
+    'athlete-harper-murray': { tag: '// ATHLETE NODE · ELITE', name: 'Harper Murray',
+      stats: [{label:'IQ SCORE',val:'8.5',sub:'ELITE tier · ± 6'},{label:'CURRENT',val:'Nebraska',sub:'OH · Class of 2025'},{label:'COMPARABLE',val:'A. Drews',sub:'87% match · LOVB ATL'},{label:'CITATIONS',val:'12',sub:'Audit trail signed'}],
+      citations: [{label:'Nebraska Volleyball roster · 2024 season',tag:'[1]'},{label:'AVCA freshman of year coverage',tag:'[2]'},{label:'High-school stats · MaxPreps verified',tag:'[3]'}],
+      cta: { text: 'Open IQ verdict →', href: '/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:'Harper Murray',sport:'womens-volleyball',school:'Nebraska'})) }
+    },
+    'athlete-justine-wo': { tag: '// ATHLETE NODE · ICON', name: 'Justine Wong-Orantes',
+      stats: [{label:'IQ SCORE',val:'8.5',sub:'ICON tier (libero specialty)'},{label:'CURRENT',val:'LOVB HOU',sub:'Pro Libero'},{label:'NEBRASKA YEARS',val:'2014-17',sub:'NCAA Champion 2015 · 2017'},{label:'USA',val:'Tokyo Gold',sub:'2021 starter libero'}],
+      citations: [{label:'LOVB Houston 2025 roster',tag:'[1]'},{label:'USA Volleyball Tokyo 2020 records',tag:'[2]'}],
+      cta: { text: 'Open IQ verdict →', href: '/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:'Justine Wong-Orantes',sport:'womens-volleyball',school:'LOVB Houston'})) }
+    },
+    'athlete-kelsey-rc': { tag: '// ATHLETE NODE · ICON', name: 'Kelsey Robinson-Cook',
+      stats: [{label:'IQ SCORE',val:'9.2',sub:'ICON tier'},{label:'CURRENT',val:'LOVB ATL',sub:'Pro · Outside Hitter'},{label:'NEBRASKA',val:'2010-13',sub:'AVCA First Team Senior'},{label:'PRO YRS',val:'10+',sub:'Italy · Turkey · USA'}],
+      citations: [{label:'LOVB Atlanta 2025 roster',tag:'[1]'},{label:'USA Volleyball Tokyo Olympics',tag:'[2]'}],
+      cta: { text: 'Open IQ verdict →', href: '/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:'Kelsey Robinson-Cook',sport:'womens-volleyball',school:'LOVB Atlanta'})) }
+    },
+    'athlete-bergen-reilly': { tag: '// ATHLETE NODE · ELITE', name: 'Bergen Reilly',
+      stats: [{label:'IQ SCORE',val:'8.0',sub:'ELITE tier'},{label:'CURRENT',val:'Nebraska',sub:'Setter · Class of 2026'},{label:'POSITION',val:'S',sub:'Anchor setter, full-time starter'},{label:'CITATIONS',val:'9',sub:'Audit trail signed'}],
+      citations: [{label:'Nebraska Volleyball roster · 2024',tag:'[1]'},{label:'AVCA All-Region 2023',tag:'[2]'}],
+      cta: { text: 'Open IQ verdict →', href: '/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:'Bergen Reilly',sport:'womens-volleyball',school:'Nebraska'})) }
+    },
+    'athlete-andi-jackson': { tag: '// ATHLETE NODE · ELITE', name: 'Andi Jackson',
+      stats: [{label:'IQ SCORE',val:'8.4',sub:'ELITE tier'},{label:'CURRENT',val:'Nebraska',sub:'MB · Class of 2026'},{label:'POSITION',val:'MB',sub:'Block leader'},{label:'CITATIONS',val:'10',sub:'Audit trail signed'}],
+      citations: [{label:'Nebraska Volleyball roster · 2024',tag:'[1]'}],
+      cta: { text: 'Open IQ verdict →', href: '/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:'Andi Jackson',sport:'womens-volleyball',school:'Nebraska'})) }
+    },
+    'athlete-lexi-rodriguez': { tag: '// ATHLETE NODE · ELITE', name: 'Lexi Rodriguez',
+      stats: [{label:'IQ SCORE',val:'8.0',sub:'ELITE tier'},{label:'CURRENT',val:'LOVB NE',sub:'Pro Libero (just turned pro)'},{label:'NEBRASKA',val:'2020-24',sub:'4-year starter, 2023 captain'},{label:'AVCA',val:'1st-Team',sub:'4× All-American'}],
+      citations: [{label:'LOVB Nebraska 2025 roster',tag:'[1]'},{label:'AVCA All-American records',tag:'[2]'}],
+      cta: { text: 'Open IQ verdict →', href: '/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:'Lexi Rodriguez',sport:'womens-volleyball',school:'LOVB Nebraska'})) }
+    },
+    'athlete-kayla-caffey': { tag: '// ATHLETE NODE · STAR', name: 'Kayla Caffey',
+      stats: [{label:'IQ SCORE',val:'7.8',sub:'STAR tier'},{label:'CURRENT',val:'Pro overseas',sub:'Italy/Turkey · MB'},{label:'NEBRASKA',val:'2021-22',sub:'Grad transfer · MB'},{label:'CITATIONS',val:'7',sub:'Audit trail signed'}],
+      citations: [{label:'European league rosters · Lega Serie A1',tag:'[1]'}],
+      cta: { text: 'Open IQ verdict →', href: '/?run=' + encodeURIComponent(JSON.stringify({track:'player',name:'Kayla Caffey',sport:'womens-volleyball',school:'Nebraska'})) }
+    }
+  };
+  function escapeHtml(s) { return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  window.tgDrillDown = function(id) {
+    const node = NODES[id];
+    if (!node) return;
+    document.getElementById('tg-dd-tag').textContent = node.tag;
+    document.getElementById('tg-dd-name').textContent = node.name;
+    const body = document.getElementById('tg-dd-body');
+    const stats = node.stats.map(s => '<div class="tg-dd-stat"><div class="tg-dd-stat-label">// ' + s.label + '</div><div class="tg-dd-stat-val">' + escapeHtml(s.val) + '</div><div class="tg-dd-stat-sub">' + escapeHtml(s.sub) + '</div></div>').join('');
+    const cits = node.citations.map(c => '<div class="tg-dd-citation"><span>' + escapeHtml(c.label) + '</span><span class="tg-dd-citation-tag">' + c.tag + '</span></div>').join('');
+    body.innerHTML = '<div class="tg-dd-grid">' + stats + '</div>' +
+      '<div class="tg-dd-list"><div class="tg-dd-list-h">// CITED SOURCES (' + node.citations.length + ')</div>' + cits + (node.cta ? '<a href="' + node.cta.href + '" class="tg-dd-cta">' + escapeHtml(node.cta.text) + '</a>' : '') + '</div>';
+    document.getElementById('tg-drilldown').classList.add('open');
+    setTimeout(function() { document.getElementById('tg-drilldown').scrollIntoView({behavior:'smooth',block:'nearest'}); }, 80);
+  };
+  window.tgClose = function() {
+    document.getElementById('tg-drilldown').classList.remove('open');
+  };
+})();
+</script>
+
+</body>
+</html>

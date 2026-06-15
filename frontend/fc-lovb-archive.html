@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archive · LOVB Intel</title>
+<meta name="description" content="The complete LOVB Intel archive. Atlas, athletes, timelines, glossaries, sources, journalism, awards, records, conferences, contracts, deck — every reference surface, indexed and searchable.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0a0908; --bg-2: #14110c; --bg-3: #1a1612; --text: #fbf6ea; --text-2: rgba(251,246,234,0.7); --text-3: rgba(251,246,234,0.45); --gold: #ffc94a; --teal: #b5e2c2; --crimson: #d44a4a; --line: rgba(251,246,234,0.1); --line-strong: rgba(251,246,234,0.18); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Crimson Pro', serif; line-height: 1.55; min-height: 100vh; position: relative; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.07 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>"); opacity: 0.55; pointer-events: none; z-index: 1; mix-blend-mode: overlay; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+  /* TOP NAV — global mega-menu pattern */
+  .nav-global{position:sticky;top:0;z-index:100;background:rgba(10,9,8,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--line)}
+  .nav-global-inner{max-width:1240px;margin:0 auto;padding:0 32px;display:flex;align-items:center;height:60px}
+  .nav-global-brand{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--text);font-weight:500;margin-right:auto;text-decoration:none;display:flex;align-items:center;gap:6px}
+  .nav-global-brand b{color:var(--gold);font-weight:500}
+  .nav-global-brand .sep{color:var(--text-3);margin:0 2px}
+  .nav-global-brand .ctx{color:var(--teal)}
+  .nav-global-main{display:flex;align-items:center}
+  .nav-global-item{position:relative}
+  .nav-global-link{display:flex;align-items:center;gap:6px;padding:0 20px;height:60px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-2);background:none;border:0;cursor:pointer;transition:color .2s}
+  .nav-global-link:hover,.nav-global-link.open{color:var(--text)}
+  .nav-global-caret{font-size:7px;opacity:.6;transition:transform .2s}
+  .nav-global-link.open .nav-global-caret{transform:rotate(180deg)}
+  .nav-global-cta{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--gold);color:var(--gold);border-radius:2px;margin-left:18px;text-decoration:none;transition:all .2s}
+  .nav-global-cta:hover{background:var(--gold);color:var(--bg)}
+  .nav-global-mega{position:absolute;top:60px;left:50%;transform:translateX(-50%) translateY(-6px);min-width:440px;background:rgba(16,14,12,.97);backdrop-filter:blur(28px);border:1px solid var(--line);border-radius:6px;padding:24px;opacity:0;pointer-events:none;transition:all .22s;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+  .nav-global-item.open .nav-global-mega{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+  .nav-global-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 22px}
+  .nav-global-col-head{grid-column:span 2;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+  .nav-global-mega a{display:flex;flex-direction:column;padding:9px 10px;border-radius:3px;text-decoration:none}
+  .nav-global-mega a strong{font-family:'Crimson Pro',serif;font-size:15px;font-weight:500;color:var(--text)}
+  .nav-global-mega a span{font-family:'Instrument Serif',serif;font-style:italic;font-size:12.5px;color:var(--text-2);margin-top:1px;line-height:1.3}
+  .nav-global-mega a:hover{background:rgba(245,241,232,.06)}
+  .nav-global-mega a:hover strong{color:var(--gold)}
+  @media(max-width:880px){.nav-global-main,.nav-global-cta{display:none}}
+.topnav-links a { font-size: 10px; } }
+
+  .hero { padding: 80px 0 40px; }
+  .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; font-weight: 700; margin-bottom: 24px; }
+  .hero-h { font-family: 'Anton', sans-serif; font-size: clamp(48px, 8vw, 88px); line-height: 0.92; letter-spacing: -0.015em; margin-bottom: 24px; max-width: 760px; }
+  .hero-h .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .hero-deck { font-size: 19px; line-height: 1.55; color: var(--text-2); max-width: 620px; margin-bottom: 32px; }
+
+  .filter-row { display: flex; gap: 12px; align-items: center; margin-bottom: 24px; flex-wrap: wrap; }
+  .filter-input { flex: 1; min-width: 240px; padding: 14px 18px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 6px; color: var(--text); font-family: 'Crimson Pro', serif; font-size: 16px; }
+  .filter-input:focus { outline: none; border-color: var(--gold); }
+  .filter-count { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: var(--text-3); text-transform: uppercase; }
+  .filter-count .gold { color: var(--gold); font-weight: 700; }
+
+  .cat-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-chip { padding: 8px 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.2px; color: var(--text-2); text-transform: uppercase; font-weight: 600; cursor: pointer; transition: all .2s; }
+  .cat-chip:hover { color: var(--gold); border-color: var(--gold); }
+  .cat-chip.active { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+
+  .section { padding-bottom: 40px; }
+  .cat-header { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px; color: var(--text-3); text-transform: uppercase; font-weight: 700; margin-bottom: 18px; display: flex; align-items: center; gap: 14px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .cat-header .gold { color: var(--gold); }
+  .cat-header::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .cat-header.hidden { display: none; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+  @media (max-width: 880px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .cards { grid-template-columns: 1fr; } }
+  .card { display: block; padding: 22px 24px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 6px; text-decoration: none; color: inherit; transition: all .2s; }
+  .card:hover { background: var(--bg-3); border-color: var(--line-strong); transform: translateY(-1px); }
+  .card.hidden { display: none; }
+  .card-route { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; color: var(--gold); font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+  .card-arrow { color: var(--text-3); transition: color .2s, transform .2s; }
+  .card:hover .card-arrow { color: var(--gold); transform: translateX(2px); }
+  .card-title { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1.05; letter-spacing: -0.005em; margin-bottom: 8px; }
+  .card-title .italic { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--gold); font-weight: 400; }
+  .card-desc { font-family: 'Crimson Pro', serif; font-size: 14px; line-height: 1.5; color: var(--text-2); }
+
+  .empty { padding: 40px 20px; text-align: center; font-family: 'Crimson Pro', serif; font-style: italic; font-size: 16px; color: var(--text-3); display: none; }
+  .empty.active { display: block; }
+
+  .footer { padding: 56px 0 40px; margin-top: 40px; border-top: 1px solid var(--line); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1.5px; color: var(--text-3); text-transform: uppercase; }
+  .footer a { color: var(--text-2); text-decoration: none; }
+  .footer a:hover { color: var(--gold); }
+  .footer-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  a { color: var(--gold); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">// The archive</div>
+    <h1 class="hero-h">Every surface. <span class="italic">Indexed.</span></h1>
+    <p class="hero-deck">The complete reference library behind the tools. Forty-plus surfaces — atlas, athletes, timelines, journalism, sources, awards, records, contracts, conferences, deck, and the per-market dossiers. Search or filter by category.</p>
+
+    <div class="filter-row">
+      <input type="text" class="filter-input" id="filterInput" placeholder="Search surfaces — name, route, or keyword…" />
+      <div class="filter-count">Showing <span class="gold" id="filterCount">—</span> surfaces</div>
+    </div>
+
+    <div class="cat-chips" id="catChips">
+      <button class="cat-chip active" data-cat="all">All</button>
+      <button class="cat-chip" data-cat="tools">Tools</button>
+      <button class="cat-chip" data-cat="primary">Primary</button>
+      <button class="cat-chip" data-cat="live">Live data</button>
+      <button class="cat-chip" data-cat="reference">Reference</button>
+      <button class="cat-chip" data-cat="voices">Voices</button>
+      <button class="cat-chip" data-cat="meta">Meta / Pitch</button>
+      <button class="cat-chip" data-cat="legacy">Other sports</button>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div id="archive"></div>
+  <div class="empty" id="empty">No surfaces match — try a different search or clear the filter.</div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-row">
+      <div>// Archive · The full LOVB Intel reference library</div>
+      <div>
+        <a href="/lovb">Hub</a> &nbsp;·&nbsp;
+        <a href="/lovb/projection">Tools</a> &nbsp;·&nbsp;
+        <a href="/lovb/about">About</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const SURFACES = [
+  // TOOLS
+  { cat: 'tools', route: '/lovb/projection', title: 'Pro Fit Score', desc: 'Project any D1 women\'s volleyball player\'s path to LOVB Pro. Tier + market + FA comparable.' },
+  { cat: 'tools', route: '/lovb/match',      title: 'FA Match',      desc: 'Find any prospect\'s closest analogue from the Founding Ten — with similarity score and reasoning.' },
+  { cat: 'tools', route: '/lovb/fit',        title: 'Market Fit',    desc: 'Score all six pro markets for a player profile. System, gap, geography, story.' },
+  { cat: 'tools', route: '/lovb/roster',     title: 'Roster Analyzer', desc: 'For any LOVB team: grade, position depth meters, gaps, target profiles.' },
+
+  // PRIMARY SURFACES
+  { cat: 'primary', route: '/lovb/atlas',    title: 'The Atlas',      desc: 'The single visual overview of the league — six markets, ten Founding Athletes, key dates.' },
+  { cat: 'primary', route: '/lovb/athletes', title: 'Athletes',       desc: 'Every rostered pro across the six teams — position, market, role, public profile.' },
+  { cat: 'primary', route: '/lovb/markets',  title: 'Markets',        desc: 'The six pro markets explained — venue, system, ownership, identity, ticket trajectory.' },
+  { cat: 'primary', route: '/lovb/draft',    title: 'Draft Watch',    desc: 'The college and portal players most likely to sign next. With cuts and confidence.' },
+  { cat: 'primary', route: '/lovb/journalism', title: 'Journalism',   desc: 'Curated and annotated long-form on the women\'s pro volleyball world.' },
+
+  // LIVE DATA
+  { cat: 'live', route: '/lovb/now',          title: 'This Week',      desc: 'Live state of the league — standings, schedule, key matchups, last-week recap.' },
+  { cat: 'live', route: '/lovb/leaders',      title: 'Statistical Leaders', desc: 'Kills, hitting %, digs, blocks, assists — leaderboards updated through current matches.' },
+  { cat: 'live', route: '/lovb/playoffs',     title: 'Playoff Picture', desc: 'Standings race, seeding scenarios, projected matchups, and bracket math.' },
+  { cat: 'live', route: '/lovb/transfer-portal', title: 'Transfer Portal Tracker', desc: 'College players in the portal, weighted by pro signability and timing.' },
+  { cat: 'live', route: '/lovb/season',       title: 'Season Schedule', desc: 'The full schedule, results, and identified inflection-point matches.' },
+
+  // REFERENCE
+  { cat: 'reference', route: '/lovb/timeline',     title: 'Timeline',          desc: 'From 2020 founding through 2025 first pitch — the league\'s public-record chronology.' },
+  { cat: 'reference', route: '/lovb/awards',       title: 'Awards & Honors',   desc: 'Year-by-year regular-season honors, end-of-year awards, and All-League selections.' },
+  { cat: 'reference', route: '/lovb/records',      title: 'Records',           desc: 'Single-match, single-season, and career LOVB Pro records.' },
+  { cat: 'reference', route: '/lovb/glossary',     title: 'Glossary',          desc: 'Every LOVB-specific and volleyball-general term used across the site, defined.' },
+  { cat: 'reference', route: '/lovb/sources',      title: 'Sources & Methods', desc: 'Where every statement comes from. Methodology notes and confidence bands.' },
+  { cat: 'reference', route: '/lovb/conferences',  title: 'College Conferences', desc: 'The D1 conference landscape that feeds LOVB Pro — strength weights, postseason history.' },
+  { cat: 'reference', route: '/lovb/expansion',    title: 'Expansion Watch',   desc: 'Markets in the public conversation for the next pro additions — odds and signals.' },
+  { cat: 'reference', route: '/lovb/contracts',    title: 'Contract Landscape', desc: 'Public-record contract economics — salary bands, FA timing, term patterns.' },
+
+  // VOICES
+  { cat: 'voices', route: '/lovb/voices',     title: 'Voices',           desc: 'The reporters, broadcasters, and commentators shaping the league\'s public coverage.' },
+  { cat: 'voices', route: '/lovb/parents',    title: 'For Parents',      desc: 'How junior club to D1 to LOVB Pro actually works — the pathway, signals, and decision points.' },
+  { cat: 'voices', route: '/lovb/coaches',    title: 'For Coaches',      desc: 'Coaching pipeline at the pro level — who\'s where, what systems, what\'s open.' },
+
+  // META / PITCH
+  { cat: 'meta', route: '/lovb/about',     title: 'About',         desc: 'What LOVB Intel is, what it isn\'t, and who built it.' },
+  { cat: 'meta', route: '/lovb/api',       title: 'Public API',    desc: 'The data behind the surfaces — JSON endpoints for primary entities.' },
+  { cat: 'meta', route: '/lovb/heritage',  title: 'Heritage',      desc: 'The deeper story of U.S. women\'s volleyball pre-2025 — the foundation under the league.' },
+  { cat: 'meta', route: '/lovb/deck',      title: 'Pitch Deck',    desc: 'The 14-slide calling-card deck for the LOVB Intel layer.' },
+
+  // LEGACY OTHER SPORTS
+  { cat: 'legacy', route: '/football',     title: 'Football',     desc: 'FieldCheck\'s original football vertical — recruiting & pro pathway tools.' },
+  { cat: 'legacy', route: '/basketball',   title: 'Basketball',   desc: 'Basketball vertical surfaces.' },
+  { cat: 'legacy', route: '/soccer',       title: 'Soccer',       desc: 'Soccer vertical surfaces.' },
+  { cat: 'legacy', route: '/sports',       title: 'All Sports',   desc: 'FieldCheck top-level — every active vertical and what each one covers.' }
+];
+
+const CAT_LABELS = {
+  tools:     '§ 01 · Tools',
+  primary:   '§ 02 · Primary surfaces',
+  live:      '§ 03 · Live data',
+  reference: '§ 04 · Reference',
+  voices:    '§ 05 · Voices · For-audiences',
+  meta:      '§ 06 · Meta · Pitch',
+  legacy:    '§ 07 · Other FieldCheck verticals'
+};
+
+let activeCat = 'all';
+let activeFilter = '';
+
+function render() {
+  const archive = document.getElementById('archive');
+  archive.innerHTML = '';
+  const filterLower = activeFilter.toLowerCase().trim();
+  let totalShown = 0;
+
+  Object.keys(CAT_LABELS).forEach(cat => {
+    if (activeCat !== 'all' && activeCat !== cat) return;
+
+    const items = SURFACES.filter(s => {
+      if (s.cat !== cat) return false;
+      if (!filterLower) return true;
+      return s.title.toLowerCase().includes(filterLower) ||
+             s.desc.toLowerCase().includes(filterLower) ||
+             s.route.toLowerCase().includes(filterLower);
+    });
+
+    if (!items.length) return;
+
+    const section = document.createElement('div');
+    section.className = 'section';
+    section.innerHTML = `<div class="cat-header"><span class="gold">${CAT_LABELS[cat].split(' · ')[0]}</span> · ${CAT_LABELS[cat].split(' · ').slice(1).join(' · ')}</div>` +
+      `<div class="cards">` +
+      items.map(s => `
+        <a href="${s.route}" class="card">
+          <div class="card-route">${s.route}<span class="card-arrow">→</span></div>
+          <div class="card-title">${s.title}</div>
+          <div class="card-desc">${s.desc}</div>
+        </a>
+      `).join('') +
+      `</div>`;
+    archive.appendChild(section);
+    totalShown += items.length;
+  });
+
+  document.getElementById('filterCount').textContent = totalShown;
+  document.getElementById('empty').classList.toggle('active', totalShown === 0);
+}
+
+document.getElementById('filterInput').addEventListener('input', (e) => {
+  activeFilter = e.target.value;
+  render();
+});
+
+document.querySelectorAll('.cat-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    activeCat = chip.dataset.cat;
+    render();
+  });
+});
+
+render();
+</script>
+
+
+<script>
+// Global mega-menu hover/click
+document.querySelectorAll('.nav-global-item').forEach(item => {
+  const link = item.querySelector('.nav-global-link');
+  let timeout;
+  item.addEventListener('mouseenter', () => { clearTimeout(timeout); document.querySelectorAll('.nav-global-item.open').forEach(o => { if(o!==item) o.classList.remove('open'); o.querySelector('.nav-global-link').classList.remove('open'); }); item.classList.add('open'); link.classList.add('open'); });
+  item.addEventListener('mouseleave', () => { timeout = setTimeout(() => { item.classList.remove('open'); link.classList.remove('open'); }, 150); });
+  link.addEventListener('click', e => { e.preventDefault(); item.classList.toggle('open'); link.classList.toggle('open'); });
+});
+</script>
+
+</body>
+</html>

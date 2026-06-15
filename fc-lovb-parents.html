@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>For Parents · The honest layer · FieldCheck LOVB</title>
+<meta name="description" content="The independent guide for parents navigating their child's club volleyball journey through the LOVB ecosystem. Cost transparency, pathway honesty, walk-away default.">
+<meta name="theme-color" content="#0A0908">
+<meta name="fieldcheck-build" content="v0.30.5.3883_LOVB_PARENTS">
+<meta property="og:title" content="For Parents · The honest layer · FieldCheck LOVB">
+<meta property="og:description" content="The independent guide for parents navigating club volleyball through the LOVB ecosystem. Cost transparency, walk-away default.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0908;--bg-2:#1c1814;--text:#fbf6ea;--text-2:rgba(212,200,173,0.78);--text-3:rgba(212,200,173,0.55);--text-4:rgba(212,200,173,0.32);--gold:#ffc94a;--gold-glow:rgba(255,201,74,0.55);--gold-soft:rgba(255,201,74,0.18);--gold-edge:rgba(255,201,74,0.32);--teal:#b5e2c2;--crimson:#d44a4a;--green:#7fa86e;--line:rgba(255,201,74,0.10);--line-2:rgba(255,201,74,0.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.025;mix-blend-mode:overlay}
+a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+a:hover{opacity:0.75}
+.wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+.fc-nav{padding:24px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:50;backdrop-filter:blur(6px)}
+.fc-logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:0.06em}
+.fc-logo span{color:var(--gold)}
+.fc-nav-links{display:flex;gap:24px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.fc-nav-links a{color:var(--text-2)}
+.fc-nav-links a.active{color:var(--gold)}
+@media(max-width:720px){.fc-nav{flex-direction:column;gap:14px;align-items:flex-start}.fc-nav-links{gap:14px;flex-wrap:wrap}}
+
+.hero{padding:72px 0 56px;border-bottom:1px solid var(--line)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(48px,8vw,108px);line-height:0.94;letter-spacing:-0.022em;margin-bottom:24px;max-width:1080px}
+.hero h1 .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.hero-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(20px,2.4vw,28px);line-height:1.4;color:var(--text-2);max-width:880px}
+
+.section{padding:64px 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:none}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.section-num .gold{color:var(--gold)}
+.section-h{font-family:'Anton',sans-serif;font-size:clamp(32px,4.6vw,52px);line-height:1.02;letter-spacing:-0.018em;margin-bottom:18px}
+.section-h .italic{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold)}
+.section-deck{font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;line-height:1.45;color:var(--text-2);max-width:780px;margin-bottom:32px}
+
+/* COST CARDS */
+.cost-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.cost-cell{padding:24px 24px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.cost-band{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.cost-tier{font-family:'Anton',sans-serif;font-size:22px;line-height:1;letter-spacing:-0.008em;color:var(--text)}
+.cost-range{font-family:'Anton',sans-serif;font-size:30px;color:var(--gold);letter-spacing:-0.018em;line-height:1;margin:6px 0}
+.cost-detail{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2);margin-top:4px}
+.cost-detail b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:14px}
+
+/* TIME COMMITMENT */
+.time-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:18px}
+.time-cell{padding:22px 24px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.time-period{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.time-hours{font-family:'Anton',sans-serif;font-size:32px;line-height:1;color:var(--text);letter-spacing:-0.015em}
+.time-hours .unit{font-size:13px;color:var(--text-3);font-family:'JetBrains Mono',monospace;letter-spacing:1.4px;text-transform:uppercase;margin-left:6px}
+.time-detail{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.55;color:var(--text-2);margin-top:6px}
+.time-detail b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:14px}
+
+/* CHECKLIST */
+.checklist{padding:28px 32px;background:linear-gradient(180deg,rgba(255,201,74,0.04),rgba(20,17,12,0.4));border:1px solid var(--gold-edge);border-radius:6px}
+.checklist-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.checklist-h{font-family:'Anton',sans-serif;font-size:clamp(26px,3.4vw,38px);line-height:1.05;margin-bottom:16px}
+.checklist-h .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.checklist-list{list-style:none;display:grid;grid-template-columns:1fr;gap:10px;margin-top:8px}
+.checklist-list li{padding:14px 18px 14px 44px;background:rgba(10,9,8,0.55);border:1px solid var(--line-2);border-radius:4px;font-family:'Crimson Pro',serif;font-size:14.5px;line-height:1.55;color:var(--text-2);position:relative}
+.checklist-list li::before{content:'☐';position:absolute;left:14px;top:14px;color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700}
+.checklist-list li b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:15.5px}
+.checklist-list li em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold)}
+
+/* TOOLS */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.tool{padding:26px 28px;background:rgba(20,17,12,0.45);border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .2s;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;position:relative}
+.tool:hover{background:rgba(20,17,12,0.85);opacity:1}
+.tool-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.tool-name{font-family:'Anton',sans-serif;font-size:24px;line-height:1.05;letter-spacing:-0.012em}
+.tool-name .italic{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+.tool-detail{font-family:'Crimson Pro',serif;font-size:14px;line-height:1.55;color:var(--text-2)}
+.tool-detail b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:14.5px}
+.tool-arrow{position:absolute;top:28px;right:28px;font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--text-3);transition:all .2s}
+.tool:hover .tool-arrow{color:var(--gold);transform:translateX(4px)}
+
+/* WARNING */
+.warning{padding:24px 28px;background:rgba(212,74,74,0.06);border:1px solid rgba(212,74,74,0.3);border-radius:6px;display:flex;gap:18px;align-items:flex-start}
+.warning-glyph{font-family:'Anton',sans-serif;font-size:36px;color:var(--crimson);line-height:1;flex:0 0 auto;letter-spacing:-0.02em}
+.warning-body{font-family:'Crimson Pro',serif;font-size:15px;line-height:1.65;color:var(--text-2)}
+.warning-body b{color:var(--text);font-family:'Anton',sans-serif;font-weight:normal;font-size:16px}
+.warning-body em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--crimson)}
+
+.footer{padding:56px 0 72px;border-top:1px solid var(--line);background:rgba(20,17,12,0.5)}
+.footer-display{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer p{font-family:'Crimson Pro',serif;font-size:13.5px;line-height:1.65;color:var(--text-2);max-width:780px;margin-bottom:12px}
+.footer-disclaimer{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--text-4);margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="fc-nav">
+    <div class="fc-logo">Field<span>Check</span></div>
+    <div class="fc-nav-links">
+      <a href="/">// home</a>
+      <a href="/lovb">// lovb hub</a>
+      <a href="/lovb/parents" class="active">// for parents</a>
+      <a href="/lovb/me">// for players</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">For Parents · The honest layer · No upsell · No commercial relationships</div>
+    <h1>The guide your <span class="italic">club won't write.</span></h1>
+    <p class="hero-deck">Most "parent guides" come from clubs that need your tuition or recruiting services that need your data. This one is independent. Cost transparency, time-commitment honesty, pathway realism, walk-away default. We won't tell you your daughter is destined for D1; we'll show you what the data actually says.</p>
+  </section>
+</div>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">I</span> · What it actually costs</div>
+    <h2 class="section-h">The cost ranges, <span class="italic">no marketing math.</span></h2>
+    <p class="section-deck">Annual cost bands for a competitive club volleyball season, based on publicly published tuition pages across LOVB-affiliated and other clubs in the U.S. 2024–2026. Ranges, not averages, because <em>your geography matters more than any club's average</em>.</p>
+
+    <div class="cost-grid">
+      <div class="cost-cell">
+        <div class="cost-band">// Regional level</div>
+        <div class="cost-tier">12U–14U Regional</div>
+        <div class="cost-range">$1.5K – $3.5K</div>
+        <div class="cost-detail"><b>Local tournaments only.</b> 2–3 practices/week, no national travel. Entry point for early competitive play.</div>
+      </div>
+      <div class="cost-cell">
+        <div class="cost-band">// National qualifier</div>
+        <div class="cost-tier">15U–17U Open</div>
+        <div class="cost-range">$5K – $10K</div>
+        <div class="cost-detail"><b>National travel.</b> 4–5 practices/week, 4–6 out-of-state tournaments, qualifier circuit fees. The middle of the curve.</div>
+      </div>
+      <div class="cost-cell">
+        <div class="cost-band">// Elite national</div>
+        <div class="cost-tier">17U / 18U Open</div>
+        <div class="cost-range">$8K – $15K</div>
+        <div class="cost-detail"><b>Full national + dual-org schedule.</b> USAV nationals + AAU nationals + qualifier circuit. <em>Often the cost of in-state tuition.</em></div>
+      </div>
+      <div class="cost-cell">
+        <div class="cost-band">// Per-family budget</div>
+        <div class="cost-tier">Travel · Lodging · Apparel</div>
+        <div class="cost-range">+$3K – $8K</div>
+        <div class="cost-detail"><b>Above and beyond tuition.</b> Flights, hotels, rental cars, team apparel, club gear. Doubles as a logistics workload — not just a cost.</div>
+      </div>
+    </div>
+
+    <div class="warning" style="margin-top:24px">
+      <div class="warning-glyph">!</div>
+      <div class="warning-body"><b>The compounding problem.</b> Multiply mid-curve ($8K) × six club years (12U–17U) = <em>$48K just-club costs</em> over a typical pathway. Add travel, lodging, apparel, missed work — true cost approaches <em>$80K–$120K per family</em>. <b>The LOVB Foundation exists specifically to widen that filter</b> for families who can't underwrite it.</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">II</span> · The time commitment</div>
+    <h2 class="section-h">Hours per week, <span class="italic">honestly.</span></h2>
+    <p class="section-deck">Time-commitment is the cost no club includes in tuition. Here's what the schedule actually looks like for the typical competitive U.S. junior club pathway, by age tier.</p>
+
+    <div class="time-grid">
+      <div class="time-cell">
+        <div class="time-period">// 11U-12U</div>
+        <div class="time-hours">4-6<span class="unit">hrs/week</span></div>
+        <div class="time-detail"><b>2 practices · 1-2 weekends/month tournaments.</b> Entry into the rhythm. Often combinable with school sport.</div>
+      </div>
+      <div class="time-cell">
+        <div class="time-period">// 13U-14U</div>
+        <div class="time-hours">8-12<span class="unit">hrs/week</span></div>
+        <div class="time-detail"><b>3-4 practices · monthly tournament weekends.</b> Conflicts with most other sports emerge here.</div>
+      </div>
+      <div class="time-cell">
+        <div class="time-period">// 15U-16U</div>
+        <div class="time-hours">12-18<span class="unit">hrs/week</span></div>
+        <div class="time-detail"><b>4-5 practices · 2-3 tournaments/month plus travel.</b> Most families specialize to volleyball-only here.</div>
+      </div>
+      <div class="time-cell">
+        <div class="time-period">// 17U-18U Open</div>
+        <div class="time-hours">18-25<span class="unit">hrs/week</span></div>
+        <div class="time-detail"><b>5+ practices · qualifier circuit · school VB · S&amp;C.</b> Compounds with school recruiting workload. <em>Full-time work for the athlete.</em></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">III</span> · Pathway realism</div>
+    <h2 class="section-h">What the <span class="italic">numbers actually say.</span></h2>
+    <p class="section-deck">Most parents arrive at club volleyball with hopeful pathway assumptions. Here's the honest version — drawn from publicly reported NCAA recruiting data and LOVB-aligned alumni outcomes.</p>
+
+    <div class="tools-grid">
+      <a href="/lovb/pathway" class="tool">
+        <div class="tool-arrow">→</div>
+        <div class="tool-label">§ THE TOOL</div>
+        <div class="tool-name">The <span class="italic">Pathway tool.</span></div>
+        <div class="tool-detail"><b>60-second input.</b> Get honest probability bands for D1 / D2 / D3 / NAIA / juco / pro outcomes given your daughter's actual situation. No inflation.</div>
+      </a>
+      <a href="/lovb/alumni" class="tool">
+        <div class="tool-arrow">→</div>
+        <div class="tool-label">§ THE TRACKER</div>
+        <div class="tool-name">The <span class="italic">Alumni tracker.</span></div>
+        <div class="tool-detail">Where LOVB junior club players actually landed. <b>~78% to D1, ~30 pro-pathway, ~340 tracked alumni.</b> Filter by club, by destination.</div>
+      </a>
+      <a href="/lovb/clubs" class="tool">
+        <div class="tool-arrow">→</div>
+        <div class="tool-label">§ THE DIRECTORY</div>
+        <div class="tool-name">The <span class="italic">Clubs directory.</span></div>
+        <div class="tool-detail">90 LOVB-affiliated clubs across 30 states. Searchable by state, by Pro affiliate, by 2025 national champion status. <b>No pay-to-list, no rankings.</b></div>
+      </a>
+    </div>
+
+    <div class="warning" style="margin-top:24px">
+      <div class="warning-glyph">!</div>
+      <div class="warning-body"><b>The "D1 promise" is the most common parent trap.</b> Clubs and recruiting services lean hard on "we placed N athletes at D1." But D1 covers <em>334 NCAA D1 programs from Stanford and Texas down to single-bid America East schools</em> — the price-paid-vs-outcome math is wildly different across that span. <b>Always ask: which D1?</b> And ask to see the alumni list before signing tuition.</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">IV</span> · Choosing a club</div>
+    <h2 class="section-h">A checklist <span class="italic">your club won't hand you.</span></h2>
+    <p class="section-deck">If you're evaluating clubs for next season — LOVB-affiliated or not — these are the questions worth asking before you sign tuition. Real questions, asked of real people, evaluated against real data.</p>
+
+    <div class="checklist">
+      <div class="checklist-eyebrow">// Parent due diligence · The 8-question filter</div>
+      <h3 class="checklist-h">Eight questions <span class="italic">before you sign.</span></h3>
+      <ul class="checklist-list">
+        <li><b>Show me your alumni outcomes.</b> Not your "verbal commits." A list of where actual graduates went and what they're doing now. <em>If they can't produce it within 24 hours, that's signal.</em></li>
+        <li><b>Who's the head coach for my daughter's team?</b> Not the program. Her specific team. What's their pathway? Are they returning next year?</li>
+        <li><b>What's the practice-to-tournament ratio?</b> A team that practices 5x/week but plays 3 tournaments all season produces different athletes than one that plays 8 tournaments. Match to your daughter's growth need.</li>
+        <li><b>What's the actual all-in cost?</b> Tuition + travel + nationals fees + apparel + qualifier fees. Get it in writing. <em>"~$X" is not a number.</em></li>
+        <li><b>How are playing-time decisions made?</b> Is it explicit? Performance-based? Rotation-based? Parents don't get to choose, but they deserve to know the framework.</li>
+        <li><b>What's the relationship with HS volleyball?</b> Some clubs accommodate; some compete. Check whether club practice schedules conflict with HS programs in your district.</li>
+        <li><b>What happens if my daughter wants to quit mid-season?</b> Refund policy. Re-entry policy. Many parents discover this answer too late.</li>
+        <li><b>Is there scholarship support?</b> If you're going to need help, ask early. LOVB-affiliated clubs have <a href="/lovb/foundation">Foundation channels</a>; others may not.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">V</span> · The promise to parents</div>
+    <h2 class="section-h">What we <span class="italic">won't do.</span></h2>
+    <p class="section-deck">Most "parent resources" sites are funded by recruiting services, club networks, or club-cert providers. Ours isn't. Here's what that means concretely.</p>
+
+    <div class="checklist">
+      <div class="checklist-eyebrow">// Our parent pledge · No exceptions</div>
+      <h3 class="checklist-h">Six commitments. <span class="italic">In writing.</span></h3>
+      <ul class="checklist-list">
+        <li><b>No emails to your daughter.</b> If she fills in the Pathway tool, we don't send her marketing. Ever.</li>
+        <li><b>No data resale.</b> If she submits a profile, that data does not go to recruiting services, agents, college coaches, or anyone else.</li>
+        <li><b>No club fees.</b> No LOVB-affiliated club, no non-affiliated club, no club anywhere pays to be highlighted in our directory or ranked higher. We don't rank.</li>
+        <li><b>No "premium" tier.</b> Everything described here is free. There's no "Plus" version that unlocks more. Ever.</li>
+        <li><b>No inflated probabilities.</b> The Pathway tool will not tell your daughter she "can be a star." It will tell her what the data actually sees.</li>
+        <li><b>Walk-away default.</b> Every recommendation supports declining as a valid choice. If the answer is "this club isn't worth it for your family," that's the answer.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-display">For Parents · Independent · Free · No Data Resale</div>
+    <p>If something here helped — or didn't — file a <a href="/dispute">dispute</a>. Parent feedback drives the next tools we build. The recurring asks (a college-fit overlay, a transfer-portal tracker, a true total-cost calculator) are queued in the <a href="/lovb/changelog">changelog</a>.</p>
+    <p>If you have a coach who's curious about this — point them at <a href="/lovb/coach">/lovb/coach</a>. If you're working with a scout — <a href="/lovb/scout">/lovb/scout</a>. If your daughter wants the player-direct entry — <a href="/lovb/me">/lovb/me</a>.</p>
+    <div class="footer-disclaimer">Independent and unaffiliated with LOVB or any club, league, or recruiting service. "LOVB" and related marks are properties of League One Volleyball Inc.</div>
+  </div>
+</footer>
+
+</body>
+</html>
