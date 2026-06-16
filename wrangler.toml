@@ -27,7 +27,7 @@ enabled = true
 name = "fieldcheck-proxy-dev"
 
 [env.dev.triggers]
-crons = []
+crons = ["0 13 * * 5"]
 
 [[env.dev.kv_namespaces]]
 binding = "FIELDCHECK_KV"

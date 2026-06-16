@@ -60,6 +60,39 @@ const CORS = {
   'Access-Control-Max-Age': '86400'
 };
 
+async function _fcRecomputeAll(env){
+  const FK=['talent','physical','competitiveness','mental_strength','mental_iq','coachability','mindset','character'];
+  let pix=[]; try{ const pr=await env.FIELDCHECK_KV.get('players:index'); if(pr) pix=JSON.parse(pr);}catch(e){}
+  const wk=(()=>{const d=new Date();const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);const ys=new Date(Date.UTC(t.getUTCFullYear(),0,1));const w=Math.ceil((((t-ys)/86400000)+1)/7);return t.getUTCFullYear()+'-W'+String(w).padStart(2,'0');})();
+  let done=0, moved=0;
+  for(const pid of pix.slice(0,500)){
+    try{
+      let idx=[]; const raw=await env.FIELDCHECK_KV.get('player-clips:'+pid); if(raw) idx=JSON.parse(raw);
+      const acc={},cnt={}; FK.forEach(f=>{acc[f]=0;cnt[f]=0;});
+      let counted=0;
+      for(const ix of idx.slice(0,200)){
+        let clip=null; try{ const cr=await env.FIELDCHECK_KV.get('clip:'+ix.id); if(cr) clip=JSON.parse(cr);}catch(e){}
+        const r=clip&&clip.ai_read; if(!r||!r.facet_signals) continue;
+        counted++; const q=r.quality||0.5;
+        for(const f of FK){ const sg=r.facet_signals[f]||0; if(sg>0){ acc[f]+=sg*q; cnt[f]+=1; } }
+      }
+      const facets={};
+      for(const f of FK){ if(cnt[f]===0){facets[f]=null;continue;} const avg=acc[f]/cnt[f]; const vol=Math.min(cnt[f]/8,1); facets[f]=Math.round((4.0+avg*vol*4.5)*10)/10; }
+      const scored=FK.map(f=>facets[f]).filter(x=>x!==null);
+      const composite=scored.length?Math.round((scored.reduce((a,b)=>a+b,0)/scored.length)*10)/10:null;
+      let prior=null; try{ const pr=await env.FIELDCHECK_KV.get('snapshot:'+pid+':latest'); if(pr) prior=JSON.parse(pr);}catch(e){}
+      const deltas={};
+      for(const f of FK){ if(facets[f]!==null && prior && prior.facets && typeof prior.facets[f]==='number') deltas[f]=Math.round((facets[f]-prior.facets[f])*10)/10; }
+      const compDelta=(composite!==null && prior && typeof prior.composite==='number')?Math.round((composite-prior.composite)*10)/10:null;
+      if(compDelta!==null && compDelta!==0) moved++;
+      const snapshot={ player_id:pid, composite, facets, deltas, composite_delta:compDelta, clips_counted:counted, facets_with_evidence:scored.length, week:wk, explanation:`Friday recompute over ${counted} clips.`, snapshot_version:'L5-v1-cron', computed_at:new Date().toISOString() };
+      await env.FIELDCHECK_KV.put('snapshot:'+pid+':latest', JSON.stringify(snapshot));
+      await env.FIELDCHECK_KV.put('snapshot:'+pid+':'+wk, JSON.stringify(snapshot));
+      done++;
+    }catch(e){}
+  }
+  return { players_total:pix.length, recomputed:done, numbers_moved:moved, week:wk };
+}
 function json(obj, status = 200) {
   return new Response(JSON.stringify(obj, null, 2), {
     status,
@@ -33939,6 +33972,10 @@ export default {
       })());
     }
 
+    if (event.cron === '0 13 * * 5') {  // WEEKLY-CRON-v1: Friday 13:00 UTC — the Friday number drop
+      try { const r = await _fcRecomputeAll(env); console.log('Friday recompute:', JSON.stringify(r)); } catch(e){ console.log('Friday recompute error', String(e)); }
+      return;
+    }
     if (event.cron === '0 9 * * 1') {
       tasks.push((async () => {
         try {
@@ -34054,6 +34091,8 @@ export default {
           let idx = []; try { const raw = await env.FIELDCHECK_KV.get(idxKey); if (raw) idx = JSON.parse(raw); } catch(e){}
           idx.unshift({ id: clip.id, week: clip.week, visibility: clip.visibility, context: clip.context, created_at: clip.created_at });
           await env.FIELDCHECK_KV.put(idxKey, JSON.stringify(idx.slice(0,500)));
+          // WEEKLY-CRON-v1: track player in the global index so the Friday cron recomputes them
+          try { let pix=[]; const pr=await env.FIELDCHECK_KV.get('players:index'); if(pr) pix=JSON.parse(pr); if(pix.indexOf(body.playerId)===-1){ pix.push(body.playerId); await env.FIELDCHECK_KV.put('players:index', JSON.stringify(pix)); } } catch(e){}
           const reads = { game:'a clutch in-game rep — reads as Talent & Competitiveness.', drill:'clean technique under reps — reads as Talent & Game IQ.', gym:'repeated training work — reads as Mindset & Physical.', park:'self-driven reps off-schedule — reads as Mindset.' };
           return json({ ok:true, clip_id:clip.id, visibility:clip.visibility, guardian_pending:guardianPending, ack:'We see '+(reads[context]||'a strong rep.'), reads_facets: clip.ai_read.dominant, recompute:'Your number recomputes Friday across all your clips.', week:clip.week });
         } catch (e) { return json({ error: 'clip_add_failed', detail: String(e).slice(0,200) }, 500); }
@@ -34143,6 +34182,11 @@ export default {
           const ctype = (obj.httpMetadata && obj.httpMetadata.contentType) || typeMap[ext] || 'video/mp4';
           return new Response(obj.body, { headers: { 'content-type': ctype, 'cache-control': 'public, max-age=3600', 'access-control-allow-origin': '*' } });
         } catch (e) { return new Response('error', { status: 500 }); }
+      }
+      // ── WEEKLY-CRON-v1 · recompute-all (manual trigger + cron core) ──
+      if (path === '/clips/recompute-all' && (request.method === 'POST' || request.method === 'GET')) {
+        try { const res = await _fcRecomputeAll(env); return json({ ok:true, ...res }); }
+        catch (e) { return json({ error:'recompute_all_failed', detail:String(e).slice(0,200) }, 500); }
       }
       // ── end CLIP-1 BACKEND ──────────────────────────────────────────────────────
       // Health
