@@ -3545,6 +3545,36 @@ async function synthesizeEightFacets(verdictResult, contributions, env) {
       // Curated fields are named eval_grid_override/awards on the curated profile object, which may be
       // attached as curated_profile / encyclopedia fields, NOT always merged into facts.awards.
       const _cp = verdictResult.curated_profile || verdictResult._curated_profile || verdictResult.curatedProfile || (enc.curated_profile) || {};
+      // BUG2B-FIX (Jun15 · Path B): derive per-facet anchors from curated eval_grid_override so apex
+      // records lift the matching facets (talent/physical/etc) past the 8.0 apex-release gate naturally.
+      try {
+        const _ego = _cp.eval_grid_override || enc.eval_grid_override || {};
+        const _flat = {};
+        for (const _ly of Object.keys(_ego)) {
+          if (_ly === 'composite') continue;
+          const _L = _ego[_ly];
+          if (_L && typeof _L === 'object') for (const _dm of Object.keys(_L)) { const _dd=_L[_dm]; if (_dd && typeof _dd==='object' && typeof _dd.score==='number') _flat[_ly+'/'+_dm]=_dd.score; }
+        }
+        const _FMAP = {
+          talent:['production/kills_per_set','production/hitting_pct','physical/athleticism','production/scoring','offense/scoring'],
+          physical:['physical/size','physical/reach','physical/athleticism','projectability/durability','physical/speed'],
+          competitiveness:['projectability/career_arc','production/serving','production/clutch','intangibles/compete'],
+          mental_strength:['projectability/career_arc','projectability/character','intangibles/clutch'],
+          mental_iq:['production/passing','projectability/scheme_fit','iq/decision','offense/playmaking'],
+          coachability:['projectability/scheme_fit','projectability/character','intangibles/coachability'],
+          mindset:['projectability/character','projectability/durability','intangibles/work_ethic'],
+          character:['projectability/character','intangibles/leadership']
+        };
+        const _anchors = {};
+        for (const _ft of Object.keys(_FMAP)) {
+          const _sc = _FMAP[_ft].map(k=>_flat[k]).filter(x=>typeof x==='number');
+          if (_sc.length) _anchors[_ft] = Math.round((_sc.reduce((a,b)=>a+b,0)/_sc.length)*10)/10;
+        }
+        if (Object.keys(_anchors).length >= 4) {
+          const _aLine = Object.entries(_anchors).map(([k,v])=>`${k}=${v}`).join(', ');
+          push('curated_facet_anchors', `CURATED RECORD ANCHORS (hand-verified, weight heavily): ${_aLine}. These reflect the athlete's actual championship/award record per facet — score each facet no lower than its anchor unless web evidence directly contradicts.`, 3500);
+        }
+      } catch (_anchErr) { /* graceful */ }
       let _aw = facts.awards || verdictResult.awards || _cp.awards;
       // also fold eval_grid_override evidence if enc.eval_grid was empty (curated uses eval_grid_override)
       if ((!_evLines.length) && (_cp.eval_grid_override || enc.eval_grid_override)) {
