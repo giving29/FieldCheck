@@ -103,10 +103,15 @@
     <div class="step active" id="step0">
       <h1>Show what you've got.</h1>
       <div class="sub">A rep from anywhere — a match, a 6am gym set, the park. 30 seconds is plenty.</div>
-      <div class="record" onclick="pick('Recorded clip','0:24','record')">
+      <input type="file" id="camInput" accept="video/*" capture="environment" style="display:none" onchange="onFilePicked(this,'record')">
+      <input type="file" id="fileInput" accept="video/*" style="display:none" onchange="onFilePicked(this,'upload')">
+      <div class="record" onclick="document.getElementById('camInput').click()">
         <div class="rec-ring"><div class="rec-dot"></div></div>
         <div class="rec-t">Record now</div>
         <div class="rec-s">Tap to film · up to 0:30</div>
+      </div>
+      <div class="imp" style="margin-top:10px;display:flex;align-items:center;gap:10px;justify-content:center" onclick="document.getElementById('fileInput').click()">
+        <span class="imp-ic">⬆</span><span class="imp-t" style="margin-top:0">Choose a video from your phone</span>
       </div>
       <div class="or">or bring one in</div>
       <div class="imports">
@@ -185,6 +190,18 @@
 
 <script>
   var state={name:'',dur:'',source:'',ctx:null,vis:'private',isMinor:true};
+  function onFilePicked(input, source){
+    var f = input.files && input.files[0];
+    if(!f){ return; }
+    // capture real file metadata as the clip reference (bytes upload = R2 layer later)
+    var name = f.name || 'clip.mp4';
+    var sizeMB = (f.size/1048576).toFixed(1);
+    state.fileName = name; state.fileSize = f.size;
+    var cn=document.getElementById('chosenName'); if(cn) cn.textContent = (source==='record'?'Recorded: ':'File: ')+name;
+    var cd=document.getElementById('chosenDur'); if(cd) cd.textContent = sizeMB+' MB · ready';
+    state.name=name; state.source=source;
+    go(1);
+  }
   function pick(name,dur,source){
     state.name=name;state.dur=dur;state.source=source;
     var cn=document.getElementById('chosenName'); if(cn) cn.textContent=name;
@@ -224,7 +241,7 @@
     document.getElementById('ack').classList.add('show');
     window.scrollTo(0,0);
     // real backend call — store the clip
-    var payload={ playerId:FC_PLAYER, source:state.source||'upload', context:state.ctx, visibility:state.vis, isMinor:state.isMinor, sourceUrl:(document.getElementById('link')||{}).value||null };
+    var payload={ playerId:FC_PLAYER, source:state.source||'upload', context:state.ctx, visibility:state.vis, isMinor:state.isMinor, sourceUrl:(document.getElementById('link')||{}).value||null, caption:state.fileName||null, meta:{file_name:state.fileName||null, file_size:state.fileSize||null} };
     fetch(FC_API+'/clips/add',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)})
       .then(function(r){return r.json();})
       .then(function(d){

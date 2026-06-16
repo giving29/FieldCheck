@@ -116,16 +116,18 @@
     items.forEach(v=>{const d=document.createElement('div');d.className='seg'+(SEL[key]===v?' on':'');d.textContent=v;d.onclick=()=>{ SEL[key]=v; if(key==='sport'){ SEL.pos=POS_BY_SPORT[v][0]; } buildAll(); updateName(); };c.appendChild(d);});
   }
   function buildAll(){buildSeg('sport','seg-sport');buildSeg('age','seg-age');buildSeg('pos','seg-pos');}
-  function updateName(){document.getElementById('segname').textContent=`${SEL.age} · ${SEL.sport} · ${SEL.pos}`;}
-  const rows=[
-    {r:4,cap:"Jump-serve ace, set point",who:"Devon K.",num:"6.3",dur:"0:14",likes:412},
-    {r:5,cap:"Triple-block stuff at the net",who:"Amara O.",num:"6.5",dur:"0:11",likes:388},
-    {r:6,cap:"Dig-to-kill transition",who:"Sofia R.",num:"6.2",dur:"0:19",likes:351},
-    {r:7,cap:"6am gym — approach reps",who:"Maya Alvarez",num:"6.4",dur:"0:18",likes:340,you:true},
-    {r:8,cap:"Comeback from 2 sets down",who:"Tariq B.",num:"6.1",dur:"0:27",likes:299},
-    {r:9,cap:"Line shot on match point",who:"Elena V.",num:"6.6",dur:"0:13",likes:281},
-    {r:10,cap:"Float-serve run of 6",who:"Noah P.",num:"5.9",dur:"0:22",likes:260},
-  ];
+  function updateName(){
+    document.getElementById('segname').textContent=`${SEL.age} · ${SEL.sport} · ${SEL.pos}`;
+    if(BOARDS[SEL.sport]){ rows=BOARDS[SEL.sport]; renderFeed(); }
+    document.querySelectorAll('.badge-t,.badge div').forEach(function(d){ if(d.textContent && d.textContent.indexOf("You're #1 in")===0){ d.textContent="You're #1 in "+SEL.age+" "+SEL.sport+" this week."; } });
+  }
+  const BOARDS={
+    Volleyball:[{r:4,cap:"Jump-serve ace, set point",who:"Devon K.",num:"6.3",dur:"0:14",likes:412},{r:5,cap:"Triple-block stuff at the net",who:"Amara O.",num:"6.5",dur:"0:11",likes:388},{r:6,cap:"Dig-to-kill transition",who:"Sofia R.",num:"6.2",dur:"0:19",likes:351},{r:7,cap:"6am gym — approach reps",who:"Maya Alvarez",num:"6.4",dur:"0:18",likes:340,you:true},{r:8,cap:"Comeback from 2 sets down",who:"Tariq B.",num:"6.1",dur:"0:27",likes:299},{r:9,cap:"Line shot on match point",who:"Elena V.",num:"6.6",dur:"0:13",likes:281}],
+    Basketball:[{r:4,cap:"Step-back three at the buzzer",who:"Marcus L.",num:"6.4",dur:"0:12",likes:402},{r:5,cap:"Chase-down block",who:"Andre P.",num:"6.3",dur:"0:09",likes:377},{r:6,cap:"No-look dime in transition",who:"Chris W.",num:"6.2",dur:"0:15",likes:340},{r:7,cap:"5am gym — jumper reps",who:"Maya Alvarez",num:"6.4",dur:"0:20",likes:333,you:true},{r:8,cap:"And-one in traffic",who:"Tariq B.",num:"6.1",dur:"0:11",likes:288},{r:9,cap:"Ankle-breaker crossover",who:"Elena V.",num:"6.6",dur:"0:13",likes:275}],
+    Football:[{r:4,cap:"60-yard touchdown bomb",who:"Jalen R.",num:"6.5",dur:"0:16",likes:430},{r:5,cap:"One-handed sideline grab",who:"Trey M.",num:"6.4",dur:"0:10",likes:391},{r:6,cap:"Goal-line stuff on 4th down",who:"Kobe S.",num:"6.2",dur:"0:13",likes:352},{r:7,cap:"6am route running",who:"Maya Alvarez",num:"6.4",dur:"0:22",likes:339,you:true},{r:8,cap:"Pick-six return",who:"Tariq B.",num:"6.1",dur:"0:19",likes:300},{r:9,cap:"Deep post for the game-winner",who:"Elena V.",num:"6.6",dur:"0:14",likes:281}],
+    Soccer:[{r:4,cap:"Curling free kick top corner",who:"Diego A.",num:"6.5",dur:"0:08",likes:418},{r:5,cap:"Nutmeg and finish",who:"Sam O.",num:"6.3",dur:"0:11",likes:380},{r:6,cap:"Sliding goal-line clearance",who:"Eli T.",num:"6.2",dur:"0:14",likes:349},{r:7,cap:"Dawn touch drills",who:"Maya Alvarez",num:"6.4",dur:"0:18",likes:331,you:true},{r:8,cap:"Volley from the edge of the box",who:"Tariq B.",num:"6.1",dur:"0:12",likes:295},{r:9,cap:"Last-minute header winner",who:"Elena V.",num:"6.6",dur:"0:13",likes:278}]
+  };
+  let rows=BOARDS.Volleyball;
   function renderFeed(){
     const f=document.getElementById('feed');f.innerHTML='';
     rows.forEach(x=>{
