@@ -34195,16 +34195,25 @@ export default {
           const age = url.searchParams.get('age') || '15U';
           const pos = url.searchParams.get('pos') || null;
           const region = url.searchParams.get('region') || null;
-          const FIRST=['Maya','Jaylen','Riya','Devon','Amara','Sofia','Tariq','Elena','Noah','Marcus','Andre','Chris','Diego','Sam','Eli','Jordan','Kayla','Mateo','Zoe','Aaliyah','Cole','Nina','Reese','Tyler','Priya','Luca','Imani','Jaxon','Leila','Owen'];
-          const LAST=['A.','C.','T.','K.','O.','R.','B.','V.','P.','L.','W.','M.','S.','J.','H.','N.','D.','G.','F.','Q.'];
+          const FIRST=['Maya','Jaylen','Riya','Devon','Amara','Sofia','Tariq','Elena','Noah','Marcus','Andre','Chris','Diego','Sam','Eli','Jordan','Kayla','Mateo','Zoe','Aaliyah','Cole','Nina','Reese','Tyler','Priya','Luca','Imani','Jaxon','Leila','Owen','Sienna','Kai','Bryce','Ava','Deshawn','Camila','Finn','Harper','Nia','Theo','Quinn','Malik','Ines','Rafael','Yara','Dante','Lena','Omar','Talia','Ezra'];
+          const LAST=['Alvarez','Carter','Tran','Kim','Owens','Reyes','Brooks','Vance','Patel','Lopez','Wright','Mensah','Silva','Jensen','Hughes','Nguyen','Diallo','Garcia','Foster','Quinn','Adeyemi','Rivera','Park','Cohen','Ramos','Walsh','Ibrahim','Cruz','Bauer','Ortiz'];
           const CAPS={Volleyball:['Jump-serve ace','Triple-block stuff','Dig-to-kill','Line shot match point','Float-serve run','Slide attack winner','Back-row bomb'],Basketball:['Step-back buzzer three','Chase-down block','No-look dime','And-one','Logo three','Putback slam','Coast-to-coast'],Football:['60-yard TD bomb','One-handed grab','Goal-line stuff','Pick-six','Spin-move TD','Hurdle first down','Fade dagger'],Soccer:['Curling free kick','Nutmeg finish','Goal-line clearance','Edge volley','Last-min header','Chip the keeper','Through-ball assist']};
           const POS={Volleyball:['OH','S','MB','L','OPP'],Basketball:['PG','SG','SF','PF','C'],Football:['QB','RB','WR','LB','DB'],Soccer:['ST','W','M','D','GK']};
           const REGIONS=['NorCal','SoCal','Texas','Northeast','Midwest','Southeast','National'];
           const caps=CAPS[sport]||CAPS.Volleyball, poss=POS[sport]||POS.Volleyball;
-          let score=6.9; const seeded=[];
+          // seeded PRNG: distinct varied people per segment, stable per segment
+          const _seed=(str)=>{ let h=2166136261; for(let i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; };
+          let _st=_seed(sport+'|'+age+'|'+(pos||'all')+'|'+(region||'all'));
+          const rnd=()=>{ _st|=0; _st=_st+0x6D2B79F5|0; let t=Math.imul(_st^_st>>>15,1|_st); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; };
+          let score=6.9; const seeded=[]; const used={};
           for(let i=0;i<100;i++){
-            score=Math.max(5.1, score-(0.01+((i*7)%4)*0.006));
-            seeded.push({ name:FIRST[(i*7+3)%FIRST.length]+' '+LAST[(i*3+1)%LAST.length], pos:poss[i%poss.length], region:REGIONS[(i*5)%REGIONS.length], score:parseFloat(score.toFixed(1)), cap:caps[i%caps.length], likes:420-i*3-((i*7)%18), dur:'0:'+(10+((i*9)%20)), seeded:true });
+            let fn,ln,key,tries=0;
+            do{ fn=FIRST[Math.floor(rnd()*FIRST.length)]; ln=LAST[Math.floor(rnd()*LAST.length)]; key=fn+ln; tries++; }while(used[key]&&tries<25);
+            used[key]=1;
+            score=Math.max(5.1, score-(0.005+rnd()*0.05));
+            // #1 of a position-filtered board should play that position; else varied
+            const rowPos = (pos && i<3) ? pos : poss[Math.floor(rnd()*poss.length)];
+            seeded.push({ name:fn+' '+ln.charAt(0)+'.', pos:rowPos, region:REGIONS[Math.floor(rnd()*REGIONS.length)], score:parseFloat(score.toFixed(1)), cap:caps[Math.floor(rnd()*caps.length)], likes:Math.floor(300+rnd()*180-i*2), dur:'0:'+(8+Math.floor(rnd()*22)), seeded:true });
           }
           // blend real public players (those with a public snapshot)
           let real=[];
