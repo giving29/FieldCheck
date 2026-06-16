@@ -126,8 +126,8 @@
 
     <!-- STEP 1 · CONTEXT -->
     <div class="step" id="step1">
-      <h1>What is it?</h1>
-      <div class="sub">One tap. It helps us read the clip right — and read effort, not just skill.</div>
+      <h1>What kind of rep?</h1>
+      <div class="sub">Tap one below, then hit Continue. It helps us read the clip right.</div>
       <div class="chosen">
         <div class="thumb">▶</div>
         <div><div class="chosen-t" id="chosenName">Recorded clip</div><div class="chosen-s" id="chosenDur">0:24 · ready</div></div>
@@ -187,8 +187,8 @@
   var state={name:'',dur:'',source:'',ctx:null,vis:'private',isMinor:true};
   function pick(name,dur,source){
     state.name=name;state.dur=dur;state.source=source;
-    document.getElementById('chosenName').textContent=name;
-    document.getElementById('chosenDur').textContent=dur+' · ready';
+    var cn=document.getElementById('chosenName'); if(cn) cn.textContent=name;
+    var cd=document.getElementById('chosenDur'); if(cd) cd.textContent=dur+' · ready';
     go(1);
   }
   function setCtx(el,ctx){

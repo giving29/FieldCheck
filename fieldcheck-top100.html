@@ -105,11 +105,15 @@
   </div>
 
 <script>
-  const SEGS={sport:['Volleyball','Basketball','Football','Soccer'],age:['12U','13U','14U','15U','16U','17U','HS Varsity','JUCO','D3','D2','D1'],pos:['Outside Hitters','Setters','Middles','Liberos','NorCal','SoCal','Texas','National']};
-  const SEL={sport:'Volleyball',age:'15U',pos:'Outside Hitters'};
+  const POS_BY_SPORT={Volleyball:['Outside Hitter','Setter','Middle','Libero','Opposite'],Basketball:['Point Guard','Shooting Guard','Small Forward','Power Forward','Center'],Football:['QB','RB','WR','Linebacker','DB'],Soccer:['Striker','Winger','Midfielder','Defender','Keeper']};
+  const REGIONS=['NorCal','SoCal','Texas','Northeast','National'];
+  const SEGS={sport:['Volleyball','Basketball','Football','Soccer'],age:['12U','13U','14U','15U','16U','17U','HS Varsity','JUCO','D3','D2','D1']};
+  function posSegs(){ return POS_BY_SPORT[SEL.sport].concat(REGIONS); }
+  const SEL={sport:'Volleyball',age:'15U',pos:'Outside Hitter'};
   function buildSeg(key,id){
     const c=document.getElementById(id);c.innerHTML='';
-    SEGS[key].forEach(v=>{const d=document.createElement('div');d.className='seg'+(SEL[key]===v?' on':'');d.textContent=v;d.onclick=()=>{SEL[key]=v;buildAll();updateName();};c.appendChild(d);});
+    var items = key==='pos' ? posSegs() : SEGS[key];
+    items.forEach(v=>{const d=document.createElement('div');d.className='seg'+(SEL[key]===v?' on':'');d.textContent=v;d.onclick=()=>{ SEL[key]=v; if(key==='sport'){ SEL.pos=POS_BY_SPORT[v][0]; } buildAll(); updateName(); };c.appendChild(d);});
   }
   function buildAll(){buildSeg('sport','seg-sport');buildSeg('age','seg-age');buildSeg('pos','seg-pos');}
   function updateName(){document.getElementById('segname').textContent=`${SEL.age} · ${SEL.sport} · ${SEL.pos}`;}
