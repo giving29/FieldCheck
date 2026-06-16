@@ -3,19 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<script>
-(function(){
-  var KEY = 'fc_canonical_auth_v1';
-  var EXPECTED = 'thinkdifferent2026';
-  var auth = sessionStorage.getItem(KEY);
-  if (auth === EXPECTED) return;
-  var p = prompt('Enter password to view canonical state:');
-  if (p === EXPECTED) { sessionStorage.setItem(KEY, EXPECTED); return; }
-  document.addEventListener('DOMContentLoaded', function(){
-    document.body.innerHTML = '<div style="font-family:system-ui;padding:60px 40px;color:#888;background:#0a0a0a;min-height:100vh"><h1 style="font-size:14px;letter-spacing:2px;text-transform:uppercase">Access denied</h1><p style="font-size:13px;margin-top:20px">Reload the page and enter the correct password to view.</p></div>';
-  });
-})();
-</script>
+<!-- canonical password gate removed Jun15 (was client-side only) -->
 <title>FieldCheck IQ · Canonical State V1.7 · May 28, 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
@@ -255,6 +243,7 @@ body{background:var(--bg);color:var(--t);font-family:'Inter',-apple-system,sans-
     <button class="tab" data-pane="tests"><span class="num">18</span>Validation Tests</button>
     <button class="tab" data-pane="moat"><span class="num">19</span>MOAT · Tenet 40</button>
     <button class="tab" data-pane="v5algo"><span class="num">20</span>V5 Algorithm</button>
+    <button class="tab" data-pane="strategyarch"><span class="num">21</span>Strategy &amp; Arch</button>
   </div>
 </nav>
 
@@ -3812,6 +3801,102 @@ print(f'gate_6_status: {d.get(\"gate_6_status\")}')
   </div>
 </section>
 
+
+<!-- ===== PANE 21: STRATEGY & ARCHITECTURE (Jun15) ===== -->
+<section class="pane" id="pane-strategyarch">
+  <div class="pane-h">Strategy &amp; <b>Architecture</b></div>
+  <div class="pane-sub">// Living notes · the two-halves system · clips moat + god-level engine · Jun 15 2026</div>
+
+  <p style="font-size:15px;color:var(--gold);font-weight:600;border-left:3px solid var(--gold);padding-left:16px;margin:0 0 26px;line-height:1.6">
+    FieldCheck is one system, two halves. The God-Level Engine = HOW we grade (every facet vs the GOAT of the
+    sport). The Clips Moat = WHAT we grade + the growth loop. The engine makes the number trustworthy; the clips
+    feed the engine and scale it to millions.</p>
+
+  <!-- CLIPS MOAT -->
+  <h3 style="font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.01em;margin:30px 0 12px;color:var(--gold)">★ The Clips Moat — the breakthrough</h3>
+  <p style="background:var(--golds);border:1px solid var(--goldl);border-radius:10px;padding:16px 18px;font-weight:600;color:var(--t);font-size:14.5px;line-height:1.6">
+    The clips are not a feature — they are the moat-building mechanism. Players volunteer the world's largest
+    proprietary dataset of <b style="color:var(--gold)">graded</b> amateur performance, because their incentive
+    (exposure, status, being seen) aligns perfectly with ours (data for the accurate number). The kid with no
+    data brings their own — the cold-start problem solved by inverting who supplies the data.</p>
+
+  <h4 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin:24px 0 10px">Locked decisions · Jun 15</h4>
+  <ul style="line-height:1.75;color:var(--t2);font-size:14px;padding-left:20px;margin:0">
+    <li><b style="color:var(--t)">Weekly cadence</b> — number updates weekly (UTR-style, not a copy). Per-upload = instant ack + "counts toward Friday." Anticipation + anti-gaming.</li>
+    <li><b style="color:var(--t)">30-second rail to start</b> — near-zero friction = volume = the moat (Twitter/TikTok route). Long-form "deep tier" later.</li>
+    <li><b style="color:var(--t)">Segmented Top 100</b> — boards by sport / age / position / region, so thousands can be "top-100 something." Daily rotation. Like a clip → player's public profile.</li>
+    <li><b style="color:var(--t)">Sport-specific talent facets + universal behavioral facets</b> — each sport measures its own talents; behavior (mindset, resilience, character, competitiveness, IQ, coachability) is universal. Same destination, sport-shaped tracks — inspires players.</li>
+    <li><b style="color:var(--t)">Private by default</b> · explicit public opt-in · guardian gate for minors · location never attached.</li>
+  </ul>
+
+  <h4 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin:24px 0 10px">Why it's a moat &amp; the VC line</h4>
+  <p style="color:var(--t2);font-size:14px;line-height:1.65;margin:0">YouTube/TikTok/Hudl have video; we have <b style="color:var(--t)">graded, structured</b> video tied to a verdict and a trajectory. After 1M clips our model has seen more graded amateur reps than anyone alive — compounds daily, can't be bought. <i style="color:var(--t)">"We're at 1M / 1B / 10B clips, growing +X/week, every one graded — the only structured amateur performance dataset on earth."</i> A data-monopoly pitch, not a feature pitch.</p>
+
+  <h4 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin:24px 0 10px">Two-lane data strategy</h4>
+  <ul style="line-height:1.75;color:var(--t2);font-size:14px;padding-left:20px;margin:0">
+    <li><b style="color:var(--t)">Lane A — proof:</b> pros + known stars on outside-available data only (the GOAT calibration anchors). Proves the engine is credible. No clips solicited from pros in proof phase.</li>
+    <li><b style="color:var(--t)">Lane B — moat:</b> amateurs (youth→HS→JUCO→D3→D2→D1) with no data out there bring their clips = the proprietary compounding asset. Lane A makes Lane B trustworthy — one engine, one scale.</li>
+  </ul>
+
+  <h4 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin:24px 0 10px">Two flywheels</h4>
+  <ul style="line-height:1.75;color:var(--t2);font-size:14px;padding-left:20px;margin:0">
+    <li><b style="color:var(--t)">Data:</b> more players → more clips → better numbers → more valuable → more players. Player Thesis loop supercharged.</li>
+    <li><b style="color:var(--t)">Growth:</b> make FC Top 100 → share badge to IG/TikTok → followers come → become players → upload. Inbound clips, outbound status. Coach bridge between (free firehose → Coach tier).</li>
+  </ul>
+
+  <h4 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin:24px 0 10px">Hard questions we own (differentiators)</h4>
+  <ul style="line-height:1.75;color:var(--t2);font-size:14px;padding-left:20px;margin:0">
+    <li><b style="color:var(--t)">Minors + safety</b> — private-default, guardian controls, no location, one-way discovery. "The safest place for a young athlete to be seen" = moat. Designed in from clip #1.</li>
+    <li><b style="color:var(--t)">Gaming</b> — cherry-picked highlights defused by grading vs GOAT + breadth across 8 facets. "Anyone posts highlights; only FieldCheck tells you what it's worth."</li>
+    <li><b style="color:var(--t)">Storage/scale</b> — show firepower (count+growth) now; funding scales infra; store derived signals (the asset) even where raw video is cold/referenced.</li>
+  </ul>
+
+  <h4 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin:24px 0 10px">Prototypes built (prototype-first, Tenet 17)</h4>
+  <ul style="line-height:1.75;color:var(--t2);font-size:14px;padding-left:20px;margin:0">
+    <li><b style="color:var(--t)">fc-player-page.html</b> — clips-centric profile (replaces 3-button page): number + polygon + "what built this," clip grid w/ public-private, The Path, coach color, sticky add-clip CTA.</li>
+    <li><b style="color:var(--t)">fc-upload-flow.html</b> — record / one-tap YT-IG-TikTok import / paste-link / voice; private-default + guardian gate; instant-ack + "updates Friday."</li>
+    <li><b style="color:var(--t)">fc-top100.html</b> — segmented discovery, podium + board, like→profile, shareable "#1" badge.</li>
+  </ul>
+
+  <!-- ENGINE -->
+  <h3 style="font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.01em;margin:36px 0 12px;color:var(--gold)">★ The God-Level Algorithm Model</h3>
+  <p style="background:rgba(78,201,192,.08);border:1px solid var(--teall);border-radius:10px;padding:16px 18px;font-weight:600;color:var(--t);font-size:14.5px;line-height:1.6">
+    Composite derives from 8 GOAT-anchored facets. 10 on every facet = the GOAT of that sport in the clutchest
+    moment. Behavior can drag (Tiger: elite talent, low behavior) or lift (Brady: modest talent, apex behavior).
+    Proven on DEV for women's volleyball. PROD safe at FCBase112.</p>
+
+  <h4 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin:24px 0 10px">Built &amp; proven on DEV (WVB)</h4>
+  <ul style="line-height:1.75;color:var(--t2);font-size:14px;padding-left:20px;margin:0">
+    <li>Scorer runs for curated marquees (FCBase114) · curated evidence fed in, was grading blind (FCBase115).</li>
+    <li>GOAT anchor per facet — WVB GOATs Zhu Ting / Kim Yeon-koung / Regla Torres; MJ basketball; steep bands, forced spread (FCBase116/117).</li>
+    <li>Cache-key collision fixed (FCBase118) · empty-synthesis caching fixed (FCBase119).</li>
+    <li>Composite derives from the 8 facets + retry-on-thin; replaced fragile eg.composite path (FCBase120).</li>
+    <li>Cap released for curated apex-facet athletes, facet-avg ≥ 8.0 = phenom-equivalent (FCBase121).</li>
+  </ul>
+  <h4 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin:24px 0 10px">Results</h4>
+  <ul style="line-height:1.75;color:var(--t2);font-size:14px;padding-left:20px;margin:0">
+    <li>Madisen Skinner facets ~7.7 → composite 7.4, stable, asymmetric (talent 7.1 &lt; competitiveness 8.3).</li>
+    <li>Harper Murray (college) 7.3 — correctly below Madisen (was 0, fixed). Discriminates college &lt; elite-pro &lt; Olympian; composite tracks facets; no bounce, no 0s.</li>
+  </ul>
+  <h4 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin:24px 0 10px">Next phase</h4>
+  <ul style="line-height:1.75;color:var(--t2);font-size:14px;padding-left:20px;margin:0">
+    <li>Cooper Flagg 5.4 — non-curated stage-resolution bug (rookie → HS cap). Diagnostic ready.</li>
+    <li>Tom/Larson facets ~7.7 (below 8.0 apex gate) — enrich curated evidence so apex athletes reach 8.0+.</li>
+    <li>Verify polygon renders on page from facet numbers · cross-sport GOAT calibration (basketball flat) · scale to 110-battery then all · data + experiments endgame · DEV→PROD with page-render gate.</li>
+  </ul>
+
+  <!-- RELEASE NOTES -->
+  <h3 style="font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.01em;margin:36px 0 12px;color:var(--gold)">Release notes</h3>
+  <table class="tbl" style="width:100%;border-collapse:collapse;font-size:13.5px">
+    <tr style="border-bottom:1px solid var(--ge)"><td style="padding:11px 14px 11px 0;color:var(--gold);font-family:'JetBrains Mono',monospace;font-weight:700;white-space:nowrap;vertical-align:top;font-size:12px">Jun 15 · pm</td><td style="padding:11px 0;color:var(--t2)"><b style="color:var(--t)">Clips Moat decisions locked</b> — weekly · 30s · segmented Top 100 · sport-specific talent + universal behavioral · private-default. Architecture V1 + 3 prototypes. Captured here.</td></tr>
+    <tr style="border-bottom:1px solid var(--ge)"><td style="padding:11px 14px 11px 0;color:var(--gold);font-family:'JetBrains Mono',monospace;font-weight:700;white-space:nowrap;vertical-align:top;font-size:12px">Jun 15 · ~1am</td><td style="padding:11px 0;color:var(--t2)"><b style="color:var(--t)">God-Level Engine Stages A→C on DEV</b> — composite derives from GOAT-anchored 8 facets; discriminates college→Olympian; cap released for apex. Open: Cooper 5.4, apex evidence. PROD safe FCBase112.</td></tr>
+    <tr style="border-bottom:1px solid var(--ge)"><td style="padding:11px 14px 11px 0;color:var(--gold);font-family:'JetBrains Mono',monospace;font-weight:700;white-space:nowrap;vertical-align:top;font-size:12px">Jun 15 · ~1am</td><td style="padding:11px 0;color:var(--t2)"><b style="color:var(--t)">Clips Moat breakthrough</b> articulated — clips as moat mechanism, data-monopoly thesis, two flywheels.</td></tr>
+    <tr><td style="padding:11px 14px 11px 0;color:var(--gold);font-family:'JetBrains Mono',monospace;font-weight:700;white-space:nowrap;vertical-align:top;font-size:12px">Jun 14 · pm</td><td style="padding:11px 0;color:var(--t2)"><b style="color:var(--t)">GitHub migration (Tenet 61)</b> — working folder is the repo; every deploy ends with a push. <b style="color:var(--t)">Verdict polygon regression recovered</b>; Madisen fixed to 7.3; prod whole.</td></tr>
+  </table>
+
+  <p style="color:var(--t3);font-size:12px;margin-top:28px;font-family:'JetBrains Mono',monospace;letter-spacing:.5px">Living document. Engine = how we grade · Clips = what we grade + how we grow. One system, two halves.</p>
+</section>
+
 <footer class="ftr">
   <div class="ftr-l">FC_CANONICAL_STATE_V1.html · V5.24 · May 28, 2026 · ThinkDifferent · V022.32 ARCHITECTURAL FIX (6-patch bundle) · dev baseline FCBase18_V022.29.1 frozen · <b>MOAT TAB ADDED · tab #18 · Tenet 40 mission reset to UNKNOWN amateurs (HS/D1/D2/D3) · pros (Cooper Flagg, Marvin Harrison Jr) explicitly excluded · 5 canonical amateur test athletes with verdict page links</b> · 28 atomic ships V022.3-V022.29.1 + canonical MOAT tab · cache v3-47 + synth v022.29 · prod baseline FCBase18_V001 · <b>DEPLOY-READY</b></div>
   <div class="ftr-b">"The execution track has phases. The learning track has no end."</div>
@@ -3928,5 +4013,6 @@ tabs.forEach(t => {
 <p>(a) Sridhar full browser pass of PATH + chip→agent + share card (only human-untested surface). (b) Movement alerts (real tier/facet change notifications) — needs event source, post-Friday. (c) Coach pipeline view (Ph6/Ph10). (d) OG/Schema merge for about/deck/pitch trio. (e) Canonical V1.8 consolidation of this addendum into tabs on next full canonical session.</p>
 </div>
 <!-- /CANONICAL-ADDENDUM-FCBASE81 -->
+
 </body>
 </html>
