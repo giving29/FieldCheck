@@ -37,3 +37,7 @@ id = "02b386ac64534c0c9e18fa37fedc80c3"
 binding = "FIELDCHECK_DB"
 database_name = "fieldcheck_db"
 database_id = "5e8ff85e-edb0-4866-a9a6-5842be84b04f"
+
+[[env.dev.r2_buckets]]
+binding = "CLIP_BUCKET"
+bucket_name = "fieldcheck-clips-dev"
