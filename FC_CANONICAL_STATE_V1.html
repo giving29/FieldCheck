@@ -3814,6 +3814,37 @@ print(f'gate_6_status: {d.get(\"gate_6_status\")}')
 
   <!-- CLIPS MOAT -->
   <h3 style="font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.01em;margin:30px 0 12px;color:var(--gold)">★ The Clips Moat — the breakthrough</h3>
+
+  <!-- CANONICAL-LIVE-PROD -->
+  <div style="border:1px solid var(--gold);border-radius:14px;padding:20px 22px;margin:16px 0 28px;background:linear-gradient(135deg,rgba(238,192,103,.08),rgba(238,192,103,.02))">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">★ Now live on prod · Jun 16 2026</div>
+    <p style="color:var(--t);font-size:15px;line-height:1.6;margin:0 0 16px"><b>The strategy below is no longer thesis — the full mechanism shipped to production.</b> A player records a clip on their phone and watches their number move. The data-monopoly loop is collecting graded amateur performance data today.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t2);margin-bottom:8px">The live system (end-to-end)</div>
+        <ul style="margin:0;padding-left:18px;color:var(--t2);font-size:13px;line-height:1.7">
+          <li><b style="color:var(--t)">Per-user profiles</b> — device identity + name on first clip; each device its own player</li>
+          <li><b style="color:var(--t)">Clip capture</b> — record/upload → real video stored in R2</li>
+          <li><b style="color:var(--t)">8-facet READ</b> — every clip read into facet signals at intake</li>
+          <li><b style="color:var(--t)">The number moves</b> — composite recomputes from clip aggregate</li>
+          <li><b style="color:var(--t)">The Friday number</b> — weekly cron auto-recomputes every player</li>
+          <li><b style="color:var(--t)">Segmented Top 100</b> — sport · age · position · region; varied boards</li>
+          <li><b style="color:var(--t)">Shareable badges</b> — 2nd flywheel; native share; status card</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t2);margin-bottom:8px">Architecture (prod)</div>
+        <ul style="margin:0;padding-left:18px;color:var(--t2);font-size:13px;line-height:1.7">
+          <li><b style="color:var(--t)">Worker</b> — fieldcheck-proxy (Cloudflare): CLIP-1 endpoints + R2 + weekly scheduled()</li>
+          <li><b style="color:var(--t)">Storage</b> — R2 fieldcheck-clips-prod (video) · KV (snapshots, names, index) · D1</li>
+          <li><b style="color:var(--t)">Site</b> — fieldcheck-app.netlify.app: /clips · /add-clip · /top100 on prod worker</li>
+          <li><b style="color:var(--t)">Two-environment doctrine</b> — dev-first, gated freeze-first promotion (Tenet 65)</li>
+          <li><b style="color:var(--t)">Rollback anchor</b> — promoted from FCBase112; wrangler version 48bc42b9</li>
+        </ul>
+      </div>
+    </div>
+    <p style="color:var(--gold);font-size:13px;font-style:italic;margin:16px 0 0">The VC proof line: the data-monopoly mechanism isn't roadmap — it's collecting graded amateur performance data in production today.</p>
+  </div>
   <p style="background:var(--golds);border:1px solid var(--goldl);border-radius:10px;padding:16px 18px;font-weight:600;color:var(--t);font-size:14.5px;line-height:1.6">
     The clips are not a feature — they are the moat-building mechanism. Players volunteer the world's largest
     proprietary dataset of <b style="color:var(--gold)">graded</b> amateur performance, because their incentive
@@ -3888,6 +3919,7 @@ print(f'gate_6_status: {d.get(\"gate_6_status\")}')
   <!-- RELEASE NOTES -->
   <h3 style="font-family:'Anton',sans-serif;font-size:26px;letter-spacing:-.01em;margin:36px 0 12px;color:var(--gold)">Release notes</h3>
   <table class="tbl" style="width:100%;border-collapse:collapse;font-size:13.5px">
+    <tr style="border-bottom:1px solid var(--ge)"><td style="padding:11px 14px 11px 0;color:var(--gold);font-family:'JetBrains Mono',monospace;font-weight:700;white-space:nowrap;vertical-align:top;font-size:12px">Jun 16</td><td style="padding:11px 0;color:var(--t2)"><b style="color:var(--t)">Clips Moat LIVE on prod</b> — full loop promoted (freeze-first, gated): profiles · clip→R2 video · 8-facet READ · number moves · Friday cron · segmented Top 100 · shareable badges. 3 VC decks updated with the moat + proof-in-motion.</td></tr>
     <tr style="border-bottom:1px solid var(--ge)"><td style="padding:11px 14px 11px 0;color:var(--gold);font-family:'JetBrains Mono',monospace;font-weight:700;white-space:nowrap;vertical-align:top;font-size:12px">Jun 15 · pm</td><td style="padding:11px 0;color:var(--t2)"><b style="color:var(--t)">Clips Moat decisions locked</b> — weekly · 30s · segmented Top 100 · sport-specific talent + universal behavioral · private-default. Architecture V1 + 3 prototypes. Captured here.</td></tr>
     <tr style="border-bottom:1px solid var(--ge)"><td style="padding:11px 14px 11px 0;color:var(--gold);font-family:'JetBrains Mono',monospace;font-weight:700;white-space:nowrap;vertical-align:top;font-size:12px">Jun 15 · ~1am</td><td style="padding:11px 0;color:var(--t2)"><b style="color:var(--t)">God-Level Engine Stages A→C on DEV</b> — composite derives from GOAT-anchored 8 facets; discriminates college→Olympian; cap released for apex. Open: Cooper 5.4, apex evidence. PROD safe FCBase112.</td></tr>
     <tr style="border-bottom:1px solid var(--ge)"><td style="padding:11px 14px 11px 0;color:var(--gold);font-family:'JetBrains Mono',monospace;font-weight:700;white-space:nowrap;vertical-align:top;font-size:12px">Jun 15 · ~1am</td><td style="padding:11px 0;color:var(--t2)"><b style="color:var(--t)">Clips Moat breakthrough</b> articulated — clips as moat mechanism, data-monopoly thesis, two flywheels.</td></tr>
