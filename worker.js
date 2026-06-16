@@ -34017,6 +34017,42 @@ export default {
     const path = url.pathname;
 
     try {
+      // ── CLIP-1 BACKEND (Jun15) · player clip intake + list ──────────────────────
+      if (path === '/clips/add' && request.method === 'POST') {
+        try {
+          const body = await request.json().catch(() => ({}));
+          if (!body || !body.playerId) return json({ error: 'playerId required' }, 400);
+          const validSrc = ['record','youtube','instagram','tiktok','upload','voice'];
+          const validCtx = ['game','drill','gym','park'];
+          const source = validSrc.includes(body.source) ? body.source : 'upload';
+          const context = validCtx.includes(body.context) ? body.context : null;
+          let visibility = 'private', guardianPending = false;
+          if (body.visibility === 'public') {
+            if (body.isMinor && !body.guardianApproved) { visibility = 'private'; guardianPending = true; }
+            else { visibility = 'public'; }
+          }
+          const meta = Object.assign({}, body.meta || {});
+          ['lat','lng','gps','geo','location','coordinates','exif_gps','place'].forEach(k => delete meta[k]);
+          const wk = (() => { const d=new Date(); const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())); const day=t.getUTCDay()||7; t.setUTCDate(t.getUTCDate()+4-day); const ys=new Date(Date.UTC(t.getUTCFullYear(),0,1)); const w=Math.ceil((((t-ys)/86400000)+1)/7); return t.getUTCFullYear()+'-W'+String(w).padStart(2,'0'); })();
+          const clip = { id: 'clip_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8), player_id: body.playerId, source, source_url: body.sourceUrl||null, context, visibility, guardian_pending: guardianPending, meta, ai_read: null, status: 'received', created_at: new Date().toISOString(), week: wk };
+          await env.FIELDCHECK_KV.put('clip:'+clip.id, JSON.stringify(clip));
+          const idxKey = 'player-clips:'+body.playerId;
+          let idx = []; try { const raw = await env.FIELDCHECK_KV.get(idxKey); if (raw) idx = JSON.parse(raw); } catch(e){}
+          idx.unshift({ id: clip.id, week: clip.week, visibility: clip.visibility, context: clip.context, created_at: clip.created_at });
+          await env.FIELDCHECK_KV.put(idxKey, JSON.stringify(idx.slice(0,500)));
+          const reads = { game:'a clutch in-game rep — reads as Talent & Competitiveness.', drill:'clean technique under reps — reads as Talent & Game IQ.', gym:'repeated training work — reads as Mindset & Physical.', park:'self-driven reps off-schedule — reads as Mindset.' };
+          return json({ ok:true, clip_id:clip.id, visibility:clip.visibility, guardian_pending:guardianPending, ack:'We see '+(reads[context]||'a strong rep.'), recompute:'Your number recomputes Friday across all your clips.', week:clip.week });
+        } catch (e) { return json({ error: 'clip_add_failed', detail: String(e).slice(0,200) }, 500); }
+      }
+      if (path === '/clips/list' && request.method === 'GET') {
+        try {
+          const pid = url.searchParams.get('playerId');
+          if (!pid) return json({ error: 'playerId required' }, 400);
+          let idx = []; try { const raw = await env.FIELDCHECK_KV.get('player-clips:'+pid); if (raw) idx = JSON.parse(raw); } catch(e){}
+          return json({ ok:true, player_id:pid, count:idx.length, clips:idx });
+        } catch (e) { return json({ error: 'clip_list_failed', detail: String(e).slice(0,200) }, 500); }
+      }
+      // ── end CLIP-1 BACKEND ──────────────────────────────────────────────────────
       // Health
       if (path === '/' || path === '/health') {
         return json({
