@@ -37,3 +37,7 @@ frontend/fc-batch-test-results-v2/
 # deps + os junk
 node_modules/
 .DS_Store
+
+.netlify/netlify.toml.broken.*
+.netlify/netlify.toml.damaged.*
+*.bak.*

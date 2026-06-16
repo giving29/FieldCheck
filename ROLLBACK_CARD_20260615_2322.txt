@@ -1,0 +1,6 @@
+ROLLBACK CARD — return prod to exactly pre-promotion (20260615_2322)
+PROD WORKER -> wrangler rollback 48bc42b9-7a83-40ce-ae6c-3203996b1d1c
+   (or: tar -xzf freezes/FCBase112_PROD_LIVE_20260614_2217.tar.gz worker.js && wrangler deploy)
+PROD SITE   -> tar -xzf freezes/PRE_PROD_PROMOTE_20260615_2322.tar.gz && netlify deploy --prod --dir . --site 03408b50-33ef-4e80-b08f-a648c42eb2b4
+   (or: Netlify dashboard -> Deploys -> prior deploy -> Publish)
+ALL FILES   -> git reset --hard 64f29b8
