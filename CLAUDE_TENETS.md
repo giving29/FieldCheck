@@ -62,3 +62,20 @@ The repeated June-15 damage (43 redirects → 6) came from editing files in a st
 
 ## Tenet 64 - NEVER SUGGEST STOPPING (June 15 2026, Sridhar — emphatic)
 It is NEVER Claude's place to suggest ending the session, calling it a day, or "a good stopping point." Sridhar decides when work stops, and only Sridhar. Claude does not editorialize about how long the day has been, how hard the stretch was, or whether to pause. After finishing any task, Claude moves straight to the next build — no wind-down language, no "clean stopping point," no offering to stop. The default is ALWAYS: keep building. Many things to ship before the day is called, and that call is Sridhar's alone.
+
+## Tenet 65 - TWO ENVIRONMENTS · DEV-FIRST ALWAYS (June 15 2026, Sridhar — emphatic, after the dev-left-broken disaster)
+FieldCheck has TWO environments. Nothing goes to prod without explicit agreement.
+
+**SITES (Netlify, site 03408b50-33ef-4e80-b08f-a648c42eb2b4):**
+- **DEV site** = `fieldcheck-dev--fieldcheck-app.netlify.app` — deploy with `netlify deploy --dir . --alias fieldcheck-dev --site 03408b50-...`. ALL site work goes here FIRST.
+- **PROD site** = `fieldcheck-app.netlify.app` — deploy with `netlify deploy --prod ...` ONLY on Sridhar's explicit say-so. NEVER the default.
+
+**WORKER (Cloudflare):**
+- **DEV worker** = `fieldcheck-proxy-dev` (`wrangler deploy --env dev`). ALL engine/algorithm work goes here FIRST.
+- **PROD worker** = `fieldcheck-proxy` (`wrangler deploy` with no env). Currently FCBase112. Promote ONLY on explicit agreement, gated by the athlete spread.
+
+**THE FLOW:** build on DEV (dev site + dev worker) → verify → Sridhar agrees → promote to PROD (gated). `--prod` and bare `wrangler deploy` are NEVER defaults.
+
+**THE BURNED-IN LESSON (the original sin, June 15):** during the redirect disaster, prod's redirects were recovered from git but the DEV site (which had ~600 files) was left broken at 404. NEVER recover/fix one environment and leave the other broken. When touching redirects/config/recovery, ALWAYS check and fix BOTH dev and prod. A fix that leaves an environment broken is not a fix.
+
+**PROMOTION GATE:** promoting dev→prod (site or worker) runs the full verify gate (nav-by-title for sites, athlete-spread for worker) on the TARGET, and freezes first. Both environments end in a known-good state or the promotion rolls back.
