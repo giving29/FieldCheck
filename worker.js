@@ -34063,8 +34063,42 @@ export default {
           const pid = url.searchParams.get('playerId');
           if (!pid) return json({ error: 'playerId required' }, 400);
           let idx = []; try { const raw = await env.FIELDCHECK_KV.get('player-clips:'+pid); if (raw) idx = JSON.parse(raw); } catch(e){}
-          return json({ ok:true, player_id:pid, count:idx.length, clips:idx });
+          let snapshot = null; try { const sr = await env.FIELDCHECK_KV.get('snapshot:'+pid+':latest'); if (sr) snapshot = JSON.parse(sr); } catch(e){}
+          return json({ ok:true, player_id:pid, count:idx.length, clips:idx, snapshot });
         } catch (e) { return json({ error: 'clip_list_failed', detail: String(e).slice(0,200) }, 500); }
+      }
+      // ── LAYER 5 · WEEKLY RECOMPUTE (Jun15) — clips' ai_reads -> weekly_snapshot ──
+      if (path === '/clips/recompute' && (request.method === 'POST' || request.method === 'GET')) {
+        try {
+          const pid = url.searchParams.get('playerId') || (await request.json().catch(()=>({}))).playerId;
+          if (!pid) return json({ error: 'playerId required' }, 400);
+          // load clip index, then each clip's ai_read
+          let idx=[]; try{ const raw=await env.FIELDCHECK_KV.get('player-clips:'+pid); if(raw) idx=JSON.parse(raw);}catch(e){}
+          const FK=['talent','physical','competitiveness','mental_strength','mental_iq','coachability','mindset','character'];
+          const acc={},cnt={}; FK.forEach(f=>{acc[f]=0;cnt[f]=0;});
+          let counted=0;
+          for(const ix of idx.slice(0,200)){
+            let clip=null; try{ const cr=await env.FIELDCHECK_KV.get('clip:'+ix.id); if(cr) clip=JSON.parse(cr);}catch(e){}
+            const r = clip && clip.ai_read; if(!r||!r.facet_signals) continue;
+            counted++;
+            const q=r.quality||0.5;
+            for(const f of FK){ const sg=r.facet_signals[f]||0; if(sg>0){ acc[f]+=sg*q; cnt[f]+=1; } }
+          }
+          const facets={};
+          for(const f of FK){ if(cnt[f]===0){facets[f]=null;continue;} const avg=acc[f]/cnt[f]; const vol=Math.min(cnt[f]/8,1); facets[f]=Math.round((4.0+avg*vol*4.5)*10)/10; }
+          const scored=FK.map(f=>facets[f]).filter(x=>x!==null);
+          const composite=scored.length?Math.round((scored.reduce((a,b)=>a+b,0)/scored.length)*10)/10:null;
+          // prior snapshot for deltas
+          let prior=null; try{ const pr=await env.FIELDCHECK_KV.get('snapshot:'+pid+':latest'); if(pr) prior=JSON.parse(pr);}catch(e){}
+          const deltas={};
+          for(const f of FK){ if(facets[f]!==null && prior && prior.facets && typeof prior.facets[f]==='number') deltas[f]=Math.round((facets[f]-prior.facets[f])*10)/10; }
+          const compDelta=(composite!==null && prior && typeof prior.composite==='number')?Math.round((composite-prior.composite)*10)/10:null;
+          const wk=(()=>{const d=new Date();const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);const ys=new Date(Date.UTC(t.getUTCFullYear(),0,1));const w=Math.ceil((((t-ys)/86400000)+1)/7);return t.getUTCFullYear()+'-W'+String(w).padStart(2,'0');})();
+          const snapshot={ player_id:pid, composite, facets, deltas, composite_delta:compDelta, clips_counted:counted, facets_with_evidence:scored.length, week:wk, explanation:`Graded over ${counted} clips across ${scored.length}/8 facets.`, snapshot_version:'L5-v1', computed_at:new Date().toISOString() };
+          await env.FIELDCHECK_KV.put('snapshot:'+pid+':latest', JSON.stringify(snapshot));
+          await env.FIELDCHECK_KV.put('snapshot:'+pid+':'+wk, JSON.stringify(snapshot));
+          return json({ ok:true, snapshot });
+        } catch (e) { return json({ error:'recompute_failed', detail:String(e).slice(0,200) }, 500); }
       }
       // ── end CLIP-1 BACKEND ──────────────────────────────────────────────────────
       // Health
