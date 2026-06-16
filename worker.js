@@ -34064,6 +34064,13 @@ export default {
           if (!pid) return json({ error: 'playerId required' }, 400);
           let idx = []; try { const raw = await env.FIELDCHECK_KV.get('player-clips:'+pid); if (raw) idx = JSON.parse(raw); } catch(e){}
           let snapshot = null; try { const sr = await env.FIELDCHECK_KV.get('snapshot:'+pid+':latest'); if (sr) snapshot = JSON.parse(sr); } catch(e){}
+          // PLAYBACK-video-key: hydrate each index entry with video_key from the full clip record (cap at 30 for perf)
+          try {
+            const top = idx.slice(0, 30);
+            await Promise.all(top.map(async (ix) => {
+              try { const cr = await env.FIELDCHECK_KV.get('clip:'+ix.id); if (cr) { const c = JSON.parse(cr); if (c.video_key) ix.video_key = c.video_key; } } catch(e){}
+            }));
+          } catch(e){}
           return json({ ok:true, player_id:pid, count:idx.length, clips:idx, snapshot });
         } catch (e) { return json({ error: 'clip_list_failed', detail: String(e).slice(0,200) }, 500); }
       }

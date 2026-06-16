@@ -212,7 +212,10 @@
     const g=document.getElementById('grid');g.innerHTML='';
     clips.filter(c=>f==='all'||c.vis===f).forEach(c=>{
       const on=c.vis==='pub';
-      g.innerHTML+=`<div class="clip"><div class="clip-thumb"><div class="vis ${on?'pub':'priv'}">${on?'PUBLIC':'PRIVATE'}</div><div class="ico">▶</div><div class="dur">${c.dur}</div></div><div class="clip-body"><div class="clip-cap">${c.cap}</div><span class="clip-tag">${c.tag}</span><div class="clip-toggle"><span>Show publicly</span><div class="sw ${on?'on':''}" onclick="this.classList.toggle('on')"><i></i></div></div></div></div>`;
+      var thumb = c.video_key
+        ? `<video class="clip-vid" src="${FC_API}/clips/video/${c.video_key}" controls preload="metadata" playsinline style="width:100%;height:100%;object-fit:cover;background:#000"></video>`
+        : `<div class="ico">▶</div><div class="dur">${c.dur}</div>`;
+      g.innerHTML+=`<div class="clip"><div class="clip-thumb"><div class="vis ${on?'pub':'priv'}">${on?'PUBLIC':'PRIVATE'}</div>${thumb}</div><div class="clip-body"><div class="clip-cap">${c.cap}</div><span class="clip-tag">${c.tag}</span><div class="clip-toggle"><span>Show publicly</span><div class="sw ${on?'on':''}" onclick="this.classList.toggle('on')"><i></i></div></div></div></div>`;
     });
   }
   function setTab(el,f){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');render(f);}
@@ -250,7 +253,7 @@
         if(d && d.clips && d.clips.length){
           clips.length=0;
           d.clips.forEach(function(c){
-            clips.push({cap:ctxLabel(c.context)+' clip',dur:'0:'+(15+Math.floor(Math.random()*15)),vis:(c.visibility==='public'?'pub':'priv'),tag:ctxLabel(c.context)});
+            clips.push({id:c.id,cap:ctxLabel(c.context)+' clip',dur:'0:'+(15+Math.floor(Math.random()*15)),vis:(c.visibility==='public'?'pub':'priv'),tag:ctxLabel(c.context),video_key:c.video_key||null});
           });
           var pub=clips.filter(function(x){return x.vis==='pub';}).length;
           var priv=clips.length-pub;
