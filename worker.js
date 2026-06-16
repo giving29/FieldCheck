@@ -34188,6 +34188,43 @@ export default {
         try { const res = await _fcRecomputeAll(env); return json({ ok:true, ...res }); }
         catch (e) { return json({ error:'recompute_all_failed', detail:String(e).slice(0,200) }, 500); }
       }
+      // ── LAYER6-top100 · segmented leaderboard (seeded + real public players) ──
+      if (path === '/top100' && request.method === 'GET') {
+        try {
+          const sport = url.searchParams.get('sport') || 'Volleyball';
+          const age = url.searchParams.get('age') || '15U';
+          const pos = url.searchParams.get('pos') || null;
+          const region = url.searchParams.get('region') || null;
+          const FIRST=['Maya','Jaylen','Riya','Devon','Amara','Sofia','Tariq','Elena','Noah','Marcus','Andre','Chris','Diego','Sam','Eli','Jordan','Kayla','Mateo','Zoe','Aaliyah','Cole','Nina','Reese','Tyler','Priya','Luca','Imani','Jaxon','Leila','Owen'];
+          const LAST=['A.','C.','T.','K.','O.','R.','B.','V.','P.','L.','W.','M.','S.','J.','H.','N.','D.','G.','F.','Q.'];
+          const CAPS={Volleyball:['Jump-serve ace','Triple-block stuff','Dig-to-kill','Line shot match point','Float-serve run','Slide attack winner','Back-row bomb'],Basketball:['Step-back buzzer three','Chase-down block','No-look dime','And-one','Logo three','Putback slam','Coast-to-coast'],Football:['60-yard TD bomb','One-handed grab','Goal-line stuff','Pick-six','Spin-move TD','Hurdle first down','Fade dagger'],Soccer:['Curling free kick','Nutmeg finish','Goal-line clearance','Edge volley','Last-min header','Chip the keeper','Through-ball assist']};
+          const POS={Volleyball:['OH','S','MB','L','OPP'],Basketball:['PG','SG','SF','PF','C'],Football:['QB','RB','WR','LB','DB'],Soccer:['ST','W','M','D','GK']};
+          const REGIONS=['NorCal','SoCal','Texas','Northeast','Midwest','Southeast','National'];
+          const caps=CAPS[sport]||CAPS.Volleyball, poss=POS[sport]||POS.Volleyball;
+          let score=6.9; const seeded=[];
+          for(let i=0;i<100;i++){
+            score=Math.max(5.1, score-(0.01+((i*7)%4)*0.006));
+            seeded.push({ name:FIRST[(i*7+3)%FIRST.length]+' '+LAST[(i*3+1)%LAST.length], pos:poss[i%poss.length], region:REGIONS[(i*5)%REGIONS.length], score:parseFloat(score.toFixed(1)), cap:caps[i%caps.length], likes:420-i*3-((i*7)%18), dur:'0:'+(10+((i*9)%20)), seeded:true });
+          }
+          // blend real public players (those with a public snapshot)
+          let real=[];
+          try {
+            let pix=[]; const pr=await env.FIELDCHECK_KV.get('players:index'); if(pr) pix=JSON.parse(pr);
+            for(const pid of pix.slice(0,200)){
+              const sr=await env.FIELDCHECK_KV.get('snapshot:'+pid+':latest'); if(!sr) continue;
+              const snap=JSON.parse(sr); if(snap.composite==null) continue;
+              // only public players appear on boards (check any public clip)
+              let isPublic=false;
+              try { const ix=await env.FIELDCHECK_KV.get('player-clips:'+pid); if(ix){ const arr=JSON.parse(ix); isPublic=arr.some(c=>c.visibility==='public'); } } catch(e){}
+              if(!isPublic) continue;
+              real.push({ name:(snap.player_name||pid.replace(/_/g,' ')), pos:(poss[0]), region:'Your area', score:snap.composite, cap:'Your graded clip', likes:Math.round(snap.composite*50), dur:'0:18', seeded:false, real:true, you:(pid==='demo_maya') });
+            }
+          } catch(e){}
+          let all=seeded.concat(real); all.sort((a,b)=>b.score-a.score); all.forEach((r,i)=>r.rank=i+1);
+          const board=all.slice(0,100);
+          return json({ ok:true, sport, age, pos, region, count:board.length, real_count:real.length, board });
+        } catch (e) { return json({ error:'top100_failed', detail:String(e).slice(0,200) }, 500); }
+      }
       // ── end CLIP-1 BACKEND ──────────────────────────────────────────────────────
       // Health
       if (path === '/' || path === '/health') {
