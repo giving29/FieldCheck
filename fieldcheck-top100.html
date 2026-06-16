@@ -128,7 +128,7 @@
     Soccer:[{r:4,cap:"Curling free kick top corner",who:"Diego A.",num:"6.5",dur:"0:08",likes:418},{r:5,cap:"Nutmeg and finish",who:"Sam O.",num:"6.3",dur:"0:11",likes:380},{r:6,cap:"Sliding goal-line clearance",who:"Eli T.",num:"6.2",dur:"0:14",likes:349},{r:7,cap:"Dawn touch drills",who:"Maya Alvarez",num:"6.4",dur:"0:18",likes:331,you:true},{r:8,cap:"Volley from the edge of the box",who:"Tariq B.",num:"6.1",dur:"0:12",likes:295},{r:9,cap:"Last-minute header winner",who:"Elena V.",num:"6.6",dur:"0:13",likes:278}]
   };
   let rows=BOARDS.Volleyball;
-  var FC_TOP100_API='https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev';
+  var FC_TOP100_API='https://fieldcheck-proxy.sridhar-nallani.workers.dev';
   function loadBoard(){
     var q='?sport='+encodeURIComponent(SEL.sport)+'&age='+encodeURIComponent(SEL.age)+'&pos='+encodeURIComponent(SEL.pos||'');
     fetch(FC_TOP100_API+'/top100'+q).then(function(r){return r.json();}).then(function(d){

@@ -11,6 +11,10 @@ binding = "FIELDCHECK_DB"
 database_name = "fieldcheck_db"
 database_id = "5e8ff85e-edb0-4866-a9a6-5842be84b04f"
 
+[[r2_buckets]]
+binding = "CLIP_BUCKET"
+bucket_name = "fieldcheck-clips-prod"
+
 [triggers]
 crons = ["*/30 * * * *", "0 9 * * 1"]
 
