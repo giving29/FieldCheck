@@ -34017,6 +34017,18 @@ export default {
     const path = url.pathname;
 
     try {
+      // ── LAYER 4 · THE READ (Jun15) — clip context+text -> facet signals (L4-v1-context) ──
+      const _fcRead = (clip) => {
+        const FK=['talent','physical','competitiveness','mental_strength','mental_iq','coachability','mindset','character'];
+        const CTX={ game:{talent:0.9,competitiveness:0.9,mental_strength:0.6,mental_iq:0.7}, drill:{talent:0.8,mental_iq:0.7,coachability:0.6,physical:0.5}, gym:{physical:0.9,mindset:0.9,mental_strength:0.5}, park:{mindset:0.9,competitiveness:0.5,talent:0.4} };
+        const CUES=[ {re:/\b(comeback|down|rally|clutch|overtime|final|championship|match point|game point)\b/i,f:{mental_strength:0.9,competitiveness:0.8}}, {re:/\b(6am|5am|early|morning|extra|after practice|alone|solo)\b/i,f:{mindset:0.9,character:0.7}}, {re:/\b(block|stuff|defense|dig|hustle|chase)\b/i,f:{competitiveness:0.7,physical:0.6}}, {re:/\b(ace|kill|dunk|highlight|nasty|insane|filthy)\b/i,f:{talent:0.8}}, {re:/\b(captain|lead|team|teammate|encourage)\b/i,f:{character:0.8,coachability:0.6}}, {re:/\b(vertical|reach|speed|jump|explosive|measured)\b/i,f:{physical:0.9}} ];
+        const sig={}; FK.forEach(f=>sig[f]=0);
+        const cs=CTX[clip.context]||{}; for(const f of Object.keys(cs)) sig[f]=Math.max(sig[f],cs[f]);
+        const text=[clip.caption||'',clip.source_url||'',clip.source||''].join(' '); const cues=[];
+        for(const c of CUES){ if(c.re.test(text)){ cues.push(true); for(const f of Object.keys(c.f)) sig[f]=Math.max(sig[f],c.f[f]); } }
+        const ranked=FK.map(f=>[f,sig[f]]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]);
+        return { facet_signals:sig, dominant:ranked.slice(0,3).map(x=>x[0]), behavioral_cue_count:cues.length, quality: clip.context?0.7:0.4, is_clip_of_player:true, read_version:'L4-v1-context' };
+      };
       // ── CLIP-1 BACKEND (Jun15) · player clip intake + list ──────────────────────
       if (path === '/clips/add' && request.method === 'POST') {
         try {
@@ -34034,14 +34046,16 @@ export default {
           const meta = Object.assign({}, body.meta || {});
           ['lat','lng','gps','geo','location','coordinates','exif_gps','place'].forEach(k => delete meta[k]);
           const wk = (() => { const d=new Date(); const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())); const day=t.getUTCDay()||7; t.setUTCDate(t.getUTCDate()+4-day); const ys=new Date(Date.UTC(t.getUTCFullYear(),0,1)); const w=Math.ceil((((t-ys)/86400000)+1)/7); return t.getUTCFullYear()+'-W'+String(w).padStart(2,'0'); })();
-          const clip = { id: 'clip_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8), player_id: body.playerId, source, source_url: body.sourceUrl||null, context, visibility, guardian_pending: guardianPending, meta, ai_read: null, status: 'received', created_at: new Date().toISOString(), week: wk };
+          const clip = { id: 'clip_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8), player_id: body.playerId, source, source_url: body.sourceUrl||null, caption: body.caption||null, context, visibility, guardian_pending: guardianPending, meta, ai_read: null, status: 'received', created_at: new Date().toISOString(), week: wk };
+          clip.ai_read = _fcRead(clip);  // LAYER 4: read the clip into facet signals at intake
+          clip.status = 'read';
           await env.FIELDCHECK_KV.put('clip:'+clip.id, JSON.stringify(clip));
           const idxKey = 'player-clips:'+body.playerId;
           let idx = []; try { const raw = await env.FIELDCHECK_KV.get(idxKey); if (raw) idx = JSON.parse(raw); } catch(e){}
           idx.unshift({ id: clip.id, week: clip.week, visibility: clip.visibility, context: clip.context, created_at: clip.created_at });
           await env.FIELDCHECK_KV.put(idxKey, JSON.stringify(idx.slice(0,500)));
           const reads = { game:'a clutch in-game rep — reads as Talent & Competitiveness.', drill:'clean technique under reps — reads as Talent & Game IQ.', gym:'repeated training work — reads as Mindset & Physical.', park:'self-driven reps off-schedule — reads as Mindset.' };
-          return json({ ok:true, clip_id:clip.id, visibility:clip.visibility, guardian_pending:guardianPending, ack:'We see '+(reads[context]||'a strong rep.'), recompute:'Your number recomputes Friday across all your clips.', week:clip.week });
+          return json({ ok:true, clip_id:clip.id, visibility:clip.visibility, guardian_pending:guardianPending, ack:'We see '+(reads[context]||'a strong rep.'), reads_facets: clip.ai_read.dominant, recompute:'Your number recomputes Friday across all your clips.', week:clip.week });
         } catch (e) { return json({ error: 'clip_add_failed', detail: String(e).slice(0,200) }, 500); }
       }
       if (path === '/clips/list' && request.method === 'GET') {
