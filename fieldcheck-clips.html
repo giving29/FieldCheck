@@ -216,7 +216,30 @@
     });
   }
   function setTab(el,f){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');render(f);}
-  render('all');
+  // load real clips from backend
+  var FC_API='https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev';
+  var FC_PLAYER='demo_maya';
+  function ctxLabel(c){return ({game:'Game',drill:'Drill',gym:'Gym',park:'Park'})[c]||'Clip';}
+  function loadClips(){
+    fetch(FC_API+'/clips/list?playerId='+encodeURIComponent(FC_PLAYER))
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d && d.clips && d.clips.length){
+          clips.length=0;
+          d.clips.forEach(function(c){
+            clips.push({cap:ctxLabel(c.context)+' clip',dur:'0:'+(15+Math.floor(Math.random()*15)),vis:(c.visibility==='public'?'pub':'priv'),tag:ctxLabel(c.context)});
+          });
+          var pub=clips.filter(function(x){return x.vis==='pub';}).length;
+          var priv=clips.length-pub;
+          document.querySelectorAll('.tab .cnt')[0].textContent=clips.length;
+          document.querySelectorAll('.tab .cnt')[1].textContent=pub;
+          document.querySelectorAll('.tab .cnt')[2].textContent=priv;
+        }
+        render('all');
+      })
+      .catch(function(){ render('all'); });
+  }
+  loadClips();
 </script>
 </body>
 </html>

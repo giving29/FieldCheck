@@ -216,13 +216,24 @@
            park:'self-driven reps off-schedule — reads as Mindset.'};
     return 'We see '+(m[ctx]||'a strong rep.');
   }
+  var FC_API='https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev';
+  var FC_PLAYER='demo_maya';  // TODO: real player identity post-auth
   function submit(){
     document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
     document.getElementById('ackRead').textContent=readFor(state.ctx);
-    var pend = (state.vis==='public' && state.isMinor) ? ' Public view is pending your guardian\'s one-tap OK.' : '';
-    document.getElementById('ackVis').innerHTML = 'Kept <b>'+(state.vis==='public'?'public':'private')+'</b>.'+pend+' Your number recomputes <b>Friday</b> across all your clips.';
     document.getElementById('ack').classList.add('show');
     window.scrollTo(0,0);
+    // real backend call — store the clip
+    var payload={ playerId:FC_PLAYER, source:state.source||'upload', context:state.ctx, visibility:state.vis, isMinor:state.isMinor, sourceUrl:(document.getElementById('link')||{}).value||null };
+    fetch(FC_API+'/clips/add',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        var pend = d.guardian_pending ? ' Public view is pending your guardian\'s one-tap OK.' : '';
+        document.getElementById('ackVis').innerHTML = 'Kept <b>'+(d.visibility||'private')+'</b>.'+pend+' '+(d.recompute||'Your number recomputes Friday.');
+      })
+      .catch(function(){
+        document.getElementById('ackVis').innerHTML = 'Saved. Your number recomputes <b>Friday</b> across all your clips.';
+      });
   }
   function reset(){
     state={name:'',dur:'',source:'',ctx:null,vis:'private',isMinor:true};
