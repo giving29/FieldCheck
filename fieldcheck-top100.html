@@ -86,9 +86,9 @@
     <div class="segnote">Showing <b id="segname">15U · Volleyball · Outside Hitters · NorCal</b> — thousands of boards mean everyone can be top-100 something.</div>
 
     <div class="podium">
-      <div class="pod p2" id="pod2" onclick="go()"><div class="pod-rank">2</div><div class="pod-av" id="pod2av">JC</div><div class="pod-n" id="pod2n">Jaylen C.</div><div class="pod-m" id="pod2m">OH · Phoenix</div><div class="pod-num" id="pod2num">6.7</div></div>
-      <div class="pod p1" id="pod1" onclick="go()"><div class="pod-rank">1</div><div class="pod-av" id="pod1av">MA</div><div class="pod-n" id="pod1n">Maya Alvarez</div><div class="pod-m" id="pod1m">OH · Bay Area</div><div class="pod-num" id="pod1num">6.4</div></div>
-      <div class="pod p3" id="pod3" onclick="go()"><div class="pod-rank">3</div><div class="pod-av" id="pod3av">RT</div><div class="pod-n" id="pod3n">Riya T.</div><div class="pod-m" id="pod3m">S · Dallas</div><div class="pod-num" id="pod3num">6.6</div></div>
+      <div class="pod p2" id="pod2" onclick="go(document.getElementById('pod2n').textContent,document.getElementById('pod2m').textContent,2,'Top clip')"><div class="pod-rank">2</div><div class="pod-av" id="pod2av">JC</div><div class="pod-n" id="pod2n">Jaylen C.</div><div class="pod-m" id="pod2m">OH · Phoenix</div><div class="pod-num" id="pod2num">6.7</div></div>
+      <div class="pod p1" id="pod1" onclick="go(document.getElementById('pod1n').textContent,document.getElementById('pod1m').textContent,1,'Top clip')"><div class="pod-rank">1</div><div class="pod-av" id="pod1av">MA</div><div class="pod-n" id="pod1n">Maya Alvarez</div><div class="pod-m" id="pod1m">OH · Bay Area</div><div class="pod-num" id="pod1num">6.4</div></div>
+      <div class="pod p3" id="pod3" onclick="go(document.getElementById('pod3n').textContent,document.getElementById('pod3m').textContent,3,'Top clip')"><div class="pod-rank">3</div><div class="pod-av" id="pod3av">RT</div><div class="pod-n" id="pod3n">Riya T.</div><div class="pod-m" id="pod3m">S · Dallas</div><div class="pod-num" id="pod3num">6.6</div></div>
     </div>
 
     <div class="feed-h"><div class="feed-title">The board</div><div class="feed-c">4–100</div></div>
@@ -99,7 +99,7 @@
       <div class="badge-t">You're #1 in 15U Volleyball this week.</div>
       <div class="badge-s">That's a real thing to say out loud. Share it — your followers come see the clip, and your profile.</div>
       <div class="badge-card"><div class="bc-seal">★</div><div><div class="bc-t">FC TOP 100 · #1</div><div class="bc-s" id="bcSub">15U Volleyball · NorCal · week of Jun 15 · verified by FieldCheck</div></div></div>
-      <div class="share"><button class="ig" onclick="alert('→ shares badge to IG/TikTok story → followers come back to FieldCheck (flywheel 2)')">Share to story</button><button class="cp" onclick="alert('Badge link copied')">Copy link</button></div>
+      <div class="share"><button class="ig" onclick="openShare('You','Your rank',1,SEL.sport,SEL.age,'Your top clip')">Share to story</button><button class="cp" onclick="openShare('You','Your rank',1,SEL.sport,SEL.age,'Your top clip')">Copy link</button></div>
       <div class="why">Every share is a clip coming in and a new player finding FieldCheck.</div>
     </div>
   </div>
@@ -148,11 +148,44 @@
   function renderFeed(){
     const f=document.getElementById('feed');f.innerHTML='';
     rows.forEach(x=>{
-      f.innerHTML+=`<div class="row${x.you?' you':''}" onclick="go()"><div class="rank">${x.r}</div><div class="rthumb"><div class="ico">▶</div><div class="dur">${x.dur}</div></div><div class="rmeta"><div class="rcap">${x.cap}</div><div class="rwho">${x.who}${x.you?' · you':''} · FC <span class="num">${x.num}</span></div></div><div class="rlike" onclick="event.stopPropagation();this.classList.toggle('liked');const c=this.querySelector('.cnt');c.textContent=this.classList.contains('liked')?${x.likes}+1:${x.likes}"><div class="heart">♥</div><div class="cnt">${x.likes}</div></div></div>`;
+      f.innerHTML+=`<div class="row${x.you?' you':''}" onclick="go('${(x.who||'').replace(/'/g,'')}','${x.who&&x.who.indexOf(' you')>-1?'you':SEL.sport}',${x.r},'${(x.cap||'').replace(/'/g,'')}')"><div class="rank">${x.r}</div><div class="rthumb"><div class="ico">▶</div><div class="dur">${x.dur}</div></div><div class="rmeta"><div class="rcap">${x.cap}</div><div class="rwho">${x.who}${x.you?' · you':''} · FC <span class="num">${x.num}</span></div></div><div class="rlike" onclick="event.stopPropagation();this.classList.toggle('liked');const c=this.querySelector('.cnt');c.textContent=this.classList.contains('liked')?${x.likes}+1:${x.likes}"><div class="heart">♥</div><div class="cnt">${x.likes}</div></div></div>`;
     });
   }
-  function go(){location.href='/clips';}
+  function go(name,meta,rank,cap){ if(name){ openShare(name,meta,rank,SEL.sport,SEL.age,cap); } else { location.href='/clips'; } }
   buildAll();updateName();renderFeed();
+</script>
+
+<!-- CLIPSHARE-v1 modal -->
+<div id="shareModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:999;align-items:center;justify-content:center;padding:20px" onclick="closeShare(event)">
+  <div style="background:var(--surface);border:1px solid var(--gold-line);border-radius:18px;max-width:360px;width:100%;padding:22px;text-align:center" onclick="event.stopPropagation()">
+    <div style="width:64px;height:64px;border-radius:50%;border:3px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:26px;margin:0 auto 14px">★</div>
+    <div id="smName" style="font-family:Archivo;font-weight:900;font-size:22px"></div>
+    <div id="smMeta" style="color:var(--muted);font-size:13px;margin-top:3px"></div>
+    <div id="smRank" style="margin:16px 0;font-family:Archivo;font-weight:900;font-size:15px;color:var(--gold)"></div>
+    <div id="smClip" style="background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:13px;color:var(--text);margin-bottom:8px"></div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:16px">verified by FieldCheck · graded, not just liked</div>
+    <button onclick="doShare()" style="width:100%;background:var(--gold);color:#0B0E13;border:none;border-radius:12px;padding:14px;font-weight:800;font-size:15px;cursor:pointer">Share this</button>
+    <button onclick="closeShare()" style="width:100%;background:transparent;color:var(--muted);border:none;padding:12px;font-size:13px;cursor:pointer;margin-top:4px">Close</button>
+  </div>
+</div>
+<script>
+  var _shareState={};
+  function openShare(name,meta,rank,sport,age,cap){
+    _shareState={name:name,rank:rank,sport:sport,age:age};
+    document.getElementById('smName').textContent=name;
+    document.getElementById('smMeta').textContent=meta;
+    document.getElementById('smRank').textContent='FC TOP 100 · #'+rank+' in '+age+' '+sport;
+    document.getElementById('smClip').textContent='▶ '+(cap||'Graded clip');
+    document.getElementById('shareModal').style.display='flex';
+  }
+  function closeShare(e){ if(e&&e.target&&e.target.id!=='shareModal'&&e.type==='click'&&e.target.closest('#shareModal > div'))return; document.getElementById('shareModal').style.display='none'; }
+  function doShare(){
+    var t=_shareState.name+' is #'+_shareState.rank+' in '+_shareState.age+' '+_shareState.sport+' this week on FieldCheck — graded, not just liked. 🏆';
+    var u='https://fieldcheck-app.netlify.app/top100';
+    if(navigator.share){ navigator.share({title:'FieldCheck Top 100',text:t,url:u}).catch(function(){}); }
+    else if(navigator.clipboard){ navigator.clipboard.writeText(t+' '+u).then(function(){ var b=event.target; var o=b.textContent; b.textContent='✓ Copied!'; setTimeout(function(){b.textContent=o;},1500); }); }
+    else { alert(t); }
+  }
 </script>
 </body>
 </html>
