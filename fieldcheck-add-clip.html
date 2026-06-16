@@ -247,7 +247,11 @@
     return 'We see '+(m[ctx]||'a strong rep.');
   }
   var FC_API='https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev';
-  var FC_PLAYER='demo_maya';  // TODO: real player identity post-auth
+  // PROFILES: device identity (each device = its own player)
+  function fcPlayerId(){ try{ var v=localStorage.getItem('fc_player_id'); if(!v){ v='fc_'+Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-4); localStorage.setItem('fc_player_id',v); } return v; }catch(e){ return 'fc_guest'; } }
+  function fcPlayerName(){ try{ return localStorage.getItem('fc_player_name')||null; }catch(e){ return null; } }
+  function fcSetName(n){ try{ localStorage.setItem('fc_player_name',n); }catch(e){} }
+  var FC_PLAYER=fcPlayerId();
   function setUploadMsg(html){
     var av=document.getElementById('ackVis');
     av.innerHTML = av.innerHTML.replace(/<br><span class="umsg"[^]*$/, '') + html;
@@ -264,12 +268,16 @@
     });
   }
   function submit(){
+    if(!fcPlayerName()){
+      var nm = prompt("What name should your clips show under?");
+      if(nm && nm.trim()){ fcSetName(nm.trim()); }
+    }
     document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
     document.getElementById('ackRead').textContent=readFor(state.ctx);
     document.getElementById('ack').classList.add('show');
     window.scrollTo(0,0);
     // real backend call — store the clip
-    var payload={ playerId:FC_PLAYER, source:state.source||'upload', context:state.ctx, visibility:state.vis, isMinor:state.isMinor, sourceUrl:(document.getElementById('link')||{}).value||null, caption:state.fileName||null, meta:{file_name:state.fileName||null, file_size:state.fileSize||null} };
+    var payload={ playerId:FC_PLAYER, playerName:fcPlayerName(), source:state.source||'upload', context:state.ctx, visibility:state.vis, isMinor:state.isMinor, sourceUrl:(document.getElementById('link')||{}).value||null, caption:state.fileName||null, meta:{file_name:state.fileName||null, file_size:state.fileSize||null} };
     fetch(FC_API+'/clips/add',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)})
       .then(function(r){return r.json();})
       .then(function(d){

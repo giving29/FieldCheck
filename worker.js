@@ -34093,6 +34093,8 @@ export default {
           await env.FIELDCHECK_KV.put(idxKey, JSON.stringify(idx.slice(0,500)));
           // WEEKLY-CRON-v1: track player in the global index so the Friday cron recomputes them
           try { let pix=[]; const pr=await env.FIELDCHECK_KV.get('players:index'); if(pr) pix=JSON.parse(pr); if(pix.indexOf(body.playerId)===-1){ pix.push(body.playerId); await env.FIELDCHECK_KV.put('players:index', JSON.stringify(pix)); } } catch(e){}
+          // PROFILES-name: store display name for this player if provided
+          try { if(body.playerName){ await env.FIELDCHECK_KV.put('player-name:'+body.playerId, String(body.playerName).slice(0,40)); } } catch(e){}
           const reads = { game:'a clutch in-game rep — reads as Talent & Competitiveness.', drill:'clean technique under reps — reads as Talent & Game IQ.', gym:'repeated training work — reads as Mindset & Physical.', park:'self-driven reps off-schedule — reads as Mindset.' };
           return json({ ok:true, clip_id:clip.id, visibility:clip.visibility, guardian_pending:guardianPending, ack:'We see '+(reads[context]||'a strong rep.'), reads_facets: clip.ai_read.dominant, recompute:'Your number recomputes Friday across all your clips.', week:clip.week });
         } catch (e) { return json({ error: 'clip_add_failed', detail: String(e).slice(0,200) }, 500); }
@@ -34226,7 +34228,8 @@ export default {
               let isPublic=false;
               try { const ix=await env.FIELDCHECK_KV.get('player-clips:'+pid); if(ix){ const arr=JSON.parse(ix); isPublic=arr.some(c=>c.visibility==='public'); } } catch(e){}
               if(!isPublic) continue;
-              real.push({ name:(snap.player_name||pid.replace(/_/g,' ')), pos:(poss[0]), region:'Your area', score:snap.composite, cap:'Your graded clip', likes:Math.round(snap.composite*50), dur:'0:18', seeded:false, real:true, you:(pid==='demo_maya') });
+              let pname=null; try{ pname=await env.FIELDCHECK_KV.get('player-name:'+pid);}catch(e){}
+              real.push({ name:(pname||snap.player_name||pid.replace(/_/g,' ')), pos:(poss[0]), region:'Your area', score:snap.composite, cap:'Your graded clip', likes:Math.round(snap.composite*50), dur:'0:18', seeded:false, real:true, you:(pid==='demo_maya') });
             }
           } catch(e){}
           let all=seeded.concat(real); all.sort((a,b)=>b.score-a.score); all.forEach((r,i)=>r.rank=i+1);

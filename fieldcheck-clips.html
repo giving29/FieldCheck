@@ -221,7 +221,8 @@
   function setTab(el,f){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');render(f);}
   // load real clips from backend
   var FC_API='https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev';
-  var FC_PLAYER='demo_maya';
+  function fcPlayerId(){ try{ var v=localStorage.getItem('fc_player_id'); if(!v){ v='fc_'+Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-4); localStorage.setItem('fc_player_id',v); } return v; }catch(e){ return 'fc_guest'; } }
+  var FC_PLAYER=fcPlayerId();
   function ctxLabel(c){return ({game:'Game',drill:'Drill',gym:'Gym',park:'Park'})[c]||'Clip';}
   var FACET_LABELS={talent:'Talent',physical:'Physical',competitiveness:'Competitiveness',mental_strength:'Mental str.',mental_iq:'Game IQ',coachability:'Coachability',mindset:'Mindset',character:'Character'};
   function renderSnapshot(snap){
