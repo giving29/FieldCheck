@@ -107,20 +107,15 @@
       <input type="file" id="fileInput" accept="video/*" style="display:none" onchange="onFilePicked(this,'upload')">
       <div class="record" onclick="document.getElementById('camInput').click()">
         <div class="rec-ring"><div class="rec-dot"></div></div>
-        <div class="rec-t">Record now</div>
-        <div class="rec-s">Tap to film · up to 0:30</div>
+        <div class="rec-t" id="recTitle">Record now</div>
+        <div class="rec-s" id="recSub">Tap to film · up to 0:30</div>
       </div>
       <div class="imp" style="margin-top:10px;display:flex;align-items:center;gap:10px;justify-content:center" onclick="document.getElementById('fileInput').click()">
         <span class="imp-ic">⬆</span><span class="imp-t" style="margin-top:0">Choose a video from your phone</span>
       </div>
-      <div class="or">or bring one in</div>
-      <div class="imports">
-        <div class="imp" onclick="pick('YouTube clip','0:30','youtube')"><div class="imp-ic">▶</div><div class="imp-t">YouTube</div></div>
-        <div class="imp" onclick="pick('Instagram reel','0:22','instagram')"><div class="imp-ic">◎</div><div class="imp-t">Instagram</div></div>
-        <div class="imp" onclick="pick('TikTok clip','0:18','tiktok')"><div class="imp-ic">♪</div><div class="imp-t">TikTok</div></div>
-      </div>
+      <div class="or">or paste a link to your clip</div>
       <div class="paste">
-        <input id="link" placeholder="…or paste any video link">
+        <input id="link" placeholder="Paste a YouTube, Instagram, or TikTok link">
         <button onclick="if(link.value)pick('Linked clip','0:27','upload')">Bring it in</button>
       </div>
       <div class="voice" onclick="pick('Voice-added clip','0:20','record')">
@@ -191,6 +186,15 @@
 
 <script>
   var state={name:'',dur:'',source:'',ctx:null,vis:'private',isMinor:true};
+  // device-aware: desktop can't record via file input, so relabel to "Upload"
+  (function(){
+    var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints>1 && /Mac/.test(navigator.platform));
+    if(!isMobile){
+      var t=document.getElementById('recTitle'), sub=document.getElementById('recSub');
+      if(t) t.textContent='Upload a video';
+      if(sub) sub.textContent='Choose a clip from your computer · up to 0:30';
+    }
+  })();
   function onFilePicked(input, source){
     var f = input.files && input.files[0];
     if(!f){ return; }
