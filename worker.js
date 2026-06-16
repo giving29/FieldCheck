@@ -34100,6 +34100,43 @@ export default {
           return json({ ok:true, snapshot });
         } catch (e) { return json({ error:'recompute_failed', detail:String(e).slice(0,200) }, 500); }
       }
+      // ── R2 VIDEO (Jun15) · store + serve clip video bytes (Pattern 1: through-worker) ──
+      if (path === '/clips/upload' && request.method === 'POST') {
+        try {
+          if (!env.CLIP_BUCKET) return json({ error: 'r2_not_bound' }, 500);
+          const pid = url.searchParams.get('playerId');
+          const cid = url.searchParams.get('clipId');
+          if (!pid || !cid) return json({ error: 'playerId and clipId required' }, 400);
+          const ct = request.headers.get('content-type') || 'video/mp4';
+          const extMap = {'video/mp4':'mp4','video/quicktime':'mov','video/webm':'webm','video/x-msvideo':'avi','video/3gpp':'3gp'};
+          const ext = extMap[ct.split(';')[0]] || 'mp4';
+          const safePid = String(pid).replace(/[^a-z0-9_-]/gi,'').slice(0,60);
+          const safeCid = String(cid).replace(/[^a-z0-9_-]/gi,'').slice(0,60);
+          const key = `clips/${safePid}/${safeCid}.${ext}`;
+          const body = await request.arrayBuffer();
+          if (!body || body.byteLength === 0) return json({ error: 'empty_body' }, 400);
+          if (body.byteLength > 80 * 1024 * 1024) return json({ error: 'too_large', max_mb: 80 }, 413);
+          await env.CLIP_BUCKET.put(key, body, { httpMetadata: { contentType: ct.split(';')[0] } });
+          try {
+            const cr = await env.FIELDCHECK_KV.get('clip:'+safeCid);
+            if (cr) { const c = JSON.parse(cr); c.video_key = key; c.status = 'uploaded'; await env.FIELDCHECK_KV.put('clip:'+safeCid, JSON.stringify(c)); }
+          } catch(e){}
+          return json({ ok:true, video_key:key, size_bytes:body.byteLength, playback_url:`/clips/video/${key}` });
+        } catch (e) { return json({ error:'upload_failed', detail:String(e).slice(0,200) }, 500); }
+      }
+      if (path.startsWith('/clips/video/') && request.method === 'GET') {
+        try {
+          if (!env.CLIP_BUCKET) return new Response('r2 not bound', { status: 500 });
+          const key = decodeURIComponent(path.slice('/clips/video/'.length));
+          if (!key || key.indexOf('..') !== -1) return new Response('bad key', { status: 400 });
+          const obj = await env.CLIP_BUCKET.get(key);
+          if (!obj) return new Response('not found', { status: 404 });
+          const ext = (key.split('.').pop()||'').toLowerCase();
+          const typeMap = {mp4:'video/mp4',mov:'video/quicktime',webm:'video/webm',avi:'video/x-msvideo','3gp':'video/3gpp'};
+          const ctype = (obj.httpMetadata && obj.httpMetadata.contentType) || typeMap[ext] || 'video/mp4';
+          return new Response(obj.body, { headers: { 'content-type': ctype, 'cache-control': 'public, max-age=3600', 'access-control-allow-origin': '*' } });
+        } catch (e) { return new Response('error', { status: 500 }); }
+      }
       // ── end CLIP-1 BACKEND ──────────────────────────────────────────────────────
       // Health
       if (path === '/' || path === '/health') {
