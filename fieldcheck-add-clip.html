@@ -197,9 +197,17 @@
     // capture real file metadata as the clip reference (bytes upload = R2 layer later)
     var name = f.name || 'clip.mp4';
     var sizeMB = (f.size/1048576).toFixed(1);
-    state.fileName = name; state.fileSize = f.size; state.fileObj = f; state.fileType = f.type || 'video/mp4';
+    state.fileName = name; state.fileSize = f.size; state.fileType = f.type || 'video/mp4';
     var cn=document.getElementById('chosenName'); if(cn) cn.textContent = (source==='record'?'Recorded: ':'File: ')+name;
-    var cd=document.getElementById('chosenDur'); if(cd) cd.textContent = sizeMB+' MB · ready';
+    var cd=document.getElementById('chosenDur'); if(cd) cd.textContent = sizeMB+' MB · reading…';
+    // read the bytes into memory NOW (own the bytes, not a fragile File reference that mobile can free)
+    state.fileObj = null; state.fileBytes = null;
+    try {
+      var fr = new FileReader();
+      fr.onload = function(){ state.fileBytes = fr.result; var cd2=document.getElementById('chosenDur'); if(cd2) cd2.textContent = sizeMB+' MB · ready'; };
+      fr.onerror = function(){ state.fileObj = f; var cd2=document.getElementById('chosenDur'); if(cd2) cd2.textContent = sizeMB+' MB · ready'; };
+      fr.readAsArrayBuffer(f);
+    } catch(e){ state.fileObj = f; }
     state.name=name; state.source=source;
     go(1);
   }
@@ -236,6 +244,21 @@
   }
   var FC_API='https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev';
   var FC_PLAYER='demo_maya';  // TODO: real player identity post-auth
+  function setUploadMsg(html){
+    var av=document.getElementById('ackVis');
+    av.innerHTML = av.innerHTML.replace(/<br><span class="umsg"[^]*$/, '') + html;
+  }
+  function doUpload(bytes, clipId){
+    setUploadMsg('<br><span class="umsg" style="color:var(--cyan);font-size:11px">⬆ uploading your video ('+((bytes.size||0)/1048576).toFixed(1)+' MB)…</span>');
+    fetch(FC_API+'/clips/upload?playerId='+encodeURIComponent(FC_PLAYER)+'&clipId='+encodeURIComponent(clipId),{
+      method:'POST', headers:{'content-type':bytes.type||state.fileType||'video/mp4'}, body:bytes
+    }).then(function(r){return r.json();}).then(function(u){
+      if(u && u.ok){ setUploadMsg('<br><span class="umsg" style="color:var(--green);font-size:11px">✓ video uploaded ('+((u.size_bytes||0)/1048576).toFixed(1)+' MB)</span>'); }
+      else { setUploadMsg('<br><span class="umsg" style="color:#ff8a6b;font-size:11px">✗ video didn\'t upload. <a href="#" onclick="doUpload(state.lastBytes,state.lastClipId);return false" style="color:var(--gold)">Tap to retry</a></span>'); }
+    }).catch(function(){
+      setUploadMsg('<br><span class="umsg" style="color:#ff8a6b;font-size:11px">✗ video didn\'t upload. <a href="#" onclick="doUpload(state.lastBytes,state.lastClipId);return false" style="color:var(--gold)">Tap to retry</a></span>');
+    });
+  }
   function submit(){
     document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
     document.getElementById('ackRead').textContent=readFor(state.ctx);
@@ -249,18 +272,10 @@
         var pend = d.guardian_pending ? ' Public view is pending your guardian\'s one-tap OK.' : '';
         document.getElementById('ackVis').innerHTML = 'Kept <b>'+(d.visibility||'private')+'</b>.'+pend+' '+(d.recompute||'Your number recomputes Friday.');
         // if a real video file was picked, upload its bytes to R2
-        if(state.fileObj && d.clip_id){
-          document.getElementById('ackVis').innerHTML += '<br><span style="color:var(--cyan);font-size:11px">⬆ uploading your video…</span>';
-          fetch(FC_API+'/clips/upload?playerId='+encodeURIComponent(FC_PLAYER)+'&clipId='+encodeURIComponent(d.clip_id),{
-            method:'POST', headers:{'content-type':state.fileType||'video/mp4'}, body:state.fileObj
-          }).then(function(r){return r.json();}).then(function(u){
-            var av=document.getElementById('ackVis');
-            if(u && u.ok){ av.innerHTML = av.innerHTML.replace(/<br><span[^]*$/, '') + '<br><span style="color:var(--green);font-size:11px">✓ video uploaded ('+((u.size_bytes||0)/1048576).toFixed(1)+' MB)</span>'; }
-            else { av.innerHTML = av.innerHTML.replace(/<br><span[^]*$/, '') + '<br><span style="color:var(--muted);font-size:11px">clip saved (video upload pending)</span>'; }
-          }).catch(function(){
-            var av=document.getElementById('ackVis');
-            av.innerHTML = av.innerHTML.replace(/<br><span[^]*$/, '') + '<br><span style="color:var(--muted);font-size:11px">clip saved (video upload pending)</span>';
-          });
+        var bytes = state.fileBytes ? new Blob([state.fileBytes], {type:state.fileType||'video/mp4'}) : state.fileObj;
+        if(bytes && d.clip_id){
+          state.lastClipId = d.clip_id; state.lastBytes = bytes;
+          doUpload(bytes, d.clip_id);
         }
       })
       .catch(function(){
