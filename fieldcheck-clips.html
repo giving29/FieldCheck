@@ -125,8 +125,8 @@
         <div class="nc-top">
           <div>
             <div class="nc-label">FieldCheck number · this week</div>
-            <div class="bignum">6.4<span class="of">/10</span></div>
-            <div class="delta">▲ 0.3 since last Friday</div>
+            <div class="bignum" id="fcNum">6.4<span class="of">/10</span></div>
+            <div class="delta" id="fcDelta">▲ 0.3 since last Friday</div>
           </div>
           <div class="tier">
             <div class="tier-band">ON A REAL TRACK</div>
@@ -143,7 +143,7 @@
             <polygon points="75,28 118,50 105,98 75,122 38,92 42,52" fill="rgba(70,216,198,.16)" stroke="#46D8C6" stroke-width="2"/>
             <g fill="#46D8C6"><circle cx="75" cy="28" r="2.6"/><circle cx="118" cy="50" r="2.6"/><circle cx="105" cy="98" r="2.6"/><circle cx="75" cy="122" r="2.6"/><circle cx="38" cy="92" r="2.6"/><circle cx="42" cy="52" r="2.6"/></g>
           </svg>
-          <div class="poly-legend">
+          <div class="poly-legend" id="fcLegend">
             <div class="pl-item"><span class="k">Competitiveness</span><span class="v up">7.6 ▲</span></div>
             <div class="pl-item"><span class="k">Talent</span><span class="v up">6.5 ▲</span></div>
             <div class="pl-item"><span class="k">Mental str.</span><span class="v">7.2</span></div>
@@ -220,6 +220,29 @@
   var FC_API='https://fieldcheck-proxy-dev.sridhar-nallani.workers.dev';
   var FC_PLAYER='demo_maya';
   function ctxLabel(c){return ({game:'Game',drill:'Drill',gym:'Gym',park:'Park'})[c]||'Clip';}
+  var FACET_LABELS={talent:'Talent',physical:'Physical',competitiveness:'Competitiveness',mental_strength:'Mental str.',mental_iq:'Game IQ',coachability:'Coachability',mindset:'Mindset',character:'Character'};
+  function renderSnapshot(snap){
+    if(!snap || snap.composite==null) return;
+    // big number
+    document.getElementById('fcNum').innerHTML = snap.composite.toFixed(1)+'<span class="of">/10</span>';
+    // delta
+    var cd=snap.composite_delta;
+    var de=document.getElementById('fcDelta');
+    if(cd!=null && cd!==0){ de.innerHTML=(cd>0?'▲ ':'▼ ')+Math.abs(cd).toFixed(1)+' since last week'; de.style.display='inline-flex'; }
+    else if(cd===0){ de.innerHTML='— holding steady'; }
+    else { de.innerHTML='your first number'; }
+    // facet legend (top 6 by score, with deltas)
+    var leg=document.getElementById('fcLegend'); if(leg && snap.facets){
+      var entries=Object.keys(snap.facets).filter(function(f){return snap.facets[f]!=null;})
+        .map(function(f){return {f:f,v:snap.facets[f],d:(snap.deltas&&snap.deltas[f])||0};})
+        .sort(function(a,b){return b.v-a.v;}).slice(0,6);
+      leg.innerHTML=entries.map(function(e){
+        var up=e.d>0?' up':'';
+        var arrow=e.d>0?' ▲':(e.d<0?' ▼':'');
+        return '<div class="pl-item"><span class="k">'+(FACET_LABELS[e.f]||e.f)+'</span><span class="v'+up+'">'+e.v.toFixed(1)+arrow+'</span></div>';
+      }).join('');
+    }
+  }
   function loadClips(){
     fetch(FC_API+'/clips/list?playerId='+encodeURIComponent(FC_PLAYER))
       .then(function(r){return r.json();})
@@ -235,6 +258,7 @@
           document.querySelectorAll('.tab .cnt')[1].textContent=pub;
           document.querySelectorAll('.tab .cnt')[2].textContent=priv;
         }
+        if(d && d.snapshot){ renderSnapshot(d.snapshot); }
         render('all');
       })
       .catch(function(){ render('all'); });
