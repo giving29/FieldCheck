@@ -43,4 +43,7 @@
 /clips                             /fieldcheck-clips.html               200
 /add-clip                          /fieldcheck-add-clip.html            200
 /top100                            /fieldcheck-top100.html              200
+/deck-master   /deck-master.html   200
+/deck-kevin    /deck-kevin.html    200
+/deck-arjun    /deck-arjun.html    200
 /*                                 /index.html                          200
