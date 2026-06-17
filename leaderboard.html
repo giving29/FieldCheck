@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FieldCheck IQ · The Honest Read on Every Athlete</title>
+<title>Leaderboard · FieldCheck IQ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Anton&display=swap" rel="stylesheet">
@@ -287,122 +287,142 @@ body::before{
 .ac-score{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;font-weight:500;color:var(--gold);letter-spacing:.01em}
 .suggest-pill{cursor:pointer}
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
-<style id="ephero-style">
-  #ephero{--bg:#0A0908;--bg-soft:#13110E;--gold:#D4A24C;--gold-bright:#E4B86A;--cream:#F5F1E8;--muted:rgba(245,241,232,.50);--line:rgba(212,162,76,.22);--green:#9DBE92;
-    position:relative;background:var(--bg);color:var(--cream);font-family:'Playfair Display',Georgia,serif;min-height:100vh;overflow:hidden}
-  #ephero::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
-    background:radial-gradient(700px 480px at 50% 40%, rgba(212,162,76,.06), transparent 70%),radial-gradient(120% 120% at 50% 50%, transparent 54%, rgba(0,0,0,.55) 100%)}
-  #ephero nav{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:20px 30px}
-  #ephero .nav-side{display:flex;align-items:center;gap:26px}
-  #ephero nav a{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(245,241,232,.58);text-decoration:none;transition:color .18s ease}
-  #ephero nav a:hover{color:var(--gold)}
-  #ephero .stage{position:relative;z-index:4;min-height:calc(100vh - 72px);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:34px 24px 48px;text-align:center}
-  #ephero .logo{text-decoration:none;color:var(--cream);line-height:1;font-size:clamp(40px,7vw,72px);letter-spacing:-1px;margin-bottom:16px}
-  #ephero .logo .f{font-style:italic;font-weight:500}
-  #ephero .logo .c{font-style:normal;font-weight:600}
-  #ephero .logo .iq{color:var(--gold);font-style:italic;font-weight:500;font-size:.4em;margin-left:.14em;vertical-align:.30em}
-  #ephero .tag{font-weight:500;letter-spacing:-.2px;font-size:clamp(15px,2.1vw,20px);color:rgba(245,241,232,.72)}
-  #ephero .tag .em{font-style:italic;color:var(--gold)}
-  #ephero .tag-top{margin-bottom:24px}
-  #ephero .tag-bot{margin-top:24px}
-  #ephero .search{position:relative;z-index:6;width:min(560px,92vw);display:flex;align-items:center;gap:13px;background:var(--bg-soft);border:1px solid var(--line);border-radius:999px;padding:0 22px;height:54px;transition:border-color .2s ease, box-shadow .2s ease}
-  #ephero .search:hover{box-shadow:0 8px 30px -16px rgba(0,0,0,.9)}
-  #ephero .search:focus-within{border-color:var(--gold);box-shadow:0 0 0 4px rgba(212,162,76,.12)}
-  #ephero .search svg{flex:none;opacity:.65}
-  #ephero .search input{flex:1;background:none;border:none;outline:none;color:var(--cream);font-family:'Playfair Display',serif;font-size:17px;font-style:italic}
-  #ephero .search input::placeholder{color:var(--muted);font-style:italic;opacity:1}
-  #ephero .verdict{position:relative;z-index:5;display:flex;align-items:center;justify-content:center;gap:44px;margin-top:40px;width:min(620px,94vw)}
-  #ephero .vz-poly{flex:none}
-  #ephero .vz-poly svg{overflow:visible;display:block}
-  #ephero .ring{fill:none;stroke:var(--gold);stroke-opacity:.13;stroke-width:1;opacity:0;transition:opacity .5s ease}
-  #ephero .spoke{stroke:var(--gold);stroke-opacity:.09;stroke-width:1;opacity:0;transition:opacity .5s ease}
-  #ephero .glow{opacity:0;transition:opacity .6s ease}
-  #ephero .vz-on .ring,#ephero .vz-on .spoke,#ephero .vz-on .glow{opacity:1}
-  #ephero .shape{fill:var(--gold);fill-opacity:0;stroke:var(--gold);stroke-opacity:.95;stroke-width:1.5;stroke-linejoin:round;transition:fill-opacity .8s ease}
-  #ephero .bead{fill:var(--gold-bright);opacity:0;transition:opacity .25s ease}
-  #ephero .flabel{font-family:'JetBrains Mono',monospace;font-size:6.6px;letter-spacing:.8px;fill:rgba(245,241,232,.62);opacity:0;transition:opacity .3s ease}
-  #ephero .vz-meta{flex:none;text-align:left}
-  #ephero .vz-card{opacity:0;transition:opacity .5s ease}
-  #ephero .vz-card.on{opacity:1}
-  #ephero .vz-name{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:var(--cream);line-height:1.08}
-  #ephero .vz-team{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1.4px;color:var(--muted);text-transform:uppercase;margin-top:9px}
-  #ephero .vz-score{display:flex;align-items:center;gap:12px;margin-top:14px}
-  #ephero .vz-num{font-family:'Playfair Display',serif;font-size:33px;font-weight:600;color:var(--gold)}
-  #ephero .vz-tier{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;border:1px solid;border-radius:4px;padding:4px 8px;text-transform:uppercase}
-  #ephero .ask{position:relative;z-index:5;margin-top:44px;font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(20px,3.2vw,30px);letter-spacing:-.3px;color:var(--cream);min-height:1.3em}
-  #ephero .ask .cur{display:inline-block;width:2px;height:1em;background:var(--gold);margin-left:3px;vertical-align:-2px;animation:epblink 1s steps(1) infinite}
-  @keyframes epblink{50%{opacity:0}}
-  @media (max-width:560px){
-    #ephero nav{padding:16px 16px}
-    #ephero .nav-side{gap:14px}
-    #ephero .verdict{flex-direction:column;gap:6px}
-    #ephero .vz-meta{text-align:center}
-  }
-</style>
 </head>
 <body>
 
-<!-- ═══════════════ NAV ═══════════════ -->
-<section id="ephero">
-  <nav>
-    <div class="nav-side left"><a href="/leaderboard">Leaderboard</a></div>
-    <div class="nav-side right">
-      <a href="/fc_canonical_state_v1">How it works</a>
-      <a href="#">Register / Log in</a>
-    </div>
-  </nav>
-  <main class="stage">
-    <a class="logo" href="/"><span class="f">Field</span><span class="c">Check</span><span class="iq">IQ</span></a>
-    <div class="tag tag-top">See the player.</div>
-    <form class="search" onsubmit="runVerdict();return false;">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4A24C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-      <input id="srch" type="text" autocomplete="off" spellcheck="false" placeholder="Any athlete, any sport" autofocus>
-    </form>
-    <div class="tag tag-bot">Before the <span class="em">world</span> does.</div>
-    <div class="verdict" id="verdict">
-      <div class="vz-poly"><svg id="radar" viewBox="0 0 240 240" width="220" height="220"></svg></div>
-      <div class="vz-meta">
-        <div class="vz-card" id="card">
-          <div class="vz-name" id="vName"></div>
-          <div class="vz-team" id="vTeam"></div>
-          <div class="vz-score"><span class="vz-num" id="vNum"></span><span class="vz-tier" id="vTier"></span></div>
-        </div>
-      </div>
-    </div>
-    <div class="ask" id="ask"></div>
-  </main>
-</section>
-
-<section class="aud">
-  <div class="aud-h-row">
-    <div>
-<h2 class="aud-h">The same framework. Different eyes.</h2>
+<!-- nav -->
+<header class="nav">
+  <div class="nav-i">
+    <a href="/" class="brand"><span class="field">Field</span><span class="check">Check</span><span class="iq">IQ</span></a>
+    <div class="nav-aux">
+      <a href="/fc_canonical_state_v1" class="nav-link">How it works</a>
+      <a href="/" class="nav-link">Home</a>
     </div>
   </div>
+</header>
 
-  <div class="aud-grid">
-    <a class="aud-card" href="/players">
-      <div class="aud-card-tag">For</div>
-      <h3 class="aud-card-h">Players<br>&amp; <i>Families</i></h3>
-      <div class="aud-card-cta">Find my verdict <span class="arrow">→</span></div>
-    </a>
-
-    <a class="aud-card" href="/coaches">
-      <div class="aud-card-tag">For</div>
-      <h3 class="aud-card-h">Coaches<br>&amp; <i>Programs</i></h3>
-      <div class="aud-card-cta">Coaches view <span class="arrow">→</span></div>
-    </a>
-
-    <a class="aud-card" href="/franchises">
-      <div class="aud-card-tag">For</div>
-      <h3 class="aud-card-h">Franchises<br>&amp; <i>Scouts</i></h3>
-      <div class="aud-card-cta">Franchise edge <span class="arrow">→</span></div>
-    </a>
+<style>
+.t110-sec{padding:80px 32px 64px;background:var(--bg);border-top:1px solid var(--ge);border-bottom:1px solid var(--ge)}
+.t110-wrap{max-width:1200px;margin:0 auto}
+.t110-eyebrow{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px;text-align:center}
+.t110-h{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:clamp(38px,5.5vw,64px);line-height:1.05;margin:0 0 18px;letter-spacing:-.01em;text-align:center}
+.t110-h em{color:var(--gold);font-style:italic}
+.t110-lede{color:var(--t2);font-size:17px;max-width:680px;line-height:1.65;margin:0 auto 40px;text-align:center}
+.t110-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:20px;padding:24px 0;border-top:1px solid var(--ge);border-bottom:1px solid var(--ge);margin-bottom:40px}
+.t110-stat{text-align:center}
+.t110-stat-num{font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--gold);font-weight:400;line-height:1}
+.t110-stat-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);letter-spacing:.12em;text-transform:uppercase;margin-top:6px}
+.t110-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:40px}
+.t110-card{display:block;padding:18px 16px 14px;background:var(--bg1);border:1px solid var(--ge2);border-radius:10px;text-decoration:none;color:var(--t);transition:all .16s ease}
+.t110-card:hover{background:var(--bg2);border-color:var(--goldl);transform:translateY(-1px)}
+.t110-card-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;margin:0 0 4px;line-height:1.2}
+.t110-card-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.t110-card-school{font-size:12.5px;color:var(--t2);margin-bottom:10px;font-style:italic}
+.t110-card-tags{display:flex;gap:6px;padding-top:8px;border-top:1px solid var(--ge2)}
+.t110-tier,.t110-band{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 6px;border-radius:3px;letter-spacing:.08em}
+.t110-tier{background:rgba(255,253,247,.04);color:var(--t3)}
+.t110-band-great .t110-band{background:var(--golds);color:var(--gold)}
+.t110-band-great .t110-card-name{color:#E8BC6C}
+.t110-band-good .t110-band{background:rgba(78,201,192,.10);color:var(--teal)}
+.t110-cta-row{display:flex;justify-content:center;margin-top:8px}
+.t110-cta{display:inline-flex;align-items:center;gap:14px;padding:18px 36px;background:var(--gold);color:#0A0907;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:8px;transition:all .16s ease}
+.t110-cta:hover{background:#E8BC6C;transform:translateY(-1px);box-shadow:0 8px 24px rgba(212,162,76,.32)}
+.t110-cta-arrow{font-size:18px}
+@media(max-width:600px){.t110-sec{padding:56px 20px 48px}.t110-grid{grid-template-columns:1fr}}
+</style>
+<section class="t110-sec">
+  <div class="t110-wrap">
+    <div class="t110-eyebrow">★ THE 110 · AMATEUR PROOF SET</div>
+    <h1 class="t110-h">Every athlete. <em>One framework.</em></h1>
+    <p class="t110-lede">The calibration battery FieldCheck IQ runs against every release. High school through D3, JUCO, with seven pro regression checks. Each name resolves to a live verdict using the same 8 facets, the same 16 voices, the same shape.</p>
+    <div class="t110-stats">
+      <div class="t110-stat"><div class="t110-stat-num">60</div><div class="t110-stat-lbl">HS amateur</div></div>
+      <div class="t110-stat"><div class="t110-stat-num">17</div><div class="t110-stat-lbl">D1</div></div>
+      <div class="t110-stat"><div class="t110-stat-num">13</div><div class="t110-stat-lbl">D2</div></div>
+      <div class="t110-stat"><div class="t110-stat-num">10</div><div class="t110-stat-lbl">D3</div></div>
+      <div class="t110-stat"><div class="t110-stat-num">3</div><div class="t110-stat-lbl">JUCO</div></div>
+      <div class="t110-stat"><div class="t110-stat-num">7</div><div class="t110-stat-lbl">Pro check</div></div>
+      <div class="t110-stat"><div class="t110-stat-num" style="color:#E8BC6C">110</div><div class="t110-stat-lbl">Total</div></div>
+    </div>
+    <div class="t110-grid">
+      <a class="t110-card t110-band-great" href="/fieldcheck-verdict.html?q=Tyran+Stokes&sport=mens-basketball">
+        <div class="t110-card-name">Tyran Stokes</div>
+        <div class="t110-card-meta">SF · MENS BASKETBALL</div>
+        <div class="t110-card-school">Notre Dame HS (CA)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class="t110-card t110-band-great" href="/fieldcheck-verdict.html?q=Cameron+Williams&sport=mens-basketball">
+        <div class="t110-card-name">Cameron Williams</div>
+        <div class="t110-card-meta">PF · MENS BASKETBALL</div>
+        <div class="t110-card-school">St. Mary's HS (Phoenix)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class="t110-card t110-band-great" href="/fieldcheck-verdict.html?q=Jordan+Smith+Jr&sport=mens-basketball">
+        <div class="t110-card-name">Jordan Smith Jr</div>
+        <div class="t110-card-meta">CG · MENS BASKETBALL</div>
+        <div class="t110-card-school">Paul VI Catholic (VA)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class="t110-card t110-band-great" href="/fieldcheck-verdict.html?q=Saniyah+Hall&sport=womens-basketball">
+        <div class="t110-card-name">Saniyah Hall</div>
+        <div class="t110-card-meta">G · WOMENS BASKETBALL</div>
+        <div class="t110-card-school">Spire Academy (OH)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class="t110-card t110-band-great" href="/fieldcheck-verdict.html?q=Faizon+Brandon&sport=football">
+        <div class="t110-card-name">Faizon Brandon</div>
+        <div class="t110-card-meta">QB · FOOTBALL</div>
+        <div class="t110-card-school">Grimsley HS (NC)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class="t110-card t110-band-great" href="/fieldcheck-verdict.html?q=Chris+Henry+Jr&sport=football">
+        <div class="t110-card-name">Chris Henry Jr</div>
+        <div class="t110-card-meta">WR · FOOTBALL</div>
+        <div class="t110-card-school">Mater Dei (CA)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class="t110-card t110-band-great" href="/fieldcheck-verdict.html?q=Grady+Emerson&sport=baseball">
+        <div class="t110-card-name">Grady Emerson</div>
+        <div class="t110-card-meta">SS · BASEBALL</div>
+        <div class="t110-card-school">Fort Worth Christian (TX)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class="t110-card t110-band-good" href="/fieldcheck-verdict.html?q=Carlos+Medlock+Jr&sport=mens-basketball">
+        <div class="t110-card-name">Carlos Medlock Jr</div>
+        <div class="t110-card-meta">PG · MENS BASKETBALL</div>
+        <div class="t110-card-school">Link Academy (MO)</div>
+        <div class="t110-card-tags"><span class="t110-tier">HS</span><span class="t110-band">GOOD</span></div>
+      </a>
+      <a class="t110-card t110-band-great" href="/fieldcheck-verdict.html?q=Robbie+Avila&sport=mens-basketball">
+        <div class="t110-card-name">Robbie Avila</div>
+        <div class="t110-card-meta">F · MENS BASKETBALL</div>
+        <div class="t110-card-school">Saint Louis</div>
+        <div class="t110-card-tags"><span class="t110-tier">D1</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class="t110-card t110-band-great" href="/fieldcheck-verdict.html?q=AJ+Dybantsa&sport=mens-basketball">
+        <div class="t110-card-name">AJ Dybantsa</div>
+        <div class="t110-card-meta">F · MENS BASKETBALL</div>
+        <div class="t110-card-school">BYU</div>
+        <div class="t110-card-tags"><span class="t110-tier">D1</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class="t110-card t110-band-great" href="/fieldcheck-verdict.html?q=Jaquay+Randolph&sport=mens-basketball">
+        <div class="t110-card-name">Jaquay Randolph</div>
+        <div class="t110-card-meta">F · MENS BASKETBALL</div>
+        <div class="t110-card-school">Southern Wesleyan</div>
+        <div class="t110-card-tags"><span class="t110-tier">D2</span><span class="t110-band">GREAT</span></div>
+      </a>
+      <a class="t110-card t110-band-great" href="/fieldcheck-verdict.html?q=Ben+Pearce&sport=mens-basketball">
+        <div class="t110-card-name">Ben Pearce</div>
+        <div class="t110-card-meta">G · MENS BASKETBALL</div>
+        <div class="t110-card-school">Emory</div>
+        <div class="t110-card-tags"><span class="t110-tier">D3</span><span class="t110-band">GREAT</span></div>
+      </a>
+    </div>
+    <div class="t110-cta-row">
+      <a class="t110-cta" href="/fieldcheck-roster-110.html">Browse all 110 <span class="t110-cta-arrow">→</span></a>
+    </div>
   </div>
 </section>
-
-<!-- ═══════════════ COLOPHON ═══════════════ -->
 <footer class="colophon">
   <div class="colophon-grid">
     <div class="colophon-brand-block">
@@ -432,154 +452,5 @@ body::before{
     <span>© 2026 ThinkDifferent Holdings · FieldCheck IQ</span>
   </div>
 </footer>
-
-<script>
-/* ===== EpicDev hero: self-drawing verdict polygon + typewriter ===== */
-(function(){
-  function typeAsk(){
-    var ask=document.getElementById('ask'); if(!ask)return;
-    var txt='What\u2019s your polygon?';
-    ask.innerHTML='<span id="askt"></span><span class="cur"></span>';
-    var el=document.getElementById('askt'), n=0;
-    (function tick(){ if(n<=txt.length){ el.textContent=txt.slice(0,n); n++; setTimeout(tick,95); } })();
-  }
-  var POLY_LABELS=['CLOSER DNA','MINDSET','ATHLETICISM','TALENT','LENGTH','COURT IQ','COACHABILITY','COMPETE'];
-  var POLY_ATHLETES=[
-    {name:'Cooper Flagg',  team:'DUKE \u00B7 F \u00B7 MEN\u2019S BASKETBALL \u00B7 18',     num:'9.30', tier:'ELITE+', r:[.80,.85,.92,.95,.90,.82,.88,.90]},
-    {name:'Caitlin Clark', team:'INDIANA FEVER \u00B7 G \u00B7 WNBA \u00B7 24',              num:'9.05', tier:'ELITE+', r:[.90,.90,.70,.95,.55,.95,.82,.92]},
-    {name:'AJ Dybantsa',   team:'BYU \u00B7 F \u00B7 MEN\u2019S BASKETBALL \u00B7 18',       num:'8.95', tier:'ELITE+', r:[.78,.80,.90,.90,.85,.76,.80,.84]},
-    {name:'JuJu Watkins',  team:'USC \u00B7 G \u00B7 WOMEN\u2019S BASKETBALL \u00B7 19',     num:'8.85', tier:'ELITE+', r:[.85,.86,.80,.90,.60,.88,.80,.90]},
-    {name:'Cameron Boozer',team:'DUKE \u00B7 F \u00B7 MEN\u2019S BASKETBALL \u00B7 18',      num:'8.80', tier:'ELITE+', r:[.78,.82,.86,.88,.84,.80,.86,.86]},
-    {name:'Paige Bueckers',team:'DALLAS WINGS \u00B7 G \u00B7 WNBA \u00B7 23',               num:'8.90', tier:'ELITE+', r:[.84,.88,.74,.90,.58,.92,.86,.86]},
-    {name:'Sarah Strong',  team:'UCONN \u00B7 F \u00B7 WOMEN\u2019S BASKETBALL \u00B7 19',   num:'8.60', tier:'ELITE+', r:[.80,.82,.82,.85,.78,.82,.88,.84]},
-    {name:'Tyran Stokes',  team:'NOTRE DAME HS \u00B7 F \u00B7 MEN\u2019S BASKETBALL \u00B7 17', num:'7.40', tier:'ELITE', r:[.70,.72,.82,.80,.78,.68,.74,.80]}
-  ];
-  (function(){
-    var ns='http://www.w3.org/2000/svg';
-    var R=70, CX=120, CY=120, LR=88;
-    var A=POLY_ATHLETES[Math.floor(Math.random()*POLY_ATHLETES.length)];
-    var svg=document.getElementById('radar'); if(!svg)return;
-    function ang(i){ return (-90+i*45)*Math.PI/180; }
-    function pt(rad,i){ var a=ang(i); return [CX+rad*Math.cos(a), CY+rad*Math.sin(a)]; }
-    function octa(rad){ var p=[]; for(var i=0;i<8;i++){ var q=pt(rad,i); p.push(q[0].toFixed(1)+','+q[1].toFixed(1)); } return p.join(' '); }
-    var defs=document.createElementNS(ns,'defs');
-    var rg=document.createElementNS(ns,'radialGradient'); rg.setAttribute('id','vg');
-    var s1=document.createElementNS(ns,'stop'); s1.setAttribute('offset','0%'); s1.setAttribute('stop-color','#D4A24C'); s1.setAttribute('stop-opacity','.20');
-    var s2=document.createElementNS(ns,'stop'); s2.setAttribute('offset','100%'); s2.setAttribute('stop-color','#D4A24C'); s2.setAttribute('stop-opacity','0');
-    rg.appendChild(s1); rg.appendChild(s2); defs.appendChild(rg); svg.appendChild(defs);
-    var glow=document.createElementNS(ns,'circle'); glow.setAttribute('cx',CX); glow.setAttribute('cy',CY); glow.setAttribute('r',R*0.72); glow.setAttribute('fill','url(#vg)'); glow.setAttribute('class','glow'); svg.appendChild(glow);
-    [0.4,0.7,1.0].forEach(function(f){ var rg2=document.createElementNS(ns,'polygon'); rg2.setAttribute('points',octa(R*f)); rg2.setAttribute('class','ring'); svg.appendChild(rg2); });
-    for(var i=0;i<8;i++){ var q=pt(R,i); var ln=document.createElementNS(ns,'line'); ln.setAttribute('x1',CX); ln.setAttribute('y1',CY); ln.setAttribute('x2',q[0].toFixed(1)); ln.setAttribute('y2',q[1].toFixed(1)); ln.setAttribute('class','spoke'); svg.appendChild(ln); }
-    var d='', verts=[];
-    for(var j=0;j<8;j++){ var v=pt(R*A.r[j],j); verts.push(v); d+=(j===0?'M':'L')+v[0].toFixed(1)+' '+v[1].toFixed(1)+' '; }
-    d+='Z';
-    var path=document.createElementNS(ns,'path'); path.setAttribute('d',d); path.setAttribute('class','shape'); svg.appendChild(path);
-    var beads=[], labels=[];
-    for(var k=0;k<8;k++){
-      var b=document.createElementNS(ns,'circle'); b.setAttribute('cx',verts[k][0].toFixed(1)); b.setAttribute('cy',verts[k][1].toFixed(1)); b.setAttribute('r','2.6'); b.setAttribute('class','bead'); svg.appendChild(b); beads.push(b);
-      var lp=pt(LR,k); var t=document.createElementNS(ns,'text');
-      t.setAttribute('x',lp[0].toFixed(1)); t.setAttribute('y',(lp[1]+2).toFixed(1)); t.setAttribute('class','flabel');
-      var c=Math.cos(ang(k)); t.setAttribute('text-anchor', Math.abs(c)<0.25?'middle':(c>0?'start':'end'));
-      t.textContent=POLY_LABELS[k]; svg.appendChild(t); labels.push(t);
-    }
-    var len=path.getTotalLength();
-    path.style.strokeDasharray=len; path.style.strokeDashoffset=len;
-    var DRAW=6000;
-    requestAnimationFrame(function(){
-      svg.parentNode.parentNode.classList.add('vz-on');
-      setTimeout(function(){ path.style.transition='stroke-dashoffset '+DRAW+'ms ease'; path.style.strokeDashoffset=0; },220);
-      for(var m=0;m<8;m++){ (function(idx){ setTimeout(function(){ beads[idx].style.opacity=1; labels[idx].style.opacity=1; }, 260+idx*(DRAW/8)); })(m); }
-      setTimeout(function(){
-        path.style.fillOpacity=0.12;
-        document.getElementById('vName').textContent=A.name;
-        document.getElementById('vTeam').textContent=A.team;
-        document.getElementById('vNum').textContent=A.num;
-        var tier=document.getElementById('vTier'); tier.textContent=A.tier;
-        var col=(A.tier.indexOf('ELITE+')===0)?'#9DBE92':'#D4A24C';
-        tier.style.borderColor=col; tier.style.color=col;
-        document.getElementById('card').classList.add('on');
-        setTimeout(typeAsk,500);
-      }, 260+DRAW+260);
-    });
-  })();
-})();
-
-/* ===== Search wiring (preserved from prior homepage) ===== */
-function focusSearch(){var s=document.getElementById('srch');if(!s)return;s.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){s.focus();},300);}
-var FC_ATHLETES=[
-  // ── v1.7 READY (full verdict pages live) ──
-  {n:'Cooper Flagg',p:'F',s:'mens-basketball',i:'🏀',fc:9.30,v17:true},
-  {n:'Caitlin Clark',p:'PG',s:'womens-basketball',i:'🏀',fc:9.05,v17:true},
-  {n:'Caleb Williams',p:'QB',s:'football',i:'🏈',fc:8.65,v17:true},
-  {n:'Avery Skinner',p:'OH',s:'womens-volleyball',i:'🏐',fc:8.80,v17:true},
-  // ── Football
-  {n:'Patrick Mahomes',p:'QB',s:'football',i:'🏈',fc:9.3},
-  {n:'Josh Allen',p:'QB',s:'football',i:'🏈',fc:8.8},
-  {n:'Travis Kelce',p:'TE',s:'football',i:'🏈',fc:9.2},
-  {n:'Joe Burrow',p:'QB',s:'football',i:'🏈',fc:9.0},
-  {n:'Lamar Jackson',p:'QB',s:'football',i:'🏈',fc:9.2},
-  {n:'Justin Jefferson',p:'WR',s:'football',i:'🏈',fc:9.1},
-  {n:'JaMarcus Russell',p:'QB',s:'football',i:'🏈',fc:7.1},
-  // ── Men's Basketball
-  {n:'Steph Curry',p:'PG',s:'mens-basketball',i:'🏀',fc:9.10},
-  {n:'LeBron James',p:'SF',s:'mens-basketball',i:'🏀',fc:9.6},
-  {n:'Nikola Jokic',p:'C',s:'mens-basketball',i:'🏀',fc:8.8},
-  {n:'Victor Wembanyama',p:'C',s:'mens-basketball',i:'🏀',fc:9.5},
-  {n:'Giannis Antetokounmpo',p:'PF',s:'mens-basketball',i:'🏀',fc:9.3},
-  {n:'Luka Doncic',p:'PG',s:'mens-basketball',i:'🏀',fc:9.2},
-  {n:'Jaylen Brunson',p:'PG',s:'mens-basketball',i:'🏀',fc:8.8},
-  {n:'Darryn Peterson',p:'PG',s:'mens-basketball',i:'🏀',fc:9.1},
-  {n:'AJ Dybantsa',p:'SF',s:'mens-basketball',i:'🏀',fc:9.0},
-  {n:'Cameron Boozer',p:'PF',s:'mens-basketball',i:'🏀',fc:9.1},
-  {n:'Nate Ament',p:'F',s:'mens-basketball',i:'🏀',fc:8.8},
-  {n:'Mikel Brown Jr.',p:'G',s:'mens-basketball',i:'🏀',fc:8.9},
-  {n:'Tre Johnson',p:'G',s:'mens-basketball',i:'🏀',fc:8.7},
-  {n:'Khaman Maluach',p:'C',s:'mens-basketball',i:'🏀',fc:8.7},
-  {n:'Kon Knueppel',p:'G',s:'mens-basketball',i:'🏀',fc:8.5},
-  {n:'Jared McCain',p:'G',s:'mens-basketball',i:'🏀',fc:8.5},
-  // ── Women's Basketball
-  {n:'Paige Bueckers',p:'PG',s:'womens-basketball',i:'🏀',fc:9.1},
-  {n:'Breanna Stewart',p:'PF',s:'womens-basketball',i:'🏀',fc:9.4},
-  {n:'Angel Reese',p:'PF',s:'womens-basketball',i:'🏀',fc:8.7},
-  {n:'Sabrina Ionescu',p:'PG',s:'womens-basketball',i:'🏀',fc:8.9},
-  // ── Baseball
-  {n:'Paul Skenes',p:'SP',s:'baseball',i:'⚾',fc:9.2},
-  {n:'Shohei Ohtani',p:'DH/SP',s:'baseball',i:'⚾',fc:9.6},
-  {n:'Aaron Judge',p:'RF',s:'baseball',i:'⚾',fc:9.2},
-  {n:'Mike Trout',p:'CF',s:'baseball',i:'⚾',fc:9.4},
-  // ── Women's Volleyball
-  {n:'Harper Murray',p:'OH',s:'womens-volleyball',i:'🏐',fc:8.9},
-  {n:'Jordan Larson',p:'OH',s:'womens-volleyball',i:'🏐',fc:9.4},
-  {n:'Dana Rettke',p:'MB',s:'womens-volleyball',i:'🏐',fc:9.2},
-  {n:'Madisen Skinner',p:'OH',s:'womens-volleyball',i:'🏐',fc:9.3},
-  {n:'Lexi Rodriguez',p:'L',s:'womens-volleyball',i:'🏐',fc:9.1},
-];
-function resolveAthlete(query){
-  const q=(query||'').toLowerCase().trim();
-  if(!q)return null;
-  let m=FC_ATHLETES.find(a=>a.n.toLowerCase()===q);
-  if(m)return m;
-  m=FC_ATHLETES.find(a=>{const n=a.n.toLowerCase();return n.includes(q)||q.includes(n);});
-  if(m)return m;
-  const qLast=q.split(/\s+/).pop();
-  m=FC_ATHLETES.find(a=>{const parts=a.n.toLowerCase().split(/\s+/);const last=parts[parts.length-1];return last.startsWith(qLast)||qLast.startsWith(last);});
-  if(m)return m;
-  const qFirst=q.split(/\s+/)[0];
-  m=FC_ATHLETES.find(a=>a.n.toLowerCase().split(/\s+/)[0]===qFirst);
-  if(m)return m;
-  return null;
-}
-function runVerdict(){
-  var si=document.getElementById('srch'); if(!si)return;
-  var raw=si.value.trim(); if(!raw){si.focus();return;}
-  var matched=resolveAthlete(raw);
-  var name=matched?matched.n:raw;
-  var resolved=matched?matched.s:'';
-  var url='/fieldcheck-verdict.html?q='+encodeURIComponent(name);
-  if(resolved)url+='&sport='+encodeURIComponent(resolved);
-  window.location.href=url;
-}
-document.addEventListener('keydown',function(e){var si=document.getElementById('srch');if(e.key==='/'&&si&&document.activeElement!==si){e.preventDefault();si.focus();si.select();}});
-</script>
 </body>
 </html>
