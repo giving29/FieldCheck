@@ -483,7 +483,7 @@ body::before{
     {n:'Tyran Stokes',      team:'NOTRE DAME HS \u00B7 F \u00B7 MEN\u2019S BASKETBALL \u00B7 17', num:'7.40', tier:'ELITE', sp:'bball', r:[.70,.72,.82,.80,.78,.68,.74,.80]}
   ];
 
-  var BEAT=820, EDGE=560, CYCLE=13000;
+  var DRAW=3600, CYCLE=10000;
 
   function typeAsk(){
     var ask=document.getElementById('ask'); if(!ask)return;
@@ -535,14 +535,13 @@ body::before{
     timers.push(setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); }, 760));
   }
   function beat(idx, verts, cum, total, L, A){
-    path.style.strokeDashoffset = (total - cum[idx]);
     beads[idx].style.opacity=1;
     pulse(verts[idx][0], verts[idx][1]);
     labels[idx].setAttribute('class','flabel lit');
     spokes[idx].style.stroke='#D4A24C'; spokes[idx].style.strokeOpacity='.42';
     (function(j){ timers.push(setTimeout(function(){
       labels[j].setAttribute('class','flabel drawn'); spokes[j].style.strokeOpacity='.08';
-    }, EDGE+140)); })(idx);
+    }, 380)); })(idx);
     ruName.textContent=L[idx];
     ruVal.textContent=(A.r[idx]*10).toFixed(1);
     ruName.style.opacity='1'; ruVal.style.opacity='1';
@@ -561,9 +560,9 @@ body::before{
     for(var m=0;m<8;m++){ beads[m].setAttribute('cx',verts[m][0].toFixed(1)); beads[m].setAttribute('cy',verts[m][1].toFixed(1)); beads[m].style.opacity=0; labels[m].setAttribute('class','flabel'); labels[m].textContent=L[m]; spokes[m].style.strokeOpacity='.08'; spokes[m].style.stroke=''; }
     ruName.style.opacity='0'; ruVal.style.opacity='0';
     void svg.getBoundingClientRect();
-    path.style.transition='stroke-dashoffset '+EDGE+'ms linear';
-    for(var k=0;k<8;k++){ (function(idx){ timers.push(setTimeout(function(){ beat(idx,verts,cum,total,L,A); }, idx*BEAT)); })(k); }
-    timers.push(setTimeout(function(){ path.style.strokeDashoffset=0; }, 8*BEAT));
+    path.style.transition='stroke-dashoffset '+DRAW+'ms linear';
+    path.style.strokeDashoffset=0;
+    for(var k=0;k<8;k++){ (function(idx){ timers.push(setTimeout(function(){ beat(idx,verts,cum,total,L,A); }, Math.round((cum[idx]/total)*DRAW))); })(k); }
     timers.push(setTimeout(function(){
       path.style.transition='fill-opacity .6s ease'; path.style.fillOpacity=0.12;
       ruName.style.opacity='0'; ruVal.style.opacity='0';
@@ -574,7 +573,7 @@ body::before{
       var col=(A.tier.indexOf('ELITE+')===0)?'#9DBE92':'#D4A24C'; tier.style.borderColor=col; tier.style.color=col;
       cardEl.classList.add('on');
       if(!asked){ asked=true; timers.push(setTimeout(typeAsk,450)); }
-    }, 8*BEAT+EDGE+200));
+    }, DRAW+200));
   }
   function nextA(){
     var ni; do{ ni=Math.floor(Math.random()*POLY.length); }while(ni===cur && POLY.length>1); cur=ni;
