@@ -514,6 +514,7 @@ body::before{
     svg.appendChild(t); labels.push(t);
   }
 
+  var DRAW=3000;
   var cardEl=document.getElementById('card'), cur=-1, asked=false;
   function draw(A){
     var L=LBL[A.sp]||LBL.bball;
@@ -527,8 +528,8 @@ body::before{
     for(var m=0;m<8;m++){ beads[m].setAttribute('cx',verts[m][0].toFixed(1)); beads[m].setAttribute('cy',verts[m][1].toFixed(1)); beads[m].style.opacity=0; }
     void svg.getBoundingClientRect();
     requestAnimationFrame(function(){
-      path.style.transition='stroke-dashoffset 1.2s ease'; path.style.strokeDashoffset=0;
-      for(var p=0;p<8;p++){ (function(idx){ setTimeout(function(){ beads[idx].style.opacity=1; }, 150+idx*110); })(p); }
+      path.style.transition='stroke-dashoffset '+DRAW+'ms ease-in-out'; path.style.strokeDashoffset=0;
+      for(var p=0;p<8;p++){ (function(idx){ setTimeout(function(){ beads[idx].style.opacity=1; }, 200+idx*(DRAW/8)); })(p); }
       setTimeout(function(){
         path.style.fillOpacity=0.12;
         document.getElementById('vName').textContent=A.n;
@@ -538,7 +539,7 @@ body::before{
         var col=(A.tier.indexOf('ELITE+')===0)?'#9DBE92':'#D4A24C'; tier.style.borderColor=col; tier.style.color=col;
         cardEl.classList.add('on');
         if(!asked){ asked=true; setTimeout(typeAsk,400); }
-      }, 1250);
+      }, DRAW+200);
     });
   }
   function nextA(){
@@ -547,7 +548,7 @@ body::before{
     setTimeout(function(){ draw(POLY[cur]); }, 380);
   }
   nextA();
-  setInterval(nextA, 16000);
+  setInterval(nextA, 8000);
 })();
 
 /* ===== Search + autocomplete (real resolver preserved) ===== */
