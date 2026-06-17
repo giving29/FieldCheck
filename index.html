@@ -312,7 +312,6 @@ body::before{
   #ephero .search svg{flex:none;opacity:.65}
   #ephero .search input{flex:1;background:none;border:none;outline:none;color:var(--cream);font-family:'Playfair Display',serif;font-size:17px;font-style:italic}
   #ephero .search input::placeholder{color:var(--muted);font-style:italic;opacity:1}
-  /* autocomplete */
   #ephero .ac{position:absolute;top:calc(100% + 9px);left:0;right:0;background:var(--bg-soft);border:1px solid var(--line);border-radius:18px;overflow:hidden;z-index:40;display:none;text-align:left;box-shadow:0 24px 70px -24px rgba(0,0,0,.92)}
   #ephero .ac.open{display:block}
   #ephero .ac-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase;padding:14px 20px 6px}
@@ -322,17 +321,20 @@ body::before{
   #ephero .ac-name{font-family:'Playfair Display',serif;font-size:16.5px;color:var(--cream);flex:none}
   #ephero .ac-detail{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;flex:1}
   #ephero .ac-score{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold)}
-  /* verdict / polygon */
   #ephero .verdict{position:relative;z-index:5;display:flex;align-items:center;justify-content:center;gap:54px;margin-top:38px;width:min(760px,95vw)}
   #ephero .vz-poly{flex:none}
   #ephero .vz-poly svg{overflow:visible;display:block}
-  #ephero .ring{fill:none;stroke:var(--gold);stroke-opacity:.13;stroke-width:1}
-  #ephero .spoke{stroke:var(--gold);stroke-opacity:.09;stroke-width:1}
-  #ephero .shape{fill:var(--gold);fill-opacity:0;stroke:var(--gold);stroke-opacity:.95;stroke-width:1.7;stroke-linejoin:round}
+  #ephero .ring{fill:none;stroke:var(--gold);stroke-opacity:.12;stroke-width:1}
+  #ephero .spoke{stroke:var(--gold);stroke-opacity:.08;stroke-width:1;transition:stroke-opacity .35s ease, stroke .35s ease}
+  #ephero .shape{fill:var(--gold);fill-opacity:0;stroke:var(--gold);stroke-opacity:.95;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
   #ephero .bead{fill:var(--gold-bright);opacity:0;transition:opacity .3s ease}
-  #ephero .flabel{font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.7px;fill:rgba(245,241,232,.6);text-transform:uppercase}
+  #ephero .flabel{font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.7px;fill:rgba(245,241,232,.28);text-transform:uppercase;transition:fill .35s ease}
+  #ephero .flabel.lit{fill:var(--gold-bright)}
+  #ephero .flabel.drawn{fill:rgba(245,241,232,.66)}
+  #ephero .ru-name{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:1.6px;fill:rgba(245,241,232,.55);opacity:0;transition:opacity .22s ease}
+  #ephero .ru-val{font-family:'Playfair Display',serif;font-size:30px;font-weight:600;fill:var(--gold);opacity:0;transition:opacity .22s ease}
   #ephero .vz-meta{flex:none;text-align:left}
-  #ephero .vz-card{opacity:0;transition:opacity .4s ease}
+  #ephero .vz-card{opacity:0;transition:opacity .45s ease}
   #ephero .vz-card.on{opacity:1}
   #ephero .vz-name{font-family:'Playfair Display',serif;font-size:34px;font-weight:600;color:var(--cream);line-height:1.06}
   #ephero .vz-team{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-top:11px}
@@ -444,7 +446,7 @@ body::before{
 </footer>
 
 <script>
-/* ===== EpicDev hero: cycling cross-sport showcase + autocomplete ===== */
+/* ===== EpicDev hero: facet-by-facet dramatic build + autocomplete ===== */
 (function(){
   var LBL={
     bball:['CLOSER DNA','MINDSET','ATHLETICISM','TALENT','LENGTH','COURT IQ','COACHABILITY','COMPETE'],
@@ -453,7 +455,6 @@ body::before{
     tennis:['CLUTCH','MINDSET','ATHLETICISM','SHOT-MAKING','MOVEMENT','COURT IQ','ADAPTABILITY','COMPETE'],
     baseball:['CLUTCH','MINDSET','ATHLETICISM','TOOLS','DURABILITY','BASEBALL IQ','DISCIPLINE','COMPETE']
   };
-  // Display values — placeholders, Tenet-57 clean (>9 only for HOF-locks/legends).
   var POLY=[
     {n:'Stephen Curry',     team:'GOLDEN STATE WARRIORS \u00B7 G \u00B7 NBA \u00B7 38', num:'9.40', tier:'ELITE+', sp:'bball',    r:[.97,.96,.74,.99,.56,.97,.92,.95]},
     {n:'Lionel Messi',      team:'INTER MIAMI \u00B7 F \u00B7 MLS \u00B7 38',          num:'9.70', tier:'ELITE+', sp:'soccer',   r:[.96,.96,.78,.99,.62,.99,.99,.95]},
@@ -482,6 +483,8 @@ body::before{
     {n:'Tyran Stokes',      team:'NOTRE DAME HS \u00B7 F \u00B7 MEN\u2019S BASKETBALL \u00B7 17', num:'7.40', tier:'ELITE', sp:'bball', r:[.70,.72,.82,.80,.78,.68,.74,.80]}
   ];
 
+  var BEAT=820, EDGE=560, CYCLE=13000;
+
   function typeAsk(){
     var ask=document.getElementById('ask'); if(!ask)return;
     var txt='What\u2019s your polygon?';
@@ -495,6 +498,7 @@ body::before{
   function ang(i){ return (-90+i*45)*Math.PI/180; }
   function pt(rad,i){ var a=ang(i); return [CX+rad*Math.cos(a), CY+rad*Math.sin(a)]; }
   function octa(rad){ var p=[]; for(var i=0;i<8;i++){ var q=pt(rad,i); p.push(q[0].toFixed(1)+','+q[1].toFixed(1)); } return p.join(' '); }
+  function dist(a,b){ var dx=a[0]-b[0], dy=a[1]-b[1]; return Math.sqrt(dx*dx+dy*dy); }
 
   var defs=document.createElementNS(ns,'defs');
   var rg=document.createElementNS(ns,'radialGradient'); rg.setAttribute('id','vg');
@@ -503,52 +507,82 @@ body::before{
   rg.appendChild(s1); rg.appendChild(s2); defs.appendChild(rg); svg.appendChild(defs);
   var glow=document.createElementNS(ns,'circle'); glow.setAttribute('cx',CX); glow.setAttribute('cy',CY); glow.setAttribute('r',R*0.72); glow.setAttribute('fill','url(#vg)'); svg.appendChild(glow);
   [0.4,0.7,1.0].forEach(function(f){ var rr=document.createElementNS(ns,'polygon'); rr.setAttribute('points',octa(R*f)); rr.setAttribute('class','ring'); svg.appendChild(rr); });
-  for(var i=0;i<8;i++){ var q=pt(R,i); var ln=document.createElementNS(ns,'line'); ln.setAttribute('x1',CX); ln.setAttribute('y1',CY); ln.setAttribute('x2',q[0].toFixed(1)); ln.setAttribute('y2',q[1].toFixed(1)); ln.setAttribute('class','spoke'); svg.appendChild(ln); }
+  var spokes=[];
+  for(var i=0;i<8;i++){ var q=pt(R,i); var ln=document.createElementNS(ns,'line'); ln.setAttribute('x1',CX); ln.setAttribute('y1',CY); ln.setAttribute('x2',q[0].toFixed(1)); ln.setAttribute('y2',q[1].toFixed(1)); ln.setAttribute('class','spoke'); svg.appendChild(ln); spokes.push(ln); }
   var path=document.createElementNS(ns,'path'); path.setAttribute('class','shape'); svg.appendChild(path);
   var beads=[], labels=[];
   for(var k=0;k<8;k++){
-    var b=document.createElementNS(ns,'circle'); b.setAttribute('r','3'); b.setAttribute('class','bead'); svg.appendChild(b); beads.push(b);
+    var b=document.createElementNS(ns,'circle'); b.setAttribute('r','3.2'); b.setAttribute('class','bead'); svg.appendChild(b); beads.push(b);
     var lp=pt(LR,k); var t=document.createElementNS(ns,'text');
     t.setAttribute('x',lp[0].toFixed(1)); t.setAttribute('y',(lp[1]+2).toFixed(1)); t.setAttribute('class','flabel');
     var c=Math.cos(ang(k)); t.setAttribute('text-anchor', Math.abs(c)<0.25?'middle':(c>0?'start':'end'));
     svg.appendChild(t); labels.push(t);
   }
+  var ruName=document.createElementNS(ns,'text'); ruName.setAttribute('x',CX); ruName.setAttribute('y',CY-6); ruName.setAttribute('class','ru-name'); ruName.setAttribute('text-anchor','middle'); svg.appendChild(ruName);
+  var ruVal=document.createElementNS(ns,'text'); ruVal.setAttribute('x',CX); ruVal.setAttribute('y',CY+22); ruVal.setAttribute('class','ru-val'); ruVal.setAttribute('text-anchor','middle'); svg.appendChild(ruVal);
 
-  var DRAW=4500;
-  var cardEl=document.getElementById('card'), cur=-1, asked=false;
+  var cardEl=document.getElementById('card'), cur=-1, asked=false, timers=[];
+  function clearTimers(){ for(var i=0;i<timers.length;i++) clearTimeout(timers[i]); timers=[]; }
+  function pulse(x,y){
+    var c=document.createElementNS(ns,'circle');
+    c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r','9');
+    c.setAttribute('fill','none'); c.setAttribute('stroke','#E4B86A'); c.setAttribute('stroke-width','1.4');
+    c.style.transformBox='fill-box'; c.style.transformOrigin='center';
+    c.style.transform='scale(.2)'; c.style.opacity='.9';
+    c.style.transition='transform .65s ease-out, opacity .65s ease-out';
+    svg.appendChild(c);
+    requestAnimationFrame(function(){ c.style.transform='scale(1.7)'; c.style.opacity='0'; });
+    timers.push(setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); }, 760));
+  }
+  function beat(idx, verts, cum, total, L, A){
+    path.style.strokeDashoffset = (total - cum[idx]);
+    beads[idx].style.opacity=1;
+    pulse(verts[idx][0], verts[idx][1]);
+    labels[idx].setAttribute('class','flabel lit');
+    spokes[idx].style.stroke='#D4A24C'; spokes[idx].style.strokeOpacity='.42';
+    (function(j){ timers.push(setTimeout(function(){
+      labels[j].setAttribute('class','flabel drawn'); spokes[j].style.strokeOpacity='.08';
+    }, EDGE+140)); })(idx);
+    ruName.textContent=L[idx];
+    ruVal.textContent=(A.r[idx]*10).toFixed(1);
+    ruName.style.opacity='1'; ruVal.style.opacity='1';
+  }
   function draw(A){
+    clearTimers();
     var L=LBL[A.sp]||LBL.bball;
-    for(var k=0;k<8;k++){ labels[k].textContent=L[k]; }
     var verts=[], d='';
     for(var j=0;j<8;j++){ var v=pt(R*A.r[j],j); verts.push(v); d+=(j===0?'M':'L')+v[0].toFixed(1)+' '+v[1].toFixed(1)+' '; }
     d+='Z';
     path.setAttribute('d',d);
-    var len=path.getTotalLength();
-    path.style.transition='none'; path.style.strokeDasharray=len; path.style.strokeDashoffset=len; path.style.fillOpacity=0;
-    for(var m=0;m<8;m++){ beads[m].setAttribute('cx',verts[m][0].toFixed(1)); beads[m].setAttribute('cy',verts[m][1].toFixed(1)); beads[m].style.opacity=0; }
+    var total=path.getTotalLength();
+    var cum=[0];
+    for(var c=1;c<8;c++){ cum[c]=cum[c-1]+dist(verts[c-1],verts[c]); }
+    path.style.transition='none'; path.style.strokeDasharray=total; path.style.strokeDashoffset=total; path.style.fillOpacity=0;
+    for(var m=0;m<8;m++){ beads[m].setAttribute('cx',verts[m][0].toFixed(1)); beads[m].setAttribute('cy',verts[m][1].toFixed(1)); beads[m].style.opacity=0; labels[m].setAttribute('class','flabel'); labels[m].textContent=L[m]; spokes[m].style.strokeOpacity='.08'; spokes[m].style.stroke=''; }
+    ruName.style.opacity='0'; ruVal.style.opacity='0';
     void svg.getBoundingClientRect();
-    requestAnimationFrame(function(){
-      path.style.transition='stroke-dashoffset '+DRAW+'ms ease-in-out'; path.style.strokeDashoffset=0;
-      for(var p=0;p<8;p++){ (function(idx){ setTimeout(function(){ beads[idx].style.opacity=1; }, 200+idx*(DRAW/8)); })(p); }
-      setTimeout(function(){
-        path.style.fillOpacity=0.12;
-        document.getElementById('vName').textContent=A.n;
-        document.getElementById('vTeam').textContent=A.team;
-        document.getElementById('vNum').textContent=A.num;
-        var tier=document.getElementById('vTier'); tier.textContent=A.tier;
-        var col=(A.tier.indexOf('ELITE+')===0)?'#9DBE92':'#D4A24C'; tier.style.borderColor=col; tier.style.color=col;
-        cardEl.classList.add('on');
-        if(!asked){ asked=true; setTimeout(typeAsk,400); }
-      }, DRAW+200);
-    });
+    path.style.transition='stroke-dashoffset '+EDGE+'ms linear';
+    for(var k=0;k<8;k++){ (function(idx){ timers.push(setTimeout(function(){ beat(idx,verts,cum,total,L,A); }, idx*BEAT)); })(k); }
+    timers.push(setTimeout(function(){ path.style.strokeDashoffset=0; }, 8*BEAT));
+    timers.push(setTimeout(function(){
+      path.style.transition='fill-opacity .6s ease'; path.style.fillOpacity=0.12;
+      ruName.style.opacity='0'; ruVal.style.opacity='0';
+      document.getElementById('vName').textContent=A.n;
+      document.getElementById('vTeam').textContent=A.team;
+      document.getElementById('vNum').textContent=A.num;
+      var tier=document.getElementById('vTier'); tier.textContent=A.tier;
+      var col=(A.tier.indexOf('ELITE+')===0)?'#9DBE92':'#D4A24C'; tier.style.borderColor=col; tier.style.color=col;
+      cardEl.classList.add('on');
+      if(!asked){ asked=true; timers.push(setTimeout(typeAsk,450)); }
+    }, 8*BEAT+EDGE+200));
   }
   function nextA(){
     var ni; do{ ni=Math.floor(Math.random()*POLY.length); }while(ni===cur && POLY.length>1); cur=ni;
     cardEl.classList.remove('on');
-    setTimeout(function(){ draw(POLY[cur]); }, 380);
+    timers.push(setTimeout(function(){ draw(POLY[cur]); }, 480));
   }
   nextA();
-  setInterval(nextA, 8000);
+  setInterval(nextA, CYCLE);
 })();
 
 /* ===== Search + autocomplete (real resolver preserved) ===== */
