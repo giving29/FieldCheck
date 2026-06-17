@@ -564,6 +564,42 @@ force = false
 [redirects.headers]
 
 [[redirects]]
+from = "/deck-master"
+to = "/deck-master.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/deck-kevin"
+to = "/deck-kevin.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/deck-arjun"
+to = "/deck-arjun.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
 from = "/*"
 to = "/index.html"
 status = 200.0

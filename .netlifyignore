@@ -1,0 +1,16 @@
+freezes/
+backups/
+node_modules/
+.git/
+fc-batch-test-results-v2/
+frontend-60-crawled-1735/
+frontend-broken-1711/
+functions-internal/
+*.tar.gz
+*.bak
+worker.js
+worker.finepass.js
+worker.js.*
+*.replaced.*
+*.pre-*
+.DS_Store
