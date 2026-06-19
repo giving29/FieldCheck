@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOVB · The League Intelligence Board · FieldCheck IQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Big+Shoulders+Display:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07060A; --bg1:#0F0E13; --card:#131119; --card2:#17141F;
+    --gold:#D4A24C; --goldl:rgba(212,162,76,.24); --goldd:rgba(212,162,76,.10);
+    --t1:#F5F1E8; --t2:rgba(245,241,232,.78); --t3:rgba(245,241,232,.5); --t4:rgba(245,241,232,.28);
+    --ge2:rgba(245,241,232,.10); --ge3:rgba(245,241,232,.06);
+    --moss:#6BAA5A; --red:#FF5C3A; --blue:#5AA9D4;
+    --mono:'JetBrains Mono',monospace; --disp:'Anton',sans-serif;
+    --bs:'Big Shoulders Display',sans-serif; --cg:'Cormorant Garamond',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--t1);font-family:var(--bs);
+    background-image:radial-gradient(circle at 18% -8%,rgba(212,162,76,.08),transparent 46%),radial-gradient(circle at 92% 4%,rgba(90,169,212,.045),transparent 40%);
+    -webkit-font-smoothing:antialiased;line-height:1.5;padding-bottom:90px}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+  a{color:inherit;text-decoration:none}
+
+  /* masthead */
+  header{padding:54px 0 30px;border-bottom:1px solid var(--ge2)}
+  .brandrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:34px}
+  .fc-mark{font-family:var(--mono);font-size:12px;letter-spacing:.32em;color:var(--gold);font-weight:700;text-transform:uppercase}
+  .fc-mark .x{color:var(--t3)}
+  .live{font-family:var(--mono);font-size:10px;letter-spacing:.22em;color:var(--moss);
+    border:1px solid rgba(107,170,90,.4);border-radius:999px;padding:5px 11px;text-transform:uppercase}
+  .live::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--moss);margin-right:7px;vertical-align:middle;box-shadow:0 0 8px var(--moss)}
+  .kicker{font-family:var(--mono);font-size:13px;letter-spacing:.3em;color:var(--t3);text-transform:uppercase;margin-bottom:8px}
+  h1{font-family:var(--disp);font-size:clamp(44px,8vw,100px);line-height:.9;letter-spacing:-.01em;text-transform:uppercase}
+  h1 .b{color:var(--gold)}
+  .tag{font-family:var(--cg);font-style:italic;font-size:clamp(19px,2.4vw,27px);color:var(--t2);margin-top:20px;max-width:820px;line-height:1.35}
+  .tag b{color:var(--gold);font-style:normal;font-weight:600}
+
+  /* doctrine: MLB vs FC */
+  .doctrine{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ge2);border:1px solid var(--ge2);border-radius:16px;overflow:hidden;margin:40px 0 6px}
+  @media(max-width:720px){.doctrine{grid-template-columns:1fr}}
+  .doc{padding:26px 28px}
+  .doc.them{background:var(--bg1)}
+  .doc.us{background:linear-gradient(155deg,#1a1626,#110f18 70%);position:relative}
+  .doc .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+  .doc.them .lbl{color:var(--t3)} .doc.us .lbl{color:var(--gold)}
+  .doc h3{font-family:var(--disp);font-size:22px;text-transform:uppercase;margin-bottom:10px;line-height:1}
+  .doc.them h3{color:var(--t2)} .doc.us h3{color:var(--t1)}
+  .doc p{font-size:14px;line-height:1.5}
+  .doc.them p{color:var(--t3)} .doc.us p{color:var(--t2)}
+  .doc.us p b{color:var(--gold);font-weight:600}
+  .doc ul{list-style:none;margin-top:12px}
+  .doc li{font-size:12.5px;padding-left:18px;position:relative;margin-bottom:6px;line-height:1.4}
+  .doc.them li{color:var(--t3)} .doc.them li::before{content:"–";position:absolute;left:0;color:var(--t4)}
+  .doc.us li{color:var(--t1)} .doc.us li::before{content:"+";position:absolute;left:0;color:var(--moss);font-weight:700}
+
+  /* section label */
+  .seclabel{display:flex;align-items:baseline;gap:16px;margin:54px 0 22px;flex-wrap:wrap}
+  .seclabel .n{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.2em}
+  .seclabel h2{font-family:var(--disp);font-size:26px;text-transform:uppercase;letter-spacing:.01em}
+  .seclabel .sub{font-family:var(--cg);font-style:italic;font-size:18px;color:var(--t3)}
+
+  /* club grid */
+  .clubs{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:780px){.clubs{grid-template-columns:1fr}}
+  .club{position:relative;background:var(--card);border:1px solid var(--ge2);border-radius:16px;padding:24px 26px;overflow:hidden;transition:.25s}
+  .club:hover{transform:translateY(-3px);border-color:var(--goldl);box-shadow:0 26px 54px -36px rgba(212,162,76,.5)}
+  .club.flag{background:linear-gradient(155deg,#1a1626,#110f18 65%);border-color:var(--goldl)}
+  .club .seq{position:absolute;top:18px;right:22px;font-family:var(--disp);font-size:48px;color:var(--ge2);line-height:1}
+  .club.flag .seq{color:rgba(212,162,76,.28)}
+  .club .ch{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+  .club h3{font-family:var(--disp);font-size:28px;text-transform:uppercase;line-height:.95}
+  .club .rec{font-family:var(--mono);font-size:11px;color:var(--t3);letter-spacing:.06em;margin-bottom:14px}
+  .club .rec b{color:var(--gold)}
+  .badge{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:4px 9px;border-radius:999px;white-space:nowrap}
+  .badge.crown{color:var(--gold);background:var(--goldd);border:1px solid var(--goldl)}
+  .stars{list-style:none;margin-bottom:16px}
+  .stars li{font-size:13.5px;color:var(--t2);line-height:1.55;padding-left:15px;position:relative;margin-bottom:3px}
+  .stars li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.7}
+  .stars li b{color:var(--t1);font-weight:700}
+  .status{border-top:1px solid var(--ge3);padding-top:13px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .status .sl{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
+  .pill{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:5px 11px;border-radius:999px;font-weight:700}
+  .pill.now{color:var(--moss);background:rgba(107,170,90,.12);border:1px solid rgba(107,170,90,.4)}
+  .pill.next{color:var(--gold);background:var(--goldd);border:1px solid var(--goldl)}
+  .pill.q{color:var(--t3);background:var(--ge3);border:1px solid var(--ge2)}
+  .reason{font-family:var(--cg);font-style:italic;font-size:14.5px;color:var(--t3);margin-top:11px;line-height:1.4}
+  .topbar{position:absolute;top:0;left:0;right:0;height:3px}
+  .topbar.now{background:linear-gradient(90deg,var(--moss),transparent)}
+  .topbar.next{background:linear-gradient(90deg,var(--gold),transparent)}
+
+  /* future tiers */
+  .tiers{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+  @media(max-width:780px){.tiers{grid-template-columns:1fr}}
+  .tier{background:var(--bg1);border:1px dashed var(--ge2);border-radius:16px;padding:24px 26px}
+  .tier .tk{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+  .tier h4{font-family:var(--disp);font-size:22px;text-transform:uppercase;margin-bottom:8px;color:var(--t1)}
+  .tier p{font-size:13.5px;color:var(--t3);line-height:1.5}
+  .tier p b{color:var(--t2)}
+
+  /* league elevation strip */
+  .elevate{margin-top:54px;border:1px solid var(--goldl);border-radius:18px;overflow:hidden;background:linear-gradient(155deg,#181423,#0e0c15 70%);position:relative}
+  .elevate::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 10%,rgba(212,162,76,.14),transparent 45%);pointer-events:none}
+  .elevate-in{padding:34px;position:relative;z-index:1}
+  .elevate .el-k{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+  .elevate h3{font-family:var(--disp);font-size:clamp(26px,4vw,40px);text-transform:uppercase;line-height:.98;margin-bottom:8px}
+  .elevate h3 .g{color:var(--gold)}
+  .elevate .lead{font-family:var(--cg);font-style:italic;font-size:19px;color:var(--t2);max-width:760px;margin-bottom:26px;line-height:1.4}
+  .el-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ge2);border:1px solid var(--ge2);border-radius:12px;overflow:hidden}
+  @media(max-width:760px){.el-grid{grid-template-columns:repeat(2,1fr)}}
+  .el-grid>div{background:rgba(10,9,14,.7);padding:20px 18px}
+  .el-grid .k{font-family:var(--bs);font-weight:900;font-size:14px;color:var(--t1);text-transform:uppercase;margin-bottom:7px}
+  .el-grid .v{font-size:12.5px;color:var(--t3);line-height:1.45}
+
+  .sig{margin-top:40px;text-align:center;font-family:var(--mono);font-size:10.5px;color:var(--t4);letter-spacing:.14em;line-height:2}
+  .sig b{color:var(--t3)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brandrow">
+      <div class="fc-mark">FieldCheck <span class="x">IQ</span> &nbsp;×&nbsp; LOVB</div>
+      <div class="live">All-in · Women's Volleyball</div>
+    </div>
+    <div class="kicker">League One Volleyball · 2026</div>
+    <h1>The League<br><span class="b">Intelligence Board</span></h1>
+    <p class="tag">Baseball tells you how hard he hits it. We tell you <b>who she is, why, and how far</b> —
+      for every player, on every club. This is how a league leaps a generation ahead.</p>
+
+    <div class="doctrine">
+      <div class="doc them">
+        <div class="lbl">The legacy model · MLB / Statcast</div>
+        <h3>The back of a baseball card</h3>
+        <p>Percentile sliders, exit velocity, expected stats. Rigorous — and built for a different era.</p>
+        <ul>
+          <li>Measures mechanics, not the person</li>
+          <li>Spotlights a handful of stars; the rest are stat lines</li>
+          <li>Needs a stats degree to read</li>
+          <li>A snapshot of now — no trajectory, no proof</li>
+        </ul>
+      </div>
+      <div class="doc us">
+        <div class="lbl">The new model · FieldCheck IQ</div>
+        <h3>The story, told like never before</h3>
+        <p>Every number grounded in the engine — then wrapped in <b>identity, trajectory, and proof</b> a fan feels instantly.</p>
+        <ul>
+          <li>An identity: she's <b>The Closer</b>, and here's why</li>
+          <li>Every player on every roster, not just the stars</li>
+          <li>Plain meaning — no literacy required</li>
+          <li>A signed call and the receipt that it cashed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="seclabel">
+    <span class="n">01</span>
+    <h2>Six Clubs · The Build Sequence</h2>
+    <span class="sub">— ordered by marquee impact · each fine-tuned on real data</span>
+  </div>
+
+  <div class="clubs" id="clubs"></div>
+
+  <div class="seclabel">
+    <span class="n">02</span>
+    <h2>The Pipeline Beyond Pro</h2>
+    <span class="sub">— where the league grows next</span>
+  </div>
+
+  <div class="tiers">
+    <div class="tier">
+      <div class="tk">2027 · Expansion</div>
+      <h4>Minnesota &amp; San Francisco</h4>
+      <p>Two new clubs join the league. <b>Every founding athlete arrives with a FieldCheck identity on day one</b> — the launch is the showcase.</p>
+    </div>
+    <div class="tier">
+      <div class="tk">The amateur tier · the dream</div>
+      <h4>22,000 Junior Athletes</h4>
+      <p>The trajectory engine for the next generation: <b>here's your shape now, here's where you want to go, here's exactly what it requires.</b> The thing that feeds the whole league.</p>
+    </div>
+  </div>
+
+  <!-- LEAGUE ELEVATION (point 6) -->
+  <div class="elevate">
+    <div class="elevate-in">
+      <div class="el-k">The bigger move · leveling up the league</div>
+      <h3>Showcasing the players <span class="g">is</span> how we elevate LOVB</h3>
+      <p class="lead">When every athlete is legible, every call is signed, and every telecast looks smarter than baseball's — LOVB becomes the most intelligently presented league in America. The player layer and the league layer are the same motion.</p>
+      <div class="el-grid">
+        <div><div class="k">Identity for all</div><div class="v">No anonymous roster spots. Every LOVB player is someone, with a shape and a story.</div></div>
+        <div><div class="k">The proof league</div><div class="v">Signed verdicts, verified outcomes. The only league that shows its calls and their receipts.</div></div>
+        <div><div class="k">Broadcast edge</div><div class="v">Graphics that out-class MLB's batting-average lower-thirds — predictive and validated, live.</div></div>
+        <div><div class="k">Discovery engine</div><div class="v">FC Top 100 across the league — the place talent gets seen, from junior to pro.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sig">
+    FIELDCHECK IQ &nbsp;·&nbsp; THE ATHLETIC INTELLIGENCE LAYER FOR VOLLEYBALL<br>
+    <b>BUILT FROM VERIFIABLE PUBLIC SOURCES · ONE CANONICAL SCALE · NO INVENTED NUMBERS · BUILT IN DAYS, NOT YEARS</b>
+  </div>
+
+</div>
+
+<script>
+/* verified public facts only · ordered by build sequence */
+const CLUBS=[
+ {seq:"01",name:"LOVB Austin",rec:"2026 · Back-to-Back Champions",crown:true,flag:true,
+  stars:["<b>Madisen Skinner</b> — OPP · LOVB Finals MVP, 3× NCAA champ","<b>Logan Eggleston</b> — OH · AVCA National POY (2022)","Carli Lloyd — S · Asjia O'Neal — MB · Molly McCage — MB"],
+  status:"now",pill:"LIVE · FINE-TUNED",
+  reason:"The proof. Champions, with the closer who anchors the whole thesis."},
+ {seq:"02",name:"LOVB Houston",rec:"2026 · #1 seed (13–7)",crown:false,flag:false,
+  stars:["<b>Jordan Thompson</b> — OPP · league-leading scorer (455 pts)","<b>Justine Wong-Orantes</b> — L · Olympic libero","Micha Hancock — S · Jess Mruzik — OH"],
+  status:"next",pill:"NEXT",
+  reason:"The single biggest individual star in the league. Maximum broadcast pop."},
+ {seq:"03",name:"LOVB Nebraska",rec:"2026 · 10–10",crown:false,flag:false,
+  stars:["<b>Jordan Larson</b> — OH · four-time Olympian, living legend","<b>Kimberly Drewniok</b> — OPP (302 pts)","Tori Dixon — MB · Anne Buijs — 2× Olympian"],
+  status:"q",pill:"03 · QUEUED",
+  reason:"The legacy story — an icon, and the biggest fanbase in the sport."},
+ {seq:"04",name:"LOVB Atlanta",rec:"2026 · 2nd (11–9)",crown:false,flag:false,
+  stars:["<b>Kelsey Cook</b> — OH · reigning 2025 LOVB MVP","McKenzie Adams — OH of the Year","Eva Hudson — OH · Ella May Powell — S"],
+  status:"q",pill:"04 · QUEUED",
+  reason:"The MVP story — the league's most decorated returning star."},
+ {seq:"05",name:"LOVB Salt Lake",rec:"2026 · Finalist (golden set)",crown:false,flag:false,
+  stars:["<b>Jordyn Poulter</b> — S · Olympic gold medalist","<b>Haleigh Washington</b> — MB · Olympic","Manami Kojima — Libero of the Year · Alexa Gray (253 pts)"],
+  status:"q",pill:"05 · QUEUED",
+  reason:"The 'so close' + Team USA core. Heartbreak makes a story."},
+ {seq:"06",name:"LOVB Madison",rec:"2026 · 6–14",crown:false,flag:false,
+  stars:["<b>Lauren Carlini</b> — S · Setter of the Year, Olympic","<b>Xiangyu Gong</b> — Olympic gold medalist","Sarah Franklin — OH · Temi Thomas-Ailara (282 pts)"],
+  status:"q",pill:"06 · QUEUED",
+  reason:"The craft + rebuild story — elite talent, a climb to tell."}
+];
+const host=document.getElementById('clubs');
+CLUBS.forEach(c=>{
+  const el=document.createElement('div');
+  el.className='club'+(c.flag?' flag':'');
+  el.innerHTML=`
+    <div class="topbar ${c.status}"></div>
+    <div class="seq">${c.seq}</div>
+    <div class="ch"><h3>${c.name.replace('LOVB ','')}</h3>${c.crown?'<span class="badge crown">Champions</span>':''}</div>
+    <div class="rec">LOVB · ${c.rec.replace('2026 · ','<b>')}${c.rec.includes('2026')?'</b>':''}</div>
+    <ul class="stars">${c.stars.map(s=>`<li>${s}</li>`).join('')}</ul>
+    <div class="status">
+      <span class="sl">Build status</span>
+      <span class="pill ${c.status}">${c.pill}</span>
+    </div>
+    <div class="reason">${c.reason}</div>`;
+  host.appendChild(el);
+});
+</script>
+</body>
+</html>

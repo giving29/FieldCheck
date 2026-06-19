@@ -556,3 +556,51 @@ Born from the June-15 redirect day-loss. Every deploy follows this or it does no
 9. **Engine:** athlete spread — target moved + others held + HS still capped + values varied.
 10. **Never break what works** (Tenet 61): the proven HP/nav stays intact; additive + reversible only.
 11. Commit + `git push` ONLY after the gate passes. On fail: leave a one-line restore, do not push.
+
+
+---
+
+# TENET 62 · LIVE-BYTES-BEFORE-EDIT  (BINDING · Jun 19 2026)
+
+> Generalizes two painful loops into one rule.
+> **Jun 15 — /canonical:** deploys published but the live URL kept serving old "May 20" bytes; looped blind deploys against a file that wasn't being served. Banked lesson: "read SERVED bytes + ALL `_redirects` FIRST."
+> **Jun 19 — LOVB nav:** authored nav-injection anchors from a STALE workspace snapshot of `index.html`; the real repo file had moved on (new "More" link, new hero line) so every anchor missed. Compounded by checking the **dev** URL while the deploy targeted **prod**.
+>
+> **ONE root cause both times: edited and verified a COPY, not the live truth.**
+
+## Principle
+Never edit a copy. Establish the current bytes of the exact file — served and on-disk — *before* crafting an edit, and confirm the result on the exact surface you deployed to. A snapshot is for understanding architecture only; it is **never** a basis for exact-string edits.
+
+## The rule
+
+**62.1 · AUTHOR FROM LIVE BYTES.**
+Before building any anchor or substitution for a live file:
+- `web_fetch` the live **DEV** and **PROD** URL to see served bytes.
+- Read the real on-disk region (preflight `grep` echoed from the repo file).
+- Build anchors **only** from that confirmed-current text. If the snapshot and the live file disagree, the live file wins — always.
+
+**62.2 · ABORT-ON-MISS, NEVER WARN.**
+The patch must `grep`-verify the anchor exists in the real file, then:
+- present → exact match → apply (idempotent, backed up).
+- not found → **rollback + print the real region + STOP.** Never "warn and continue." A patch that can't confirm its target does not get to deploy.
+
+**62.3 · VERIFY ON THE DEPLOYED SURFACE.**
+Know each script's publish target and check there:
+- `fc-dev.sh` → `fieldcheck-dev--fieldcheck-app.netlify.app`
+- `fc-promote-home.sh` → `fieldcheck-app.netlify.app` (prod)
+Confirm the change renders on that exact URL (hard refresh), and check dev/prod parity intentionally — never assume one reflects the other. Report which URL was checked.
+
+## Enforcement — bake into every patch script
+1. PRE-READ — echo the real on-disk target region (no edit).
+2. ANCHOR-VERIFY — `grep -c` the exact anchor; `0` → abort before touching anything.
+3. BACKUP — timestamped `.bak`.
+4. APPLY — idempotent, anchored edit only.
+5. DIFF-GUARD — re-grep; confirm the new content is in AND nothing outside the intended region changed; mismatch → rollback.
+6. REGRESSION — key elements still present (title, nav block, hero, footer link counts).
+7. DEPLOY — named target, then GitHub sync (Tenet 61).
+8. POST-VERIFY — state the URL to open + hard-refresh; confirm render.
+
+## Assistant behavior change
+Claude `web_fetch`es the live dev/prod surface and reads the real on-disk region before authoring any live-file edit. `/tmp` / workspace snapshots are treated as architecture reference only, never as the edit source.
+
+*File: append to RELEASE_PLAYBOOK.md · log incident line in DECISIONS.md.*

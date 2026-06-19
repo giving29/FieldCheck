@@ -16,7 +16,7 @@ binding = "CLIP_BUCKET"
 bucket_name = "fieldcheck-clips-prod"
 
 [triggers]
-crons = ["*/30 * * * *", "0 9 * * 1"]
+crons = ["*/30 * * * *", "0 9 * * 1", "0 */2 * * *"]
 
 [observability]
 enabled = true

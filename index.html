@@ -359,7 +359,8 @@ body::before{
   <nav>
     <div class="nav-side left"><a href="/leaderboard">Leaderboard</a></div>
     <div class="nav-side right">
-      <a href="/fc_canonical_state_v1">How it works</a>
+      <a href="/lovb" style="color:var(--gold)">LOVB</a>
+      <a href="/methodology">How it works</a>
       <a href="/more">More</a>
       <a href="#">Register / Log in</a>
     </div>
@@ -437,7 +438,7 @@ body::before{
     <div>
       <div class="colophon-col-title">Company</div>
       <a href="/about" class="colophon-col-link">About</a>
-      <a href="/fc_canonical_state_v1" class="colophon-col-link">Methodology</a>
+      <a href="/methodology" class="colophon-col-link">Methodology</a>
       <a href="/nba-draft" class="colophon-col-link">NBA Draft call</a>
       <a href="/more" class="colophon-col-link">Explore everything</a>
     </div>
@@ -667,6 +668,7 @@ var _acd=document.getElementById('acDrop');
 function getSug(v){ if(!v||v.trim().length<1) return FC_ATHLETES.slice(0,8); var q=v.toLowerCase(); return FC_ATHLETES.filter(function(a){return a.n.toLowerCase().indexOf(q)>=0;}).slice(0,8); }
 function renderAC(v){
   if(!_acd)return;
+  if(!v||!v.trim()){ closeAC(); return; }
   acF=getSug(v);
   var label=(!v||!v.trim())?'<div class="ac-lbl">Popular athletes</div>':'';
   if(!acF.length){ closeAC(); return; }
