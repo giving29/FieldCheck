@@ -56,46 +56,14 @@ for qa in fc-qa-agent fc-jobs-qa fc-site-audit; do
   [ -f "$DL/$qa.sh" ] && { cp "$DL/$qa.sh" "$P/$qa.sh" && chmod +x "$P/$qa.sh" && ok "$qa.sh"; }
 done
 
-# ── WRITE CORRECT _REDIRECTS (always enforced) ──────────────
+# ── _REDIRECTS · preserve live routes, add dev-only /roadmap ──
 hdr "_REDIRECTS"
-cat > "$P/_redirects" << 'REDIRECTS'
-# FieldCheck IQ — specific routes BEFORE catch-all (always)
-/draft-intelligence       /fc-draft-intelligence.html       200
-/calibration              /fc-calibration.html              200
-/accuracy                 /fc-calibration.html              200
-/trajectory               /fieldcheck-trajectory.html       200
-/voice                    /fieldcheck-athlete-voice.html    200
-/add-me                   /fieldcheck-athlete-voice.html    200
-/accountability           /fieldcheck-accountability.html   200
-/nba-draft                /fieldcheck-nba-draft.html        200
-/benchmarks               /fieldcheck-benchmarks.html       200
-/coaches                  /for-coaches.html                 200
-/portal                   /fieldcheck-portal.html           200
-/compare                  /fieldcheck-compare.html          200
-/recruiting-class         /fieldcheck-recruiting-class.html 200
-/path                     /fieldcheck-path.html             200
-/about                    /fieldcheck-about.html            200
-/pro-probability          /fieldcheck-pro-probability.html  200
-/conference               /fieldcheck-conference.html       200
-/predictions              /PREDICTION_LEDGER_V1.html        200
-/roadmap                  /fieldcheck-roadmap.html          200
-/moat                     /index.html                       200
-/methodology              /METHODOLOGY_V17_V1.html          200
-/pricing                  /index.html                       200
-/lovb                     /index.html                       200
-/canonical                /FC_CANONICAL_STATE_V1.html        200
-/fc_canonical_state_v1    /FC_CANONICAL_STATE_V1.html        200
-/players                  /for-players.html                 200
-/franchises               /for-franchises.html              200
-/gems                     /fieldcheck-gems.html             200
-/video-iq                 /fieldcheck-video-iq.html         200
-/fit                      /fieldcheck-fit.html              200
-/class                    /fieldcheck-class.html            200
-/features                 /fieldcheck-features.html         200
-/field-report             /fieldcheck-field-report.html     200
-/*    /index.html    200
-REDIRECTS
-ok "_redirects enforced"
+[ -f "$P/_redirects" ] || fail "_redirects missing — refusing to deploy without routing"
+if ! grep -q '^/roadmap ' "$P/_redirects"; then
+  awk 'BEGIN{d=0} /^\/\*/ && d==0 {print "/roadmap                  /fieldcheck-roadmap.html          200"; d=1} {print}' "$P/_redirects" > "$P/_redirects.tmp"
+  mv "$P/_redirects.tmp" "$P/_redirects"
+fi
+ok "_redirects preserved (full live routes + dev-only /roadmap)"
 
 # ── SYNTAX CHECK ─────────────────────────────────────────────
 hdr "SYNTAX CHECK"
