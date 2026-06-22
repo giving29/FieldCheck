@@ -434,12 +434,11 @@ body::before{
         <div class="fmend" id="fmend"><div class="fmendpoly" id="fmendpoly"></div><div class="fmendcard" id="fmendcard"></div></div>
         <div class="fmnav" id="fmnav"><button class="prev" id="fmprev" aria-label="Previous player">&#8249;</button><button class="rep" id="fmrep" aria-label="Replay the film">&#9654; Replay</button><button class="next" id="fmnext" aria-label="Next player">&#8250;</button></div>
       </div>
-<!-- FCR3 A/B START -->
-<div style="margin-top:14px;border-top:1px dashed rgba(184,152,90,.4);padding-top:12px">
-  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#e6bd6f;margin-bottom:8px">▼ NEW · v3 reveal (A/B · sample data)</div>
-  <iframe src="/fc_reveal_anim_skinner_v3.html" title="FieldCheck Reveal v3" loading="lazy" style="width:100%;height:840px;border:1px solid rgba(184,152,90,.3);border-radius:14px;background:#0a0907"></iframe>
+<!-- FCR3 B START -->
+<div style="margin-top:14px">
+  <iframe id="fcr3frame" src="/fc_reveal_v4.html?p=Madisen%20Skinner" title="FieldCheck Read" loading="lazy" style="width:100%;height:880px;border:1px solid rgba(184,152,90,.3);border-radius:14px;background:#0a0907"></iframe>
 </div>
-<!-- FCR3 A/B END -->
+<!-- FCR3 B END -->
 
     </div>
   </div>
@@ -1681,8 +1680,8 @@ function verdict(n){return '/fieldcheck-verdict.html?q='+encodeURIComponent(n);}
     } else {
       modal.classList.remove('cta'); cta.style.display='none';
       var f=FX[c.n], tr=TRAJ[c.n];
-      if(f && tr){ mk.style.display=''; FCFilm.open(c,f,tr,i); }
-      else { mk.style.display='none'; }
+      mk.style.display='none'; FCFilm.stop();
+      var _fr=document.getElementById('fcr3frame'); if(_fr){ _fr.src='/fc_reveal_v4.html?p='+encodeURIComponent(c.n); }
       function tag(){ ovl.style.display='none'; }
       if(c.yt){ tag(); var cw=(c.st?('&start='+c.st):'')+(c.en?('&end='+c.en):''); stage.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+c.yt+'?autoplay=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&color=white&fs=1'+cw+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe><a class="ytlink" href="https://www.youtube.com/watch?v='+c.yt+'" target="_blank" rel="noopener">Watch on YouTube \u2197</a>'; }
       else if(c.src){ tag(); stage.innerHTML='<video src="'+c.src+'"'+(c.poster?' poster="'+c.poster+'"':'')+' controls autoplay playsinline></video>'; }
