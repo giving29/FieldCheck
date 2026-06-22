@@ -34786,6 +34786,33 @@ export default {
         }
       }
 
+      // FCFB1 - PUBLIC FEEDBACK FRONT DOOR - frictionless "this number is off".
+      // Minimal input by design: only the athlete is required. One-tap signal
+      // AND/OR a raw freeform/voice note. Agent-parse of the note is the next layer.
+      if (path === '/feedback' && request.method === 'POST') {
+        try {
+          const fb = await request.json().catch(() => ({}));
+          const fbName = (fb.athlete || fb.name || '').toString().trim();
+          const fbSlug = (fb.slug || fbName).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80);
+          if (!fbSlug) return json({ ok: false, error: 'athlete_or_slug_required' }, 400);
+          const fbId = `fb:${fbSlug}:${Date.now()}`;
+          const fbRecord = {
+            id: fbId, athlete: fbName || null, slug: fbSlug, sport: fb.sport || null,
+            signal: fb.signal || null,
+            suggested_number: (typeof fb.suggested_number === 'number') ? fb.suggested_number : null,
+            note: ((fb.note || fb.voice_transcript || '').toString().slice(0, 2000)) || null,
+            source: fb.source || 'public', received_at: new Date().toISOString()
+          };
+          if (env.FIELDCHECK_KV) await env.FIELDCHECK_KV.put(fbId, JSON.stringify(fbRecord), { expirationTtl: 86400 * 365 * 3 });
+          return json({ ok: true, id: fbId, slug: fbSlug });
+        } catch (e) {
+          return json({ ok: false, error: 'feedback_failed', detail: String(e).slice(0, 200) }, 500);
+        }
+      }
+      if (path === '/feedback/health' && request.method === 'GET') {
+        return json({ ok: true, service: 'feedback', ts: new Date().toISOString() });
+      }
+
       // v0.30: /elite-programs — curated marquee programs scored by 8-dim engine.
       // Returns programs in tier order. Hybrid: curated set + dynamic ELITE badges.
       // ?sport=football|mens-basketball|womens-basketball|baseball|mens-soccer|tennis|womens-volleyball|mens-volleyball
