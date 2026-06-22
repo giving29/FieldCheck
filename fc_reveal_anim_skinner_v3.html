@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FieldCheck Reads — Madisen Skinner · v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0a0907; --ink2:#13100b; --line:rgba(184,152,90,.18); --line2:rgba(184,152,90,.34);
+  --gold:#b8985a; --gold-b:#e6bd6f; --bone:#f0eadd; --muted:#9a9385;
+  --steel:#6b7480; --steel-b:#9aa3ae; --cg:'Fraunces',serif; --mono:'JetBrains Mono',monospace; --body:'Inter',sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(120% 100% at 50% 0%,#15120c 0%,var(--ink) 60%);color:var(--bone);font-family:var(--body);min-height:100vh}
+.shell{max-width:1000px;margin:0 auto;padding:18px 16px 70px}
+.reel{border:1px solid var(--line);border-radius:13px;background:linear-gradient(180deg,#1a1610,#0f0c08);aspect-ratio:21/7;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:8px}
+.reel:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,#15120c 0 40px,#171309 40px 80px);opacity:.6}
+.reel .tag{position:absolute;left:15px;top:11px;font-family:var(--mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);z-index:1}
+.reel .pl{width:54px;height:54px;border-radius:50%;border:1px solid var(--line2);background:rgba(184,152,90,.10);display:grid;place-items:center;color:var(--gold-b);z-index:1}
+.handoff{display:flex;align-items:center;gap:12px;color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:1.6px;text-transform:uppercase;margin:14px 2px 6px}
+.handoff .ln{height:1px;background:var(--line);flex:1}
+
+.stage{position:relative;border:1px solid var(--line);border-radius:16px;background:var(--ink2);overflow:hidden;perspective:1400px}
+.stage-top{display:flex;align-items:center;gap:12px;padding:15px 20px;border-bottom:1px solid var(--line);position:relative;z-index:6}
+.stage-top .nm{font-family:var(--cg);font-size:22px}
+.stage-top .po{color:var(--muted);font-size:12px;font-family:var(--mono);letter-spacing:.5px}
+.stage-top .chip{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:1.6px;text-transform:uppercase;border:1px solid var(--line2);color:var(--gold-b);padding:5px 10px;border-radius:999px}
+.moatbadge{position:absolute;right:16px;bottom:14px;font-family:var(--mono);font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);opacity:.5;z-index:4;pointer-events:none}
+svg{display:block;width:100%;height:auto}
+text{font-family:var(--mono)}
+.scene{opacity:0;transition:opacity .6s ease}
+.scene.on{opacity:1}
+.facetClick{cursor:pointer}
+.facetClick:hover{fill:#e6bd6f}
+
+.cap{position:absolute;left:0;right:0;bottom:0;padding:20px 24px 22px;background:linear-gradient(0deg,rgba(8,7,5,.94),transparent);font-family:var(--cg);font-size:20px;line-height:1.4;color:var(--bone);min-height:60px;display:flex;align-items:flex-end;z-index:3}
+.cap .beat{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-b);margin-right:14px;opacity:.9;white-space:nowrap}
+.cap span.t{opacity:0;transition:opacity .6s ease}
+.cap.show span.t{opacity:1}
+
+/* overlays (title / oldcard / sharecard / facetpanel) */
+.ov{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;opacity:0;pointer-events:none;transition:opacity .55s ease}
+.ov.on{opacity:1}
+.title{background:radial-gradient(120% 120% at 50% 40%,#16120b,#080705 80%)}
+.title .rule{width:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-bottom:26px;transition:width 1s ease .2s}
+.title.on .rule{width:240px}
+.title .kick{font-family:var(--mono);font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-b);margin-bottom:22px;opacity:0;transform:translateY(8px);transition:.6s ease .25s}
+.title.on .kick{opacity:.95;transform:none}
+.title .head{font-family:var(--cg);font-weight:500;font-size:clamp(26px,4.4vw,46px);line-height:1.18;letter-spacing:-.01em;max-width:18ch}
+.title .head .ln{display:block;opacity:0;transform:translateY(16px);transition:.7s cubic-bezier(.2,.7,.3,1)}
+.title.on .head .ln:nth-child(1){transition-delay:.45s}.title.on .head .ln:nth-child(2){transition-delay:.85s}
+.title.on .head .ln{opacity:1;transform:none}
+.title .head em{font-style:normal;color:var(--gold-b)}
+.title.on .head em{animation:flash 1.1s ease 1.2s both}
+
+/* OLD baseball card */
+.oldcard{background:radial-gradient(120% 120% at 50% 40%,#14110b,#070605 80%)}
+.oc-card{width:230px;border-radius:14px;padding:14px;background:linear-gradient(160deg,#211b12,#15110b);border:1px solid var(--line2);
+  box-shadow:0 30px 60px rgba(0,0,0,.5);transition:transform .8s cubic-bezier(.6,.1,.3,1),opacity .6s ease}
+.oldcard.leaving .oc-card{transform:rotateY(90deg) scale(.9);opacity:0}
+.oc-photo{aspect-ratio:1/1;border-radius:9px;background:repeating-linear-gradient(135deg,#2a2216 0 14px,#231c12 14px 28px);display:grid;place-items:center;color:#5c5345;font-family:var(--mono);font-size:10px;letter-spacing:1px;margin-bottom:12px;border:1px solid var(--line)}
+.oc-name{font-family:var(--cg);font-size:20px;color:var(--bone)}
+.oc-pos{font-family:var(--mono);font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.oc-stats{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px}
+.oc-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px}
+.oc-row .k{color:var(--muted)} .oc-row .v{color:var(--bone)}
+.oc-foot{margin-top:10px;font-family:var(--mono);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:#5c5345;text-align:center}
+.oldcard .occap{margin-top:30px;font-family:var(--cg);font-size:clamp(22px,3.6vw,34px);color:var(--bone);opacity:0;transition:.7s ease .6s}
+.oldcard.on .occap{opacity:1}
+.oldcard .occap em{font-style:normal;color:var(--muted)}
+
+/* SHARE card (the new artifact) */
+.sharecard{background:radial-gradient(120% 120% at 50% 35%,#17130c,#070605 82%)}
+.sc-kick{font-family:var(--mono);font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-b);margin-bottom:18px;opacity:0;transition:.5s .2s}
+.sharecard.on .sc-kick{opacity:.9}
+.sc-card{width:340px;max-width:88vw;border-radius:18px;padding:22px;background:linear-gradient(165deg,#1d1810,#120e08);border:1px solid var(--line2);box-shadow:0 40px 80px rgba(0,0,0,.55);opacity:0;transform:translateY(20px) scale(.96);transition:.8s cubic-bezier(.2,.8,.3,1.05) .35s}
+.sharecard.on .sc-card{opacity:1;transform:none}
+.sc-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.sc-poly{flex:0 0 70px}
+.sc-id .n{font-family:var(--cg);font-size:21px;line-height:1.1}
+.sc-id .m{font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.sc-score{margin-left:auto;text-align:right}
+.sc-score .big{font-family:var(--cg);font-size:40px;color:var(--gold-b);line-height:1}
+.sc-score .t{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--muted)}
+.sc-asym{border-top:1px solid var(--line);padding-top:14px;font-size:14px;color:var(--bone);text-align:left;line-height:1.45}
+.sc-asym b{color:var(--gold-b)}
+.sc-cta{margin-top:16px;display:flex;gap:10px}
+.sc-cta .b{flex:1;font-family:var(--mono);font-size:10px;letter-spacing:1.4px;text-transform:uppercase;border:1px solid var(--line2);color:var(--gold-b);padding:10px;border-radius:9px;text-align:center}
+.sc-cta .b.solid{background:var(--gold);color:#0a0907;border-color:var(--gold)}
+
+/* facet explore panel */
+.facetpanel{position:absolute;left:0;right:0;bottom:0;z-index:7;background:linear-gradient(0deg,#100c07,rgba(16,12,7,.96));border-top:1px solid var(--line2);
+  padding:20px 24px;transform:translateY(102%);transition:transform .45s cubic-bezier(.2,.8,.3,1);max-height:78%;overflow:auto}
+.facetpanel.on{transform:none}
+.fp-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.fp-top .fn{font-family:var(--cg);font-size:21px}
+.fp-top .fv{font-family:var(--cg);font-size:26px;color:var(--gold-b);margin-left:auto}
+.fp-top .x{cursor:pointer;color:var(--muted);font-family:var(--mono);font-size:18px;line-height:1}
+.fp-read{font-size:15px;line-height:1.5;color:var(--bone);margin:0 0 14px;max-width:64ch}
+.fp-moves{display:none}
+.fp-moves.show{display:block}
+.fp-moves .h{font-family:var(--mono);font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold-b);margin-bottom:8px}
+.fp-move{border-left:2px solid var(--gold);padding-left:12px;margin-bottom:8px;font-size:13.5px;color:var(--bone)}
+.fp-hint{position:absolute;left:50%;bottom:80px;transform:translateX(-50%);z-index:4;font-family:var(--mono);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold-b);background:rgba(16,12,7,.85);border:1px solid var(--line2);padding:8px 14px;border-radius:999px;opacity:0;transition:.4s;pointer-events:none}
+.fp-hint.on{opacity:1}
+
+.ctl{display:flex;align-items:center;gap:10px;padding:14px 6px 2px;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:11px;letter-spacing:1.3px;text-transform:uppercase;border:1px solid var(--line2);background:rgba(184,152,90,.08);color:var(--gold-b);padding:11px 16px;border-radius:999px;cursor:pointer}
+.btn.ghost{background:none;color:var(--muted);border-color:var(--line)}
+.beats{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;align-items:center}
+.beatdot{width:9px;height:9px;border-radius:50%;border:1px solid var(--line2);background:transparent;cursor:pointer;transition:.2s}
+.beatdot.title{transform:rotate(45deg);border-radius:1px}
+.beatdot.active{background:var(--gold-b);border-color:var(--gold-b);box-shadow:0 0 0 3px rgba(184,152,90,.18)}
+
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pop{0%{transform:scale(0);opacity:0}70%{transform:scale(1.18)}100%{transform:scale(1);opacity:1}}
+@keyframes ringfill{to{stroke-dashoffset:var(--off)}}
+@keyframes rise{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes flow{0%{offset-distance:0%;opacity:0}12%{opacity:1}88%{opacity:1}100%{offset-distance:100%;opacity:0}}
+@keyframes sweep{0%{transform:translateX(-120%)}100%{transform:translateX(360%)}}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.018)}}
+@keyframes flash{0%{filter:none;transform:scale(1)}28%{filter:drop-shadow(0 0 16px rgba(230,189,111,.95));transform:scale(1.22)}100%{filter:none;transform:scale(1)}}
+@keyframes pulseLine{0%,100%{opacity:.45;stroke-width:3}50%{opacity:1;stroke-width:5}}
+.flashable{transform-box:fill-box;transform-origin:center}
+
+.foot{margin-top:16px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:11.5px}
+.foot .sample{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#c9a24a;border:1px solid rgba(201,162,74,.4);background:rgba(201,162,74,.07);padding:3px 8px;border-radius:6px;margin-bottom:10px}
+.foot .mono{font-family:var(--mono)}
+:focus-visible{outline:2px solid var(--gold-b);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.scene,.ov,.facetpanel{transition:none}*{animation-duration:.001s!important}}
+@media (max-width:640px){.cap{font-size:16px;padding:16px}.stage-top .nm{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="reel" aria-hidden="true">
+    <span class="tag">LOVB reel · Women's Volleyball</span>
+    <span class="pl"><svg width="18" height="20" viewBox="0 0 18 20" fill="currentColor"><path d="M0 0l18 10L0 20z"/></svg></span>
+  </div>
+  <div class="handoff"><span>Below the reel</span><span class="ln"></span><span>FieldCheck reads the player</span></div>
+
+  <div class="stage">
+    <div class="stage-top">
+      <span class="nm">Madisen Skinner</span>
+      <span class="po">Women's Volleyball · Outside Hitter</span>
+      <span class="chip">STAR</span>
+    </div>
+
+    <svg id="canvas" viewBox="0 0 920 600" role="img" aria-label="Animated FieldCheck dissection">
+      <defs>
+        <linearGradient id="gGold" x1="0" x2="1"><stop offset="0" stop-color="#8a7038"/><stop offset="1" stop-color="#e6bd6f"/></linearGradient>
+        <radialGradient id="gGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="rgba(184,152,90,.28)"/><stop offset="100%" stop-color="rgba(184,152,90,0)"/></radialGradient>
+        <filter id="soft"><feGaussianBlur stdDeviation="2.4"/></filter>
+      </defs>
+      <g class="scene" id="s0"></g><g class="scene" id="s1"></g><g class="scene" id="s2"></g>
+      <g class="scene" id="s3"></g><g class="scene" id="s4"></g><g class="scene" id="s5"></g><g class="scene" id="s6"></g>
+    </svg>
+
+    <!-- OLD CARD overlay -->
+    <div class="ov oldcard" id="oldcard">
+      <div class="oc-card">
+        <div class="oc-photo">PHOTO</div>
+        <div class="oc-name">Madisen Skinner</div>
+        <div class="oc-pos">OH · Women's Volleyball</div>
+        <div class="oc-stats">
+          <div class="oc-row"><span class="k">Kills</span><span class="v">1,847</span></div>
+          <div class="oc-row"><span class="k">Hitting %</span><span class="v">.312</span></div>
+          <div class="oc-row"><span class="k">Aces</span><span class="v">96</span></div>
+          <div class="oc-row"><span class="k">Titles</span><span class="v">2×</span></div>
+        </div>
+        <div class="oc-foot">the box score</div>
+      </div>
+      <div class="occap">This is what everyone else shows you. <em>A stat line.</em></div>
+    </div>
+
+    <!-- TITLE overlay -->
+    <div class="ov title" id="title"><div class="rule"></div><div class="kick" id="tkick"></div><div class="head" id="thead"></div></div>
+
+    <!-- SHARE CARD overlay -->
+    <div class="ov sharecard" id="sharecard">
+      <div class="sc-kick">The new card · share the read</div>
+      <div class="sc-card">
+        <div class="sc-head">
+          <svg class="sc-poly" viewBox="0 0 80 80" id="scPoly"></svg>
+          <div class="sc-id"><div class="n">Madisen Skinner</div><div class="m">WVB · Outside Hitter</div></div>
+          <div class="sc-score"><div class="big">7.5</div><div class="t">STAR</div></div>
+        </div>
+        <div class="sc-asym">The market says a great college hitter. <b>FieldCheck says an elite closer</b> — and the closer is what carries to the pro game.</div>
+        <div class="sc-cta"><span class="b solid">Share the read</span><span class="b">See the full read</span></div>
+      </div>
+    </div>
+
+    <div class="facetpanel" id="facetpanel">
+      <div class="fp-top"><span class="fn" id="fpName"></span><span class="fv" id="fpVal"></span><span class="x" id="fpX">✕</span></div>
+      <p class="fp-read" id="fpRead"></p>
+      <div class="fp-moves" id="fpMoves"><div class="h">What moves this number</div><div id="fpMoveList"></div></div>
+    </div>
+    <div class="fp-hint" id="fpHint">❚❚ paused — tap any facet to explore</div>
+
+    <div class="cap" id="cap"><span class="beat" id="beat"></span><span class="t" id="captext"></span></div>
+    <div class="moatbadge">The Moat · reading the invisible</div>
+  </div>
+
+  <div class="ctl">
+    <button class="btn" id="play">⏸ Pause</button>
+    <button class="btn ghost" id="replay">↻ Replay</button>
+    <button class="btn ghost" id="explore">⊕ Explore facets</button>
+    <div class="beats" id="beats"></div>
+  </div>
+
+  <div class="foot">
+    <span class="sample">Illustrative sample data — not live engine output · motion prototype v3</span><br>
+    Polygon ← <span class="mono">canonical_facets_8</span> · asymmetry ← <span class="mono">brutal_honest</span> · nodes ← EvalGrid sub-dims · ceiling ← <span class="mono">pro_stack_up</span> · curve ← <span class="mono">projection+trajectory</span> · clip ← <span class="mono">clip.ai_read</span> · share-card = the artifact that replaces the baseball card.
+  </div>
+</div>
+
+<script>
+(function(){
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const NS="http://www.w3.org/2000/svg";
+const CX=370,CY=300,R=178;
+const FACETS=[["Competitiveness",7.9,1],["Talent",7.5,0],["Physical",7.4,0],["Mental / IQ",7.3,0],
+  ["Mental Strength",7.7,1],["Mindset",7.2,1],["Coachability",7.4,0],["Character",7.2,1]];
+const MARKET=[6.2,7.3,7.2,7.0,6.3,6.4,7.1,6.5];
+const COMPOSITE=7.5,GOAT=9.2;
+const SUBMECH=[["Response to runs",8.2],["Late-set kill conversion",8.1],["Serve-receive composure",7.6],["Demand the ball, tight sets",8.0],["Bounce-back after a block",7.8]];
+const TRAJ=[["Club",5.9],["Transfer",6.6],["Title runs",7.5],["Now",7.9],["Pro / LOVB",8.3]];
+const READS=[
+ "Her swing gets bigger as the score gets tighter — the closer's trait, already reading at the pro band.",
+ "Pin-hitting tools that translate up a level; the arm speed and the timing are real, not college-only.",
+ "A pro-viable frame and bounce — not elite-elite athletically, but no artificial ceiling on it.",
+ "Reads the block and the seam early; shot selection and tempo sense ahead of her age.",
+ "Doesn't unravel after a stuff or an opponent run — resets fast and swings clean on the next ball.",
+ "Wants the moment; the work shows up in late-set conditioning and the willingness to be the option.",
+ "Role grew every season — a player who absorbs coaching and applies it inside a system.",
+ "Teammate-first; the kind of culture piece a professional program builds a locker room around."
+];
+const MOVES=[["A six-rotation back-row role","Becoming a six-rotation terminal threat moves competitiveness from 'closes sets' to 'closes matches' — ~+0.3."],
+ ["An aggressive serve under pressure","A point-scoring serve in tight sets completes the closer profile — the gap between a great pin and a match-ender."]];
+
+function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function pt(i,r){const a=(-90+i*45)*Math.PI/180;return [CX+Math.cos(a)*r,CY+Math.sin(a)*r];}
+function poly(vals){return vals.map((v,i)=>pt(i,(v/10)*R).join(",")).join(" ");}
+
+/* S0 */
+(function(){const g=document.getElementById('s0');
+  for(let k=1;k<=4;k++)g.appendChild(el('polygon',{points:poly(FACETS.map(()=>10*k/4)),fill:'none',stroke:'rgba(184,152,90,.07)','stroke-width':1}));
+  FACETS.forEach((f,i)=>{const[x,y]=pt(i,R);g.appendChild(el('line',{x1:CX,y1:CY,x2:x,y2:y,stroke:'rgba(184,152,90,.12)','stroke-width':1}));
+    const[lx,ly]=pt(i,R+30);const anc=lx<CX-12?'end':lx>CX+12?'start':'middle';
+    const t=el('text',{x:lx,y:ly,fill:f[2]?'#e6bd6f':'#9a9385','font-size':14,'text-anchor':anc,'dominant-baseline':'middle',class:'lbl facetClick','data-i':i});t.textContent=f[0];g.appendChild(t);
+    if(f[2]){const tag=el('text',{x:lx,y:ly+15,fill:'#7a7468','font-size':9,'text-anchor':anc,class:'lbl unseen'});tag.textContent='● unseen';g.appendChild(tag);}});
+  g.appendChild(el('circle',{cx:CX,cy:CY,r:150,fill:'url(#gGlow)'}));
+  g.appendChild(el('polygon',{id:'s0poly',points:poly(FACETS.map(f=>f[1])),fill:'rgba(184,152,90,.14)',stroke:'url(#gGold)','stroke-width':2.5,'stroke-linejoin':'round'}));
+  FACETS.forEach((f,i)=>{const[x,y]=pt(i,(f[1]/10)*R);g.appendChild(el('circle',{cx:x,cy:y,r:4,fill:'#e6bd6f',class:'vtx facetClick','data-i':i}));});
+  const num=el('text',{id:'compNum',x:CX,y:CY+8,fill:'#e6bd6f','font-size':52,'text-anchor':'middle','font-family':"'Fraunces',serif",class:'flashable'});num.textContent='0.0';g.appendChild(num);
+  const s=el('text',{x:CX,y:CY+30,fill:'#9a9385','font-size':11,'text-anchor':'middle','letter-spacing':2});s.textContent='COMPOSITE';g.appendChild(s);})();
+/* S1 */
+(function(){const g=document.getElementById('s1');g.appendChild(el('circle',{cx:CX,cy:CY,r:150,fill:'url(#gGlow)'}));
+  g.appendChild(el('polygon',{points:poly(MARKET),fill:'rgba(110,120,130,.12)',stroke:'#6b7480','stroke-width':2,'stroke-dasharray':'5 5','stroke-linejoin':'round'}));
+  g.appendChild(el('polygon',{points:poly(FACETS.map(f=>f[1])),fill:'rgba(184,152,90,.10)',stroke:'url(#gGold)','stroke-width':2.5,'stroke-linejoin':'round'}));
+  FACETS.forEach((f,i)=>{if(!f[2])return;const[ax,ay]=pt(i,(MARKET[i]/10)*R),[bx,by]=pt(i,(f[1]/10)*R);
+    g.appendChild(el('line',{x1:ax,y1:ay,x2:bx,y2:by,stroke:'#e6bd6f','stroke-width':3,'stroke-linecap':'round',class:'gapL',style:`--d:${i}`}));
+    const d=(f[1]-MARKET[i]).toFixed(1);const tx=el('text',{x:bx+(bx>=CX?10:-10),y:by-4,fill:'#e6bd6f','font-size':13,'text-anchor':bx>=CX?'start':'end'});tx.textContent='+'+d;g.appendChild(tx);});
+  [['— what the market sees',228,'#9aa3ae'],['— what FieldCheck sees',250,'#e6bd6f'],['Every gap sits on an',286,'#f0eadd'],['invisible facet.',305,'#e6bd6f']].forEach(([t,y,c])=>{const e=el('text',{x:660,y:y,fill:c,'font-size':13});e.textContent=t;g.appendChild(e);});})();
+/* S2 */
+(function(){const g=document.getElementById('s2');const ox=CX-30,oy=CY;
+  const t=el('text',{x:ox,y:oy-160,fill:'#e6bd6f','font-size':16,'text-anchor':'middle'});t.textContent='COMPETITIVENESS · 7.9';g.appendChild(t);
+  const t2=el('text',{x:ox,y:oy-140,fill:'#9a9385','font-size':11,'text-anchor':'middle'});t2.textContent='none of these live in a stat sheet';g.appendChild(t2);
+  SUBMECH.forEach((m,i)=>{const ang=(-148+i*49)*Math.PI/180,r=158,x=ox+Math.cos(ang)*r,y=oy+Math.sin(ang)*r;
+    g.appendChild(el('line',{x1:ox,y1:oy,x2:x,y2:y,stroke:'rgba(184,152,90,.16)','stroke-width':1}));
+    const node=el('g',{class:'node',style:`--d:${i}`});node.appendChild(el('circle',{cx:x,cy:y,r:27,fill:'#13100b',stroke:'rgba(184,152,90,.25)','stroke-width':1}));
+    const c=2*Math.PI*27,off=c*(1-m[1]/10);node.appendChild(el('circle',{cx:x,cy:y,r:27,fill:'none',stroke:'url(#gGold)','stroke-width':3.5,'stroke-linecap':'round',transform:`rotate(-90 ${x} ${y})`,'stroke-dasharray':c,'stroke-dashoffset':c,class:'ring',style:`--off:${off}`}));
+    const v=el('text',{x:x,y:y+5,fill:'#e6bd6f','font-size':16,'text-anchor':'middle',class:'nval flashable',style:`--d:${i}`});v.textContent=m[1];node.appendChild(v);
+    const l=el('text',{x:x,y:y+45,fill:'#c8c1b2','font-size':11,'text-anchor':'middle'});l.textContent=m[0];node.appendChild(l);g.appendChild(node);});
+  g.appendChild(el('circle',{cx:ox,cy:oy,r:8,fill:'#e6bd6f'}));})();
+/* S3 */
+(function(){const g=document.getElementById('s3');const fx=300,fy=180,fw=340,fh=190;
+  g.appendChild(el('rect',{x:fx,y:fy,width:fw,height:fh,rx:12,fill:'#0f0c08',stroke:'rgba(184,152,90,.3)'}));
+  for(let i=0;i<8;i++){g.appendChild(el('rect',{x:fx+12+i*40,y:fy+9,width:15,height:10,rx:2,fill:'rgba(184,152,90,.18)'}));g.appendChild(el('rect',{x:fx+12+i*40,y:fy+fh-19,width:15,height:10,rx:2,fill:'rgba(184,152,90,.18)'}));}
+  g.appendChild(el('circle',{cx:fx+fw/2,cy:fy+fh/2,r:28,fill:'rgba(184,152,90,.12)',stroke:'rgba(184,152,90,.4)'}));g.appendChild(el('path',{d:`M${fx+fw/2-7} ${fy+fh/2-12}l19 12l-19 12z`,fill:'#e6bd6f'}));
+  g.appendChild(el('rect',{x:fx,y:fy,width:7,height:fh,fill:'rgba(230,189,111,.55)',filter:'url(#soft)',class:'scan'}));
+  const m=el('text',{x:fx,y:fy-14,fill:'#9a9385','font-size':12});m.textContent='CLIP 02 · SET 5 · 12–12 · OPPONENT SERVING RUN';g.appendChild(m);
+  const c=el('text',{x:fx,y:fy+fh+28,fill:'#f0eadd','font-size':14});c.textContent='Back-to-back kills from the pin — the swing got bigger as the score got tighter.';g.appendChild(c);
+  const c2=el('text',{x:fx,y:fy+fh+48,fill:'#9a9385','font-size':12});c2.textContent='Read by an engine that has watched a million swings just like it.';g.appendChild(c2);})();
+/* S4 */
+(function(){const g=document.getElementById('s4');const x0=290,x1=720,y=300,sc=(x1-x0)/10;
+  g.appendChild(el('line',{x1:x0,y1:y,x2:x1,y2:y,stroke:'rgba(184,152,90,.18)'}));
+  for(let v=0;v<=10;v+=2){const x=x0+v*sc;g.appendChild(el('line',{x1:x,y1:y-4,x2:x,y2:y+4,stroke:'rgba(184,152,90,.3)'}));const t=el('text',{x:x,y:y+22,fill:'#7a7468','font-size':11,'text-anchor':'middle'});t.textContent=v;g.appendChild(t);}
+  const gx=x0+GOAT*sc;g.appendChild(el('line',{x1:gx,y1:y-66,x2:gx,y2:y,stroke:'#9aa3ae','stroke-width':2,'stroke-dasharray':'4 4'}));
+  const gt=el('text',{x:gx,y:y-74,fill:'#9aa3ae','font-size':14,'text-anchor':'middle'});gt.textContent='GOAT · 9.2';g.appendChild(gt);
+  const bar=el('rect',{id:'goatBar',x:x0,y:y-16,width:0,height:32,rx:4,fill:'url(#gGold)'});bar.dataset.w=(7.9*sc);g.appendChild(bar);
+  const pv=el('text',{id:'goatVal',x:x0+10,y:y+6,fill:'#0a0907','font-size':16,'font-weight':600});g.appendChild(pv);
+  const px=x0+7.9*sc;g.appendChild(el('line',{x1:px,y1:y-34,x2:gx,y2:y-34,stroke:'#e6bd6f','stroke-width':2}));
+  const gap=el('text',{x:(px+gx)/2,y:y-42,fill:'#e6bd6f','font-size':14,'text-anchor':'middle',class:'flashable',id:'gapTxt'});gap.textContent='gap 1.3';g.appendChild(gap);
+  const sub=el('text',{x:(px+gx)/2,y:y-24,fill:'#9a9385','font-size':11,'text-anchor':'middle'});sub.textContent='clutch swing already pro · résumé accrues with time';g.appendChild(sub);})();
+/* S5 */
+(function(){const g=document.getElementById('s5');const x0=120,x1=800,yb=470,yt=130,n=TRAJ.length;
+  const vals=TRAJ.map(t=>t[1]),vmin=Math.min(...vals)-0.6,vmax=Math.max(...vals)+0.4;
+  const xs=TRAJ.map((_,i)=>x0+(x1-x0)*i/(n-1)),ys=vals.map(v=>yb-(yb-yt)*(v-vmin)/(vmax-vmin));
+  g.appendChild(el('line',{x1:x0-20,y1:yb,x2:x1+10,y2:yb,stroke:'rgba(184,152,90,.18)'}));
+  g.appendChild(el('polygon',{points:`${xs[n-2]},${ys[n-2]} ${xs[n-1]},${ys[n-1]-24} ${xs[n-1]},${ys[n-1]+24}`,fill:'rgba(184,152,90,.10)',class:'cone'}));
+  const sp=el('polyline',{points:xs.slice(0,n-1).map((x,i)=>`${x},${ys[i]}`).join(' '),fill:'none',stroke:'url(#gGold)','stroke-width':3.5,class:'tjline'});g.appendChild(sp);sp.style.strokeDasharray=900;sp.style.strokeDashoffset=900;
+  g.appendChild(el('polyline',{points:`${xs[n-2]},${ys[n-2]} ${xs[n-1]},${ys[n-1]}`,fill:'none',stroke:'#b8985a','stroke-width':3.5,'stroke-dasharray':'7 7'}));
+  TRAJ.forEach((t,i)=>{g.appendChild(el('circle',{cx:xs[i],cy:ys[i],r:6,fill:'#13100b',stroke:'#e6bd6f','stroke-width':2.5,class:'tjdot',style:`--d:${i}`}));
+    const lv=el('text',{x:xs[i],y:ys[i]-16,fill:'#e6bd6f','font-size':13,'text-anchor':'middle'});lv.textContent=t[1];g.appendChild(lv);
+    const st=el('text',{x:xs[i],y:yb+22,fill:'#9a9385','font-size':12,'text-anchor':'middle'});st.textContent=t[0];g.appendChild(st);});
+  const ix=xs[2],iy=ys[2];g.appendChild(el('line',{x1:ix,y1:iy,x2:ix,y2:iy-50,stroke:'rgba(184,152,90,.4)'}));
+  const ic=el('text',{x:ix,y:iy-58,fill:'#f0eadd','font-size':12,'text-anchor':'middle'});ic.textContent='transfer + title run → competitiveness +0.9';g.appendChild(ic);})();
+/* S6 */
+(function(){const g=document.getElementById('s6');
+  const tiers=[["evidence · graded clips + sources",470],["EvalGrid sub-mechanics",382],["competitiveness · 7.9",294],["8 facets · invisible weighted",206],["composite · 7.5",118]];
+  tiers.forEach((t,i)=>{const y=t[1];g.appendChild(el('rect',{x:210,y:y-24,width:500,height:48,rx:9,fill:'#13100b',stroke:'rgba(184,152,90,.2)',class:'tier',style:`--d:${i}`}));
+    const tx=el('text',{x:240,y:y+6,fill:i>=3?'#e6bd6f':'#c8c1b2','font-size':i>=4?17:14,'font-family':i>=4?"'Fraunces',serif":'inherit'});tx.textContent=t[0];g.appendChild(tx);});
+  for(let i=0;i<6;i++){const d=el('circle',{r:4,fill:'#e6bd6f',class:'fdot',style:`--d:${i}`});d.setAttribute('offset-path',"path('M460 470 L460 118')");g.appendChild(d);}})();
+/* mini polygon in share card */
+(function(){const s=document.getElementById('scPoly');const c=40,r=30;
+  function p(vals){return vals.map((v,i)=>{const a=(-90+i*45)*Math.PI/180;return [c+Math.cos(a)*(v/10)*r,c+Math.sin(a)*(v/10)*r].join(",");}).join(" ");}
+  s.appendChild(el('polygon',{points:p(FACETS.map(()=>10)),fill:'none',stroke:'rgba(184,152,90,.18)','stroke-width':.8}));
+  s.appendChild(el('polygon',{points:p(FACETS.map(f=>f[1])),fill:'rgba(184,152,90,.2)',stroke:'#e6bd6f','stroke-width':1.5,'stroke-linejoin':'round'}));})();
+
+const css=document.createElement('style');css.textContent=`
+#s0.on .lbl{animation:rise .7s ease both;animation-delay:.6s}
+#s0.on .vtx{animation:pop .55s ease both;animation-delay:calc(.05s*var(--d))}
+#s0.on #s0poly{animation:draw 1.3s ease both, breathe 6s ease-in-out 1.4s infinite}
+#s0.on #compNum{animation:flash 1s ease 1.25s both}
+#s1.on .gapL{animation:pop .6s ease both, pulseLine 2.2s ease 1s infinite;animation-delay:calc(.15s*var(--d)+.3s),calc(.15s*var(--d)+1s)}
+#s2.on .node{animation:pop .6s ease both;animation-delay:calc(.22s*var(--d)+.3s)}
+#s2.on .ring{animation:ringfill 1.15s ease forwards;animation-delay:calc(.22s*var(--d)+.7s)}
+#s2.on .nval{animation:flash .8s ease both;animation-delay:calc(.22s*var(--d)+1.7s)}
+#s3.on .scan{animation:sweep 2.4s ease-in-out .4s both}
+#s4.on #gapTxt{animation:flash 1s ease 1.3s both}
+#s5.on .tjline{animation:draw 1.8s ease both .3s}
+#s5.on .tjdot{animation:pop .5s ease both;animation-delay:calc(.3s*var(--d)+.5s)}
+#s5.on .cone{animation:rise .9s ease both 1.9s}
+#s6.on .tier{animation:rise .6s ease both;animation-delay:calc(.16s*var(--d))}
+#s6.on .fdot{animation:flow 2s linear infinite;animation-delay:calc(.22s*var(--d)+.9s)}`;document.head.appendChild(css);
+
+const B=[
+ {t:'oldcard',d:4600},
+ {t:'scene',id:'s0',b:'01 · The read',c:'Eight facets, one honest number — counted from zero, in the open.',d:6000},
+ {t:'title',k:'The Moat',h:['Four of these eight facets','are <em>invisible</em> to everyone else.'],d:4200},
+ {t:'scene',id:'s1',b:'02 · The asymmetry',c:'The market measures what it can count. We measure what it can\u2019t — and every gap lands on an invisible facet.',d:6200},
+ {t:'title',k:'The Asymmetry',h:['The market prices the <em>résumé</em>.','FieldCheck prices the <em>will</em>.'],d:4000},
+ {t:'scene',id:'s2',b:'03 · The dissection',c:'Competitiveness, opened up — five EvalGrid factors, each scored off the film.',d:6800},
+ {t:'title',k:'Why no one else can do this',h:['We grade what the film <em>shows</em>','and the numbers <em>hide</em>.'],d:4400},
+ {t:'scene',id:'s3',b:'04 · The evidence',c:'Set five, twelve-all. One swing — and the engine has the receipts.',d:5600},
+ {t:'scene',id:'s4',b:'05 · The ceiling',c:'Measured against the apex of the trait. The gap is named, not guessed.',d:5800},
+ {t:'title',k:'The Read',h:['The clutch swing is <em>already pro</em>.','The body of work is what time adds.'],d:4200},
+ {t:'scene',id:'s5',b:'06 · The trajectory',c:'How she got here — every inflection — and where the curve points next.',d:6400},
+ {t:'title',k:'The Projection',h:['We don\u2019t just see where she <em>is</em>.','We see where she\u2019s <em>going</em>.'],d:4200},
+ {t:'scene',id:'s6',b:'07 · The math',c:'No black box. Evidence to sub-mechanics to facet to number — assembled in front of you.',d:6600},
+ {t:'share',d:7000},
+];
+const scenes=document.querySelectorAll('.scene');
+const title=document.getElementById('title'),tkick=document.getElementById('tkick'),thead=document.getElementById('thead');
+const oldcard=document.getElementById('oldcard'),sharecard=document.getElementById('sharecard');
+const cap=document.getElementById('cap'),capt=document.getElementById('captext'),beat=document.getElementById('beat');
+const beatsWrap=document.getElementById('beats'),hint=document.getElementById('fpHint');
+let idx=0,timer=null,playing=true;
+
+B.forEach((b,i)=>{const d=document.createElement('div');d.className='beatdot'+(b.t==='title'||b.t==='oldcard'||b.t==='share'?' title':'');d.tabIndex=0;
+  d.addEventListener('click',()=>jump(i));d.addEventListener('keydown',e=>{if(e.key==='Enter')jump(i);});beatsWrap.appendChild(d);});
+const dots=[...beatsWrap.children];
+
+function compCount(){const n=document.getElementById('compNum');if(!n)return;const t0=performance.now();
+  (function f(t){const k=Math.min(1,(t-t0)/1200);n.textContent=(COMPOSITE*(0.15+0.85*k)).toFixed(1);if(k<1)requestAnimationFrame(f);else n.textContent=COMPOSITE.toFixed(1);})(performance.now());}
+function goatGrow(){const b=document.getElementById('goatBar'),v=document.getElementById('goatVal');if(!b)return;const w=parseFloat(b.dataset.w);
+  b.style.transition='width 1.3s ease';requestAnimationFrame(()=>b.setAttribute('width',w));const t0=performance.now();
+  (function f(t){const k=Math.min(1,(t-t0)/1300);v.textContent=(7.9*(0.1+0.9*k)).toFixed(1);if(k<1)requestAnimationFrame(f);})(performance.now());}
+function allOff(){scenes.forEach(s=>s.classList.remove('on'));[title,oldcard,sharecard].forEach(o=>o.classList.remove('on','leaving','final'));}
+
+function show(i){
+  idx=i;const b=B[i];dots.forEach((d,k)=>d.classList.toggle('active',k===i));closePanel();
+  if(b.t==='oldcard'){allOff();cap.classList.remove('show');beat.textContent='';capt.textContent='';oldcard.classList.add('on');}
+  else if(b.t==='title'){allOff();cap.classList.remove('show');beat.textContent='';capt.textContent='';
+    tkick.textContent=b.k;thead.innerHTML=b.h.map(l=>`<span class="ln">${l}</span>`).join('');
+    title.classList.remove('on');void title.offsetWidth;title.classList.add('on');}
+  else if(b.t==='share'){allOff();cap.classList.remove('show');beat.textContent='';capt.textContent='';
+    sharecard.classList.remove('on');void sharecard.offsetWidth;sharecard.classList.add('on');}
+  else {[title,oldcard,sharecard].forEach(o=>o.classList.remove('on'));
+    scenes.forEach(s=>{if(s.id===b.id){s.classList.remove('on');void s.offsetWidth;s.classList.add('on');}else s.classList.remove('on');});
+    beat.textContent=b.b;cap.classList.remove('show');capt.textContent=b.c;setTimeout(()=>cap.classList.add('show'),150);
+    if(b.id==='s0')compCount(); if(b.id==='s4')goatGrow();}
+}
+function leaveTransition(i){ if(B[i].t==='oldcard') oldcard.classList.add('leaving'); }
+function next(){const cur=idx;leaveTransition(cur);const delay=B[cur].t==='oldcard'?700:0;
+  setTimeout(()=>show((cur+1)%B.length),delay);schedule(true);}
+function schedule(soft){clearTimeout(timer);if(!playing)return;timer=setTimeout(next,RM?1500:(B[idx].d||5000));}
+function jump(i){playOn();show(i);schedule();}
+function playOn(){playing=true;document.getElementById('play').textContent='⏸ Pause';hint.classList.remove('on');}
+function playToggle(){playing=!playing;document.getElementById('play').textContent=playing?'⏸ Pause':'▶ Play';
+  if(playing){hint.classList.remove('on');schedule();}else{clearTimeout(timer);hint.classList.add('on');}}
+document.getElementById('play').addEventListener('click',playToggle);
+document.getElementById('replay').addEventListener('click',()=>{playOn();show(0);schedule();});
+document.getElementById('explore').addEventListener('click',()=>{playing=false;document.getElementById('play').textContent='▶ Play';clearTimeout(timer);show(1);hint.classList.add('on');});
+
+/* facet explore panel */
+const panel=document.getElementById('facetpanel');
+function openFacet(i){playing=false;document.getElementById('play').textContent='▶ Play';clearTimeout(timer);hint.classList.remove('on');
+  document.getElementById('fpName').textContent=FACETS[i][0]+(FACETS[i][2]?'  · invisible':'');
+  document.getElementById('fpVal').textContent=FACETS[i][1].toFixed(1);
+  document.getElementById('fpRead').textContent=READS[i];
+  const mv=document.getElementById('fpMoves'),list=document.getElementById('fpMoveList');
+  if(i===0){mv.classList.add('show');list.innerHTML=MOVES.map(m=>`<div class="fp-move"><b style="color:#e6bd6f">${m[0]}</b> — ${m[1]}</div>`).join('');}
+  else mv.classList.remove('show');
+  panel.classList.add('on');}
+function closePanel(){panel.classList.remove('on');}
+document.getElementById('fpX').addEventListener('click',closePanel);
+document.getElementById('canvas').addEventListener('click',e=>{const t=e.target.closest('.facetClick');if(t){openFacet(+t.getAttribute('data-i'));}});
+
+show(0);schedule();
+})();
+</script>
+</body>
+</html>
