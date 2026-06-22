@@ -435,6 +435,7 @@ body::before{
         <div class="fmnav" id="fmnav"><button class="prev" id="fmprev" aria-label="Previous player">&#8249;</button><button class="rep" id="fmrep" aria-label="Replay the film">&#9654; Replay</button><button class="next" id="fmnext" aria-label="Next player">&#8250;</button></div>
       </div>
 <!-- FCR3 B START -->
+<style id="fcr3hide">#fmstage{display:none!important}</style>
 <div style="margin-top:14px">
   <iframe id="fcr3frame" src="/fc_reveal_v4.html?p=Madisen%20Skinner" title="FieldCheck Read" loading="lazy" style="width:100%;height:880px;border:1px solid rgba(184,152,90,.3);border-radius:14px;background:#0a0907"></iframe>
 </div>
@@ -1671,6 +1672,7 @@ function verdict(n){return '/fieldcheck-verdict.html?q='+encodeURIComponent(n);}
     document.getElementById('mvoice').textContent=c.cta?'':c.voice;
     document.getElementById('mbadge').textContent=m.label;
     document.getElementById('mnm').textContent=c.n;
+    var _fr=document.getElementById('fcr3frame'); if(_fr&&!c.cta){ _fr.src='/fc_reveal_v4.html?p='+encodeURIComponent(c.n); }
     document.getElementById('mread').textContent=c.read;
     var cta=document.getElementById('mcta'), ovl=document.getElementById('fcoverlay'), mk=document.getElementById('fmstage');
     if(c.cta){
