@@ -388,6 +388,1312 @@ body::before{
   </main>
 </section>
 
+
+<!-- ====== THE GREATEST CLIPS — home reel ====== -->
+<div class="gcfilm">
+<!-- MOMENTS REEL -->
+<section><div class="wrap">
+  <div class="kicker">// The Greatest Clips</div>
+  <h2 class="sec-h">The moments, <i>in motion.</i></h2>
+  <p class="sec-deck">From the GOATs of every game to the amateur about to be seen — every sport, one lens, in motion. Tap any clip.</p>
+  <p class="fcmoat"><span class="fcmoat-dot"></span><b>We see the players the world overlooks.</b>&nbsp; Frontier AI on a proprietary athletic-data moat — one honest number for every athlete.</p>
+</div>
+<div class="reel" id="reel"><div class="reel-track" id="track"></div></div>
+</section>
+<!-- clip modal -->
+<div class="ov" id="ov">
+  <div class="modal" id="modal">
+    <button class="x" id="x" aria-label="Close">&times;</button>
+    <div class="stagewrap">
+      <div class="stage" id="stage"></div>
+      <div class="fcoverlay" id="fcoverlay"></div>
+    </div>
+    <div class="mbody">
+      <div class="mvoice" id="mvoice"></div>
+      <div class="mbadge" id="mbadge"></div>
+      <div class="mnm" id="mnm"></div>
+      <div class="mread" id="mread"></div>
+      <a class="mcta" id="mcta" href="#"></a>
+      <div class="fmnav-h"><button class="prev" id="fmprev_d" aria-label="Previous player">&#8249;</button><button class="rep" id="fmrep_d" aria-label="Replay the film">&#9654; Replay</button><button class="next" id="fmnext_d" aria-label="Next player">&#8250;</button></div>
+      <div class="fmstage" id="fmstage">
+        <svg class="fmfilm" id="fmfilm" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <filter id="fmglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <linearGradient id="fmfire" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF7A18"/><stop offset="1" stop-color="#EEC067"/></linearGradient>
+          </defs>
+          <g id="fmworld"></g>
+        </svg>
+        <div class="fmvign"></div>
+        <div class="fmgrain"></div>
+        <div class="fmtitle" id="fmtitle"><div class="tk">THE MARK</div><div class="tt" id="fmtt"></div></div>
+        <div class="fmcap" id="fmcap"><div class="ck"></div><div class="cy"></div><div class="cyr"></div><ul class="clist" id="fmclist"></ul></div>
+        <div class="fmfcap" id="fmfcap"><div class="fk">ZONED STRENGTH</div><div class="fn"></div><div class="fl"></div></div>
+        <div class="fmflash" id="fmflash"></div>
+        <div class="fmmap" id="fmmap"></div>
+        <div class="fmend" id="fmend"><div class="fmendpoly" id="fmendpoly"></div><div class="fmendcard" id="fmendcard"></div></div>
+        <div class="fmnav" id="fmnav"><button class="prev" id="fmprev" aria-label="Previous player">&#8249;</button><button class="rep" id="fmrep" aria-label="Replay the film">&#9654; Replay</button><button class="next" id="fmnext" aria-label="Next player">&#8250;</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.gcfilm{--cg:'Cormorant Garamond',Georgia,serif;--mono:'JetBrains Mono',ui-monospace,monospace}
+.gcfilm section{padding:88px 0 4px}
+.gcfilm .fcmoat{font-family:var(--mono);font-size:11.5px;line-height:1.5;letter-spacing:.03em;color:#8c8678;margin:12px 0 0;display:flex;align-items:flex-start;gap:9px;max-width:62ch}
+.gcfilm .fcmoat b{color:var(--gold,#b8985a);font-weight:600;letter-spacing:.02em}
+.gcfilm .fcmoat-dot{width:6px;height:6px;border-radius:50%;background:var(--gold,#b8985a);flex:none;margin-top:6px;box-shadow:0 0 0 3px rgba(184,152,90,.14)}
+.wrap{max-width:1340px;margin:0 auto;padding:0 28px}
+.kicker{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold)}
+.sec-h{font-family:var(--cg);font-size:clamp(28px,3.4vw,42px);font-weight:500;letter-spacing:-.018em;line-height:1.04;color:var(--t);margin:14px 0 6px}
+.sec-h i{font-style:italic;color:var(--gold)}
+.sec-deck{font-family:var(--cg);font-style:italic;font-size:19px;color:var(--t2);max-width:640px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.lg{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rule);border-radius:999px;padding:7px 13px;font-family:var(--mono);font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t2)}
+.lg .sw{width:9px;height:9px;border-radius:50%}
+.lg b{color:var(--t);font-weight:500}
+.reel{margin-top:32px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.reel-track{display:flex;gap:16px;width:max-content;will-change:transform;animation:rollR 64s linear infinite}
+.reel:hover .reel-track,.reel.touched .reel-track{animation-play-state:paused}
+@keyframes rollR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){.reel-track{animation:none}
+.reel{overflow-x:auto}}
+.clip{position:relative;flex:0 0 auto;width:268px;aspect-ratio:9/16;border:1px solid var(--rule);border-radius:14px;overflow:hidden;cursor:pointer;background:linear-gradient(165deg,var(--ink3),var(--ink2));text-align:left;color:inherit;font:inherit;display:block}
+.clip:hover{border-color:var(--goldl)}
+.clip .poster{position:absolute;inset:0;background-size:cover;background-position:center}
+.clip img.poster{width:100%;height:100%;object-fit:cover;object-position:center 28%}
+.clip .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,7,6,.12) 0%,rgba(8,7,6,.04) 36%,rgba(8,7,6,.88) 100%)}
+.clip .slot{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--t4);font-family:var(--mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;text-align:center;padding:14px}
+.clip .badge{position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:8px;letter-spacing:1.3px;text-transform:uppercase;color:var(--t);background:rgba(8,7,6,.55);border:1px solid var(--rule);border-radius:999px;padding:5px 9px;backdrop-filter:blur(3px)}
+.clip .badge .sw{width:7px;height:7px;border-radius:50%}
+.clip .play{position:absolute;top:46%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:rgba(8,7,6,.5);border:1.5px solid rgba(244,241,234,.7);display:flex;align-items:center;justify-content:center;transition:.2s;backdrop-filter:blur(3px)}
+.clip:hover .play{background:var(--gold);border-color:var(--gold)}
+.clip:hover .play svg{fill:var(--ink)}
+.clip .play svg{fill:var(--t);margin-left:3px}
+.clip .cap{position:absolute;left:0;right:0;bottom:0;padding:15px 15px 16px}
+.clip .vtop{position:absolute;top:40px;left:15px;right:15px;font-family:var(--cg);font-style:italic;font-weight:600;font-size:23px;line-height:1.02;color:var(--gold-hi);z-index:2;text-shadow:0 1px 14px rgba(8,7,6,.7)}
+.clip .vtop::after{content:"";display:block;width:22px;height:2px;background:var(--gold);margin-top:8px}
+.clip .nm{font-family:var(--cg);font-size:23px;font-weight:600;line-height:1.02}
+.clip .read{font-family:var(--mono);font-size:8.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--t3);margin-top:6px;line-height:1.5}
+.clip .dur{position:absolute;bottom:14px;right:13px;font-family:var(--mono);font-size:8px;letter-spacing:1px;color:var(--t2);background:rgba(8,7,6,.55);border-radius:5px;padding:3px 6px}
+.clip.cta{background:linear-gradient(165deg,rgba(124,155,110,.16),var(--ink2));border-color:rgba(124,155,110,.32)}
+.clip.cta .nm{color:var(--moss)}
+.clip.cta .vtop{color:#A8C49A}
+.clip.cta .vtop::after{background:var(--moss)}
+.clip.cta .play{background:rgba(124,155,110,.18);border-color:rgba(124,155,110,.6)}
+.clip.cta:hover .play{background:var(--moss);border-color:var(--moss)}
+.ov{position:fixed;inset:0;background:rgba(5,4,3,.86);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:90;padding:20px}
+.ov.on{display:flex}
+.modal{width:min(1180px,95vw);max-height:95vh;overflow:auto;background:var(--ink2);border:1px solid var(--rule);border-radius:16px;position:relative}
+.modal .stagewrap{position:relative;width:100%}
+.modal .stage{position:relative;width:100%;aspect-ratio:16/9;max-height:38vh;background:#000;display:flex;align-items:center;justify-content:center}
+.modal video,.modal iframe{width:100%;height:100%;border:0;object-fit:cover;display:block}
+.modal .stage .ph{color:var(--t4);font-family:var(--mono);font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;text-align:center;padding:20px;line-height:1.7}
+.modal .stage .ytlink{position:absolute;bottom:11px;right:12px;z-index:6;font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--t);background:rgba(8,7,6,.66);border:1px solid var(--goldl);border-radius:999px;padding:6px 11px;text-decoration:none;backdrop-filter:blur(4px)}
+.modal .stage .ytlink:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.fcoverlay{position:absolute;top:13px;left:13px;z-index:4;pointer-events:none;display:none;gap:9px;align-items:center;background:rgba(8,7,6,.6);border:1px solid var(--goldl);border-radius:999px;padding:6px 12px;backdrop-filter:blur(4px)}
+.fcoverlay .lab{font-family:var(--mono);font-size:8px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold)}
+.fcoverlay .v{font-family:var(--cg);font-style:italic;font-weight:600;font-size:16px;color:var(--gold-hi);line-height:1}
+.modal .mbody{padding:12px 24px 12px;max-width:none;position:relative}
+.modal .mvoice{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-hi)}
+.modal .mbadge{font-family:var(--mono);font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-top:4px}
+.modal .mnm{font-family:var(--cg);font-size:27px;font-weight:600;line-height:1.02;margin-top:4px}
+.modal .mread{color:var(--t2);font-size:13.5px;line-height:1.5;margin-top:6px}
+.fmstage{position:relative;border:1px solid var(--rule);border-left:2px solid var(--gold);border-radius:13px;overflow:hidden;background:radial-gradient(120% 120% at 50% 0,rgba(212,162,76,.06),rgba(212,162,76,.02) 60%,transparent);height:43vh;min-height:300px;margin-top:10px;transition:height .4s ease}
+.fmstage.done{height:39vh}
+.fmstage svg.fmfilm{position:absolute;inset:0;width:100%;height:100%;display:block}
+.fmstage .fmvign{position:absolute;inset:0;pointer-events:none;z-index:2;background:radial-gradient(120% 92% at 50% 42%,transparent 52%,rgba(4,3,2,.6))}
+.fmstage .fmgrain{position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.05;mix-blend-mode:overlay;background-image:radial-gradient(rgba(255,255,255,.5) 0.5px,transparent 0.6px);background-size:3px 3px}
+.fmstage .fmtitle{position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:0;transition:opacity 1s ease;pointer-events:none;padding:18px}
+.fmstage .fmtitle.in{opacity:1}
+.fmstage .fmtitle .tk{font-family:var(--mono);font-size:12px;letter-spacing:7px;text-transform:uppercase;color:var(--gold);opacity:0;transform:translateY(10px);transition:opacity 1.1s ease .2s,transform 1.1s ease .2s}
+.fmstage .fmtitle.in .tk{opacity:1;transform:none}
+.fmstage .fmtitle .tt{font-family:var(--cg);font-style:italic;font-weight:600;font-size:clamp(20px,3vw,38px);color:var(--t);margin-top:14px;opacity:0;transform:translateY(14px);transition:opacity 1.2s ease .6s,transform 1.2s ease .6s;max-width:82%}
+.fmstage .fmtitle.in .tt{opacity:1;transform:none}
+.fmstage .fmcap{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:18px 28px 22px;text-align:center;background:linear-gradient(180deg,transparent,rgba(6,5,4,.42) 35%,rgba(6,5,4,.84) 78%);opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;pointer-events:none}
+.fmstage .fmcap.in{opacity:1;transform:none}
+.fmstage .fmcap.out{opacity:0;transform:translateY(-8px);transition:opacity .45s ease,transform .45s ease}
+.fmstage .fmcap .ck{font-family:var(--mono);font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-hi)}
+.fmstage .fmcap .cy{font-family:var(--cg);font-weight:600;font-style:italic;font-size:clamp(32px,4.6vw,56px);line-height:1;color:var(--t);margin-top:4px;text-shadow:0 2px 30px rgba(0,0,0,.6)}
+.fmstage .fmcap .cyr{font-family:var(--mono);font-size:12px;letter-spacing:2px;color:rgba(244,241,234,.6);margin-top:7px}
+.fmstage .fmcap .clist{list-style:none;margin:11px auto 0;max-width:680px;display:flex;flex-direction:column;gap:6px}
+.fmstage .fmcap .clist li{font-family:var(--cg);font-style:italic;font-size:clamp(16px,2vw,21px);color:rgba(244,241,234,.92);opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease;line-height:1.3}
+.fmstage .fmcap .clist li.show{opacity:1;transform:none}
+.fmstage .fmcap .clist li.hero{color:var(--gold-hi);font-weight:600}
+.fmstage .fmcap .clist li b{color:var(--gold-hi);font-weight:600;font-style:normal;font-family:var(--mono);font-size:.82em;letter-spacing:1px}
+.fmstage .fmfcap{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:22px 28px 26px;text-align:center;background:linear-gradient(180deg,transparent,rgba(6,5,4,.82) 65%);opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s ease;pointer-events:none}
+.fmstage .fmfcap.in{opacity:1;transform:none}
+.fmstage .fmfcap .fk{font-family:var(--mono);font-size:11px;letter-spacing:4px;text-transform:uppercase;color:rgba(244,241,234,.6)}
+.fmstage .fmfcap .fn{font-family:var(--cg);font-weight:600;font-size:clamp(34px,5vw,62px);line-height:1;color:var(--gold-hi);margin-top:3px;text-shadow:0 0 36px rgba(238,192,103,.42)}
+.fmstage .fmfcap .fl{font-family:var(--cg);font-style:italic;font-size:clamp(15px,1.9vw,20px);color:rgba(244,241,234,.88);margin-top:7px}
+.fmstage .fmflash{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;background:radial-gradient(60% 60% at 50% 52%,rgba(255,233,180,.8),rgba(238,192,103,.22) 45%,transparent 70%)}
+.fmstage .fmmap{position:absolute;inset:0;z-index:6;opacity:0;visibility:hidden;transition:opacity .7s ease,visibility .7s;pointer-events:none;background:radial-gradient(120% 110% at 50% 46%,rgba(8,6,4,.36),rgba(4,3,2,.74))}
+.fmstage .fmmap.in{opacity:1;visibility:visible}
+.fmstage .fmmap svg{position:absolute;inset:0;width:100%;height:100%}
+.fmstage .fmmap .mk{font-family:var(--mono);font-size:13px;letter-spacing:6px;fill:var(--gold)}
+.fmstage .fmmap .msub{font-family:var(--cg);font-style:italic;font-size:25px;fill:rgba(244,241,234,.9)}
+.fmstage .fmmap .mlab{font-family:var(--mono);font-size:12px;letter-spacing:3px;fill:rgba(244,241,234,.34)}
+.fmstage .fmmap .mtop{font-family:var(--mono);font-size:18px;letter-spacing:.3px;fill:rgba(244,241,234,.5);opacity:0;transition:opacity .5s ease,fill .45s ease}
+.fmstage .fmmap .mtop.on{opacity:1}
+.fmstage .fmmap .mtop.lit{fill:var(--t);font-weight:600}
+.fmstage .fmmap .mbot{font-family:var(--mono);font-size:18px;letter-spacing:.3px;fill:rgba(238,192,103,.46);opacity:0;transition:opacity .5s ease,fill .45s ease}
+.fmstage .fmmap .mbot.on{opacity:1}
+.fmstage .fmmap .mbot.lit{fill:var(--gold-hi);font-weight:700}
+.fmstage .fmmap .mtie{stroke:var(--gold);stroke-width:1.5;fill:none;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .4s ease}
+.fmstage .fmmap .mtie.on{opacity:.85}
+.fmstage .fmmap .mnode{fill:var(--gold-hi);opacity:0;transition:opacity .4s ease}
+.fmstage .fmmap .mnode.on{opacity:1}
+.fmstage .fmmap .mfound{stroke:rgba(238,192,103,.4);stroke-width:1.4;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .6s ease}
+.fmstage .fmmap .mcap{font-family:var(--cg);font-style:italic;font-size:26px;fill:var(--t);opacity:0;transition:opacity .8s ease}
+.fmstage .fmmap .mcap.on{opacity:1}
+.fmstage .fmmap.v2{background:none}
+.fmstage .fmplabel.v2core{fill:var(--gold-hi);font-weight:700}
+.fmstage .fmgrid{stroke:rgba(248,244,237,.06);stroke-width:1;vector-effect:non-scaling-stroke;fill:none}
+.fmstage .fmaxlab{font-family:var(--mono);font-size:10px;letter-spacing:2px;fill:rgba(244,241,234,.3)}
+.fmstage .fmtrseg{stroke:var(--gold);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.fmstage .fmtrglow{stroke:rgba(238,192,103,.26);stroke-width:9;fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.fmstage .fmtnode{fill:var(--gold)}
+.fmstage .fmtnode.apex{fill:var(--gold-hi)}
+.fmstage .fmtring{fill:none;stroke:var(--gold-hi);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.fmstage .fmpgrid{stroke:rgba(248,244,237,.08);stroke-width:1;vector-effect:non-scaling-stroke;fill:none}
+.fmstage .fmpspoke{stroke:rgba(248,244,237,.06);stroke-width:1;vector-effect:non-scaling-stroke}
+.fmstage .fmppath{fill:rgba(212,162,76,.16);stroke:#D4A24C;stroke-width:2.4;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.fmstage .fmpvtx{fill:rgba(248,244,237,.42)}
+.fmstage .fmpvtx.str{fill:var(--gold-hi)}
+.fmstage .fmplabel{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.4px;fill:rgba(244,241,234,.5);transition:fill .4s ease}
+.fmstage .fmplabel.lit{fill:rgba(244,241,234,.95);font-weight:600}
+.fmstage .fmplabel.str{fill:var(--gold-hi);font-weight:700}
+.fmstage .fmplabel.hot{fill:var(--gold-hi);font-weight:700;font-size:15.5px}
+.fmstage .fmarrow{stroke:url(#fmfire);stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:url(#fmglow)}
+.fmstage .fmspark{fill:var(--fire);filter:url(#fmglow)}
+.fmstage .fmend{position:absolute;inset:0;z-index:8;opacity:0;visibility:hidden;transition:opacity .8s ease;display:grid;grid-template-columns:1.04fr 1fr;gap:8px;padding:16px 20px;background:var(--ink2)}
+.fmstage .fmend.show{opacity:1;visibility:visible}
+.fmstage .fmendpoly{display:flex;align-items:center;justify-content:center;border-right:1px solid var(--rule);padding:8px}
+.fmstage .fmendpoly svg{width:100%;height:auto;max-height:100%}
+.fmstage .fmendcard{display:flex;flex-direction:column;justify-content:center;padding:12px 14px 12px 24px;overflow:auto}
+.fmstage .fmendcard .eh{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-hi)}
+.fmstage .fmendcard .ev{font-family:var(--cg);font-style:italic;font-weight:600;font-size:32px;color:var(--gold-hi);line-height:1;margin-top:3px}
+.fmstage .fmendcard .ez{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(244,241,234,.5);margin-top:8px}
+.fmstage .fmendcard .ez b{color:var(--t)}
+.fmstage .fmfacets{margin-top:13px;display:flex;flex-direction:column;gap:9px}
+.fmstage .fmrow{display:grid;grid-template-columns:92px 1fr 60px;align-items:center;gap:11px}
+.fmstage .fmrow .fk{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;color:rgba(244,241,234,.66)}
+.fmstage .fmrow.str .fk{color:var(--gold-hi);font-weight:700}
+.fmstage .fmrow .fb{height:10px;border-radius:6px;background:rgba(248,244,237,.1);overflow:hidden}
+.fmstage .fmrow .fb i{display:block;height:100%;border-radius:6px;background:rgba(248,244,237,.34);width:0;transition:width 1.1s cubic-bezier(.3,.9,.3,1)}
+.fmstage .fmrow.str .fb i{background:linear-gradient(90deg,var(--gold),var(--gold-hi))}
+.fmstage .fmrow .ft{font-family:var(--mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);text-align:right}
+.fmstage .fmendcard .ep{font-family:var(--cg);font-style:italic;font-size:17px;color:rgba(244,241,234,.9);margin-top:14px;line-height:1.34}
+.fmstage .fmendcard .em{font-family:var(--mono);font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(244,241,234,.4);margin-top:9px}
+.fmstage .fmendcard .ecta{display:inline-block;width:max-content;margin-top:14px;font-family:var(--mono);font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink);background:linear-gradient(90deg,var(--gold),var(--gold-hi));padding:11px 18px;border-radius:8px;text-decoration:none;font-weight:700;box-shadow:0 6px 22px rgba(212,162,76,.30);transition:box-shadow .3s,transform .3s}
+.fmstage .fmendcard .ecta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(212,162,76,.46)}
+.fmstage .fmnav{position:absolute;z-index:9;top:10px;right:10px;display:flex;gap:6px;align-items:center}
+.fmstage .fmnav button{font-family:var(--mono);font-size:14px;line-height:1;color:var(--t);background:rgba(8,7,6,.62);border:1px solid var(--goldl);border-radius:8px;min-width:38px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);padding:0 8px}
+.fmstage .fmnav button.rep{color:var(--gold-hi);font-weight:700;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;padding:0 12px}
+.fmstage .fmnav button:hover{border-color:var(--gold)}
+.fmstage .fmnav button:active{background:rgba(212,162,76,.3)}
+.fmnav-h{position:absolute;top:16px;right:24px;z-index:6;display:flex;gap:6px;align-items:center}
+.fmnav-h button{font-family:var(--mono);font-size:14px;line-height:1;color:var(--t);background:rgba(8,7,6,.5);border:1px solid var(--goldl);border-radius:8px;min-width:36px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0 8px}
+.fmnav-h button.rep{color:var(--gold-hi);font-weight:700;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;padding:0 12px}
+.fmnav-h button:hover{border-color:var(--gold)}
+.fmnav-h button:active{background:rgba(212,162,76,.3)}
+@media(max-width:640px){.fmstage .fmnav{display:none}
+.fmnav-h{top:14px;right:16px}
+.fmnav-h button{height:36px;min-width:40px}}
+@media(min-width:641px){.fmstage .fmnav{display:none}
+.fmstage.done{height:46vh}
+.fmstage .fmend{grid-template-columns:0.9fr 1.1fr;gap:10px;padding:8px 22px}
+.fmstage .fmendpoly{padding:4px;align-items:center}
+.fmstage .fmendpoly svg{width:auto;height:86%;max-height:86%;max-width:92%}
+.fmstage .fmendcard{padding:6px 22px 6px 16px;justify-content:flex-start}
+.fmstage .fmendcard .eh{font-size:9.5px}
+.fmstage .fmendcard .ev{font-size:24px}
+.fmstage .fmendcard .ez{margin-top:5px}
+.fmstage .fmfacets{margin-top:6px;gap:4px}
+.fmstage .fmrow{grid-template-columns:88px 1fr 56px;gap:9px}
+.fmstage .fmrow .fk{font-size:11px}
+.fmstage .fmrow .fb{height:8px}
+.fmstage .fmendcard .ep{font-size:13px;margin-top:7px;line-height:1.26}
+.fmstage .fmendcard .em{margin-top:5px}
+.fmstage .fmendcard .ecta{margin-top:7px;padding:8px 14px;font-size:9px}}
+@media(prefers-reduced-motion:reduce){.fmstage *{transition-duration:.001s!important;animation-duration:.001s!important}}
+@media(max-width:640px){.fmstage{height:auto;aspect-ratio:1/1;min-height:360px;transition:none}
+.fmstage.done{height:auto}
+.fmstage .fmcap .cy{font-size:38px}
+.fmstage .fmcap .ck{font-size:12px}
+.fmstage .fmcap .clist li{font-size:16px}
+.fmstage .fmfcap .fn{font-size:38px}
+.fmstage .fmplabel{font-size:15px;font-weight:600;fill:rgba(244,241,234,.72)}
+.fmstage .fmplabel.lit{fill:rgba(244,241,234,.98)}
+.fmstage .fmplabel.hot{font-size:18px}
+.fmstage .fmend{grid-template-columns:1fr;gap:4px;padding:12px 12px}
+.fmstage .fmendpoly{border-right:0;border-bottom:1px solid var(--rule);max-height:48%;padding:4px 4px 8px}
+.fmstage .fmendcard{padding:8px 2px 4px;justify-content:flex-start}
+.fmstage .fmendcard .ev{font-size:26px}
+.fmstage .fmfacets{margin-top:10px;gap:8px}
+.fmstage .fmrow{grid-template-columns:84px 1fr 52px;gap:9px}
+.fmstage .fmrow .fk{font-size:13px;font-weight:600}
+.fmstage .fmrow .fb{height:11px}
+.fmstage .fmendcard .ep{font-size:15.5px;margin-top:10px}
+.fmstage .fmnav button{min-width:44px;height:42px;font-size:18px}
+.fmstage .fmnav button.rep{font-size:11px;padding:0 14px}}
+.modal .mcta{display:inline-block;margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600}
+.modal.cta .mcta{background:var(--moss)}
+.modal .x{position:absolute;top:12px;right:12px;z-index:6;width:40px;height:40px;border-radius:50%;background:rgba(8,7,6,.7);border:1px solid var(--rule);color:var(--t);font-size:21px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+@media(max-width:640px){.clip{width:74vw}
+.modal{max-height:94vh;overflow:auto;display:block}
+.modal .stage{max-height:34vh}
+.modal .mbody{display:block;padding:12px 16px 16px}
+.modal .mnm{font-size:24px}
+.fmstage{height:auto;aspect-ratio:1/1;min-height:360px;margin-top:12px}
+.fmstage .fmtitle .tt{font-size:21px}
+.fmstage .fmcap{padding:14px 14px 16px}
+.fmstage .fmcap .cy{font-size:42px}
+.fmstage .fmcap .ck{font-size:12px}
+.fmstage .fmcap .cl{font-size:15.5px;max-width:none}
+.fmstage .fmfcap .fn{font-size:38px}
+.fmstage .fmfcap .fl{font-size:16px}
+.fmstage .fmplabel{font-size:15px;font-weight:600;fill:rgba(244,241,234,.72)}
+.fmstage .fmplabel.lit{fill:rgba(244,241,234,.98)}
+.fmstage .fmplabel.hot{font-size:18px}
+.fmstage .fmend{grid-template-columns:1fr;gap:4px;padding:12px 12px}
+.fmstage .fmendpoly{border-right:0;border-bottom:1px solid var(--rule);padding:6px 4px 10px}
+.fmstage .fmendpoly svg{width:auto;height:auto;max-height:190px;max-width:76%}
+.fmstage .fmendcard{padding:10px 2px 6px;justify-content:flex-start;overflow:visible}
+.fmstage .fmendcard .ev{font-size:26px}
+.fmstage .fmfacets{margin-top:10px;gap:8px}
+.fmstage .fmrow{grid-template-columns:84px 1fr 52px;gap:9px}
+.fmstage .fmrow .fk{font-size:13px;font-weight:600}
+.fmstage .fmrow .fb{height:11px}
+.fmstage .fmendcard .ep{font-size:15.5px;margin-top:10px}
+.fmstage.done{aspect-ratio:auto;height:auto;min-height:0}
+.fmstage.done svg.fmfilm,.fmstage.done .fmvign,.fmstage.done .fmtitle,.fmstage.done .fmcap,.fmstage.done .fmfcap{display:none}
+.fmstage.done .fmend{position:relative}
+.fmstage .fmnav button{min-width:44px;height:42px;font-size:18px}
+.fmstage .fmnav button.rep{font-size:11px;padding:0 14px}}
+</style>
+<script>
+function verdict(n){return '/fieldcheck-verdict.html?q='+encodeURIComponent(n);}
+// moments reel — FC IQ Voice on every clip; yt = official embed, src = owned R2 clip
+  var TIER={
+    Pro:{label:"LOVB Pro",c:"var(--gold)"},
+    D1:{label:"NCAA D1",c:"var(--gold-hi)"},
+    D2:{label:"NCAA D2",c:"var(--moss)"},
+    D3:{label:"NCAA D3",c:"#9a8c6f"},
+    JUCO:{label:"JUCO",c:"#8a93a8"},
+    Am:{label:"Amateur · 2027",c:"#A8C49A"},
+    Legend:{label:"Legend",c:"var(--gold-hi)"}
+  };
+  var CLIPS=[
+    {t:"D1", sport:"football", voice:"The Blur", n:"Eugene Wilson III", yt:"coMViA2dLzY", read:"LSU Tigers \u00b7 1,000-yard SEC receiver \u00b7 4.43 speed that zigs and zags into the end zone", facet:"Speed", proof:"A thousand-yard SEC receiver with 4.43 speed \u2014 a Florida record-setter now leading LSU\u2019s receiving corps."},
+    {t:"D3", sport:"football", voice:"The Deep Threat", n:"Imhotep Cromer", yt:"VZVKu6_7C8k", st:42, read:"SUNY Brockport \u00b7 deep-threat receiver \u00b7 the kind of D3 talent the world never scouts", facet:"Hands", proof:"A JUCO transfer turned Division III deep threat and NFL Draft hopeful \u2014 elite tape from a level nobody is watching."},
+    {t:"Legend", sport:"basketball", voice:"The Maestro", n:"Luka Doncic", yt:"8ZtkzbPqhlo", read:"5\u00d7 All-NBA First Team \u00b7 scoring champion \u00b7 a basketball genius at every level", facet:"Vision", proof:"A EuroLeague MVP and champion at nineteen, then an instant NBA superstar \u2014 the most complete offensive engine of his generation."},
+    {t:"Legend", sport:"basketball", voice:"The Logo", n:"Caitlin Clark", yt:"kSA91GkQh9U", st:42, read:"NCAA all-time scoring leader \u00b7 WNBA Rookie of the Year \u00b7 range that broke the sport open", facet:"Scoring", proof:"The all-time leading scorer in major-college basketball and an instant WNBA sensation \u2014 logo range that changed how the game is watched."},
+    {t:"D1", sport:"basketball", voice:"The Next", n:"AJ Dybantsa", yt:"kmhxcuhYNjk", read:"#1 recruit in America \u00b7 projected top pick \u00b7 a 6\u20197 scoring forward with everything", facet:"Scoring", proof:"The #1 prospect in the country and a projected top NBA pick \u2014 a six-foot-seven scoring forward with a complete game."},
+    {t:"D1", sport:"volleyball", voice:"The Pin", n:"Harper Murray", yt:"0uuWEERBHgk", read:"3\u00d7 AVCA All-American \u00b7 #1 recruit \u00b7 the most dynamic pin hitter in college", facet:"Attack", proof:"The nation\u2019s #1 recruit turned three-time All-American \u2014 a six-rotation force and the most dynamic outside hitter in the college game."},
+    {t:"D1", sport:"basketball", voice:"The Phenom", n:"Cooper Flagg", yt:"GGUaE_ow73Y", read:"2025 National Player of the Year \u00b7 #1 overall pick \u00b7 the most complete prospect in a generation", facet:"Two-Way", proof:"National Player of the Year as a freshman and the #1 overall pick \u2014 the most complete two-way prospect in a generation."},
+    {t:"Legend", sport:"basketball", voice:"The Greek Freak", n:"Giannis Antetokounmpo", yt:"0USzJs9agOk", read:"NBA champion \u00b7 2\u00d7 MVP \u00b7 Finals MVP \u2014 a force at the rim", facet:"Athleticism", proof:"From selling trinkets on the streets of Athens to an NBA title and back-to-back MVPs \u2014 the most physically dominant force in basketball."},
+    {t:"Legend", sport:"baseball", voice:"The Judge", n:"Aaron Judge", yt:"tZO9iete5nA", st:6, read:"3\u00d7 MVP \u00b7 AL home-run record (62) \u00b7 the most feared power in the game", facet:"Tools", proof:"The American League single-season home-run record and three MVPs \u2014 at six-foot-seven, the most awe-inspiring power hitter of his era."},
+    {t:"Legend", sport:"soccer", voice:"The Genius", n:"Lionel Messi", read:"8\u00d7 Ballon d\u2019Or \u00b7 World Cup champion \u00b7 more goals than anyone, ever", yt:"mMiL4_1Yewg", facet:"Vision", proof:"Eight Ballons d\u2019Or, a World Cup, more goals than anyone who ever played."},
+    {t:"Legend", sport:"basketball", voice:"The Revolution", n:"Stephen Curry", yt:"ow98-i75_QY", st:26, read:"4\u00d7 champion \u00b7 2\u00d7 MVP \u00b7 the greatest shooter who ever lived", facet:"Scoring", proof:"The only unanimous MVP. The most threes in history. Range from the logo \u2014 he didn\u2019t break the record, he relocated the three-point line in everyone\u2019s mind."},
+    {t:"Legend", sport:"soccer", voice:"The Machine", n:"Cristiano Ronaldo", yt:"mxQOOMX4NQM", read:"900+ career goals \u00b7 five Champions Leagues \u00b7 relentless", facet:"Finishing", proof:"Over nine hundred goals across every league he ever entered \u2014 a force of pure will."},
+    {t:"Legend", sport:"basketball", voice:"The King", n:"LeBron James", yt:"hpeZOd1C-us", read:"all-time leading scorer \u00b7 21 seasons \u00b7 a myth made real", facet:"Length", proof:"The all-time leading scorer, still dominating after twenty-one seasons \u2014 built like a myth, lasted like a legend."},
+    {t:"Legend", sport:"volleyball", voice:"The GOAT", n:"Jordan Larson", read:"Four-time Olympian \u00b7 the measuring stick", yt:"clDqoxVSPC4", facet:"Pedigree", proof:"Four Olympics, two decades at the very top \u2014 the standard every other read is measured against."},
+    {t:"Legend", sport:"volleyball", voice:"The Closer", n:"Madisen Skinner", read:"Back-to-back Finals MVP \u00b7 the title-clinching kill, twice", yt:"ArkevSLQucQ", facet:"Clutch", proof:"Back-to-back title-clinching kills \u2014 the closer, every single time it mattered."},
+    {t:"D1", sport:"basketball", voice:"The Heir", n:"Cameron Boozer", yt:"1Ir_UeJDQMI", read:"2026 NABC National Player of the Year \u00b7 Duke-bound \u00b7 the pinnacle of D1 talent", facet:"Scoring", proof:"National Player of the Year before he ever stepped on campus \u2014 the most decorated D1-bound forward in the country."},
+    {t:"D1", sport:"basketball", voice:"The Showstopper", n:"JuJu Watkins", yt:"nbTE_6vxZU4", read:"USC \u00b7 rewriting the scoring books \u00b7 a top WNBA pick in waiting", facet:"Scoring", proof:"Driving record audiences to women\u2019s basketball while rewriting the freshman and sophomore record books \u2014 a generational scorer."},
+    {t:"Am", sport:"basketball", voice:"Claim Your Spot", n:"You\u2019re Next", read:"Drop your clip \u00b7 earn your verdict \u00b7 join the board", cta:true}
+  ];
+  var PLAY='<svg width="17" height="17" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+  function clipHTML(c,i){
+    var m=TIER[c.t];
+    var h='';
+    if(c.poster || c.yt){
+      var src=c.poster?c.poster:('https://img.youtube.com/vi/'+c.yt+'/hq2.jpg');
+      var fb=c.yt?('https://img.youtube.com/vi/'+c.yt+'/hqdefault.jpg'):src;
+      h+='<img class="poster" src="'+src+'" onerror="this.onerror=null;this.src=\''+fb+'\'" alt="">';
+    } else { h+='<span class="poster"></span>'; }
+    h+='<span class="scrim"></span>';
+    if(!c.poster && !c.cta && !c.yt) h+='<span class="slot">clip frame<br>drop poster</span>';
+    h+='<span class="badge"><span class="sw" style="background:'+m.c+'"></span>'+m.label+'</span>';
+    h+='<span class="vtop">'+c.voice+'</span>';
+    h+='<span class="play">'+PLAY+'</span>';
+    if(!c.cta) h+='<span class="dur">'+(c.yt?'watch':'0:30')+'</span>';
+    h+='<span class="cap"><span class="nm">'+c.n+'</span><span class="read">'+c.read+'</span></span>';
+    return '<button class="clip'+(c.cta?' cta':'')+'" data-i="'+i+'">'+h+'</button>';
+  }
+  var track=document.getElementById('track'),rhtml='';
+  for(var rp=0;rp<2;rp++){ CLIPS.forEach(function(c,i){ rhtml+=clipHTML(c,i); }); }
+  track.innerHTML=rhtml;
+
+  var ov=document.getElementById('ov'),modal=document.getElementById('modal'),stage=document.getElementById('stage');
+  // FC IQ 8-facet shapes (relative, calibrate to engine) + the 2-3 zoned strengths
+  var AX=['POW','CLU','EFF','DEF','BLK','IQ','CON','UPS'];
+  var AXN=['Frame','Power','Speed','Finishing','Skill','IQ','Motor','Presence'];
+  var LENS={
+    volleyball:['Reach','Power','Range','Kill','Control','Court IQ','Compete','Leadership'],
+    basketball:['Length','Bounce','Burst','Buckets','Handle','Feel','Motor','Alpha'],
+    football:['Frame','Release','Speed','Hands','Routes','Football IQ','Toughness','Captain'],
+    baseball:['Frame','Power','Speed','Bat','Glove','Instincts','Grind','Leadership'],
+    soccer:['Presence','Power','Pace','Finishing','Flair','Vision','Work Rate','Talisman'],
+    track:['Stride','Explosion','Speed','Dominance','Form','Focus','Drive','Legend'],
+    tennis:['Reach','Power','Speed','Weapons','Skill','Tennis IQ','Will','Legend'],
+    boxing:['Reach','Power','Speed','Output','Skill','Ring IQ','Heart','Legend'],
+    gymnastics:['Power','Air','Speed','Difficulty','Execution','Focus','Nerve','Legend'],
+    swimming:['Reach','Power','Speed','Output','Technique','Focus','Drive','Legend'],
+    cricket:['Footwork','Power','Timing','Runs','Technique','Cricket IQ','Grit','Legend']
+  };
+  var SLINEBY={
+    volleyball:{Reach:'Touches heights no one else can.',Power:'The heaviest swing in the building.',Range:'Covers every blade of the floor.',Kill:'Terminal — the point ends with her.',Control:'Hands that never break.','Court IQ':'Reads the play before it forms.',Compete:'Owns the last point of the set.',Leadership:'Makes everyone on the floor better.'},
+    basketball:{Length:'Plays bigger than the measurement.',Bounce:'Lives above the rim.',Burst:'Gone before the help rotates.',Buckets:'Three levels, no night off.',Handle:'The ball on a string.',Feel:'Sees the play two passes early.',Motor:'The last one standing, always.',Alpha:'Bends the game to his will.'},
+    track:{Stride:'Eats the track in fewer steps.',Explosion:'Out of the blocks like a gunshot.',Speed:'Top-end speed no one has touched.',Dominance:'The race is over at the gun.',Form:'Not a wasted inch of motion.',Focus:'Locked in when it matters most.',Drive:'Refuses to be caught.',Legend:'A name the sport never forgets.'},
+    soccer:{Presence:'Bends the whole defense toward him.',Power:'Stronger on the ball than he looks.',Pace:'Gone in the half-yard that counts.',Finishing:'The chance becomes a goal.',Flair:'The ball is simply obedient.',Vision:'Sees the pass before it exists.','Work Rate':'Tracks back when it matters.',Talisman:'Carries a nation on his back.'},
+    football:{Frame:'Built to take the hit and deliver.',Release:'Off the snap before they react.',Speed:'Runs away from the angle.',Hands:'Snatches it clean out of the air.',Routes:'Footwork like a metronome.','Football IQ':'Reads the whole field pre-snap.',Toughness:'Gets up every single time.',Captain:'The huddle believes him.'},
+    baseball:{Frame:'A frame built for the long season.',Power:'The ball leaves different off his bat.',Speed:'First to third without a thought.',Bat:'Barrels everything in the zone.',Glove:'Nothing gets through.',Instincts:'Reads it off the crack of the bat.',Grind:'A hundred and sixty-two games, every one.',Leadership:'Sets the clubhouse standard.'},
+    tennis:{Reach:'Covers every blade of the court.',Power:'The serve ends the point.',Speed:'There before the ball lands.',Weapons:'A winner from anywhere on court.',Skill:'Hands that never break.','Tennis IQ':'Builds the point three shots ahead.',Will:'Owns the deciding set.',Legend:'A name the sport never forgets.'},
+    boxing:{Reach:'Controls the range all night.',Power:'One punch ends it.',Speed:'Hits, and is already gone.',Output:'Throws in unanswerable flurries.',Skill:'Slips what should have landed.','Ring IQ':'Solves you by the third round.',Heart:'Refuses to fall.',Legend:'The Greatest, by acclaim.'},
+    gymnastics:{Power:'Launches higher than physics should allow.',Air:'Hangs an extra beat in the air.',Speed:'Tumbling that blurs.',Difficulty:'Skills no one else will attempt.',Execution:'Sticks the landing, every time.',Focus:'Calm on the biggest stage there is.',Nerve:'Fearless when it counts most.',Legend:'Rewrote what is possible.'},
+    swimming:{Reach:'A wingspan that pulls oceans.',Power:'Turns water into pure propulsion.',Speed:'Out-touches the entire field.',Output:'Races back-to-back and wins both.',Technique:'Not one wasted motion.',Focus:'Locked in behind the blocks.',Drive:'Never satisfied with gold.',Legend:'The most decorated ever.'},
+    cricket:{Footwork:'Moves like the pitch told him its secrets.',Power:'Clears the rope at will.',Timing:'The ball finds the middle, always.',Runs:'Fills a scoreboard for a nation.',Technique:'Textbook \u2014 then better than the book.','Cricket IQ':'Reads the bowler before the release.',Grit:'Carries the whole chase alone.',Legend:'A billion hearts beat with his bat.'}
+  };
+  var FX={
+    "Cameron Boozer":{v:[82,80,72,84,68,80,82,82],s:[0,3]},
+    "JuJu Watkins":{v:[74,78,84,88,84,80,82,80],s:[3,2]},
+    "Dagen Brewer":{v:[74,84,72,86,70,76,82,72],s:[3,1]},
+    "Colby Deaver":{v:[76,80,66,40,60,86,84,74],s:[5,6]},
+    "Kristyna Hranacova":{v:[72,78,74,80,82,78,80,55],s:[4,3]},
+    "Kaley McIntyre":{v:[78,76,82,86,82,82,86,58],s:[3,6]},
+    "Alex Kagoro":{v:[84,82,72,86,70,74,80,76],s:[3,0]},
+    "Riley Laygo":{v:[72,84,70,86,68,76,80,70],s:[3,1]},
+    "Shah Hall":{v:[88,76,64,76,52,70,78,68],s:[0,3]},
+    "Layla Scott":{v:[68,76,82,82,82,76,82,80],s:[2,4]},
+    "Stephen Curry":{v:[78,72,88,99,97,98,92,95],s:[3,4]},
+    "Sachin Tendulkar":{v:[90,88,96,99,98,97,92,100],s:[3,4]},
+    "Serena Williams":{v:[88,99,90,99,92,94,99,100],s:[1,6]},
+    "Muhammad Ali":{v:[96,90,98,92,97,99,100,100],s:[2,6]},
+    "Simone Biles":{v:[97,99,92,100,96,95,98,100],s:[3,1]},
+    "Michael Phelps":{v:[98,94,99,97,95,96,99,100],s:[2,6]},
+    "Tom Brady":{v:[80,60,55,97,95,100,96,99],s:[5,7]},
+    "Shohei Ohtani":{v:[90,97,90,96,80,92,93,90],s:[1,3]},
+    "Cristiano Ronaldo":{v:[95,96,94,99,90,84,96,92],s:[3,0]},
+    "LeBron James":{v:[95,93,90,96,90,97,96,98],s:[5,7]},
+    "Patrick Mahomes":{v:[86,82,80,99,92,97,90,93],s:[3,5]},
+    "Babe Ruth":{v:[92,100,70,99,72,88,86,95],s:[1,3]},
+    "Giannis Antetokounmpo":{v:[90,92,99,95,99,86,85,98],s:[2,4]},
+    "Aaron Judge":{v:[88,90,90,99,80,86,82,96],s:[3,0]},
+    "Cooper Flagg":{v:[88,86,90,92,88,90,84,94],s:[0,4]},
+    "Luka Doncic":{v:[80,84,82,96,88,99,78,94],s:[5,3]},
+    "Caitlin Clark":{v:[70,80,99,96,84,96,82,92],s:[2,5]},
+    "AJ Dybantsa":{v:[84,80,82,90,82,84,80,86],s:[3,0]},
+    "Harper Murray":{v:[86,82,80,90,72,80,82,84],s:[3,0]},
+    "Imhotep Cromer":{v:[88,82,84,86,72,80,82,84],s:[0,3]},
+    "Eugene Wilson III":{v:[90,80,82,84,72,82,82,82],s:[0,3]},
+    "Michael Jordan":{v:[82,95,96,99,90,97,99,99],s:[3,6]},
+    "Usain Bolt":{v:[97,88,100,99,92,90,93,100],s:[2,3]},
+    "Lionel Messi":{v:[70,72,88,99,100,99,82,88],s:[4,3]},
+    "Madisen Skinner":{v:[64,86,81,87,64,62,88,79],s:[6,3]},
+    "Jordan Thompson":{v:[82,95,70,93,64,80,90,80],s:[1,3]},
+    "Jordan Larson":{v:[93,78,97,94,99,99,91,99],s:[4,5]},
+    "Lauren Carlini":{v:[60,72,74,64,90,94,84,90],s:[5,4]},
+    "Manami Kojima":{v:[30,66,95,40,92,86,90,76],s:[2,4]},
+    "Asjia O'Neal":{v:[90,82,68,82,74,86,82,80],s:[0,5]},
+    "Amber Igiede":{v:[88,84,86,72,66,78,82,74],s:[0,2]},
+    "Logan Eggleston":{v:[80,84,80,84,78,86,88,90],s:[7,6]},
+    "Jess Mruzik":{v:[71,66,62,73,66,60,69,61],s:[3,0]},
+    "Alexa Gray":{v:[82,88,78,86,70,80,86,78],s:[1,3]},
+    "Harper Murray":{v:[72,68,60,71,63,56,67,59],s:[0,3]},
+    "Olivia Babcock":{v:[75,70,64,74,65,58,67,60],s:[0,3]},
+    "Bergen Reilly":{v:[56,58,62,66,70,72,60,61],s:[5,4]},
+    "Andi Jackson":{v:[78,70,55,64,58,54,61,56],s:[0,1]},
+    "Shaye Witherspoon":{v:[50,48,42,50,45,38,50,46],s:[0,3]},
+    "Camille Csernik":{v:[48,52,42,50,44,46,50,46],s:[1,3]},
+    "Makenna Nold":{v:[63,58,55,70,58,50,61,56],s:[3,0]}
+  };
+  var TRAJ={
+    "Cameron Boozer":[["2024","Columbus High \u2014 a five-star, two-time Gatorade Player of the Year",40],["2026","Duke \u2014 NABC National Player of the Year before college",60],["NOW","The Blue Devils \u2014 the next great forward, arriving",72]],
+    "JuJu Watkins":[["2023","Sierra Canyon \u2014 the #1 recruit in the country",42],["2024","USC \u2014 a freshman scoring sensation",58],["NOW","Los Angeles \u2014 rewriting the books, WNBA-bound",70]],
+    "Dagen Brewer":[["2025","Pittsburg State \u2014 a breakout bat in the MIAA",44],["2026","The MIAA Triple Crown \u2014 D2 Player of the Year",58],["NOW","100 hits, 100 runs \u2014 only the third in D2 history",62]],
+    "Colby Deaver":[["2025","Emporia State \u2014 a rising arm",42],["2026","D2 National Pitcher of the Year \u2014 unhittable",58],["NOW","0.82 WHIP, 1.50 ERA \u2014 the nation\u2019s best",60]],
+    "Kristyna Hranacova":[["2025","Nova Southeastern \u2014 climbing the D2 ranks",44],["2026","No. 1 in singles and doubles \u2014 national champion",58],["NOW","30-4 in doubles \u2014 total command",60]],
+    "Kaley McIntyre":[["2023","NYU \u2014 a national champion emerges",46],["2026","D3 Woman Athlete of the Year \u2014 five titles in one meet",60],["NOW","15-time national champion \u2014 a D3 record",62]],
+    "Alex Kagoro":[["2025","Messiah \u2014 the premier attacker emerges",44],["2026","AVCA D3 National Player of the Year",58],["NOW","Elite above the net \u2014 the best in the men\u2019s game",60]],
+    "Riley Laygo":[["2025","Rochester \u2014 a breakout at the plate",42],["2026","NFCA D3 National Player of the Year",56],["NOW","The most feared hitter at the level",58]],
+    "Shah Hall":[["2025","Shelton State \u2014 a 6\u201911 force emerges",44],["2026","JUCO All-American \u2014 65.1% from the field",58],["NOW","Committed to NC State \u2014 the leap arrives",60]],
+    "Layla Scott":[["2025","Johnson County \u2014 a powerhouse guard",42],["2026","Back-to-back NJCAA All-American",56],["NOW","D1 signee at Liberty \u2014 the next level calls",58]],
+    "Stephen Curry":[["2009","Davidson \u2014 the underdog from a small school",32],["2015","Golden State \u2014 a first ring, a first MVP",64],["2016","The unanimous MVP \u2014 402 threes, a season unlike any",86],["2022","Finals MVP \u2014 a fourth ring, the last doubt erased",96],["The Revolution","The greatest shooter who ever lived",100]],
+    "Sachin Tendulkar":[["1989","Karachi \u2014 Test debut at sixteen",30],["1998","Sharjah \u2014 the Desert Storm 143",62],["2010","Gwalior \u2014 the first ODI double century",82],["2011","Mumbai \u2014 World Cup champion, at last",94],["2013","One hundred international centuries",100]],
+    "Serena Williams":[["1995","Compton \u2014 turned pro at fourteen",28],["1999","US Open \u2014 first major at seventeen",54],["2003","the Serena Slam \u2014 all four at once",78],["2017","Melbourne \u2014 a 23rd major, while pregnant",94],["The Queen","23 Grand Slams \u2014 she rewrote the game",100]],
+    "Muhammad Ali":[["1960","Rome \u2014 Olympic gold at eighteen",30],["1964","Miami \u2014 shocks Sonny Liston",58],["1974","Kinshasa \u2014 the Rumble in the Jungle",84],["1975","Manila \u2014 the Thrilla",94],["The Greatest","Float like a butterfly",100]],
+    "Simone Biles":[["2013","Antwerp \u2014 first world title",40],["2016","Rio \u2014 four Olympic golds",72],["2019","Stuttgart \u2014 skills named after her",88],["2024","Paris \u2014 the comeback gold",96],["The G.O.A.T.","Most decorated gymnast ever",100]],
+    "Michael Phelps":[["2004","Athens \u2014 six golds at nineteen",44],["2008","Beijing \u2014 eight golds, one Games",82],["2012","London \u2014 most decorated Olympian ever",92],["2016","Rio \u2014 a 23rd gold",98],["The Olympian","Twenty-three golds, untouchable",100]],
+    "Tom Brady":[["2000","Drafted 199th \u2014 the slight that fueled it all",24],["2001","New England \u2014 a first ring as a backup",52],["2017","Houston \u2014 28\u20133, the impossible comeback",82],["2021","Tampa \u2014 a seventh ring, at 43",96],["The Comeback","The greatest to ever play",100]],
+    "Shohei Ohtani":[["2013","Japan \u2014 a two-way phenom",36],["2018","Anaheim \u2014 Rookie of the Year",60],["2021","Unanimous MVP \u2014 pitching and hitting",84],["2024","50-50 \u2014 a season no one had ever had",96],["The Unicorn","What baseball waited a century for",100]],
+    "Cristiano Ronaldo":[["2003","Manchester \u2014 the boy from Madeira",38],["2008","A first Ballon d\u2019Or",62],["2014","Madrid \u2014 La D\u00e9cima",84],["2016","Lisbon \u2014 Euro champion for Portugal",94],["The Machine","900+ goals \u2014 a force of will",100]],
+    "LeBron James":[["2003","Akron \u2014 the Chosen One, out of high school",34],["2012","Miami \u2014 a first ring, a first crown",64],["2016","Cleveland \u2014 the block, the comeback, the promise kept",86],["2023","The all-time leading scorer",96],["The King","21 seasons \u2014 a myth made real",100]],
+    "Patrick Mahomes":[["2017","Kansas City \u2014 the arm everyone waited on",38],["2018","MVP in his first year starting",64],["2020","Super Bowl LIV \u2014 a champion at 24",84],["2024","Three rings \u2014 a dynasty forming",96],["The Magician","The arm that breaks geometry",100]],
+    "Babe Ruth":[["1914","Boston \u2014 a pitcher, first",30],["1920","New York \u2014 the home run is reborn",58],["1927","Sixty home runs \u2014 a number that stood for decades",84],["The Bambino","714 \u2014 he changed what was possible",100]],
+    "Giannis Antetokounmpo":[["2013","Milwaukee \u2014 drafted from Greece",40],["2017","The Bucks \u2014 an unstoppable force",64],["2019","The NBA \u2014 back-to-back MVP",86],["2021","Champion \u2014 Finals MVP",100]],
+    "Aaron Judge":[["2017","New York \u2014 52 HR, Rookie of the Year",64],["2022","New York \u2014 62 HR, AL record, MVP",86],["2025","New York \u2014 three-time MVP",100]],
+    "Cooper Flagg":[["2023","Montverde \u2014 #1 recruit",54],["2025","Duke \u2014 National Player of the Year",84],["2025","The NBA \u2014 #1 overall pick",100]],
+    "Luka Doncic":[["2018","Real Madrid \u2014 EuroLeague MVP & champion",62],["2019","Dallas \u2014 Rookie of the Year",78],["2024","The NBA \u2014 scoring champion",100]],
+    "Caitlin Clark":[["2020","Iowa \u2014 a scoring phenom arrives",62],["2024","NCAA \u2014 all-time leading scorer",88],["2024","The WNBA \u2014 Rookie of the Year",100]],
+    "AJ Dybantsa":[["2024","Utah Prep \u2014 #1 recruit in America",54],["2025","BYU \u2014 the prize of the class",66],["2026","Projected \u2014 a top NBA pick",80]],
+    "Harper Murray":[["2022","Skyline \u2014 Miss Volleyball, #1 recruit",54],["2023","Nebraska \u2014 Big Ten Freshman of the Year",66],["2025","College \u2014 3\u00d7 All-American",80]],
+    "Imhotep Cromer":[["2019","The Bronx — a deep threat emerges",40],["2020","Monroe — JUCO standout",54],["2021","SUNY Brockport — D3 star receiver",72],["2022","NFL Draft — a hopeful from D3",82]],
+    "Eugene Wilson III":[["2021","Gaither — a Tampa playmaker",40],["2023","Florida — freshman record-setter",58],["2025","SEC — 1,000 career yards",70],["2026","LSU — a new home in Baton Rouge",78]],
+    "Michael Jordan":[["1982","North Carolina \u2014 champion",40],["1984","Chicago \u2014 Rookie of the Year",62],["1991","Six titles begin",88],["1998","The ceiling",100]],
+    "Usain Bolt":[["2002","World Junior champion",42],["2008","Beijing \u2014 3 golds, 3 records",74],["2016","Eight Olympic golds",92],["2016","The fastest ever",100]],
+    "Lionel Messi":[["2000","La Masia, Barcelona",42],["2009","Four Champions Leagues",80],["2022","World Cup champion",94],["2022","The GOAT",100]],
+    "Madisen Skinner":[["2019","Seven Lakes HS, Texas",24],["2020","Kentucky — NCAA champion",50],["2022","Texas — national title",72],["2024","4\u00d7 All-American",84],["2026","LOVB Austin — back-to-back Finals MVP",100]],
+    "Jordan Thompson":[["2015","Edina HS, Minnesota",22],["2019","Cincinnati — 2\u00d7 All-American",52],["2021","Tokyo Olympics — gold",74],["2024","Pro: T\u00fcrkiye & Italy",86],["2026","LOVB MVP — record season",100]],
+    "Jordan Larson":[["2005","Nebraska — All-American",34],["2006","NCAA champion",52],["2012","Olympic silver",70],["2021","Tokyo gold — Olympic MVP",92],["2026","LOVB Omaha — the GOAT",100]],
+    "Lauren Carlini":[["2014","Wisconsin — 4\u00d7 All-American",40],["2016","USA National Team",60],["2023","Pro in Italy",78],["2024","Paris Olympics — silver",90],["2026","LOVB Madison — Setter Icon",100]],
+    "Manami Kojima":[["2016","NEC Red Rockets, Japan",36],["2020","3\u00d7 Japan league titles",58],["2024","Japan National Team",74],["2025","LOVB Salt Lake",88],["2026","Libero of the Year — 250+ digs",100]],
+    "Asjia O'Neal":[["2018","Texas Longhorns",40],["2022","NCAA champion",64],["2024","USA National Team",80],["2025","LOVB Austin — champion",92],["2026","First-Team Icon — the wall",100]],
+    "Amber Igiede":[["2019","Hawai'i — All-American",40],["2024","Pro in Italy",62],["2024","USA NT — Pan Am silver",78],["2025","LOVB Houston",90],["2026","Middle Blocker of the Year",100]],
+    "Logan Eggleston":[["2017","Brentwood HS, Tennessee",26],["2018","Texas — 5\u00d7 Big 12 titles",54],["2022","National title — Final MVP",78],["2022","AVCA Player of the Year",88],["2026","LOVB Austin — champion & Icon",100]],
+    "Jess Mruzik":[["2019","U18 Worlds — MVP",36],["2021","Michigan — All-American",56],["2024","Penn State — NCAA title & MOP",82],["2025","LOVB Houston",92],["2026","Two-time LOVB Icon",100]],
+    "Alexa Gray":[["2012","BYU — 2\u00d7 WCC POY",38],["2017","Canada National Team",58],["2022","Italy — league MVP",78],["2023","Club World champion",90],["2026","LOVB Salt Lake — Icon",100]],
+    "Harper Murray":[["2022","Gatorade National POY",46],["2023","Nebraska — Big Ten Freshman of Year",66],["2024","All-American \u00b7 Regional MOP",84],["2026","Nebraska — the silencer",100]],
+    "Olivia Babcock":[["2021","Sierra Canyon — D1 champion",44],["2024","Pitt — AVCA POY",72],["2025","Back-to-back National POY",90],["2026","Pitt — the phenom",100]],
+    "Bergen Reilly":[["2023","Nebraska — freshman setter",48],["2024","All-Big Ten",70],["2025","USA National Team",86],["2026","Nebraska — the quarterback",100]],
+    "Andi Jackson":[["2022","U19 — gold medal",44],["2023","#1 MB recruit \u00b7 Nebraska",66],["2024","Big Ten Freshman of Year",84],["2026","Nebraska — the riser",100]],
+    "Shaye Witherspoon":[["2024","Lafayette HS — state champion",40],["2025","No. 10 national (PrepDig)",64],["2025","Nebraska commit",82],["2027","The climb is just starting",100]],
+    "Camille Csernik":[["2024","TAV Houston club",40],["2025","4-star recruit",64],["2026","Rising national arrow",82],["2027","The ascent ahead",100]],
+    "Makenna Nold":[["2023","Jamestown HS — Gatorade ND POY",40],["2024","Concordia-St. Paul — NSIC Freshman of Year",60],["2025","AVCA D2 National Player of the Year",88],["2026","D2, finally seen",100]]
+  };
+
+  /* ===== FC IQ FILM ENGINE (the mark) ===== */
+  /* ===== FC IQ FILM ENGINE v2 — Director's Cut (the mark) ===== */
+  var FCFilm=(function(){
+    var W=1200,H=620,CX=600,CY=315,MR=200,LBLO=36,TX0=140,TX1=1060,TYB=536,TYT=104;
+    var SPEED=1,gen=0,runGen=-1,cam={x:0,y:0,w:W,h:H},io=null,curData=null,curIdx=-1,curSport='',MAPMODE='v2';
+    var svg=document.getElementById('fmfilm'),world=document.getElementById('fmworld');
+    var titleEl=document.getElementById('fmtitle'),ttEl=document.getElementById('fmtt');
+    var capEl=document.getElementById('fmcap'),clistEl=document.getElementById('fmclist'),fcapEl=document.getElementById('fmfcap');
+    var flashEl=document.getElementById('fmflash'),endEl=document.getElementById('fmend');
+    var endPoly=document.getElementById('fmendpoly'),endCard=document.getElementById('fmendcard'),stageBox=document.getElementById('fmstage');
+    var mapEl=document.getElementById('fmmap');
+
+    var SLINE={Frame:"Built on a frame the sport rewards.",Power:"Force that changes the play.",Speed:"A step the field cannot cover.",Finishing:"The moment ends in points.",Skill:"Craft that never breaks down.",IQ:"Sees it before it happens.",Motor:"The last one still standing.",Presence:"Bends the game to their will."};
+    var curAX=AXN,curSL=SLINE;
+
+    var HERO={
+      "Eugene Wilson III":{voice:"The Blur",fx:[90,80,82,84,72,82,82,82],s:[0,3],
+        title:"How FieldCheck reads a blur that zigs into the end zone.",
+        proof:"A thousand-yard SEC receiver with 4.43 speed \u2014 a Florida record-setter now at LSU.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Tampa",year:"FLORIDA",v:22,lines:["Son of an NFL safety and Super Bowl champ.","The fastest man at the All-America camp."]},
+          {tag:"FLORIDA",place:"The Gators",year:"2023",v:58,lines:["A freshman record-setter \u2014 <b>11 catches</b> vs Georgia.","An instant SEC starter."]},
+          {tag:"THE PRODUCER",place:"The SEC",year:"2025",v:70,lines:["<b>1,000+ career yards</b>.","A blur who zigs and zags into the end zone."]},
+          {tag:"THE PORTAL",place:"The Move",year:"2026",v:74,lines:["<b>4.43</b> speed in the forty.","Ninth-best receiver in the transfer portal."]},
+          {tag:"THE BLUR",place:"LSU",year:"2026",v:78,lines:["A new home in Baton Rouge.","Leading the Tigers\u2019 receiving corps."]}
+        ]},
+      "Imhotep Cromer":{voice:"The Deep Threat",fx:[88,82,84,86,72,80,82,84],s:[0,3],
+        title:"How FieldCheck reads the talent nobody scouts.",
+        proof:"A JUCO transfer turned Division III deep threat and NFL Draft hopeful \u2014 elite tape from a level the world never sees.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"The Bronx",year:"NEW YORK",v:22,lines:["Fell for the game at four years old.","Wears #1, and plays like it."]},
+          {tag:"JUCO",place:"Monroe University",year:"2020",v:54,lines:["Proved it at the junior-college level.","A deep threat with tough hands."]},
+          {tag:"BROCKPORT",place:"Division III",year:"2021",v:72,lines:["A D3 star receiver.","Takes the top off the defense."]},
+          {tag:"THE TAPE",place:"The Breakout",year:"DIVISION III",v:78,lines:["Elite film from a level the world never sees.","Production that travels up every level."]},
+          {tag:"THE DEEP THREAT",place:"The Draft",year:"2022",v:82,lines:["An NFL Draft hopeful out of D3.","Elite tape from a level nobody is scouting."]}
+        ]},
+      "Luka Doncic":{voice:"The Maestro",fx:[80,84,82,96,88,99,78,94],s:[5,3],
+        title:"How FieldCheck reads a basketball genius.",
+        proof:"A EuroLeague MVP and champion at nineteen, then an instant NBA superstar \u2014 the most complete offensive engine of his generation.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Ljubljana",year:"SLOVENIA",v:22,lines:["A prodigy who turned pro at thirteen.","Dominating grown men as a teenager."]},
+          {tag:"REAL MADRID",place:"Spain",year:"2018",v:62,lines:["<b>EuroLeague MVP and champion</b> at nineteen.","The best young player in the world."]},
+          {tag:"DALLAS",place:"The NBA",year:"2019",v:78,lines:["Rookie of the Year.","An instant triple-double machine."]},
+          {tag:"THE ENGINE",place:"The League",year:"2024",v:90,lines:["<b>Scoring champion</b>.","Carried Dallas to the Finals."]},
+          {tag:"THE MAESTRO",place:"Now",year:"NOW",v:100,lines:["The most complete offensive force of his era."]}
+        ]},
+      "Caitlin Clark":{voice:"The Logo",fx:[70,80,99,96,84,96,82,92],s:[2,5],
+        title:"How FieldCheck reads range that broke the sport open.",
+        proof:"The all-time leading scorer in major-college basketball and an instant WNBA sensation \u2014 logo range that changed how the game is watched.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Des Moines",year:"IOWA",v:22,lines:["A gym rat with limitless range.","Shooting from the logo before anyone allowed it."]},
+          {tag:"IOWA",place:"The Hawkeyes",year:"2020",v:62,lines:["A scoring phenomenon.","Sold-out arenas across the country."]},
+          {tag:"THE STAGE",place:"Back-to-Back Finals",year:"2023",v:76,lines:["<b>Two straight national-title games</b>.","The most-watched women\u2019s games ever."]},
+          {tag:"THE RECORD",place:"College Basketball",year:"2024",v:88,lines:["<b>All-time leading scorer</b> in major-college history.","Record television audiences."]},
+          {tag:"THE FEVER",place:"The WNBA",year:"2024",v:100,lines:["<b>Rookie of the Year</b>.","Changed how the game is watched."]}
+        ]},
+      "AJ Dybantsa":{voice:"The Next",fx:[84,80,82,90,82,84,80,86],s:[3,0],
+        title:"How FieldCheck reads the #1 prospect in America.",
+        proof:"The #1 prospect in the country and a projected top NBA pick \u2014 a six-foot-seven scoring forward with a complete game.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Brockton",year:"MASSACHUSETTS",v:22,lines:["Putting defenders on posters since the eighth grade.","A man among boys on the circuit."]},
+          {tag:"THE CIRCUIT",place:"The Grassroots",year:"2023",v:40,lines:["The most feared scorer on the circuit.","Reclassified \u2014 and still untouchable."]},
+          {tag:"UTAH PREP",place:"High School",year:"2024",v:54,lines:["The <b>#1 recruit</b> in America.","A five-star, can\u2019t-miss forward."]},
+          {tag:"BYU",place:"College",year:"2025",v:66,lines:["The prize of the recruiting class.","A program-changer from day one."]},
+          {tag:"THE NEXT",place:"The Draft",year:"2026",v:80,lines:["A projected <b>top NBA pick</b>.","Six-foot-seven with no holes."]}
+        ]},
+      "Harper Murray":{voice:"The Pin",fx:[86,82,80,90,72,80,82,84],s:[3,0],
+        title:"How FieldCheck reads the most dynamic hitter in the college game.",
+        proof:"The nation\u2019s #1 recruit turned three-time All-American \u2014 a six-rotation force and the most dynamic outside hitter in the college game.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Ann Arbor",year:"MICHIGAN",v:22,lines:["Michigan\u2019s Miss Volleyball.","The <b>#1 recruit</b> in the country."]},
+          {tag:"NEBRASKA",place:"Lincoln",year:"2023",v:60,lines:["<b>Big Ten Freshman of the Year</b>.","An instant force in front of a sold-out arena."]},
+          {tag:"ALL-AMERICAN",place:"College Volleyball",year:"2025",v:74,lines:["<b>Three-time AVCA All-American</b>.","A complete six-rotation star."]},
+          {tag:"THE PIN",place:"Now",year:"NOW",v:82,lines:["The most dynamic outside hitter in the game."]}
+        ]},
+      "Cooper Flagg":{voice:"The Phenom",fx:[88,86,90,92,88,90,84,94],s:[0,4],
+        title:"How FieldCheck reads the most complete prospect in a generation.",
+        proof:"National Player of the Year as a freshman and the #1 overall pick \u2014 the most complete two-way prospect in a generation.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Newport",year:"MAINE",v:22,lines:["A small-state kid with a complete two-way game.","Reclassified up a year \u2014 and still dominated."]},
+          {tag:"MONTVERDE",place:"Florida",year:"2024",v:54,lines:["The <b>#1 recruit</b> in the country.","A high-school national champion."]},
+          {tag:"THE SCRIMMAGE",place:"Team USA",year:"2024",v:70,lines:["Held his own against <b>NBA Olympians</b> at seventeen.","The moment the world took notice."]},
+          {tag:"DUKE",place:"Durham",year:"2025",v:84,lines:["<b>National Player of the Year</b> as a freshman.","ACC Player and Freshman of the Year."]},
+          {tag:"THE #1 PICK",place:"The NBA",year:"2025",v:100,lines:["<b>First overall pick</b>.","The most complete prospect in a generation."]}
+        ]},
+      "Giannis Antetokounmpo":{voice:"The Greek Freak",fx:[90,92,99,95,99,86,85,98],s:[2,4],
+        title:"How FieldCheck reads a force of nature.",
+        proof:"From the streets of Athens to back-to-back MVPs and a title \u2014 the most physically dominant force in basketball.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Athens",year:"GREECE",v:18,lines:["Sold trinkets on the street to help his family.","Barely touched a basketball until his teens."]},
+          {tag:"THE LEAP",place:"Milwaukee",year:"2013",v:40,lines:["Drafted out of Greece\u2019s second division.","Raw, impossibly long, fearless."]},
+          {tag:"THE FREAK EMERGES",place:"The Bucks",year:"2017",v:64,lines:["A point guard\u2019s skill in a seven-foot frame.","The most unstoppable drive in the league."]},
+          {tag:"BACK-TO-BACK MVP",place:"The NBA",year:"2019",v:86,lines:["<b>Two straight MVPs</b>.","Defensive Player of the Year."]},
+          {tag:"THE GREEK FREAK",place:"Milwaukee",year:"2021",v:100,lines:["<b>50 points to close out the title</b>.","Champion and Finals MVP."]}
+        ]},
+      "Aaron Judge":{voice:"The Judge",fx:[88,90,90,99,80,86,82,96],s:[3,0],
+        title:"How FieldCheck reads the most feared bat in the game.",
+        proof:"The AL single-season home-run record and three MVPs \u2014 the most awe-inspiring power hitter of his era.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Linden",year:"CALIFORNIA",v:18,lines:["Adopted at one day old.","A giant, two-sport star in a small town."]},
+          {tag:"FRESNO STATE",place:"The Bulldogs",year:"2013",v:40,lines:["Six-foot-seven with staggering power.","A first-round pick."]},
+          {tag:"ALL RISE",place:"The Bronx",year:"2017",v:64,lines:["<b>52 home runs</b> as a rookie.","Rookie of the Year \u2014 unanimous."]},
+          {tag:"THE RECORD",place:"New York",year:"2022",v:86,lines:["<b>62 home runs</b> \u2014 the AL record.","MVP, and the Yankees\u2019 captain."]},
+          {tag:"THE JUDGE",place:"Yankee Stadium",year:"2025",v:100,lines:["<b>Three MVPs</b>.","The most feared power in baseball."]}
+        ]},
+      "Cameron Boozer":{voice:"The Heir",fx:[82,80,72,84,68,80,82,82],s:[0,3],
+        title:"How FieldCheck reads the most decorated forward in the country.",
+        proof:"National Player of the Year before he ever stepped on campus \u2014 the most decorated D1-bound forward in the country.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Miami",year:"FLORIDA",v:20,lines:["Son of an NBA champion.","A twin, and a five-star phenom."]},
+          {tag:"HIGH SCHOOL",place:"Columbus High",year:"MIAMI",v:42,lines:["<b>Two-time Gatorade</b> National Player of the Year.","An undefeated state champion."]},
+          {tag:"THE COMMITMENT",place:"Duke",year:"2025",v:56,lines:["The <b>#1 recruit</b> in the country.","Bound for the Blue Devils."]},
+          {tag:"BEFORE A SINGLE GAME",place:"The Award",year:"2026",v:66,lines:["<b>NABC National Player of the Year</b>.","Honored before he reached campus."]},
+          {tag:"THE HEIR",place:"Durham",year:"NOW",v:72,lines:["The next great Duke forward, arriving."]}
+        ]},
+      "JuJu Watkins":{voice:"The Showstopper",fx:[74,78,84,88,84,80,82,80],s:[3,2],
+        title:"How FieldCheck reads a generational scorer.",
+        proof:"Driving record audiences to women\u2019s basketball while rewriting the freshman and sophomore record books \u2014 a generational scorer.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Los Angeles",year:"CALIFORNIA",v:20,lines:["A daughter of LA.","A jumper built on the blacktop."]},
+          {tag:"HIGH SCHOOL",place:"Sierra Canyon",year:"CALIFORNIA",v:42,lines:["The <b>#1 recruit</b> in the nation.","A McDonald\u2019s All-American."]},
+          {tag:"USC",place:"Los Angeles",year:"2023",v:58,lines:["A freshman <b>scoring sensation</b>.","Record crowds, back in LA."]},
+          {tag:"THE RECORD BOOKS",place:"The Trojans",year:"2024",v:66,lines:["Rewriting the freshman and sophomore books.","Must-watch television."]},
+          {tag:"THE SHOWSTOPPER",place:"USC",year:"NOW",v:70,lines:["A top WNBA pick in waiting."]}
+        ]},
+      "Dagen Brewer":{voice:"The Triple Crown",fx:[74,84,72,86,70,76,82,72],s:[3,1],
+        title:"How FieldCheck reads a triple-crown campaign.",
+        proof:"One of only three players in D2 history with 100 hits and 100 runs in a season \u2014 a triple-crown campaign for the ages.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Pittsburg State",year:"KANSAS \u00b7 D2",v:22,lines:["A bat that turned heads in the MIAA."]},
+          {tag:"THE BREAKOUT",place:"The Gorillas",year:"2025",v:42,lines:["Barrels everything in the zone.","Hits to all fields."]},
+          {tag:"THE TRIPLE CROWN",place:"The MIAA",year:"2026",v:54,lines:["Won the <b>MIAA Triple Crown</b>.","Average, power, and RBIs \u2014 all of it."]},
+          {tag:"NATIONAL HONORS",place:"Division II",year:"2026",v:60,lines:["<b>D2 National Player of the Year</b>.","100 hits and 100 runs \u2014 only the third ever."]},
+          {tag:"THE TRIPLE CROWN",place:"Pittsburg State",year:"NOW",v:62,lines:["One of the greatest seasons in D2 history."]}
+        ]},
+      "Colby Deaver":{voice:"The Unhittable",fx:[76,80,66,40,60,86,84,74],s:[5,6],
+        title:"How FieldCheck reads the most untouchable arm in D2.",
+        proof:"Led the nation in WHIP and ERA with twelve walks across ninety-six innings \u2014 the most unhittable arm in Division II.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Emporia State",year:"KANSAS \u00b7 D2",v:22,lines:["A live arm in the MIAA."]},
+          {tag:"THE RISE",place:"The Hornets",year:"2025",v:42,lines:["Pinpoint command.","Misses bats and barrels alike."]},
+          {tag:"UNHITTABLE",place:"Division II",year:"2026",v:54,lines:["<b>0.82 WHIP, 1.50 ERA</b>.","Twelve walks in ninety-six innings."]},
+          {tag:"NATIONAL HONORS",place:"The Nation",year:"2026",v:58,lines:["<b>D2 National Pitcher of the Year</b>.","Led the country in WHIP and ERA."]},
+          {tag:"THE UNHITTABLE",place:"Emporia State",year:"NOW",v:60,lines:["The most untouchable arm in D2."]}
+        ]},
+      "Kristyna Hranacova":{voice:"The No. 1",fx:[72,78,74,80,82,78,80,55],s:[4,3],
+        title:"How FieldCheck reads total command of the court.",
+        proof:"The top-ranked singles and doubles player in D2, a national title, and a 30-4 doubles record \u2014 total command of the court.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Nova Southeastern",year:"FLORIDA \u00b7 D2",v:24,lines:["A complete game, built point by point."]},
+          {tag:"THE CLIMB",place:"The Sharks",year:"2025",v:44,lines:["Rising through the D2 ranks.","A weapon from anywhere."]},
+          {tag:"NO. 1",place:"Division II",year:"2026",v:54,lines:["<b>No. 1 in singles and doubles</b>.","Total command of the court."]},
+          {tag:"NATIONAL CHAMPION",place:"The Title",year:"2026",v:58,lines:["A national champion.","<b>30-4</b> in doubles."]},
+          {tag:"THE NO. 1",place:"Nova Southeastern",year:"NOW",v:60,lines:["The best in Division II tennis."]}
+        ]},
+      "Kaley McIntyre":{voice:"The Collector",fx:[78,76,82,86,82,82,86,58],s:[3,6],
+        title:"How FieldCheck reads the most decorated swimmer at the level.",
+        proof:"Five national titles in one championship meet, fifteen in a career \u2014 tying the D3 record \u2014 the most decorated swimmer at the level.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"NYU",year:"NEW YORK \u00b7 D3",v:26,lines:["A racer always chasing the wall."]},
+          {tag:"THE CHAMPION",place:"The Violets",year:"2023",v:46,lines:["A national champion emerges."]},
+          {tag:"FIVE IN ONE MEET",place:"NCAA Championships",year:"2026",v:58,lines:["<b>Five national titles</b> in a single meet."]},
+          {tag:"ATHLETE OF THE YEAR",place:"Division III",year:"2026",v:60,lines:["<b>D3 Woman Athlete of the Year</b>.","Fifteen national titles \u2014 a D3 record."]},
+          {tag:"THE COLLECTOR",place:"NYU",year:"NOW",v:62,lines:["The most decorated swimmer at the level."]}
+        ]},
+      "Alex Kagoro":{voice:"The Ceiling",fx:[84,82,72,86,70,74,80,76],s:[3,0],
+        title:"How FieldCheck reads the premier attacker in the game.",
+        proof:"National Player of the Year \u2014 elite attacking and presence above the net made him the premier player in men\u2019s D3 volleyball.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Messiah",year:"PENNSYLVANIA \u00b7 D3",v:24,lines:["A force above the net."]},
+          {tag:"THE RISE",place:"The Falcons",year:"2025",v:44,lines:["Terminal at the pin.","Impossible to dig."]},
+          {tag:"NATIONAL PLAYER",place:"Division III",year:"2026",v:56,lines:["<b>AVCA D3 National Player of the Year</b>."]},
+          {tag:"THE PREMIER",place:"Men\u2019s Volleyball",year:"2026",v:58,lines:["Elite attacking, presence above the net."]},
+          {tag:"THE CEILING",place:"Messiah",year:"NOW",v:60,lines:["The best in men\u2019s D3 volleyball."]}
+        ]},
+      "Riley Laygo":{voice:"The Slugger",fx:[72,84,70,86,68,76,80,70],s:[3,1],
+        title:"How FieldCheck reads the most feared hitter at the level.",
+        proof:"National Player of the Year \u2014 a breakthrough at the plate that made her the most feared hitter in Division III.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Rochester",year:"NEW YORK \u00b7 D3",v:24,lines:["A swing that found another gear."]},
+          {tag:"THE BREAKOUT",place:"The Yellowjackets",year:"2025",v:44,lines:["A breakthrough at the plate."]},
+          {tag:"MOST FEARED",place:"Division III",year:"2026",v:54,lines:["The most feared hitter at the level."]},
+          {tag:"NATIONAL PLAYER",place:"The Nation",year:"2026",v:58,lines:["<b>NFCA D3 National Player of the Year</b>."]},
+          {tag:"THE SLUGGER",place:"Rochester",year:"NOW",v:58,lines:["A breakout season for the ages."]}
+        ]},
+      "Shah Hall":{voice:"The Eraser",fx:[88,76,64,76,52,70,78,68],s:[0,3],
+        title:"How FieldCheck reads a rim nobody could reach.",
+        proof:"A six-foot-eleven shot-blocking force shooting 65% from the field \u2014 JUCO tape that earned a high-major scholarship.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Shelton State",year:"ALABAMA \u00b7 JUCO",v:24,lines:["Six-foot-eleven.","A rim nobody could reach."]},
+          {tag:"THE FORCE",place:"The Buccaneers",year:"2025",v:44,lines:["<b>65% from the field</b>.","Erases shots at the rim."]},
+          {tag:"ALL-AMERICAN",place:"Junior College",year:"2026",v:54,lines:["A <b>JUCO All-American</b>."]},
+          {tag:"THE LEAP",place:"NC State",year:"2026",v:58,lines:["Tape that earned a high-major scholarship.","Committed to the Wolfpack."]},
+          {tag:"THE ERASER",place:"The Next Level",year:"NOW",v:60,lines:["A shot-blocking force, rising."]}
+        ]},
+      "Layla Scott":{voice:"The General",fx:[68,76,82,82,82,76,82,80],s:[2,4],
+        title:"How FieldCheck reads a powerhouse guard.",
+        proof:"Back-to-back First Team All-American \u2014 a powerhouse guard whose JUCO dominance earned a D1 signing.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Johnson County",year:"KANSAS \u00b7 JUCO",v:24,lines:["A powerhouse guard.","Downhill and relentless."]},
+          {tag:"THE RISE",place:"The Cavaliers",year:"2025",v:44,lines:["Took over games off the bounce."]},
+          {tag:"ALL-AMERICAN",place:"Junior College",year:"2025\u20132026",v:54,lines:["<b>Back-to-back NJCAA All-American</b>."]},
+          {tag:"THE LEAP",place:"Liberty",year:"2026",v:58,lines:["A D1 signee.","The next level calls."]},
+          {tag:"THE GENERAL",place:"The Next Level",year:"NOW",v:58,lines:["JUCO dominance, headed up."]}
+        ]},
+      "Stephen Curry":{voice:"The Revolution",fx:[78,72,88,99,97,98,92,95],s:[3,4],
+        title:"How FieldCheck reads the man who moved the line.",
+        proof:"The only unanimous MVP, the most threes in history, range from the logo \u2014 he relocated the three-point line in everyone\u2019s mind.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Charlotte",year:"NORTH CAROLINA \u00b7 BORN 1988",v:15,lines:["Too small for the big programs.","A shot already pure."]},
+          {tag:"DAVIDSON",place:"The Cinderella Run",year:"2008",v:44,lines:["Carried a tiny school to the <b>Elite Eight</b>.","The nation learned his name."]},
+          {tag:"THE UNANIMOUS MVP",place:"Golden State",year:"2016",v:82,lines:["<b>402 threes</b> in a single season.","The first unanimous MVP ever."]},
+          {tag:"THE DYNASTY",place:"The Bay",year:"2015\u20132022",v:94,lines:["<b>Four titles</b>, a Finals MVP.","The last doubt erased."]},
+          {tag:"THE REVOLUTION",place:"The Logo",year:"LEGEND",v:100,lines:["The greatest shooter who ever lived.","He moved the line in our minds."]}
+        ]},
+      "Sachin Tendulkar":{voice:"The Little Master",fx:[90,88,96,99,98,97,92,100],s:[3,4],
+        title:"How FieldCheck reads a nation\u2019s heartbeat.",
+        proof:"Twenty-four years, a hundred international centuries, the most runs in history \u2014 a billion dreams in one bat.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Mumbai",year:"INDIA \u00b7 BORN 1973",v:14,lines:["A boy who batted for hours in the maidan.","Coached before he was eleven."]},
+          {tag:"THE PRODIGY",place:"Schools Cricket",year:"1988",v:38,lines:["A <b>664-run partnership</b> as a schoolboy.","First-class debut at fifteen."]},
+          {tag:"TEST DEBUT",place:"Karachi",year:"1989",v:54,lines:["Faced the world\u2019s fastest at <b>sixteen</b>.","Bloodied, and never backed down."]},
+          {tag:"THE DESERT STORM",place:"Sharjah",year:"1998",v:82,lines:["<b>143 against Australia</b>, alone in a sandstorm.","A nation stopped to watch."]},
+          {tag:"THE LITTLE MASTER",place:"A Billion Dreams",year:"LEGEND",v:100,lines:["World Cup champion, 2011.","<b>100 international centuries</b> \u2014 none will reach it."]}
+        ]},
+      "Serena Williams":{voice:"The Queen",fx:[88,99,90,99,92,94,99,100],s:[1,6],
+        title:"How FieldCheck reads pure dominance.",
+        proof:"Twenty-three Grand Slams \u2014 power and will that rewrote the women\u2019s game entirely.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Compton",year:"CALIFORNIA \u00b7 BORN 1981",v:15,lines:["Learned on cracked public courts.","A father\u2019s impossible plan."]},
+          {tag:"TURNED PRO",place:"The Tour",year:"1995",v:40,lines:["On the pro tour at <b>fourteen</b>.","The power game arrived."]},
+          {tag:"FIRST CROWN",place:"US Open",year:"1999",v:58,lines:["<b>First major at seventeen</b>.","The Williams era begins."]},
+          {tag:"THE SERENA SLAM",place:"All Four At Once",year:"2002\u20132003",v:84,lines:["Held <b>all four majors</b> at once.","Then did it all again."]},
+          {tag:"THE QUEEN",place:"The G.O.A.T.",year:"LEGEND",v:100,lines:["A 23rd major \u2014 won while pregnant.","She rewrote the women\u2019s game."]}
+        ]},
+      "Muhammad Ali":{voice:"The Greatest",fx:[96,90,98,92,97,99,100,100],s:[2,6],
+        title:"How FieldCheck reads the man bigger than the sport.",
+        proof:"He shocked Liston, won the Rumble in the Jungle, and called himself The Greatest until the world agreed.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Louisville",year:"KENTUCKY \u00b7 BORN 1942",v:16,lines:["Took up boxing at twelve \u2014 over a stolen bike.","Anger turned to art."]},
+          {tag:"OLYMPIC GOLD",place:"Rome",year:"1960",v:42,lines:["<b>Olympic gold at eighteen</b>.","The mouth and the gift, together."]},
+          {tag:"SHOCK THE WORLD",place:"Miami",year:"1964",v:66,lines:["Beat Liston as a <b>7-to-1 underdog</b>.","\u2018I am the greatest.\u2019"]},
+          {tag:"THE RUMBLE",place:"Kinshasa",year:"1974",v:90,lines:["<b>Rope-a-dope</b> felled George Foreman.","Champion of the world again."]},
+          {tag:"THE GREATEST",place:"The Ring",year:"LEGEND",v:100,lines:["Float like a butterfly, sting like a bee.","Bigger than the sport itself."]}
+        ]},
+      "Simone Biles":{voice:"The G.O.A.T.",fx:[97,99,92,100,96,95,98,100],s:[3,1],
+        title:"How FieldCheck reads the limit of the possible.",
+        proof:"Five skills bear her name. She made gravity look optional \u2014 the most decorated gymnast in history.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Columbus",year:"OHIO \u00b7 BORN 1997",v:14,lines:["Discovered on a daycare field trip.","Bounced before she could sit still."]},
+          {tag:"THE PHENOM",place:"World Championships",year:"2013\u20132015",v:52,lines:["<b>Three straight all-around</b> world titles.","No one came close."]},
+          {tag:"RIO",place:"The Olympics",year:"2016",v:78,lines:["<b>Four golds</b> at a single Games.","Gravity looked optional."]},
+          {tag:"HER OWN NAME",place:"The Code of Points",year:"2019\u2192",v:90,lines:["<b>Five skills</b> named after her.","Too hard for anyone else to try."]},
+          {tag:"THE G.O.A.T.",place:"The Apex",year:"LEGEND",v:100,lines:["The comeback gold in Paris.","Most decorated gymnast in history."]}
+        ]},
+      "Michael Phelps":{voice:"The Olympian",fx:[98,94,99,97,95,96,99,100],s:[2,6],
+        title:"How FieldCheck reads the most decorated ever.",
+        proof:"Eight golds in a single Games. Twenty-three across four. No Olympian in any sport has more.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Baltimore",year:"MARYLAND \u00b7 BORN 1985",v:15,lines:["A restless kid who found the water.","A wingspan built for it."]},
+          {tag:"YOUNGEST IN 68 YEARS",place:"Sydney",year:"2000",v:40,lines:["Olympian at <b>fifteen</b>.","World record at sixteen."]},
+          {tag:"ATHENS",place:"The Olympics",year:"2004",v:62,lines:["<b>Six golds</b> at his first full Games.","The hunt was on."]},
+          {tag:"BEIJING",place:"The Water Cube",year:"2008",v:90,lines:["<b>Eight golds, one Games</b>.","A record thought impossible."]},
+          {tag:"THE OLYMPIAN",place:"The Podium",year:"LEGEND",v:100,lines:["<b>23 Olympic golds</b>.","The most decorated Olympian ever."]}
+        ]},
+      "Tom Brady":{voice:"The Comeback",fx:[80,60,55,97,95,100,96,99],s:[5,7],
+        title:"How FieldCheck reads the slight that fueled a career.",
+        proof:"Drafted 199th, won seven rings, erased 28\u20133 \u2014 the greatest to ever play the position.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"San Mateo",year:"CALIFORNIA \u00b7 BORN 1977",v:14,lines:["Skinny, slow, overlooked.","A chip that never came off."]},
+          {tag:"THE 199TH PICK",place:"The Draft",year:"2000",v:32,lines:["<b>Six quarterbacks</b> went ahead of him.","He kept the slight forever."]},
+          {tag:"THE FIRST RING",place:"New Orleans",year:"2001",v:60,lines:["Champion in his <b>first year starting</b>.","A backup no more."]},
+          {tag:"28\u20133",place:"Houston",year:"2017",v:86,lines:["Erased the <b>impossible deficit</b>.","The greatest comeback ever."]},
+          {tag:"THE COMEBACK",place:"The G.O.A.T.",year:"LEGEND",v:100,lines:["<b>Seven rings</b>, two franchises.","The greatest to ever play."]}
+        ]},
+      "Shohei Ohtani":{voice:"The Unicorn",fx:[90,97,90,96,80,92,93,90],s:[1,3],
+        title:"How FieldCheck reads what baseball waited a century for.",
+        proof:"The first 50-50 season ever, while pitching like an ace \u2014 the two-way unicorn the game never thought it would see.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Oshu",year:"JAPAN \u00b7 BORN 1994",v:16,lines:["A two-way dream no one allowed.","He refused to choose."]},
+          {tag:"THE NIPPON PHENOM",place:"Japan",year:"2013\u20132017",v:50,lines:["Pitched 100mph <b>and</b> hit cleanup.","A unicorn in the making."]},
+          {tag:"ROOKIE OF THE YEAR",place:"Anaheim",year:"2018",v:66,lines:["Crossed the Pacific.","<b>Hit and pitched</b> from day one."]},
+          {tag:"THE 50-50",place:"The Majors",year:"2024",v:92,lines:["<b>50 homers, 50 steals</b> \u2014 a first ever.","Unanimous MVPs piling up."]},
+          {tag:"THE UNICORN",place:"The Apex",year:"LEGEND",v:100,lines:["Pitches like an ace, hits like an MVP.","A century in the making."]}
+        ]},
+      "Cristiano Ronaldo":{voice:"The Machine",fx:[95,96,94,99,90,84,96,92],s:[3,0],
+        title:"How FieldCheck reads relentless will.",
+        proof:"Over nine hundred career goals across every league he ever entered \u2014 a monument to relentless will.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Madeira",year:"PORTUGAL \u00b7 BORN 1985",v:15,lines:["An island kid who left home at twelve.","Trained until the lights went out."]},
+          {tag:"THE WONDERKID",place:"Manchester",year:"2003",v:48,lines:["The <b>number 7</b> at United.","Stepovers into superstardom."]},
+          {tag:"LA D\u00c9CIMA",place:"Madrid",year:"2009\u20132018",v:84,lines:["<b>Four Champions Leagues</b> in five years.","450 goals in white."]},
+          {tag:"THE NATION",place:"Portugal",year:"2016",v:92,lines:["<b>Euro champion</b> for his country.","Carried a nation on his back."]},
+          {tag:"THE MACHINE",place:"The Record",year:"LEGEND",v:100,lines:["<b>900+ career goals</b>.","A force that never powered down."]}
+        ]},
+      "LeBron James":{voice:"The King",fx:[95,93,90,96,90,97,96,98],s:[5,7],
+        title:"How FieldCheck reads a myth made real.",
+        proof:"The all-time leading scorer, still dominating after twenty-one seasons \u2014 built like a myth, lasted like a legend.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Akron",year:"OHIO \u00b7 BORN 1984",v:16,lines:["\u2018The Chosen One\u2019 on a magazine cover.","A high-schooler carrying a city."]},
+          {tag:"STRAIGHT TO THE LEAGUE",place:"Cleveland",year:"2003",v:52,lines:["<b>#1 pick</b> out of high school.","Rookie of the Year, instantly."]},
+          {tag:"THE TITLES",place:"Miami",year:"2012\u20132013",v:78,lines:["<b>Back-to-back champion</b>.","Four MVPs in the bank."]},
+          {tag:"THE PROMISE",place:"Cleveland",year:"2016",v:90,lines:["<b>The block, the comeback</b> from 3\u20131.","A title for his hometown."]},
+          {tag:"THE KING",place:"The Throne",year:"LEGEND",v:100,lines:["<b>All-time leading scorer</b>.","21 seasons \u2014 a myth made real."]}
+        ]},
+      "Patrick Mahomes":{voice:"The Magician",fx:[86,82,80,99,92,97,90,93],s:[3,5],
+        title:"How FieldCheck reads the arm that breaks geometry.",
+        proof:"No-look darts, sidearm lasers, three rings before thirty \u2014 the arm that bends the geometry of the game.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Tyler",year:"TEXAS \u00b7 BORN 1995",v:15,lines:["A pitcher\u2019s son with a baseball arm.","Threw from every angle."]},
+          {tag:"THE WAIT",place:"Kansas City",year:"2017",v:44,lines:["Sat a year behind a veteran.","The league had no idea."]},
+          {tag:"MVP",place:"His First Start",year:"2018",v:68,lines:["<b>50 touchdowns</b>, MVP, year one.","No-look passes arrived."]},
+          {tag:"THE DYNASTY",place:"The Super Bowls",year:"2020\u20132024",v:92,lines:["<b>Three rings</b> before thirty.","Comebacks that defy the clock."]},
+          {tag:"THE MAGICIAN",place:"The Ceiling",year:"LEGEND",v:100,lines:["Sidearm, no-look, off-platform.","The arm that breaks geometry."]}
+        ]},
+      "Babe Ruth":{voice:"The Bambino",fx:[92,100,70,99,72,88,86,95],s:[1,3],
+        title:"How FieldCheck reads the man who changed the game.",
+        proof:"714 home runs in a dead-ball world \u2014 he didn\u2019t break records, he changed what was possible.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Baltimore",year:"MARYLAND \u00b7 BORN 1895",v:16,lines:["A reform-school kid.","Saved by a game and a priest."]},
+          {tag:"THE PITCHER",place:"Boston",year:"1914",v:44,lines:["Began as an <b>ace left-hander</b>.","World Series rings on the mound."]},
+          {tag:"THE TRADE",place:"New York",year:"1920",v:68,lines:["Sold to the Yankees.","The home run was reborn."]},
+          {tag:"SIXTY",place:"The Stadium",year:"1927",v:90,lines:["<b>60 home runs</b> in a season.","A number that stood for decades."]},
+          {tag:"THE BAMBINO",place:"The Legend",year:"LEGEND",v:100,lines:["<b>714 home runs</b>.","He changed what was possible."]}
+        ]},
+      "Michael Jordan":{voice:"His Airness",fx:[82,95,96,99,90,97,99,99],s:[3,6],
+        title:"How FieldCheck reads the standard the game is measured against.",
+        proof:"Six titles, six Finals MVPs, never a Game 7 loss \u2014 the standard every read since is measured against.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Wilmington",year:"NORTH CAROLINA \u00b7 BORN 1963",v:14,lines:["Cut from varsity as a sophomore.","Used it as fuel for twenty years."]},
+          {tag:"NORTH CAROLINA",place:"Chapel Hill",year:"1982",v:40,lines:["Hit the <b>title-winning shot</b> as a freshman.","National champion."]},
+          {tag:"THE LEAGUE",place:"Chicago",year:"1984\u2192",v:62,lines:["<b>Rookie of the Year.</b>","A scoring force from night one."]},
+          {tag:"THE DYNASTY",place:"The Bulls",year:"1991\u20131998",v:88,lines:["<b>Six championships.</b>","Six Finals MVPs \u2014 a perfect record."]},
+          {tag:"HIS AIRNESS",place:"The Ceiling",year:"LEGEND",v:100,lines:["Five MVPs.","The gravity the game still orbits."]}
+        ]},
+      "Usain Bolt":{voice:"Lightning",fx:[97,88,100,99,92,90,93,100],s:[2,3],
+        title:"How FieldCheck clocks the fastest human ever measured.",
+        proof:"9.58 in the 100, 19.19 in the 200 \u2014 records standing for over a decade.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Trelawny",year:"JAMAICA \u00b7 BORN 1986",v:16,lines:["A cricket-loving kid.","Faster than everyone in the parish."]},
+          {tag:"THE PRODIGY",place:"World Juniors",year:"2002",v:42,lines:["<b>Youngest-ever</b> world junior champion.","Fifteen years old."]},
+          {tag:"BEIJING",place:"The Olympics",year:"2008",v:74,lines:["<b>Three golds, three world records.</b>","And he eased up at the line."]},
+          {tag:"THE TREBLE-TREBLE",place:"London \u00b7 Rio",year:"2012\u20132016",v:92,lines:["<b>Eight Olympic golds</b> across three Games.","Never beaten in an Olympic final."]},
+          {tag:"LIGHTNING",place:"9.58",year:"LEGEND",v:100,lines:["The fastest human who has ever lived.","Records that may never fall."]}
+        ]},
+      "Lionel Messi":{voice:"The Genius",fx:[70,72,88,99,100,99,82,88],s:[4,3],
+        title:"How FieldCheck makes genius measurable.",
+        proof:"Eight Ballons d\u2019Or, a World Cup, more goals than anyone who ever played.",
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Rosario",year:"ARGENTINA \u00b7 BORN 1987",v:14,lines:["A tiny kid with a growth disorder.","And a gift no one could miss."]},
+          {tag:"LA MASIA",place:"Barcelona",year:"2000",v:42,lines:["Crossed an ocean at <b>thirteen</b>.","The academy that changed football."]},
+          {tag:"THE BLAUGRANA",place:"Camp Nou",year:"2009\u20132015",v:80,lines:["<b>Four Champions Leagues.</b>","Records by the hundred."]},
+          {tag:"THE CROWN",place:"Qatar",year:"2022",v:94,lines:["<b>World Cup champion.</b>","The one trophy left, finally his."]},
+          {tag:"THE GENIUS",place:"The GOAT",year:"LEGEND",v:100,lines:["Eight Ballons d\u2019Or.","More goals than anyone, ever."]}
+        ]},
+      "Madisen Skinner":{voice:"The Closer",fx:[64,86,81,87,64,62,88,79],s:[6,3],
+        title:"How FieldCheck saw her \u2014 before the world agreed.",
+        proof:"Three NCAA titles, National Player of the Year, Finals MVP \u2014 the closer, every time it mattered.",
+        slines:{1:"The title-clinching swing \u2014 more than once.",0:"Terminal velocity at the pin."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Katy, Texas",year:"BORN 2001",v:12,lines:["Daughter of an NBA father and an All-American sister.","Picked up the game seriously at fifteen."]},
+          {tag:"HIGH SCHOOL",place:"Seven Lakes",year:"KATY, TEXAS \u00b7 2019",v:34,lines:["The <b>#2 recruit</b> in the country.","PrepVolleyball All-American."]},
+          {tag:"KENTUCKY",place:"Lexington",year:"2020",v:58,lines:["National champion as a <b>true freshman</b>.","19 kills in the title match."]},
+          {tag:"TEXAS",place:"Austin",year:"2022\u20132024",v:82,lines:["Back-to-back national titles.","<b>National Player of the Year</b>, 2023.","Four-time All-American."]},
+          {tag:"THE CLOSER",place:"LOVB Austin",year:"PRO \u00b7 2025",v:100,lines:["U.S. National Team debut, 2024.","Inaugural LOVB season.","<b>Finals MVP.</b>"]}
+        ]},
+      "Amber Igiede":{voice:"The Hammer",fx:[88,84,86,72,66,78,82,74],s:[0,2],
+        title:"How FieldCheck saw her \u2014 before the league agreed.",
+        proof:"Two-time All-American, Big West Player of the Year, LOVB's Best Middle Blocker.",
+        slines:{2:"Among the most efficient hitters in the league.",4:"A wall in the middle."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Baton Rouge",year:"LOUISIANA \u00b7 BORN 2001",v:14,lines:["Started out at St. Michael High.","Found the game and never looked back."]},
+          {tag:"HAWAI'I",place:"M\u0101noa",year:"2019\u20132023",v:50,lines:["<b>Two-time All-American.</b>","2022 Big West Player of the Year.","NCAA tournament every single season."]},
+          {tag:"ITALY",place:"Roma Volley",year:"PRO \u00b7 2024",v:66,lines:["First pro contract, Serie A1.","Sharpened the edge overseas."]},
+          {tag:"TEAM USA",place:"Pan American Cup",year:"2024",v:80,lines:["National team debut.","<b>Pan Am silver.</b>"]},
+          {tag:"THE HAMMER",place:"LOVB Houston",year:"PRO \u00b7 2025",v:100,lines:["<b>Best Middle Blocker</b>, LOVB Classic.","First-Team LOVB Icon."]}
+        ]},
+      "Jordan Larson":{voice:"The GOAT",fx:[93,78,97,94,99,99,91,99],s:[4,5],
+        title:"How FieldCheck saw her \u2014 before, during, and long after.",
+        proof:"Four Olympic medals, a gold and a Games MVP \u2014 two decades as the standard.",
+        slines:{5:"She reads the play before it happens.",6:"Every match, for twenty years."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Hooper, Nebraska",year:"BORN 1986",v:8,lines:["A town of <b>832 people</b>.","Picked up volleyball in eighth grade."]},
+          {tag:"HIGH SCHOOL",place:"Logan View",year:"HOOPER, NEBRASKA \u00b7 2003",v:26,lines:["Set a <b>state kills record</b> \u2014 15.08 a game.","Three-time Super-State first team."]},
+          {tag:"NEBRASKA",place:"Lincoln",year:"2005\u20132008",v:48,lines:["National champion, 2006.","Three-time All-American.","127\u20138 across four years."]},
+          {tag:"THE WORLD STAGE",place:"The Olympics",year:"2012 \u00b7 2016 \u00b7 2021 \u00b7 2024",v:88,lines:["<b>Four-time Olympian.</b>","Gold and Games MVP \u2014 Tokyo 2020.","First U.S. indoor player with four medals."]},
+          {tag:"THE GOAT",place:"LOVB Omaha",year:"PRO \u00b7 2025",v:100,lines:["Founding athlete and co-owner.","The Governor comes home."]}
+        ]},
+      "Jordan Thompson":{voice:"The Cannon",fx:[82,95,70,93,64,80,90,80],s:[1,3],
+        title:"How FieldCheck clocked the most feared swing in the game.",
+        proof:"Most points in a single LOVB season, ever \u2014 the engine saw the separation before the box score did.",
+        slines:{0:"The hardest, heaviest swing in the building.",2:"Power, with almost none of it wasted."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Edina, Minnesota",year:"PREP \u00b7 2015",v:22,lines:["A Minnesota prep phenom.","One unteachable gift from the start \u2014 <b>power.</b>"]},
+          {tag:"CINCINNATI",place:"The Bearcats",year:"2016\u20132019",v:52,lines:["<b>Two-time All-American.</b>","Rewrote the program record book."]},
+          {tag:"TEAM USA",place:"Tokyo Olympics",year:"2021",v:74,lines:["Olympic <b>gold</b> with the national team.","The opposite the U.S. built around."]},
+          {tag:"THE PROVING GROUND",place:"Italy & T\u00fcrkiye",year:"PRO \u00b7 2022\u20132024",v:88,lines:["Top-flight European clubs.","Tested nightly against the world's best."]},
+          {tag:"THE CANNON",place:"LOVB",year:"PRO \u00b7 2026",v:100,lines:["<b>League MVP.</b>","The most dominant season the league has seen."]}
+        ]},
+      "Harper Murray":{voice:"The Silencer",fx:[72,68,60,71,63,56,67,59],s:[0,3],
+        title:"How FieldCheck saw the swing that quiets an arena.",
+        proof:"Gatorade National Player of the Year to three-time All-American \u2014 the read that turns a top recruit into a number you can trust.",
+        slines:{0:"Terminal from the pin.",7:"The ceiling is still climbing."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Ann Arbor, Michigan",year:"SKYLINE HS \u00b7 2022",v:18,lines:["<b>Gatorade National Player of the Year.</b>","Michigan's Miss Volleyball."]},
+          {tag:"TEAM USA YOUTH",place:"U19 Pan Am",year:"2022",v:40,lines:["<b>Gold medal</b> and tournament Best Spiker.","13 kills in the title win over Brazil."]},
+          {tag:"NEBRASKA",place:"Lincoln",year:"2023",v:62,lines:["<b>Big Ten Freshman of the Year.</b>","A starter from day one on a contender."]},
+          {tag:"ALL-AMERICAN",place:"The Huskers",year:"2024\u20132025",v:84,lines:["<b>Three-time AVCA All-American.</b>","National Player of the Year semifinalist, 2025."]},
+          {tag:"THE SILENCER",place:"Nebraska",year:"NOW",v:100,lines:["The swing that quiets a sold-out Devaney.","A top recruit, now a number you can trust."]}
+        ]},
+      "Lauren Carlini":{voice:"The Conductor",fx:[60,72,74,64,90,94,84,90],s:[5,4],
+        title:"How FieldCheck measured the hands that run the offense.",
+        proof:"Four-time All-American and an Olympic medalist \u2014 she runs an offense the box score can't capture.",
+        slines:{5:"She sees the play two contacts early.",6:"The same precision, every single night."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Illinois",year:"PREP",v:20,lines:["A setter's feel, visible early.","One of the nation's most-wanted recruits."]},
+          {tag:"WISCONSIN",place:"Madison",year:"2013\u20132016",v:46,lines:["<b>Four-time All-American.</b>","Big Ten Setter of the Year."]},
+          {tag:"TEAM USA",place:"National Team",year:"2016\u2192",v:64,lines:["The national team's setter.","Years in the red, white and blue."]},
+          {tag:"PARIS",place:"The Olympics",year:"2024",v:88,lines:["Olympic <b>silver.</b>","Ran the offense on the sport's biggest stage."]},
+          {tag:"THE CONDUCTOR",place:"LOVB Madison",year:"PRO \u00b7 2026",v:100,lines:["The league's premier hands.","Home, as a Setter Icon."]}
+        ]},
+      "Manami Kojima":{voice:"The Last Line",fx:[30,66,95,40,92,86,90,76],s:[2,4],
+        title:"How FieldCheck ranked the unrankable \u2014 the libero.",
+        proof:"First to 250 digs in league history. Nothing the tape shows ever hits the floor.",
+        slines:{3:"Turns defense into offense.",6:"Reads the attack before contact."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Japan",year:"NEC RED ROCKETS \u00b7 2016",v:18,lines:["A libero's craft, honed in Japan's top league.","Defense as an art form."]},
+          {tag:"THE PROVING GROUND",place:"V.League",year:"2017\u20132023",v:54,lines:["<b>Three league titles.</b>","Among the best defenders in Japan."]},
+          {tag:"TEAM JAPAN",place:"National Team",year:"2024",v:74,lines:["A national-team call-up.","The last line for her country."]},
+          {tag:"THE LEAP",place:"LOVB Salt Lake",year:"PRO \u00b7 2025",v:88,lines:["Crossed an ocean for the inaugural league.","Anchored a back row overnight."]},
+          {tag:"THE LAST LINE",place:"LOVB",year:"2026",v:100,lines:["<b>Libero of the Year.</b>","First to 250 digs in league history."]}
+        ]},
+      "Asjia O'Neal":{voice:"The Wall",fx:[90,82,68,82,74,86,82,80],s:[0,5],
+        title:"How FieldCheck proved what the eye suspects at the net.",
+        proof:"League-best block on a back-to-back champion \u2014 the wall, quantified.",
+        slines:{4:"A wall in the middle.",2:"Efficient on every touch."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Texas",year:"PREP",v:20,lines:["A Texas standout who stayed home.","Built for the middle."]},
+          {tag:"TEXAS",place:"Austin",year:"2018\u20132022",v:48,lines:["<b>National champion, 2022.</b>","A title-team centerpiece at the net."]},
+          {tag:"TEAM USA",place:"National Team",year:"2024",v:78,lines:["A national-team selection.","The block, on the world stage."]},
+          {tag:"LOVB AUSTIN",place:"Austin",year:"PRO \u00b7 2025",v:92,lines:["<b>Inaugural-season champion.</b>","The wall on a title team."]},
+          {tag:"THE WALL",place:"LOVB Austin",year:"2026",v:100,lines:["<b>First-Team Icon.</b>","League-best block, two seasons running."]}
+        ]},
+      "Logan Eggleston":{voice:"The Captain",fx:[80,84,80,84,78,86,88,90],s:[7,6],
+        title:"How FieldCheck captured the read the stat line splits apart.",
+        proof:"AVCA Player of the Year \u2014 twenty points and fourteen digs in the same match, on a champion.",
+        slines:{5:"Leads the floor on both ends.",3:"Defense that starts the offense."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Brentwood, Tennessee",year:"PREP \u00b7 2017",v:24,lines:["Tennessee's most decorated prep.","A leader before she ever arrived."]},
+          {tag:"TEXAS",place:"Austin",year:"2018\u20132022",v:52,lines:["<b>Five conference titles.</b>","The face of the program."]},
+          {tag:"THE SUMMIT",place:"National Championship",year:"2022",v:80,lines:["<b>National title \u2014 Final MVP.</b>","AVCA Player of the Year."]},
+          {tag:"TEAM USA",place:"National Team",year:"2023\u2192",v:88,lines:["Into the national-team picture.","An all-court game that travels."]},
+          {tag:"THE CAPTAIN",place:"LOVB Austin",year:"PRO \u00b7 2026",v:100,lines:["<b>Champion and LOVB Icon.</b>","Twenty kills and fourteen digs in a night."]}
+        ]},
+      "Jess Mruzik":{voice:"The Spark",fx:[71,66,62,73,66,60,69,61],s:[3,0],
+        title:"How FieldCheck tracked an arrow that keeps pointing up.",
+        proof:"Twenty-nine kills in a national title game \u2014 the most valuable player when it mattered most.",
+        slines:{0:"Terminal in the biggest moments.",7:"And she's still climbing."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Michigan",year:"U18 WORLDS \u00b7 2019",v:18,lines:["<b>U18 World Championship MVP.</b>","A scorer's instinct, early."]},
+          {tag:"MICHIGAN",place:"Ann Arbor",year:"2021\u20132023",v:54,lines:["<b>All-American.</b>","A program centerpiece."]},
+          {tag:"PENN STATE",place:"The Title",year:"2024",v:82,lines:["<b>National champion \u2014 Final MOP.</b>","29 kills in the championship match."]},
+          {tag:"THE LEAP",place:"LOVB Houston",year:"PRO \u00b7 2025",v:92,lines:["Pro in the inaugural league.","Scoring from the jump."]},
+          {tag:"THE SPARK",place:"LOVB Houston",year:"2026",v:100,lines:["<b>Two-time LOVB Icon.</b>","The arrow still points up."]}
+        ]},
+      "Alexa Gray":{voice:"The Engine",fx:[82,88,78,86,70,80,86,78],s:[1,3],
+        title:"How FieldCheck captured a motor that won't quit.",
+        proof:"Salt Lake's engine to the final \u2014 the read that quantifies relentlessness.",
+        slines:{6:"The same level, every rally.",0:"Heavy from the pin."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Calgary, Canada",year:"PREP",v:20,lines:["A Canadian outside hitter.","Built on motor and reach."]},
+          {tag:"BYU",place:"Provo",year:"2012\u20132015",v:46,lines:["<b>Two-time conference Player of the Year.</b>","A collegiate standout."]},
+          {tag:"TEAM CANADA",place:"National Team",year:"2017\u2192",v:64,lines:["The national team's outside.","Years in the maple leaf."]},
+          {tag:"THE PROVING GROUND",place:"Italy",year:"PRO \u00b7 2022\u20132023",v:88,lines:["<b>League MVP abroad.</b>","A club-world champion."]},
+          {tag:"THE ENGINE",place:"LOVB Salt Lake",year:"PRO \u00b7 2026",v:100,lines:["The motor of a contender.","An LOVB Icon."]}
+        ]},
+      "Olivia Babcock":{voice:"The Phenom",fx:[75,70,64,74,65,58,67,60],s:[0,3],
+        title:"How FieldCheck turned a label into a number.",
+        proof:"Two-time National Player of the Year before her senior season \u2014 the ceiling, quantified.",
+        slines:{0:"The most feared swing in college volleyball.",7:"And she isn't done growing."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"California",year:"PREP",v:22,lines:["A top-ranked national recruit.","Power from the very first swing."]},
+          {tag:"PITTSBURGH",place:"Pitt",year:"2023\u20132024",v:58,lines:["Arrived and dominated immediately.","A program lifted to the Final Four."]},
+          {tag:"NATIONAL PLAYER OF THE YEAR",place:"AVCA",year:"2024",v:80,lines:["<b>AVCA National Player of the Year.</b>","As an underclassman."]},
+          {tag:"AGAIN",place:"Pitt",year:"2025",v:92,lines:["<b>Back-to-back National Player of the Year.</b>","Before her senior season."]},
+          {tag:"THE PHENOM",place:"Pittsburgh",year:"NOW",v:100,lines:["The ceiling everyone points to.","FieldCheck makes the label a number."]}
+        ]},
+      "Bergen Reilly":{voice:"The Quarterback",fx:[56,58,62,66,70,72,60,61],s:[5,4],
+        title:"How FieldCheck found the value hidden between the numbers.",
+        proof:"Big Ten Player of the Year \u2014 the rarest honor for a setter. A setter's worth, finally quantified.",
+        slines:{5:"She sees the play before it forms.",7:"And the ceiling keeps rising."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Sioux Falls, South Dakota",year:"PREP",v:22,lines:["A setting prodigy out of the Dakotas.","A blue-chip recruit at Nebraska."]},
+          {tag:"NEBRASKA",place:"Lincoln",year:"2023",v:48,lines:["Starting setter as a <b>freshman</b>.","Big Ten All-Freshman team."]},
+          {tag:"THE RISE",place:"The Huskers",year:"2023\u20132024",v:70,lines:["<b>Back-to-back Big Ten Setter of the Year.</b>","Ran a national-semifinal offense."]},
+          {tag:"THE PROVING GROUND",place:"Lincoln",year:"2025",v:86,lines:["<b>AVCA Setter of the Year.</b>","Three-time Big Ten Setter of the Year."]},
+          {tag:"THE QUARTERBACK",place:"Nebraska",year:"NOW",v:100,lines:["<b>Big Ten Player of the Year.</b>","A setter at the very top of the sport."]}
+        ]},
+      "Andi Jackson":{voice:"The Riser",fx:[78,70,55,64,58,54,61,56],s:[0,1],
+        title:"How FieldCheck tracks a ceiling from day one.",
+        proof:"AVCA Middle Blocker of the Year \u2014 the trajectory the engine reads from the start.",
+        slines:{4:"A wall the league plans around.",7:"And the climb is far from over."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Brighton, Colorado",year:"PREP",v:22,lines:["The <b>#1 middle-blocker recruit.</b>","A national-meet long jumper at age ten."]},
+          {tag:"TEAM USA YOUTH",place:"U19 Pan Am",year:"2022",v:44,lines:["<b>Gold</b> with the U.S. youth team.","A NORCECA U21 champion."]},
+          {tag:"NEBRASKA",place:"Lincoln",year:"2023",v:66,lines:["Started as a <b>freshman</b> in the middle.","Big Ten All-Freshman team."]},
+          {tag:"ALL-AMERICAN",place:"The Huskers",year:"2024\u20132025",v:84,lines:["<b>Two-time AVCA All-American.</b>","All-Big Ten First Team."]},
+          {tag:"THE RISER",place:"Nebraska",year:"NOW",v:100,lines:["<b>Middle Blocker of the Year.</b>","A ceiling FieldCheck saw coming."]}
+        ]},
+      "Shaye Witherspoon":{voice:"The Climber",fx:[50,48,42,50,45,38,50,46],s:[0,3],
+        title:"How FieldCheck captures the climb \u2014 before the world catches on.",
+        proof:"Gatorade State Player of the Year and an AVCA All-American \u2014 already committed to a blue blood. The arrow FieldCheck was built to track.",
+        slines:{7:"The ceiling is the whole story.",0:"And the power is already real."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Wildwood, Missouri",year:"LAFAYETTE HS",v:22,lines:["A 6'3\" outside hitter near St. Louis.","Father played in the NFL \u2014 it runs in the family."]},
+          {tag:"THE PROVING GROUND",place:"Lafayette",year:"2025",v:48,lines:["<b>636 kills, hitting .395.</b>","A 40\u20131 season and a state title."]},
+          {tag:"STATE PLAYER OF THE YEAR",place:"Missouri",year:"2025\u201326",v:70,lines:["<b>Gatorade Missouri Player of the Year.</b>","32 kills in the state final."]},
+          {tag:"TEAM USA YOUTH",place:"U19 National Team",year:"2025",v:86,lines:["<b>AVCA First-Team All-American.</b>","Named to the U.S. U19 National Team."]},
+          {tag:"THE CLIMBER",place:"Nebraska",year:"CLASS OF 2027",v:100,lines:["Committed to a blue blood.","The climb is only getting started."]}
+        ]},
+      "Camille Csernik":{voice:"The Ascent",fx:[48,52,42,50,44,46,50,46],s:[1,3],
+        title:"How FieldCheck reads a four-star arrow pointing straight up.",
+        proof:"A four-star talent already committed to a Division I program \u2014 the trajectory, captured early.",
+        slines:{7:"The ceiling is the headline.",0:"With real power underneath."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Spring, Texas",year:"PREP",v:22,lines:["A 6'1\" outside hitter with a big arm.","Power and reach, still being built."]},
+          {tag:"THE CLUB CIRCUIT",place:"TAV Houston",year:"2024",v:48,lines:["One of the nation's top clubs.","Tested against elite competition."]},
+          {tag:"THE RISE",place:"Recruiting Boards",year:"2025",v:72,lines:["<b>Four-star recruit.</b>","A rising national name in the 2027 class."]},
+          {tag:"THE COMMITMENT",place:"Miami",year:"CLASS OF 2027",v:88,lines:["Committed to <b>Miami (FL).</b>","Division I, locked in early."]},
+          {tag:"THE ASCENT",place:"The Road Ahead",year:"NEXT",v:100,lines:["The arrow points straight up.","A read that grows with her."]}
+        ]},
+      "Makenna Nold":{voice:"The Undeniable",fx:[63,58,55,70,58,50,61,56],s:[3,0],
+        title:"How FieldCheck reads the best at every level \u2014 the same way.",
+        proof:"A National Player of the Year with 563 kills \u2014 the level never capped the ceiling, and the engine reads it the same everywhere.",
+        slines:{0:"Terminal, at any level.",7:"And the level never capped the ceiling."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Jamestown, North Dakota",year:"PREP \u00b7 2023",v:24,lines:["<b>Gatorade North Dakota Player of the Year.</b>","Took the Blue Jays to a state semifinal."]},
+          {tag:"CONCORDIA-ST. PAUL",place:"The Golden Bears",year:"2024",v:54,lines:["<b>NSIC Freshman of the Year.</b>","An immediate force at the D2 level."]},
+          {tag:"NATIONAL PLAYER OF THE YEAR",place:"Division II",year:"2025",v:84,lines:["<b>AVCA D2 National Player of the Year.</b>","563 kills \u2014 second-most in the country."]},
+          {tag:"THE STAGE",place:"NCAA Tournament",year:"DEC 2025",v:92,lines:["26 kills in a regional final.","Carried CSP into the national quarterfinals."]},
+          {tag:"THE UNDENIABLE",place:"D2, Seen",year:"NOW",v:100,lines:["The best at her level, finally on the board.","Same algorithm. Same standard. Everyone."]}
+        ]}
+    };
+
+    function easeInOut(k){return k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;}
+    function easeOut(k){return 1-Math.pow(1-k,3);}
+    function easeOutBack(k){var c=1.7;return 1+(c+1)*Math.pow(k-1,3)+c*Math.pow(k-1,2);}
+    function lin(k){return k;}
+    function tween(dur,on,ease){ease=ease||easeInOut;var myGen=gen;return new Promise(function(res){var done=false,t0=null;function fin(){if(done)return;done=true;res();}function step(ts){if(done)return;if(gen!==myGen){fin();return;}if(t0===null)t0=ts;var k=Math.min(1,(ts-t0)/(dur/SPEED));on(ease(k));if(k<1)requestAnimationFrame(step);else fin();}requestAnimationFrame(step);setTimeout(function(){if(!done&&gen===myGen){try{on(1);}catch(e){}}fin();},dur/SPEED+600);});}
+    function wait(ms){return new Promise(function(res){setTimeout(res,ms/SPEED);});}
+    function dead(){return gen!==runGen;}
+    function setVB(x,y,w,h){cam={x:x,y:y,w:w,h:h};svg.setAttribute('viewBox',x.toFixed(1)+' '+y.toFixed(1)+' '+w.toFixed(1)+' '+h.toFixed(1));}
+    function cameraTo(t,dur,ease){var f={x:cam.x,y:cam.y,w:cam.w,h:cam.h};return tween(dur,function(k){setVB(f.x+(t.x-f.x)*k,f.y+(t.y-f.y)*k,f.w+(t.w-f.w)*k,f.h+(t.h-f.h)*k);},ease);}
+    function flash(a){a=a||.5;flashEl.style.transition='none';flashEl.style.opacity=a;requestAnimationFrame(function(){flashEl.style.transition='opacity .6s ease';flashEl.style.opacity=0;});}
+    function frameNode(nx,ny,w,yfrac){var h=w*H/W;var x=Math.max(0,Math.min(W-w,nx-w/2));var y=Math.max(0,Math.min(H-h,ny-h*yfrac));return {x:x,y:y,w:w,h:h};}
+    function boundingFrame(pts,pad){var minx=1e9,miny=1e9,maxx=-1e9,maxy=-1e9;pts.forEach(function(p){minx=Math.min(minx,p[0]);maxx=Math.max(maxx,p[0]);miny=Math.min(miny,p[1]);maxy=Math.max(maxy,p[1]);});minx-=pad;miny-=pad;maxx+=pad;maxy+=pad;var w=maxx-minx,h=maxy-miny,cx=(minx+maxx)/2,cy=(miny+maxy)/2;if(w/h<W/H){w=h*W/H;}else{h=w*H/W;}var x=Math.max(0,Math.min(W-w,cx-w/2)),y=Math.max(0,Math.min(H-h,cy-h/2));if(w>W){w=W;x=0;}if(h>H){h=H;y=0;}return {x:x,y:y,w:w,h:h};}
+    function mang(i){return (-90+i*45)*Math.PI/180;}
+    function mpt(i,r){return [CX+r*Math.cos(mang(i)),CY+r*Math.sin(mang(i))];}
+    function ppath(rad){var d='';for(var i=0;i<8;i++){var p=mpt(i,MR*rad[i]/100);d+=(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1);}return d+'Z';}
+    function stagesFor(fx){var sc=[0.40,0.70,0.54,0.86,1.0],out=[];sc.forEach(function(s,si){var a=[];for(var i=0;i<8;i++){var jit=si===4?0:(((i*7+si*13)%9)-4)*1.2;a[i]=Math.max(8,Math.min(100,(si===4?fx[i]:fx[i]*s+jit)));}out.push(a);});return out;}
+    function svgEl(tag,a){var e=document.createElementNS('http://www.w3.org/2000/svg',tag);for(var k in a)e.setAttribute(k,a[k]);return e;}
+    function jPts(j){var n=j.length,p=[],i;for(i=0;i<n;i++)p.push([TX0+(TX1-TX0)*i/(n-1<1?1:n-1),TYB-(j[i].v/100)*(TYB-TYT)]);return p;}
+    function deriveSL(s){var o={};s.forEach(function(i){o[i]=curSL[curAX[i]]||'';});return o;}
+    function genJourney(name,voice,traj){var kick=["WHERE IT STARTS","THE RISE","THE LEAP","THE PROVING GROUND","THE CLIMB","THE NOW"],n=traj.length;return traj.map(function(row,i){var yr=row[0],full=String(row[1]),val=row[2],last=i===n-1,parts=full.split(' \u2014 '),place=parts[0],acc=parts[1]||'';return {tag:last?String(voice).toUpperCase():(kick[i]||"THE CLIMB"),place:place,year:String(yr),v:val,lines:[acc?(acc.charAt(0).toUpperCase()+acc.slice(1)):place]};});}
+    var PROJ={
+      "Madisen Skinner":{tag:"THE PROJECTION",place:"Team USA\u2019s Closer",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected to anchor LOVB Austin and close for <b>Team USA through LA 2028</b>.","One of the defining American outsides of her era."]},
+      "Jordan Larson":{tag:"THE PROJECTION",place:"The Standard",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected to remain the bar every LOVB pro is measured against \u2014 then the sideline.","A farewell on the sport\u2019s biggest stage."]},
+      "Harper Murray":{tag:"THE PROJECTION",place:"Future of USA",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: a top LOVB pick and a Team USA outside within three years."]},
+      "Bergen Reilly":{tag:"THE PROJECTION",place:"The Next USA Setter",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected to run a pro offense by 2028 \u2014 the setter of the next generation."]},
+      "Andi Jackson":{tag:"THE PROJECTION",place:"Wall of the Future",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: a dominant pro middle and USA blocker as the game speeds up."]},
+      "Jess Mruzik":{tag:"THE PROJECTION",place:"Scoring Leader",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: an LOVB scoring leader and a name in the USA Olympic pool."]},
+      "Olivia Babcock":{tag:"THE PROJECTION",place:"Player of the Year",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: National Player of the Year, then a first-round LOVB opposite."]},
+      "Makenna Nold":{tag:"THE PROJECTION",place:"No Ceiling",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: the proof the pathway has no ceiling \u2014 a pro look out of Division II."]},
+      "Shaye Witherspoon":{tag:"THE PROJECTION",place:"Rising",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: a Nebraska starter \u2014 and this board\u2019s pro tier by 2029."]},
+      "Jordan Thompson":{tag:"THE PROJECTION",place:"Most Feared",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: the most feared opposite on Team USA through 2028."]},
+      "Lauren Carlini":{tag:"THE PROJECTION",place:"The Brain",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: the veteran engine of the USA offense and a title contender\u2019s setter."]},
+      "Manami Kojima":{tag:"THE PROJECTION",place:"The Floor",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: the libero standard \u2014 the floor no ball touches, for years."]},
+      "Asjia O'Neal":{tag:"THE PROJECTION",place:"USA Anchor",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: a starting USA middle and an LOVB anchor at the net."]},
+      "Amber Igiede":{tag:"THE PROJECTION",place:"On the Rise",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: an All-LOVB blocker and a USA-pool middle."]},
+      "Logan Eggleston":{tag:"THE PROJECTION",place:"The Captain",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: an LOVB captain \u2014 the locker-room standard wherever she plays."]},
+      "Alexa Gray":{tag:"THE PROJECTION",place:"Steady Force",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: a veteran scoring leader steadying a contender."]},
+      "Camille Csernik":{tag:"THE PROJECTION",place:"One to Watch",year:"PROJECTED \u00b7 2026\u20132029",v:100,proj:true,lines:["Projected: an ACC impact freshman \u2014 a pathway story to follow."]}
+    };
+    function dataFor(clip,fx,traj){var name=clip.n,h=HERO[name];if(h)return {n:name,voice:h.voice,proof:h.proof,fx:h.fx,s:h.s,slines:deriveSL(h.s),title:h.title,journey:(PROJ[name]?h.journey.concat([PROJ[name]]):h.journey)};return {n:name,voice:clip.voice,proof:clip.proof||'',fx:fx.v,s:fx.s,slines:deriveSL(fx.s),title:"How FieldCheck saw the whole climb.",journey:genJourney(name,clip.voice,traj)};}
+
+    var el={};
+    function buildWorld(d){
+      world.innerHTML='';el={};
+      var j=d.journey,pts=jPts(j);el.pts=pts;
+      var plane=svgEl('g',{id:'fmplane',opacity:'0'});el.plane=plane;
+      [0,.25,.5,.75,1].forEach(function(f){var yy=TYB-(TYB-TYT)*f;plane.appendChild(svgEl('line',{'class':'fmgrid',x1:TX0-26,y1:yy,x2:TX1+26,y2:yy}));});
+      plane.appendChild(svgEl('line',{'class':'fmgrid',x1:TX0-26,y1:TYT-22,x2:TX0-26,y2:TYB+10}));
+      var a1=svgEl('text',{'class':'fmaxlab',x:TX0-40,y:TYT-4});a1.textContent='APEX';a1.setAttribute('transform','rotate(-90 '+(TX0-40)+' '+(TYT-4)+')');plane.appendChild(a1);
+      var dl='';pts.forEach(function(p,i){dl+=(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1);});
+      var L=0,i;for(i=1;i<pts.length;i++)L+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);el.L=L;
+      el.cum=[0];for(i=1;i<pts.length;i++)el.cum[i]=el.cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
+      var glow=svgEl('path',{'class':'fmtrglow',d:dl});glow.style.strokeDasharray=L;glow.style.strokeDashoffset=L;el.glow=glow;plane.appendChild(glow);
+      var line=svgEl('path',{'class':'fmtrseg',d:dl});line.style.strokeDasharray=L;line.style.strokeDashoffset=L;el.line=line;plane.appendChild(line);
+      el.nodes=[];el.rings=[];
+      pts.forEach(function(p,i){var apex=i===pts.length-1;var ring=svgEl('circle',{'class':'fmtring',cx:p[0],cy:p[1],r:0,opacity:0});plane.appendChild(ring);el.rings.push(ring);var c=svgEl('circle',{'class':'fmtnode'+(apex?' apex':''),cx:p[0],cy:p[1],r:0});if(apex)c.setAttribute('filter','url(#fmglow)');plane.appendChild(c);el.nodes.push(c);});
+      world.appendChild(plane);
+      var poly=svgEl('g',{id:'fmpoly',opacity:'0'});el.poly=poly;
+      var g=svgEl('g',{});
+      [25,50,75,100].forEach(function(f){g.appendChild(svgEl('path',{'class':'fmpgrid',d:ppath([f,f,f,f,f,f,f,f])}));});
+      for(var k=0;k<8;k++){var pp=mpt(k,MR);g.appendChild(svgEl('line',{'class':'fmpspoke',x1:CX,y1:CY,x2:pp[0],y2:pp[1]}));}
+      poly.appendChild(g);
+      var path=svgEl('path',{'class':'fmppath',d:ppath([6,6,6,6,6,6,6,6])});el.path=path;poly.appendChild(path);
+      el.vtx=[];el.plab=[];el.lblpt=[];el.arrow=[];el.spark=[];
+      for(var jx=0;jx<8;jx++){var str=d.s.indexOf(jx)>=0,v=mpt(jx,MR*d.fx[jx]/100),lp=mpt(jx,MR+LBLO),co=Math.cos(mang(jx)),an=co>0.4?'start':(co<-0.4?'end':'middle');el.lblpt.push(lp);
+        var vx=svgEl('circle',{'class':'fmpvtx'+(str?' str':''),cx:v[0],cy:v[1],r:str?5:2.5});poly.appendChild(vx);el.vtx.push(vx);
+        var lb=svgEl('text',{'class':'fmplabel'+(str?' str':''),x:lp[0],y:lp[1]+4,'text-anchor':an});lb.textContent=curAX[jx];poly.appendChild(lb);el.plab.push(lb);
+        if(str){var out=mpt(jx,MR+82),al=Math.hypot(v[0]-out[0],v[1]-out[1]);var ar=svgEl('path',{'class':'fmarrow',d:'M'+out[0].toFixed(1)+','+out[1].toFixed(1)+'L'+v[0].toFixed(1)+','+v[1].toFixed(1)});ar.style.strokeDasharray=al;ar.style.strokeDashoffset=al;ar.style.opacity=0;poly.appendChild(ar);el.arrow[jx]=ar;var sp=svgEl('circle',{'class':'fmspark',cx:v[0],cy:v[1],r:0,opacity:0});poly.appendChild(sp);el.spark[jx]=sp;}
+      }
+      world.appendChild(poly);
+    }
+    function panelFill(stop){capEl.querySelector('.ck').textContent=stop.tag;capEl.querySelector('.cy').textContent=stop.place;capEl.querySelector('.cyr').textContent=stop.year;clistEl.innerHTML='';stop.lines.forEach(function(t){var li=document.createElement('li');if(/<b>/.test(t))li.className='hero';li.innerHTML=t;clistEl.appendChild(li);});}
+    async function panelIn(stop){panelFill(stop);capEl.classList.remove('out');capEl.classList.add('in');await wait(360);if(dead())return;var lis=clistEl.querySelectorAll('li');for(var i=0;i<lis.length;i++){lis[i].classList.add('show');if(lis[i].className.indexOf('hero')>=0)flash(.32);await wait(520);if(dead())return;}}
+    async function panelOut(){capEl.classList.remove('in');capEl.classList.add('out');await wait(460);}
+    function showFacet(n,l){fcapEl.querySelector('.fn').textContent=n;fcapEl.querySelector('.fl').textContent=l;fcapEl.classList.add('in');}
+    function hideFacet(){fcapEl.classList.remove('in');}
+    async function nodePop(i){var c=el.nodes[i],apex=i===el.nodes.length-1,R=apex?9:6.5,ring=el.rings[i];ring.setAttribute('opacity',1);tween(900,function(k){ring.setAttribute('r',(R+26*k).toFixed(1));ring.setAttribute('opacity',((1-k)*0.9).toFixed(2));},easeOut);await tween(apex?640:480,function(k){c.setAttribute('r',(R*easeOutBack(k)).toFixed(2));},lin);}
+    function morphTo(path,from,to,dur,ease){return tween(dur,function(k){var cur=[];for(var i=0;i<8;i++)cur[i]=from[i]+(to[i]-from[i])*k;path.setAttribute('d',ppath(cur));},ease);}
+    function reset(){titleEl.className='fmtitle';capEl.className='fmcap';fcapEl.className='fmfcap';endEl.classList.remove('show');if(mapEl){mapEl.classList.remove('in');mapEl.innerHTML='';}if(stageBox)stageBox.classList.remove('done');flashEl.style.opacity=0;if(svg)svg.style.opacity='';setVB(0,0,W,H);}
+
+    async function film(d){
+      gen++;runGen=gen;reset();ttEl.textContent=d.title;
+      try{
+        buildWorld(d);
+        titleEl.classList.add('in');await wait(3200);if(dead())return;
+        titleEl.classList.remove('in');await wait(640);if(dead())return;
+        setVB(0,0,W,H);
+        await tween(800,function(k){el.plane.setAttribute('opacity',k);},easeOut);if(dead())return;
+        var pts=el.pts,n=pts.length,L=el.L,cum=el.cum;
+        for(var b=0;b<n;b++){
+          var medium=frameNode(pts[b][0],pts[b][1],700,0.42);
+          if(b===0){await cameraTo(medium,1300,easeInOut);if(dead())return;}
+          else{var from=cum[b-1],to=cum[b];await Promise.all([tween(1700,(function(from,to){return function(k){var off=L-(from+(to-from)*k);el.line.style.strokeDashoffset=off;el.glow.style.strokeDashoffset=off;};})(from,to),easeInOut),cameraTo(medium,1700,easeInOut)]);if(dead())return;}
+          var close=frameNode(pts[b][0],pts[b][1],380,0.33);
+          await cameraTo(close,1000,easeInOut);if(dead())return;
+          await nodePop(b);if(dead())return;
+          var closer=frameNode(pts[b][0],pts[b][1],352,0.33);
+          tween(3600,function(k){setVB(close.x+(closer.x-close.x)*k,close.y+(closer.y-close.y)*k,close.w+(closer.w-close.w)*k,close.h+(closer.h-close.h)*k);},lin);
+          await panelIn(d.journey[b]);if(dead())return;
+          await wait(b===n-1?2600:2100);if(dead())return;
+          await panelOut();if(dead())return;
+          await cameraTo(medium,700,easeInOut);if(dead())return;
+        }
+        await cameraTo({x:0,y:0,w:W,h:H},1100,easeInOut);if(dead())return;
+        await wait(700);if(dead())return;
+        await tween(800,function(k){el.plane.setAttribute('opacity',1-k);},easeOut);if(dead())return;
+        var polyView=boundingFrame([mpt(0,MR+LBLO),mpt(2,MR+LBLO),mpt(4,MR+LBLO),mpt(6,MR+LBLO),[CX,CY-MR-LBLO],[CX,CY+MR+LBLO]],30);
+        el.poly.setAttribute('opacity',1);
+        await Promise.all([tween(1000,function(k){el.poly.setAttribute('opacity',k);},easeOut),cameraTo(polyView,1100,easeInOut)]);if(dead())return;
+        var stg=stagesFor(d.fx),prev=[6,6,6,6,6,6,6,6];
+        for(var sI=0;sI<stg.length;sI++){var dur=(sI===stg.length-1)?1700:600;await morphTo(el.path,prev,stg[sI],dur,(sI===stg.length-1)?easeOut:easeInOut);if(dead())return;prev=stg[sI];}
+        for(var li2=0;li2<8;li2++){var strl=d.s.indexOf(li2)>=0;el.plab[li2].classList.add(strl?'str':'lit');el.vtx[li2].setAttribute('r',strl?5:3);await wait(160);if(dead())return;}
+        await wait(520);if(dead())return;
+        for(var si=0;si<d.s.length;si++){
+          var idx=d.s[si],vx=el.vtx[idx],vpos=mpt(idx,MR*d.fx[idx]/100),lpos=el.lblpt[idx];
+          el.plab[idx].classList.add('hot');
+          await cameraTo(boundingFrame([vpos,lpos,[CX,CY]],46),1000,easeInOut);if(dead())return;
+          showFacet(curAX[idx],d.slines[idx]||'');
+          if(el.arrow[idx]){var ar=el.arrow[idx];ar.style.opacity=1;var al=parseFloat(ar.style.strokeDasharray);await tween(560,(function(ar,al){return function(k){ar.style.strokeDashoffset=(al*(1-k)).toFixed(1);};})(ar,al),easeOut);}if(dead())return;
+          vx.setAttribute('r',8);flash(.5);
+          if(el.spark[idx]){var sp=el.spark[idx];sp.setAttribute('opacity',1);await tween(640,(function(sp){return function(k){sp.setAttribute('r',(7+11*k).toFixed(1));sp.setAttribute('opacity',(1-k).toFixed(2));};})(sp),easeOut);}if(dead())return;
+          vx.setAttribute('r',6);
+          await wait(1700);if(dead())return;
+          el.plab[idx].classList.remove('hot');hideFacet();await wait(420);if(dead())return;
+        }
+        await cameraTo(polyView,900,easeInOut);if(dead())return;await wait(560);if(dead())return;
+      await mapReveal(d);if(dead())return;
+      }catch(err){if(dead())return;}
+      if(dead())return;
+      try{buildEnd(d);endEl.classList.add('show');flash(.34);if(svg)svg.style.opacity='0';}catch(e){}
+      await wait(80);if(dead())return;
+      try{endEl.querySelectorAll('.fb i').forEach(function(bar){bar.style.width=bar.getAttribute('data-w');});}catch(e){}
+      if(stageBox)stageBox.classList.add('done');
+    }
+
+    var SPORTNM={volleyball:'Volleyball',basketball:'Basketball',football:'Football',baseball:'Baseball',soccer:'Soccer',track:'Track',tennis:'Tennis',boxing:'Boxing',gymnastics:'Gymnastics',swimming:'Swimming',cricket:'Cricket'};
+    function buildMapSVG(){
+      var VBW=1180,VBH=600,mL=70,n=8,usable=VBW-2*mL,step=usable/n,i;
+      var cxs=[];for(i=0;i<n;i++)cxs[i]=mL+step*(i+0.5);
+      var topY=232,tieT=topY+16,tieB=398,nodeY=414,botY=430,foundY=452;
+      var sport=curAX,core=AXN,nm=SPORTNM[curSport]||'the game';
+      function esc(t){return (t+'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+      var S='<svg viewBox="0 0 '+VBW+' '+VBH+'" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">';
+      S+='<text class="mk" x="'+(VBW/2)+'" y="68" text-anchor="middle">THE METHOD</text>';
+      S+='<text class="msub" x="'+(VBW/2)+'" y="104" text-anchor="middle">How FieldCheck reads '+esc(nm)+'</text>';
+      S+='<text class="mlab" x="'+(VBW/2)+'" y="170" text-anchor="middle">WHAT THE GAME CALLS IT</text>';
+      for(i=0;i<n;i++)S+='<line class="mtie" id="mtie'+i+'" x1="'+cxs[i].toFixed(1)+'" y1="'+tieT+'" x2="'+cxs[i].toFixed(1)+'" y2="'+tieB+'"/>';
+      for(i=0;i<n;i++)S+='<circle class="mnode" id="mnode'+i+'" cx="'+cxs[i].toFixed(1)+'" cy="'+nodeY+'" r="3.4"/>';
+      for(i=0;i<n;i++)S+='<text class="mtop" id="mtop'+i+'" x="'+cxs[i].toFixed(1)+'" y="'+topY+'" text-anchor="middle">'+esc(sport[i])+'</text>';
+      for(i=0;i<n;i++)S+='<text class="mbot" id="mbot'+i+'" x="'+cxs[i].toFixed(1)+'" y="'+botY+'" text-anchor="middle">'+esc(core[i])+'</text>';
+      S+='<line class="mfound" id="mfound" x1="'+mL+'" y1="'+foundY+'" x2="'+(VBW-mL)+'" y2="'+foundY+'"/>';
+      S+='<text class="mlab" x="'+(VBW/2)+'" y="'+(foundY+30)+'" text-anchor="middle" fill="rgba(238,192,103,.62)">THE ENGINE \u00b7 FIELDCHECK IQ</text>';
+      S+='<text class="mcap" id="mcap" x="'+(VBW/2)+'" y="'+(VBH-22)+'" text-anchor="middle"></text>';
+      return S+'</svg>';
+    }
+    async function mapRevealV1(d){
+      if(!mapEl)return;
+      var reduce=false;try{reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+      mapEl.innerHTML=buildMapSVG();
+      var g=function(id){return mapEl.querySelector('#'+id);};
+      var i,n=8,tie=[],node=[],top=[],bot=[];
+      for(i=0;i<n;i++){tie[i]=g('mtie'+i);node[i]=g('mnode'+i);top[i]=g('mtop'+i);bot[i]=g('mbot'+i);}
+      for(i=0;i<n;i++){try{var L=tie[i].getTotalLength();tie[i].style.strokeDasharray=L;tie[i].style.strokeDashoffset=L;tie[i].setAttribute('data-l',L);}catch(e){}}
+      if(svg){svg.style.transition='opacity .6s ease';svg.style.opacity='0.10';}
+      mapEl.classList.add('in');await wait(720);if(dead())return;
+      var foundEl=g('mfound');if(foundEl)foundEl.style.opacity='1';
+      if(reduce){
+        for(i=0;i<n;i++){bot[i].classList.add('on');node[i].classList.add('on');top[i].classList.add('on');tie[i].classList.add('on');tie[i].style.strokeDashoffset='0';}
+        var c0=g('mcap');if(c0){c0.textContent='Eight reads of the game. One engine underneath.';c0.classList.add('on');}
+        await wait(2000);if(dead())return;mapEl.classList.remove('in');if(svg)svg.style.opacity='0';await wait(640);return;
+      }
+      for(i=0;i<n;i++){bot[i].classList.add('on');node[i].classList.add('on');await wait(52);if(dead())return;}
+      await wait(220);if(dead())return;
+      for(i=0;i<n;i++){top[i].classList.add('on');await wait(46);if(dead())return;}
+      await wait(320);if(dead())return;
+      for(i=0;i<n;i++){
+        tie[i].classList.add('on');top[i].classList.add('lit');bot[i].classList.add('lit');
+        var L2=parseFloat(tie[i].getAttribute('data-l'))||140;
+        await tween(260,(function(el,L){return function(k){el.style.strokeDashoffset=(L*(1-k)).toFixed(1);};})(tie[i],L2),easeOut);
+        if(dead())return;await wait(46);if(dead())return;
+      }
+      await wait(520);if(dead())return;
+      for(i=0;i<n;i++){if(d.s.indexOf(i)<0){top[i].classList.remove('lit');bot[i].classList.remove('lit');tie[i].style.opacity='.30';}}
+      var cap=g('mcap');
+      if(cap){var parts=d.s.map(function(k){return curAX[k]+' \u2192 '+AXN[k];});cap.textContent='Their edge: '+parts.join('     \u00b7     ');cap.classList.add('on');}
+      await wait(1600);if(dead())return;
+      mapEl.classList.remove('in');if(svg)svg.style.opacity='0';
+      await wait(620);if(dead())return;
+    }
+    function mapReveal(d){return (MAPMODE==='v1')?mapRevealV1(d):mapRevealV2(d);}
+    async function mapRevealV2(d){
+      if(!el||!el.plab||!el.poly||!el.vtx)return;
+      var i,n=8,NM=(SPORTNM[curSport]||'the game').toUpperCase();
+      var reduce=false;try{reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+      var pv=boundingFrame([mpt(0,MR+LBLO),mpt(2,MR+LBLO),mpt(4,MR+LBLO),mpt(6,MR+LBLO),[CX,CY-MR-LBLO],[CX,CY+MR+LBLO]],30);
+      var zv={x:pv.x+pv.w*0.075,y:pv.y+pv.h*0.075,w:pv.w*0.85,h:pv.h*0.85};
+      for(i=0;i<n;i++){el.plab[i].classList.remove('hot','str');el.plab[i].classList.add('lit');el.plab[i].setAttribute('opacity',1);}
+      if(el.plane)el.plane.setAttribute('opacity',0);
+      for(i=0;i<n;i++){if(el.arrow&&el.arrow[i])el.arrow[i].style.opacity=0;if(el.spark&&el.spark[i])el.spark[i].setAttribute('opacity',0);el.vtx[i].setAttribute('r',3);}
+      if(mapEl){mapEl.classList.add('v2');mapEl.innerHTML='<svg viewBox="0 0 1180 600" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><text class="mk" id="v2kick" x="590" y="50" text-anchor="middle">WHAT '+NM+' CALLS IT</text><text class="mcap on" id="v2cap" x="590" y="574" text-anchor="middle">Same eight points \u2014 two names for one engine.</text></svg>';mapEl.classList.add('in');}
+      var kick=mapEl?mapEl.querySelector('#v2kick'):null;
+      function setText(toCore){for(var a=0;a<8;a++){el.plab[a].textContent=toCore?AXN[a]:curAX[a];if(toCore)el.plab[a].classList.add('v2core');else el.plab[a].classList.remove('v2core');}}
+      async function rippleDots(){for(var b=0;b<8;b++){(function(vx,base){tween(440,function(k){vx.setAttribute('r',(base+5.5*Math.sin(Math.PI*k)).toFixed(2));},lin);})(el.vtx[b],parseFloat(el.vtx[b].getAttribute('r'))||3);await wait(50);if(dead())return;}}
+      async function swapTo(toCore,zoomIn){
+        if(kick)kick.textContent=toCore?'WHAT FIELDCHECK IQ MEASURES':('WHAT '+NM+' CALLS IT');
+        cameraTo(zoomIn?zv:pv,1300,easeInOut);
+        await tween(360,function(k){for(var c=0;c<8;c++)el.plab[c].setAttribute('opacity',(1-k).toFixed(3));},easeInOut);if(dead())return;
+        setText(toCore);flash(.24);
+        await Promise.all([tween(470,function(k){for(var e2=0;e2<8;e2++)el.plab[e2].setAttribute('opacity',k.toFixed(3));},easeOut),rippleDots()]);if(dead())return;
+      }
+      if(reduce){
+        setText(true);if(kick)kick.textContent='WHAT FIELDCHECK IQ MEASURES';await wait(1800);if(dead())return;
+        setText(false);if(kick)kick.textContent='WHAT '+NM+' CALLS IT';await wait(900);if(dead())return;
+        if(mapEl){mapEl.classList.remove('in');await wait(380);if(dead())return;mapEl.classList.remove('v2');mapEl.innerHTML='';}return;
+      }
+      await wait(640);if(dead())return;
+      await swapTo(true,true);if(dead())return;await wait(1050);if(dead())return;
+      await swapTo(false,false);if(dead())return;await wait(760);if(dead())return;
+      await swapTo(true,true);if(dead())return;await wait(1050);if(dead())return;
+      await swapTo(false,false);if(dead())return;await wait(620);if(dead())return;
+      if(mapEl)mapEl.classList.remove('in');
+      await wait(420);if(dead())return;
+      if(mapEl){mapEl.classList.remove('v2');mapEl.innerHTML='';}
+    }
+    function staticPoly(d){
+      var cx=230,cy=232,R=152,S='<svg viewBox="0 0 460 470" xmlns="http://www.w3.org/2000/svg">';
+      function pt(i,r){var a=(-90+i*45)*Math.PI/180;return [cx+r*Math.cos(a),cy+r*Math.sin(a)];}
+      function pa(rad){var s='',i;for(i=0;i<8;i++){var p=pt(i,R*rad[i]/100);s+=(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1);}return s+'Z';}
+      S+='<defs><filter id="fmeg" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+      [25,50,75,100].forEach(function(f){S+='<path d="'+pa([f,f,f,f,f,f,f,f])+'" fill="none" stroke="rgba(248,244,237,.08)"/>';});
+      for(var i=0;i<8;i++){var p=pt(i,R);S+='<line x1="'+cx+'" y1="'+cy+'" x2="'+p[0].toFixed(1)+'" y2="'+p[1].toFixed(1)+'" stroke="rgba(248,244,237,.06)"/>';}
+      S+='<path d="'+pa(d.fx)+'" fill="rgba(212,162,76,.18)" stroke="#D4A24C" stroke-width="2.4" stroke-linejoin="round"/>';
+      for(var j=0;j<8;j++){var str=d.s.indexOf(j)>=0,v=pt(j,R*d.fx[j]/100),lp=pt(j,R+26),co=Math.cos((-90+j*45)*Math.PI/180),an=co>0.4?'start':(co<-0.4?'end':'middle');
+        S+='<circle cx="'+v[0].toFixed(1)+'" cy="'+v[1].toFixed(1)+'" r="'+(str?5.5:2.5)+'" fill="'+(str?'#EEC067':'rgba(248,244,237,.4)')+'"'+(str?' filter="url(#fmeg)"':'')+'/>';
+        S+='<text x="'+lp[0].toFixed(1)+'" y="'+(lp[1]+4).toFixed(1)+'" text-anchor="'+an+'" font-family="JetBrains Mono,monospace" font-size="12.5" font-weight="'+(str?700:500)+'" letter-spacing=".4" fill="'+(str?'#EEC067':'rgba(244,241,234,.72)')+'">'+curAX[j]+'</text>';}
+      return S+'</svg>';
+    }
+    function buildEnd(d){
+      endPoly.innerHTML=staticPoly(d);
+      var rows='',i;for(i=0;i<8;i++){var str=d.s.indexOf(i)>=0;rows+='<div class="fmrow'+(str?' str':'')+'"><span class="fk">'+curAX[i]+'</span><span class="fb"><i data-w="'+d.fx[i]+'%"></i></span><span class="ft">'+(str?'strength':'')+'</span></div>';}
+      var zones=d.s.map(function(k){return curAX[k];}).join(' \u00b7 ');
+      endCard.innerHTML='<div class="eh">FieldCheck Player Card</div><div class="ev">'+d.voice+'</div><div class="ez">Zoned strengths \u2014 <b>'+zones+'</b></div><div class="fmfacets">'+rows+'</div><div class="ep">'+d.proof+'</div><div class="em">Not a highlight \u2014 evidence in the Outcome Ledger.</div><a class="ecta" href="'+verdict(d.n)+'">See the full audited read \u2192</a>';
+    }
+
+    function inView(){var r=svg.getBoundingClientRect();if(r.height<=0)return false;var vh=window.innerHeight||800;var vis=Math.min(r.bottom,vh)-Math.max(r.top,0);return vis/r.height>=0.6;}
+    function armStart(d){if(io){io.disconnect();io=null;}gen++;runGen=gen;reset();ttEl.textContent=d.title;titleEl.classList.add('in');if(inView()){film(d);return;}try{io=new IntersectionObserver(function(es){if(es[0]&&es[0].isIntersecting){if(io){io.disconnect();io=null;}film(d);}},{threshold:0.55});io.observe(stageBox);}catch(e){film(d);}}
+    function playableIdxs(){var a=[],i;for(i=0;i<CLIPS.length;i++){var c=CLIPS[i];if(!c.cta&&FX[c.n]&&TRAJ[c.n])a.push(i);}return a;}
+    function goRel(step){var arr=playableIdxs();if(!arr.length)return;var pos=arr.indexOf(curIdx);if(pos<0)pos=0;openClip(arr[(pos+step+arr.length)%arr.length]);}
+    (function(){function wire(pv,rp,nx){var bp=document.getElementById(pv),br=document.getElementById(rp),bn=document.getElementById(nx);if(bp)bp.addEventListener('click',function(){goRel(-1);});if(bn)bn.addEventListener('click',function(){goRel(1);});if(br)br.addEventListener('click',function(){if(curData)film(curData);});}wire('fmprev','fmrep','fmnext');wire('fmprev_d','fmrep_d','fmnext_d');})();
+    return {open:function(clip,fx,traj,idx){curAX=(clip&&LENS[clip.sport])||AXN;curSL=(clip&&SLINEBY[clip.sport])||SLINE;curSport=(clip&&clip.sport)||'';var d=dataFor(clip,fx,traj);curData=d;curIdx=(idx==null?-1:idx);armStart(d);},stop:function(){if(io){io.disconnect();io=null;}gen++;runGen=gen;reset();}};
+  })();
+
+  function openClip(i){
+    var c=CLIPS[i],m=TIER[c.t];
+    document.getElementById('mvoice').textContent=c.cta?'':c.voice;
+    document.getElementById('mbadge').textContent=m.label;
+    document.getElementById('mnm').textContent=c.n;
+    document.getElementById('mread').textContent=c.read;
+    var cta=document.getElementById('mcta'), ovl=document.getElementById('fcoverlay'), mk=document.getElementById('fmstage');
+    if(c.cta){
+      modal.classList.add('cta'); cta.style.display='inline-block'; cta.textContent="Claim your spot \u2192"; cta.href="/add-me";
+      ovl.style.display='none'; mk.style.display='none'; FCFilm.stop();
+      stage.innerHTML='<div class="ph">This frame is waiting for the next one.<br>Drop your clip. Get your verdict. Get seen.</div>';
+    } else {
+      modal.classList.remove('cta'); cta.style.display='none';
+      var f=FX[c.n], tr=TRAJ[c.n];
+      if(f && tr){ mk.style.display=''; FCFilm.open(c,f,tr,i); }
+      else { mk.style.display='none'; }
+      function tag(){ ovl.style.display='none'; }
+      if(c.yt){ tag(); var cw=(c.st?('&start='+c.st):'')+(c.en?('&end='+c.en):''); stage.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+c.yt+'?autoplay=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&color=white&fs=1'+cw+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe><a class="ytlink" href="https://www.youtube.com/watch?v='+c.yt+'" target="_blank" rel="noopener">Watch on YouTube \u2197</a>'; }
+      else if(c.src){ tag(); stage.innerHTML='<video src="'+c.src+'"'+(c.poster?' poster="'+c.poster+'"':'')+' controls autoplay playsinline></video>'; }
+      else { ovl.style.display='none'; stage.innerHTML='<div class="ph">30-second highlight<br>drop owned clip URL for '+c.n+'</div>'; }
+    }
+    ov.classList.add('on'); document.body.style.overflow='hidden';
+    if(!c.cta && mk.style.display!=='none'){ setTimeout(function(){ try{ mk.scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){} },360); }
+  }
+  function closeClip(){ ov.classList.remove('on'); stage.innerHTML=''; FCFilm.stop(); document.body.style.overflow=''; }
+  document.getElementById('x').addEventListener('click',closeClip);
+  ov.addEventListener('click',function(e){ if(e.target===ov) closeClip(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeClip(); });
+  track.addEventListener('click',function(e){ var b=e.target.closest('.clip'); if(b) openClip(+b.dataset.i); });
+  var reel=document.getElementById('reel'),rto;
+  reel.addEventListener('touchstart',function(){ reel.classList.add('touched'); clearTimeout(rto); },{passive:true});
+  reel.addEventListener('touchend',function(){ rto=setTimeout(function(){ reel.classList.remove('touched'); },2500); });
+</script>
+<!-- ====== end Greatest Clips ====== -->
+
 <section class="aud">
   <div class="aud-h-row">
     <div>
