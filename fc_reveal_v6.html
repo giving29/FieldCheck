@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FieldCheck Reads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0a0907;--ink2:#13100b;--line:rgba(184,152,90,.16);--line2:rgba(184,152,90,.32);--gold:#b8985a;--gold-b:#e8bf70;--bone:#f3eee2;--muted:#a39c8c;--dim:#7d7768;--steel:#6b7480;--steel-b:#9aa3ae;--cg:'Fraunces',serif;--mono:'JetBrains Mono',monospace;--body:'Inter',sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(120% 100% at 50% 0%,#15120c 0%,var(--ink) 60%);color:var(--bone);font-family:var(--body);-webkit-font-smoothing:antialiased}
+.stage{position:relative;border:1px solid var(--line);border-radius:16px;background:var(--ink2);overflow:hidden;max-width:1000px;margin:0 auto}
+.stage-top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);position:relative;z-index:6}
+.stage-top .nm{font-family:var(--cg);font-weight:500;font-size:22px;letter-spacing:-.01em}
+.stage-top .po{color:var(--muted);font-size:11.5px;font-family:var(--mono);letter-spacing:.4px}
+.stage-top .chip{margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;border:1px solid var(--line2);color:var(--gold-b);padding:5px 11px;border-radius:999px}
+.moatbadge{position:absolute;right:16px;bottom:13px;font-family:var(--mono);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);opacity:.45;z-index:4;pointer-events:none}
+svg{display:block;width:100%;height:auto}text{font-family:var(--mono)}
+.scene{opacity:0;transition:opacity .55s ease}.scene.on{opacity:1}
+.point{position:absolute;left:22px;top:18px;z-index:3;max-width:60%;font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold-b);opacity:0;transition:opacity .5s ease}.point.on{opacity:.92}
+.cap{position:absolute;left:0;right:0;bottom:0;padding:18px 24px 20px;background:linear-gradient(0deg,rgba(8,7,5,.95),transparent);font-family:var(--cg);font-size:19px;line-height:1.42;min-height:58px;display:flex;align-items:flex-end;z-index:3}
+.cap .beat{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-b);margin-right:13px;opacity:.92;white-space:nowrap}
+.cap span.t{opacity:0;transition:opacity .55s ease}.cap.show span.t{opacity:1}
+.ov{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:36px;opacity:0;pointer-events:none;transition:opacity .5s ease}.ov.on{opacity:1}
+.title{background:radial-gradient(120% 120% at 50% 40%,#16120b,#070605 82%)}
+.title .rule{width:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-bottom:22px;transition:width .9s ease .2s}.title.on .rule{width:220px}
+.title .kick{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold-b);margin-bottom:18px;opacity:0;transform:translateY(8px);transition:.55s .25s}.title.on .kick{opacity:.95;transform:none}
+.title .head{font-family:var(--cg);font-weight:500;font-size:clamp(26px,4.4vw,46px);line-height:1.16;letter-spacing:-.012em;max-width:19ch}
+.title .head .ln{display:block;opacity:0;transform:translateY(14px);transition:.65s cubic-bezier(.2,.7,.3,1)}
+.title.on .head .ln:nth-child(1){transition-delay:.4s}.title.on .head .ln:nth-child(2){transition-delay:.8s}
+.title.on .head .ln{opacity:1;transform:none}.title .head em{font-style:normal;color:var(--gold-b)}.title.on .head em{animation:flash 1s ease 1.1s both}
+.ctl{display:flex;align-items:center;gap:10px;padding:13px 16px 4px;max-width:1000px;margin:0 auto;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:1.3px;text-transform:uppercase;border:1px solid var(--line2);background:rgba(184,152,90,.08);color:var(--gold-b);padding:10px 15px;border-radius:999px;cursor:pointer}
+.btn.ghost{background:none;color:var(--muted);border-color:var(--line)}
+.beats{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap;align-items:center}
+.beatdot{width:8px;height:8px;border-radius:50%;border:1px solid var(--line2);cursor:pointer;transition:.2s}.beatdot.title{transform:rotate(45deg);border-radius:1px}.beatdot.active{background:var(--gold-b);border-color:var(--gold-b);box-shadow:0 0 0 3px rgba(184,152,90,.18)}
+@keyframes draw{to{stroke-dashoffset:0}}@keyframes pop{0%{transform:scale(0);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+@keyframes ringfill{to{stroke-dashoffset:var(--off)}}@keyframes rise{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes flow{0%{offset-distance:0%;opacity:0}12%{opacity:1}88%{opacity:1}100%{offset-distance:100%;opacity:0}}
+@keyframes sweep{0%{transform:translateX(-120%)}100%{transform:translateX(360%)}}@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.016)}}
+@keyframes flash{0%{filter:none;transform:scale(1)}28%{filter:drop-shadow(0 0 16px rgba(232,191,112,.95));transform:scale(1.2)}100%{filter:none;transform:scale(1)}}
+@keyframes flashbig{0%{opacity:0;transform:scale(.7)}25%{opacity:1;transform:scale(1.08);filter:drop-shadow(0 0 22px rgba(232,191,112,.9))}80%{opacity:1;transform:scale(1)}100%{opacity:.25;transform:scale(1)}}
+@keyframes pulseLine{0%,100%{opacity:.45;stroke-width:3}50%{opacity:1;stroke-width:5}}
+.flashable{transform-box:fill-box;transform-origin:center}
+.foot{max-width:1000px;margin:14px auto 30px;color:var(--muted);font-size:11px;padding:0 16px}
+.foot .sample{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#c9a24a;border:1px solid rgba(201,162,74,.4);background:rgba(201,162,74,.07);padding:3px 8px;border-radius:6px}
+:focus-visible{outline:2px solid var(--gold-b);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.scene,.ov{transition:none}*{animation-duration:.001s!important}}
+@media(max-width:640px){.cap{font-size:15px;padding:15px}.stage-top .nm{font-size:17px}.point{max-width:70%}}
+</style></head>
+<body>
+<div class="stage">
+  <div class="stage-top"><span class="nm" id="pName">—</span><span class="po" id="pPos"></span><span class="chip" id="pTier"></span></div>
+  <svg id="canvas" viewBox="0 0 920 600" role="img" aria-label="FieldCheck dissection">
+    <defs>
+      <linearGradient id="gGold" x1="0" x2="1"><stop offset="0" stop-color="#8a7038"/><stop offset="1" stop-color="#e8bf70"/></linearGradient>
+      <radialGradient id="gGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="rgba(184,152,90,.26)"/><stop offset="100%" stop-color="rgba(184,152,90,0)"/></radialGradient>
+      <filter id="soft"><feGaussianBlur stdDeviation="2.4"/></filter>
+    </defs>
+    <g class="scene" id="s0"></g><g class="scene" id="sFacets8"></g><g class="scene" id="s1"></g>
+    <g class="scene" id="s2"></g><g class="scene" id="s3"></g><g class="scene" id="s4"></g>
+    <g class="scene" id="sMorph"></g><g class="scene" id="sProof"></g><g class="scene" id="sFinal"></g>
+  </svg>
+  <div class="point" id="point"></div>
+  <div class="ov title" id="title"><div class="rule"></div><div class="kick" id="tkick"></div><div class="head" id="thead"></div></div>
+  <div class="cap" id="cap"><span class="beat" id="beat"></span><span class="t" id="captext"></span></div>
+  <div class="moatbadge">The Moat · reading the invisible</div>
+</div>
+<div class="ctl"><button class="btn" id="play">⏸ Pause</button><button class="btn ghost" id="replay">↻ Replay</button><div class="beats" id="beats"></div></div>
+<div class="foot"><span class="sample">Illustrative sample data — calibrated to FieldCheck's ladder (MJ 9.3 ceiling), not live engine output</span></div>
+
+<script>
+(function(){
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const NS="http://www.w3.org/2000/svg";
+const CX=370,CY=300,R=174,MJ=9.3;
+const SPORT_FACETS={
+ volleyball:['Competitiveness','Power','Physical','Volleyball IQ','Mental Strength','Mindset','Ball Control','Character'],
+ basketball:['Competitiveness','Scoring','Athleticism','Basketball IQ','Mental Strength','Mindset','Skill','Character'],
+ baseball:['Competitiveness','Power','Speed','Baseball IQ','Mental Strength','Mindset','Hitting','Character'],
+ football:['Competitiveness','Explosiveness','Speed','Football IQ','Mental Strength','Mindset','Hands','Character'],
+ soccer:['Competitiveness','Finishing','Pace','Vision','Mental Strength','Mindset','Technique','Character']};
+const INVIS=[0,4,5,7], VIS=[1,2,3,6];
+const SUBMECH_BY_SPORT={
+ volleyball:['Response to opponent runs','Late-set kill conversion','Serve-receive under pressure','Demands the ball, tight sets','Bounce-back after a block'],
+ basketball:['Response to runs','Closing-time usage','Defensive pickup pressure','50/50 & loose balls','Bounce-back after a miss'],
+ baseball:['Two-strike approach','Clutch RBI rate','At-bat after an error','Late-inning focus','Plate discipline under heat'],
+ football:['Competes for the ball','Yards after contact','4th-quarter snaps','Response to a deficit','Bounce-back after a drop'],
+ soccer:['Big-game goals','Composure 1v1','Press to win it back','Response to going down','Bounce-back after a miss']};
+const COMPETS={
+ basketball:['247Sports · On3 · ESPN','stars, recruiting rank, mock-draft slot'],
+ volleyball:['PrepVolleyball · recruiting boards','club results, stats, recruiting stars'],
+ baseball:['Perfect Game · Baseball America','showcase tools, draft boards'],
+ football:['247 · On3 · the combine','star ratings, 40 times, measurables'],
+ soccer:['scouting networks · academy boards','goals, minutes, transfer value']};
+const MISSES=[['Tom Brady','199th pick · 2000'],['Stephen Curry','7th pick · 2009'],['Nikola Jokić','41st pick · 2014'],['Brock Purdy','262nd · last pick · 2022']];
+
+const AUTHORED={
+ 'madisen skinner':{sport:'volleyball',pos:'Outside Hitter',voice:'The Closer',facets:[7.6,7.3,7.0,7.2,7.5,7.1,7.2,7.3],goatName:'the WVB GOAT',goatScore:9.2,
+  invisReads:['Her swing gets bigger as the score tightens — the closer\u2019s trait, reading pro.','Resets fast after a stuff or a run; swings clean on the next ball.','Wants the moment — the late-set conditioning shows it.','Teammate-first; the culture piece a pro program builds around.'],
+  visReads:['Power: real pin heat — graded honest, not hyped.','Physical: pro-viable frame; we don\u2019t inflate the leap.','Volleyball IQ: reads the block and seam early.','Ball Control: clean platform under fire.'],
+  clip:{tag:'NCAA TITLE POINT · LOVB FINALS MVP',cap:'The kill that ended the championship — she asked for the ball.',path:'2× national champion → LOVB Finals MVP'},
+  asym:{market:'A decorated college hitter, solid pro prospect.',fc:'An elite competitive closer — the clutch swing already reads pro.'},
+  world:{said:'A good college hitter — a solid pro prospect',fcSaw:'Competitiveness 7.6 · Mental Strength 7.5',line:'The trophy is the past. The trait is the future.',future:true},
+  verdict:'The Closer. Already pro where it counts — the résumé is what time adds.',
+  traj:[['Club',5.6],['Transfer',6.3],['Title runs',7.0],['Now',7.3],['Pro / LOVB',7.7]],infl:'transfer + title run \u2192 competitiveness re-rated'},
+ 'jordan larson':{sport:'volleyball',pos:'Outside Hitter',voice:'The GOAT',facets:[8.2,7.6,6.9,8.4,8.3,8.0,7.8,8.2],goatName:'the WVB GOAT',goatScore:9.2,
+  invisReads:['Two decades deciding the biggest points — the competitive standard of the sport.','Olympic-final composure; the bigger the moment, the calmer the read.','Still the hardest worker in the gym — a lifelong pro\u2019s mindset.','The locker-room cornerstone every team is built around.'],
+  visReads:['Power: still pro-level pin scoring.','Physical: age-honest — we don\u2019t pretend.','Volleyball IQ: the best read in the building.','Ball Control: flawless platform, every rotation.'],
+  clip:{tag:'TOKYO 2020 · GOLD-MEDAL MATCH',cap:'The dig that kept the rally alive — then the swing to end it.',path:'4× Olympian → Olympic gold → living legend'},
+  asym:{market:'A legendary résumé, late in a storied career.',fc:'The IQ and will never aged — still a pro-deciding competitor.'},
+  world:{said:'A late bloomer, overlooked out of college',fcSaw:'Competitiveness 8.2 · Volleyball IQ 8.4',line:'The will the recruiting boards never measured.'},
+  verdict:'The standard. Two decades of deciding the biggest points; the will never aged.',
+  traj:[['College',6.4],['Pro',7.6],['Olympic gold',8.4],['Now',8.2],['Legacy',8.5]],infl:'Olympic gold \u2192 the competitive ceiling confirmed'},
+ 'harper murray':{sport:'volleyball',pos:'Outside Hitter',voice:'The Pin',facets:[6.9,6.8,6.9,6.4,6.6,6.7,6.8,6.6],goatName:'the WVB GOAT',goatScore:9.2,
+  invisReads:['Plays bigger as the gym gets louder — a young competitor rising.','Learning to steady the swing under a run — composure is next.','Wants the spotlight and the work that earns it.','A program favorite — coachable, team-first.'],
+  visReads:['Power: real, still raw.','Physical: pro frame in progress.','Volleyball IQ: developing the reads.','Ball Control: improving every season.'],
+  clip:{tag:'NEBRASKA · FIVE-SET COMEBACK',cap:'Down two sets, she took over the pin — refused to lose.',path:'top recruit → Nebraska starter → rising'},
+  asym:{market:'A hyped young college star.',fc:'The compete is real; the polish is the climb ahead.'},
+  world:{said:'A 5-star recruit the boards already love',fcSaw:'Competitiveness 6.9 — real, with room to climb',line:'The hype is loud; we grade the climb honestly.',future:true},
+  verdict:'The Pin. Elite young compete; the consistency is the next rung.',
+  traj:[['HS',5.4],['Freshman',6.2],['Now',6.9],['Junior',7.2],['Projected',7.6]],infl:'first big college run \u2192 compete confirmed'},
+ 'cooper flagg':{sport:'basketball',pos:'Forward',voice:'The Phenom',facets:[8.0,7.5,7.6,7.4,7.8,7.2,7.6,7.5],goatName:'Michael Jordan',goatScore:9.3,
+  invisReads:['Competes every possession like most prospects compete in the last two minutes.','Doesn\u2019t let a miss bleed into the next two possessions.','Wants the hardest matchup; the motor is the identity.','A connector who makes a locker room better.'],
+  visReads:['Scoring: efficient, not hyped — we grade the shot honest.','Athleticism: real, not elite-elite; no inflation.','Basketball IQ: processes the game fast.','Skill: two-way polish ahead of his age.'],
+  clip:{tag:'NCAA TOURNAMENT · VS THE #1 SEED',cap:'Three straight stops, then the and-one — effort rose with the score.',path:'#1 HS prospect → freshman phenom → top pick'},
+  asym:{market:'Polished two-way wing, safe high-floor #1.',fc:'The competitiveness is the separator — it re-rates the whole profile.'},
+  world:{said:'Consensus #1 — but "system-dependent scorer"',fcSaw:'Competitiveness 8.0 · Mental Strength 7.8',line:'The market prices his floor. We price his will.',future:true},
+  verdict:'The motor is the franchise. Everything else compounds off the compete.',
+  traj:[['HS soph',5.4],['HS sr',6.4],['Freshman',7.2],['Now',7.6],['Projected',8.1]],infl:'tournament run vs elite competition \u2192 motor +0.9'},
+ 'caitlin clark':{sport:'basketball',pos:'Guard',voice:'The Logo',facets:[8.0,8.2,7.0,7.9,7.8,7.7,7.6,7.5],goatName:'Michael Jordan',goatScore:9.3,
+  invisReads:['Takes — and makes — the biggest shot; the will is why the range is lethal.','Thrives in the loudest buildings; pressure sharpens the decisions.','A relentless worker who reshaped what a guard attempts.','A culture-shifter who lifts a whole sport with her.'],
+  visReads:['Scoring: generational volume — earned, graded honest.','Athleticism: average for the level; we say it plainly.','Basketball IQ: elite vision and pace.','Skill: handle and range that bend defenses.'],
+  clip:{tag:'THE LOGO THREE · ALL-TIME RECORD',cap:'From four feet behind the line — to break the all-time scoring record.',path:'HS star → record-breaker → pro phenom'},
+  asym:{market:'A generational scorer with deep range.',fc:'The competitiveness behind the range is the real engine.'},
+  world:{said:'A scorer some doubted could translate up',fcSaw:'Competitiveness 8.0 · Basketball IQ 7.9',line:'The doubters measured the size, not the will.'},
+  verdict:'The range is the headline; the will to take the moment is the reason.',
+  traj:[['HS',6.2],['College',7.4],['Now',8.0],['Pro',8.3],['Projected',8.6]],infl:'record tournament runs \u2192 competitiveness +1.0'},
+ 'aj dybantsa':{sport:'basketball',pos:'Wing',voice:'The Next',facets:[7.4,7.5,7.4,6.9,7.1,6.8,7.3,6.9],goatName:'Michael Jordan',goatScore:9.3,
+  invisReads:['The #1 prospect plays like he has something to prove every night.','Steady under the recruiting spotlight — rare for his age.','Wants the smoke; compete shows in the closeout possessions.','Coachable and well-liked — the makeup checks out.'],
+  visReads:['Scoring: real pro tools — graded without the hype tax removed.','Athleticism: legit; not yet elite-burst.','Basketball IQ: still maturing the reads.','Skill: pro shot-making in flashes.'],
+  clip:{tag:'NATIONAL HS FINAL · CLOSEOUT DUNK',cap:'The two-way sequence that ended the title game — closeout was personal.',path:'#1 HS prospect → BYU → projected lottery'},
+  asym:{market:'The consensus #1 high-school prospect.',fc:'Pro scorer\u2019s tools with a real competitive edge underneath.'},
+  world:{said:'The consensus #1 — penciled into the lottery',fcSaw:'Competitiveness 7.4 — real, not yet a 9',line:'We won\u2019t inflate a prospect to a number he hasn\u2019t earned.',future:true},
+  verdict:'The Next. Pro tools, and a compete that shows up in the biggest games.',
+  traj:[['HS soph',5.6],['HS jr',6.6],['Now',7.4],['College',7.8],['Projected',8.2]],infl:'national-final run \u2192 compete confirmed'},
+ 'aaron judge':{sport:'baseball',pos:'Outfielder',voice:'The Judge',facets:[8.3,8.6,6.9,8.1,8.2,7.9,8.0,8.2],goatName:'the baseball GOAT',goatScore:9.5,
+  invisReads:['The competitive at-bat under the brightest lights turned power into history.','Unshaken in October; the swing decision never speeds up.','A captain\u2019s mindset — sets the clubhouse standard daily.','The face-of-the-franchise character a city builds around.'],
+  visReads:['Power: historic — and we still grade it honest, not 10.','Speed: average; we don\u2019t pretend otherwise.','Baseball IQ: elite plate approach.','Hitting: barrels everything in the zone.'],
+  clip:{tag:'THE 62ND HOME RUN · AL RECORD',cap:'The record-breaking swing — under a season of relentless pressure.',path:'late-round prospect → MVP → AL HR record'},
+  asym:{market:'Record-setting power, three MVPs.',fc:'The competitive at-bat is what made the power historic.'},
+  world:{said:'Once just a big, late-round projector',fcSaw:'Competitiveness 8.3 · Mental Strength 8.2',line:'The frame was obvious; the will was the gem.'},
+  verdict:'Historic power — but the competitive at-bat is what made it history.',
+  traj:[['Minors',6.0],['Rookie',7.4],['MVP',8.3],['Record',8.6],['Now',8.4]],infl:'the 62-HR season \u2192 the whole profile re-rated'},
+ 'stephen curry':{sport:'basketball',pos:'Guard',voice:'The Revolution',facets:[8.6,8.8,7.2,8.5,8.7,8.6,8.0,8.2],goatName:'Michael Jordan',goatScore:9.3,
+  invisReads:['The work and the will were elite before the world believed the jumper.','Never rattled — relocated the three-point line in everyone\u2019s mind.','The gym-rat mindset that rewrote the sport.','The teammate and culture a dynasty was built around.'],
+  visReads:['Scoring: the greatest shooter ever — earned, graded honest.','Athleticism: never elite-burst; we said it then, say it now.','Basketball IQ: reads two passes ahead.','Skill: handle and release that broke the game.'],
+  clip:{tag:'THE RECORD · MOST THREES IN HISTORY',cap:'Range from the logo — he didn\u2019t break the record, he moved the line.',path:'undersized college star → 7th pick → 4× champion'},
+  asym:{market:'In 2009: an undersized shooter, durability questions.',fc:'The mindset and competitiveness were already a 8.6.'},
+  world:{said:'2009 Draft · Pick 7 — six teams passed',fcSaw:'Mindset 8.6 · Competitiveness 8.6 — the will was always there',line:'The world questioned the size. FieldCheck would have read the will.'},
+  verdict:'The mindset was always elite. The world needed proof; we\u2019d have read it.',
+  traj:[['College',6.6],['Draft (7th)',7.0],['Champion',8.4],['Now',8.6],['Legend',8.8]],infl:'the world hesitated at 7 \u2014 the mindset never did'}
+};
+const SPORTOF={'eugene wilson iii':'football','imhotep cromer':'football','luka doncic':'basketball','caitlin clark':'basketball','aj dybantsa':'basketball','harper murray':'volleyball','cooper flagg':'basketball','giannis antetokounmpo':'basketball','aaron judge':'baseball','lionel messi':'soccer','stephen curry':'basketball','cristiano ronaldo':'soccer','lebron james':'basketball','jordan larson':'volleyball','madisen skinner':'volleyball','cameron boozer':'basketball','juju watkins':'basketball'};
+const VOICEOF={'eugene wilson iii':'The Blur','imhotep cromer':'The Deep Threat','luka doncic':'The Maestro','caitlin clark':'The Logo','aj dybantsa':'The Next','harper murray':'The Pin','cooper flagg':'The Phenom','giannis antetokounmpo':'The Greek Freak','aaron judge':'The Judge','lionel messi':'The Genius','stephen curry':'The Revolution','cristiano ronaldo':'The Machine','lebron james':'The King','jordan larson':'The GOAT','madisen skinner':'The Closer','cameron boozer':'The Heir','juju watkins':'The Showstopper'};
+const LEVEL={'lebron james':8.5,'lionel messi':8.6,'cristiano ronaldo':8.2,'giannis antetokounmpo':8.3,'luka doncic':8.0,'cameron boozer':6.9,'juju watkins':7.6,'eugene wilson iii':6.2,'imhotep cromer':6.0};
+
+function slug(s){return (s||'').toLowerCase().replace(/[^a-z ]/g,'').trim();}
+function rng(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return ()=>{h+=0x6D2B79F5;let t=h;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;};}
+function avg(a){return Math.round(a.reduce((x,y)=>x+y,0)/a.length*10)/10;}
+
+function build(name){
+ const k=slug(name),sport=SPORTOF[k]||'basketball',labels=SPORT_FACETS[sport];let P;
+ if(AUTHORED[k]){P=Object.assign({name,labels,sport},AUTHORED[k]);P.composite=avg(P.facets);}
+ else{const base=LEVEL[k]||6.5,r=rng(k);
+  const f=labels.map((_,i)=>Math.max(4.5,Math.min(8.8,Math.round((base+(r()-.5)*1.0+(i===0?.2:0))*10)/10)));const composite=avg(f);
+  const goat=sport==='basketball'?['Michael Jordan',9.3]:sport==='baseball'?['the baseball GOAT',9.5]:sport==='soccer'?['the soccer GOAT',9.4]:sport==='volleyball'?['the WVB GOAT',9.2]:['the GOAT',9.3];
+  P={name,labels,sport,pos:'',voice:VOICEOF[k]||'The Read',facets:f,composite,goatName:goat[0],goatScore:goat[1],
+   invisReads:['Competes biggest when the moment is tightest.','Holds composure when the game speeds up.','A worker\u2019s mindset; earns the moment.','A teammate the room is built around.'],
+   visReads:['The tools, graded harsh — no hype tax.','Athletic profile, called honestly.','Reads the game at a real level.','Skill that translates up.'],
+   clip:{tag:name.toUpperCase()+' · SIGNATURE MOMENT',cap:'The play where the game tightened and the compete answered.',path:'the moment that defines the profile'},
+   asym:{market:'Known for the number everyone can count.',fc:'The competitive trait underneath is the real separator.'},
+   world:{said:'rated by the boards on stats and stars',fcSaw:'Competitiveness '+f[0].toFixed(1)+' — read off the film',line:'We read the will the rankings never measured.',future:true},
+   verdict:(VOICEOF[k]||'The Read')+'. The trait under the stat line is the real story.',
+   traj:[['Early',Math.max(4.5,base-1.6)],['Rising',Math.max(5,base-.8)],['Now',composite],['Next',Math.min(8.9,composite+.4)]],infl:'the moment the competition rose \u2192 the motor answered'};}
+ P.tier=P.composite>=8.6?'ELITE+':P.composite>=7.8?'ELITE':P.composite>=6.6?'STAR':P.composite>=5.4?'PROSPECT':'SCOUT';
+ P.market=P.facets.map((v,i)=>Math.max(3,Math.round((v-(INVIS.indexOf(i)>=0?1.2+((i*7)%4)/10:0.25))*10)/10));
+ const lead=P.facets[0],sm=SUBMECH_BY_SPORT[P.sport],r2=rng(k+'sm');
+ P.submech=sm.map(n=>[n,Math.max(4,Math.min(9.0,Math.round((lead+(r2()-.45)*0.8)*10)/10))]);
+ P.compets=COMPETS[P.sport];
+ const now=P.composite;P.morph=P.traj.map(([st,c])=>[st,c,P.facets.map(v=>Math.max(2.5,Math.min(10,Math.round(v*(c/now)*10)/10)))]);
+ return P;
+}
+const params=new URLSearchParams(location.search);
+const P=build(params.get('p')||'Madisen Skinner');
+const F=P.facets,LB=P.labels,COMP=P.composite,GOAT=P.goatScore;
+document.getElementById('pName').textContent=P.name;
+document.getElementById('pPos').textContent=P.sport[0].toUpperCase()+P.sport.slice(1)+(P.pos?' · '+P.pos:'')+' · '+P.voice;
+document.getElementById('pTier').textContent=P.tier;
+
+function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function tx(p,s){const t=el('text',p);t.textContent=s;return t;}
+function pt(i,r){const a=(-90+i*45)*Math.PI/180;return [CX+Math.cos(a)*r,CY+Math.sin(a)*r];}
+function poly(v){return v.map((x,i)=>pt(i,(x/10)*R).join(",")).join(" ");}
+function add(g,e){g.appendChild(e);return e;}
+function wrap(g,s,x,y,max,dy,attr){const w=s.split(' ');let line='',ln=0;w.forEach(z=>{if((line+z).length>max){add(g,tx(Object.assign({x:x,y:y+ln*dy},attr),line.trim()));line=z+' ';ln++;}else line+=z+' ';});if(line)add(g,tx(Object.assign({x:x,y:y+ln*dy},attr),line.trim()));return ln+1;}
+
+/* S0 */
+(function(){const g=document.getElementById('s0');
+ for(let k=1;k<=4;k++)add(g,el('polygon',{points:poly(F.map(()=>10*k/4)),fill:'none',stroke:'rgba(184,152,90,.06)'}));
+ LB.forEach((lb,i)=>{const[x,y]=pt(i,R);add(g,el('line',{x1:CX,y1:CY,x2:x,y2:y,stroke:'rgba(184,152,90,.1)'}));
+  const[lx,ly]=pt(i,R+26),anc=lx<CX-12?'end':lx>CX+12?'start':'middle',inv=INVIS.indexOf(i)>=0;
+  add(g,tx({x:lx,y:ly,fill:inv?'#e8bf70':'#a39c8c','font-size':13,'font-weight':inv?600:400,'text-anchor':anc,'dominant-baseline':'middle',class:'lbl'},lb));});
+ add(g,el('circle',{cx:CX,cy:CY,r:146,fill:'url(#gGlow)'}));
+ add(g,el('polygon',{id:'s0poly',points:poly(F),fill:'rgba(184,152,90,.13)',stroke:'url(#gGold)','stroke-width':2.5,'stroke-linejoin':'round'}));
+ F.forEach((v,i)=>{const[x,y]=pt(i,(v/10)*R);add(g,el('circle',{cx:x,cy:y,r:3.8,fill:'#e8bf70',class:'vtx'}));});
+ add(g,tx({id:'compNum',x:CX,y:CY+8,fill:'#e8bf70','font-size':50,'text-anchor':'middle','font-family':"'Fraunces',serif",class:'flashable'},'0.0'));
+ add(g,tx({x:CX,y:CY+29,fill:'#a39c8c','font-size':10,'text-anchor':'middle','letter-spacing':2},'COMPOSITE'));})();
+
+/* sFacets8 — all 8: tools harsh / invisible different (two columns) */
+(function(){const g=document.getElementById('sFacets8');
+ add(g,tx({x:250,y:70,fill:'#9aa3ae','font-size':12,'font-weight':600,'text-anchor':'middle','letter-spacing':1.5},'THE TOOLS — GRADED HARSH'));
+ add(g,tx({x:670,y:70,fill:'#e8bf70','font-size':12,'font-weight':600,'text-anchor':'middle','letter-spacing':1.5},'THE INVISIBLE — READ DIFFERENT'));
+ VIS.forEach((fi,row)=>{const y=130+row*108;const grp=add(g,el('g',{class:'frow',style:`--d:${row}`}));
+  add(grp,el('rect',{x:40,y:y-34,width:420,height:88,rx:11,fill:'#121009',stroke:'rgba(110,120,130,.25)'}));
+  add(grp,tx({x:64,y:y-8,fill:'#cfc9bb','font-size':14,'font-weight':600},LB[fi]));
+  add(grp,tx({x:440,y:y+2,fill:'#9aa3ae','font-size':30,'text-anchor':'end','font-family':"'Fraunces',serif",class:'fval flashable',style:`--d:${row}`},F[fi].toFixed(1)));
+  add(grp,tx({x:64,y:y+18,fill:'#a39c8c','font-size':11.5},(P.visReads[row]||'graded honest — no hype').slice(0,52)));});
+ INVIS.forEach((fi,row)=>{const y=130+row*108;const grp=add(g,el('g',{class:'frow',style:`--d:${row+0.5}`}));
+  add(grp,el('rect',{x:460,y:y-34,width:420,height:88,rx:11,fill:'#15110b',stroke:'rgba(184,152,90,.32)'}));
+  add(grp,tx({x:484,y:y-8,fill:'#e8bf70','font-size':14,'font-weight':600},'● '+LB[fi]));
+  add(grp,tx({x:860,y:y+2,fill:'#e8bf70','font-size':30,'text-anchor':'end','font-family':"'Fraunces',serif",class:'fval flashable',style:`--d:${row+0.5}`},F[fi].toFixed(1)));
+  add(grp,tx({x:484,y:y+18,fill:'#cfc9bb','font-size':11.5},(P.invisReads[row]||'').slice(0,52)));});})();
+
+/* S1 asymmetry — competitor-named */
+(function(){const g=document.getElementById('s1');add(g,el('circle',{cx:CX,cy:CY,r:146,fill:'url(#gGlow)'}));
+ add(g,el('polygon',{points:poly(P.market),fill:'rgba(110,120,130,.12)',stroke:'#6b7480','stroke-width':2,'stroke-dasharray':'5 5','stroke-linejoin':'round'}));
+ add(g,el('polygon',{points:poly(F),fill:'rgba(184,152,90,.1)',stroke:'url(#gGold)','stroke-width':2.5,'stroke-linejoin':'round'}));
+ INVIS.forEach(i=>{const[ax,ay]=pt(i,(P.market[i]/10)*R),[bx,by]=pt(i,(F[i]/10)*R);
+  add(g,el('line',{x1:ax,y1:ay,x2:bx,y2:by,stroke:'#e8bf70','stroke-width':3,'stroke-linecap':'round',class:'gapL',style:`--d:${i}`}));
+  add(g,tx({x:bx+(bx>=CX?9:-9),y:by-4,fill:'#e8bf70','font-size':12,'text-anchor':bx>=CX?'start':'end'},'+'+(F[i]-P.market[i]).toFixed(1)));});
+ add(g,tx({x:648,y:206,fill:'#9aa3ae','font-size':12,'font-weight':600,'letter-spacing':1},'THEY COUNT'));
+ add(g,tx({x:648,y:226,fill:'#cfc9bb','font-size':11.5},P.compets[0]));
+ wrap(g,P.compets[1],648,244,30,16,{fill:'#9aa3ae','font-size':11});
+ add(g,tx({x:648,y:316,fill:'#e8bf70','font-size':12,'font-weight':600,'letter-spacing':1},'WE READ'));
+ add(g,tx({x:648,y:336,fill:'#f3eee2','font-size':11.5},'the 4 invisible facets'));
+ add(g,tx({x:648,y:354,fill:'#e8bf70','font-size':11.5,'font-weight':600},'the will, not the résumé'));})();
+
+/* S2 dissection */
+(function(){const g=document.getElementById('s2');const ox=460,oy=336;
+ add(g,tx({x:460,y:92,fill:'#e8bf70','font-size':17,'font-weight':600,'text-anchor':'middle'},'COMPETITIVENESS · '+F[0].toFixed(1)));
+ add(g,tx({x:460,y:114,fill:'#a39c8c','font-size':11,'text-anchor':'middle'},'the deepest of the four — each EvalGrid factor scored off the film'));
+ P.submech.forEach((m,i)=>{const ang=(-116+i*58)*Math.PI/180,r=178,x=ox+Math.cos(ang)*r,y=oy+Math.sin(ang)*r;
+  add(g,el('line',{x1:ox,y1:oy,x2:x,y2:y,stroke:'rgba(184,152,90,.15)'}));
+  const node=add(g,el('g',{class:'node',style:`--d:${i}`}));add(node,el('circle',{cx:x,cy:y,r:26,fill:'#13100b',stroke:'rgba(184,152,90,.25)'}));
+  const c=2*Math.PI*26,off=c*(1-m[1]/10);add(node,el('circle',{cx:x,cy:y,r:26,fill:'none',stroke:'url(#gGold)','stroke-width':3.5,'stroke-linecap':'round',transform:`rotate(-90 ${x} ${y})`,'stroke-dasharray':c,'stroke-dashoffset':c,class:'ring',style:`--off:${off}`}));
+  add(node,tx({x:x,y:y+5,fill:'#e8bf70','font-size':15,'text-anchor':'middle',class:'nval flashable',style:`--d:${i}`},m[1].toFixed(1)));
+  add(node,tx({x:x,y:y+44,fill:'#d8d1c2','font-size':10.5,'text-anchor':'middle'},m[0]));});
+ add(g,el('circle',{cx:ox,cy:oy,r:7,fill:'#e8bf70'}));})();
+
+/* S3 evidence */
+(function(){const g=document.getElementById('s3');const fx=300,fy=170,fw=340,fh=176;
+ const card=add(g,el('g',{class:'clipcard',id:'clipBtn',style:'cursor:pointer'}));
+ add(card,el('rect',{x:fx,y:fy,width:fw,height:fh,rx:12,fill:'#0f0c08',stroke:'rgba(184,152,90,.32)'}));
+ for(let i=0;i<8;i++){add(card,el('rect',{x:fx+12+i*40,y:fy+9,width:15,height:9,rx:2,fill:'rgba(184,152,90,.16)'}));add(card,el('rect',{x:fx+12+i*40,y:fy+fh-18,width:15,height:9,rx:2,fill:'rgba(184,152,90,.16)'}));}
+ add(card,el('circle',{cx:fx+fw/2,cy:fy+fh/2,r:27,fill:'rgba(184,152,90,.14)',stroke:'rgba(184,152,90,.45)'}));add(card,el('path',{d:`M${fx+fw/2-7} ${fy+fh/2-12}l19 12l-19 12z`,fill:'#e8bf70'}));
+ add(card,el('rect',{x:fx,y:fy,width:7,height:fh,fill:'rgba(232,191,112,.55)',filter:'url(#soft)',class:'scan'}));
+ add(g,tx({x:fx,y:fy-30,fill:'#e8bf70','font-size':11,'font-weight':600,'letter-spacing':1},P.clip.tag));
+ add(g,tx({x:fx,y:fy-13,fill:'#7d7768','font-size':10,'letter-spacing':1},P.clip.path.toUpperCase()));
+ wrap(g,P.clip.cap,fx,fy+fh+24,56,19,{fill:'#f3eee2','font-size':13.5});
+ add(g,tx({x:fx+fw,y:fy+fh+24,fill:'#e8bf70','font-size':11,'font-weight':600,'text-anchor':'end'},'▶ Watch this moment'));})();
+
+/* S4 ceiling — with MJ 9.3 reference */
+(function(){const g=document.getElementById('s4');const x0=290,x1=720,y=300,sc=(x1-x0)/10;
+ add(g,el('line',{x1:x0,y1:y,x2:x1,y2:y,stroke:'rgba(184,152,90,.18)'}));
+ for(let v=0;v<=10;v+=2){const x=x0+v*sc;add(g,el('line',{x1:x,y1:y-4,x2:x,y2:y+4,stroke:'rgba(184,152,90,.3)'}));add(g,tx({x:x,y:y+22,fill:'#7d7768','font-size':11,'text-anchor':'middle'},v));}
+ const mx=x0+MJ*sc;add(g,el('line',{x1:mx,y1:y-90,x2:mx,y2:y,stroke:'rgba(232,191,112,.5)','stroke-width':1.5,'stroke-dasharray':'2 3'}));
+ add(g,tx({x:mx,y:y-96,fill:'#e8bf70','font-size':11,'text-anchor':'middle','font-weight':600},'CEILING · MJ 9.3'));
+ const gx=x0+GOAT*sc;add(g,el('line',{x1:gx,y1:y-58,x2:gx,y2:y,stroke:'#9aa3ae','stroke-width':2,'stroke-dasharray':'4 4'}));
+ add(g,tx({x:gx,y:y-64,fill:'#9aa3ae','font-size':13,'text-anchor':'middle'},'GOAT · '+GOAT.toFixed(1)));
+ const bar=add(g,el('rect',{id:'goatBar',x:x0,y:y-15,width:0,height:30,rx:4,fill:'url(#gGold)'}));bar.dataset.w=(F[0]*sc);
+ add(g,tx({id:'goatVal',x:x0+10,y:y+5,fill:'#0a0907','font-size':15,'font-weight':600},''));
+ const px=x0+F[0]*sc;add(g,el('line',{x1:px,y1:y-30,x2:gx,y2:y-30,stroke:'#e8bf70','stroke-width':2}));
+ add(g,tx({x:(px+gx)/2,y:y-38,fill:'#e8bf70','font-size':13,'text-anchor':'middle',class:'flashable',id:'gapTxt'},'gap '+(GOAT-F[0]).toFixed(1)));
+ add(g,tx({x:460,y:y+72,fill:'#a39c8c','font-size':12,'text-anchor':'middle'},'10.0 is unreachable. The GOAT is the practical apex. The gap is the body of work.'));})();
+
+/* sMorph */
+(function(){const g=document.getElementById('sMorph');
+ for(let k=1;k<=4;k++)add(g,el('polygon',{points:poly(F.map(()=>10*k/4)),fill:'none',stroke:'rgba(184,152,90,.05)'}));
+ LB.forEach((lb,i)=>{const[lx,ly]=pt(i,R+22),anc=lx<CX-12?'end':lx>CX+12?'start':'middle';add(g,tx({x:lx,y:ly,fill:'#7d7768','font-size':10.5,'text-anchor':anc,'dominant-baseline':'middle'},lb));});
+ add(g,el('polygon',{id:'morphPoly',points:poly(P.morph[0][2]),fill:'rgba(184,152,90,.13)',stroke:'url(#gGold)','stroke-width':2.5,'stroke-linejoin':'round'}));
+ add(g,tx({id:'morphStage',x:CX,y:CY-2,fill:'#e8bf70','font-size':22,'text-anchor':'middle','font-family':"'Fraunces',serif"},P.morph[0][0]));
+ add(g,tx({id:'morphVal',x:CX,y:CY+22,fill:'#a39c8c','font-size':12,'text-anchor':'middle'},P.morph[0][1].toFixed(1)));
+ add(g,tx({x:CX,y:566,fill:'#d8d1c2','font-size':12,'text-anchor':'middle'},P.infl));})();
+
+/* sProof — the world has missed gems before (impressionable) */
+(function(){const g=document.getElementById('sProof');
+ add(g,tx({x:460,y:62,fill:'#e8bf70','font-size':13,'font-weight':600,'text-anchor':'middle','letter-spacing':2},'THE WORLD HAS MISSED GEMS BEFORE'));
+ MISSES.forEach((m,i)=>{const y=110+i*46;const grp=add(g,el('g',{class:'miss',style:`--d:${i}`}));
+  add(grp,tx({x:300,y:y,fill:'#cfc9bb','font-size':17,'text-anchor':'end','font-family':"'Fraunces',serif"},m[0]));
+  add(grp,tx({x:320,y:y,fill:'#9aa3ae','font-size':13},m[1]));});
+ add(g,tx({x:460,y:330,fill:'#f3eee2','font-size':14,'text-anchor':'middle',class:'misslede'},'Every one had the invisible facet.'));
+ add(g,tx({x:460,y:352,fill:'#e8bf70','font-size':14,'font-weight':600,'text-anchor':'middle',class:'misslede'},'FieldCheck would have read it.'));
+ // player-specific
+ const w=P.world;const fut=w.future;
+ add(g,tx({x:460,y:412,fill:'#9aa3ae','font-size':12,'font-weight':600,'text-anchor':'middle','letter-spacing':1.5,class:'pw'},fut?('THE WORLD IS DECIDING '+P.name.toUpperCase()+' NOW'):('THE WORLD SAID')));
+ wrap(g,w.said,460,438,52,18,{fill:'#cfc9bb','font-size':13,'text-anchor':'middle',class:'pw'});
+ add(g,tx({x:460,y:486,fill:'#e8bf70','font-size':13,'font-weight':600,'text-anchor':'middle',class:'pw'},'FieldCheck reads: '+w.fcSaw));
+ wrap(g,w.line,460,514,58,18,{fill:'#f3eee2','font-size':13,'text-anchor':'middle','font-family':"'Fraunces',serif",class:'pw'});})();
+
+/* sFinal — completed polygon + verdict */
+(function(){const g=document.getElementById('sFinal');const fcx=300,fcy=300,fr=150;
+ function fp(i,r){const a=(-90+i*45)*Math.PI/180;return [fcx+Math.cos(a)*r,fcy+Math.sin(a)*r];}
+ for(let k=1;k<=4;k++)add(g,el('polygon',{points:F.map((_,i)=>fp(i,fr*k/4).join(',')).join(' '),fill:'none',stroke:'rgba(184,152,90,.06)'}));
+ add(g,el('circle',{cx:fcx,cy:fcy,r:128,fill:'url(#gGlow)'}));
+ add(g,el('polygon',{id:'finalPoly',points:F.map((v,i)=>fp(i,(v/10)*fr).join(',')).join(' '),fill:'rgba(184,152,90,.16)',stroke:'url(#gGold)','stroke-width':2.5,'stroke-linejoin':'round'}));
+ F.forEach((v,i)=>{const[x,y]=fp(i,(v/10)*fr);add(g,el('circle',{cx:x,cy:y,r:3.4,fill:'#e8bf70'}));const[lx,ly]=fp(i,fr+18),anc=lx<fcx-10?'end':lx>fcx+10?'start':'middle';add(g,tx({x:lx,y:ly,fill:INVIS.indexOf(i)>=0?'#e8bf70':'#7d7768','font-size':9.5,'text-anchor':anc,'dominant-baseline':'middle'},v.toFixed(1)));});
+ add(g,tx({x:fcx,y:fcy+6,fill:'#e8bf70','font-size':40,'text-anchor':'middle','font-family':"'Fraunces',serif"},COMP.toFixed(1)));
+ add(g,tx({x:fcx,y:fcy+26,fill:'#a39c8c','font-size':9,'text-anchor':'middle','letter-spacing':2},P.tier));
+ add(g,tx({x:540,y:148,fill:'#a39c8c','font-size':11,'font-weight':600,'letter-spacing':2},'THE FIELDCHECK VERDICT'));
+ const n=wrap(g,P.verdict,540,186,26,30,{fill:'#f3eee2','font-size':22,'font-family':"'Fraunces',serif"});
+ add(g,el('line',{x1:540,y1:186+n*30,x2:860,y2:186+n*30,stroke:'rgba(184,152,90,.25)'}));
+ add(g,tx({x:540,y:186+n*30+24,fill:'#9aa3ae','font-size':12},'Market: '+(P.asym.market.length>42?P.asym.market.slice(0,42)+'…':P.asym.market)));
+ add(g,tx({x:540,y:186+n*30+44,fill:'#e8bf70','font-size':12,'font-weight':600},'FieldCheck: '+(P.asym.fc.length>42?P.asym.fc.slice(0,42)+'…':P.asym.fc)));
+ add(g,tx({x:540,y:474,fill:'#e8bf70','font-size':11,'font-weight':600,'letter-spacing':1.5},'▶ SHARE THE READ'));
+ add(g,tx({x:680,y:474,fill:'#7d7768','font-size':11,'letter-spacing':1.5},'SEE THE FULL READ →'));})();
+
+const css=document.createElement('style');css.textContent=`
+#s0.on .lbl{animation:rise .65s ease both .55s}#s0.on .vtx{animation:pop .5s ease both;animation-delay:calc(.05s*var(--d))}
+#s0.on #s0poly{animation:draw 1.2s ease both,breathe 6s ease-in-out 1.3s infinite}#s0.on #compNum{animation:flash .9s ease 1.2s both}
+#sFacets8.on .frow{animation:rise .55s ease both;animation-delay:calc(.16s*var(--d)+.2s)}#sFacets8.on .fval{animation:flash .8s ease both;animation-delay:calc(.16s*var(--d)+.8s)}
+#s1.on .gapL{animation:pop .55s ease both,pulseLine 2.2s ease 1s infinite;animation-delay:calc(.13s*var(--d)+.3s),calc(.13s*var(--d)+1s)}
+#s2.on .node{animation:pop .55s ease both;animation-delay:calc(.2s*var(--d)+.3s)}#s2.on .ring{animation:ringfill 1.1s ease forwards;animation-delay:calc(.2s*var(--d)+.65s)}#s2.on .nval{animation:flash .75s ease both;animation-delay:calc(.2s*var(--d)+1.6s)}
+#s3.on .scan{animation:sweep 2.3s ease-in-out .4s both}
+#s4.on #gapTxt{animation:flash .9s ease 1.2s both}
+#sProof.on .miss{animation:flashbig 1.6s ease both;animation-delay:calc(.5s*var(--d)+.2s)}
+#sProof.on .misslede{animation:rise .6s ease both 2.6s}
+#sProof.on .pw{animation:rise .6s ease both 3.4s}
+#sFinal.on #finalPoly{animation:draw 1.4s ease both .2s}`;
+document.head.appendChild(css);
+
+document.getElementById('canvas').addEventListener('click',function(e){if(e.target.closest('#clipBtn')){try{window.parent.postMessage({type:'fcr3-clip',player:P.name},'*');}catch(_){}}});
+
+function runMorph(){const pl=document.getElementById('morphPoly'),stg=document.getElementById('morphStage'),val=document.getElementById('morphVal');if(!pl)return;
+ function pp(v){return v.map((x,i)=>{const a=(-90+i*45)*Math.PI/180;return [CX+Math.cos(a)*(x/10)*R,CY+Math.sin(a)*(x/10)*R].join(",");}).join(" ");}
+ let s=0;function step(){if(s>=P.morph.length-1)return;const t0=performance.now();stg.textContent=P.morph[s+1][0];val.textContent=P.morph[s+1][1].toFixed(1);
+  (function f(t){const k=Math.min(1,(t-t0)/(RM?1:850));const a=P.morph[s][2],b=P.morph[s+1][2];pl.setAttribute('points',pp(a.map((x,i)=>x+(b[i]-x)*k)));if(k<1)requestAnimationFrame(f);else{s++;setTimeout(step,RM?1:600);}})(performance.now());}
+ stg.textContent=P.morph[0][0];val.textContent=P.morph[0][1].toFixed(1);pl.setAttribute('points',pp(P.morph[0][2]));s=0;setTimeout(step,RM?1:450);}
+
+const B=[
+ {t:'title',k:'FieldCheck · The Read',h:['The box score tells you what they <em>did</em>.','We tell you who they <em>are</em>.'],d:4000},
+ {t:'scene',id:'s0',pt:'8 facets · 1 honest number',b:'01 · The read',c:'Eight facets, one honest number — counted from zero, in the open.',d:5200},
+ {t:'scene',id:'sFacets8',pt:'tools graded harsh · invisible read different',b:'02 · All eight',c:'The tools, graded harshly — no hype. The four invisible facets, read the way no one else can.',d:7200},
+ {t:'title',k:'The Moat',h:['Four of these eight facets','are <em>invisible</em> to everyone else.'],d:3600},
+ {t:'scene',id:'s1',pt:'247 · On3 · Hudl count stars; we read will',b:'03 · The asymmetry',c:'They rank stars, stats and highlights. We read the will — and every gap lands on an invisible facet.',d:6400},
+ {t:'title',k:'The Asymmetry',h:['The market prices the <em>résumé</em>.','FieldCheck prices the <em>will</em>.'],d:3600},
+ {t:'scene',id:'s2',pt:'we score the trait, factor by factor',b:'04 · The dissection',c:'Competitiveness opened up — each EvalGrid factor scored off the film.',d:6200},
+ {t:'title',k:'Why no one else can do this',h:['We grade what the film <em>shows</em>','and the numbers <em>hide</em>.'],d:3800},
+ {t:'scene',id:'s3',pt:'every read points back to real tape',b:'05 · The evidence',c:'A real moment from the path — and the engine has the receipts.',d:5400},
+ {t:'scene',id:'s4',pt:'10.0 is unreachable · MJ 9.3 is the ceiling',b:'06 · The ceiling',c:'Measured against the apex — the distance to the GOAT is the body of work.',d:5600},
+ {t:'scene',id:'sMorph',pt:'the whole shape grows over time',b:'07 · The trajectory',c:'Watch the profile build — how it got here, and where it points.',d:6600},
+ {t:'title',k:'The Proof',h:['The world has hesitated <em>before</em>.','We wouldn\u2019t have.'],d:3800},
+ {t:'scene',id:'sProof',pt:'the gem the world missed — and the one it\u2019s deciding now',b:'08 · The proof',c:'Brady at 199. Curry at 7. The invisible facet was always there — and we read it.',d:9000},
+ {t:'scene',id:'sFinal',pt:'one number, one verdict, the whole shape',b:'09 · The verdict',c:'The completed read — the shape, the number, and what it means in one line.',d:8000}
+];
+const scenes=document.querySelectorAll('.scene');
+const title=document.getElementById('title'),tkick=document.getElementById('tkick'),thead=document.getElementById('thead');
+const cap=document.getElementById('cap'),capt=document.getElementById('captext'),beat=document.getElementById('beat'),pointEl=document.getElementById('point'),beatsWrap=document.getElementById('beats');
+let idx=0,timer=null,playing=true;
+B.forEach((b,i)=>{const d=document.createElement('div');d.className='beatdot'+(b.t==='title'?' title':'');d.tabIndex=0;d.addEventListener('click',()=>jump(i));beatsWrap.appendChild(d);});
+const dots=[...beatsWrap.children];
+function compCount(){const n=document.getElementById('compNum');if(!n)return;const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/1150);n.textContent=(COMP*(.15+.85*k)).toFixed(1);if(k<1)requestAnimationFrame(f);else n.textContent=COMP.toFixed(1);})(performance.now());}
+function goatGrow(){const b=document.getElementById('goatBar'),v=document.getElementById('goatVal');if(!b)return;const w=parseFloat(b.dataset.w);b.style.transition='width 1.2s ease';requestAnimationFrame(()=>b.setAttribute('width',w));const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/1200);v.textContent=(F[0]*(.1+.9*k)).toFixed(1);if(k<1)requestAnimationFrame(f);})(performance.now());}
+function show(i){idx=i;const b=B[i];dots.forEach((d,k)=>d.classList.toggle('active',k===i));pointEl.classList.remove('on');
+ if(b.t==='title'){scenes.forEach(s=>s.classList.remove('on'));cap.classList.remove('show');beat.textContent='';capt.textContent='';
+   tkick.textContent=b.k;thead.innerHTML=b.h.map(l=>`<span class="ln">${l}</span>`).join('');title.classList.remove('on');void title.offsetWidth;title.classList.add('on');}
+ else{title.classList.remove('on');scenes.forEach(s=>{if(s.id===b.id){s.classList.remove('on');void s.offsetWidth;s.classList.add('on');}else s.classList.remove('on');});
+   beat.textContent=b.b;cap.classList.remove('show');capt.textContent=b.c;setTimeout(()=>cap.classList.add('show'),140);
+   if(b.pt){pointEl.textContent='› '+b.pt;setTimeout(()=>pointEl.classList.add('on'),200);}
+   if(b.id==='s0')compCount();if(b.id==='s4')goatGrow();if(b.id==='sMorph')runMorph();}}
+function next(){show((idx+1)%B.length);schedule();}
+function schedule(){clearTimeout(timer);if(!playing)return;timer=setTimeout(next,RM?1500:(B[idx].d||5000));}
+function jump(i){playing=true;document.getElementById('play').textContent='⏸ Pause';show(i);schedule();}
+document.getElementById('play').addEventListener('click',function(){playing=!playing;this.textContent=playing?'⏸ Pause':'▶ Play';playing?schedule():clearTimeout(timer);});
+document.getElementById('replay').addEventListener('click',()=>{playing=true;document.getElementById('play').textContent='⏸ Pause';show(0);schedule();});
+show(0);schedule();
+})();
+</script>
+</body></html>
