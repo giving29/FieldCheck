@@ -2,855 +2,928 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>LOVB · The Pro Pathway — FieldCheck</title>
-<meta name="description" content="League One Volleyball — the first pro pathway built for American volleyball. Standings, Icons First Team, the founding story, and the pathway from youth club to LOVB Pro.">
-<meta name="theme-color" content="#0A0908">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOVB · League One Volleyball — FieldCheck IQ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Marcellus&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Anton&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0A0908; --bg-1: #110F0D; --bg-2: #1A1715;
-  --glass: rgba(255, 252, 245, 0.04);
-  --glass-2: rgba(255, 252, 245, 0.08);
-  --glass-edge: rgba(255, 252, 245, 0.14);
-  --glass-edge-2: rgba(255, 252, 245, 0.22);
-  --text: #F5F1E8;
-  --text-2: rgba(245, 241, 232, 0.72);
-  --text-3: rgba(245, 241, 232, 0.50);
-  --text-4: rgba(245, 241, 232, 0.30);
-  --accent: #FF5C3A;
-  --accent-glow: rgba(255, 92, 58, 0.55);
-  --gold: #F5B800;
-  --gold-glow: rgba(245, 184, 0, 0.45);
-  --moss: #6BAA5A;
-  --r-1: 8px; --r-2: 12px; --r-3: 18px; --r-4: 24px; --r-pill: 9999px;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --section-py: 96px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; background: #0A0908; color-scheme: dark; }
-body {
-  background: var(--bg); color: var(--text);
-  font-family: "General Sans", -apple-system, sans-serif;
-  font-size: 15px; line-height: 1.5;
-  letter-spacing: -0.005em;
-  min-height: 100vh; overflow-x: hidden;
-}
-a { color: inherit; text-decoration: none; }
+  :root{
+    --ink:#0A0908; --ink2:#15130F; --ink3:#1E1B16;
+    --t:#F4F1EA; --t2:rgba(245,241,232,.74); --t3:rgba(245,241,232,.46); --t4:rgba(245,241,232,.26);
+    --rule:rgba(248,244,237,.12); --rule2:rgba(248,244,237,.06);
+    --gold:#D4A24C; --gold-hi:#EEC067; --golds:rgba(212,162,76,.10); --goldl:rgba(212,162,76,.30);
+    --moss:#7C9B6E; --ink-red:#A33B2A;
+    --mono:'JetBrains Mono',monospace; --cg:'Cormorant Garamond',serif; --inter:'Inter',sans-serif; --anton:'Anton',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;background:var(--ink)}
+  body{background:var(--ink);color:var(--t);font-family:var(--inter);line-height:1.6;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1340px;margin:0 auto;padding:0 28px}
+  @keyframes blip{0%,100%{opacity:1}50%{opacity:.35}}
 
-.masthead {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 18px 32px;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px;
-  background: linear-gradient(180deg, rgba(10,9,8,0.85), rgba(10,9,8,0.4));
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-}
-.wordmark {
-  font-family: "Anton"; font-size: 28px;
-  letter-spacing: -0.005em; text-transform: uppercase;
-  display: flex; align-items: center; gap: 4px;
-}
-.wordmark .dot {
-  display: inline-block; width: 8px; height: 8px;
-  background: var(--accent); border-radius: 50%;
-  margin-left: 4px; margin-bottom: 4px;
-  box-shadow: 0 0 14px var(--accent-glow);
-}
-.nav {
-  display: flex; align-items: center; gap: 4px;
-  font-family: "JetBrains Mono"; font-size: 11px;
-  font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
-}
-.nav a {
-  padding: 8px 14px; border-radius: var(--r-pill);
-  color: var(--text-3);
-  transition: all 0.2s var(--ease-out);
-}
-.nav a:hover { color: var(--text); background: var(--glass); }
-.nav a.active { color: var(--text); background: var(--glass-2); }
+  /* masthead strip */
+  .strip{border-bottom:1px solid var(--rule);background:rgba(10,9,8,.85);backdrop-filter:blur(10px)}
+  .strip-i{max-width:1340px;margin:0 auto;padding:9px 28px;display:flex;justify-content:space-between;align-items:center;gap:24px;
+    font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:1.7px;text-transform:uppercase;color:var(--t3)}
+  .strip b{color:var(--gold)}
+  .blip{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--moss);box-shadow:0 0 0 3px rgba(124,155,110,.18);animation:blip 2s infinite;margin-right:7px;vertical-align:middle}
 
-/* ── Hero ──────────────────────────────────────────────── */
-.lovb-hero {
-  padding: 160px 32px 80px;
-  text-align: center;
-  background:
-    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(245, 184, 0, 0.08), transparent 70%),
-    linear-gradient(180deg, var(--bg) 0%, var(--bg-1) 100%);
-  position: relative;
-}
-/* v0.30.5.136: LOVB HERO TEAM STRIP + LA28 COUNTDOWN */
-.lovb-hero-teamstrip {
-  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
-  margin: 24px 0 16px 0;
-}
-.lovb-hero-team {
-  padding: 5px 14px;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--lovb-tc);
-  background: color-mix(in srgb, var(--lovb-tc) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--lovb-tc) 45%, transparent);
-  border-radius: 999px;
-}
-.lovb-hero-la28 {
-  display: inline-flex; align-items: baseline; gap: 8px;
-  margin-top: 8px;
-  padding: 10px 18px;
-  background: rgba(255,92,58,0.06);
-  border: 1px solid rgba(255,92,58,0.25);
-  border-radius: 999px;
-}
-.lovb-hero-la28-num {
-  font-family: "Anton", sans-serif;
-  font-size: 22px;
-  color: var(--accent);
-}
-.lovb-hero-la28-lbl {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-.lovb-hero-eyebrow {
-  font-family: "JetBrains Mono"; font-size: 11px;
-  letter-spacing: 0.18em; color: var(--gold);
-  text-transform: uppercase; margin-bottom: 28px;
-}
-.lovb-hero-h {
-  font-family: "Anton", sans-serif;
-  font-size: clamp(52px, 7vw, 104px);
-  font-weight: 400; line-height: 0.92;
-  letter-spacing: -0.015em;
-  color: var(--text);
-  margin: 0 auto 28px;
-  max-width: 1100px;
-}
-.lovb-hero-h .serif {
-  font-family: "Marcellus", serif;
-  font-style: italic; font-weight: 400;
-  color: var(--gold);
-}
-.lovb-hero-sub {
-  font-family: "General Sans";
-  font-size: 19px; line-height: 1.5;
-  color: var(--text-2);
-  max-width: 740px;
-  margin: 0 auto;
-}
+  /* nav (match home) */
+  nav.top{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--rule);background:rgba(10,9,8,.92);backdrop-filter:blur(16px)}
+  .nav-i{max-width:1340px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .brand{font-family:var(--cg);font-size:30px;letter-spacing:-.005em;color:var(--t);font-weight:500;line-height:1}
+  .brand .c{color:var(--gold)}
+  .brand .iq{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:2.4px;color:var(--gold);margin-left:8px;text-transform:uppercase;padding:3px 6px;border:1px solid var(--goldl);border-radius:3px;background:var(--golds)}
+  .nav-items{display:flex;align-items:center;gap:6px}
+  .nav-item{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase;color:var(--t2);padding:8px 14px;transition:color .15s}
+  .nav-item:hover{color:var(--gold)}
+  .nav-item.active{color:var(--gold)}
+  @media(min-width:641px){.nav-items .nav-item.active{margin-left:14px}}
+  .nav-cta{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink);padding:9px 16px;background:var(--gold);border-radius:2px}
+  @media(max-width:820px){.nav-items .nav-item:not(.active){display:none}}
 
-/* ── Section wrappers ──────────────────────────────────── */
-.lovb-section {
-  padding: var(--section-py) 32px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.lovb-section-eyebrow {
-  font-family: "JetBrains Mono"; font-size: 11px;
-  letter-spacing: 0.18em; color: var(--gold);
-  text-transform: uppercase; margin-bottom: 18px;
-  text-align: center;
-}
-.lovb-section-h {
-  font-family: "Anton", sans-serif;
-  font-size: clamp(36px, 5vw, 64px);
-  font-weight: 400; line-height: 0.96;
-  letter-spacing: -0.012em;
-  text-align: center;
-  margin: 0 auto 18px;
-  max-width: 900px;
-}
-.lovb-section-h .serif {
-  font-family: "Marcellus", serif;
-  font-style: italic; color: var(--gold);
-}
-.lovb-section-sub {
-  font-family: "General Sans";
-  font-size: 16px; color: var(--text-2);
-  text-align: center;
-  max-width: 660px; margin: 0 auto 56px;
-}
+  .kicker{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold)}
+  section{padding:74px 0;border-bottom:1px solid var(--rule2)}
+  .sec-h{font-family:var(--cg);font-size:clamp(28px,3.4vw,42px);font-weight:500;letter-spacing:-.018em;line-height:1.04;color:var(--t);margin:14px 0 6px}
+  .sec-h i{font-style:italic;color:var(--gold)}
+  .sec-deck{font-family:var(--cg);font-style:italic;font-size:19px;color:var(--t2);max-width:640px}
 
-/* ── Standings (canonical league state) ─────────────────── */
-.lovb-standings {
-  background: var(--glass);
-  border: 1px solid var(--glass-edge);
-  border-radius: var(--r-3);
-  overflow: hidden;
-}
-.lovb-standings-header {
-  padding: 24px 28px;
-  border-bottom: 1px solid var(--glass-edge);
-  display: flex; justify-content: space-between; align-items: baseline;
-  flex-wrap: wrap; gap: 12px;
-}
-.lovb-standings-h {
-  font-family: "Anton", sans-serif;
-  font-size: 22px; letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-.lovb-standings-meta {
-  font-family: "JetBrains Mono"; font-size: 11px;
-  color: var(--text-3); letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.lovb-standing-row {
-  display: grid;
-  grid-template-columns: 60px 1fr 2fr;
-  gap: 16px;
-  padding: 18px 28px;
-  border-bottom: 1px solid var(--glass-edge);
-  align-items: center;
-}
-.lovb-standing-row:last-child { border-bottom: none; }
-.lovb-standing-row.champion { background: rgba(245, 184, 0, 0.06); }
-.lovb-standing-row.runner   { background: rgba(245, 184, 0, 0.03); }
-.lovb-standing-rank {
-  font-family: "Anton", sans-serif;
-  font-size: 36px; line-height: 1;
-  color: var(--text-3);
-}
-.lovb-standing-row.champion .lovb-standing-rank { color: var(--gold); }
-.lovb-standing-team {
-  font-family: "General Sans";
-  font-size: 17px; line-height: 1.3;
-}
-.lovb-standing-team strong { font-weight: 600; color: var(--text); }
-.lovb-standing-tag {
-  display: inline-block;
-  margin-left: 10px;
-  font-family: "JetBrains Mono"; font-size: 10px;
-  font-weight: 600; letter-spacing: 0.12em;
-  padding: 3px 10px; border-radius: var(--r-pill);
-  background: var(--glass); color: var(--text-3);
-  text-transform: uppercase;
-}
-.lovb-standing-tag.champ { background: rgba(245, 184, 0, 0.16); color: var(--gold); }
-.lovb-standing-tag.runner { color: var(--text-2); }
-.lovb-standing-tag.semi { background: var(--glass-2); color: var(--text-2); }
-.lovb-standing-detail {
-  font-family: "General Sans";
-  font-size: 14px;
-  color: var(--text-3);
-}
-.lovb-standings-footer {
-  padding: 20px 28px;
-  text-align: center;
-  font-family: "JetBrains Mono"; font-size: 11px;
-  color: var(--text-3);
-  letter-spacing: 0.05em;
-}
+  /* hero */
+  .hero{padding:60px 0 70px}
+  .hero-dateline{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--gold);
+    margin-bottom:30px;padding-bottom:22px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .hero-grid{display:grid;grid-template-columns:1.25fr .85fr;gap:54px;align-items:center}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+  .hero-h{font-family:var(--cg);font-size:clamp(54px,7.4vw,100px);line-height:.94;letter-spacing:-.025em;color:var(--t);font-weight:500;margin-bottom:28px}
+  .hero-h i{font-style:italic;color:var(--gold)}
+  .hero-h .rule{display:inline-block;width:58px;height:5px;background:var(--gold);vertical-align:middle;margin:0 14px 14px 0}
+  .hero-deck{font-family:var(--cg);font-size:22px;font-style:italic;line-height:1.45;color:var(--t2);max-width:560px;font-weight:400;margin-bottom:30px}
+  .hero-deck b{font-style:normal;font-weight:600;color:var(--t)}
+  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+  .hero-stats>div{background:var(--ink2);padding:24px 22px}
+  .hero-stats .n{font-family:var(--anton);font-size:40px;color:var(--gold);line-height:1}
+  .hero-stats .l{font-family:var(--mono);font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--t3);margin-top:8px}
 
-/* ── Icons First Team buttons ──────────────────────────── */
-.lovb-icons-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 12px;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-.lovb-icon-btn {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 22px;
-  background: var(--glass);
-  border: 1px solid var(--glass-edge);
-  border-radius: var(--r-2);
-  font-family: "General Sans";
-  font-size: 16px;
-  color: var(--text);
-  transition: all 0.2s var(--ease-out);
-  cursor: pointer;
-}
-.lovb-icon-btn:hover {
-  border-color: var(--gold);
-  background: var(--glass-2);
-  transform: translateY(-1px);
-}
-.lovb-icon-btn .pos {
-  font-family: "JetBrains Mono"; font-size: 11px;
-  font-weight: 600; letter-spacing: 0.12em;
-  color: var(--gold);
-  padding: 4px 8px;
-  background: rgba(245, 184, 0, 0.10);
-  border-radius: var(--r-pill);
-}
+  /* doctrine */
+  .doctrine{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:30px}
+  @media(max-width:760px){.doctrine{grid-template-columns:1fr}}
+  .doc{padding:30px 30px}
+  .doc.them{background:var(--ink2)} .doc.us{background:linear-gradient(160deg,#1c1813,#100e0b)}
+  .doc .l{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+  .doc.them .l{color:var(--t3)} .doc.us .l{color:var(--gold)}
+  .doc h4{font-family:var(--cg);font-size:24px;font-weight:600;margin-bottom:10px;color:var(--t)}
+  .doc p{font-size:14.5px;color:var(--t2);line-height:1.55}
+  .doc.us p b{color:var(--gold);font-weight:600}
 
-/* ── Top-5 marquee lists (revived from the trimmed hub) ─── */
-.lovb-top5-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 18px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.lovb-top5 {
-  padding: 26px 26px 22px;
-  background: var(--glass);
-  border: 1px solid var(--glass-edge);
-  border-radius: var(--r-3);
-}
-.lovb-top5-h {
-  font-family: "Anton", sans-serif;
-  font-size: 18px; letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 18px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--glass-edge);
-}
-.lovb-top5-list {
-  list-style: none; padding: 0; margin: 0;
-}
-.lovb-top5-list li {
-  padding: 12px 0;
-  border-bottom: 1px solid var(--glass-edge);
-  display: flex; flex-direction: column; gap: 4px;
-}
-.lovb-top5-list li:last-child { border-bottom: none; }
-.lovb-top5-list li a {
-  font-family: "General Sans";
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
-  transition: color 0.2s var(--ease-out);
-}
-.lovb-top5-list li a:hover { color: var(--gold); }
-.lovb-top5-list li span {
-  font-family: "General Sans";
-  font-size: 12.5px;
-  color: var(--text-3);
-}
+  /* pathway */
+  .ladder{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+  @media(max-width:760px){.ladder{grid-template-columns:1fr}}
+  .rung{background:var(--ink2);border:1px solid var(--rule);padding:28px 26px;position:relative}
+  .rung .step{font-family:var(--anton);font-size:46px;color:var(--rule);line-height:1;position:absolute;top:18px;right:22px}
+  .rung .rk{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  .rung h4{font-family:var(--cg);font-size:27px;font-weight:600;margin-bottom:10px}
+  .rung p{font-size:14px;color:var(--t2);line-height:1.55}
+  .rung p b{color:var(--t)}
 
-/* ── Pathway diagram ──────────────────────────────────── */
-.lovb-pathway {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 14px;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-.lovb-pathway-step {
-  padding: 32px 26px;
-  background: var(--glass);
-  border: 1px solid var(--glass-edge);
-  border-radius: var(--r-3);
-  text-align: center;
-}
-.lovb-pathway-step-num {
-  font-family: "Anton";
-  font-size: 64px; line-height: 0.9;
-  color: var(--gold);
-  margin-bottom: 16px;
-}
-.lovb-pathway-step-h {
-  font-family: "Anton";
-  font-size: 22px; letter-spacing: 0.02em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.lovb-pathway-step-detail {
-  font-family: "General Sans";
-  font-size: 14px;
-  color: var(--text-2);
-  line-height: 1.5;
-}
-.lovb-pathway-step strong { color: var(--text); font-weight: 600; }
+  /* standings */
+  .stand{margin-top:34px;border:1px solid var(--rule)}
+  .strow{display:grid;grid-template-columns:48px 1fr auto;gap:18px;align-items:center;padding:18px 22px;border-bottom:1px solid var(--rule2)}
+  .strow:last-child{border-bottom:none}
+  .strow.champ{background:linear-gradient(90deg,rgba(212,162,76,.10),transparent)}
+  .strow .rank{font-family:var(--anton);font-size:28px;color:var(--t3)}
+  .strow.champ .rank{color:var(--gold)}
+  .strow .team{font-family:var(--cg);font-size:23px;font-weight:600;color:var(--t)}
+  .strow .team .tag{font-family:var(--mono);font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-left:10px;vertical-align:middle}
+  .strow .note{font-size:13px;color:var(--t3);margin-top:3px;font-family:var(--inter)}
+  .strow .res{font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t3);text-align:right}
 
-/* ── Founding story ──────────────────────────────────── */
-.lovb-founding {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 48px 40px;
-  background: var(--glass);
-  border: 1px solid var(--glass-edge);
-  border-radius: var(--r-3);
-  text-align: center;
-}
-.lovb-founding-eyebrow {
-  font-family: "JetBrains Mono"; font-size: 11px;
-  letter-spacing: 0.18em; color: var(--gold);
-  text-transform: uppercase; margin-bottom: 22px;
-}
-.lovb-founding-quote {
-  font-family: "Marcellus", serif;
-  font-style: italic;
-  font-size: clamp(22px, 2.4vw, 30px);
-  line-height: 1.4;
-  color: var(--text);
-  margin-bottom: 24px;
-}
-.lovb-founding-attr {
-  font-family: "General Sans";
-  font-size: 14px;
-  color: var(--text-3);
-  letter-spacing: 0.02em;
-}
-.lovb-founding-attr strong { color: var(--text-2); font-weight: 600; }
+  /* icons grid */
+  .icons{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+  @media(max-width:820px){.icons{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.icons{grid-template-columns:1fr}}
+  .icon{display:block;background:var(--ink2);border:1px solid var(--rule);padding:22px 22px;transition:.2s;position:relative}
+  .icon:hover{border-color:var(--goldl);background:var(--ink3);transform:translateY(-2px)}
+  .icon .pos{position:absolute;top:18px;right:20px;font-family:var(--mono);font-size:9px;letter-spacing:1.6px;color:var(--gold);border:1px solid var(--goldl);border-radius:5px;padding:3px 7px}
+  .icon h4{font-family:var(--cg);font-size:25px;font-weight:600;color:var(--t);line-height:1.05;margin-bottom:5px}
+  .icon .club{font-family:var(--mono);font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3)}
+  .icon .read{font-size:13px;color:var(--t2);margin-top:11px;line-height:1.5}
+  .icon .go{font-family:var(--mono);font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-top:13px;display:inline-block}
 
-/* ── CTA back to product ──────────────────────────────── */
-.lovb-cta {
-  text-align: center;
-  padding: 80px 32px 120px;
-  background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg) 100%);
-}
-.lovb-cta-h {
-  font-family: "Anton";
-  font-size: clamp(36px, 5vw, 56px);
-  letter-spacing: -0.012em;
-  margin-bottom: 14px;
-}
-.lovb-cta-sub {
-  font-family: "General Sans";
-  font-size: 16px; color: var(--text-2);
-  margin-bottom: 32px;
-}
-.lovb-cta-btn {
-  display: inline-block;
-  padding: 16px 32px;
-  background: var(--gold);
-  color: var(--bg);
-  border-radius: var(--r-pill);
-  font-family: "JetBrains Mono"; font-size: 13px;
-  font-weight: 600; letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
-}
-.lovb-cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px var(--gold-glow);
-}
+  /* marquee lists */
+  .mq{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:34px}
+  @media(max-width:1040px){.mq{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.mq{grid-template-columns:1fr}}
+  .mq-col.amateur .mq-h{color:var(--moss);border-bottom-color:rgba(124,155,110,.4)}
+  .mq-col.amateur .mq-row:hover .nm{color:var(--moss)}
+  .mq-col .mq-h{font-family:var(--mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);padding-bottom:12px;border-bottom:1px solid var(--rule);margin-bottom:6px}
+  .mq-row{display:flex;gap:12px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--rule2);transition:.15s}
+  .mq-row:hover{padding-left:6px}
+  .mq-row .rn{font-family:var(--anton);font-size:16px;color:var(--t4);min-width:18px}
+  .mq-row .nm{font-family:var(--cg);font-size:18px;font-weight:600;color:var(--t)}
+  .mq-row:hover .nm{color:var(--gold)}
+  .mq-row .sub{font-size:11.5px;color:var(--t3);display:block;margin-top:2px;font-family:var(--inter)}
 
-/* ── Footer ──────────────────────────────────────────── */
-.lovb-footer {
-  padding: 56px 32px 40px;
-  border-top: 1px solid var(--glass-edge);
-  text-align: center;
-  background: var(--bg);
-}
-.lovb-footer-colophon {
-  font-family: "JetBrains Mono"; font-size: 11px;
-  color: var(--text-3);
-  letter-spacing: 0.08em;
-}
+  /* board feature */
+  .board-feat{margin-top:30px;border:1px solid var(--goldl);background:linear-gradient(160deg,#1c1813,#0e0c0a);padding:38px 40px;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap}
+  .board-feat .bk{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  .board-feat h3{font-family:var(--cg);font-size:32px;font-weight:600;color:var(--t);line-height:1.05;margin-bottom:10px;max-width:560px}
+  .board-feat p{font-size:14.5px;color:var(--t2);max-width:560px;line-height:1.55}
+  .board-feat .btn{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:15px 26px;border-radius:2px;white-space:nowrap}
 
-@media (max-width: 720px) {
-  .nav a { padding: 6px 10px; font-size: 10px; }
-  .lovb-hero { padding: 130px 20px 60px; }
-  .lovb-section { padding: 64px 20px; }
-  .lovb-standing-row { grid-template-columns: 44px 1fr; gap: 12px; padding: 14px 18px; }
-  .lovb-standing-detail { grid-column: 1 / -1; padding-left: 56px; }
-  .lovb-founding { padding: 32px 24px; }
-}
+  /* founding + cta */
+  .found{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  @media(max-width:760px){.found{grid-template-columns:1fr;gap:28px}}
+  .quote{font-family:var(--cg);font-style:italic;font-size:27px;line-height:1.4;color:var(--t);font-weight:500}
+  .quote .mark{color:var(--gold)}
+  .found .meta{font-size:14.5px;color:var(--t2);line-height:1.7}
+  .found .meta b{color:var(--t)}
+  .cta{text-align:center;padding:80px 0}
+  .cta h3{font-family:var(--cg);font-size:clamp(32px,4.5vw,52px);font-weight:500;color:var(--t);margin-bottom:24px}
+  .cta h3 i{font-style:italic;color:var(--gold)}
+  .cta .btn{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:17px 34px;border-radius:2px;display:inline-block}
+
+  footer{border-top:1px solid var(--rule);padding:34px 0;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4)}
+  footer b{color:var(--t3)}
+
+
+  /* moments reel */
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .lg{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rule);border-radius:999px;padding:7px 13px;font-family:var(--mono);font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t2)}
+  .lg .sw{width:9px;height:9px;border-radius:50%}
+  .lg b{color:var(--t);font-weight:500}
+  .reel{margin-top:32px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+  .reel-track{display:flex;gap:16px;width:max-content;will-change:transform;animation:rollR 64s linear infinite}
+  .reel:hover .reel-track,.reel.touched .reel-track{animation-play-state:paused}
+  @keyframes rollR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+  @media(prefers-reduced-motion:reduce){.reel-track{animation:none}.reel{overflow-x:auto}}
+  .clip{position:relative;flex:0 0 auto;width:268px;aspect-ratio:9/16;border:1px solid var(--rule);border-radius:14px;overflow:hidden;cursor:pointer;background:linear-gradient(165deg,var(--ink3),var(--ink2));text-align:left;color:inherit;font:inherit;display:block}
+  .clip:hover{border-color:var(--goldl)}
+  .clip .poster{position:absolute;inset:0;background-size:cover;background-position:center}
+  .clip img.poster{width:100%;height:100%;object-fit:cover;object-position:center 28%}
+  .clip .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,7,6,.12) 0%,rgba(8,7,6,.04) 36%,rgba(8,7,6,.88) 100%)}
+  .clip .slot{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--t4);font-family:var(--mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;text-align:center;padding:14px}
+  .clip .badge{position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:8px;letter-spacing:1.3px;text-transform:uppercase;color:var(--t);background:rgba(8,7,6,.55);border:1px solid var(--rule);border-radius:999px;padding:5px 9px;backdrop-filter:blur(3px)}
+  .clip .badge .sw{width:7px;height:7px;border-radius:50%}
+  .clip .play{position:absolute;top:46%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:rgba(8,7,6,.5);border:1.5px solid rgba(244,241,234,.7);display:flex;align-items:center;justify-content:center;transition:.2s;backdrop-filter:blur(3px)}
+  .clip:hover .play{background:var(--gold);border-color:var(--gold)}
+  .clip:hover .play svg{fill:var(--ink)}
+  .clip .play svg{fill:var(--t);margin-left:3px}
+  .clip .cap{position:absolute;left:0;right:0;bottom:0;padding:15px 15px 16px}
+  .clip .vtop{position:absolute;top:40px;left:15px;right:15px;font-family:var(--cg);font-style:italic;font-weight:600;font-size:23px;line-height:1.02;color:var(--gold-hi);z-index:2;text-shadow:0 1px 14px rgba(8,7,6,.7)}
+  .clip .vtop::after{content:"";display:block;width:22px;height:2px;background:var(--gold);margin-top:8px}
+  .clip .nm{font-family:var(--cg);font-size:23px;font-weight:600;line-height:1.02}
+  .clip .read{font-family:var(--mono);font-size:8.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--t3);margin-top:6px;line-height:1.5}
+  .clip .dur{position:absolute;bottom:14px;right:13px;font-family:var(--mono);font-size:8px;letter-spacing:1px;color:var(--t2);background:rgba(8,7,6,.55);border-radius:5px;padding:3px 6px}
+  .clip.cta{background:linear-gradient(165deg,rgba(124,155,110,.16),var(--ink2));border-color:rgba(124,155,110,.32)}
+  .clip.cta .nm{color:var(--moss)} .clip.cta .vtop{color:#A8C49A} .clip.cta .vtop::after{background:var(--moss)}
+  .clip.cta .play{background:rgba(124,155,110,.18);border-color:rgba(124,155,110,.6)}
+  .clip.cta:hover .play{background:var(--moss);border-color:var(--moss)}
+  .ov{position:fixed;inset:0;background:rgba(5,4,3,.86);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:90;padding:20px}
+  .ov.on{display:flex}
+  .modal{width:min(1180px,95vw);max-height:95vh;overflow:auto;background:var(--ink2);border:1px solid var(--rule);border-radius:16px;position:relative}
+  .modal .stagewrap{position:relative;width:100%}
+  .modal .stage{position:relative;width:100%;aspect-ratio:16/9;max-height:38vh;background:#000;display:flex;align-items:center;justify-content:center}
+  .modal video,.modal iframe{width:100%;height:100%;border:0;object-fit:cover;display:block}
+  .modal .stage .ph{color:var(--t4);font-family:var(--mono);font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;text-align:center;padding:20px;line-height:1.7}
+  .fcoverlay{position:absolute;top:13px;left:13px;z-index:4;pointer-events:none;display:none;gap:9px;align-items:center;background:rgba(8,7,6,.6);border:1px solid var(--goldl);border-radius:999px;padding:6px 12px;backdrop-filter:blur(4px)}
+  .fcoverlay .lab{font-family:var(--mono);font-size:8px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold)}
+  .fcoverlay .v{font-family:var(--cg);font-style:italic;font-weight:600;font-size:16px;color:var(--gold-hi);line-height:1}
+  .modal .mbody{padding:12px 24px 12px;max-width:none;position:relative}
+  .modal .mvoice{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-hi)}
+  .modal .mbadge{font-family:var(--mono);font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-top:4px}
+  .modal .mnm{font-family:var(--cg);font-size:27px;font-weight:600;line-height:1.02;margin-top:4px}
+  .modal .mread{color:var(--t2);font-size:13.5px;line-height:1.5;margin-top:6px}
+  /* ===== FC IQ FILM v2 — Director's Cut (the mark) ===== */
+  .fmstage{position:relative;border:1px solid var(--rule);border-left:2px solid var(--gold);border-radius:13px;overflow:hidden;background:radial-gradient(120% 120% at 50% 0,rgba(212,162,76,.06),rgba(212,162,76,.02) 60%,transparent);height:43vh;min-height:300px;margin-top:10px;transition:height .4s ease}
+  .fmstage.done{height:39vh}
+  .fmstage svg.fmfilm{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .fmstage .fmvign{position:absolute;inset:0;pointer-events:none;z-index:2;background:radial-gradient(120% 92% at 50% 42%,transparent 52%,rgba(4,3,2,.6))}
+  .fmstage .fmgrain{position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.05;mix-blend-mode:overlay;background-image:radial-gradient(rgba(255,255,255,.5) 0.5px,transparent 0.6px);background-size:3px 3px}
+  .fmstage .fmtitle{position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:0;transition:opacity 1s ease;pointer-events:none;padding:18px}
+  .fmstage .fmtitle.in{opacity:1}
+  .fmstage .fmtitle .tk{font-family:var(--mono);font-size:12px;letter-spacing:7px;text-transform:uppercase;color:var(--gold);opacity:0;transform:translateY(10px);transition:opacity 1.1s ease .2s,transform 1.1s ease .2s}
+  .fmstage .fmtitle.in .tk{opacity:1;transform:none}
+  .fmstage .fmtitle .tt{font-family:var(--cg);font-style:italic;font-weight:600;font-size:clamp(20px,3vw,38px);color:var(--t);margin-top:14px;opacity:0;transform:translateY(14px);transition:opacity 1.2s ease .6s,transform 1.2s ease .6s;max-width:82%}
+  .fmstage .fmtitle.in .tt{opacity:1;transform:none}
+  .fmstage .fmcap{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:18px 28px 22px;text-align:center;background:linear-gradient(180deg,transparent,rgba(6,5,4,.42) 35%,rgba(6,5,4,.84) 78%);opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;pointer-events:none}
+  .fmstage .fmcap.in{opacity:1;transform:none}
+  .fmstage .fmcap.out{opacity:0;transform:translateY(-8px);transition:opacity .45s ease,transform .45s ease}
+  .fmstage .fmcap .ck{font-family:var(--mono);font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-hi)}
+  .fmstage .fmcap .cy{font-family:var(--cg);font-weight:600;font-style:italic;font-size:clamp(32px,4.6vw,56px);line-height:1;color:var(--t);margin-top:4px;text-shadow:0 2px 30px rgba(0,0,0,.6)}
+  .fmstage .fmcap .cyr{font-family:var(--mono);font-size:12px;letter-spacing:2px;color:rgba(244,241,234,.6);margin-top:7px}
+  .fmstage .fmcap .clist{list-style:none;margin:11px auto 0;max-width:680px;display:flex;flex-direction:column;gap:6px}
+  .fmstage .fmcap .clist li{font-family:var(--cg);font-style:italic;font-size:clamp(16px,2vw,21px);color:rgba(244,241,234,.92);opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease;line-height:1.3}
+  .fmstage .fmcap .clist li.show{opacity:1;transform:none}
+  .fmstage .fmcap .clist li.hero{color:var(--gold-hi);font-weight:600}
+  .fmstage .fmcap .clist li b{color:var(--gold-hi);font-weight:600;font-style:normal;font-family:var(--mono);font-size:.82em;letter-spacing:1px}
+  .fmstage .fmfcap{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:22px 28px 26px;text-align:center;background:linear-gradient(180deg,transparent,rgba(6,5,4,.82) 65%);opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s ease;pointer-events:none}
+  .fmstage .fmfcap.in{opacity:1;transform:none}
+  .fmstage .fmfcap .fk{font-family:var(--mono);font-size:11px;letter-spacing:4px;text-transform:uppercase;color:rgba(244,241,234,.6)}
+  .fmstage .fmfcap .fn{font-family:var(--cg);font-weight:600;font-size:clamp(34px,5vw,62px);line-height:1;color:var(--gold-hi);margin-top:3px;text-shadow:0 0 36px rgba(238,192,103,.42)}
+  .fmstage .fmfcap .fl{font-family:var(--cg);font-style:italic;font-size:clamp(15px,1.9vw,20px);color:rgba(244,241,234,.88);margin-top:7px}
+  .fmstage .fmflash{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;background:radial-gradient(60% 60% at 50% 52%,rgba(255,233,180,.8),rgba(238,192,103,.22) 45%,transparent 70%)}
+  .fmstage .fmgrid{stroke:rgba(248,244,237,.06);stroke-width:1;vector-effect:non-scaling-stroke;fill:none}
+  .fmstage .fmaxlab{font-family:var(--mono);font-size:10px;letter-spacing:2px;fill:rgba(244,241,234,.3)}
+  .fmstage .fmtrseg{stroke:var(--gold);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .fmstage .fmtrglow{stroke:rgba(238,192,103,.26);stroke-width:9;fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .fmstage .fmtnode{fill:var(--gold)}
+  .fmstage .fmtnode.apex{fill:var(--gold-hi)}
+  .fmstage .fmtring{fill:none;stroke:var(--gold-hi);stroke-width:1.5;vector-effect:non-scaling-stroke}
+  .fmstage .fmpgrid{stroke:rgba(248,244,237,.08);stroke-width:1;vector-effect:non-scaling-stroke;fill:none}
+  .fmstage .fmpspoke{stroke:rgba(248,244,237,.06);stroke-width:1;vector-effect:non-scaling-stroke}
+  .fmstage .fmppath{fill:rgba(212,162,76,.16);stroke:#D4A24C;stroke-width:2.4;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .fmstage .fmpvtx{fill:rgba(248,244,237,.42)}
+  .fmstage .fmpvtx.str{fill:var(--gold-hi)}
+  .fmstage .fmplabel{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.4px;fill:rgba(244,241,234,.5);transition:fill .4s ease}
+  .fmstage .fmplabel.lit{fill:rgba(244,241,234,.95);font-weight:600}
+  .fmstage .fmplabel.str{fill:var(--gold-hi);font-weight:700}
+  .fmstage .fmplabel.hot{fill:var(--gold-hi);font-weight:700;font-size:15.5px}
+  .fmstage .fmarrow{stroke:url(#fmfire);stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:url(#fmglow)}
+  .fmstage .fmspark{fill:var(--fire);filter:url(#fmglow)}
+  .fmstage .fmend{position:absolute;inset:0;z-index:8;opacity:0;visibility:hidden;transition:opacity .8s ease;display:grid;grid-template-columns:1.04fr 1fr;gap:8px;padding:16px 20px;background:var(--ink2)}
+  .fmstage .fmend.show{opacity:1;visibility:visible}
+  .fmstage .fmendpoly{display:flex;align-items:center;justify-content:center;border-right:1px solid var(--rule);padding:8px}
+  .fmstage .fmendpoly svg{width:100%;height:auto;max-height:100%}
+  .fmstage .fmendcard{display:flex;flex-direction:column;justify-content:center;padding:12px 14px 12px 24px;overflow:auto}
+  .fmstage .fmendcard .eh{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-hi)}
+  .fmstage .fmendcard .ev{font-family:var(--cg);font-style:italic;font-weight:600;font-size:32px;color:var(--gold-hi);line-height:1;margin-top:3px}
+  .fmstage .fmendcard .ez{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(244,241,234,.5);margin-top:8px}
+  .fmstage .fmendcard .ez b{color:var(--t)}
+  .fmstage .fmfacets{margin-top:13px;display:flex;flex-direction:column;gap:9px}
+  .fmstage .fmrow{display:grid;grid-template-columns:92px 1fr 60px;align-items:center;gap:11px}
+  .fmstage .fmrow .fk{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;color:rgba(244,241,234,.66)}
+  .fmstage .fmrow.str .fk{color:var(--gold-hi);font-weight:700}
+  .fmstage .fmrow .fb{height:10px;border-radius:6px;background:rgba(248,244,237,.1);overflow:hidden}
+  .fmstage .fmrow .fb i{display:block;height:100%;border-radius:6px;background:rgba(248,244,237,.34);width:0;transition:width 1.1s cubic-bezier(.3,.9,.3,1)}
+  .fmstage .fmrow.str .fb i{background:linear-gradient(90deg,var(--gold),var(--gold-hi))}
+  .fmstage .fmrow .ft{font-family:var(--mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);text-align:right}
+  .fmstage .fmendcard .ep{font-family:var(--cg);font-style:italic;font-size:17px;color:rgba(244,241,234,.9);margin-top:14px;line-height:1.34}
+  .fmstage .fmendcard .em{font-family:var(--mono);font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(244,241,234,.4);margin-top:9px}
+  .fmstage .fmendcard .ecta{display:inline-block;width:max-content;margin-top:14px;font-family:var(--mono);font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink);background:linear-gradient(90deg,var(--gold),var(--gold-hi));padding:11px 18px;border-radius:8px;text-decoration:none;font-weight:700}
+  .fmstage .fmnav{position:absolute;z-index:9;top:10px;right:10px;display:flex;gap:6px;align-items:center}
+  .fmstage .fmnav button{font-family:var(--mono);font-size:14px;line-height:1;color:var(--t);background:rgba(8,7,6,.62);border:1px solid var(--goldl);border-radius:8px;min-width:38px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);padding:0 8px}
+  .fmstage .fmnav button.rep{color:var(--gold-hi);font-weight:700;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;padding:0 12px}
+  .fmstage .fmnav button:hover{border-color:var(--gold)}
+  .fmstage .fmnav button:active{background:rgba(212,162,76,.3)}
+  .fmnav-h{position:absolute;top:16px;right:24px;z-index:6;display:flex;gap:6px;align-items:center}
+  .fmnav-h button{font-family:var(--mono);font-size:14px;line-height:1;color:var(--t);background:rgba(8,7,6,.5);border:1px solid var(--goldl);border-radius:8px;min-width:36px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0 8px}
+  .fmnav-h button.rep{color:var(--gold-hi);font-weight:700;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;padding:0 12px}
+  .fmnav-h button:hover{border-color:var(--gold)}
+  .fmnav-h button:active{background:rgba(212,162,76,.3)}
+  @media(max-width:640px){.fmstage .fmnav{display:none}.fmnav-h{top:14px;right:16px}.fmnav-h button{height:36px;min-width:40px}}
+  @media(min-width:641px){
+    .fmstage .fmnav{display:none}
+    .fmstage.done{height:46vh}
+    .fmstage .fmend{grid-template-columns:0.9fr 1.1fr;gap:10px;padding:8px 22px}
+    .fmstage .fmendpoly{padding:4px;align-items:center}
+    .fmstage .fmendpoly svg{width:auto;height:86%;max-height:86%;max-width:92%}
+    .fmstage .fmendcard{padding:6px 22px 6px 16px;justify-content:flex-start}
+    .fmstage .fmendcard .eh{font-size:9.5px}
+    .fmstage .fmendcard .ev{font-size:24px}
+    .fmstage .fmendcard .ez{margin-top:5px}
+    .fmstage .fmfacets{margin-top:6px;gap:4px}
+    .fmstage .fmrow{grid-template-columns:88px 1fr 56px;gap:9px}
+    .fmstage .fmrow .fk{font-size:11px}
+    .fmstage .fmrow .fb{height:8px}
+    .fmstage .fmendcard .ep{font-size:13px;margin-top:7px;line-height:1.26}
+    .fmstage .fmendcard .em{margin-top:5px}
+    .fmstage .fmendcard .ecta{margin-top:7px;padding:8px 14px;font-size:9px}
+  }
+  @media(prefers-reduced-motion:reduce){.fmstage *{transition-duration:.001s!important;animation-duration:.001s!important}}
+  @media(max-width:640px){
+    .fmstage{height:auto;aspect-ratio:1/1;min-height:360px;transition:none}
+    .fmstage.done{height:auto}
+    .fmstage .fmcap .cy{font-size:38px}
+    .fmstage .fmcap .ck{font-size:12px}
+    .fmstage .fmcap .clist li{font-size:16px}
+    .fmstage .fmfcap .fn{font-size:38px}
+    .fmstage .fmplabel{font-size:15px;font-weight:600;fill:rgba(244,241,234,.72)}
+    .fmstage .fmplabel.lit{fill:rgba(244,241,234,.98)}
+    .fmstage .fmplabel.hot{font-size:18px}
+    .fmstage .fmend{grid-template-columns:1fr;gap:4px;padding:12px 12px}
+    .fmstage .fmendpoly{border-right:0;border-bottom:1px solid var(--rule);max-height:48%;padding:4px 4px 8px}
+    .fmstage .fmendcard{padding:8px 2px 4px;justify-content:flex-start}
+    .fmstage .fmendcard .ev{font-size:26px}
+    .fmstage .fmfacets{margin-top:10px;gap:8px}
+    .fmstage .fmrow{grid-template-columns:84px 1fr 52px;gap:9px}
+    .fmstage .fmrow .fk{font-size:13px;font-weight:600}
+    .fmstage .fmrow .fb{height:11px}
+    .fmstage .fmendcard .ep{font-size:15.5px;margin-top:10px}
+    .fmstage .fmnav button{min-width:44px;height:42px;font-size:18px}
+    .fmstage .fmnav button.rep{font-size:11px;padding:0 14px}
+  }
+  .modal .mcta{display:inline-block;margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600}
+  .modal.cta .mcta{background:var(--moss)}
+  .modal .x{position:absolute;top:12px;right:12px;z-index:6;width:40px;height:40px;border-radius:50%;background:rgba(8,7,6,.7);border:1px solid var(--rule);color:var(--t);font-size:21px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  @media(max-width:640px){
+    .clip{width:74vw}
+    .modal{max-height:94vh;overflow:auto;display:block}
+    .modal .stage{max-height:34vh}
+    .modal .mbody{display:block;padding:12px 16px 16px}
+    .modal .mnm{font-size:24px}
+    .fciq .proof{font-size:17px}
+    .fmstage{height:auto;aspect-ratio:1/1;min-height:360px;margin-top:12px}
+    .fmstage .fmtitle .tt{font-size:21px}
+    .fmstage .fmcap{padding:14px 14px 16px}
+    .fmstage .fmcap .cy{font-size:42px}
+    .fmstage .fmcap .ck{font-size:12px}
+    .fmstage .fmcap .cl{font-size:15.5px;max-width:none}
+    .fmstage .fmfcap .fn{font-size:38px}
+    .fmstage .fmfcap .fl{font-size:16px}
+    .fmstage .fmplabel{font-size:15px;font-weight:600;fill:rgba(244,241,234,.72)}
+    .fmstage .fmplabel.lit{fill:rgba(244,241,234,.98)}
+    .fmstage .fmplabel.hot{font-size:18px}
+    .fmstage .fmend{grid-template-columns:1fr;gap:4px;padding:12px 12px}
+    .fmstage .fmendpoly{border-right:0;border-bottom:1px solid var(--rule);padding:6px 4px 10px}
+    .fmstage .fmendpoly svg{width:auto;height:auto;max-height:190px;max-width:76%}
+    .fmstage .fmendcard{padding:10px 2px 6px;justify-content:flex-start;overflow:visible}
+    .fmstage .fmendcard .ev{font-size:26px}
+    .fmstage .fmfacets{margin-top:10px;gap:8px}
+    .fmstage .fmrow{grid-template-columns:84px 1fr 52px;gap:9px}
+    .fmstage .fmrow .fk{font-size:13px;font-weight:600}
+    .fmstage .fmrow .fb{height:11px}
+    .fmstage .fmendcard .ep{font-size:15.5px;margin-top:10px}
+    .fmstage.done{aspect-ratio:auto;height:auto;min-height:0}
+    .fmstage.done svg.fmfilm,.fmstage.done .fmvign,.fmstage.done .fmtitle,.fmstage.done .fmcap,.fmstage.done .fmfcap{display:none}
+    .fmstage.done .fmend{position:relative}
+    .fmstage .fmnav button{min-width:44px;height:42px;font-size:18px}
+    .fmstage .fmnav button.rep{font-size:11px;padding:0 14px}
+  }
+
 </style>
 </head>
 <body>
 
-<header class="masthead">
-  <a href="/" class="wordmark">FIELDCHECK<span class="dot"></span></a>
-  <!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
-<header class="masthead fc-canonical-masthead">
-  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
-  <nav class="nav fc-canonical-nav">
-    <a href="/#buckets" class="nav-primary">Player</a>
-    <a href="/#buckets" class="nav-primary">Program</a>
-    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
-    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
-    <div class="nav-more-wrap" id="fc-nav-more-wrap">
-      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
-      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
-        <div class="nav-more-group">
-          <div class="nav-more-group-label">Tools</div>
-          <a href="/voices" role="menuitem">Voices</a>
-          <a href="/position-fit" role="menuitem">Position-Fit</a>
-          <a href="/add-me" role="menuitem">Add Me</a>
-          <a href="/coach" role="menuitem">Coach</a>
-        </div>
-        <div class="nav-more-group">
-          <div class="nav-more-group-label">Newsroom</div>
-          <a href="/wire" role="menuitem">The Wire</a>
-        </div>
-        <div class="nav-more-group">
-          <div class="nav-more-group-label">Trust</div>
-          <a href="/accuracy" role="menuitem">Track Record</a>
-          <a href="/moat" role="menuitem">Moat</a>
-        </div>
-        <div class="nav-more-group">
-          <div class="nav-more-group-label">For You · Personalized Path</div>
-          <a href="/for-players" role="menuitem">For Players</a>
-          <a href="/for-coaches" role="menuitem">For Coaches</a>
-          <a href="/for-parents" role="menuitem">For Parents</a>
-          <a href="/for-scouts" role="menuitem">For Scouts</a>
-        </div>
-        <div class="nav-more-group">
-          <div class="nav-more-group-label">Company</div>
-          <a href="/about" role="menuitem">About</a>
-          <a href="/portal" role="menuitem">Portal</a>
-        </div>
-      </div>
+<div class="strip">
+  <div class="strip-i">
+    <span><span class="blip"></span>League One Volleyball · 2026 Season</span>
+    <span><b id="days">—</b> days to LA28</span>
+  </div>
+</div>
+
+<nav class="top">
+  <div class="nav-i">
+    <a class="brand" href="/"><span>Field</span><span class="c">Check</span><span class="iq">IQ</span></a>
+    <div class="nav-items">
+      <a class="nav-item" href="/leaderboard">Leaderboard</a>
+      <a class="nav-item active" href="/lovb">LOVB</a>
+      <a class="nav-item" href="/methodology">How it works</a>
+      <a class="nav-item" href="/more">More</a>
+      <a class="nav-cta" href="#run">Run a verdict</a>
     </div>
-  </nav>
-</header>
-
-<style>
-  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
-  .fc-canonical-masthead {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
-    gap: 16px;
-    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
-    backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  }
-  .fc-canonical-wordmark {
-    font-family: 'Anton', 'Bebas Neue', sans-serif;
-    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
-    color: #F5F1E8; text-decoration: none;
-    display: flex; align-items: center; gap: 4px;
-  }
-  .fc-canonical-wordmark .dot {
-    display: inline-block; width: 7px; height: 7px;
-    background: #FF5C3A; border-radius: 50%;
-    margin-left: 3px; margin-bottom: 2px;
-    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
-  }
-  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
-  .fc-canonical-nav .nav-primary {
-    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
-    color: #F5F1E8; text-decoration: none;
-    transition: color 0.18s; display: inline-block;
-    background: transparent; border: 0; cursor: pointer;
-    font-family: inherit;
-  }
-  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
-  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
-  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
-  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
-  .fc-canonical-nav .nav-more-menu {
-    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
-    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
-    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
-    opacity: 0; visibility: hidden; transform: translateY(-6px);
-    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
-  }
-  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
-  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
-  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
-  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
-  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
-  @media (max-width: 720px) {
-    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
-    .fc-canonical-nav .nav-more-wrap { display: none; }
-    .fc-canonical-wordmark { font-size: 18px; }
-  }
-  /* Spacer so page content doesn't get hidden under the fixed nav */
-  body.fc-has-canonical-nav { padding-top: 64px; }
-</style>
-
-<script>
-  function fcToggleNavMore(e) {
-    if (e) e.stopPropagation();
-    var wrap = document.getElementById('fc-nav-more-wrap');
-    var btn  = document.getElementById('fc-nav-more-btn');
-    var menu = document.getElementById('fc-nav-more-menu');
-    if (!wrap || !btn || !menu) return;
-    var open = wrap.classList.toggle('open');
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
-  }
-  document.addEventListener('click', function(e) {
-    var wrap = document.getElementById('fc-nav-more-wrap');
-    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
-      wrap.classList.remove('open');
-      var btn = document.getElementById('fc-nav-more-btn');
-      if (btn) btn.setAttribute('aria-expanded', 'false');
-    }
-  });
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      var wrap = document.getElementById('fc-nav-more-wrap');
-      if (wrap && wrap.classList.contains('open')) {
-        wrap.classList.remove('open');
-        var btn = document.getElementById('fc-nav-more-btn');
-        if (btn) btn.setAttribute('aria-expanded', 'false');
-      }
-    }
-  });
-  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
-  } else {
-    document.body.classList.add('fc-has-canonical-nav');
-  }
-</script>
-</header>
+  </div>
+</nav>
 
 <!-- HERO -->
-<section class="lovb-hero">
-  <div class="lovb-hero-eyebrow">// LEAGUE ONE VOLLEYBALL · THE PRO PATHWAY</div>
-  <h1 class="lovb-hero-h">
-    The first pro pathway built<br>
-    for <span class="serif">American volleyball.</span>
-  </h1>
-  <p class="lovb-hero-sub">
-    From <strong>22,000+ youth athletes</strong> across <strong>77 LOVB clubs in 28 states</strong>, to <strong>NCAA D-I powerhouses</strong>, to <strong>6 LOVB Pro teams</strong>. FieldCheck maps the entire pathway.
-  </p>
-  <!-- v0.30.5.136: TEAM STRIP + LA28 COUNTDOWN -->
-  <div class="lovb-hero-teamstrip">
-    <span class="lovb-hero-team" style="--lovb-tc:#D4145A">Atlanta</span>
-    <span class="lovb-hero-team" style="--lovb-tc:#FF6B35">Austin</span>
-    <span class="lovb-hero-team" style="--lovb-tc:#1F4E79">Houston</span>
-    <span class="lovb-hero-team" style="--lovb-tc:#C8102E">Madison</span>
-    <span class="lovb-hero-team" style="--lovb-tc:#C8102E">Omaha</span>
-    <span class="lovb-hero-team" style="--lovb-tc:#5B2C82">Salt Lake</span>
+<div class="wrap hero">
+  <div class="hero-dateline">
+    <span>// League One Volleyball · The Pro Pathway</span>
+    <span>FieldCheck IQ · Athletic Intelligence</span>
   </div>
-  <div class="lovb-hero-la28">
-    <span class="lovb-hero-la28-num" id="lovb-la28-days">—</span>
-    <span class="lovb-hero-la28-lbl">days to LA28</span>
-  </div>
-  <script>
-    (function() {
-      var la28 = new Date('2028-07-14');
-      var diff = Math.max(0, Math.floor((la28 - new Date()) / 86400000));
-      var el = document.getElementById('lovb-la28-days');
-      if (el) el.textContent = diff.toLocaleString();
-    })();
-  </script>
-</section>
-
-<!-- v0.30.5.2213 — LOVB TOOLKIT · the 4 decision tools surfaced upfront -->
-<section class="lovb-section lovb-toolkit-section">
-  <div class="lovb-section-eyebrow">// THE TOOLKIT · DECIDE BEFORE YOU SIGN</div>
-  <h2 class="lovb-section-h">Four tools. <span class="serif">One decision.</span></h2>
-  <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--gold,#d4af37);font-weight:700;margin-top:6px;margin-bottom:12px;text-align:center">// POWERED BY FIELDCHECK IQ</div>
-  <p class="lovb-section-sub">Score the pro projection. Find your archetype match. Read the market fit. Spot the roster gap. Each tool is one click. Methodology cited. Free to use.</p>
-
-  <div class="lovb-toolkit-grid">
-    <a class="lovb-tool-card" href="/lovb/projection">
-      <div class="lovb-tool-card-eyebrow">// IQ SCORE</div>
-      <h3 class="lovb-tool-card-h">Projection.</h3>
-      <p class="lovb-tool-card-sub">8-dimensional score · position-weighted · 5 presets. Quantify a player's LOVB readiness before the contract conversation.</p>
-      <span class="lovb-tool-card-cta">Score a player →</span>
-    </a>
-    <a class="lovb-tool-card" href="/lovb/match">
-      <div class="lovb-tool-card-eyebrow">// IQ MATCH</div>
-      <h3 class="lovb-tool-card-h">Archetype match.</h3>
-      <p class="lovb-tool-card-sub">Cosine similarity against the entire LOVB founding cohort. Find the closest comparables and their actual pro outcomes.</p>
-      <span class="lovb-tool-card-cta">Match the archetype →</span>
-    </a>
-    <a class="lovb-tool-card" href="/lovb/fit">
-      <div class="lovb-tool-card-eyebrow">// IQ FIT</div>
-      <h3 class="lovb-tool-card-h">Market fit.</h3>
-      <p class="lovb-tool-card-sub">Weighted scoring across 6 markets (Austin, Salt Lake, Atlanta, Houston, Nebraska, Madison). Where does this player actually fit?</p>
-      <span class="lovb-tool-card-cta">Read the markets →</span>
-    </a>
-    <a class="lovb-tool-card" href="/lovb/roster">
-      <div class="lovb-tool-card-eyebrow">// IQ ROSTER</div>
-      <h3 class="lovb-tool-card-h">Roster analyzer.</h3>
-      <p class="lovb-tool-card-sub">Position-by-position gap analysis for every LOVB team. See where the depth charts are thin — and who could fill them.</p>
-      <span class="lovb-tool-card-cta">Find the gaps →</span>
-    </a>
+  <div class="hero-grid">
+    <div>
+      <h1 class="hero-h"><span class="rule"></span>See the whole league.<br><i>Before the world does.</i></h1>
+      <p class="hero-deck">LOVB built the first real pathway in American volleyball — <b>22,000 youth, NCAA, and six pro teams.</b> FieldCheck is the intelligence layer that gives every player on it an identity, proves its calls, and tells the story like no league ever has.</p>
+    </div>
+    <div class="hero-stats">
+      <div><div class="n">22K+</div><div class="l">Youth athletes</div></div>
+      <div><div class="n">77</div><div class="l">Clubs · 28 states</div></div>
+      <div><div class="n">6</div><div class="l">Pro teams</div></div>
+      <div><div class="n">9</div><div class="l">2026 Icons read</div></div>
+    </div>
   </div>
 
-  <div class="lovb-toolkit-footnote">
-    <span class="lovb-toolkit-footnote-dot"></span>
-    Methodology pages cite every weight and threshold. Open-source approach to pro readiness — no proprietary black box, no affiliate revenue, no "premium tier" gating.
-  </div>
-</section>
-
-<style>
-  /* LOVB Toolkit cards — match existing lovb-section aesthetic */
-  .lovb-toolkit-section { padding-top: 64px; padding-bottom: 64px; }
-  .lovb-toolkit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 36px; }
-  .lovb-tool-card { display: block; padding: 28px 26px; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: var(--r-3); text-decoration: none; transition: all 0.25s var(--ease-out); position: relative; overflow: hidden; }
-  .lovb-tool-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); opacity: 0.55; transition: opacity 0.25s; }
-  .lovb-tool-card:hover { background: var(--glass-2); border-color: var(--glass-edge-2); transform: translateY(-2px); }
-  .lovb-tool-card:hover::before { opacity: 1; }
-  .lovb-tool-card-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--gold); font-weight: 700; margin-bottom: 12px; }
-  .lovb-tool-card-h { font-family: 'Anton', sans-serif; font-size: 30px; line-height: 1.0; letter-spacing: -0.01em; color: var(--text); margin-bottom: 12px; text-transform: uppercase; }
-  .lovb-tool-card-h .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -0.005em; }
-  .lovb-tool-card-sub { color: var(--text-2); font-size: 14px; line-height: 1.55; margin-bottom: 18px; }
-  .lovb-tool-card-cta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: 0.5px; }
-  .lovb-toolkit-footnote { margin-top: 24px; padding: 16px 20px; background: var(--glass); border-left: 2px solid var(--gold); border-radius: 0 var(--r-2) var(--r-2) 0; font-size: 12.5px; color: var(--text-2); line-height: 1.55; display: flex; align-items: flex-start; gap: 12px; }
-  .lovb-toolkit-footnote-dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 12px var(--gold-glow); margin-top: 6px; flex-shrink: 0; }
-  @media (max-width: 720px) { .lovb-toolkit-grid { grid-template-columns: 1fr; } .lovb-tool-card { padding: 22px 20px; } .lovb-tool-card-h { font-size: 26px; } }
-</style>
-
-<!-- STANDINGS -->
-<section class="lovb-section">
-  <div class="lovb-section-eyebrow">// THE 2026 SEASON</div>
-  <h2 class="lovb-section-h">Final <span class="serif">standings.</span></h2>
-  <p class="lovb-section-sub">League One Volleyball Pro · 2026 Championship completed April 18 in Long Beach.</p>
-
-  <div class="lovb-standings">
-    <div class="lovb-standings-header">
-      <div class="lovb-standings-h">LOVB Pro · 2026 Final Standings</div>
-      <div class="lovb-standings-meta">Championship completed Apr 18, 2026</div>
+  <!-- DOCTRINE -->
+  <div class="doctrine">
+    <div class="doc them">
+      <div class="l">The legacy model · baseball</div>
+      <h4>The back of a stat card</h4>
+      <p>Percentile sliders and exit velocity for a handful of stars. Rigorous — and built for a different era. The rest of the roster is a stat line.</p>
     </div>
-    <div class="lovb-standing-row champion">
-      <div class="lovb-standing-rank">1</div>
-      <div class="lovb-standing-team"><strong>LOVB Austin</strong> <span class="lovb-standing-tag champ">🏆 Back-to-back Champions</span></div>
-      <div class="lovb-standing-detail">Defeated Salt Lake 3-2 + golden set 15-8 · Skinner repeat Finals MVP</div>
-    </div>
-    <div class="lovb-standing-row runner">
-      <div class="lovb-standing-rank">2</div>
-      <div class="lovb-standing-team"><strong>LOVB Salt Lake</strong> <span class="lovb-standing-tag runner">Runner-up</span></div>
-      <div class="lovb-standing-detail">Won Game 1 vs Austin · Manami Kojima 256 league-leading digs</div>
-    </div>
-    <div class="lovb-standing-row">
-      <div class="lovb-standing-rank">3</div>
-      <div class="lovb-standing-team"><strong>LOVB Atlanta</strong> <span class="lovb-standing-tag semi">Semifinalist (#2 seed)</span></div>
-      <div class="lovb-standing-detail">Lost to Austin in golden set · Paulo Coco coaching</div>
-    </div>
-    <div class="lovb-standing-row">
-      <div class="lovb-standing-rank">4</div>
-      <div class="lovb-standing-team"><strong>LOVB Houston</strong> <span class="lovb-standing-tag semi">Semifinalist (#1 seed)</span></div>
-      <div class="lovb-standing-detail">Lost to Salt Lake in semifinal · Wong-Orantes joined for 2026</div>
-    </div>
-    <div class="lovb-standing-row">
-      <div class="lovb-standing-rank">5</div>
-      <div class="lovb-standing-team"><strong>LOVB Nebraska</strong> <span class="lovb-standing-tag">Missed playoffs</span></div>
-      <div class="lovb-standing-detail">First-year Suzie Fritz era · Wong-Orantes departed for Houston</div>
-    </div>
-    <div class="lovb-standing-row">
-      <div class="lovb-standing-rank">6</div>
-      <div class="lovb-standing-team"><strong>LOVB Madison</strong> <span class="lovb-standing-tag">Missed playoffs</span></div>
-      <div class="lovb-standing-detail">Sun Prairie facility under construction · Carli Lloyd repeat First Team Setter</div>
-    </div>
-    <div class="lovb-standings-footer">
-      Season 3 begins January 2027 · LOVB plans for league expansion announced for 2027-28
+    <div class="doc us">
+      <div class="l">The new model · FieldCheck IQ</div>
+      <h4>The story, told like never before</h4>
+      <p>Every number grounded in the engine, then wrapped in <b>identity, trajectory, and proof</b> a fan feels instantly — for <b>every player</b>, not just the stars.</p>
     </div>
   </div>
-</section>
-
-<!-- ICONS FIRST TEAM -->
-<section class="lovb-section">
-  <div class="lovb-section-eyebrow">// 2026 ICONS FIRST TEAM</div>
-  <h2 class="lovb-section-h">Nine names. <span class="serif">One read each.</span></h2>
-  <p class="lovb-section-sub">Click any name to see the FieldCheck verdict — sourced, audited, on the pathway.</p>
-
-  <div class="lovb-icons-grid">
-    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Lauren%20Carlini%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Madison%22%7D'><span>Lauren Carlini</span><span class="pos">S</span></a>
-    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Amber%20Igiede%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Houston%22%7D'><span>Amber Igiede</span><span class="pos">MB</span></a>
-    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Logan%20Eggleston%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Austin%22%7D'><span>Logan Eggleston</span><span class="pos">OH</span></a>
-    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Madisen%20Skinner%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Austin%22%7D'><span>Madisen Skinner</span><span class="pos">OH</span></a>
-    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Asjia%20O%27Neal%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Austin%22%7D'><span>Asjia O'Neal</span><span class="pos">MB</span></a>
-    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Jordan%20Larson%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Nebraska%22%7D'><span>Jordan Larson</span><span class="pos">OH</span></a>
-    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Jordan%20Thompson%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Houston%22%7D'><span>Jordan Thompson</span><span class="pos">OPP</span></a>
-    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Manami%20Kojima%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Salt%20Lake%22%7D'><span>Manami Kojima</span><span class="pos">L</span></a>
-    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Alexa%20Gray%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Salt%20Lake%22%7D'><span>Alexa Gray</span><span class="pos">OH</span></a>
-  </div>
-</section>
-
-<!-- TOP-5 MARQUEE LISTS -->
-<section class="lovb-section">
-  <div class="lovb-section-eyebrow">// THE MARQUEE LISTS</div>
-  <h2 class="lovb-section-h">Where the <span class="serif">stars</span> live.</h2>
-  <p class="lovb-section-sub">Curated short lists. Every entry deep-links to a FieldCheck verdict.</p>
-
-  <div class="lovb-top5-grid">
-    <div class="lovb-top5">
-      <div class="lovb-top5-h">Top 5 NCAA D-I Programs</div>
-      <ol class="lovb-top5-list">
-        <li><a href='/?run=%7B%22track%22%3A%22program%22%2C%22name%22%3A%22Nebraska%22%2C%22sport%22%3A%22womens-volleyball%22%7D'>Nebraska Cornhuskers</a><span>5 NCAA titles · 92K attendance record</span></li>
-        <li><a href='/?run=%7B%22track%22%3A%22program%22%2C%22name%22%3A%22Texas%22%2C%22sport%22%3A%22womens-volleyball%22%7D'>Texas Longhorns</a><span>2022 + 2023 NCAA Champs</span></li>
-        <li><a href='/?run=%7B%22track%22%3A%22program%22%2C%22name%22%3A%22Penn%20State%22%2C%22sport%22%3A%22womens-volleyball%22%7D'>Penn State Nittany Lions</a><span>8 NCAA titles · 2024 Champs</span></li>
-        <li><a href='/?run=%7B%22track%22%3A%22program%22%2C%22name%22%3A%22Wisconsin%22%2C%22sport%22%3A%22womens-volleyball%22%7D'>Wisconsin Badgers</a><span>2021 NCAA Champs · 4 Final Fours</span></li>
-        <li><a href='/?run=%7B%22track%22%3A%22program%22%2C%22name%22%3A%22Stanford%22%2C%22sport%22%3A%22womens-volleyball%22%7D'>Stanford Cardinal</a><span>9 NCAA titles · most decorated</span></li>
-      </ol>
-    </div>
-
-    <div class="lovb-top5">
-      <div class="lovb-top5-h">Top 5 LOVB Pro Stars (2025–26)</div>
-      <ol class="lovb-top5-list">
-        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Madisen%20Skinner%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Austin%22%7D'>Madisen Skinner</a><span>2025 + 2026 Finals MVP</span></li>
-        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Kelsey%20Robinson-Cook%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Atlanta%22%7D'>Kelsey Robinson-Cook</a><span>2025 Regular Season MVP · Olympic medalist</span></li>
-        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Lauren%20Carlini%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Madison%22%7D'>Lauren Carlini</a><span>2× Icons First Team Setter</span></li>
-        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Jordan%20Larson%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Nebraska%22%7D'>Jordan Larson</a><span>3× Olympic medalist · Nebraska owner</span></li>
-        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Lexi%20Rodriguez%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Nebraska%22%7D'>Lexi Rodriguez</a><span>2025 LOVB Libero of Year</span></li>
-      </ol>
-    </div>
-
-    <div class="lovb-top5">
-      <div class="lovb-top5-h">Top 5 NCAA Stars to Watch</div>
-      <ol class="lovb-top5-list">
-        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Bergen%20Reilly%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22Nebraska%22%7D'>Bergen Reilly</a><span>Nebraska S · USA National Team</span></li>
-        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Andi%20Jackson%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22Nebraska%22%7D'>Andi Jackson</a><span>Nebraska MB · Big Ten Freshman of Year</span></li>
-        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Harper%20Murray%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22Nebraska%22%7D'>Harper Murray</a><span>Nebraska OH · top-25 recruit class of 2023</span></li>
-        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Olivia%20Babcock%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22Pittsburgh%22%7D'>Olivia Babcock</a><span>Pitt OH · 2024 AVCA Freshman of Year</span></li>
-        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Eva%20Hudson%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22Purdue%22%7D'>Eva Hudson</a><span>Purdue OH · Big Ten dominant</span></li>
-      </ol>
-    </div>
-  </div>
-</section>
+</div>
 
 <!-- PATHWAY -->
-<section class="lovb-section">
-  <div class="lovb-section-eyebrow">// THE PATHWAY</div>
-  <h2 class="lovb-section-h">Three steps. <span class="serif">One ladder.</span></h2>
-  <p class="lovb-section-sub">Built for the first time: a real route from youth club to American professional play.</p>
-
-  <div class="lovb-pathway">
-    <div class="lovb-pathway-step">
-      <div class="lovb-pathway-step-num">01</div>
-      <div class="lovb-pathway-step-h">Club</div>
-      <div class="lovb-pathway-step-detail"><strong>22,000+ youth athletes</strong> training across <strong>77 LOVB clubs in 28 states</strong> — the largest single club system in American volleyball.</div>
-    </div>
-    <div class="lovb-pathway-step">
-      <div class="lovb-pathway-step-num">02</div>
-      <div class="lovb-pathway-step-h">College</div>
-      <div class="lovb-pathway-step-detail"><strong>NCAA Division I</strong> · The college game has never been stronger. 92K attendance records, Final Fours selling out, multi-million NIL deals.</div>
-    </div>
-    <div class="lovb-pathway-step">
-      <div class="lovb-pathway-step-num">03</div>
-      <div class="lovb-pathway-step-h">LOVB Pro</div>
-      <div class="lovb-pathway-step-detail"><strong>6 pro teams · Olympic-caliber rosters</strong> · For the first time, American volleyball players have a home league with real pay, real coaches, real stakes.</div>
-    </div>
+<section><div class="wrap">
+  <div class="kicker">// The Pathway</div>
+  <h2 class="sec-h">Three steps. <i>One ladder.</i></h2>
+  <p class="sec-deck">Built for the first time: a real route from a kid's first serve to the professional court.</p>
+  <div class="ladder">
+    <div class="rung"><div class="step">01</div><div class="rk">Club</div><h4>The dream begins</h4><p><b>22,000+ youth athletes</b> across 77 LOVB clubs in 28 states — the largest single club system in American volleyball. FieldCheck shows each one their shape now, and how far it can go.</p></div>
+    <div class="rung"><div class="step">02</div><div class="rk">College</div><h4>NCAA Division I</h4><p>The college game has never been stronger — <b>92K attendance records</b>, Final Fours selling out, multi-million NIL deals.</p></div>
+    <div class="rung"><div class="step">03</div><div class="rk">LOVB Pro</div><h4>A home league</h4><p><b>Six pro teams, Olympic-caliber rosters.</b> For the first time, American players have real pay, real coaches, real stakes.</p></div>
   </div>
+</div></section>
+
+<!-- STANDINGS -->
+<section><div class="wrap">
+  <div class="kicker">// The 2026 Season</div>
+  <h2 class="sec-h">Final <i>standings.</i></h2>
+  <p class="sec-deck">League One Volleyball Pro · 2026 championship completed April 18 in Long Beach.</p>
+  <div class="stand">
+    <div class="strow champ"><div class="rank">1</div><div><div class="team">LOVB Austin <span class="tag">🏆 Back-to-back champions</span></div><div class="note">Defeated Salt Lake 3–2 + golden set 15–8 · Skinner repeat Finals MVP</div></div><div class="res">Champions</div></div>
+    <div class="strow"><div class="rank">2</div><div><div class="team">LOVB Salt Lake</div><div class="note">Won Game 1 vs Austin · Manami Kojima 256 league-leading digs</div></div><div class="res">Runner-up</div></div>
+    <div class="strow"><div class="rank">3</div><div><div class="team">LOVB Atlanta</div><div class="note">Lost to Austin in golden set · Paulo Coco coaching</div></div><div class="res">Semifinal · #2</div></div>
+    <div class="strow"><div class="rank">4</div><div><div class="team">LOVB Houston</div><div class="note">Lost to Salt Lake in semifinal · Wong-Orantes joined for 2026</div></div><div class="res">Semifinal · #1</div></div>
+    <div class="strow"><div class="rank">5</div><div><div class="team">LOVB Nebraska</div><div class="note">First-year Suzie Fritz era</div></div><div class="res">Missed playoffs</div></div>
+    <div class="strow"><div class="rank">6</div><div><div class="team">LOVB Madison</div><div class="note">Sun Prairie facility under construction · Carli Lloyd repeat First Team Setter</div></div><div class="res">Missed playoffs</div></div>
+  </div>
+</div></section>
+
+<!-- ICONS -->
+<section><div class="wrap">
+  <div class="kicker">// 2026 Icons First Team</div>
+  <h2 class="sec-h">Nine names. <i>One read each.</i></h2>
+  <p class="sec-deck">Click any name for the FieldCheck verdict — sourced, audited, on the pathway.</p>
+  <div class="icons" id="iconsGrid"></div>
+</div></section>
+
+<!-- BOARD FEATURE -->
+<section><div class="wrap">
+  <div class="kicker">// The Greatest Clips</div>
+  <h2 class="sec-h">The moments, <i>in motion.</i></h2>
+  <p class="sec-deck">The league's most inspiring swings, digs and runs — rolling past, one hero frame at a time. Tap any clip to watch the highlight. From LOVB pros to the amateur about to be seen, this is the whole pathway, in motion.</p>
+  <div class="legend">
+    <span class="lg"><span class="sw" style="background:var(--gold)"></span><b>LOVB Pro</b> 50%</span>
+    <span class="lg"><span class="sw" style="background:var(--gold-hi)"></span><b>D1</b> 20%</span>
+    <span class="lg"><span class="sw" style="background:var(--moss)"></span><b>D2</b> 10%</span>
+    <span class="lg"><span class="sw" style="background:#9a8c6f"></span><b>D3 · JUCO</b> 10%</span>
+    <span class="lg"><span class="sw" style="background:#A8C49A"></span><b>Amateur</b> 10%</span>
+  </div>
+</div>
+<div class="reel" id="reel"><div class="reel-track" id="track"></div></div>
 </section>
 
-<!-- FOUNDING STORY -->
-<section class="lovb-section">
-  <div class="lovb-section-eyebrow">// FOUNDED IN 2020</div>
-  <h2 class="lovb-section-h">How <span class="serif">LOVB</span> began.</h2>
-
-  <div class="lovb-founding">
-    <div class="lovb-founding-eyebrow">// THE THESIS</div>
-    <div class="lovb-founding-quote">
-      "Create real pathways for American volleyball talent from youth club to professional. Five years later, the pathway exists."
+<!-- MOMENTS REEL -->
+<section><div class="wrap">
+  <div class="board-feat">
+    <div>
+      <div class="bk">// The League Intelligence Board</div>
+      <h3>All six clubs. Every shape. The whole league, read at once.</h3>
+      <p>The league-wide view — marquee players per club, the build sequence, and how FieldCheck levels up LOVB against any league in sports.</p>
     </div>
-    <div class="lovb-founding-attr">
-      Founded by <strong>Katlyn Gao</strong> (CEO), <strong>Peter Hirschmann</strong>, and Olympian <strong>Kevin Wong</strong>. Headquarters in Costa Mesa, California.
+    <a class="btn" href="/fieldcheck-lovb-board.html">Open the board →</a>
+  </div>
+</div></section>
+
+<!-- clip modal -->
+<div class="ov" id="ov">
+  <div class="modal" id="modal">
+    <button class="x" id="x" aria-label="Close">&times;</button>
+    <div class="stagewrap">
+      <div class="stage" id="stage"></div>
+      <div class="fcoverlay" id="fcoverlay"></div>
+    </div>
+    <div class="mbody">
+      <div class="mvoice" id="mvoice"></div>
+      <div class="mbadge" id="mbadge"></div>
+      <div class="mnm" id="mnm"></div>
+      <div class="mread" id="mread"></div>
+      <a class="mcta" id="mcta" href="#"></a>
+      <div class="fmnav-h"><button class="prev" id="fmprev_d" aria-label="Previous player">&#8249;</button><button class="rep" id="fmrep_d" aria-label="Replay the film">&#9654; Replay</button><button class="next" id="fmnext_d" aria-label="Next player">&#8250;</button></div>
+      <div class="fmstage" id="fmstage">
+        <svg class="fmfilm" id="fmfilm" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <filter id="fmglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <linearGradient id="fmfire" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF7A18"/><stop offset="1" stop-color="#EEC067"/></linearGradient>
+          </defs>
+          <g id="fmworld"></g>
+        </svg>
+        <div class="fmvign"></div>
+        <div class="fmgrain"></div>
+        <div class="fmtitle" id="fmtitle"><div class="tk">THE MARK</div><div class="tt" id="fmtt"></div></div>
+        <div class="fmcap" id="fmcap"><div class="ck"></div><div class="cy"></div><div class="cyr"></div><ul class="clist" id="fmclist"></ul></div>
+        <div class="fmfcap" id="fmfcap"><div class="fk">ZONED STRENGTH</div><div class="fn"></div><div class="fl"></div></div>
+        <div class="fmflash" id="fmflash"></div>
+        <div class="fmend" id="fmend"><div class="fmendpoly" id="fmendpoly"></div><div class="fmendcard" id="fmendcard"></div></div>
+        <div class="fmnav" id="fmnav"><button class="prev" id="fmprev" aria-label="Previous player">&#8249;</button><button class="rep" id="fmrep" aria-label="Replay the film">&#9654; Replay</button><button class="next" id="fmnext" aria-label="Next player">&#8250;</button></div>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- CTA back to product -->
-<section class="lovb-cta">
-  <h2 class="lovb-cta-h">Ready to read a player?</h2>
-  <p class="lovb-cta-sub">Run a verdict on anyone on this pathway. Sourced, audited, on the record.</p>
-  <!-- v0.30.5.142: Pre-select Women's Volleyball when coming from LOVB landing -->
-  <a class="lovb-cta-btn" href='/?lovb-prefill=1#player'>Run a player check →</a>
-</section>
+<!-- MARQUEE -->
+<section><div class="wrap">
+  <div class="kicker">// The Marquee Lists</div>
+  <h2 class="sec-h">Where the <i>stars</i> live.</h2>
+  <p class="sec-deck">Curated short lists. Every entry deep-links to a FieldCheck verdict.</p>
+  <div class="mq" id="mqGrid"></div>
+</div></section>
 
-<footer class="lovb-footer">
-  <div class="lovb-footer-colophon">
-    FieldCheck · ThinkDifferent Holdings · © 2026 · Built on the TD Trust Engine · v0.30
+<!-- FOUNDING -->
+<section><div class="wrap">
+  <div class="kicker">// Founded in 2020</div>
+  <h2 class="sec-h">How LOVB <i>began.</i></h2>
+  <div class="found" style="margin-top:30px">
+    <div class="quote"><span class="mark">"</span>Create real pathways for American volleyball talent from youth club to professional. Five years later, the pathway exists.<span class="mark">"</span></div>
+    <div class="meta">Founded by <b>Katlyn Gao</b> (CEO), <b>Peter Hirschmann</b>, and Olympian <b>Kevin Wong</b>.<br>Headquarters in Costa Mesa, California.<br><br>From a grassroots club system to a televised pro league in five years — the fastest-built pathway in American team sports.</div>
   </div>
-</footer>
+</div></section>
 
+<!-- CTA -->
+<div class="wrap" id="run">
+  <div class="cta">
+    <h3>Ready to <i>read a player?</i></h3>
+    <a class="btn" href="/">Run a verdict →</a>
+  </div>
+</div>
+
+<footer>FieldCheck · ThinkDifferent Holdings · © 2026 · Built on the TD Trust Engine</footer>
+
+<script>
+  // days to LA28 (opening ceremony Jul 14, 2028)
+  (function(){
+    var la=new Date('2028-07-14T00:00:00');
+    var now=new Date();
+    var d=Math.max(0,Math.round((la-now)/86400000));
+    document.getElementById('days').textContent=d;
+  })();
+
+  function verdict(name){ return '/fieldcheck-verdict.html?q='+encodeURIComponent(name)+'&sport=womens-volleyball'; }
+
+  var ICONS=[
+    {n:"Lauren Carlini",pos:"S",club:"LOVB Madison",read:"Two-time Icons First Team setter · the league's premier distributor."},
+    {n:"Amber Igiede",pos:"MB",club:"LOVB Houston",read:"Middle-blocker force anchoring Houston's front line."},
+    {n:"Logan Eggleston",pos:"OH",club:"LOVB Austin",read:"AVCA National Player of the Year · do-it-all wing on a champion."},
+    {n:"Madisen Skinner",pos:"OH",club:"LOVB Austin",read:"Back-to-back Finals MVP · the closer. Three NCAA titles before age 24."},
+    {n:"Asjia O'Neal",pos:"MB",club:"LOVB Austin",read:"The wall — league-best blocking on a back-to-back champion."},
+    {n:"Jordan Larson",pos:"OH",club:"LOVB Nebraska",read:"Four-time Olympian, living legend, and team owner."},
+    {n:"Jordan Thompson",pos:"OPP",club:"LOVB Houston",read:"The league's leading scorer · the most explosive opposite in the game."},
+    {n:"Manami Kojima",pos:"L",club:"LOVB Salt Lake",read:"Libero of the Year · 256 league-leading digs in 2026."},
+    {n:"Alexa Gray",pos:"OH",club:"LOVB Salt Lake",read:"Canadian international · Salt Lake's scoring engine to the final."}
+  ];
+  var ig=document.getElementById('iconsGrid');
+  ICONS.forEach(function(p){
+    var a=document.createElement('a'); a.className='icon'; a.href=verdict(p.n);
+    a.innerHTML='<span class="pos">'+p.pos+'</span><h4>'+p.n+'</h4><div class="club">'+p.club+'</div><div class="read">'+p.read+'</div><span class="go">See the verdict →</span>';
+    ig.appendChild(a);
+  });
+
+  var MQ=[
+    {h:"Top 5 · NCAA D-I Programs",rows:[
+      ["Nebraska Cornhuskers","5 NCAA titles · 92K attendance record"],
+      ["Texas Longhorns","2022 + 2023 NCAA champions"],
+      ["Penn State Nittany Lions","8 NCAA titles · 2024 champions"],
+      ["Wisconsin Badgers","2021 champions · 4 Final Fours"],
+      ["Stanford Cardinal","9 NCAA titles · most decorated"]
+    ]},
+    {h:"Top 5 · LOVB Pro Stars (2025–26)",rows:[
+      ["Madisen Skinner","2025 + 2026 Finals MVP"],
+      ["Kelsey Robinson-Cook","2025 Regular Season MVP · Olympic medalist"],
+      ["Lauren Carlini","2× Icons First Team setter"],
+      ["Jordan Larson","3× Olympic medalist · Nebraska owner"],
+      ["Lexi Rodriguez","2025 LOVB Libero of the Year"]
+    ]},
+    {h:"Top 5 · NCAA Stars to Watch",rows:[
+      ["Bergen Reilly","Nebraska S · USA National Team"],
+      ["Andi Jackson","Nebraska MB · Big Ten Freshman of the Year"],
+      ["Harper Murray","Nebraska OH · top-25 recruit, 2023"],
+      ["Olivia Babcock","Pitt OH · 2024 AVCA Freshman of the Year"],
+      ["Eva Hudson","Purdue OH · Big Ten standout"]
+    ]},
+    {h:"Top 5 · The Next Wave · 2027",amateur:true,rows:[
+      ["Shaye Witherspoon","6'3\" OH · Nebraska commit · No. 10 PrepDig"],
+      ["Camille Csernik","6'1\" OH · 4-star · TAV Houston"],
+      ["Malorie Boesiger","Setter · Nebraska 2027 commit"],
+      ["Kendall Omoruyi","Middle blocker · Nebraska 2027 commit"],
+      ["Claim your spot →","Get your verdict · make the FC Top 100","/add-me"]
+    ]}
+  ];
+  var mg=document.getElementById('mqGrid');
+  MQ.forEach(function(col){
+    var c=document.createElement('div'); c.className='mq-col'+(col.amateur?' amateur':'');
+    var html='<div class="mq-h">'+col.h+'</div>';
+    col.rows.forEach(function(r,i){
+      var href=r[2]?r[2]:verdict(r[0]);
+      html+='<a class="mq-row" href="'+href+'"><span class="rn">'+(i+1)+'</span><span><span class="nm">'+r[0]+'</span><span class="sub">'+r[1]+'</span></span></a>';
+    });
+    c.innerHTML=html; mg.appendChild(c);
+  });
+
+  // moments reel — FC IQ Voice on every clip; yt = official embed, src = owned R2 clip
+  var TIER={
+    Pro:{label:"LOVB Pro",c:"var(--gold)"},
+    D1:{label:"NCAA D1",c:"var(--gold-hi)"},
+    D2:{label:"NCAA D2",c:"var(--moss)"},
+    JUCO:{label:"D3 · JUCO",c:"#9a8c6f"},
+    Am:{label:"Amateur · 2027",c:"#A8C49A"}
+  };
+  var CLIPS=[
+    {t:"Pro", voice:"The Closer",     n:"Madisen Skinner",   read:"Back-to-back Finals MVP · the title-clinching kill, twice", yt:"ArkevSLQucQ", facet:"Clutch", proof:"Back-to-back title-clinching kills. FieldCheck logged both — the tape is the receipt."},
+    {t:"Pro", voice:"The Cannon",     n:"Jordan Thompson",   read:"2026 League MVP · most dominant season in LOVB history", yt:"2nDPt2hDZE4", facet:"Dominance", proof:"Most points in a single LOVB season, ever. The engine saw the separation before the box score did."},
+    {t:"D1",  voice:"The Silencer",   n:"Harper Murray",     read:"Nebraska OH · the swing that quiets an arena", facet:"Power", proof:"The read that turns a top recruit into a number you can trust."},
+    {t:"Pro", voice:"The Standard",   n:"Jordan Larson",     read:"Four-time Olympian · the measuring stick", yt:"clDqoxVSPC4", facet:"Pedigree", proof:"Four Olympics, eighteen pro seasons. The standard every other read is measured against."},
+    {t:"Am",  voice:"The Climber",    n:"Shaye Witherspoon", read:"6'3\" OH · Nebraska commit · No. 10 PrepDig", facet:"Trajectory", proof:"The climb FieldCheck was built to capture — before the world catches on."},
+    {t:"Pro", voice:"The Conductor",  n:"Lauren Carlini",    read:"Setter of the era · the league's premier hands", yt:"ChkJHiVDHCI", facet:"Vision", proof:"Runs an offense the box score can't capture. FieldCheck can."},
+    {t:"D2",  voice:"Unwritten",      n:"This spot is open", read:"A D2 program's best is about to be seen", cta:true},
+    {t:"Pro", voice:"The Last Line",  n:"Manami Kojima",     read:"Libero of the Year · first to 250 digs in league history", yt:"pXzxci0_8xY", facet:"Defense", proof:"Nothing the tape shows hits the floor. First to 250 digs — the engine ranks the unrankable."},
+    {t:"D1",  voice:"The Phenom",     n:"Olivia Babcock",    read:"Pitt OH · back-to-back AVCA National Player of the Year", yt:"18_URrDno00", facet:"Ceiling", proof:"Two-time national Player of the Year before her senior season. FieldCheck makes the label a number."},
+    {t:"Pro", voice:"The Wall",       n:"Asjia O'Neal",      read:"League-best block on a back-to-back champion", yt:"IqgRFQESxWo", facet:"Rim Protection", proof:"The wall on a back-to-back champion. The read proves what the eye suspects."},
+    {t:"Am",  voice:"The Ascent",     n:"Camille Csernik",   read:"6'1\" OH · 4-star · TAV Houston", facet:"Trajectory", proof:"A four-star arrow pointing straight up — and a read that grows with her."},
+    {t:"Pro", voice:"The Hammer",     n:"Amber Igiede",      read:"Middle Blocker of the Year · .615 in a single night", yt:"_7Iwd0vuqv8", facet:"Efficiency", proof:".615 hitting in one night. The most efficient terminator in the league, quantified."},
+    {t:"JUCO",voice:"Unwritten",      n:"This spot is open", read:"D3 / JUCO · proof the pathway has no ceiling", cta:true},
+    {t:"Pro", voice:"The Captain",    n:"Logan Eggleston",   read:"AVCA Player of the Year · all-court leader on a champion", yt:"NVW2E5QL4sA", facet:"Two-Way", proof:"Twenty points and fourteen digs in the same match. The all-court read the stat line splits apart."},
+    {t:"D1",  voice:"The Quarterback",n:"Bergen Reilly",     read:"Nebraska S · USA National Team", facet:"Vision", proof:"A setter's value hides between the numbers. FieldCheck finds it."},
+    {t:"Pro", voice:"The Spark",      n:"Jess Mruzik",       read:"2024 NCAA title MOP · 29 kills in the final", yt:"3ncbOfgKaa8", facet:"Rising", proof:"Twenty-nine kills in a national title game. The arrow is still pointing up."},
+    {t:"D2",  voice:"Unwritten",      n:"This spot is open", read:"Every level has a best. This one's waiting.", cta:true},
+    {t:"Pro", voice:"The Engine",     n:"Alexa Gray",        read:"Salt Lake's motor · the rally that won't die", yt:"Ii2DMP-HfsQ", facet:"Motor", proof:"Salt Lake's engine to the final. The read that captures relentlessness."},
+    {t:"D1",  voice:"The Riser",      n:"Andi Jackson",      read:"Nebraska MB · Big Ten Freshman of the Year", facet:"Ceiling", proof:"Big Ten Freshman of the Year — the trajectory FieldCheck tracks from day one."},
+    {t:"JUCO",voice:"Unwritten",      n:"This spot is open", read:"The pathway has no ceiling. Claim your level.", cta:true}
+  ];
+  var PLAY='<svg width="17" height="17" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+  function clipHTML(c,i){
+    var m=TIER[c.t];
+    var h='';
+    if(c.poster || c.yt){
+      var src=c.poster?c.poster:('https://img.youtube.com/vi/'+c.yt+'/hq2.jpg');
+      var fb=c.yt?('https://img.youtube.com/vi/'+c.yt+'/hqdefault.jpg'):src;
+      h+='<img class="poster" src="'+src+'" onerror="this.onerror=null;this.src=\''+fb+'\'" alt="">';
+    } else { h+='<span class="poster"></span>'; }
+    h+='<span class="scrim"></span>';
+    if(!c.poster && !c.cta && !c.yt) h+='<span class="slot">clip frame<br>drop poster</span>';
+    h+='<span class="badge"><span class="sw" style="background:'+m.c+'"></span>'+m.label+'</span>';
+    h+='<span class="vtop">'+c.voice+'</span>';
+    h+='<span class="play">'+PLAY+'</span>';
+    if(!c.cta) h+='<span class="dur">'+(c.yt?'watch':'0:30')+'</span>';
+    h+='<span class="cap"><span class="nm">'+c.n+'</span><span class="read">'+c.read+'</span></span>';
+    return '<button class="clip'+(c.cta?' cta':'')+'" data-i="'+i+'">'+h+'</button>';
+  }
+  var track=document.getElementById('track'),rhtml='';
+  for(var rp=0;rp<2;rp++){ CLIPS.forEach(function(c,i){ rhtml+=clipHTML(c,i); }); }
+  track.innerHTML=rhtml;
+
+  var ov=document.getElementById('ov'),modal=document.getElementById('modal'),stage=document.getElementById('stage');
+  // FC IQ 8-facet shapes (relative, calibrate to engine) + the 2-3 zoned strengths
+  var AX=['POW','CLU','EFF','DEF','BLK','IQ','CON','UPS'];
+  var AXN=['Power','Clutch','Efficiency','Defense','Block','Court IQ','Consistency','Upside'];
+  var FX={
+    "Madisen Skinner":{v:[92,96,80,70,74,82,84,80],s:[1,0]},
+    "Jordan Thompson":{v:[98,88,90,72,74,80,92,84],s:[0,2]},
+    "Jordan Larson":{v:[84,90,82,88,68,96,94,58],s:[5,6]},
+    "Lauren Carlini":{v:[50,84,80,80,58,98,90,76],s:[5,6]},
+    "Manami Kojima":{v:[28,80,60,99,38,88,92,74],s:[3,6]},
+    "Asjia O'Neal":{v:[78,78,84,64,96,80,86,80],s:[4,2]},
+    "Amber Igiede":{v:[86,80,95,60,88,78,84,82],s:[2,4]},
+    "Logan Eggleston":{v:[86,88,84,86,76,92,90,76],s:[5,3]},
+    "Jess Mruzik":{v:[88,84,82,80,70,82,84,92],s:[0,7]},
+    "Alexa Gray":{v:[86,82,82,84,68,82,90,76],s:[6,0]},
+    "Harper Murray":{v:[88,82,78,84,72,80,82,88],s:[0,7]},
+    "Olivia Babcock":{v:[94,86,86,76,72,84,86,92],s:[0,7]},
+    "Bergen Reilly":{v:[48,80,78,78,56,94,86,86],s:[5,7]},
+    "Andi Jackson":{v:[82,78,86,62,90,78,82,90],s:[4,7]},
+    "Shaye Witherspoon":{v:[80,72,70,72,68,72,72,98],s:[7,0]},
+    "Camille Csernik":{v:[80,70,72,70,66,72,72,96],s:[7,0]}
+  };
+  var TRAJ={
+    "Madisen Skinner":[["2019","Seven Lakes HS, Texas",24],["2020","Kentucky — NCAA champion",50],["2022","Texas — national title",72],["2024","4\u00d7 All-American",84],["2026","LOVB Austin — back-to-back Finals MVP",100]],
+    "Jordan Thompson":[["2015","Edina HS, Minnesota",22],["2019","Cincinnati — 2\u00d7 All-American",52],["2021","Tokyo Olympics — gold",74],["2024","Pro: T\u00fcrkiye & Italy",86],["2026","LOVB MVP — record season",100]],
+    "Jordan Larson":[["2005","Nebraska — All-American",34],["2006","NCAA champion",52],["2012","Olympic silver",70],["2021","Tokyo gold — Olympic MVP",92],["2026","LOVB Nebraska — the GOAT",100]],
+    "Lauren Carlini":[["2014","Wisconsin — 4\u00d7 All-American",40],["2016","USA National Team",60],["2023","Pro in Italy",78],["2024","Paris Olympics — silver",90],["2026","LOVB Madison — Setter Icon",100]],
+    "Manami Kojima":[["2016","NEC Red Rockets, Japan",36],["2020","3\u00d7 Japan league titles",58],["2024","Japan National Team",74],["2025","LOVB Salt Lake",88],["2026","Libero of the Year — 250+ digs",100]],
+    "Asjia O'Neal":[["2018","Texas Longhorns",40],["2022","NCAA champion",64],["2024","USA National Team",80],["2025","LOVB Austin — champion",92],["2026","First-Team Icon — the wall",100]],
+    "Amber Igiede":[["2019","Hawai'i — All-American",40],["2024","Pro in Italy",62],["2024","USA NT — Pan Am silver",78],["2025","LOVB Houston",90],["2026","Middle Blocker of the Year",100]],
+    "Logan Eggleston":[["2017","Brentwood HS, Tennessee",26],["2018","Texas — 5\u00d7 Big 12 titles",54],["2022","National title — Final MVP",78],["2022","AVCA Player of the Year",88],["2026","LOVB Austin — champion & Icon",100]],
+    "Jess Mruzik":[["2019","U18 Worlds — MVP",36],["2021","Michigan — All-American",56],["2024","Penn State — NCAA title & MOP",82],["2025","LOVB Houston",92],["2026","Two-time LOVB Icon",100]],
+    "Alexa Gray":[["2012","BYU — 2\u00d7 WCC POY",38],["2017","Canada National Team",58],["2022","Italy — league MVP",78],["2023","Club World champion",90],["2026","LOVB Salt Lake — Icon",100]],
+    "Harper Murray":[["2022","Gatorade National POY",46],["2023","Nebraska — Big Ten Freshman of Year",66],["2024","All-American \u00b7 Regional MOP",84],["2026","Nebraska — the silencer",100]],
+    "Olivia Babcock":[["2021","Sierra Canyon — D1 champion",44],["2024","Pitt — AVCA POY",72],["2025","Back-to-back National POY",90],["2026","Pitt — the phenom",100]],
+    "Bergen Reilly":[["2023","Nebraska — freshman setter",48],["2024","All-Big Ten",70],["2025","USA National Team",86],["2026","Nebraska — the quarterback",100]],
+    "Andi Jackson":[["2022","U19 — gold medal",44],["2023","#1 MB recruit \u00b7 Nebraska",66],["2024","Big Ten Freshman of Year",84],["2026","Nebraska — the riser",100]],
+    "Shaye Witherspoon":[["2024","Lafayette HS — state champion",40],["2025","No. 10 national (PrepDig)",64],["2025","Nebraska commit",82],["2027","The climb is just starting",100]],
+    "Camille Csernik":[["2024","TAV Houston club",40],["2025","4-star recruit",64],["2026","Rising national arrow",82],["2027","The ascent ahead",100]]
+  };
+
+  /* ===== FC IQ FILM ENGINE (the mark) ===== */
+  /* ===== FC IQ FILM ENGINE v2 — Director's Cut (the mark) ===== */
+  var FCFilm=(function(){
+    var W=1200,H=620,CX=600,CY=315,MR=200,LBLO=36,TX0=140,TX1=1060,TYB=536,TYT=104;
+    var SPEED=1,gen=0,runGen=-1,cam={x:0,y:0,w:W,h:H},io=null,curData=null,curIdx=-1;
+    var svg=document.getElementById('fmfilm'),world=document.getElementById('fmworld');
+    var titleEl=document.getElementById('fmtitle'),ttEl=document.getElementById('fmtt');
+    var capEl=document.getElementById('fmcap'),clistEl=document.getElementById('fmclist'),fcapEl=document.getElementById('fmfcap');
+    var flashEl=document.getElementById('fmflash'),endEl=document.getElementById('fmend');
+    var endPoly=document.getElementById('fmendpoly'),endCard=document.getElementById('fmendcard'),stageBox=document.getElementById('fmstage');
+
+    var SLINE={Power:"Terminal at the pin.",Clutch:"Ice in the deciding points.",Efficiency:"Almost never wastes a swing.",Defense:"Turns defense into offense.",Block:"A wall at the net.","Court IQ":"Reads the play before it happens.",Consistency:"The same, every single night.",Upside:"The ceiling is still rising."};
+
+    var HERO={
+      "Madisen Skinner":{voice:"The Closer",fx:[92,96,80,70,74,82,84,80],s:[1,0],
+        title:"How FieldCheck saw her \u2014 before the world agreed.",
+        proof:"Three NCAA titles, National Player of the Year, Finals MVP \u2014 the closer, every time it mattered.",
+        slines:{1:"The title-clinching swing \u2014 more than once.",0:"Terminal velocity at the pin."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Katy, Texas",year:"BORN 2001",v:12,lines:["Daughter of an NBA father and an All-American sister.","Picked up the game seriously at fifteen."]},
+          {tag:"HIGH SCHOOL",place:"Seven Lakes",year:"KATY, TEXAS \u00b7 2019",v:34,lines:["The <b>#2 recruit</b> in the country.","PrepVolleyball All-American."]},
+          {tag:"KENTUCKY",place:"Lexington",year:"2020",v:58,lines:["National champion as a <b>true freshman</b>.","19 kills in the title match."]},
+          {tag:"TEXAS",place:"Austin",year:"2022\u20132024",v:82,lines:["Back-to-back national titles.","<b>National Player of the Year</b>, 2023.","Four-time All-American."]},
+          {tag:"THE CLOSER",place:"LOVB Austin",year:"PRO \u00b7 2025",v:100,lines:["U.S. National Team debut, 2024.","Inaugural LOVB season.","<b>Finals MVP.</b>"]}
+        ]},
+      "Amber Igiede":{voice:"The Hammer",fx:[86,80,95,60,88,78,84,82],s:[2,4],
+        title:"How FieldCheck saw her \u2014 before the league agreed.",
+        proof:"Two-time All-American, Big West Player of the Year, LOVB's Best Middle Blocker.",
+        slines:{2:"Among the most efficient hitters in the league.",4:"A wall in the middle."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Baton Rouge",year:"LOUISIANA \u00b7 BORN 2001",v:14,lines:["Started out at St. Michael High.","Found the game and never looked back."]},
+          {tag:"HAWAI'I",place:"M\u0101noa",year:"2019\u20132023",v:50,lines:["<b>Two-time All-American.</b>","2022 Big West Player of the Year.","NCAA tournament every single season."]},
+          {tag:"ITALY",place:"Roma Volley",year:"PRO \u00b7 2024",v:66,lines:["First pro contract, Serie A1.","Sharpened the edge overseas."]},
+          {tag:"TEAM USA",place:"Pan American Cup",year:"2024",v:80,lines:["National team debut.","<b>Pan Am silver.</b>"]},
+          {tag:"THE HAMMER",place:"LOVB Houston",year:"PRO \u00b7 2025",v:100,lines:["<b>Best Middle Blocker</b>, LOVB Classic.","First-Team LOVB Icon."]}
+        ]},
+      "Jordan Larson":{voice:"The GOAT",fx:[84,90,82,88,68,96,94,58],s:[5,6],
+        title:"How FieldCheck saw her \u2014 before, during, and long after.",
+        proof:"Four Olympic medals, a gold and a Games MVP \u2014 two decades as the standard.",
+        slines:{5:"She reads the play before it happens.",6:"Every match, for twenty years."},
+        journey:[
+          {tag:"WHERE IT STARTS",place:"Hooper, Nebraska",year:"BORN 1986",v:8,lines:["A town of <b>832 people</b>.","Picked up volleyball in eighth grade."]},
+          {tag:"HIGH SCHOOL",place:"Logan View",year:"HOOPER, NEBRASKA \u00b7 2003",v:26,lines:["Set a <b>state kills record</b> \u2014 15.08 a game.","Three-time Super-State first team."]},
+          {tag:"NEBRASKA",place:"Lincoln",year:"2005\u20132008",v:48,lines:["National champion, 2006.","Three-time All-American.","127\u20138 across four years."]},
+          {tag:"THE WORLD STAGE",place:"The Olympics",year:"2012 \u00b7 2016 \u00b7 2021 \u00b7 2024",v:88,lines:["<b>Four-time Olympian.</b>","Gold and Games MVP \u2014 Tokyo 2020.","First U.S. indoor player with four medals."]},
+          {tag:"THE GOAT",place:"LOVB Omaha",year:"PRO \u00b7 2025",v:100,lines:["Founding athlete and co-owner.","The Governor comes home."]}
+        ]}
+    };
+
+    function easeInOut(k){return k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;}
+    function easeOut(k){return 1-Math.pow(1-k,3);}
+    function easeOutBack(k){var c=1.7;return 1+(c+1)*Math.pow(k-1,3)+c*Math.pow(k-1,2);}
+    function lin(k){return k;}
+    function tween(dur,on,ease){ease=ease||easeInOut;var myGen=gen;return new Promise(function(res){var done=false,t0=null;function fin(){if(done)return;done=true;res();}function step(ts){if(done)return;if(gen!==myGen){fin();return;}if(t0===null)t0=ts;var k=Math.min(1,(ts-t0)/(dur/SPEED));on(ease(k));if(k<1)requestAnimationFrame(step);else fin();}requestAnimationFrame(step);setTimeout(function(){if(!done&&gen===myGen){try{on(1);}catch(e){}}fin();},dur/SPEED+600);});}
+    function wait(ms){return new Promise(function(res){setTimeout(res,ms/SPEED);});}
+    function dead(){return gen!==runGen;}
+    function setVB(x,y,w,h){cam={x:x,y:y,w:w,h:h};svg.setAttribute('viewBox',x.toFixed(1)+' '+y.toFixed(1)+' '+w.toFixed(1)+' '+h.toFixed(1));}
+    function cameraTo(t,dur,ease){var f={x:cam.x,y:cam.y,w:cam.w,h:cam.h};return tween(dur,function(k){setVB(f.x+(t.x-f.x)*k,f.y+(t.y-f.y)*k,f.w+(t.w-f.w)*k,f.h+(t.h-f.h)*k);},ease);}
+    function flash(a){a=a||.5;flashEl.style.transition='none';flashEl.style.opacity=a;requestAnimationFrame(function(){flashEl.style.transition='opacity .6s ease';flashEl.style.opacity=0;});}
+    function frameNode(nx,ny,w,yfrac){var h=w*H/W;var x=Math.max(0,Math.min(W-w,nx-w/2));var y=Math.max(0,Math.min(H-h,ny-h*yfrac));return {x:x,y:y,w:w,h:h};}
+    function boundingFrame(pts,pad){var minx=1e9,miny=1e9,maxx=-1e9,maxy=-1e9;pts.forEach(function(p){minx=Math.min(minx,p[0]);maxx=Math.max(maxx,p[0]);miny=Math.min(miny,p[1]);maxy=Math.max(maxy,p[1]);});minx-=pad;miny-=pad;maxx+=pad;maxy+=pad;var w=maxx-minx,h=maxy-miny,cx=(minx+maxx)/2,cy=(miny+maxy)/2;if(w/h<W/H){w=h*W/H;}else{h=w*H/W;}var x=Math.max(0,Math.min(W-w,cx-w/2)),y=Math.max(0,Math.min(H-h,cy-h/2));if(w>W){w=W;x=0;}if(h>H){h=H;y=0;}return {x:x,y:y,w:w,h:h};}
+    function mang(i){return (-90+i*45)*Math.PI/180;}
+    function mpt(i,r){return [CX+r*Math.cos(mang(i)),CY+r*Math.sin(mang(i))];}
+    function ppath(rad){var d='';for(var i=0;i<8;i++){var p=mpt(i,MR*rad[i]/100);d+=(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1);}return d+'Z';}
+    function stagesFor(fx){var sc=[0.40,0.70,0.54,0.86,1.0],out=[];sc.forEach(function(s,si){var a=[];for(var i=0;i<8;i++){var jit=si===4?0:(((i*7+si*13)%9)-4)*1.2;a[i]=Math.max(8,Math.min(100,(si===4?fx[i]:fx[i]*s+jit)));}out.push(a);});return out;}
+    function svgEl(tag,a){var e=document.createElementNS('http://www.w3.org/2000/svg',tag);for(var k in a)e.setAttribute(k,a[k]);return e;}
+    function jPts(j){var n=j.length,p=[],i;for(i=0;i<n;i++)p.push([TX0+(TX1-TX0)*i/(n-1<1?1:n-1),TYB-(j[i].v/100)*(TYB-TYT)]);return p;}
+    function deriveSL(s){var o={};s.forEach(function(i){o[i]=SLINE[AXN[i]]||'';});return o;}
+    function genJourney(name,voice,traj){var kick=["WHERE IT STARTS","THE RISE","THE LEAP","THE PROVING GROUND","THE CLIMB","THE NOW"],n=traj.length;return traj.map(function(row,i){var yr=row[0],full=String(row[1]),val=row[2],last=i===n-1,parts=full.split(' \u2014 '),place=parts[0],acc=parts[1]||'';return {tag:last?String(voice).toUpperCase():(kick[i]||"THE CLIMB"),place:place,year:String(yr),v:val,lines:[acc?(acc.charAt(0).toUpperCase()+acc.slice(1)):place]};});}
+    function dataFor(clip,fx,traj){var name=clip.n,h=HERO[name];if(h)return {n:name,voice:h.voice,proof:h.proof,fx:h.fx,s:h.s,slines:h.slines,title:h.title,journey:h.journey};return {n:name,voice:clip.voice,proof:clip.proof||'',fx:fx.v,s:fx.s,slines:deriveSL(fx.s),title:"How FieldCheck saw the whole climb.",journey:genJourney(name,clip.voice,traj)};}
+
+    var el={};
+    function buildWorld(d){
+      world.innerHTML='';el={};
+      var j=d.journey,pts=jPts(j);el.pts=pts;
+      var plane=svgEl('g',{id:'fmplane',opacity:'0'});el.plane=plane;
+      [0,.25,.5,.75,1].forEach(function(f){var yy=TYB-(TYB-TYT)*f;plane.appendChild(svgEl('line',{'class':'fmgrid',x1:TX0-26,y1:yy,x2:TX1+26,y2:yy}));});
+      plane.appendChild(svgEl('line',{'class':'fmgrid',x1:TX0-26,y1:TYT-22,x2:TX0-26,y2:TYB+10}));
+      var a1=svgEl('text',{'class':'fmaxlab',x:TX0-40,y:TYT-4});a1.textContent='APEX';a1.setAttribute('transform','rotate(-90 '+(TX0-40)+' '+(TYT-4)+')');plane.appendChild(a1);
+      var dl='';pts.forEach(function(p,i){dl+=(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1);});
+      var L=0,i;for(i=1;i<pts.length;i++)L+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);el.L=L;
+      el.cum=[0];for(i=1;i<pts.length;i++)el.cum[i]=el.cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
+      var glow=svgEl('path',{'class':'fmtrglow',d:dl});glow.style.strokeDasharray=L;glow.style.strokeDashoffset=L;el.glow=glow;plane.appendChild(glow);
+      var line=svgEl('path',{'class':'fmtrseg',d:dl});line.style.strokeDasharray=L;line.style.strokeDashoffset=L;el.line=line;plane.appendChild(line);
+      el.nodes=[];el.rings=[];
+      pts.forEach(function(p,i){var apex=i===pts.length-1;var ring=svgEl('circle',{'class':'fmtring',cx:p[0],cy:p[1],r:0,opacity:0});plane.appendChild(ring);el.rings.push(ring);var c=svgEl('circle',{'class':'fmtnode'+(apex?' apex':''),cx:p[0],cy:p[1],r:0});if(apex)c.setAttribute('filter','url(#fmglow)');plane.appendChild(c);el.nodes.push(c);});
+      world.appendChild(plane);
+      var poly=svgEl('g',{id:'fmpoly',opacity:'0'});el.poly=poly;
+      var g=svgEl('g',{});
+      [25,50,75,100].forEach(function(f){g.appendChild(svgEl('path',{'class':'fmpgrid',d:ppath([f,f,f,f,f,f,f,f])}));});
+      for(var k=0;k<8;k++){var pp=mpt(k,MR);g.appendChild(svgEl('line',{'class':'fmpspoke',x1:CX,y1:CY,x2:pp[0],y2:pp[1]}));}
+      poly.appendChild(g);
+      var path=svgEl('path',{'class':'fmppath',d:ppath([6,6,6,6,6,6,6,6])});el.path=path;poly.appendChild(path);
+      el.vtx=[];el.plab=[];el.lblpt=[];el.arrow=[];el.spark=[];
+      for(var jx=0;jx<8;jx++){var str=d.s.indexOf(jx)>=0,v=mpt(jx,MR*d.fx[jx]/100),lp=mpt(jx,MR+LBLO),co=Math.cos(mang(jx)),an=co>0.4?'start':(co<-0.4?'end':'middle');el.lblpt.push(lp);
+        var vx=svgEl('circle',{'class':'fmpvtx'+(str?' str':''),cx:v[0],cy:v[1],r:str?5:2.5});poly.appendChild(vx);el.vtx.push(vx);
+        var lb=svgEl('text',{'class':'fmplabel'+(str?' str':''),x:lp[0],y:lp[1]+4,'text-anchor':an});lb.textContent=AXN[jx];poly.appendChild(lb);el.plab.push(lb);
+        if(str){var out=mpt(jx,MR+82),al=Math.hypot(v[0]-out[0],v[1]-out[1]);var ar=svgEl('path',{'class':'fmarrow',d:'M'+out[0].toFixed(1)+','+out[1].toFixed(1)+'L'+v[0].toFixed(1)+','+v[1].toFixed(1)});ar.style.strokeDasharray=al;ar.style.strokeDashoffset=al;ar.style.opacity=0;poly.appendChild(ar);el.arrow[jx]=ar;var sp=svgEl('circle',{'class':'fmspark',cx:v[0],cy:v[1],r:0,opacity:0});poly.appendChild(sp);el.spark[jx]=sp;}
+      }
+      world.appendChild(poly);
+    }
+    function panelFill(stop){capEl.querySelector('.ck').textContent=stop.tag;capEl.querySelector('.cy').textContent=stop.place;capEl.querySelector('.cyr').textContent=stop.year;clistEl.innerHTML='';stop.lines.forEach(function(t){var li=document.createElement('li');if(/<b>/.test(t))li.className='hero';li.innerHTML=t;clistEl.appendChild(li);});}
+    async function panelIn(stop){panelFill(stop);capEl.classList.remove('out');capEl.classList.add('in');await wait(360);if(dead())return;var lis=clistEl.querySelectorAll('li');for(var i=0;i<lis.length;i++){lis[i].classList.add('show');if(lis[i].className.indexOf('hero')>=0)flash(.32);await wait(520);if(dead())return;}}
+    async function panelOut(){capEl.classList.remove('in');capEl.classList.add('out');await wait(460);}
+    function showFacet(n,l){fcapEl.querySelector('.fn').textContent=n;fcapEl.querySelector('.fl').textContent=l;fcapEl.classList.add('in');}
+    function hideFacet(){fcapEl.classList.remove('in');}
+    async function nodePop(i){var c=el.nodes[i],apex=i===el.nodes.length-1,R=apex?9:6.5,ring=el.rings[i];ring.setAttribute('opacity',1);tween(900,function(k){ring.setAttribute('r',(R+26*k).toFixed(1));ring.setAttribute('opacity',((1-k)*0.9).toFixed(2));},easeOut);await tween(apex?640:480,function(k){c.setAttribute('r',(R*easeOutBack(k)).toFixed(2));},lin);}
+    function morphTo(path,from,to,dur,ease){return tween(dur,function(k){var cur=[];for(var i=0;i<8;i++)cur[i]=from[i]+(to[i]-from[i])*k;path.setAttribute('d',ppath(cur));},ease);}
+    function reset(){titleEl.className='fmtitle';capEl.className='fmcap';fcapEl.className='fmfcap';endEl.classList.remove('show');if(stageBox)stageBox.classList.remove('done');flashEl.style.opacity=0;if(svg)svg.style.opacity='';setVB(0,0,W,H);}
+
+    async function film(d){
+      gen++;runGen=gen;reset();ttEl.textContent=d.title;
+      try{
+        buildWorld(d);
+        titleEl.classList.add('in');await wait(3200);if(dead())return;
+        titleEl.classList.remove('in');await wait(640);if(dead())return;
+        setVB(0,0,W,H);
+        await tween(800,function(k){el.plane.setAttribute('opacity',k);},easeOut);if(dead())return;
+        var pts=el.pts,n=pts.length,L=el.L,cum=el.cum;
+        for(var b=0;b<n;b++){
+          var medium=frameNode(pts[b][0],pts[b][1],700,0.42);
+          if(b===0){await cameraTo(medium,1300,easeInOut);if(dead())return;}
+          else{var from=cum[b-1],to=cum[b];await Promise.all([tween(1700,(function(from,to){return function(k){var off=L-(from+(to-from)*k);el.line.style.strokeDashoffset=off;el.glow.style.strokeDashoffset=off;};})(from,to),easeInOut),cameraTo(medium,1700,easeInOut)]);if(dead())return;}
+          var close=frameNode(pts[b][0],pts[b][1],380,0.33);
+          await cameraTo(close,1000,easeInOut);if(dead())return;
+          await nodePop(b);if(dead())return;
+          var closer=frameNode(pts[b][0],pts[b][1],352,0.33);
+          tween(3600,function(k){setVB(close.x+(closer.x-close.x)*k,close.y+(closer.y-close.y)*k,close.w+(closer.w-close.w)*k,close.h+(closer.h-close.h)*k);},lin);
+          await panelIn(d.journey[b]);if(dead())return;
+          await wait(b===n-1?2600:2100);if(dead())return;
+          await panelOut();if(dead())return;
+          await cameraTo(medium,700,easeInOut);if(dead())return;
+        }
+        await cameraTo({x:0,y:0,w:W,h:H},1100,easeInOut);if(dead())return;
+        await wait(700);if(dead())return;
+        await tween(800,function(k){el.plane.setAttribute('opacity',1-k);},easeOut);if(dead())return;
+        var polyView=boundingFrame([mpt(0,MR+LBLO),mpt(2,MR+LBLO),mpt(4,MR+LBLO),mpt(6,MR+LBLO),[CX,CY-MR-LBLO],[CX,CY+MR+LBLO]],30);
+        el.poly.setAttribute('opacity',1);
+        await Promise.all([tween(1000,function(k){el.poly.setAttribute('opacity',k);},easeOut),cameraTo(polyView,1100,easeInOut)]);if(dead())return;
+        var stg=stagesFor(d.fx),prev=[6,6,6,6,6,6,6,6];
+        for(var sI=0;sI<stg.length;sI++){var dur=(sI===stg.length-1)?1700:600;await morphTo(el.path,prev,stg[sI],dur,(sI===stg.length-1)?easeOut:easeInOut);if(dead())return;prev=stg[sI];}
+        for(var li2=0;li2<8;li2++){var strl=d.s.indexOf(li2)>=0;el.plab[li2].classList.add(strl?'str':'lit');el.vtx[li2].setAttribute('r',strl?5:3);await wait(160);if(dead())return;}
+        await wait(520);if(dead())return;
+        for(var si=0;si<d.s.length;si++){
+          var idx=d.s[si],vx=el.vtx[idx],vpos=mpt(idx,MR*d.fx[idx]/100),lpos=el.lblpt[idx];
+          el.plab[idx].classList.add('hot');
+          await cameraTo(boundingFrame([vpos,lpos,[CX,CY]],46),1000,easeInOut);if(dead())return;
+          showFacet(AXN[idx],d.slines[idx]||'');
+          if(el.arrow[idx]){var ar=el.arrow[idx];ar.style.opacity=1;var al=parseFloat(ar.style.strokeDasharray);await tween(560,(function(ar,al){return function(k){ar.style.strokeDashoffset=(al*(1-k)).toFixed(1);};})(ar,al),easeOut);}if(dead())return;
+          vx.setAttribute('r',8);flash(.5);
+          if(el.spark[idx]){var sp=el.spark[idx];sp.setAttribute('opacity',1);await tween(640,(function(sp){return function(k){sp.setAttribute('r',(7+11*k).toFixed(1));sp.setAttribute('opacity',(1-k).toFixed(2));};})(sp),easeOut);}if(dead())return;
+          vx.setAttribute('r',6);
+          await wait(1700);if(dead())return;
+          el.plab[idx].classList.remove('hot');hideFacet();await wait(420);if(dead())return;
+        }
+        await cameraTo(polyView,900,easeInOut);if(dead())return;await wait(560);if(dead())return;
+      }catch(err){if(dead())return;}
+      if(dead())return;
+      try{buildEnd(d);endEl.classList.add('show');flash(.34);if(svg)svg.style.opacity='0';}catch(e){}
+      await wait(80);if(dead())return;
+      try{endEl.querySelectorAll('.fb i').forEach(function(bar){bar.style.width=bar.getAttribute('data-w');});}catch(e){}
+      if(stageBox)stageBox.classList.add('done');
+    }
+
+    function staticPoly(d){
+      var cx=230,cy=232,R=152,S='<svg viewBox="0 0 460 470" xmlns="http://www.w3.org/2000/svg">';
+      function pt(i,r){var a=(-90+i*45)*Math.PI/180;return [cx+r*Math.cos(a),cy+r*Math.sin(a)];}
+      function pa(rad){var s='',i;for(i=0;i<8;i++){var p=pt(i,R*rad[i]/100);s+=(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1);}return s+'Z';}
+      S+='<defs><filter id="fmeg" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+      [25,50,75,100].forEach(function(f){S+='<path d="'+pa([f,f,f,f,f,f,f,f])+'" fill="none" stroke="rgba(248,244,237,.08)"/>';});
+      for(var i=0;i<8;i++){var p=pt(i,R);S+='<line x1="'+cx+'" y1="'+cy+'" x2="'+p[0].toFixed(1)+'" y2="'+p[1].toFixed(1)+'" stroke="rgba(248,244,237,.06)"/>';}
+      S+='<path d="'+pa(d.fx)+'" fill="rgba(212,162,76,.18)" stroke="#D4A24C" stroke-width="2.4" stroke-linejoin="round"/>';
+      for(var j=0;j<8;j++){var str=d.s.indexOf(j)>=0,v=pt(j,R*d.fx[j]/100),lp=pt(j,R+26),co=Math.cos((-90+j*45)*Math.PI/180),an=co>0.4?'start':(co<-0.4?'end':'middle');
+        S+='<circle cx="'+v[0].toFixed(1)+'" cy="'+v[1].toFixed(1)+'" r="'+(str?5.5:2.5)+'" fill="'+(str?'#EEC067':'rgba(248,244,237,.4)')+'"'+(str?' filter="url(#fmeg)"':'')+'/>';
+        S+='<text x="'+lp[0].toFixed(1)+'" y="'+(lp[1]+4).toFixed(1)+'" text-anchor="'+an+'" font-family="JetBrains Mono,monospace" font-size="12.5" font-weight="'+(str?700:500)+'" letter-spacing=".4" fill="'+(str?'#EEC067':'rgba(244,241,234,.72)')+'">'+AXN[j]+'</text>';}
+      return S+'</svg>';
+    }
+    function buildEnd(d){
+      endPoly.innerHTML=staticPoly(d);
+      var rows='',i;for(i=0;i<8;i++){var str=d.s.indexOf(i)>=0;rows+='<div class="fmrow'+(str?' str':'')+'"><span class="fk">'+AXN[i]+'</span><span class="fb"><i data-w="'+d.fx[i]+'%"></i></span><span class="ft">'+(str?'strength':'')+'</span></div>';}
+      var zones=d.s.map(function(k){return AXN[k];}).join(' \u00b7 ');
+      endCard.innerHTML='<div class="eh">FieldCheck Player Card</div><div class="ev">'+d.voice+'</div><div class="ez">Zoned strengths \u2014 <b>'+zones+'</b></div><div class="fmfacets">'+rows+'</div><div class="ep">'+d.proof+'</div><div class="em">Not a highlight \u2014 evidence in the Outcome Ledger.</div><a class="ecta" href="'+verdict(d.n)+'">See the full audited read \u2192</a>';
+    }
+
+    function inView(){var r=svg.getBoundingClientRect();if(r.height<=0)return false;var vh=window.innerHeight||800;var vis=Math.min(r.bottom,vh)-Math.max(r.top,0);return vis/r.height>=0.6;}
+    function armStart(d){if(io){io.disconnect();io=null;}gen++;runGen=gen;reset();ttEl.textContent=d.title;titleEl.classList.add('in');if(inView()){film(d);return;}try{io=new IntersectionObserver(function(es){if(es[0]&&es[0].isIntersecting){if(io){io.disconnect();io=null;}film(d);}},{threshold:0.55});io.observe(stageBox);}catch(e){film(d);}}
+    function playableIdxs(){var a=[],i;for(i=0;i<CLIPS.length;i++){var c=CLIPS[i];if(!c.cta&&FX[c.n]&&TRAJ[c.n])a.push(i);}return a;}
+    function goRel(step){var arr=playableIdxs();if(!arr.length)return;var pos=arr.indexOf(curIdx);if(pos<0)pos=0;openClip(arr[(pos+step+arr.length)%arr.length]);}
+    (function(){function wire(pv,rp,nx){var bp=document.getElementById(pv),br=document.getElementById(rp),bn=document.getElementById(nx);if(bp)bp.addEventListener('click',function(){goRel(-1);});if(bn)bn.addEventListener('click',function(){goRel(1);});if(br)br.addEventListener('click',function(){if(curData)film(curData);});}wire('fmprev','fmrep','fmnext');wire('fmprev_d','fmrep_d','fmnext_d');})();
+    return {open:function(clip,fx,traj,idx){var d=dataFor(clip,fx,traj);curData=d;curIdx=(idx==null?-1:idx);armStart(d);},stop:function(){if(io){io.disconnect();io=null;}gen++;runGen=gen;reset();}};
+  })();
+
+  function openClip(i){
+    var c=CLIPS[i],m=TIER[c.t];
+    document.getElementById('mvoice').textContent=c.cta?'':c.voice;
+    document.getElementById('mbadge').textContent=m.label;
+    document.getElementById('mnm').textContent=c.n;
+    document.getElementById('mread').textContent=c.read;
+    var cta=document.getElementById('mcta'), ovl=document.getElementById('fcoverlay'), mk=document.getElementById('fmstage');
+    if(c.cta){
+      modal.classList.add('cta'); cta.style.display='inline-block'; cta.textContent="Claim your spot \u2192"; cta.href="/add-me";
+      ovl.style.display='none'; mk.style.display='none'; FCFilm.stop();
+      stage.innerHTML='<div class="ph">This frame is waiting for the next one.<br>Drop your clip. Get your verdict. Get seen.</div>';
+    } else {
+      modal.classList.remove('cta'); cta.style.display='none';
+      var f=FX[c.n], tr=TRAJ[c.n];
+      if(f && tr){ mk.style.display=''; FCFilm.open(c,f,tr,i); }
+      else { mk.style.display='none'; }
+      function tag(){ ovl.style.display='none'; }
+      if(c.yt){ tag(); stage.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+c.yt+'?autoplay=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&color=white&fs=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'; }
+      else if(c.src){ tag(); stage.innerHTML='<video src="'+c.src+'"'+(c.poster?' poster="'+c.poster+'"':'')+' controls autoplay playsinline></video>'; }
+      else { ovl.style.display='none'; stage.innerHTML='<div class="ph">30-second highlight<br>drop owned clip URL for '+c.n+'</div>'; }
+    }
+    ov.classList.add('on'); document.body.style.overflow='hidden';
+    if(!c.cta && mk.style.display!=='none'){ setTimeout(function(){ try{ mk.scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){} },360); }
+  }
+  function closeClip(){ ov.classList.remove('on'); stage.innerHTML=''; FCFilm.stop(); document.body.style.overflow=''; }
+  document.getElementById('x').addEventListener('click',closeClip);
+  ov.addEventListener('click',function(e){ if(e.target===ov) closeClip(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeClip(); });
+  track.addEventListener('click',function(e){ var b=e.target.closest('.clip'); if(b) openClip(+b.dataset.i); });
+  var reel=document.getElementById('reel'),rto;
+  reel.addEventListener('touchstart',function(){ reel.classList.add('touched'); clearTimeout(rto); },{passive:true});
+  reel.addEventListener('touchend',function(){ rto=setTimeout(function(){ reel.classList.remove('touched'); },2500); });
+</script>
 </body>
 </html>

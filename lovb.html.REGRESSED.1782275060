@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>LOVB · The Pro Pathway — FieldCheck</title>
+<meta name="description" content="League One Volleyball — the first pro pathway built for American volleyball. Standings, Icons First Team, the founding story, and the pathway from youth club to LOVB Pro.">
+<meta name="theme-color" content="#0A0908">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Marcellus&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0A0908; --bg-1: #110F0D; --bg-2: #1A1715;
+  --glass: rgba(255, 252, 245, 0.04);
+  --glass-2: rgba(255, 252, 245, 0.08);
+  --glass-edge: rgba(255, 252, 245, 0.14);
+  --glass-edge-2: rgba(255, 252, 245, 0.22);
+  --text: #F5F1E8;
+  --text-2: rgba(245, 241, 232, 0.72);
+  --text-3: rgba(245, 241, 232, 0.50);
+  --text-4: rgba(245, 241, 232, 0.30);
+  --accent: #FF5C3A;
+  --accent-glow: rgba(255, 92, 58, 0.55);
+  --gold: #F5B800;
+  --gold-glow: rgba(245, 184, 0, 0.45);
+  --moss: #6BAA5A;
+  --r-1: 8px; --r-2: 12px; --r-3: 18px; --r-4: 24px; --r-pill: 9999px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --section-py: 96px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; background: #0A0908; color-scheme: dark; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: "General Sans", -apple-system, sans-serif;
+  font-size: 15px; line-height: 1.5;
+  letter-spacing: -0.005em;
+  min-height: 100vh; overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+.masthead {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(180deg, rgba(10,9,8,0.85), rgba(10,9,8,0.4));
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+.wordmark {
+  font-family: "Anton"; font-size: 28px;
+  letter-spacing: -0.005em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 4px;
+}
+.wordmark .dot {
+  display: inline-block; width: 8px; height: 8px;
+  background: var(--accent); border-radius: 50%;
+  margin-left: 4px; margin-bottom: 4px;
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+.nav {
+  display: flex; align-items: center; gap: 4px;
+  font-family: "JetBrains Mono"; font-size: 11px;
+  font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.nav a {
+  padding: 8px 14px; border-radius: var(--r-pill);
+  color: var(--text-3);
+  transition: all 0.2s var(--ease-out);
+}
+.nav a:hover { color: var(--text); background: var(--glass); }
+.nav a.active { color: var(--text); background: var(--glass-2); }
+
+/* ── Hero ──────────────────────────────────────────────── */
+.lovb-hero {
+  padding: 160px 32px 80px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(245, 184, 0, 0.08), transparent 70%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-1) 100%);
+  position: relative;
+}
+/* v0.30.5.136: LOVB HERO TEAM STRIP + LA28 COUNTDOWN */
+.lovb-hero-teamstrip {
+  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+  margin: 24px 0 16px 0;
+}
+.lovb-hero-team {
+  padding: 5px 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--lovb-tc);
+  background: color-mix(in srgb, var(--lovb-tc) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lovb-tc) 45%, transparent);
+  border-radius: 999px;
+}
+.lovb-hero-la28 {
+  display: inline-flex; align-items: baseline; gap: 8px;
+  margin-top: 8px;
+  padding: 10px 18px;
+  background: rgba(255,92,58,0.06);
+  border: 1px solid rgba(255,92,58,0.25);
+  border-radius: 999px;
+}
+.lovb-hero-la28-num {
+  font-family: "Anton", sans-serif;
+  font-size: 22px;
+  color: var(--accent);
+}
+.lovb-hero-la28-lbl {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.lovb-hero-eyebrow {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  letter-spacing: 0.18em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 28px;
+}
+.lovb-hero-h {
+  font-family: "Anton", sans-serif;
+  font-size: clamp(52px, 7vw, 104px);
+  font-weight: 400; line-height: 0.92;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin: 0 auto 28px;
+  max-width: 1100px;
+}
+.lovb-hero-h .serif {
+  font-family: "Marcellus", serif;
+  font-style: italic; font-weight: 400;
+  color: var(--gold);
+}
+.lovb-hero-sub {
+  font-family: "General Sans";
+  font-size: 19px; line-height: 1.5;
+  color: var(--text-2);
+  max-width: 740px;
+  margin: 0 auto;
+}
+
+/* ── Section wrappers ──────────────────────────────────── */
+.lovb-section {
+  padding: var(--section-py) 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.lovb-section-eyebrow {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  letter-spacing: 0.18em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 18px;
+  text-align: center;
+}
+.lovb-section-h {
+  font-family: "Anton", sans-serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400; line-height: 0.96;
+  letter-spacing: -0.012em;
+  text-align: center;
+  margin: 0 auto 18px;
+  max-width: 900px;
+}
+.lovb-section-h .serif {
+  font-family: "Marcellus", serif;
+  font-style: italic; color: var(--gold);
+}
+.lovb-section-sub {
+  font-family: "General Sans";
+  font-size: 16px; color: var(--text-2);
+  text-align: center;
+  max-width: 660px; margin: 0 auto 56px;
+}
+
+/* ── Standings (canonical league state) ─────────────────── */
+.lovb-standings {
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-3);
+  overflow: hidden;
+}
+.lovb-standings-header {
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--glass-edge);
+  display: flex; justify-content: space-between; align-items: baseline;
+  flex-wrap: wrap; gap: 12px;
+}
+.lovb-standings-h {
+  font-family: "Anton", sans-serif;
+  font-size: 22px; letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.lovb-standings-meta {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  color: var(--text-3); letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.lovb-standing-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 2fr;
+  gap: 16px;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--glass-edge);
+  align-items: center;
+}
+.lovb-standing-row:last-child { border-bottom: none; }
+.lovb-standing-row.champion { background: rgba(245, 184, 0, 0.06); }
+.lovb-standing-row.runner   { background: rgba(245, 184, 0, 0.03); }
+.lovb-standing-rank {
+  font-family: "Anton", sans-serif;
+  font-size: 36px; line-height: 1;
+  color: var(--text-3);
+}
+.lovb-standing-row.champion .lovb-standing-rank { color: var(--gold); }
+.lovb-standing-team {
+  font-family: "General Sans";
+  font-size: 17px; line-height: 1.3;
+}
+.lovb-standing-team strong { font-weight: 600; color: var(--text); }
+.lovb-standing-tag {
+  display: inline-block;
+  margin-left: 10px;
+  font-family: "JetBrains Mono"; font-size: 10px;
+  font-weight: 600; letter-spacing: 0.12em;
+  padding: 3px 10px; border-radius: var(--r-pill);
+  background: var(--glass); color: var(--text-3);
+  text-transform: uppercase;
+}
+.lovb-standing-tag.champ { background: rgba(245, 184, 0, 0.16); color: var(--gold); }
+.lovb-standing-tag.runner { color: var(--text-2); }
+.lovb-standing-tag.semi { background: var(--glass-2); color: var(--text-2); }
+.lovb-standing-detail {
+  font-family: "General Sans";
+  font-size: 14px;
+  color: var(--text-3);
+}
+.lovb-standings-footer {
+  padding: 20px 28px;
+  text-align: center;
+  font-family: "JetBrains Mono"; font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.05em;
+}
+
+/* ── Icons First Team buttons ──────────────────────────── */
+.lovb-icons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.lovb-icon-btn {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-2);
+  font-family: "General Sans";
+  font-size: 16px;
+  color: var(--text);
+  transition: all 0.2s var(--ease-out);
+  cursor: pointer;
+}
+.lovb-icon-btn:hover {
+  border-color: var(--gold);
+  background: var(--glass-2);
+  transform: translateY(-1px);
+}
+.lovb-icon-btn .pos {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  font-weight: 600; letter-spacing: 0.12em;
+  color: var(--gold);
+  padding: 4px 8px;
+  background: rgba(245, 184, 0, 0.10);
+  border-radius: var(--r-pill);
+}
+
+/* ── Top-5 marquee lists (revived from the trimmed hub) ─── */
+.lovb-top5-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.lovb-top5 {
+  padding: 26px 26px 22px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-3);
+}
+.lovb-top5-h {
+  font-family: "Anton", sans-serif;
+  font-size: 18px; letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--glass-edge);
+}
+.lovb-top5-list {
+  list-style: none; padding: 0; margin: 0;
+}
+.lovb-top5-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--glass-edge);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.lovb-top5-list li:last-child { border-bottom: none; }
+.lovb-top5-list li a {
+  font-family: "General Sans";
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  transition: color 0.2s var(--ease-out);
+}
+.lovb-top5-list li a:hover { color: var(--gold); }
+.lovb-top5-list li span {
+  font-family: "General Sans";
+  font-size: 12.5px;
+  color: var(--text-3);
+}
+
+/* ── Pathway diagram ──────────────────────────────────── */
+.lovb-pathway {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.lovb-pathway-step {
+  padding: 32px 26px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-3);
+  text-align: center;
+}
+.lovb-pathway-step-num {
+  font-family: "Anton";
+  font-size: 64px; line-height: 0.9;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.lovb-pathway-step-h {
+  font-family: "Anton";
+  font-size: 22px; letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.lovb-pathway-step-detail {
+  font-family: "General Sans";
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.lovb-pathway-step strong { color: var(--text); font-weight: 600; }
+
+/* ── Founding story ──────────────────────────────────── */
+.lovb-founding {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 40px;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-3);
+  text-align: center;
+}
+.lovb-founding-eyebrow {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  letter-spacing: 0.18em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 22px;
+}
+.lovb-founding-quote {
+  font-family: "Marcellus", serif;
+  font-style: italic;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.4;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+.lovb-founding-attr {
+  font-family: "General Sans";
+  font-size: 14px;
+  color: var(--text-3);
+  letter-spacing: 0.02em;
+}
+.lovb-founding-attr strong { color: var(--text-2); font-weight: 600; }
+
+/* ── CTA back to product ──────────────────────────────── */
+.lovb-cta {
+  text-align: center;
+  padding: 80px 32px 120px;
+  background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg) 100%);
+}
+.lovb-cta-h {
+  font-family: "Anton";
+  font-size: clamp(36px, 5vw, 56px);
+  letter-spacing: -0.012em;
+  margin-bottom: 14px;
+}
+.lovb-cta-sub {
+  font-family: "General Sans";
+  font-size: 16px; color: var(--text-2);
+  margin-bottom: 32px;
+}
+.lovb-cta-btn {
+  display: inline-block;
+  padding: 16px 32px;
+  background: var(--gold);
+  color: var(--bg);
+  border-radius: var(--r-pill);
+  font-family: "JetBrains Mono"; font-size: 13px;
+  font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+.lovb-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px var(--gold-glow);
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+.lovb-footer {
+  padding: 56px 32px 40px;
+  border-top: 1px solid var(--glass-edge);
+  text-align: center;
+  background: var(--bg);
+}
+.lovb-footer-colophon {
+  font-family: "JetBrains Mono"; font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 720px) {
+  .nav a { padding: 6px 10px; font-size: 10px; }
+  .lovb-hero { padding: 130px 20px 60px; }
+  .lovb-section { padding: 64px 20px; }
+  .lovb-standing-row { grid-template-columns: 44px 1fr; gap: 12px; padding: 14px 18px; }
+  .lovb-standing-detail { grid-column: 1 / -1; padding-left: 56px; }
+  .lovb-founding { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a href="/" class="wordmark">FIELDCHECK<span class="dot"></span></a>
+  <!-- v0.30.5.2218 — CANONICAL NAV (V006). Source of truth, same on every page. -->
+<header class="masthead fc-canonical-masthead">
+  <a href="/" class="wordmark fc-canonical-wordmark">FieldCheck<span class="dot"></span></a>
+  <nav class="nav fc-canonical-nav">
+    <a href="/#buckets" class="nav-primary">Player</a>
+    <a href="/#buckets" class="nav-primary">Program</a>
+    <a href="/pathway" class="nav-primary" style="color:var(--moss, #95d5b2);font-weight:600">Pathway</a>
+    <a href="/lovb" class="nav-primary" style="color:var(--gold, #ffc94a);font-weight:600">LOVB</a>
+    <div class="nav-more-wrap" id="fc-nav-more-wrap">
+      <button class="nav-primary nav-more-trigger" type="button" id="fc-nav-more-btn" aria-expanded="false" onclick="fcToggleNavMore(event)">More <span class="nav-more-chev">▾</span></button>
+      <div class="nav-more-menu" id="fc-nav-more-menu" role="menu" aria-hidden="true">
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Tools</div>
+          <a href="/voices" role="menuitem">Voices</a>
+          <a href="/position-fit" role="menuitem">Position-Fit</a>
+          <a href="/add-me" role="menuitem">Add Me</a>
+          <a href="/coach" role="menuitem">Coach</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Newsroom</div>
+          <a href="/wire" role="menuitem">The Wire</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Trust</div>
+          <a href="/accuracy" role="menuitem">Track Record</a>
+          <a href="/moat" role="menuitem">Moat</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">For You · Personalized Path</div>
+          <a href="/for-players" role="menuitem">For Players</a>
+          <a href="/for-coaches" role="menuitem">For Coaches</a>
+          <a href="/for-parents" role="menuitem">For Parents</a>
+          <a href="/for-scouts" role="menuitem">For Scouts</a>
+        </div>
+        <div class="nav-more-group">
+          <div class="nav-more-group-label">Company</div>
+          <a href="/about" role="menuitem">About</a>
+          <a href="/portal" role="menuitem">Portal</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* v0.30.5.2218 — Canonical nav styling (self-contained, no host-CSS dependencies) */
+  .fc-canonical-masthead {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.92), rgba(10,9,8,0.55));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .fc-canonical-wordmark {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: -0.005em; text-transform: uppercase;
+    color: #F5F1E8; text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .fc-canonical-wordmark .dot {
+    display: inline-block; width: 7px; height: 7px;
+    background: #FF5C3A; border-radius: 50%;
+    margin-left: 3px; margin-bottom: 2px;
+    box-shadow: 0 0 12px rgba(255, 92, 58, 0.55);
+  }
+  .fc-canonical-nav { display: flex; align-items: center; gap: 4px; }
+  .fc-canonical-nav .nav-primary {
+    font-size: 14px; letter-spacing: 0.01em; padding: 8px 14px; margin: 0 3px;
+    color: #F5F1E8; text-decoration: none;
+    transition: color 0.18s; display: inline-block;
+    background: transparent; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .fc-canonical-nav .nav-primary:hover { color: #ffc94a; }
+  .fc-canonical-nav .nav-more-wrap { position: relative; display: inline-block; }
+  .fc-canonical-nav .nav-more-chev { display: inline-block; transition: transform 0.2s; font-size: 10px; margin-left: 2px; }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-chev { transform: rotate(180deg); }
+  .fc-canonical-nav .nav-more-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; min-width: 260px;
+    background: rgba(20,17,12,0.96); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,201,74,0.18); border-radius: 12px;
+    padding: 14px 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  .fc-canonical-nav .nav-more-wrap.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .fc-canonical-nav .nav-more-group { padding: 6px 4px; }
+  .fc-canonical-nav .nav-more-group + .nav-more-group { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px; padding-top: 12px; }
+  .fc-canonical-nav .nav-more-group-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 1.5px; color: rgba(255,201,74,0.65); font-weight: 700; padding: 0 8px 6px; text-transform: uppercase; }
+  .fc-canonical-nav .nav-more-menu a { display: block; padding: 7px 10px; color: #d4c8ad; font-size: 13px; text-decoration: none; border-radius: 6px; transition: all 0.15s; font-family: inherit; }
+  .fc-canonical-nav .nav-more-menu a:hover { background: rgba(255,201,74,0.08); color: #F5F1E8; }
+  @media (max-width: 720px) {
+    .fc-canonical-nav .nav-primary { font-size: 13px; padding: 6px 8px; margin: 0; }
+    .fc-canonical-nav .nav-more-wrap { display: none; }
+    .fc-canonical-wordmark { font-size: 18px; }
+  }
+  /* Spacer so page content doesn't get hidden under the fixed nav */
+  body.fc-has-canonical-nav { padding-top: 64px; }
+</style>
+
+<script>
+  function fcToggleNavMore(e) {
+    if (e) e.stopPropagation();
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    var btn  = document.getElementById('fc-nav-more-btn');
+    var menu = document.getElementById('fc-nav-more-menu');
+    if (!wrap || !btn || !menu) return;
+    var open = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('fc-nav-more-wrap');
+    if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      var btn = document.getElementById('fc-nav-more-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var wrap = document.getElementById('fc-nav-more-wrap');
+      if (wrap && wrap.classList.contains('open')) {
+        wrap.classList.remove('open');
+        var btn = document.getElementById('fc-nav-more-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  // Add the body class once DOM is ready (so the padding-top spacer kicks in)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add('fc-has-canonical-nav'); });
+  } else {
+    document.body.classList.add('fc-has-canonical-nav');
+  }
+</script>
+</header>
+
+<!-- HERO -->
+<section class="lovb-hero">
+  <div class="lovb-hero-eyebrow">// LEAGUE ONE VOLLEYBALL · THE PRO PATHWAY</div>
+  <h1 class="lovb-hero-h">
+    The first pro pathway built<br>
+    for <span class="serif">American volleyball.</span>
+  </h1>
+  <p class="lovb-hero-sub">
+    From <strong>22,000+ youth athletes</strong> across <strong>77 LOVB clubs in 28 states</strong>, to <strong>NCAA D-I powerhouses</strong>, to <strong>6 LOVB Pro teams</strong>. FieldCheck maps the entire pathway.
+  </p>
+  <!-- v0.30.5.136: TEAM STRIP + LA28 COUNTDOWN -->
+  <div class="lovb-hero-teamstrip">
+    <span class="lovb-hero-team" style="--lovb-tc:#D4145A">Atlanta</span>
+    <span class="lovb-hero-team" style="--lovb-tc:#FF6B35">Austin</span>
+    <span class="lovb-hero-team" style="--lovb-tc:#1F4E79">Houston</span>
+    <span class="lovb-hero-team" style="--lovb-tc:#C8102E">Madison</span>
+    <span class="lovb-hero-team" style="--lovb-tc:#C8102E">Omaha</span>
+    <span class="lovb-hero-team" style="--lovb-tc:#5B2C82">Salt Lake</span>
+  </div>
+  <div class="lovb-hero-la28">
+    <span class="lovb-hero-la28-num" id="lovb-la28-days">—</span>
+    <span class="lovb-hero-la28-lbl">days to LA28</span>
+  </div>
+  <script>
+    (function() {
+      var la28 = new Date('2028-07-14');
+      var diff = Math.max(0, Math.floor((la28 - new Date()) / 86400000));
+      var el = document.getElementById('lovb-la28-days');
+      if (el) el.textContent = diff.toLocaleString();
+    })();
+  </script>
+</section>
+
+<!-- v0.30.5.2213 — LOVB TOOLKIT · the 4 decision tools surfaced upfront -->
+<section class="lovb-section lovb-toolkit-section">
+  <div class="lovb-section-eyebrow">// THE TOOLKIT · DECIDE BEFORE YOU SIGN</div>
+  <h2 class="lovb-section-h">Four tools. <span class="serif">One decision.</span></h2>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--gold,#d4af37);font-weight:700;margin-top:6px;margin-bottom:12px;text-align:center">// POWERED BY FIELDCHECK IQ</div>
+  <p class="lovb-section-sub">Score the pro projection. Find your archetype match. Read the market fit. Spot the roster gap. Each tool is one click. Methodology cited. Free to use.</p>
+
+  <div class="lovb-toolkit-grid">
+    <a class="lovb-tool-card" href="/lovb/projection">
+      <div class="lovb-tool-card-eyebrow">// IQ SCORE</div>
+      <h3 class="lovb-tool-card-h">Projection.</h3>
+      <p class="lovb-tool-card-sub">8-dimensional score · position-weighted · 5 presets. Quantify a player's LOVB readiness before the contract conversation.</p>
+      <span class="lovb-tool-card-cta">Score a player →</span>
+    </a>
+    <a class="lovb-tool-card" href="/lovb/match">
+      <div class="lovb-tool-card-eyebrow">// IQ MATCH</div>
+      <h3 class="lovb-tool-card-h">Archetype match.</h3>
+      <p class="lovb-tool-card-sub">Cosine similarity against the entire LOVB founding cohort. Find the closest comparables and their actual pro outcomes.</p>
+      <span class="lovb-tool-card-cta">Match the archetype →</span>
+    </a>
+    <a class="lovb-tool-card" href="/lovb/fit">
+      <div class="lovb-tool-card-eyebrow">// IQ FIT</div>
+      <h3 class="lovb-tool-card-h">Market fit.</h3>
+      <p class="lovb-tool-card-sub">Weighted scoring across 6 markets (Austin, Salt Lake, Atlanta, Houston, Nebraska, Madison). Where does this player actually fit?</p>
+      <span class="lovb-tool-card-cta">Read the markets →</span>
+    </a>
+    <a class="lovb-tool-card" href="/lovb/roster">
+      <div class="lovb-tool-card-eyebrow">// IQ ROSTER</div>
+      <h3 class="lovb-tool-card-h">Roster analyzer.</h3>
+      <p class="lovb-tool-card-sub">Position-by-position gap analysis for every LOVB team. See where the depth charts are thin — and who could fill them.</p>
+      <span class="lovb-tool-card-cta">Find the gaps →</span>
+    </a>
+  </div>
+
+  <div class="lovb-toolkit-footnote">
+    <span class="lovb-toolkit-footnote-dot"></span>
+    Methodology pages cite every weight and threshold. Open-source approach to pro readiness — no proprietary black box, no affiliate revenue, no "premium tier" gating.
+  </div>
+</section>
+
+<style>
+  /* LOVB Toolkit cards — match existing lovb-section aesthetic */
+  .lovb-toolkit-section { padding-top: 64px; padding-bottom: 64px; }
+  .lovb-toolkit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 36px; }
+  .lovb-tool-card { display: block; padding: 28px 26px; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: var(--r-3); text-decoration: none; transition: all 0.25s var(--ease-out); position: relative; overflow: hidden; }
+  .lovb-tool-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); opacity: 0.55; transition: opacity 0.25s; }
+  .lovb-tool-card:hover { background: var(--glass-2); border-color: var(--glass-edge-2); transform: translateY(-2px); }
+  .lovb-tool-card:hover::before { opacity: 1; }
+  .lovb-tool-card-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--gold); font-weight: 700; margin-bottom: 12px; }
+  .lovb-tool-card-h { font-family: 'Anton', sans-serif; font-size: 30px; line-height: 1.0; letter-spacing: -0.01em; color: var(--text); margin-bottom: 12px; text-transform: uppercase; }
+  .lovb-tool-card-h .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -0.005em; }
+  .lovb-tool-card-sub { color: var(--text-2); font-size: 14px; line-height: 1.55; margin-bottom: 18px; }
+  .lovb-tool-card-cta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: 0.5px; }
+  .lovb-toolkit-footnote { margin-top: 24px; padding: 16px 20px; background: var(--glass); border-left: 2px solid var(--gold); border-radius: 0 var(--r-2) var(--r-2) 0; font-size: 12.5px; color: var(--text-2); line-height: 1.55; display: flex; align-items: flex-start; gap: 12px; }
+  .lovb-toolkit-footnote-dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 12px var(--gold-glow); margin-top: 6px; flex-shrink: 0; }
+  @media (max-width: 720px) { .lovb-toolkit-grid { grid-template-columns: 1fr; } .lovb-tool-card { padding: 22px 20px; } .lovb-tool-card-h { font-size: 26px; } }
+</style>
+
+<!-- STANDINGS -->
+<section class="lovb-section">
+  <div class="lovb-section-eyebrow">// THE 2026 SEASON</div>
+  <h2 class="lovb-section-h">Final <span class="serif">standings.</span></h2>
+  <p class="lovb-section-sub">League One Volleyball Pro · 2026 Championship completed April 18 in Long Beach.</p>
+
+  <div class="lovb-standings">
+    <div class="lovb-standings-header">
+      <div class="lovb-standings-h">LOVB Pro · 2026 Final Standings</div>
+      <div class="lovb-standings-meta">Championship completed Apr 18, 2026</div>
+    </div>
+    <div class="lovb-standing-row champion">
+      <div class="lovb-standing-rank">1</div>
+      <div class="lovb-standing-team"><strong>LOVB Austin</strong> <span class="lovb-standing-tag champ">🏆 Back-to-back Champions</span></div>
+      <div class="lovb-standing-detail">Defeated Salt Lake 3-2 + golden set 15-8 · Skinner repeat Finals MVP</div>
+    </div>
+    <div class="lovb-standing-row runner">
+      <div class="lovb-standing-rank">2</div>
+      <div class="lovb-standing-team"><strong>LOVB Salt Lake</strong> <span class="lovb-standing-tag runner">Runner-up</span></div>
+      <div class="lovb-standing-detail">Won Game 1 vs Austin · Manami Kojima 256 league-leading digs</div>
+    </div>
+    <div class="lovb-standing-row">
+      <div class="lovb-standing-rank">3</div>
+      <div class="lovb-standing-team"><strong>LOVB Atlanta</strong> <span class="lovb-standing-tag semi">Semifinalist (#2 seed)</span></div>
+      <div class="lovb-standing-detail">Lost to Austin in golden set · Paulo Coco coaching</div>
+    </div>
+    <div class="lovb-standing-row">
+      <div class="lovb-standing-rank">4</div>
+      <div class="lovb-standing-team"><strong>LOVB Houston</strong> <span class="lovb-standing-tag semi">Semifinalist (#1 seed)</span></div>
+      <div class="lovb-standing-detail">Lost to Salt Lake in semifinal · Wong-Orantes joined for 2026</div>
+    </div>
+    <div class="lovb-standing-row">
+      <div class="lovb-standing-rank">5</div>
+      <div class="lovb-standing-team"><strong>LOVB Nebraska</strong> <span class="lovb-standing-tag">Missed playoffs</span></div>
+      <div class="lovb-standing-detail">First-year Suzie Fritz era · Wong-Orantes departed for Houston</div>
+    </div>
+    <div class="lovb-standing-row">
+      <div class="lovb-standing-rank">6</div>
+      <div class="lovb-standing-team"><strong>LOVB Madison</strong> <span class="lovb-standing-tag">Missed playoffs</span></div>
+      <div class="lovb-standing-detail">Sun Prairie facility under construction · Carli Lloyd repeat First Team Setter</div>
+    </div>
+    <div class="lovb-standings-footer">
+      Season 3 begins January 2027 · LOVB plans for league expansion announced for 2027-28
+    </div>
+  </div>
+</section>
+
+<!-- ICONS FIRST TEAM -->
+<section class="lovb-section">
+  <div class="lovb-section-eyebrow">// 2026 ICONS FIRST TEAM</div>
+  <h2 class="lovb-section-h">Nine names. <span class="serif">One read each.</span></h2>
+  <p class="lovb-section-sub">Click any name to see the FieldCheck verdict — sourced, audited, on the pathway.</p>
+
+  <div class="lovb-icons-grid">
+    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Lauren%20Carlini%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Madison%22%7D'><span>Lauren Carlini</span><span class="pos">S</span></a>
+    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Amber%20Igiede%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Houston%22%7D'><span>Amber Igiede</span><span class="pos">MB</span></a>
+    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Logan%20Eggleston%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Austin%22%7D'><span>Logan Eggleston</span><span class="pos">OH</span></a>
+    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Madisen%20Skinner%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Austin%22%7D'><span>Madisen Skinner</span><span class="pos">OH</span></a>
+    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Asjia%20O%27Neal%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Austin%22%7D'><span>Asjia O'Neal</span><span class="pos">MB</span></a>
+    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Jordan%20Larson%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Nebraska%22%7D'><span>Jordan Larson</span><span class="pos">OH</span></a>
+    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Jordan%20Thompson%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Houston%22%7D'><span>Jordan Thompson</span><span class="pos">OPP</span></a>
+    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Manami%20Kojima%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Salt%20Lake%22%7D'><span>Manami Kojima</span><span class="pos">L</span></a>
+    <a class="lovb-icon-btn" href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Alexa%20Gray%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Salt%20Lake%22%7D'><span>Alexa Gray</span><span class="pos">OH</span></a>
+  </div>
+</section>
+
+<!-- TOP-5 MARQUEE LISTS -->
+<section class="lovb-section">
+  <div class="lovb-section-eyebrow">// THE MARQUEE LISTS</div>
+  <h2 class="lovb-section-h">Where the <span class="serif">stars</span> live.</h2>
+  <p class="lovb-section-sub">Curated short lists. Every entry deep-links to a FieldCheck verdict.</p>
+
+  <div class="lovb-top5-grid">
+    <div class="lovb-top5">
+      <div class="lovb-top5-h">Top 5 NCAA D-I Programs</div>
+      <ol class="lovb-top5-list">
+        <li><a href='/?run=%7B%22track%22%3A%22program%22%2C%22name%22%3A%22Nebraska%22%2C%22sport%22%3A%22womens-volleyball%22%7D'>Nebraska Cornhuskers</a><span>5 NCAA titles · 92K attendance record</span></li>
+        <li><a href='/?run=%7B%22track%22%3A%22program%22%2C%22name%22%3A%22Texas%22%2C%22sport%22%3A%22womens-volleyball%22%7D'>Texas Longhorns</a><span>2022 + 2023 NCAA Champs</span></li>
+        <li><a href='/?run=%7B%22track%22%3A%22program%22%2C%22name%22%3A%22Penn%20State%22%2C%22sport%22%3A%22womens-volleyball%22%7D'>Penn State Nittany Lions</a><span>8 NCAA titles · 2024 Champs</span></li>
+        <li><a href='/?run=%7B%22track%22%3A%22program%22%2C%22name%22%3A%22Wisconsin%22%2C%22sport%22%3A%22womens-volleyball%22%7D'>Wisconsin Badgers</a><span>2021 NCAA Champs · 4 Final Fours</span></li>
+        <li><a href='/?run=%7B%22track%22%3A%22program%22%2C%22name%22%3A%22Stanford%22%2C%22sport%22%3A%22womens-volleyball%22%7D'>Stanford Cardinal</a><span>9 NCAA titles · most decorated</span></li>
+      </ol>
+    </div>
+
+    <div class="lovb-top5">
+      <div class="lovb-top5-h">Top 5 LOVB Pro Stars (2025–26)</div>
+      <ol class="lovb-top5-list">
+        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Madisen%20Skinner%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Austin%22%7D'>Madisen Skinner</a><span>2025 + 2026 Finals MVP</span></li>
+        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Kelsey%20Robinson-Cook%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Atlanta%22%7D'>Kelsey Robinson-Cook</a><span>2025 Regular Season MVP · Olympic medalist</span></li>
+        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Lauren%20Carlini%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Madison%22%7D'>Lauren Carlini</a><span>2× Icons First Team Setter</span></li>
+        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Jordan%20Larson%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Nebraska%22%7D'>Jordan Larson</a><span>3× Olympic medalist · Nebraska owner</span></li>
+        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Lexi%20Rodriguez%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22LOVB%20Nebraska%22%7D'>Lexi Rodriguez</a><span>2025 LOVB Libero of Year</span></li>
+      </ol>
+    </div>
+
+    <div class="lovb-top5">
+      <div class="lovb-top5-h">Top 5 NCAA Stars to Watch</div>
+      <ol class="lovb-top5-list">
+        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Bergen%20Reilly%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22Nebraska%22%7D'>Bergen Reilly</a><span>Nebraska S · USA National Team</span></li>
+        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Andi%20Jackson%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22Nebraska%22%7D'>Andi Jackson</a><span>Nebraska MB · Big Ten Freshman of Year</span></li>
+        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Harper%20Murray%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22Nebraska%22%7D'>Harper Murray</a><span>Nebraska OH · top-25 recruit class of 2023</span></li>
+        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Olivia%20Babcock%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22Pittsburgh%22%7D'>Olivia Babcock</a><span>Pitt OH · 2024 AVCA Freshman of Year</span></li>
+        <li><a href='/?run=%7B%22track%22%3A%22player%22%2C%22name%22%3A%22Eva%20Hudson%22%2C%22sport%22%3A%22womens-volleyball%22%2C%22school%22%3A%22Purdue%22%7D'>Eva Hudson</a><span>Purdue OH · Big Ten dominant</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- PATHWAY -->
+<section class="lovb-section">
+  <div class="lovb-section-eyebrow">// THE PATHWAY</div>
+  <h2 class="lovb-section-h">Three steps. <span class="serif">One ladder.</span></h2>
+  <p class="lovb-section-sub">Built for the first time: a real route from youth club to American professional play.</p>
+
+  <div class="lovb-pathway">
+    <div class="lovb-pathway-step">
+      <div class="lovb-pathway-step-num">01</div>
+      <div class="lovb-pathway-step-h">Club</div>
+      <div class="lovb-pathway-step-detail"><strong>22,000+ youth athletes</strong> training across <strong>77 LOVB clubs in 28 states</strong> — the largest single club system in American volleyball.</div>
+    </div>
+    <div class="lovb-pathway-step">
+      <div class="lovb-pathway-step-num">02</div>
+      <div class="lovb-pathway-step-h">College</div>
+      <div class="lovb-pathway-step-detail"><strong>NCAA Division I</strong> · The college game has never been stronger. 92K attendance records, Final Fours selling out, multi-million NIL deals.</div>
+    </div>
+    <div class="lovb-pathway-step">
+      <div class="lovb-pathway-step-num">03</div>
+      <div class="lovb-pathway-step-h">LOVB Pro</div>
+      <div class="lovb-pathway-step-detail"><strong>6 pro teams · Olympic-caliber rosters</strong> · For the first time, American volleyball players have a home league with real pay, real coaches, real stakes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDING STORY -->
+<section class="lovb-section">
+  <div class="lovb-section-eyebrow">// FOUNDED IN 2020</div>
+  <h2 class="lovb-section-h">How <span class="serif">LOVB</span> began.</h2>
+
+  <div class="lovb-founding">
+    <div class="lovb-founding-eyebrow">// THE THESIS</div>
+    <div class="lovb-founding-quote">
+      "Create real pathways for American volleyball talent from youth club to professional. Five years later, the pathway exists."
+    </div>
+    <div class="lovb-founding-attr">
+      Founded by <strong>Katlyn Gao</strong> (CEO), <strong>Peter Hirschmann</strong>, and Olympian <strong>Kevin Wong</strong>. Headquarters in Costa Mesa, California.
+    </div>
+  </div>
+</section>
+
+<!-- CTA back to product -->
+<section class="lovb-cta">
+  <h2 class="lovb-cta-h">Ready to read a player?</h2>
+  <p class="lovb-cta-sub">Run a verdict on anyone on this pathway. Sourced, audited, on the record.</p>
+  <!-- v0.30.5.142: Pre-select Women's Volleyball when coming from LOVB landing -->
+  <a class="lovb-cta-btn" href='/?lovb-prefill=1#player'>Run a player check →</a>
+</section>
+
+<footer class="lovb-footer">
+  <div class="lovb-footer-colophon">
+    FieldCheck · ThinkDifferent Holdings · © 2026 · Built on the TD Trust Engine · v0.30
+  </div>
+</footer>
+
+</body>
+</html>

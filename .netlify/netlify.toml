@@ -313,7 +313,7 @@ force = false
 
 [[redirects]]
 from = "/lovb"
-to = "/fieldcheck-lovb-board.html"
+to = "/lovb.html"
 status = 200.0
 force = false
 
