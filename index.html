@@ -437,7 +437,7 @@ body::before{
 <!-- FCR3 B START -->
 <style id="fcr3hide">#fmstage{display:none!important}</style>
 <div style="margin-top:14px">
-  <iframe id="fcr3frame" src="/fc_reveal_v8.html?p=Madisen%20Skinner" title="FieldCheck Read" loading="lazy" style="width:100%;height:min(560px,70vh);border:1px solid rgba(184,152,90,.3);border-radius:14px;background:#0a0907"></iframe>
+  <iframe id="fcr3frame" src="/fc_reveal.html?p=Madisen%20Skinner" title="FieldCheck Read" loading="lazy" style="width:100%;height:min(520px,44vh);border:1px solid rgba(184,152,90,.3);border-radius:14px;background:#0a0907"></iframe>
 </div>
 <!-- FCR3 B END -->
 
@@ -1672,7 +1672,7 @@ function verdict(n){return '/fieldcheck-verdict.html?q='+encodeURIComponent(n);}
     document.getElementById('mvoice').textContent=c.cta?'':c.voice;
     document.getElementById('mbadge').textContent=m.label;
     document.getElementById('mnm').textContent=c.n;
-    var _fr=document.getElementById('fcr3frame'); if(_fr&&!c.cta){ _fr.src='/fc_reveal_v8.html?p='+encodeURIComponent(c.n)+'&cb='+Date.now(); }
+    var _fr=document.getElementById('fcr3frame'); if(_fr&&!c.cta){ _fr.src='/fc_reveal.html?p='+encodeURIComponent(c.n)+'&cb='+Date.now(); }
     document.getElementById('mread').textContent=c.read;
     var cta=document.getElementById('mcta'), ovl=document.getElementById('fcoverlay'), mk=document.getElementById('fmstage');
     if(c.cta){
@@ -1683,7 +1683,7 @@ function verdict(n){return '/fieldcheck-verdict.html?q='+encodeURIComponent(n);}
       modal.classList.remove('cta'); cta.style.display='none';
       var f=FX[c.n], tr=TRAJ[c.n];
       mk.style.display='none'; FCFilm.stop();
-      var _fr=document.getElementById('fcr3frame'); if(_fr){ _fr.src='/fc_reveal_v8.html?p='+encodeURIComponent(c.n)+'&cb='+Date.now(); }
+      var _fr=document.getElementById('fcr3frame'); if(_fr){ _fr.src='/fc_reveal.html?p='+encodeURIComponent(c.n)+'&cb='+Date.now(); }
       function tag(){ ovl.style.display='none'; }
       if(c.yt){ tag(); var cw=(c.st?('&start='+c.st):'')+(c.en?('&end='+c.en):''); stage.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+c.yt+'?autoplay=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&color=white&fs=1'+cw+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe><a class="ytlink" href="https://www.youtube.com/watch?v='+c.yt+'" target="_blank" rel="noopener">Watch on YouTube \u2197</a>'; }
       else if(c.src){ tag(); stage.innerHTML='<video src="'+c.src+'"'+(c.poster?' poster="'+c.poster+'"':'')+' controls autoplay playsinline></video>'; }
