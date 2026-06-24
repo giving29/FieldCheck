@@ -171,8 +171,8 @@
   .clip:hover .play svg{fill:var(--ink)}
   .clip .play svg{fill:var(--t);margin-left:3px}
   .clip .cap{position:absolute;left:0;right:0;bottom:0;padding:15px 15px 16px}
-  .clip .vtop{position:absolute;top:40px;left:15px;right:15px;font-family:var(--cg);font-style:italic;font-weight:600;font-size:23px;line-height:1.02;color:var(--gold-hi);z-index:2;text-shadow:0 1px 14px rgba(8,7,6,.7)}
-  .clip .vtop::after{content:"";display:block;width:22px;height:2px;background:var(--gold);margin-top:8px}
+  .clip .vtop{position:absolute;top:10px;left:90px;right:12px;text-align:right;font-family:var(--cg);font-style:italic;font-weight:600;font-size:25px;line-height:1.04;color:#f9e6a8;z-index:3;text-shadow:0 2px 16px rgba(8,7,6,.92),0 0 18px rgba(230,192,103,.45)}
+  .clip .vtop::after{content:"";display:block;width:26px;height:2px;background:var(--gold-hi);margin-top:7px;margin-left:auto}
   .clip .nm{font-family:var(--cg);font-size:23px;font-weight:600;line-height:1.02}
   .clip .read{font-family:var(--mono);font-size:8.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--t3);margin-top:6px;line-height:1.5}
   .clip .dur{position:absolute;bottom:14px;right:13px;font-family:var(--mono);font-size:8px;letter-spacing:1px;color:var(--t2);background:rgba(8,7,6,.55);border-radius:5px;padding:3px 6px}
@@ -921,5 +921,38 @@
   reel.addEventListener('touchstart',function(){ reel.classList.add('touched'); clearTimeout(rto); },{passive:true});
   reel.addEventListener('touchend',function(){ rto=setTimeout(function(){ reel.classList.remove('touched'); },2500); });
 </script>
+<!-- FCR fullscreen control · parent-only, never modifies reveal contents -->
+<style>
+#fcr3wrap{position:relative}
+.fcr-fs-btn{position:absolute;top:14px;right:14px;z-index:6;width:34px;height:34px;border-radius:8px;background:rgba(8,7,6,.6);border:1px solid rgba(232,191,112,.55);color:#e8bf70;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;backdrop-filter:blur(4px);transition:.15s}
+.fcr-fs-btn:hover{background:rgba(232,191,112,.92);color:#0a0907;border-color:#e8bf70}
+#fcr3wrap.fcr-fs-css{position:fixed;inset:0;z-index:99999;width:100vw!important;height:100vh!important;margin:0;border-radius:0;background:#0a0907}
+#fcr3wrap.fcr-fs-css>iframe{height:100%!important;border-radius:0!important;margin:0!important}
+#fcr3wrap:fullscreen{background:#0a0907}
+#fcr3wrap:fullscreen>iframe,#fcr3wrap:-webkit-full-screen>iframe{height:100%!important;border-radius:0!important;margin:0!important}
+</style>
+<script>
+(function(){
+  function setup(){
+    var ifr=document.getElementById('fcr3frame'); if(!ifr)return;
+    var wrap=document.getElementById('fcr3wrap');
+    if(!wrap){ wrap=document.createElement('div'); wrap.id='fcr3wrap'; ifr.parentNode.insertBefore(wrap,ifr); wrap.appendChild(ifr); }
+    if(wrap.querySelector('.fcr-fs-btn'))return;
+    var b=document.createElement('button'); b.type='button'; b.className='fcr-fs-btn'; b.title='Fullscreen'; b.setAttribute('aria-label','Toggle fullscreen'); b.innerHTML='\u2922';
+    function active(){return document.fullscreenElement===wrap||document.webkitFullscreenElement===wrap||wrap.classList.contains('fcr-fs-css');}
+    function cssOn(){wrap.classList.add('fcr-fs-css');document.body.style.overflow='hidden';b.innerHTML='\u2715';}
+    function cssOff(){wrap.classList.remove('fcr-fs-css');document.body.style.overflow='';b.innerHTML='\u2922';}
+    function enter(){ if(wrap.requestFullscreen){wrap.requestFullscreen().then(function(){b.innerHTML='\u2715';}).catch(cssOn);} else if(wrap.webkitRequestFullscreen){try{wrap.webkitRequestFullscreen();b.innerHTML='\u2715';}catch(e){cssOn();}} else cssOn(); }
+    function exit(){ if(document.fullscreenElement){document.exitFullscreen();} else if(document.webkitFullscreenElement){document.webkitExitFullscreen();} if(wrap.classList.contains('fcr-fs-css'))cssOff(); else b.innerHTML='\u2922'; }
+    b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();active()?exit():enter();});
+    document.addEventListener('fullscreenchange',function(){b.innerHTML=(document.fullscreenElement===wrap)?'\u2715':'\u2922';if(!document.fullscreenElement)document.body.style.overflow='';});
+    document.addEventListener('webkitfullscreenchange',function(){b.innerHTML=(document.webkitFullscreenElement===wrap)?'\u2715':'\u2922';});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&wrap.classList.contains('fcr-fs-css'))cssOff();});
+    wrap.appendChild(b);
+  }
+  if(document.readyState!=='loading')setup();else document.addEventListener('DOMContentLoaded',setup);
+})();
+</script>
+
 </body>
 </html>
