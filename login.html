@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FieldCheck · Claim your read</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0907; --ink2:#13100b; --panel:#17130c;
+    --gold:#d4a24c; --gold-hi:#e8bf70; --goldl:rgba(184,152,90,.28);
+    --bone:#f3eee2; --t2:#cfc9bb; --t3:#9a9486; --t4:#6f695d;
+    --line:rgba(184,152,90,.2); --moss:#7c9b6e;
+    --cg:'Fraunces',Georgia,serif; --body:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--body);color:var(--bone);
+    background:radial-gradient(120% 90% at 15% 0%,#191510 0%,var(--ink) 58%);
+    -webkit-font-smoothing:antialiased;display:flex;min-height:100%;
+  }
+  a{color:inherit}
+  .wrap{display:grid;grid-template-columns:1.05fr .95fr;width:100%;min-height:100vh}
+
+  /* ---------- BRAND PANEL ---------- */
+  .brand{position:relative;overflow:hidden;padding:48px 56px;display:flex;flex-direction:column;justify-content:space-between;
+    border-right:1px solid var(--line);background:linear-gradient(160deg,rgba(212,162,76,.05),transparent 60%)}
+  .mark{display:flex;align-items:center;gap:12px;z-index:2}
+  .mark .logo{width:34px;height:34px;border-radius:50%;border:1px solid var(--goldl);display:flex;align-items:center;justify-content:center;
+    font-family:var(--cg);font-weight:600;color:var(--gold-hi);font-size:16px;background:rgba(8,7,6,.5)}
+  .mark b{font-family:var(--mono);font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--t2);font-weight:500}
+  .brand-mid{z-index:2;max-width:440px}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+  .brand h1{font-family:var(--cg);font-weight:600;font-size:clamp(34px,4vw,52px);line-height:1.02;letter-spacing:-.5px}
+  .brand h1 i{font-style:italic;color:var(--gold-hi)}
+  .brand p{color:var(--t2);font-size:15px;line-height:1.6;margin-top:18px;max-width:380px}
+  .foot{z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4)}
+  /* ambient 8-facet polygon — the signature */
+  .poly{position:absolute;right:-90px;top:50%;transform:translateY(-50%);width:560px;height:560px;opacity:.5;pointer-events:none;
+    animation:breathe 9s ease-in-out infinite}
+  @keyframes breathe{0%,100%{transform:translateY(-50%) scale(1);opacity:.42}50%{transform:translateY(-50%) scale(1.04);opacity:.6}}
+  .poly .spin{transform-origin:280px 280px;animation:spin 80s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ---------- AUTH PANEL ---------- */
+  .auth{display:flex;align-items:center;justify-content:center;padding:48px 40px}
+  .card{width:100%;max-width:380px}
+  .step{display:none;animation:rise .45s cubic-bezier(.2,.7,.2,1)}
+  .step.on{display:block}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .h2{font-family:var(--cg);font-weight:600;font-size:27px;line-height:1.1;letter-spacing:-.3px}
+  .sub{color:var(--t3);font-size:13.5px;line-height:1.55;margin-top:8px}
+
+  .oauth{display:flex;flex-direction:column;gap:10px;margin-top:26px}
+  .obtn{display:flex;align-items:center;justify-content:center;gap:11px;height:50px;border-radius:11px;cursor:pointer;
+    background:#f7f4ee;color:#1a160f;border:0;font-family:var(--body);font-size:14.5px;font-weight:600;transition:.16s;width:100%}
+  .obtn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+  .obtn.apple{background:#000;color:#fff}
+  .obtn svg{width:18px;height:18px}
+
+  .or{display:flex;align-items:center;gap:14px;margin:22px 0;color:var(--t4);font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase}
+  .or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  label.fl{display:block;font-family:var(--mono);font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:var(--t3);margin-bottom:9px}
+  .inp{width:100%;height:50px;border-radius:11px;background:var(--panel);border:1px solid var(--goldl);color:var(--bone);
+    font-family:var(--body);font-size:15px;padding:0 16px;transition:.16s;outline:none}
+  .inp::placeholder{color:var(--t4)}
+  .inp:focus{border-color:var(--gold-hi);box-shadow:0 0 0 3px rgba(232,191,112,.14)}
+  .cta{width:100%;height:50px;margin-top:16px;border-radius:11px;border:0;cursor:pointer;
+    background:linear-gradient(180deg,#eccb86,var(--gold));color:#1a1206;font-family:var(--body);font-weight:600;font-size:14.5px;
+    letter-spacing:.2px;transition:.16s;display:flex;align-items:center;justify-content:center;gap:8px}
+  .cta:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(212,162,76,.28)}
+  .cta:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+
+  .fine{margin-top:18px;color:var(--t4);font-size:11.5px;line-height:1.55}
+  .fine a{color:var(--t3);text-decoration:underline;text-underline-offset:2px}
+  .err{color:#e7a17e;font-size:12.5px;margin-top:10px;min-height:16px;font-family:var(--mono);letter-spacing:.3px}
+
+  /* OTP boxes */
+  .otp{display:flex;gap:9px;margin-top:24px}
+  .otp input{flex:1;height:60px;text-align:center;border-radius:11px;background:var(--panel);border:1px solid var(--goldl);
+    color:var(--bone);font-family:var(--cg);font-size:26px;font-weight:600;outline:none;transition:.16s}
+  .otp input:focus{border-color:var(--gold-hi);box-shadow:0 0 0 3px rgba(232,191,112,.14)}
+  .otp input.filled{border-color:var(--gold);color:var(--gold-hi)}
+  .resend{margin-top:20px;font-size:12.5px;color:var(--t3)}
+  .resend b{color:var(--gold-hi)}
+  .link{background:none;border:0;color:var(--gold-hi);cursor:pointer;font-family:var(--body);font-size:12.5px;text-decoration:underline;text-underline-offset:2px;padding:0}
+  .back{background:none;border:0;color:var(--t3);cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:20px;display:inline-flex;gap:6px;align-items:center}
+  .back:hover{color:var(--gold-hi)}
+
+  /* role chips */
+  .roles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+  .role{padding:16px 14px;border-radius:12px;background:var(--panel);border:1px solid var(--goldl);cursor:pointer;transition:.16s;text-align:left}
+  .role:hover{border-color:var(--gold)}
+  .role.sel{border-color:var(--gold-hi);background:rgba(232,191,112,.08)}
+  .role .ic{font-size:20px}
+  .role .rn{font-family:var(--cg);font-size:16px;font-weight:600;margin-top:8px}
+  .role .rd{font-size:11px;color:var(--t3);margin-top:3px;line-height:1.4}
+
+  /* success */
+  .seal{width:74px;height:74px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;
+    margin-bottom:22px;animation:pop .5s cubic-bezier(.2,.8,.2,1)}
+  @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+  .seal svg{width:34px;height:34px}
+
+  /* admin */
+  .admin{max-width:920px;margin:40px auto;padding:0 24px;width:100%}
+  .admin h2{font-family:var(--cg);font-size:24px;font-weight:600}
+  .admin .bar{display:flex;justify-content:space-between;align-items:center;margin:18px 0;flex-wrap:wrap;gap:12px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line)}
+  th{font-family:var(--mono);font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3)}
+  .pill{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid var(--goldl);color:var(--gold-hi)}
+
+  @media(max-width:860px){
+    .wrap{grid-template-columns:1fr}
+    .brand{min-height:auto;padding:34px 28px;border-right:0;border-bottom:1px solid var(--line)}
+    .poly{width:340px;height:340px;right:-130px;opacity:.3}
+    .brand p{display:none}
+    .auth{padding:34px 24px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ AUTH ============ -->
+<div class="wrap" id="wrap">
+  <section class="brand">
+    <div class="mark"><span class="logo">F</span><b>FieldCheck IQ</b></div>
+    <svg class="poly" viewBox="0 0 560 560" aria-hidden="true">
+      <g class="spin">
+        <g fill="none" stroke="rgba(184,152,90,.16)">
+          <polygon points="280,90 414,168 414,392 280,470 146,392 146,168"/>
+          <polygon points="280,150 360,196 360,364 280,410 200,364 200,196"/>
+        </g>
+        <polygon points="280,110 402,180 388,372 268,452 158,360 168,182"
+                 fill="rgba(212,162,76,.10)" stroke="url(#g)" stroke-width="2" stroke-linejoin="round"/>
+        <g fill="#e8bf70">
+          <circle cx="280" cy="110" r="4.5"/><circle cx="388" cy="372" r="4.5"/>
+          <circle cx="168" cy="182" r="4.5"/><circle cx="268" cy="452" r="4.5"/>
+        </g>
+      </g>
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#e8bf70"/><stop offset="1" stop-color="#b8975a"/>
+      </linearGradient></defs>
+    </svg>
+    <div class="brand-mid">
+      <div class="eyebrow">Athletic Intelligence</div>
+      <h1>Claim your <i>read.</i></h1>
+      <p>One account for your verdict, your clips, and your place on the board. The will, not the résumé — starting with yours.</p>
+    </div>
+    <div class="foot">ThinkDifferent Holdings · © 2026</div>
+  </section>
+
+  <section class="auth">
+    <div class="card">
+
+      <!-- STEP 1: enter -->
+      <div class="step on" id="s-enter">
+        <div class="h2">Sign in or create your account</div>
+        <div class="sub">No password. One email gets you in — new or returning.</div>
+        <div class="oauth">
+          <button class="obtn" onclick="oauth('Google')">
+            <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z"/><path fill="#EA4335" d="M12 4.75c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 1.46 14.97.5 12 .5A11 11 0 0 0 2.18 7.06l3.66 2.84C6.71 6.68 9.14 4.75 12 4.75z"/></svg>
+            Continue with Google
+          </button>
+          <button class="obtn apple" onclick="oauth('Apple')">
+            <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.05 12.54c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.71-3.19-1.73-1.36-.14-2.65.8-3.34.8-.69 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.54 2.67-.39 6.62 1.11 8.79.73 1.06 1.6 2.25 2.74 2.21 1.1-.04 1.52-.71 2.85-.71 1.33 0 1.7.71 2.86.69 1.18-.02 1.93-1.08 2.65-2.15.84-1.23 1.18-2.42 1.2-2.48-.03-.01-2.3-.88-2.32-3.5zM14.88 5.9c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.64-1.05 1.68-.92 2.67.97.08 1.96-.49 2.56-1.22z"/></svg>
+            Continue with Apple
+          </button>
+        </div>
+        <div class="or">or</div>
+        <label class="fl" for="email">Email</label>
+        <input class="inp" id="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" onkeydown="if(event.key==='Enter')sendCode()">
+        <button class="cta" id="cta-email" onclick="sendCode()">Continue with email</button>
+        <div class="err" id="err-email"></div>
+        <div class="fine">By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</div>
+      </div>
+
+      <!-- STEP 2: code -->
+      <div class="step" id="s-code">
+        <button class="back" onclick="go('enter')">&#8249; Back</button>
+        <div class="h2">Enter your code</div>
+        <div class="sub">We sent a 6-digit code to <b id="email-echo" style="color:var(--bone)"></b>.</div>
+        <div class="otp" id="otp">
+          <input maxlength="1" inputmode="numeric" autocomplete="one-time-code">
+          <input maxlength="1" inputmode="numeric">
+          <input maxlength="1" inputmode="numeric">
+          <input maxlength="1" inputmode="numeric">
+          <input maxlength="1" inputmode="numeric">
+          <input maxlength="1" inputmode="numeric">
+        </div>
+        <div class="err" id="err-code"></div>
+        <div class="resend" id="resend"></div>
+      </div>
+
+      <!-- STEP 3: profile -->
+      <div class="step" id="s-profile">
+        <div class="h2">Tell us who you are</div>
+        <div class="sub">Two quick things and you're on the board.</div>
+        <label class="fl" for="name" style="margin-top:22px">Name</label>
+        <input class="inp" id="name" placeholder="First Last" autocomplete="name">
+        <label class="fl" style="margin-top:18px">I'm a…</label>
+        <div class="roles" id="roles">
+          <button class="role" data-r="Athlete"><div class="ic">🏐</div><div class="rn">Athlete</div><div class="rd">Get my verdict, upload clips</div></button>
+          <button class="role" data-r="Coach"><div class="ic">📋</div><div class="rn">Coach</div><div class="rd">Read my roster</div></button>
+          <button class="role" data-r="Parent"><div class="ic">🤝</div><div class="rn">Parent</div><div class="rd">Follow my athlete</div></button>
+          <button class="role" data-r="Fan"><div class="ic">🔭</div><div class="rn">Fan / Scout</div><div class="rd">Discover who's next</div></button>
+        </div>
+        <button class="cta" id="cta-profile" onclick="finish()" disabled style="margin-top:22px">Enter FieldCheck</button>
+        <div class="err" id="err-profile"></div>
+      </div>
+
+      <!-- STEP 4: done -->
+      <div class="step" id="s-done" style="text-align:center">
+        <div class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="#e8bf70" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <div class="h2">You're in, <span id="done-name">there</span>.</div>
+        <div class="sub" style="max-width:300px;margin:8px auto 0">Your account is ready. Time to read a player — starting with the board.</div>
+        <a href="/lovb"><button class="cta" style="margin-top:26px">Go to the board →</button></a>
+        <button class="link" style="margin-top:16px" onclick="location.href='/'">Back to home</button>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============ ADMIN (test-phase signups) ============ -->
+<div class="admin" id="admin" style="display:none">
+  <div class="mark" style="margin-bottom:24px"><span class="logo">F</span><b>FieldCheck · Signups</b></div>
+  <div class="bar">
+    <h2><span id="count">0</span> accounts captured</h2>
+    <div style="display:flex;gap:10px">
+      <button class="cta" style="width:auto;height:40px;padding:0 18px" onclick="exportCSV()">Export CSV</button>
+      <button class="obtn" style="width:auto;height:40px;padding:0 16px;font-size:13px" onclick="if(confirm('Clear all local signups?')){localStorage.removeItem(KEY);renderAdmin();}">Clear</button>
+    </div>
+  </div>
+  <div id="admin-empty" style="color:var(--t3);padding:30px 0">No signups yet. They'll appear here as people register.</div>
+  <table id="admin-table" style="display:none"><thead><tr><th>When</th><th>Email</th><th>Name</th><th>Role</th><th>Method</th></tr></thead><tbody id="admin-rows"></tbody></table>
+  <p style="color:var(--t4);font-size:11.5px;margin-top:20px;line-height:1.6">Test-phase capture. Records are stored in this browser (localStorage) and POSTed to your collector if <code>CAPTURE_URL</code> is set. This is a prototype flow — not verified auth. Wire to Supabase/Clerk for production sessions.</p>
+</div>
+
+<script>
+/* ===================== CONFIG ===================== */
+// Test-phase real capture: paste an Airtable Web API / Form webhook or Formspree URL here.
+// Leave '' to capture locally only. When set, each signup is POSTed as JSON.
+var CAPTURE_URL = 'https://formspree.io/f/xzdlebkq';   // live Formspree endpoint — real capture in test mode
+var ADMIN_CODE  = 'ghost2026';   // /login?admin=ghost2026  → see + export the list
+var KEY = 'fc_signups_v1';
+
+/* ===================== STATE ===================== */
+var state = { email:'', code:'', role:'', method:'email' };
+
+function go(name){
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('on');});
+  document.getElementById('s-'+name).classList.add('on');
+  if(name==='code'){ setTimeout(function(){document.querySelector('#otp input').focus();},60); }
+}
+
+/* ---------- email ---------- */
+function validEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+function sendCode(){
+  var e = document.getElementById('email').value.trim();
+  var err = document.getElementById('err-email');
+  if(!validEmail(e)){ err.textContent='Enter a valid email address.'; return; }
+  err.textContent='';
+  state.email = e; state.method = 'email';
+  document.getElementById('email-echo').textContent = e;
+  // prototype: generate a demo code (a real backend sends this). Shown for testing.
+  state.code = String(Math.floor(100000 + Math.random()*900000));
+  console.log('[FieldCheck] demo code:', state.code);
+  go('code');
+  startResend();
+  // For the prototype we surface the code as a hint so it's testable end-to-end:
+  document.getElementById('err-code').innerHTML = '<span style="color:var(--t3)">Demo code (test phase): <b style="color:var(--gold-hi)">'+state.code+'</b></span>';
+}
+
+/* ---------- oauth (prototype) ---------- */
+function oauth(provider){
+  state.method = provider;
+  state.email = '';
+  // In production this redirects to the provider. Prototype jumps to profile.
+  go('profile');
+}
+
+/* ---------- OTP boxes ---------- */
+var otp = document.getElementById('otp');
+if(otp){
+  var boxes = otp.querySelectorAll('input');
+  boxes.forEach(function(b,i){
+    b.addEventListener('input',function(){
+      this.value = this.value.replace(/[^0-9]/g,'');
+      this.classList.toggle('filled', !!this.value);
+      if(this.value && i<boxes.length-1) boxes[i+1].focus();
+      checkCode();
+    });
+    b.addEventListener('keydown',function(e){
+      if(e.key==='Backspace' && !this.value && i>0){ boxes[i-1].focus(); }
+    });
+    b.addEventListener('paste',function(e){
+      e.preventDefault();
+      var d=(e.clipboardData.getData('text')||'').replace(/[^0-9]/g,'').slice(0,6);
+      boxes.forEach(function(x,j){ x.value=d[j]||''; x.classList.toggle('filled',!!d[j]); });
+      checkCode();
+    });
+  });
+  function checkCode(){
+    var entered = Array.prototype.map.call(boxes,function(x){return x.value;}).join('');
+    var err = document.getElementById('err-code');
+    if(entered.length<6) return;
+    if(entered === state.code){
+      err.textContent='';
+      go('profile');
+    } else {
+      err.innerHTML = '<span style="color:#e7a17e">That code didn\u2019t match. Check and re-enter.</span>';
+      boxes.forEach(function(x){x.value='';x.classList.remove('filled');});
+      boxes[0].focus();
+    }
+  }
+}
+
+/* ---------- resend timer ---------- */
+function startResend(){
+  var el=document.getElementById('resend'); var t=30;
+  el.innerHTML='Resend code in <b>'+t+'s</b>';
+  var iv=setInterval(function(){
+    t--;
+    if(t<=0){ clearInterval(iv); el.innerHTML='<button class="link" onclick="resend()">Resend code</button>'; }
+    else { el.innerHTML='Resend code in <b>'+t+'s</b>'; }
+  },1000);
+}
+function resend(){
+  state.code = String(Math.floor(100000+Math.random()*900000));
+  document.getElementById('err-code').innerHTML='<span style="color:var(--t3)">New demo code: <b style="color:var(--gold-hi)">'+state.code+'</b></span>';
+  startResend();
+}
+
+/* ---------- role select ---------- */
+document.querySelectorAll('#roles .role').forEach(function(r){
+  r.addEventListener('click',function(){
+    document.querySelectorAll('#roles .role').forEach(function(x){x.classList.remove('sel');});
+    this.classList.add('sel');
+    state.role = this.dataset.r;
+    document.getElementById('cta-profile').disabled = false;
+  });
+});
+
+/* ---------- finish + CAPTURE ---------- */
+function finish(){
+  var name = document.getElementById('name').value.trim();
+  var err = document.getElementById('err-profile');
+  if(!name){ err.textContent='Add your name to continue.'; return; }
+  if(!state.role){ err.textContent='Pick what describes you.'; return; }
+  err.textContent='';
+  var record = {
+    email: state.email || (state.method.toLowerCase()+'-oauth (email via provider)'),
+    name: name, role: state.role, method: state.method,
+    ts: new Date().toISOString()
+  };
+  saveLocal(record);
+  postRemote(record);   // no-op unless CAPTURE_URL is set
+  try{ localStorage.setItem('fc_user_v1', JSON.stringify({name:name, role:state.role, email:record.email, ts:record.ts})); }catch(e){}  // session: who's logged in
+  document.getElementById('done-name').textContent = name.split(' ')[0];
+  go('done');
+}
+
+function saveLocal(rec){
+  var list=[]; try{ list=JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){}
+  list.push(rec);
+  try{ localStorage.setItem(KEY, JSON.stringify(list)); }catch(e){}
+}
+function postRemote(rec){
+  if(!CAPTURE_URL) return;
+  var payload = {
+    email: rec.email,
+    name: rec.name,
+    role: rec.role,
+    method: rec.method,
+    signed_up: rec.ts,
+    _subject: 'New FieldCheck signup: '+rec.name+' ('+rec.role+')'
+  };
+  try{
+    fetch(CAPTURE_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(payload)
+    }).catch(function(){/* test-phase: ignore network errors, local copy is kept */});
+  }catch(e){}
+}
+
+/* ===================== ADMIN ===================== */
+function isAdmin(){ return new URLSearchParams(location.search).get('admin')===ADMIN_CODE; }
+function renderAdmin(){
+  var list=[]; try{ list=JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){}
+  document.getElementById('count').textContent=list.length;
+  var t=document.getElementById('admin-table'), e=document.getElementById('admin-empty'), rows=document.getElementById('admin-rows');
+  if(!list.length){ t.style.display='none'; e.style.display='block'; return; }
+  e.style.display='none'; t.style.display='table';
+  rows.innerHTML = list.slice().reverse().map(function(r){
+    var when=new Date(r.ts).toLocaleString();
+    return '<tr><td style="color:var(--t3);font-family:var(--mono);font-size:11px">'+when+'</td><td>'+esc(r.email)+'</td><td>'+esc(r.name)+'</td><td><span class="pill">'+esc(r.role)+'</span></td><td style="color:var(--t3)">'+esc(r.method)+'</td></tr>';
+  }).join('');
+}
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function exportCSV(){
+  var list=[]; try{ list=JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){}
+  var head=['timestamp','email','name','role','method'];
+  var lines=[head.join(',')].concat(list.map(function(r){
+    return [r.ts,r.email,r.name,r.role,r.method].map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(',');
+  }));
+  var blob=new Blob([lines.join('\n')],{type:'text/csv'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='fieldcheck-signups-'+new Date().toISOString().slice(0,10)+'.csv'; a.click();
+}
+
+/* ===================== BOOT ===================== */
+if(isAdmin()){
+  document.getElementById('wrap').style.display='none';
+  document.getElementById('admin').style.display='block';
+  renderAdmin();
+}
+</script>
+</body>
+</html>
