@@ -687,13 +687,68 @@ function runAgent(){
 }
 
 /* ============================================================
-   analyzeClips() — THE SINGLE AI INTEGRATION POINT.
-   Prototype: derives honest, verdict-grounded reads locally.
-   LIVE: replace the body with a POST to your vision pipeline
-   (e.g. /api/analyze → Claude multimodal → moment scoring),
-   returning the SAME shape. The whole UI above stays unchanged.
+   analyzeClips() — LIVE vision pipeline, graceful fallback.
+   Real clips → sample frames → POST /.netlify/functions/analyze
+   (Claude vision, key server-side) → real grounded moments.
+   Demo clips or any failure → mockAnalyze() local read.
+   The moment shape the UI renders is identical either way.
    ============================================================ */
 function analyzeClips(clips){
+  var hasVideo = clips.some(function(c){return c.url;});
+  if(!hasVideo) return mockAnalyze(clips);                 // demo path stays instant/offline
+  return liveAnalyze(clips)
+    .then(function(m){ return (m && m.length) ? m : mockAnalyze(clips); })
+    .catch(function(){ return mockAnalyze(clips); });      // no key / offline / error → never breaks
+}
+
+/* sample n frames spread across each clip, as small base64 jpegs */
+function extractFrames(url, n){
+  return new Promise(function(resolve){
+    var v=document.createElement('video'); v.preload='metadata'; v.muted=true; v.playsInline=true; v.src=url;
+    var frames=[], times=[], i=0, done=false;
+    v.addEventListener('loadeddata',function(){ var d=v.duration||3; for(var k=1;k<=n;k++) times.push(d*k/(n+1)); seek(); });
+    function seek(){ if(i>=times.length){ return finish(); } try{ v.currentTime=times[i]; }catch(e){ finish(); } }
+    v.addEventListener('seeked',function(){
+      try{ var c=document.createElement('canvas'), r=(v.videoHeight/v.videoWidth)||0.6;
+        c.width=320; c.height=Math.round(320*r);
+        c.getContext('2d').drawImage(v,0,0,c.width,c.height);
+        frames.push(c.toDataURL('image/jpeg',0.6));
+      }catch(e){}
+      i++; seek();
+    });
+    v.addEventListener('error', finish);
+    function finish(){ if(done)return; done=true; resolve(frames); }
+    setTimeout(finish, 7000);
+  });
+}
+
+/* call the server vision function, map to the UI moment shape */
+function liveAnalyze(clips){
+  return Promise.all(clips.map(function(c){ return c.url ? extractFrames(c.url,3) : Promise.resolve([]); }))
+    .then(function(framesPer){
+      var payload={
+        athlete:{name:A.name,sport:A.sport,pos:A.pos,labels:A.fc.labels,facets:A.fc.facets,invis:INVIS},
+        clips: clips.map(function(c,i){ return {name:c.name,dur:c.dur,frames:framesPer[i]||[]}; })
+      };
+      return fetch('/.netlify/functions/analyze',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)});
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(!d || !d.moments) return null;
+      AGENT_LIVE=true;
+      return d.moments.map(function(m,idx){
+        var c=clips[m.clip]||clips[0]||{};
+        var fv=A.fc.facets[m.fidx]; if(fv==null) fv=7.0;
+        return { id:idx, thumb:c.thumb||'', url:c.url||'', demo:!!c.demo,
+          facet:m.facet, fidx:m.fidx, fval:fv, invisible:INVIS.indexOf(m.fidx)>=0,
+          caption:m.caption, ts:m.ts, clip:c.name||'clip', conf:m.conf };
+      });
+    });
+}
+var AGENT_LIVE=false;
+
+/* ---- local read (fallback + demo) ---- */
+function mockAnalyze(clips){
   return new Promise(function(resolve){
     var labels=A.fc.labels, facets=A.fc.facets;
     var CAP={
@@ -740,7 +795,10 @@ function analyzeClips(clips){
 function renderAgentOut(){
   var out=document.getElementById('agentout'); out.style.display='block';
   var invN=MOMENTS.filter(function(m){return m.invisible;}).length;
-  document.getElementById('foundbar').innerHTML='The agent found <b>'+MOMENTS.length+' moments</b> — and <b>'+invN+'</b> that a normal highlight reel would skip entirely. Those invisible ones are your edge.';
+  var mode = AGENT_LIVE
+    ? '<span style="display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:#1a1206;background:var(--gold-hi);padding:2px 7px;border-radius:999px;font-weight:700;margin-bottom:8px">✦ live vision read</span><br>'
+    : '';
+  document.getElementById('foundbar').innerHTML=mode+'The agent watched your film and found <b>'+MOMENTS.length+' moments</b> — including <b>'+invN+'</b> a normal highlight reel would skip entirely. Those invisible ones are your edge.';
   var mh='';
   MOMENTS.forEach(function(m){
     mh+='<div class="moment'+(m.invisible?' inv':'')+'">'
