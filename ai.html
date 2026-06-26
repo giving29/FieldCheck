@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>FieldCheck · The Intelligence</title>
+<title>FieldCheck Intelligence — how the read works</title>
 <meta name="description" content="AI that reads the player. Data nobody else has. FieldCheck refines the world's scattered athletic signal into one honest number — then a team of agents goes to work for the athlete.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,10 +31,13 @@
   nav .nlinks{display:flex;gap:18px}
   nav .nlinks a{font-size:13px;color:var(--t3);text-decoration:none}
   nav .nlinks a:hover{color:var(--gold-hi)}
+  nav .nlinks a.cur{color:var(--t4);pointer-events:none}
 
   /* hero */
   .hero{padding:48px 0 18px;text-align:center}
   .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
+  /* page identity */
+  .eyebrow2{font-family:var(--cg);font-style:italic;font-weight:600;font-size:20px;color:var(--bone);margin-bottom:10px}
   .hero h1{font-family:var(--cg);font-weight:500;font-size:clamp(34px,8vw,60px);line-height:1.02;letter-spacing:-1px}
   .hero h1 em{font-style:italic;color:var(--gold-hi)}
   .hero .sub{font-size:clamp(15px,3.6vw,18px);line-height:1.6;color:var(--t2);max-width:560px;margin:22px auto 0}
@@ -49,6 +52,8 @@
   @keyframes pulse{0%,100%{r:46;opacity:.35}50%{r:60;opacity:0}}
   @keyframes glow{0%,100%{opacity:.55}50%{opacity:1}}
   .corePulse{animation:pulse 3.4s ease-out infinite}
+  #readcore{transform-origin:220px 268px;animation:formin 1.15s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes formin{from{transform:scale(.22);opacity:0}50%{opacity:1}to{transform:scale(1);opacity:1}}
   .scrollcue{display:inline-block;margin-top:26px;font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t4)}
 
   /* sections */
@@ -78,6 +83,29 @@
   .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
   .chip{font-family:var(--mono);font-size:9.5px;letter-spacing:.5px;color:var(--gold-hi);border:1px solid var(--goldl);border-radius:999px;padding:5px 10px}
   .chip.inv{background:rgba(232,191,112,.12)}
+
+  /* engine: how the number is built */
+  .engine{margin-top:30px;display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:start}
+  .etruths{display:flex;flex-direction:column;gap:18px}
+  .etruth .et-h{font-family:var(--cg);font-weight:600;font-size:17px;color:var(--bone)}
+  .etruth .et-p{font-size:13.5px;line-height:1.55;color:var(--t3);margin-top:4px}
+  .etruth .et-p b{color:var(--t2);font-weight:600}
+  /* the harsh ladder */
+  .ladder{background:var(--panel);border:1px solid var(--goldl);border-radius:16px;padding:18px 18px 16px}
+  .ladder .lcap{font-family:var(--mono);font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  .rung{display:flex;align-items:flex-start;gap:13px;padding:9px 0;border-top:1px solid var(--line)}
+  .rung:first-of-type{border-top:0}
+  .rung .rn{font-family:var(--cg);font-weight:600;font-size:24px;line-height:1;width:34px;text-align:right;flex-shrink:0}
+  .rung .rt{font-size:12.5px;line-height:1.4;color:var(--t2);padding-top:3px}
+  .rung .rt b{color:var(--bone);font-weight:600}
+  .rung.apex .rn{color:var(--gold-hi)} .rung.apex .rt b{color:var(--gold-hi)}
+  .rung.hof .rn{color:#dcae6a}
+  .rung.track .rn{color:var(--moss)}
+  .rung.good .rn{color:var(--bone)}
+  .rung.base .rn{color:var(--t4)} .rung.base .rt{color:var(--t4)}
+  .rung.good{background:rgba(232,191,112,.05);border-radius:9px;margin:2px -8px;padding:9px 8px}
+  .lsting{font-size:12px;line-height:1.5;color:var(--t4);font-style:italic;margin-top:14px;border-top:1px solid var(--line);padding-top:13px}
+  @media(max-width:600px){ .engine{grid-template-columns:1fr;gap:24px} }
 
   /* loops */
   .loops{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:11px}
@@ -122,7 +150,7 @@
   .reveal.in{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){
     .reveal{opacity:1;transform:none;transition:none}
-    .corePulse,.stream-dot{animation:none!important}
+    .corePulse,.stream-dot,#readcore{animation:none!important}
     html{scroll-behavior:auto}
   }
   @media(max-width:540px){ .loops{grid-template-columns:1fr} nav .nlinks a:not(:last-child){display:none} }
@@ -132,7 +160,7 @@
 
 <nav>
   <div class="brand"><span class="logo">F</span><b>FieldCheck</b></div>
-  <div class="nlinks"><a href="/lovb">The board</a><a href="/studio">Studio</a><a href="/login">Get your read</a></div>
+  <div class="nlinks"><a href="/leaderboard">Leaderboard</a><a href="/lovb">LOVB</a><a href="/methodology">Intelligence</a><a href="/more">More</a><a href="/login" data-fc-auth>Register / Log in</a></div>
 </nav>
 
 <div class="wrap">
@@ -140,6 +168,7 @@
   <!-- HERO -->
   <header class="hero">
     <div class="eyebrow">Athletic Intelligence</div>
+    <div class="eyebrow2">FieldCheck Intelligence</div>
     <h1>AI reads the player.<br>Data nobody <em>else has.</em></h1>
     <p class="sub">FieldCheck refines the world's scattered athletic signal into one honest number — then puts a team of agents to work for the athlete. No rankings for sale. No hype tax.</p>
 
@@ -168,11 +197,14 @@
         <!-- drifting signal dots -->
         <g id="dots"></g>
 
-        <!-- the core: one read -->
-        <circle class="corePulse" cx="220" cy="268" r="46" fill="none" stroke="#e8bf70"/>
-        <circle cx="220" cy="268" r="42" fill="url(#coreg)" stroke="#e8bf70" stroke-width="1.5"/>
-        <text x="220" y="266" fill="#e8bf70" font-family="Fraunces,serif" font-weight="600" font-size="30" text-anchor="middle">7.4</text>
-        <text x="220" y="285" fill="#9a9486" font-family="JetBrains Mono,monospace" font-size="7.5" letter-spacing="1.5" text-anchor="middle">THE READ</text>
+        <!-- the core: the read TAKES SHAPE — FieldCheck's polygon, forming + breathing -->
+        <g id="readcore">
+          <polygon points="220.0,228.0 248.3,239.7 260.0,268.0 248.3,296.3 220.0,308.0 191.7,296.3 180.0,268.0 191.7,239.7" fill="none" stroke="rgba(184,152,90,.16)"/>
+          <polygon id="fcShape" fill="rgba(212,162,76,.18)" stroke="#e8bf70" stroke-width="1.7" stroke-linejoin="round" points="220.0,237.6 240.6,247.4 248.0,268.0 240.4,288.4 220.0,298.0 199.9,288.1 191.2,268.0 199.4,247.4"></polygon>
+          <circle cx="220.0" cy="228.0" r="2.6" fill="#e8bf70"/><circle cx="248.3" cy="239.7" r="1.8" fill="rgba(184,152,90,.5)"/><circle cx="260.0" cy="268.0" r="1.8" fill="rgba(184,152,90,.5)"/><circle cx="248.3" cy="296.3" r="1.8" fill="rgba(184,152,90,.5)"/><circle cx="220.0" cy="308.0" r="2.6" fill="#e8bf70"/><circle cx="191.7" cy="296.3" r="2.6" fill="#e8bf70"/><circle cx="180.0" cy="268.0" r="1.8" fill="rgba(184,152,90,.5)"/><circle cx="191.7" cy="239.7" r="2.6" fill="#e8bf70"/>
+          <text x="220" y="272" fill="#e8bf70" font-family="Fraunces,serif" font-weight="600" font-size="17" text-anchor="middle">7.4</text>
+        </g>
+        <text x="220" y="324" fill="#9a9486" font-family="JetBrains Mono,monospace" font-size="7.5" letter-spacing="2" text-anchor="middle">THE READ</text>
       </svg>
     </div>
     <div class="rf-line">Raw signal from everywhere &nbsp;→&nbsp; <b>one honest read</b></div>
@@ -209,6 +241,32 @@
       </div>
     </div>
     <p class="lede" style="margin-top:22px">No grade for sale. No pay-to-play tier. The read is the read — that's the whole point. <a href="/lovb" style="color:var(--gold-hi);text-decoration:underline;text-underline-offset:3px">See it live on the LOVB board →</a></p>
+  </section>
+
+  <!-- HOW THE NUMBER IS BUILT -->
+  <section class="block reveal">
+    <div class="khead">The engine</div>
+    <h2>How the number is built — <em>the same way for everyone.</em></h2>
+    <p class="lede">The data is the fuel. The engine is what turns it into a grade you can trust — graded against the greatest, disciplined by design, and impossible to buy.</p>
+    <div class="engine">
+      <div class="etruths">
+        <div class="etruth"><div class="et-h">Graded against the greatest</div><div class="et-p">Every athlete is scored relative to the best to ever play their sport — <b>not curved against the kids next to them</b>. The number means the same thing in every gym, every level, every sport.</div></div>
+        <div class="etruth"><div class="et-h">Eight facets, one number</div><div class="et-p">The read breaks into eight graded facets and synthesizes into a single 0–10. <b>The shape is the evidence</b> — the polygon shows exactly where the number comes from: four traits on the surface, the four invisible ones underneath.</div></div>
+        <div class="etruth"><div class="et-h">AI reads the evidence; rules keep it honest</div><div class="et-p">The model judges the film and the record; deterministic checks enforce consistency where a number can't drift. <b>Judgment from the AI, discipline from the code</b> — so the same player gets the same read every time.</div></div>
+        <div class="etruth"><div class="et-h">One algorithm, every athlete</div><div class="et-p">No hand-tuning a favorite. No cap bought. No grade curated. <b>One engine, every level.</b> The number is the number.</div></div>
+        <div class="etruth"><div class="et-h">Evidence in, or no grade</div><div class="et-p">A read is only as good as the signal behind it. Thin evidence earns a careful read, <b>never a confident fake</b> — which is exactly why more data makes every number sharper.</div></div>
+      </div>
+
+      <div class="ladder">
+        <div class="lcap">One ladder · no inflation</div>
+        <div class="rung apex"><div class="rn">10</div><div class="rt"><b>Once-a-generation.</b> A handful, ever. (Jordan is a 10.)</div></div>
+        <div class="rung hof"><div class="rn">7+</div><div class="rt"><b>Hall-of-Fame trajectory.</b> The rarest air — a path almost no one reaches.</div></div>
+        <div class="rung track"><div class="rn">5–6</div><div class="rt"><b>A real college track.</b> Genuinely on the path.</div></div>
+        <div class="rung good"><div class="rn">4</div><div class="rt"><b>Good — and about the best high-schooler in the country.</b></div></div>
+        <div class="rung base"><div class="rn">&lt;4</div><div class="rt">Building the base. Most of the work is still ahead.</div></div>
+        <div class="lsting">We don't grade on a curve, and we don't hand out 9s. That's the part that stings — and the part that's honest.</div>
+      </div>
+    </div>
   </section>
 
   <!-- THE LOOPS -->
@@ -294,6 +352,28 @@
   // scroll reveals
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
   document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  // FieldCheck shape — just morphing, like home (lerp between 8-pt shapes), no names
+  (function(){
+    var poly=document.getElementById('fcShape'); if(!poly) return;
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    var cx=220, cy=268, R=40, A=[];
+    for(var i=0;i<8;i++) A.push(-90+i*45);
+    function rnd(lo,hi){return lo+Math.random()*(hi-lo);}
+    function shape(){var v=[]; for(var i=0;i<8;i++){ v.push(rnd(6.4,8.2)); } return v;}
+    function pts(v){var o=[];for(var i=0;i<8;i++){var a=A[i]*Math.PI/180,r=(v[i]/10)*R;o.push((cx+Math.cos(a)*r).toFixed(1)+','+(cy+Math.sin(a)*r).toFixed(1));}return o.join(' ');}
+    var cur=[7.6,7.3,7.0,7.2,7.5,7.1,7.2,7.3], to=shape(), t0=null, DUR=2600;
+    function ease(k){return k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;}
+    function step(ts){
+      if(t0===null)t0=ts; var k=Math.min(1,(ts-t0)/DUR), e=ease(k), v=[];
+      for(var i=0;i<8;i++) v[i]=cur[i]+(to[i]-cur[i])*e;
+      poly.setAttribute('points', pts(v));
+      if(k>=1){ cur=to; to=shape(); t0=null; }
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+
 })();
 </script>
 </body>
