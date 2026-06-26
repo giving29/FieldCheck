@@ -212,6 +212,42 @@
   .rp-note{font-size:11px;color:var(--t4);line-height:1.5;margin-top:12px}
   .rp-note b{color:var(--t2)}
 
+  /* ============ TARGETS (Strategist) ============ */
+  .findfit{width:100%;margin-top:12px;padding:14px 16px;border-radius:13px;border:1px solid var(--goldl);background:linear-gradient(150deg,rgba(212,162,76,.1),var(--panel));color:var(--gold-hi);font-family:var(--body);font-weight:600;font-size:13.5px;cursor:pointer;text-align:left;line-height:1.3}
+  .findfit:active{transform:scale(.99)}
+  .tg-read{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:16px;display:flex;align-items:center;gap:14px}
+  .tg-read .tnum{font-family:var(--cg);font-weight:600;font-size:40px;line-height:.85;color:var(--gold-hi)}
+  .tg-read .twho{font-size:12.5px;color:var(--t2);line-height:1.5}
+  .tg-read .twho b{color:var(--bone)}
+  .tg-read .tlock{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.5px;color:var(--gold);margin-top:6px;text-transform:uppercase}
+  .tg-prefs{margin-bottom:8px}
+  .tg-pgrp{margin-bottom:13px}
+  .tg-pl{font-family:var(--mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+  .chips2{display:flex;flex-wrap:wrap;gap:7px}
+  .chip2{font-family:var(--body);font-weight:600;font-size:12px;color:var(--t2);border:1px solid var(--line);border-radius:999px;padding:8px 13px;cursor:pointer;transition:.13s;background:var(--panel)}
+  .chip2.on{background:rgba(232,191,112,.13);border-color:var(--goldl);color:var(--gold-hi)}
+  .tg-bucket{margin-top:22px}
+  .tg-bhead{display:flex;align-items:center;gap:9px;margin-bottom:11px}
+  .tg-bdot{width:9px;height:9px;border-radius:50%}
+  .tg-bn{font-family:var(--cg);font-weight:600;font-size:19px}
+  .tg-bd{font-size:11px;color:var(--t3);margin-left:auto;text-align:right;line-height:1.3;max-width:160px}
+  .sch{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 14px;margin-bottom:9px}
+  .sch .schh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .sch .snm{font-family:var(--cg);font-weight:600;font-size:17px;line-height:1.1}
+  .sch .smeta{font-family:var(--mono);font-size:8.5px;letter-spacing:.5px;color:var(--t3);margin-top:4px;text-transform:uppercase}
+  .sch .sfit{text-align:right;flex-shrink:0}
+  .sch .sfp{font-family:var(--cg);font-weight:600;font-size:21px;color:var(--gold-hi);line-height:1}
+  .sch .sfl{font-family:var(--mono);font-size:7px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);margin-top:2px}
+  .sch .srs{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+  .sch .sr{display:flex;gap:8px;font-size:12px;line-height:1.4;color:var(--t2)}
+  .sch .sr .srk{color:var(--gold-hi);flex-shrink:0}
+  .schact{display:flex;gap:8px;margin-top:11px}
+  .schb{flex:1;height:37px;border-radius:9px;border:1px solid var(--goldl);background:var(--ink2);color:var(--bone);font-family:var(--body);font-weight:600;font-size:12px;cursor:pointer}
+  .schb.fill{background:linear-gradient(180deg,#eccb86,var(--gold));border:0;color:#1a1206}
+  .schdraft{margin-top:10px;display:none;background:var(--ink2);border:1px solid var(--line);border-radius:11px;padding:12px;font-size:12px;line-height:1.6;color:var(--t2);white-space:pre-wrap}
+  .schdraft.on{display:block}
+  .schdraft .var{color:var(--gold-hi);font-weight:600}
+
   /* shared (coach) view banner */
   .sharedbar{display:none;background:linear-gradient(180deg,rgba(212,162,76,.12),transparent);border-bottom:1px solid var(--line);
     padding:11px 16px;text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold-hi)}
@@ -238,6 +274,7 @@
 
   <div class="seg">
     <button class="on" data-v="card" onclick="tab('card')">Card</button>
+    <button data-v="targets" onclick="tab('targets')">Targets&nbsp;✦</button>
     <button data-v="send" onclick="tab('send')">Send</button>
     <button data-v="reel" onclick="tab('reel')">Reel&nbsp;✦</button>
   </div>
@@ -282,6 +319,7 @@
       <div class="act" onclick="copyLink()"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg><span>Link</span></div>
     </div>
     <div class="hint">Anyone who opens your link or scans the QR sees this exact card — no app, no login.</div>
+    <button class="findfit" onclick="tab('targets')">Find your fit — schools where your read lands →</button>
 
     <div class="edit">
       <div class="locknote" style="margin-bottom:12px">🔒 <b>Your grade is locked.</b> The number, shape and reads come straight from the FieldCheck engine — that's what makes a coach trust it. You control everything else.</div>
@@ -321,6 +359,36 @@
           <div class="two"><div><label class="fl">Phone</label><input class="inp" id="f-phone" placeholder="(optional)"></div><div><label class="fl">@handle</label><input class="inp" id="f-handle" placeholder="@you"></div></div>
         </div>
       </details>
+    </div>
+  </div>
+
+  <!-- ============ TARGETS (The Strategist) ============ -->
+  <div class="view" id="v-targets">
+    <div class="agentintro">
+      <div class="ai-eyebrow">✦ FieldCheck Strategist</div>
+      <p>The schools where you <b>actually fit</b> — built from your read, your region, your academics. Not a wish list. The work a $3,000 service charges for, free.</p>
+    </div>
+
+    <div class="tg-read" id="tg-read"></div>
+
+    <div class="tg-prefs">
+      <div class="tg-pgrp"><div class="tg-pl">Region</div><div class="chips2" id="tc-region"></div></div>
+      <div class="tg-pgrp"><div class="tg-pl">Levels you'll consider</div><div class="chips2" id="tc-levels"></div></div>
+      <div class="tg-pgrp"><div class="tg-pl">How much do academics matter?</div><div class="chips2" id="tc-acad"></div></div>
+    </div>
+
+    <button class="runbtn" onclick="runStrategist()">Build my target list →</button>
+
+    <div class="agentrun" id="tg-run" style="display:none">
+      <div class="spinner"></div>
+      <div class="runstep" id="tg-rs">Reading your verdict…</div>
+      <div class="runsub" id="tg-rsub"></div>
+    </div>
+
+    <div id="tg-out" style="display:none">
+      <div class="foundbar" id="tg-summary"></div>
+      <div id="tg-buckets"></div>
+      <div class="hint" style="margin-top:14px">Built from your read, program level, region and academics. The live Strategist adds real-time roster needs and contact windows.</div>
     </div>
   </div>
 
@@ -496,9 +564,11 @@ if(!SHARED){
 function tab(v){
   document.querySelectorAll('.seg button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});
   document.getElementById('v-card').classList.toggle('on',v==='card');
+  document.getElementById('v-targets').classList.toggle('on',v==='targets');
   document.getElementById('v-send').classList.toggle('on',v==='send');
   document.getElementById('v-reel').classList.toggle('on',v==='reel');
   if(v==='send') renderTemplates();
+  if(v==='targets'){ if(!tab._tinit){ tgInit(); tab._tinit=true; } else { tgReadPanel(); } window.scrollTo(0,0); }
 }
 
 /* ---------- share link ---------- */
@@ -887,6 +957,127 @@ function stopReel(){
   var vid=document.getElementById('rpvideo'); try{vid.pause();vid.onended=null;}catch(e){}
   document.getElementById('rp-play').innerHTML='<svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z"/></svg> Play reel';
 }
+
+/* ============================================================
+   THE STRATEGIST — reads natively from the Card model A.
+   Same engine as /strategist, sharing the athlete's read.
+   ============================================================ */
+var TPREFS={ region:'Anywhere', levels:'D1–D2', acad:'Balanced' };
+function tchips(id,opts,key){
+  var el=document.getElementById(id); if(!el)return;
+  el.innerHTML=opts.map(function(o){return '<div class="chip2'+(TPREFS[key]===o?' on':'')+'" data-v="'+o+'">'+o+'</div>';}).join('');
+  el.querySelectorAll('.chip2').forEach(function(c){ c.onclick=function(){ TPREFS[key]=c.dataset.v; tchips(id,opts,key); }; });
+}
+function tgReadPanel(){
+  var el=document.getElementById('tg-read'); if(!el)return;
+  el.innerHTML='<div class="tnum">'+A.fc.num+'</div><div class="twho"><b>'+(A.name||'Your read')+'</b><br>'+[A.pos,A.cls?'Class of '+A.cls:'',A.sport].filter(Boolean).join(' · ')
+    +'<span class="tlock">🔒 engine-graded · the honest anchor</span></div>';
+}
+function tgInit(){
+  tchips('tc-region',['West','Midwest','South','Northeast','Anywhere'],'region');
+  tchips('tc-levels',['D1 only','D1–D2','All levels'],'levels');
+  tchips('tc-acad',['Matters a lot','Balanced','Athletics first'],'acad');
+  tgReadPanel();
+}
+
+var TSCHOOLS=[
+  {n:'Nebraska',d:'D1',c:'Big Ten',r:'Midwest',acad:1,level:9.4},{n:'Texas',d:'D1',c:'SEC',r:'South',acad:2,level:9.4},
+  {n:'Wisconsin',d:'D1',c:'Big Ten',r:'Midwest',acad:2,level:9.2},{n:'Penn State',d:'D1',c:'Big Ten',r:'Northeast',acad:2,level:9.1},
+  {n:'Stanford',d:'D1',c:'ACC',r:'West',acad:3,level:9.0},{n:'Louisville',d:'D1',c:'ACC',r:'South',acad:1,level:9.0},
+  {n:'Pittsburgh',d:'D1',c:'ACC',r:'Northeast',acad:2,level:9.0},{n:'Kentucky',d:'D1',c:'SEC',r:'South',acad:1,level:8.9},
+  {n:'Oregon',d:'D1',c:'Big Ten',r:'West',acad:1,level:8.3},{n:'Washington',d:'D1',c:'Big Ten',r:'West',acad:2,level:8.2},
+  {n:'Florida',d:'D1',c:'SEC',r:'South',acad:1,level:8.3},{n:'Minnesota',d:'D1',c:'Big Ten',r:'Midwest',acad:1,level:8.2},
+  {n:'Purdue',d:'D1',c:'Big Ten',r:'Midwest',acad:1,level:8.0},{n:'Creighton',d:'D1',c:'Big East',r:'Midwest',acad:1,level:8.0},
+  {n:'Marquette',d:'D1',c:'Big East',r:'Midwest',acad:1,level:7.9},{n:'Baylor',d:'D1',c:'Big 12',r:'South',acad:1,level:7.9},
+  {n:'Dayton',d:'D1',c:'Atlantic 10',r:'Midwest',acad:1,level:7.2},{n:'Yale',d:'D1',c:'Ivy',r:'Northeast',acad:3,level:7.1},
+  {n:'Princeton',d:'D1',c:'Ivy',r:'Northeast',acad:3,level:7.0},{n:'Colorado',d:'D1',c:'Big 12',r:'West',acad:1,level:7.1},
+  {n:'San Diego',d:'D1',c:'WCC',r:'West',acad:2,level:7.0},{n:'Western Kentucky',d:'D1',c:'C-USA',r:'South',acad:0,level:6.6},
+  {n:'Northern Iowa',d:'D1',c:'MVC',r:'Midwest',acad:1,level:6.4},{n:'Loyola Chicago',d:'D1',c:'Atlantic 10',r:'Midwest',acad:1,level:6.2},
+  {n:'UC Irvine',d:'D1',c:'Big West',r:'West',acad:1,level:6.2},{n:'Towson',d:'D1',c:'CAA',r:'Northeast',acad:0,level:6.0},
+  {n:'Mercer',d:'D1',c:'SoCon',r:'South',acad:1,level:5.9},{n:'Nova Southeastern',d:'D2',c:'SSC',r:'South',acad:1,level:5.4},
+  {n:'Concordia–St. Paul',d:'D2',c:'NSIC',r:'Midwest',acad:1,level:5.5},{n:'Tampa',d:'D2',c:'SSC',r:'South',acad:1,level:5.2},
+  {n:'Cal State LA',d:'D2',c:'CCAA',r:'West',acad:0,level:5.0},{n:'Augustana',d:'D2',c:'NSIC',r:'Midwest',acad:2,level:5.1},
+  {n:'Johns Hopkins',d:'D3',c:'Centennial',r:'Northeast',acad:3,level:4.4},{n:'Emory',d:'D3',c:'UAA',r:'South',acad:3,level:4.3},
+  {n:'Calvin',d:'D3',c:'MIAA',r:'Midwest',acad:2,level:4.2},{n:'Wartburg',d:'D3',c:'ARC',r:'Midwest',acad:1,level:4.1},
+  {n:'Park University',d:'NAIA',c:'HAAC',r:'Midwest',acad:0,level:3.7},{n:'Indiana Tech',d:'NAIA',c:'WHAC',r:'Midwest',acad:0,level:3.6},
+  {n:'Iowa Western CC',d:'JUCO',c:'ICCAC',r:'Midwest',acad:0,level:3.4},{n:'Hutchinson CC',d:'JUCO',c:'KJCCC',r:'Midwest',acad:0,level:3.3}
+];
+function tNum(){ return parseFloat(A.fc.num)||7.0; }
+function tAcadStrength(){
+  var g=parseFloat(A.gpa)||0, s=g>=3.9?3:g>=3.6?2:g>=3.2?1:0;
+  var t=parseInt(String(A.test||'').replace(/[^0-9]/g,''),10);
+  if(t){ if(t>=1450||(t<=36&&t>=33)) s=Math.min(3,s+1); }
+  return s;
+}
+function tBand(n){ return n>=7.5?9:n>=7.0?8:n>=6.3?7:n>=5.6?6:n>=5.0?5:n>=4.3?4:3.2; }
+function tLevels(){ return TPREFS.levels==='D1 only'?['D1']:TPREFS.levels==='D1–D2'?['D1','D2']:['D1','D2','D3','NAIA','JUCO']; }
+function tTopInvis(){ var b=INVIS[0]; INVIS.forEach(function(i){ if(A.fc.facets[i]>A.fc.facets[b])b=i; }); return [A.fc.labels[b],A.fc.facets[b]]; }
+
+/* THE SINGLE AI INTEGRATION POINT — swap body for POST /.netlify/functions/strategist */
+function buildTargets(){
+  return new Promise(function(resolve){
+    var num=tNum(), band=tBand(num), aStr=tAcadStrength(), allow=tLevels();
+    var aw=TPREFS.acad==='Matters a lot'?1:TPREFS.acad==='Athletics first'?0.25:0.6;
+    var scored=TSCHOOLS.filter(function(s){return allow.indexOf(s.d)>=0;}).map(function(s){
+      var diff=s.level-band, acadGap=s.acad-aStr;
+      var levelFit=Math.max(0,1-Math.abs(diff)/2.2), acadFit=acadGap<=0?1:Math.max(0,1-acadGap/2.2);
+      var regionFit=(TPREFS.region==='Anywhere'||s.r===TPREFS.region)?1:0.55;
+      return {s:s,diff:diff,acadGap:acadGap,regionMatch:s.r===TPREFS.region,fit:levelFit*0.5+acadFit*aw*0.35+regionFit*0.15};
+    }).filter(function(x){ return !(x.acadGap>=2 && aw>=0.6); });
+    function bk(lo,hi){ return scored.filter(function(x){return x.diff>lo&&x.diff<=hi;}).sort(function(a,b){return b.fit-a.fit;}); }
+    setTimeout(function(){ resolve({reach:bk(0.45,1.7).slice(0,4),match:bk(-0.55,0.45).slice(0,5),safety:bk(-1.9,-0.55).slice(0,4)}); },150);
+  });
+}
+function tReasons(x,kind){
+  var s=x.s, inv=tTopInvis(), out=[];
+  out.push(kind==='reach'?'A stretch — but your ceiling reaches this level.':kind==='match'?'Your '+A.fc.num+' read sits right at this program\u2019s level.':'You\u2019d be a strong, contributing addition from day one.');
+  out.push(x.acadGap<=0?'Your '+(A.gpa||'')+' GPA clears their academic profile.':x.acadGap===1?'Academically within reach — keep the test score climbing.':'Academically a stretch — a long shot worth knowing.');
+  if(x.regionMatch) out.push('In your preferred region ('+s.r+').');
+  else out.push('Your '+inv[0].toLowerCase()+' ('+inv[1].toFixed(1)+') fits a '+s.c+' program.');
+  return out.slice(0,3);
+}
+function tDraft(s,kind){
+  var inv=tTopInvis(), lvl=kind==='reach'?'I know you recruit at the highest level, and I want to earn a look':'I think my game fits what '+s.n+' is building';
+  return 'Subject: '+(A.name||'[name]')+' — '+(A.pos||'')+', \u201926 — FieldCheck Verdict '+A.fc.num+'\n\nCoach,\n\nI\u2019m '+(A.name||'[name]')+', a '+(A.pos||'')+' in the class of '+(A.cls||'2026')+'. My independent FieldCheck verdict is '+A.fc.num+' — a GOAT-anchored read of my game, with '+inv[0].toLowerCase()+' ('+inv[1].toFixed(1)+') among my strengths. '+lvl+'.\n\nMy card and graded film: [your FieldCheck link]\n\nI\u2019d love the chance to compete for '+s.n+'. Thank you for your time.\n\n'+(A.name||'');
+}
+var TDRAFTS={};
+function runStrategist(){
+  tgReadPanel();
+  document.getElementById('tg-out').style.display='none';
+  var run=document.getElementById('tg-run'); run.style.display='block';
+  var steps=[['Reading your verdict…','8 facets, the invisible four'],['Matching the program field…','level, region, academics'],['Weighing honest fit…','no wish-list inflation'],['Sorting reach · match · safety…','where you actually land'],['Writing your outreach…','each note led by your verdict']];
+  var i=0; document.getElementById('tg-rs').textContent=steps[0][0]; document.getElementById('tg-rsub').textContent=steps[0][1];
+  var iv=setInterval(function(){ i++;
+    if(i>=steps.length){ clearInterval(iv); buildTargets().then(function(res){ run.style.display='none'; tRender(res); }); return; }
+    document.getElementById('tg-rs').textContent=steps[i][0]; document.getElementById('tg-rsub').textContent=steps[i][1];
+  },780);
+}
+function tRender(res){
+  document.getElementById('tg-out').style.display='block';
+  var total=res.reach.length+res.match.length+res.safety.length;
+  document.getElementById('tg-summary').innerHTML='From your <b>'+A.fc.num+'</b> read, the Strategist found <b>'+total+' honest fits</b> — <b>'+res.match.length+'</b> right at your level, <b>'+res.reach.length+'</b> to stretch for, <b>'+res.safety.length+'</b> where you\u2019d lead. Not one inflated to flatter you.';
+  var h=tBucket('Match','var(--moss)','best odds — your read fits the roster',res.match,'match')
+       +tBucket('Reach','#c98b6a','aim high — earn the look',res.reach,'reach')
+       +tBucket('Safety','#7e93b8','you\u2019d be a difference-maker',res.safety,'safety');
+  document.getElementById('tg-buckets').innerHTML=h;
+}
+function tBucket(name,color,desc,list,kind){
+  if(!list.length)return '';
+  var h='<div class="tg-bucket"><div class="tg-bhead"><span class="tg-bdot" style="background:'+color+'"></span><span class="tg-bn">'+name+'</span><span class="tg-bd">'+desc+'</span></div>';
+  list.forEach(function(x,idx){
+    var s=x.s, id=kind+idx, rs=tReasons(x,kind);
+    h+='<div class="sch"><div class="schh"><div><div class="snm">'+s.n+'</div><div class="smeta">'+s.d+' · '+s.c+' · '+s.r+'</div></div><div class="sfit"><div class="sfp">'+Math.round(72+x.fit*25)+'%</div><div class="sfl">fit</div></div></div>'
+      +'<div class="srs">'+rs.map(function(r){return '<div class="sr"><span class="srk">›</span><span>'+r+'</span></div>';}).join('')+'</div>'
+      +'<div class="schact"><button class="schb fill" onclick="tToggle(\''+id+'\')">Draft outreach</button><button class="schb" onclick="toast(\'Saved to your list\')">Save</button></div>'
+      +'<div class="schdraft" id="td-'+id+'">'+tDraft(s,kind).replace(/\[your FieldCheck link\]/g,'<span class="var">[your FieldCheck link]</span>')
+      +'<div class="schact" style="margin-top:10px"><button class="schb fill" onclick="tCopy(\''+id+'\')">Copy</button><button class="schb" onclick="tShare(\''+id+'\')">Share</button></div></div></div>';
+    TDRAFTS[id]=tDraft(s,kind);
+  });
+  return h+'</div>';
+}
+function tToggle(id){ document.getElementById('td-'+id).classList.toggle('on'); }
+function tCopy(id){ var t=TDRAFTS[id]; if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){toast('Outreach copied');},function(){prompt('Copy:',t);});}else prompt('Copy:',t); }
+function tShare(id){ var t=TDRAFTS[id]; if(navigator.share){navigator.share({text:t}).catch(function(){});}else tCopy(id); }
 
 /* ---------- boot ---------- */
 renderCard();

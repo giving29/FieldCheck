@@ -33,6 +33,8 @@
         +'<div style="font-family:Fraunces,Georgia,serif;font-size:16px;font-weight:600;color:#f3eee2">'+esc(first)+'</div>'
         +'<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:#9a9486;margin-top:4px">'+esc(u.role||'Member')+(u.email?' \u00b7 '+esc(shortEmail(u.email)):'')+'</div>'
       +'</div>'
+      +'<a href="/studio" style="display:block;padding:10px 12px;border-radius:8px;color:#e8bf70;text-decoration:none;font-size:13.5px;font-weight:600">My Studio &rarr;</a>'
+      +'<a href="/strategist" style="display:block;padding:9px 12px;border-radius:8px;color:#cfc9bb;text-decoration:none;font-size:13.5px">Find my fit &rarr;</a>'
       +'<a href="/login" style="display:block;padding:9px 12px;border-radius:8px;color:#cfc9bb;text-decoration:none;font-size:13.5px">Account</a>'
       +'<button id="fc-signout" style="width:100%;text-align:left;background:none;border:0;cursor:pointer;padding:9px 12px;border-radius:8px;color:#e7a17e;font-size:13.5px;font-family:inherit">Sign out</button>';
     document.body.appendChild(m);
