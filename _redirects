@@ -19,8 +19,8 @@
 /conference                        /fieldcheck-conference.html          200
 /predictions                       /PREDICTION_LEDGER_V1.html           200
 /moat                              /index.html                          200
-/methodology                       /voices                              302
-/methodology/*                     /fc_canonical_state_v1               302
+/methodology    /methodology.html    200
+/methodology/*    /methodology.html    200
 /pricing                           /index.html                          200
 /lovb                              /lovb.html          200
 /canonical                         /FC_CANONICAL_STATE_V1.html          200
@@ -38,7 +38,7 @@
 /shape                             /fieldcheck-shape-quiz.html          200
 /drop                              /fieldcheck-daily-drop.html          200
 /pitch                             /fieldcheck-pitch.html               200
-/voices                            /fieldcheck-voices.html              200
+/voices    /methodology.html    200
 /deck                              /fieldcheck-deck.html                200
 /clips                             /fieldcheck-clips.html               200
 /add-clip                          /fieldcheck-add-clip.html            200
@@ -53,3 +53,5 @@
 /login  /login.html  200
 
 /studio  /studio.html  200
+
+/ai  /ai.html  200
