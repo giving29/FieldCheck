@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>FieldCheck · Recruiting Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0907; --ink2:#13100b; --panel:#17130c; --card:#100d08;
+    --gold:#d4a24c; --gold-hi:#e8bf70; --goldl:rgba(184,152,90,.26);
+    --bone:#f3eee2; --t2:#cfc9bb; --t3:#9a9486; --t4:#6f695d;
+    --line:rgba(184,152,90,.18); --moss:#7c9b6e;
+    --cg:'Fraunces',Georgia,serif; --body:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--body);color:var(--bone);background:radial-gradient(130% 80% at 50% 0%,#191510,var(--ink) 60%);
+    -webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:40px}
+  .shell{max-width:430px;margin:0 auto;padding:0 16px}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 2px 10px;position:sticky;top:0;
+    background:linear-gradient(180deg,var(--ink) 65%,transparent);z-index:30}
+  .top .brand{display:flex;align-items:center;gap:9px}
+  .top .logo{width:26px;height:26px;border-radius:50%;border:1px solid var(--goldl);display:flex;align-items:center;justify-content:center;font-family:var(--cg);font-weight:600;color:var(--gold-hi);font-size:13px}
+  .top b{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t2);font-weight:500}
+  .top a.x{color:var(--t3);text-decoration:none;font-size:13px}
+
+  .lead{padding:6px 2px 4px}
+  .lead h1{font-family:var(--cg);font-weight:600;font-size:26px;line-height:1.05;letter-spacing:-.3px}
+  .lead p{color:var(--t3);font-size:13px;line-height:1.5;margin-top:6px}
+
+  /* segmented */
+  .seg{display:flex;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:4px;margin:14px 0}
+  .seg button{flex:1;border:0;background:none;color:var(--t3);font-family:var(--body);font-weight:600;font-size:12.5px;
+    padding:9px 0;border-radius:9px;cursor:pointer;transition:.15s}
+  .seg button.on{background:rgba(232,191,112,.12);color:var(--gold-hi)}
+
+  .view{display:none}.view.on{display:block;animation:rise .35s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ============ THE CARD ============ */
+  #cardwrap{display:flex;justify-content:center}
+  .card{width:100%;max-width:380px;background:var(--card);border:1px solid var(--goldl);border-radius:20px;overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .card .ch{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;
+    border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(212,162,76,.08),transparent)}
+  .card .ch .k{font-family:var(--mono);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+  .card .ch .tier{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--gold-hi);
+    border:1px solid var(--goldl);border-radius:999px;padding:3px 8px}
+  .card .id{padding:16px 18px 8px}
+  .card .id h2{font-family:var(--cg);font-weight:600;font-size:27px;line-height:1.02;letter-spacing:-.4px}
+  .card .id .meta{font-family:var(--mono);font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--t3);margin-top:6px;line-height:1.5}
+
+  .vbox{margin:8px 18px 0;padding:14px 16px;border:1px solid var(--goldl);border-radius:14px;
+    background:linear-gradient(160deg,rgba(212,162,76,.1),rgba(20,16,10,.4));display:flex;align-items:center;gap:14px}
+  .vbox .num{font-family:var(--cg);font-weight:600;font-size:52px;line-height:.9;color:var(--gold-hi)}
+  .vbox .vmeta .lab{font-family:var(--mono);font-size:8px;letter-spacing:1.6px;text-transform:uppercase;color:var(--t3)}
+  .vbox .vmeta .voice{font-family:var(--cg);font-style:italic;font-weight:600;font-size:18px;color:var(--bone);margin-top:2px}
+  .vbox .vmeta .gv{font-family:var(--mono);font-size:8px;letter-spacing:.4px;color:var(--t4);margin-top:5px}
+  .lock{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:7.5px;letter-spacing:.8px;
+    text-transform:uppercase;color:var(--gold);border:1px solid var(--goldl);border-radius:999px;padding:2px 6px;margin-top:6px}
+
+  .polywrap{display:flex;justify-content:center;padding:6px 12px 0}
+  .polywrap svg{width:230px;height:230px}
+
+  .reads{padding:4px 18px 0}
+  .reads .rh{font-family:var(--mono);font-size:8px;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .reads .row{display:flex;align-items:baseline;gap:8px;margin-bottom:7px}
+  .reads .row .dot{color:var(--gold-hi);font-size:9px;line-height:1.4}
+  .reads .row .nm{font-family:var(--body);font-weight:600;font-size:12px;color:var(--bone);min-width:108px}
+  .reads .row .vv{font-family:var(--cg);font-weight:600;font-size:13px;color:var(--gold-hi)}
+  .reads .row .rd{font-size:10.5px;color:var(--t3);line-height:1.35;flex:1}
+
+  .strip{display:flex;border-top:1px solid var(--line);margin-top:12px}
+  .strip .cell{flex:1;padding:11px 8px;text-align:center;border-right:1px solid var(--line)}
+  .strip .cell:last-child{border-right:0}
+  .strip .cell .v{font-family:var(--cg);font-weight:600;font-size:17px;color:var(--bone)}
+  .strip .cell .l{font-family:var(--mono);font-size:7px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);margin-top:3px}
+
+  .acad{display:flex;gap:8px;padding:11px 18px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .acad span{font-family:var(--mono);font-size:8.5px;letter-spacing:.6px;color:var(--t2)}
+  .acad b{color:var(--gold-hi);font-weight:700}
+
+  .cfoot{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 16px;border-top:1px solid var(--line)}
+  .cfoot .ct{font-family:var(--mono);font-size:9px;letter-spacing:.4px;color:var(--t2);line-height:1.5}
+  .cfoot .ct b{color:var(--gold-hi);font-weight:700}
+  .cfoot .wm{font-family:var(--cg);font-weight:600;font-size:11px;color:var(--t4)}
+  .cfoot .wm i{color:var(--gold);font-style:normal}
+
+  /* action row */
+  .acts{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:16px 0 6px}
+  .act{background:var(--panel);border:1px solid var(--goldl);border-radius:13px;padding:11px 4px 9px;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;gap:6px;transition:.14s}
+  .act:active{transform:scale(.95)}
+  .act svg{width:19px;height:19px;stroke:var(--gold-hi);fill:none;stroke-width:1.7}
+  .act span{font-family:var(--mono);font-size:7.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--t2)}
+  .act.primary{background:linear-gradient(180deg,#eccb86,var(--gold));border:0}
+  .act.primary svg{stroke:#1a1206}.act.primary span{color:#1a1206}
+  .hint{font-size:11px;color:var(--t4);text-align:center;margin-top:4px;line-height:1.5}
+
+  /* edit panel */
+  .edit{margin-top:18px}
+  details{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+  summary{padding:14px 16px;font-family:var(--body);font-weight:600;font-size:13.5px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary .chev{color:var(--t3);transition:.2s}
+  details[open] summary .chev{transform:rotate(180deg)}
+  .efields{padding:2px 16px 16px;display:grid;gap:12px}
+  .fl{font-family:var(--mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t3);margin-bottom:6px;display:block}
+  .inp{width:100%;height:44px;border-radius:10px;background:var(--ink2);border:1px solid var(--goldl);color:var(--bone);
+    font-family:var(--body);font-size:14px;padding:0 13px;outline:none}
+  .inp:focus{border-color:var(--gold-hi)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .locknote{font-size:11px;color:var(--t4);line-height:1.5;background:rgba(212,162,76,.06);border:1px solid var(--line);border-radius:10px;padding:11px 12px}
+  .locknote b{color:var(--gold-hi)}
+
+  /* ============ SEND KIT ============ */
+  .tpl{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px;margin-bottom:13px}
+  .tpl .th{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .tpl .th .tt{font-family:var(--cg);font-weight:600;font-size:16px}
+  .tpl .th .badge{font-family:var(--mono);font-size:7.5px;letter-spacing:1px;text-transform:uppercase;color:var(--gold-hi);border:1px solid var(--goldl);border-radius:999px;padding:3px 8px}
+  .tpl .body{font-size:13px;line-height:1.6;color:var(--t2);white-space:pre-wrap;background:var(--ink2);border:1px solid var(--line);border-radius:11px;padding:13px;max-height:none}
+  .tpl .body .var{color:var(--gold-hi);font-weight:600}
+  .tplbtns{display:flex;gap:8px;margin-top:11px}
+  .tb{flex:1;height:42px;border-radius:10px;border:1px solid var(--goldl);background:var(--ink2);color:var(--bone);
+    font-family:var(--body);font-weight:600;font-size:12.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
+  .tb.fill{background:linear-gradient(180deg,#eccb86,var(--gold));border:0;color:#1a1206}
+  .tb svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
+  .coachrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+
+  /* modal */
+  .ov{position:fixed;inset:0;background:rgba(5,4,3,.86);display:none;align-items:center;justify-content:center;z-index:80;padding:24px}
+  .ov.on{display:flex}
+  .sheet{width:100%;max-width:340px;background:var(--ink2);border:1px solid var(--goldl);border-radius:18px;padding:22px;text-align:center}
+  .sheet h3{font-family:var(--cg);font-weight:600;font-size:20px;margin-bottom:6px}
+  .sheet p{font-size:12.5px;color:var(--t3);line-height:1.5}
+  #qrbox{display:flex;justify-content:center;margin:18px 0;padding:14px;background:#fff;border-radius:14px}
+  #qrbox img,#qrbox canvas{display:block}
+  .sheet .lnk{font-family:var(--mono);font-size:10px;color:var(--gold-hi);word-break:break-all;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px;margin-top:4px}
+  .sheet button{margin-top:14px;width:100%;height:46px;border-radius:11px;border:0;background:linear-gradient(180deg,#eccb86,var(--gold));color:#1a1206;font-family:var(--body);font-weight:600;font-size:14px;cursor:pointer}
+
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#1c1811;border:1px solid var(--goldl);
+    color:var(--bone);font-size:13px;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:90;pointer-events:none}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ============ HIGHLIGHT AGENT ============ */
+  .agentintro{margin-bottom:14px}
+  .ai-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-hi);margin-bottom:8px}
+  .agentintro p{font-size:13px;line-height:1.55;color:var(--t2)}
+  .agentintro b{color:var(--gold-hi);font-weight:600}
+  .drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:30px 18px;border:1.5px dashed var(--goldl);
+    border-radius:16px;background:rgba(212,162,76,.04);cursor:pointer;text-align:center;transition:.15s}
+  .drop:active{transform:scale(.99)}
+  .drop.hot{border-color:var(--gold-hi);background:rgba(212,162,76,.1)}
+  .dropic{width:44px;height:44px;border-radius:50%;border:1px solid var(--goldl);display:flex;align-items:center;justify-content:center;color:var(--gold-hi);font-size:22px;margin-bottom:4px}
+  .dropt{font-family:var(--cg);font-weight:600;font-size:17px}
+  .drops{font-size:11px;color:var(--t4);line-height:1.4}
+  .clips{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:12px}
+  .clipx{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--panel)}
+  .clipx img{width:100%;height:100%;object-fit:cover}
+  .clipx .dur{position:absolute;bottom:4px;right:4px;font-family:var(--mono);font-size:7px;background:rgba(8,7,6,.7);color:var(--bone);padding:1px 4px;border-radius:4px}
+  .clipx .del{position:absolute;top:3px;right:3px;width:17px;height:17px;border-radius:50%;background:rgba(8,7,6,.7);color:var(--bone);border:0;font-size:11px;cursor:pointer;line-height:1}
+  .runbtn{width:100%;height:50px;margin-top:14px;border-radius:13px;border:0;cursor:pointer;background:linear-gradient(180deg,#eccb86,var(--gold));
+    color:#1a1206;font-family:var(--body);font-weight:600;font-size:14.5px}
+  .link2{display:block;width:100%;background:none;border:0;color:var(--t3);font-family:var(--body);font-size:12.5px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin-top:13px;padding:6px}
+
+  .agentrun{text-align:center;padding:36px 20px}
+  .spinner{width:38px;height:38px;border-radius:50%;border:2.5px solid rgba(212,162,76,.2);border-top-color:var(--gold-hi);margin:0 auto 18px;animation:sp .8s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .runstep{font-family:var(--cg);font-weight:600;font-size:18px;color:var(--bone)}
+  .runsub{font-family:var(--mono);font-size:10px;letter-spacing:.5px;color:var(--t3);margin-top:8px;min-height:14px}
+
+  .foundbar{background:linear-gradient(160deg,rgba(212,162,76,.14),rgba(20,16,10,.4));border:1px solid var(--goldl);border-radius:13px;
+    padding:14px 16px;font-size:13px;line-height:1.5;color:var(--bone);margin-bottom:18px}
+  .foundbar b{color:var(--gold-hi)}
+  .rh2{font-family:var(--mono);font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:11px}
+  .moments{display:flex;flex-direction:column;gap:9px}
+  .moment{display:flex;gap:11px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:9px;align-items:center}
+  .moment.inv{border-color:var(--goldl);background:linear-gradient(160deg,rgba(212,162,76,.07),var(--panel))}
+  .moment .mt{width:62px;height:62px;border-radius:9px;object-fit:cover;flex-shrink:0;background:var(--ink2)}
+  .moment .mbody{flex:1;min-width:0}
+  .moment .mfac{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .moment .ftag{font-family:var(--mono);font-size:8px;letter-spacing:.6px;text-transform:uppercase;padding:2px 7px;border-radius:999px;border:1px solid var(--goldl);color:var(--gold-hi)}
+  .moment .ftag.inv{background:rgba(232,191,112,.14)}
+  .moment .fval{font-family:var(--cg);font-weight:600;font-size:14px;color:var(--gold-hi)}
+  .moment .mcap{font-size:12.5px;color:var(--bone);line-height:1.4;margin-top:5px}
+  .moment .mmeta{font-family:var(--mono);font-size:8px;letter-spacing:.4px;color:var(--t4);margin-top:5px}
+  .invtag{display:inline-block;font-family:var(--mono);font-size:7px;letter-spacing:1px;text-transform:uppercase;color:var(--moss);border:1px solid rgba(124,155,110,.4);border-radius:999px;padding:2px 6px;margin-left:4px}
+
+  .cuts{display:flex;flex-direction:column;gap:10px}
+  .cut{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;transition:.14s;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .cut.sel{border-color:var(--gold-hi);background:rgba(232,191,112,.06)}
+  .cut .cl{flex:1}
+  .cut .cn{font-family:var(--cg);font-weight:600;font-size:16px}
+  .cut .cd{font-size:11.5px;color:var(--t3);margin-top:3px;line-height:1.4}
+  .cut .cgo{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--gold-hi);border:1px solid var(--goldl);border-radius:8px;padding:8px 11px;white-space:nowrap}
+  .cut.sel .cgo{background:var(--gold-hi);color:#1a1206;border-color:var(--gold-hi)}
+
+  .reelplayer{margin-top:18px}
+  .rp-stage{position:relative;width:100%;aspect-ratio:9/12;max-height:62vh;border-radius:16px;overflow:hidden;background:#000;border:1px solid var(--goldl)}
+  .rp-stage video,.rp-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .rp-stage img{display:none}
+  .rp-grad{position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,7,5,.92) 4%,transparent 38%)}
+  .rp-ovl{position:absolute;left:16px;right:16px;bottom:18px;z-index:2}
+  .rp-facet{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:#1a1206;background:var(--gold-hi);padding:4px 9px;border-radius:999px;font-weight:700}
+  .rp-cap{font-family:var(--cg);font-weight:600;font-size:19px;line-height:1.15;color:#fff;margin-top:9px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+  .rp-ts{font-family:var(--mono);font-size:9px;letter-spacing:1px;color:var(--gold-hi);margin-top:6px}
+  .rp-prog{position:absolute;top:0;left:0;height:3px;background:var(--gold-hi);width:0;z-index:3;transition:width .2s linear}
+  .rp-note{font-size:11px;color:var(--t4);line-height:1.5;margin-top:12px}
+  .rp-note b{color:var(--t2)}
+
+  /* shared (coach) view banner */
+  .sharedbar{display:none;background:linear-gradient(180deg,rgba(212,162,76,.12),transparent);border-bottom:1px solid var(--line);
+    padding:11px 16px;text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold-hi)}
+  body.shared .sharedbar{display:block}
+  body.shared .top,body.shared .lead,body.shared .seg,body.shared .edit,body.shared #v-send{display:none!important}
+  body.shared .acts{grid-template-columns:1fr 1fr}
+  body.shared #cardwrap{margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="sharedbar">FieldCheck Verdict · shared by the athlete</div>
+
+<div class="shell">
+  <div class="top">
+    <div class="brand"><span class="logo">F</span><b>Recruiting Studio</b></div>
+    <a class="x" href="/">Close</a>
+  </div>
+
+  <div class="lead">
+    <h1>Your card. Your read. <span style="color:var(--gold-hi)">Your move.</span></h1>
+    <p>Built on your FieldCheck grade — the one number a coach can trust. Send it anywhere in one tap.</p>
+  </div>
+
+  <div class="seg">
+    <button class="on" data-v="card" onclick="tab('card')">Card</button>
+    <button data-v="send" onclick="tab('send')">Send</button>
+    <button data-v="reel" onclick="tab('reel')">Reel&nbsp;✦</button>
+  </div>
+
+  <!-- ============ CARD VIEW ============ -->
+  <div class="view on" id="v-card">
+    <div id="cardwrap">
+      <div class="card" id="fccard">
+        <div class="ch"><span class="k">FieldCheck · Verdict</span><span class="tier" id="c-tier">LOVB · OH</span></div>
+        <div class="id">
+          <h2 id="c-name">Your Name</h2>
+          <div class="meta" id="c-meta">Outside Hitter · Class of 2026 · Volleyball</div>
+        </div>
+        <div class="vbox">
+          <div class="num" id="c-num">7.4</div>
+          <div class="vmeta">
+            <div class="lab">FieldCheck Verdict</div>
+            <div class="voice" id="c-voice">The Closer</div>
+            <div class="gv">Graded vs the GOAT · 8 facets</div>
+            <span class="lock">🔒 engine-graded · can't be inflated</span>
+          </div>
+        </div>
+        <div class="polywrap"><svg id="c-poly" viewBox="0 0 280 280" aria-hidden="true"></svg></div>
+        <div class="reads">
+          <div class="rh">The invisible four · the moat</div>
+          <div id="c-reads"></div>
+        </div>
+        <div class="strip" id="c-stats"></div>
+        <div class="acad" id="c-acad"></div>
+        <div class="cfoot">
+          <div class="ct" id="c-contact"></div>
+          <div class="wm">Field<i>Check</i>IQ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acts">
+      <div class="act primary" onclick="doShare()"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg><span>Share</span></div>
+      <div class="act" onclick="saveImage()"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Image</span></div>
+      <div class="act" onclick="savePDF()"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg><span>PDF</span></div>
+      <div class="act" onclick="showQR()"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M21 14v7h-7"/></svg><span>QR</span></div>
+      <div class="act" onclick="copyLink()"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg><span>Link</span></div>
+    </div>
+    <div class="hint">Anyone who opens your link or scans the QR sees this exact card — no app, no login.</div>
+
+    <div class="edit">
+      <div class="locknote" style="margin-bottom:12px">🔒 <b>Your grade is locked.</b> The number, shape and reads come straight from the FieldCheck engine — that's what makes a coach trust it. You control everything else.</div>
+      <details open>
+        <summary>Identity &amp; position <span class="chev">▾</span></summary>
+        <div class="efields">
+          <div><label class="fl">Full name</label><input class="inp" id="f-name" placeholder="First Last"></div>
+          <div class="two">
+            <div><label class="fl">Sport</label><input class="inp" id="f-sport" placeholder="Volleyball"></div>
+            <div><label class="fl">Position</label><input class="inp" id="f-pos" placeholder="Outside Hitter"></div>
+          </div>
+          <div class="two">
+            <div><label class="fl">Class of</label><input class="inp" id="f-class" placeholder="2026"></div>
+            <div><label class="fl">Club / School</label><input class="inp" id="f-club" placeholder="LOVB Austin"></div>
+          </div>
+        </div>
+      </details>
+      <details>
+        <summary>Stats <span class="chev">▾</span></summary>
+        <div class="efields">
+          <div class="two"><div><label class="fl">Stat 1 label</label><input class="inp" id="f-s1l" placeholder="Kills/set"></div><div><label class="fl">Value</label><input class="inp" id="f-s1v" placeholder="4.2"></div></div>
+          <div class="two"><div><label class="fl">Stat 2 label</label><input class="inp" id="f-s2l" placeholder="Hitting %"></div><div><label class="fl">Value</label><input class="inp" id="f-s2v" placeholder=".312"></div></div>
+          <div class="two"><div><label class="fl">Stat 3 label</label><input class="inp" id="f-s3l" placeholder="Aces"></div><div><label class="fl">Value</label><input class="inp" id="f-s3v" placeholder="38"></div></div>
+        </div>
+      </details>
+      <details>
+        <summary>Academics &amp; eligibility <span class="chev">▾</span></summary>
+        <div class="efields">
+          <div class="two"><div><label class="fl">GPA</label><input class="inp" id="f-gpa" placeholder="3.8"></div><div><label class="fl">Test</label><input class="inp" id="f-test" placeholder="1280 SAT"></div></div>
+          <div><label class="fl">NCAA ID</label><input class="inp" id="f-ncaa" placeholder="Optional"></div>
+        </div>
+      </details>
+      <details>
+        <summary>Contact <span class="chev">▾</span></summary>
+        <div class="efields">
+          <div><label class="fl">Email</label><input class="inp" id="f-email" type="email" placeholder="you@email.com"></div>
+          <div class="two"><div><label class="fl">Phone</label><input class="inp" id="f-phone" placeholder="(optional)"></div><div><label class="fl">@handle</label><input class="inp" id="f-handle" placeholder="@you"></div></div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ============ SEND VIEW ============ -->
+  <div class="view" id="v-send">
+    <div class="coachrow">
+      <div><label class="fl">Coach name</label><input class="inp" id="f-coach" placeholder="Coach Smith" oninput="renderTemplates()"></div>
+      <div><label class="fl">Program</label><input class="inp" id="f-program" placeholder="Nebraska" oninput="renderTemplates()"></div>
+    </div>
+    <div id="templates"></div>
+    <div class="hint" style="margin-top:6px">Every message leads with your verdict and links your card — the read is the hook a coach actually opens.</div>
+  </div>
+
+  <!-- ============ HIGHLIGHT AGENT ============ -->
+  <div class="view" id="v-reel">
+    <div class="agentintro">
+      <div class="ai-eyebrow">✦ FieldCheck Highlight Agent</div>
+      <p>Drop your raw film — full sets, scrimmages, phone clips. The agent watches it, finds your best moments <b>including the ones other reels skip</b>, and builds your reel narrated by your verdict.</p>
+    </div>
+
+    <label class="drop" id="drop">
+      <input type="file" id="clipinput" accept="video/*" multiple hidden>
+      <div class="dropic">＋</div>
+      <div class="dropt">Add your film</div>
+      <div class="drops">MP4 / MOV · multiple clips · stays on your device in this prototype</div>
+    </label>
+    <div class="clips" id="clipgrid"></div>
+    <button class="runbtn" id="runbtn" onclick="runAgent()" style="display:none">Let the agent watch your film →</button>
+    <button class="link2" id="trydemo" onclick="loadDemoClips()">or try it with sample film →</button>
+
+    <div class="agentrun" id="agentrun" style="display:none">
+      <div class="spinner"></div>
+      <div class="runstep" id="runstep">Watching your film…</div>
+      <div class="runsub" id="runsub"></div>
+    </div>
+
+    <div id="agentout" style="display:none">
+      <div class="foundbar" id="foundbar"></div>
+      <div class="rh2">The moments the agent found</div>
+      <div class="moments" id="moments"></div>
+
+      <div class="rh2" style="margin-top:24px">Your reel — three cuts</div>
+      <div class="cuts" id="cuts"></div>
+
+      <div class="reelplayer" id="reelplayer" style="display:none">
+        <div class="rp-stage" id="rp-stage">
+          <video id="rpvideo" playsinline muted></video>
+          <img id="rpimg" alt="">
+          <div class="rp-grad"></div>
+          <div class="rp-ovl">
+            <div class="rp-facet" id="rp-facet"></div>
+            <div class="rp-cap" id="rp-cap"></div>
+            <div class="rp-ts" id="rp-ts"></div>
+          </div>
+          <div class="rp-prog" id="rp-prog"></div>
+        </div>
+        <div class="tplbtns" style="margin-top:12px">
+          <button class="tb fill" id="rp-play" onclick="playReel()"><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z"/></svg> Play reel</button>
+          <button class="tb" onclick="toast('Saved to your Card')"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Add to Card</button>
+        </div>
+        <div class="rp-note">This prototype plays your clips in sequence with the agent's reads overlaid. <b>True auto player-detection and a downloadable MP4 render</b> arrive with the film pipeline.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QR / link modal -->
+<div class="ov" id="qrov">
+  <div class="sheet">
+    <h3>Scan to view the card</h3>
+    <p>Hand a coach the QR at a showcase — one scan opens your full FieldCheck card.</p>
+    <div id="qrbox"></div>
+    <div class="lnk" id="qrlink"></div>
+    <button onclick="copyLink();closeQR()">Copy link &amp; close</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* ---------- model ---------- */
+var INVIS=[0,4,5,7];
+function demo(){
+  return {
+    name:'Your Name', sport:'Volleyball', pos:'Outside Hitter', cls:'2026', club:'LOVB Austin', tier:'LOVB · OH',
+    fc:{ num:'7.4', voice:'The Closer',
+      labels:['Competitiveness','Power','Physical','Volleyball IQ','Mental Strength','Mindset','Ball Control','Character'],
+      facets:[7.6,7.3,7.0,7.2,7.5,7.1,7.2,7.3],
+      reads:['Swing gets bigger as the score tightens.','Resets fast after a stuff; swings clean.','Wants the moment — late-set conditioning shows.','Teammate-first; the culture piece.'] },
+    stats:[['Kills/set','4.2'],['Hitting %','.312'],['Aces','38']],
+    gpa:'3.8', test:'1280 SAT', ncaa:'',
+    email:'', phone:'', handle:''
+  };
+}
+var A = demo();
+
+/* prefill from session */
+try{
+  var u=JSON.parse(localStorage.getItem('fc_user_v1')||'null');
+  if(u){ if(u.name) A.name=u.name; if(u.email) A.email=u.email; }
+}catch(e){}
+
+/* ---------- shared (coach) view via ?a= ---------- */
+function decodeA(s){ try{ return JSON.parse(decodeURIComponent(escape(atob(s)))); }catch(e){ return null; } }
+function encodeA(o){ return btoa(unescape(encodeURIComponent(JSON.stringify(o)))); }
+var qp=new URLSearchParams(location.search);
+var SHARED=false;
+if(qp.get('a')){ var got=decodeA(qp.get('a')); if(got){ A=got; SHARED=true; document.body.classList.add('shared'); } }
+
+/* ---------- polygon ---------- */
+function buildPoly(){
+  var F=A.fc.facets, LB=A.fc.labels, cx=140, cy=140, r=86, ns='http://www.w3.org/2000/svg';
+  function pt(i,rr){var a=(-90+i*45)*Math.PI/180;return [cx+Math.cos(a)*rr, cy+Math.sin(a)*rr];}
+  var g='';
+  for(var k=1;k<=4;k++){ var pts=F.map(function(_,i){return pt(i,r*k/4).join(',');}).join(' '); g+='<polygon points="'+pts+'" fill="none" stroke="rgba(184,152,90,.1)"/>'; }
+  var shape=F.map(function(v,i){return pt(i,(v/10)*r).join(',');}).join(' ');
+  g+='<polygon points="'+shape+'" fill="rgba(212,162,76,.16)" stroke="#e8bf70" stroke-width="2" stroke-linejoin="round"/>';
+  LB.forEach(function(lb,i){
+    var inv=INVIS.indexOf(i)>=0, p=pt(i,(F[i]/10)*r);
+    g+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(inv?4:2.4)+'" fill="'+(inv?'#e8bf70':'#6b7480')+'"/>';
+    var lp=pt(i,r+15), anc=lp[0]<cx-8?'end':lp[0]>cx+8?'start':'middle';
+    g+='<text x="'+lp[0]+'" y="'+lp[1]+'" fill="'+(inv?'#e8bf70':'#8a8474')+'" font-family="JetBrains Mono,monospace" font-size="'+(inv?7.5:6.5)+'" font-weight="'+(inv?'700':'400')+'" text-anchor="'+anc+'" dominant-baseline="middle">'+lb+'</text>';
+  });
+  g+='<text x="'+cx+'" y="'+(cy+5)+'" fill="#e8bf70" font-family="Fraunces,serif" font-size="22" font-weight="600" text-anchor="middle">'+A.fc.num+'</text>';
+  document.getElementById('c-poly').innerHTML=g;
+}
+
+/* ---------- render card ---------- */
+function renderCard(){
+  document.getElementById('c-name').textContent=A.name||'Your Name';
+  document.getElementById('c-meta').textContent=[A.pos, A.cls?'Class of '+A.cls:'', A.sport].filter(Boolean).join(' · ');
+  document.getElementById('c-tier').textContent=A.tier||(A.sport||'');
+  document.getElementById('c-num').textContent=A.fc.num;
+  document.getElementById('c-voice').textContent=A.fc.voice;
+  buildPoly();
+  var rh='';
+  INVIS.forEach(function(fi,j){
+    rh+='<div class="row"><span class="dot">●</span><span class="nm">'+A.fc.labels[fi]+'</span><span class="vv">'+A.fc.facets[fi].toFixed(1)+'</span><span class="rd">'+(A.fc.reads[j]||'')+'</span></div>';
+  });
+  document.getElementById('c-reads').innerHTML=rh;
+  var sh='';
+  (A.stats||[]).forEach(function(s){ if(s[0]||s[1]) sh+='<div class="cell"><div class="v">'+(s[1]||'—')+'</div><div class="l">'+(s[0]||'')+'</div></div>'; });
+  document.getElementById('c-stats').innerHTML=sh||'<div class="cell"><div class="v">—</div><div class="l">add stats</div></div>';
+  var ac=[]; if(A.gpa)ac.push('GPA <b>'+A.gpa+'</b>'); if(A.test)ac.push('<b>'+A.test+'</b>'); if(A.club)ac.push(A.club); if(A.ncaa)ac.push('NCAA <b>'+A.ncaa+'</b>');
+  document.getElementById('c-acad').innerHTML=ac.map(function(x){return '<span>'+x+'</span>';}).join('');
+  var ct=[]; if(A.email)ct.push(A.email); if(A.phone)ct.push(A.phone); if(A.handle)ct.push('<b>'+A.handle+'</b>');
+  document.getElementById('c-contact').innerHTML='<div class="ct">'+ (ct.join('<br>')||'Add your contact') +'</div>';
+}
+
+/* ---------- bind edit fields ---------- */
+function bind(id,fn){ var el=document.getElementById(id); if(!el)return; el.addEventListener('input',function(){ fn(el.value); renderCard(); }); }
+function fill(){
+  set('f-name',A.name);set('f-sport',A.sport);set('f-pos',A.pos);set('f-class',A.cls);set('f-club',A.club);
+  set('f-s1l',A.stats[0][0]);set('f-s1v',A.stats[0][1]);set('f-s2l',A.stats[1][0]);set('f-s2v',A.stats[1][1]);set('f-s3l',A.stats[2][0]);set('f-s3v',A.stats[2][1]);
+  set('f-gpa',A.gpa);set('f-test',A.test);set('f-ncaa',A.ncaa);set('f-email',A.email);set('f-phone',A.phone);set('f-handle',A.handle);
+}
+function set(id,v){ var el=document.getElementById(id); if(el) el.value=v||''; }
+if(!SHARED){
+  bind('f-name',function(v){A.name=v;});bind('f-sport',function(v){A.sport=v;});bind('f-pos',function(v){A.pos=v;});
+  bind('f-class',function(v){A.cls=v;});bind('f-club',function(v){A.club=v;});
+  bind('f-s1l',function(v){A.stats[0][0]=v;});bind('f-s1v',function(v){A.stats[0][1]=v;});
+  bind('f-s2l',function(v){A.stats[1][0]=v;});bind('f-s2v',function(v){A.stats[1][1]=v;});
+  bind('f-s3l',function(v){A.stats[2][0]=v;});bind('f-s3v',function(v){A.stats[2][1]=v;});
+  bind('f-gpa',function(v){A.gpa=v;});bind('f-test',function(v){A.test=v;});bind('f-ncaa',function(v){A.ncaa=v;});
+  bind('f-email',function(v){A.email=v;});bind('f-phone',function(v){A.phone=v;});bind('f-handle',function(v){A.handle=v;});
+  fill();
+}
+
+/* ---------- tabs ---------- */
+function tab(v){
+  document.querySelectorAll('.seg button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});
+  document.getElementById('v-card').classList.toggle('on',v==='card');
+  document.getElementById('v-send').classList.toggle('on',v==='send');
+  document.getElementById('v-reel').classList.toggle('on',v==='reel');
+  if(v==='send') renderTemplates();
+}
+
+/* ---------- share link ---------- */
+function shareLink(){ return location.origin+location.pathname+'?a='+encodeA(A); }
+
+/* ---------- actions ---------- */
+function toast(m){ var t=document.getElementById('toast'); t.textContent=m; t.classList.add('on'); setTimeout(function(){t.classList.remove('on');},1900); }
+function copyLink(){ var l=shareLink(); if(navigator.clipboard){ navigator.clipboard.writeText(l).then(function(){toast('Link copied');},function(){prompt('Copy your link:',l);}); } else { prompt('Copy your link:',l); } }
+function doShare(){
+  var l=shareLink(), txt=(A.name||'My')+' · FieldCheck Verdict '+A.fc.num+' ('+A.fc.voice+')';
+  if(navigator.share){ navigator.share({title:'FieldCheck Card',text:txt,url:l}).catch(function(){}); }
+  else { copyLink(); }
+}
+function capture(cb){
+  var card=document.getElementById('fccard');
+  if(typeof html2canvas==='undefined'){ toast('Still loading — try again'); return; }
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){
+    html2canvas(card,{backgroundColor:'#100d08',scale:2,useCORS:true,logging:false}).then(cb).catch(function(){toast('Could not render image');});
+  });
+}
+function saveImage(){
+  capture(function(canvas){
+    canvas.toBlob(function(blob){
+      var file=new File([blob],'fieldcheck-card.png',{type:'image/png'});
+      if(navigator.canShare&&navigator.canShare({files:[file]})){ navigator.share({files:[file],title:'FieldCheck Card'}).catch(function(){dl(blob);}); }
+      else dl(blob);
+    },'image/png');
+  });
+  function dl(blob){ var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='fieldcheck-card.png'; a.click(); toast('Image saved'); }
+}
+function savePDF(){
+  capture(function(canvas){
+    try{
+      var jsPDF=window.jspdf.jsPDF, img=canvas.toDataURL('image/png');
+      var w=canvas.width, h=canvas.height, pw=320, ph=pw*h/w;
+      var pdf=new jsPDF({unit:'pt',format:[pw+40,ph+40]});
+      pdf.setFillColor(10,9,7); pdf.rect(0,0,pw+40,ph+40,'F');
+      pdf.addImage(img,'PNG',20,20,pw,ph);
+      pdf.save('fieldcheck-card.pdf'); toast('PDF saved');
+    }catch(e){ toast('PDF needs a moment — retry'); }
+  });
+}
+
+/* ---------- QR ---------- */
+var qrDrawn=false;
+function showQR(){
+  document.getElementById('qrlink').textContent=shareLink();
+  var box=document.getElementById('qrbox'); box.innerHTML='';
+  try{ new QRCode(box,{text:shareLink(),width:190,height:190,colorDark:'#0a0907',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M}); }
+  catch(e){ box.innerHTML='<div style="color:#333;font-size:12px">QR unavailable</div>'; }
+  document.getElementById('qrov').classList.add('on');
+}
+function closeQR(){ document.getElementById('qrov').classList.remove('on'); }
+document.getElementById('qrov').addEventListener('click',function(e){ if(e.target===this) closeQR(); });
+
+/* ---------- send-kit templates ---------- */
+function tplData(){
+  var coach=document.getElementById('f-coach')?document.getElementById('f-coach').value.trim():'';
+  var prog=document.getElementById('f-program')?document.getElementById('f-program').value.trim():'';
+  return {
+    coach:coach||'Coach', prog:prog||'your program',
+    name:A.name||'[name]', pos:A.pos||'[position]', cls:A.cls||'[year]',
+    num:A.fc.num, voice:A.fc.voice, link:shareLink()
+  };
+}
+function renderTemplates(){
+  var d=tplData();
+  var V=function(s){return '<span class="var">'+s+'</span>';};
+  var email='Subject: '+d.name+' — '+d.pos+', Class of '+d.cls+' — FieldCheck Verdict '+d.num+'\n\n'+
+    'Coach '+V(d.coach)+',\n\nI\u2019m '+d.name+', a '+d.pos+' in the class of '+d.cls+'. My independent FieldCheck verdict is '+
+    d.num+' ('+d.voice+') — a GOAT-anchored read of my game, including the traits a stat line never shows.\n\n'+
+    'My card and graded film: '+V(d.link)+'\n\nI\u2019d love the chance to compete for '+V(d.prog)+'. Thank you for your time.\n\n'+d.name;
+  var text='Hi Coach '+V(d.coach)+' — '+d.name+', '+d.pos+' \u201827... my FieldCheck verdict is '+d.num+' ('+d.voice+'), an honest GOAT-anchored read + film: '+V(d.link)+'. Would love to talk about '+V(d.prog)+'.';
+  var dm='Coach — '+d.name+' here ('+d.pos+'). FieldCheck graded me '+d.num+' \u2014 '+d.voice+'. Card + film: '+V(d.link)+' 🏐';
+  var html='';
+  html+=tplCard('Email a coach','Email',email);
+  html+=tplCard('Text message','SMS',text);
+  html+=tplCard('Instagram / X DM','DM',dm);
+  document.getElementById('templates').innerHTML=html;
+}
+function tplCard(title,badge,body){
+  var raw=body.replace(/<span class="var">(.*?)<\/span>/g,'$1');
+  var enc=encodeURIComponent(raw);
+  return '<div class="tpl"><div class="th"><span class="tt">'+title+'</span><span class="badge">'+badge+'</span></div>'+
+    '<div class="body">'+body+'</div>'+
+    '<div class="tplbtns">'+
+      '<button class="tb" onclick="copyText(decodeURIComponent(\''+enc+'\'))"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>Copy</button>'+
+      '<button class="tb fill" onclick="shareText(decodeURIComponent(\''+enc+'\'))"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg>Share</button>'+
+    '</div></div>';
+}
+function copyText(t){ if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){toast('Copied — paste anywhere');},function(){prompt('Copy:',t);});}else prompt('Copy:',t); }
+function shareText(t){ if(navigator.share){navigator.share({text:t}).catch(function(){});}else copyText(t); }
+
+/* ============================================================
+   HIGHLIGHT AGENT
+   ============================================================ */
+var CLIPS=[];       // {thumb,dur,url,name}
+var MOMENTS=[];     // analyzed
+var CURCUT=null;
+
+/* ---- file intake + REAL frame thumbnail extraction ---- */
+var dropEl=document.getElementById('drop'), clipInput=document.getElementById('clipinput');
+if(dropEl){
+  dropEl.addEventListener('dragover',function(e){e.preventDefault();dropEl.classList.add('hot');});
+  dropEl.addEventListener('dragleave',function(){dropEl.classList.remove('hot');});
+  dropEl.addEventListener('drop',function(e){e.preventDefault();dropEl.classList.remove('hot');addFiles(e.dataTransfer.files);});
+  clipInput.addEventListener('change',function(){addFiles(this.files);});
+}
+function addFiles(files){
+  Array.prototype.forEach.call(files,function(f){
+    if(!/video\//.test(f.type) && !/\.(mp4|mov|m4v|webm)$/i.test(f.name)) return;
+    var url=URL.createObjectURL(f);
+    extractThumb(url,function(thumb,dur){
+      CLIPS.push({thumb:thumb,dur:dur,url:url,name:f.name});
+      renderClips();
+    });
+  });
+}
+function extractThumb(url,cb){
+  var v=document.createElement('video'); v.preload='metadata'; v.muted=true; v.playsInline=true; v.src=url;
+  var done=false;
+  v.addEventListener('loadeddata',function(){ try{ v.currentTime=Math.min(1.2,(v.duration||3)/3); }catch(e){ finish('',0); } });
+  v.addEventListener('seeked',function(){
+    try{
+      var c=document.createElement('canvas'), r=(v.videoHeight/v.videoWidth)||1;
+      c.width=200; c.height=Math.round(200*r);
+      c.getContext('2d').drawImage(v,0,0,c.width,c.height);
+      finish(c.toDataURL('image/jpeg',0.72), v.duration||0);
+    }catch(e){ finish('',v.duration||0); }
+  });
+  v.addEventListener('error',function(){ finish('',0); });
+  function finish(t,d){ if(done)return; done=true; cb(t,d); }
+  setTimeout(function(){ finish('',0); },4000);
+}
+function renderClips(){
+  var g=document.getElementById('clipgrid'); g.innerHTML='';
+  CLIPS.forEach(function(c,i){
+    var d=document.createElement('div'); d.className='clipx';
+    d.innerHTML=(c.thumb?'<img src="'+c.thumb+'">':'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#6f695d;font-size:9px">clip</div>')
+      +'<span class="dur">'+fmt(c.dur)+'</span><button class="del" onclick="delClip('+i+')">×</button>';
+    g.appendChild(d);
+  });
+  document.getElementById('runbtn').style.display = CLIPS.length? 'block':'none';
+  document.getElementById('trydemo').style.display = CLIPS.length? 'none':'block';
+}
+function delClip(i){ CLIPS.splice(i,1); renderClips(); }
+function fmt(s){ s=Math.round(s||0); return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2); }
+
+/* ---- DEMO film (no upload needed for a walkthrough) ---- */
+function loadDemoClips(){
+  var seeds=['Set 3 — match point','Quarterfinal vs Houston','Practice — serve receive','Club nationals','Timeout huddle','Set 2 rally'];
+  CLIPS = seeds.map(function(n,i){ return {thumb:'', dur:18+i*7, url:'', name:n, demo:true}; });
+  renderClips();
+  document.getElementById('runbtn').style.display='block';
+  document.getElementById('trydemo').style.display='none';
+  runAgent();
+}
+
+/* ---- THE AGENT RUN ---- */
+function runAgent(){
+  document.getElementById('runbtn').style.display='none';
+  document.getElementById('agentout').style.display='none';
+  var run=document.getElementById('agentrun'); run.style.display='block';
+  var steps=[
+    ['Watching '+CLIPS.length+' clips…','reading frames, isolating your touches'],
+    ['Scoring each moment vs the GOAT…','8 facets, frame by frame'],
+    ['Surfacing the invisible four…','the moments other reels never clip'],
+    ['Writing the honest read…','grounding every caption in the verdict'],
+    ['Building your narrative…','ordering the story — open, build, close']
+  ];
+  var i=0;
+  document.getElementById('runstep').textContent=steps[0][0];
+  document.getElementById('runsub').textContent=steps[0][1];
+  var iv=setInterval(function(){
+    i++;
+    if(i>=steps.length){
+      clearInterval(iv);
+      analyzeClips(CLIPS).then(function(moments){
+        MOMENTS=moments; run.style.display='none'; renderAgentOut();
+      });
+      return;
+    }
+    document.getElementById('runstep').textContent=steps[i][0];
+    document.getElementById('runsub').textContent=steps[i][1];
+  },950);
+}
+
+/* ============================================================
+   analyzeClips() — THE SINGLE AI INTEGRATION POINT.
+   Prototype: derives honest, verdict-grounded reads locally.
+   LIVE: replace the body with a POST to your vision pipeline
+   (e.g. /api/analyze → Claude multimodal → moment scoring),
+   returning the SAME shape. The whole UI above stays unchanged.
+   ============================================================ */
+function analyzeClips(clips){
+  return new Promise(function(resolve){
+    var labels=A.fc.labels, facets=A.fc.facets;
+    var CAP={
+      'Competitiveness':['down two, asked for the ball','the swing got bigger as the score tightened','chased a dead ball into the bench','wanted the next one before the whistle'],
+      'Mental Strength':['reset to a clean swing right after the stuff','next point — like the error never happened','stayed level after the bad call'],
+      'Mindset':['first one in the huddle, talking the rotation','called the seam before the serve went up','set the tempo the whole rotation'],
+      'Character':['picked up a teammate after a shank','owned the miss out loud, moved on','last one off the floor after the dig drill'],
+      'Power':['terminal swing straight through the block','high seam, no hesitation'],
+      'Ball Control':['platform stayed clean under pressure','perfect pass off a jump-serve'],
+      'Volleyball IQ':['read the tip a beat early','tooled the block on purpose'],
+      'Physical':['closed the block from the middle in time','third effort on the same rally'],
+      'Scoring':['took over the run with three straight','answer-point every time they crept close'],
+      'Athleticism':['ran down a ball no one else reaches'],
+      'Skill':['clean mechanics under a fast tempo'],
+      'Basketball IQ':['made the read before the help arrived']
+    };
+    var INV=INVIS; // invisible facet indices
+    var out=[]; var id=0;
+    clips.forEach(function(c,ci){
+      var n = c.dur>30?2:1;  // longer clips yield more moments
+      for(var k=0;k<n;k++){
+        // bias toward an invisible facet — that's the differentiator
+        var pickInv = Math.random()<0.62;
+        var fi = pickInv ? INV[Math.floor(Math.random()*INV.length)] : Math.floor(Math.random()*8);
+        var lbl=labels[fi];
+        var caps=CAP[lbl]||['a moment worth keeping'];
+        out.push({
+          id:id++, thumb:c.thumb, url:c.url, demo:!!c.demo,
+          facet:lbl, fidx:fi, fval:facets[fi],
+          invisible: INV.indexOf(fi)>=0,
+          caption:caps[Math.floor(Math.random()*caps.length)],
+          ts: fmt(Math.random()*(c.dur||20)),
+          clip:c.name, conf: 0.74+Math.random()*0.22
+        });
+      }
+    });
+    // sort by confidence, keep it tight
+    out.sort(function(a,b){return b.conf-a.conf;});
+    setTimeout(function(){ resolve(out.slice(0,8)); }, 200);
+  });
+}
+
+/* ---- render results ---- */
+function renderAgentOut(){
+  var out=document.getElementById('agentout'); out.style.display='block';
+  var invN=MOMENTS.filter(function(m){return m.invisible;}).length;
+  document.getElementById('foundbar').innerHTML='The agent found <b>'+MOMENTS.length+' moments</b> — and <b>'+invN+'</b> that a normal highlight reel would skip entirely. Those invisible ones are your edge.';
+  var mh='';
+  MOMENTS.forEach(function(m){
+    mh+='<div class="moment'+(m.invisible?' inv':'')+'">'
+      + (m.thumb?'<img class="mt" src="'+m.thumb+'">':'<div class="mt" style="display:flex;align-items:center;justify-content:center;color:#6f695d;font-size:8px;font-family:var(--mono)">'+m.ts+'</div>')
+      + '<div class="mbody"><div class="mfac"><span class="ftag'+(m.invisible?' inv':'')+'">'+m.facet+'</span><span class="fval">'+m.fval.toFixed(1)+'</span>'+(m.invisible?'<span class="invtag">invisible · the moat</span>':'')+'</div>'
+      + '<div class="mcap">"'+m.caption+'"</div>'
+      + '<div class="mmeta">'+esc(m.clip||'clip')+' · '+m.ts+' · '+Math.round(m.conf*100)+'% read confidence</div></div></div>';
+  });
+  document.getElementById('moments').innerHTML=mh;
+  buildCuts();
+  document.getElementById('reelplayer').style.display='none';
+}
+
+/* ---- the three cuts ---- */
+function buildCuts(){
+  var byConf=MOMENTS.slice().sort(function(a,b){return b.conf-a.conf;});
+  // coach cut: lead with strongest invisible, then narrative by confidence
+  var firstInv=byConf.filter(function(m){return m.invisible;})[0];
+  var coach=[]; if(firstInv) coach.push(firstInv);
+  byConf.forEach(function(m){ if(coach.indexOf(m)<0 && coach.length<6) coach.push(m); });
+  // story cut: punchiest 4
+  var story=byConf.slice(0,4);
+  // facet-proof: one per invisible facet present
+  var proof=[]; INVIS.forEach(function(fi){ var m=MOMENTS.filter(function(x){return x.fidx===fi;})[0]; if(m) proof.push(m); });
+  CUTS={
+    coach:{name:'Coach Cut',desc:'≈30s · narrative arc — opens on your signature trait, closes on the closer',list:coach},
+    story:{name:'Story Cut',desc:'Vertical · the 4 punchiest moments for IG / TikTok',list:story},
+    proof:{name:'Facet-Proof Cut',desc:'One clip per invisible trait — receipts for the moat',list:proof}
+  };
+  var ch='';
+  ['coach','story','proof'].forEach(function(key){
+    var c=CUTS[key];
+    ch+='<div class="cut" data-c="'+key+'" onclick="selectCut(\''+key+'\')"><div class="cl"><div class="cn">'+c.name+'</div><div class="cd">'+c.desc+' · '+c.list.length+' clips</div></div><div class="cgo">Build ✦</div></div>';
+  });
+  document.getElementById('cuts').innerHTML=ch;
+}
+var CUTS={};
+function selectCut(key){
+  CURCUT=CUTS[key];
+  document.querySelectorAll('.cut').forEach(function(c){ c.classList.toggle('sel',c.dataset.c===key); c.querySelector('.cgo').textContent = c.dataset.c===key?'Selected':'Build ✦'; });
+  var rp=document.getElementById('reelplayer'); rp.style.display='block';
+  showFrame(0);
+  rp.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ---- reel player: real sequential playback + overlays ---- */
+var reelPlaying=false, reelIdx=0, reelTimer=null;
+function showFrame(i){
+  var seq=CURCUT.list; if(!seq.length)return;
+  var m=seq[Math.min(i,seq.length-1)];
+  var vid=document.getElementById('rpvideo'), img=document.getElementById('rpimg');
+  document.getElementById('rp-facet').textContent=m.facet+' · '+m.fval.toFixed(1);
+  document.getElementById('rp-cap').textContent='"'+m.caption+'"';
+  document.getElementById('rp-ts').textContent='clip '+(i+1)+'/'+seq.length+' · '+m.ts;
+  document.getElementById('rp-prog').style.width=Math.round((i)/seq.length*100)+'%';
+  if(m.url){ img.style.display='none'; vid.style.display='block'; vid.src=m.url; try{vid.currentTime=0;}catch(e){} vid.pause(); }
+  else if(m.thumb){ vid.style.display='none'; img.style.display='block'; img.src=m.thumb; }
+  else { vid.style.display='none'; img.style.display='none'; }
+}
+function playReel(){
+  if(!CURCUT)return;
+  if(reelPlaying){ stopReel(); return; }
+  reelPlaying=true; reelIdx=0;
+  document.getElementById('rp-play').innerHTML='<svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg> Stop';
+  stepReel();
+}
+function stepReel(){
+  if(!reelPlaying)return;
+  var seq=CURCUT.list;
+  if(reelIdx>=seq.length){ endReel(); return; }
+  showFrame(reelIdx);
+  document.getElementById('rp-prog').style.width=Math.round((reelIdx+1)/seq.length*100)+'%';
+  var m=seq[reelIdx], vid=document.getElementById('rpvideo');
+  reelIdx++;
+  if(m.url){
+    vid.onended=function(){ if(reelPlaying) stepReel(); };
+    var capped=setTimeout(function(){ if(reelPlaying){ vid.onended=null; stepReel(); } },4500); // cap each clip ~4.5s
+    vid.play().catch(function(){ clearTimeout(capped); reelTimer=setTimeout(stepReel,2400); });
+  } else {
+    reelTimer=setTimeout(stepReel,2400);
+  }
+}
+function endReel(){ stopReel(); document.getElementById('rp-prog').style.width='100%'; toast('That\u2019s your reel ✦'); }
+function stopReel(){
+  reelPlaying=false; clearTimeout(reelTimer);
+  var vid=document.getElementById('rpvideo'); try{vid.pause();vid.onended=null;}catch(e){}
+  document.getElementById('rp-play').innerHTML='<svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z"/></svg> Play reel';
+}
+
+/* ---------- boot ---------- */
+renderCard();
+if(SHARED){ document.title=(A.name||'Athlete')+' · FieldCheck Card'; }
+</script>
+</body>
+</html>

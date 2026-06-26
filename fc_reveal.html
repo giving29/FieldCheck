@@ -162,6 +162,10 @@ const AUTHORED={
 const SPORTOF={'eugene wilson iii':'football','imhotep cromer':'football','luka doncic':'basketball','caitlin clark':'basketball','aj dybantsa':'basketball','harper murray':'volleyball','cooper flagg':'basketball','giannis antetokounmpo':'basketball','aaron judge':'baseball','lionel messi':'soccer','stephen curry':'basketball','cristiano ronaldo':'soccer','lebron james':'basketball','jordan larson':'volleyball','madisen skinner':'volleyball','cameron boozer':'basketball','juju watkins':'basketball'};
 const VOICEOF={'eugene wilson iii':'The Blur','imhotep cromer':'The Deep Threat','luka doncic':'The Maestro','caitlin clark':'The Logo','aj dybantsa':'The Next','harper murray':'The Pin','cooper flagg':'The Phenom','giannis antetokounmpo':'The Greek Freak','aaron judge':'The Judge','lionel messi':'The Genius','stephen curry':'The Revolution','cristiano ronaldo':'The Machine','lebron james':'The King','jordan larson':'The GOAT','madisen skinner':'The Closer','cameron boozer':'The Heir','juju watkins':'The Showstopper'};
 const LEVEL={'lebron james':8.5,'lionel messi':8.6,'cristiano ronaldo':8.2,'giannis antetokounmpo':8.3,'luka doncic':8.0,'cameron boozer':6.9,'juju watkins':7.6,'eugene wilson iii':6.2,'imhotep cromer':6.0};
+/* dynamic pronouns — never misgender. Female roster explicit; women's-volleyball → she; known others → he; truly unknown → they. */
+const PRO={f:{s:'she',S:'She',o:'her',p:'her',is:'is'},m:{s:'he',S:'He',o:'him',p:'his',is:'is'},n:{s:'they',S:'They',o:'them',p:'their',is:'are'}};
+const FEMALE=new Set(['caitlin clark','juju watkins','harper murray','jordan larson','madisen skinner','jordan thompson','shaye witherspoon','lauren carlini','manami kojima','olivia babcock','asjia oneal','camille csernik','amber igiede','logan eggleston','bergen reilly','jess mruzik','alexa gray','andi jackson','kelsey robinsoncook','lexi rodriguez','eva hudson','malorie boesiger','kendall omoruyi','nebraska cornhuskers','texas longhorns']);
+function pronOf(k,sport){ if(FEMALE.has(k)) return PRO.f; if(sport==='volleyball') return PRO.f; if(SPORTOF[k]) return PRO.m; return PRO.n; }
 const SUBMECH_FACET={
  0:['Response to runs','Closing-time usage','Effort / defensive pickup','50/50 & loose balls','Bounce-back after error'],
  4:['Reset after a mistake','Composure late & loud','Under-pressure execution','Focus through a slump','Body language in duress'],
@@ -203,11 +207,13 @@ function build(name){
  P.essence=ESSENCE[k]||(P.voice||'The Read').toUpperCase();
  P.slot=SLOT[k]||(P.world&&P.world.future?'STARS & STATS':'OVERLOOKED');
  P.fcNum=P.facets[0].toFixed(1);
+ P.pro=pronOf(k,P.sport);
  return P;
 }
 const params=new URLSearchParams(location.search);
 const P=build(params.get('p')||'Madisen Skinner');
 const F=P.facets,LB=P.labels,COMP=P.composite,GOAT=P.goatScore;
+function pron(s){if(!s)return s;var pr=P.pro||PRO.n;return String(s).replace(/\{S\}/g,pr.S).replace(/\{s\}/g,pr.s).replace(/\{o\}/g,pr.o).replace(/\{p\}/g,pr.p).replace(/\{is\}/g,pr.is);}
 
 function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
 function tx(p,s){const t=el('text',p);t.textContent=s;return t;}
@@ -313,25 +319,25 @@ function wrap(g,s,x,y,max,dy,attr){const w=s.split(' ');let line='',ln=0;w.forEa
 
 /* sProof — the world has missed gems before (big contrast) */
 (function(){const g=document.getElementById('sProof');
- add(g,tx({x:460,y:52,fill:'#e8bf70','font-size':12,'font-weight':600,'text-anchor':'middle','letter-spacing':2},'THE WORLD HAS MISSED GEMS BEFORE'));
- MISSES.forEach((m,i)=>{const x=120+i*210;const grp=add(g,el('g',{class:'miss',style:`--d:${i}`}));
-  add(grp,tx({x:x,y:90,fill:'#cfc9bb','font-size':15,'text-anchor':'middle','font-family':"'Fraunces',serif"},m[0]));
-  add(grp,tx({x:x,y:108,fill:'#9aa3ae','font-size':11,'text-anchor':'middle'},m[1]));});
- add(g,tx({x:460,y:146,fill:'#7d7768','font-size':11,'text-anchor':'middle'},'every one had the invisible facet · FieldCheck would have read it'));
- // big contrast
+ add(g,tx({x:460,y:44,fill:'#e8bf70','font-size':12,'font-weight':600,'text-anchor':'middle','letter-spacing':2},'THE WORLD HAS MISSED GEMS BEFORE'));
+ MISSES.forEach((m,i)=>{const x=130+i*200;const grp=add(g,el('g',{class:'miss',style:`--d:${i}`}));
+  add(grp,tx({x:x,y:78,fill:'#cfc9bb','font-size':14,'text-anchor':'middle','font-family':"'Fraunces',serif"},m[0]));
+  add(grp,tx({x:x,y:95,fill:'#9aa3ae','font-size':10.5,'text-anchor':'middle'},m[1]));});
+ add(g,tx({x:460,y:124,fill:'#7d7768','font-size':10.5,'text-anchor':'middle','font-style':'italic'},'every one had the invisible facet — FieldCheck would have read it'));
+ // big contrast — the payoff
  const w=P.world;
  const L=add(g,el('g',{class:'pcol pL'}));
- add(L,el('rect',{x:70,y:200,width:330,height:150,rx:12,fill:'#101216',stroke:'rgba(110,120,130,.35)'}));
- add(L,tx({x:235,y:232,fill:'#9aa3ae','font-size':11,'font-weight':600,'text-anchor':'middle','letter-spacing':2},'THE WORLD'));
- add(L,tx({x:235,y:290,fill:'#9aa3ae','font-size':34,'text-anchor':'middle','font-family':"'Fraunces',serif"},P.slot));
- add(L,tx({x:235,y:322,fill:'#7d7768','font-size':11,'text-anchor':'middle'},w.future?'is deciding now':'said, once'));
- add(g,tx({x:460,y:282,fill:'#e8bf70','font-size':30,'text-anchor':'middle',class:'parrow'},'\u2192'));
+ add(L,el('rect',{x:80,y:168,width:320,height:152,rx:13,fill:'#101216',stroke:'rgba(110,120,130,.35)'}));
+ add(L,tx({x:240,y:202,fill:'#9aa3ae','font-size':11,'font-weight':600,'text-anchor':'middle','letter-spacing':2},'THE WORLD'));
+ add(L,tx({x:240,y:260,fill:'#9aa3ae','font-size':32,'text-anchor':'middle','font-family':"'Fraunces',serif"},P.slot));
+ add(L,tx({x:240,y:296,fill:'#7d7768','font-size':11,'text-anchor':'middle'},w.future?'is deciding now':'said, once'));
+ add(g,tx({x:460,y:254,fill:'#e8bf70','font-size':32,'text-anchor':'middle',class:'parrow'},'\u2192'));
  const Rr=add(g,el('g',{class:'pcol pR'}));
- add(Rr,el('rect',{x:520,y:200,width:330,height:150,rx:12,fill:'#171109',stroke:'rgba(184,152,90,.4)'}));
- add(Rr,tx({x:685,y:232,fill:'#e8bf70','font-size':11,'font-weight':600,'text-anchor':'middle','letter-spacing':2},'FIELDCHECK READS'));
- add(Rr,tx({x:685,y:292,fill:'#e8bf70','font-size':46,'text-anchor':'middle','font-family':"'Fraunces',serif",class:'flashbignum',id:'proofNum'},P.fcNum));
- add(Rr,tx({x:685,y:322,fill:'#cfc9bb','font-size':11,'text-anchor':'middle'},'Competitiveness'));
- wrap(g,w.line,460,408,62,20,{fill:'#f3eee2','font-size':15,'text-anchor':'middle','font-family':"'Fraunces',serif",class:'pline'});})();
+ add(Rr,el('rect',{x:520,y:168,width:320,height:152,rx:13,fill:'#171109',stroke:'rgba(184,152,90,.45)'}));
+ add(Rr,tx({x:680,y:202,fill:'#e8bf70','font-size':11,'font-weight':600,'text-anchor':'middle','letter-spacing':2},'FIELDCHECK READS'));
+ add(Rr,tx({x:680,y:264,fill:'#e8bf70','font-size':48,'text-anchor':'middle','font-family':"'Fraunces',serif",class:'flashbignum',id:'proofNum'},P.fcNum));
+ add(Rr,tx({x:680,y:298,fill:'#cfc9bb','font-size':11,'text-anchor':'middle'},'Competitiveness · the will'));
+ wrap(g,w.line,460,368,60,20,{fill:'#f3eee2','font-size':15,'text-anchor':'middle','font-family':"'Fraunces',serif",class:'pline'});})();
 
 /* sFinal — completed polygon + verdict */
 (function(){const g=document.getElementById('sFinal');const fcx=300,fcy=300,fr=150;
@@ -398,7 +404,7 @@ function runMorph(){const pl=document.getElementById('morphPoly'),stg=document.g
  stg.textContent=P.morph[0][0];val.textContent=P.morph[0][1].toFixed(1);pl.setAttribute('points',pp(P.morph[0][2]));s=0;setTimeout(step,RM?1:450);}
 
 const B=[
- {t:'title',k:'FieldCheck · The Read',h:['The world saw a highlight reel.','We saw who he <em>is</em>.'],d:4200},
+ {t:'title',k:'FieldCheck · The Read',h:['The world saw a highlight reel.','We saw who {s} <em>{is}</em>.'],d:4200},
  {t:'scene',id:'s0',pt:'one number no ranking can give',b:'01 · The read',c:'Eight facets. One honest number — built from zero, in the open.',d:5200},
  {t:'scene',id:'sFacets8',pt:'four of these live only on film',b:'02 · The eight',c:'Four of these eight never show up in a ranking. They are the moat.',d:7400},
  {t:'title',k:'The Moat',h:['Four of these eight facets','are <em>invisible</em> to everyone else.'],d:3600},
@@ -408,10 +414,10 @@ const B=[
  {t:'title',k:'Why no one else can do this',h:['We grade what the film <em>shows</em>','and the numbers <em>hide</em>.'],d:3800},
  {t:'scene',id:'s3',pt:'one moment, read frame by frame',b:'05 · The evidence',c:'Not a stat — a moment. The swing, the stop, the at-bat, read like no one else can.',d:6000},
  {t:'scene',id:'s4',pt:'measured to the apex — MJ 9.3',b:'06 · The ceiling',c:'Ten is unreachable. We measure every player against the apex of the trait itself.',d:5600},
- {t:'scene',id:'sMorph',pt:'where he was, is, and is going',b:'07 · The trajectory',c:'The shape grows in front of you — and the curve points where the world hasn\u2019t looked yet.',d:6800},
+ {t:'scene',id:'sMorph',pt:'where {p} game was, is, and is going',b:'07 · The trajectory',c:'The shape grows in front of you — and the curve points where the world hasn\u2019t looked yet.',d:6800},
  {t:'title',k:'The Proof',h:['The world has missed gems <em>before</em>.','We wouldn\u2019t have.'],d:3800},
  {t:'scene',id:'sProof',pt:'the gem the world already missed',b:'08 · The proof',c:'Brady at 199. Curry at 7. The invisible facet was always there — we\u2019d have read it.',d:9000},
- {t:'scene',id:'sFinal',pt:'the real player, in one line',b:'09 · The verdict',c:'The shape. The number. And who he really is — in one honest line.',d:8000}
+ {t:'scene',id:'sFinal',pt:'the real player, in one line',b:'09 · The verdict',c:'The shape. The number. And who {s} really {is} — in one honest line.',d:8000}
 ];
 const scenes=document.querySelectorAll('.scene');
 const title=document.getElementById('title'),tkick=document.getElementById('tkick'),thead=document.getElementById('thead');
@@ -423,10 +429,10 @@ function compCount(){const n=document.getElementById('compNum');if(!n)return;con
 function goatGrow(){const b=document.getElementById('goatBar'),v=document.getElementById('goatVal');if(!b)return;const w=parseFloat(b.dataset.w);b.style.transition='width 1.2s ease';requestAnimationFrame(()=>b.setAttribute('width',w));const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/1200);v.textContent=(F[0]*(.1+.9*k)).toFixed(1);if(k<1)requestAnimationFrame(f);})(performance.now());}
 function show(i){idx=i;const b=B[i];dots.forEach((d,k)=>d.classList.toggle('active',k===i));pointEl.classList.remove('on');
  if(b.t==='title'){scenes.forEach(s=>s.classList.remove('on'));cap.classList.remove('show');beat.textContent='';capt.textContent='';
-   tkick.textContent=b.k;thead.innerHTML=b.h.map(l=>`<span class="ln">${l}</span>`).join('');title.classList.remove('on');void title.offsetWidth;title.classList.add('on');}
+   tkick.textContent=b.k;thead.innerHTML=b.h.map(l=>`<span class="ln">${pron(l)}</span>`).join('');title.classList.remove('on');void title.offsetWidth;title.classList.add('on');}
  else{title.classList.remove('on');scenes.forEach(s=>{if(s.id===b.id){s.classList.remove('on');void s.offsetWidth;s.classList.add('on');}else s.classList.remove('on');});
-   beat.textContent=b.b;cap.classList.remove('show');capt.textContent=b.c;setTimeout(()=>cap.classList.add('show'),140);
-   if(b.pt){pointEl.textContent='› '+b.pt;setTimeout(()=>pointEl.classList.add('on'),200);}
+   beat.textContent=b.b;cap.classList.remove('show');capt.textContent=pron(b.c);setTimeout(()=>cap.classList.add('show'),140);
+   if(b.pt){pointEl.textContent='› '+pron(b.pt);setTimeout(()=>pointEl.classList.add('on'),200);}
    CURID=b.id;document.getElementById('canvas').style.cursor=(b.id==='s3')?'pointer':'default';
    if(b.id==='s0')compCount();if(b.id==='s4')goatGrow();if(b.id==='sMorph')runMorph();if(b.id==='s2')runDissect();if(b.id==='s3')runPlay();}}
 function next(){show((idx+1)%B.length);schedule();}

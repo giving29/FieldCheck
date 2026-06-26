@@ -218,8 +218,8 @@
       <div class="step" id="s-done" style="text-align:center">
         <div class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="#e8bf70" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
         <div class="h2">You're in, <span id="done-name">there</span>.</div>
-        <div class="sub" style="max-width:300px;margin:8px auto 0">Your account is ready. Time to read a player — starting with the board.</div>
-        <a href="/lovb"><button class="cta" style="margin-top:26px">Go to the board →</button></a>
+        <div class="sub" id="done-sub" style="max-width:300px;margin:8px auto 0">Your account is ready. Time to read a player — starting with the board.</div>
+        <a id="done-primary" href="/lovb"><button class="cta" id="done-primary-btn" style="margin-top:26px">Go to the board →</button></a>
         <button class="link" style="margin-top:16px" onclick="location.href='/'">Back to home</button>
       </div>
 
@@ -362,6 +362,12 @@ function finish(){
   saveLocal(record);
   postRemote(record);   // no-op unless CAPTURE_URL is set
   try{ localStorage.setItem('fc_user_v1', JSON.stringify({name:name, role:state.role, email:record.email, ts:record.ts})); }catch(e){}  // session: who's logged in
+  // role-aware landing — athletes go straight to their Studio
+  if(state.role==='Athlete'){
+    document.getElementById('done-sub').textContent='Your studio is ready — build your card, then let the agent read your film.';
+    document.getElementById('done-primary').setAttribute('href','/studio');
+    document.getElementById('done-primary-btn').textContent='Open my Studio →';
+  }
   document.getElementById('done-name').textContent = name.split(' ')[0];
   go('done');
 }
