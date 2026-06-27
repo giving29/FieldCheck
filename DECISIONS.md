@@ -161,3 +161,27 @@ cd ~/Desktop/fieldcheck-proxy && git add . && git commit -m "FCBase___ — what 
 - **Decks live at:** /deck (master), /deck-kevin (4 sections: gap/proof/WVB wedge/where this goes), /deck-arjun (5 sections: thesis/live today/stickiness loop/revenue/moat). Talk-track: SRIDHAR-TALK-TRACK-KEVIN-ARJUN.html. Source the new content from FC_CANONICAL_STATE_V1.html Pane 21 (Strategy & Arch) + BREAKTHROUGH_CLIPS_MOAT.md.
 - **Status:** PARKED until more of the breakthrough is built (Sridhar's call — "park it till we get through more amazeness").
 2026-06-19 - T62 LIVE-BYTES-BEFORE-EDIT codified. Incident: LOVB nav edits authored from a stale snapshot and verified on dev while deploying prod (cf. Jun15 /canonical served-bytes loop). Fix: author from live served + on-disk bytes, abort-on-anchor-miss, verify on the deployed URL. See RELEASE_PLAYBOOK.md.
+
+---
+## 2026-06-27 · SHIPPED · THE AGENT CONSTELLATION + THE CALIBRATION SPINE (two-lane model codified)
+
+**What shipped to prod this session (all live, git==prod, tagged):**
+- **Coverage** (`/coverage`) — "we already see you." Live ingestion: Claude + web_search reads the PUBLIC record, returns a PROVISIONAL read. Firewall: provisional≠graded (grey ~number, never gold), conf capped ≤70 public-only, num clamped 3.2–6.8, no contact data, no fabrication. Verified both directions (Skinner real signals / nonsense → thin, zero invention). Fn: `netlify/functions/coverage.js`.
+- **Discovery** (`/discovery`) — the COACH side (revenue half of the marketplace). Natural-language ask → Claude parses intent + reads public record → ranked real candidates w/ provisional reads. Consent-routed "request full verdict" (notifies athlete; NO contact hand-off — minor-safe). Latency-tuned: max_uses=1 search, max_tokens=900, name-filter drops placeholders ("OH at X HS"). Honest-few not fabricated-many (ND-2028 → candidates:[]). Fn: `discovery.js`.
+- **The Developer** (`/developer`) — the Coach agent. Verdict → honest development plan: 2 headroom facets (weighted to the invisible four), concrete film-able work, earned-on-film target projection (moss ~number, "not a promise"). Reads Studio card via `?a=`.
+- **The Record** (`/ledger`) — P1 of the calibration spine. Public prediction ledger: every read logged the day made, append-only, tamper-evident content hash, status (tracking/confirmed/reference). HONEST: no fake accuracy rate; reference anchors marked NOT predictions. The clock started 2026-06-27.
+- **The Dossier engine** (P3) — Coverage now reads 5 INDEPENDENT source types (ROSTER/RESULT/PRESS/HONOR/PROFILE) and scores CROSS-SOURCE AGREEMENT. Surfaced Apple-simple: "Confirmed by N independent sources" + 5-pip meter. Honest on thin: single-source → grey "corroboration still thin"; nonsense → "no corroborating sources." Loop A made real.
+- **Cost guard** (`_ratelimit.js`) — shared budget across paid fns: 100 calls/day global cap + 5/min per-IP. Pure in-memory, ZERO deps (Netlify Blobs static-scans even dynamic imports at bundle time → caused 3 failed deploys; lesson: NO reference to `@netlify/blobs` at all). Daily cap tunable via env `FC_AGENT_DAILY_CAP`. Throttle fired correctly at call 7 in test.
+- **Audit pass** — tightened Coverage (one hero: number→"confirmed by N"→claim; evidence behind a "See the evidence ↓" tap; one honesty line) + The Record (3 honesty blocks → 2). External `/methodology` + `/ai` made TRUTHFUL: 6 agents live (Scout·Editor·Strategist·Developer·Discovery·Coverage), Messenger in build, The Record surfaced in the calibration-spine loop.
+
+**[DECISION] API key fix (critical):** `ANTHROPIC_API_KEY` Netlify env was the literal placeholder string `sk-ant-...` (never replaced) → all live calls 401'd, silently fell back to mocks (Coverage AND vision pipeline). Set a real key via `netlify env:set ... --force` + redeploy. NOTE: a key was accidentally pasted in chat → REVOKED + replaced. Real key = real $/call (web search + tokens) → drove the cost guard.
+
+**[DECISION] TWO-LANE MODEL (codified — the lane discipline):**
+- **LANE 1 · RELEASE TRACK (`main` → prod):** all front-end + agent + ingestion work. Ships freely on its own cadence. Uses Claude+ingestion as-is; gets better when the engine matures but NEVER depends on it.
+- **LANE 2 · ENGINE TRACK (`lab` branch, NEVER touches `main`):** the parked god-level algorithm (worker.js) — deep tightening. Promotes to `main` ONLY through a gate (L5: 110-battery passing + page-render gate), triggered by Sridhar. The branch is the firewall, not separate chat sessions. Lab work happens in dedicated time; until then `main` ships unblocked.
+
+**[DECISION] Calibration spine roadmap (P1–P6):** P1 The Record ✅ live · P2 durable write-path + store (needs datastore choice — Supabase/Upstash; the one phase with external setup dep) · P3 Dossier engine ✅ live · P4 evidence-logged-with-prediction · P5 outcome layer · P6 public scoreboard. The killer combo by P6: invisible-four read + early dossier evidence + outcome proof = uncopyable.
+
+**Commits this session (verify `git log --oneline`):** Coverage+guard live, Discovery live, Developer, The Record (7b66062), Dossier (2f29279), audit+truthful-docs (2f590ba). Tags `site-live-20260627-*`.
+
+**Parked (unchanged):** apex-calibration (Olympians >7.4); engine recalibration on `lab`; durable rate-limiter upgrade (in-memory caps abuse, resets on cold start — Blobs/Upstash when traffic warrants); P2 datastore.

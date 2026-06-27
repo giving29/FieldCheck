@@ -160,3 +160,42 @@ d2ff07f Kevin deck: land on Problem + update banner → Moat
 2. If canonical block not committed → commit it.
 3. Then ask Sridhar for the LOVB/Kevin 13 points (paste / project / grep) — DO NOT reconstruct.
 4. Lead with the roadmap. Ship gated, freeze-first, dev-first, one script at a time. GO when he says GO.
+
+# ═══════════════════════════════════════════════════════════════
+# PART L · ✅ THE AGENT CONSTELLATION + CALIBRATION SPINE (added 2026-06-27)
+# ═══════════════════════════════════════════════════════════════
+# This PART supersedes the agent-status lists above where they conflict.
+# As of 2026-06-27, SIX agents are LIVE ON PROD, both market sides standing.
+
+## LIVE AGENTS (prod)
+# Supply side (players):
+#  - The Scout — the verdict (8 facets, invisible four, one number)
+#  - The Editor (Highlight Agent) — live vision pipeline, reads film, builds reel (analyze.js, real Claude vision)
+#  - The Strategist (/strategist + Studio Targets tab) — honest reach/match/safety college target list
+#  - The Developer (/developer) — verdict → development plan, 2 headroom facets (invisible-four weighted), earned-on-film projection
+#  - Coverage (/coverage) — "we already see you"; live public-record ingestion + the Dossier engine
+# Query side (coaches):
+#  - The Discovery agent (/discovery) — natural-language coach search → ranked real candidates, consent-routed verdict
+# In build: The Messenger (outreach tracking — needs light backend/persistence).
+
+## THE DOSSIER ENGINE (cross-source agreement — Loop A, live in Coverage)
+# Coverage reads 5 INDEPENDENT source types: ROSTER, RESULT, PRESS, HONOR, PROFILE.
+# Agreement: 3+ types = "strong", 2 = "moderate", 1 = "thin", 0 = "none".
+# Surfaced Apple-simple: "Confirmed by N independent sources" + 5-pip meter + one corroboration line.
+# Honest: single-source = grey "corroboration still thin"; nonsense name = "no corroborating sources" (sourceCount 0).
+# Same swap pattern available to extend to Discovery later.
+
+## THE CALIBRATION SPINE — THE RECORD (/ledger)
+# The track-record moat. Every read logged the day made: append-only, timestamped, tamper-evident content hash.
+# Status: tracking (bet placed, outcome open) / confirmed / reference (established athlete = scale anchor, NOT a prediction).
+# HONEST: no accuracy rate published yet — only when outcomes back it. The clock started 2026-06-27.
+# Roadmap: P1 Record ✅ · P2 durable write-path (datastore TBD) · P3 Dossier ✅ · P4 logged-with-evidence · P5 outcomes · P6 public scoreboard.
+
+## COST GUARD (netlify/functions/_ratelimit.js)
+# Shared across paid fns (coverage, discovery, analyze): 100/day global + 5/min per-IP. Pure in-memory, ZERO deps.
+# CRITICAL LESSON: never `require`/`import('@netlify/blobs')` — the bundler static-scans even dynamic imports and fails the build if the pkg isn't in package.json. Caused 3 failed deploys. In-memory caps abuse (resets on cold start); durable store is a later upgrade.
+
+## TWO-LANE MODEL (Tenet 66 — protect the lanes)
+# LANE 1 (main→prod): all release/agent/ingestion work, ships freely, never blocked by the engine.
+# LANE 2 (lab branch): the god-level engine (worker.js), parked & deepened in dedicated time.
+#   Promotes to main ONLY through the gate (110-battery + page-render). The BRANCH is the firewall.
