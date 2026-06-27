@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FieldCheck · Discovery — find the players the world overlooks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0907;--ink2:#13100b;--panel:#16120b;--card:#100d08;
+    --gold:#d4a24c;--gold-hi:#e8bf70;--goldl:rgba(184,152,90,.24);
+    --bone:#f3eee2;--t2:#cfc9bb;--t3:#9a9486;--t4:#6f695d;--line:rgba(184,152,90,.16);--moss:#84a273;
+    --prov:#9aa3ae;
+    --cg:'Fraunces',Georgia,serif;--body:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--body);color:var(--bone);background:radial-gradient(130% 80% at 50% 0%,#191510,var(--ink) 62%);min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:60px}
+  .shell{max-width:680px;margin:0 auto;padding:0 18px}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 2px 8px}
+  .top .brand{display:flex;align-items:center;gap:9px}
+  .logo{width:26px;height:26px;border-radius:50%;border:1px solid var(--goldl);display:flex;align-items:center;justify-content:center;font-family:var(--cg);font-weight:600;color:var(--gold-hi);font-size:13px}
+  .top b{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t2);font-weight:500}
+  .top a{color:var(--t3);text-decoration:none;font-size:13px}
+
+  .lead{padding:26px 2px 4px}
+  .lead .eye{font-family:var(--mono);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-hi);margin-bottom:14px}
+  .lead h1{font-family:var(--cg);font-weight:500;font-size:clamp(28px,6.5vw,40px);line-height:1.04;letter-spacing:-.5px;max-width:560px}
+  .lead h1 em{font-style:italic;color:var(--gold-hi)}
+  .lead p{color:var(--t3);font-size:14.5px;line-height:1.55;margin-top:14px;max-width:520px}
+
+  .ask{margin-top:24px;background:var(--panel);border:1px solid var(--goldl);border-radius:16px;padding:16px}
+  .ask label{font-family:var(--mono);font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);display:block;margin-bottom:8px}
+  .ask textarea{width:100%;min-height:62px;resize:none;border-radius:12px;background:var(--ink2);border:1px solid var(--goldl);color:var(--bone);font-family:var(--body);font-size:16px;line-height:1.5;padding:13px 14px;outline:none}
+  .ask textarea:focus{border-color:var(--gold-hi)}
+  .askbtn{width:100%;height:52px;margin-top:12px;border-radius:14px;border:0;cursor:pointer;background:linear-gradient(180deg,#eccb86,var(--gold));color:#1a1206;font-family:var(--body);font-weight:600;font-size:15px}
+  .examples{margin-top:13px;display:flex;flex-wrap:wrap;gap:8px}
+  .ex{font-family:var(--body);font-size:12px;color:var(--t2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;background:var(--panel);transition:.13s;line-height:1.3}
+  .ex:hover{border-color:var(--goldl);color:var(--gold-hi)}
+
+  .run{text-align:center;padding:42px 20px;display:none}.run.on{display:block}
+  .spin{width:38px;height:38px;border-radius:50%;border:2.5px solid rgba(184,152,90,.2);border-top-color:var(--gold-hi);margin:0 auto 18px;animation:sp .8s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .run .rs{font-family:var(--cg);font-weight:600;font-size:18px}
+  .run .rsub{font-family:var(--mono);font-size:10px;letter-spacing:.5px;color:var(--t3);margin-top:8px;min-height:14px}
+
+  .out{display:none}.out.on{display:block;animation:rise .4s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  .understood{margin-top:20px;background:var(--ink2);border:1px solid var(--line);border-radius:13px;padding:13px 15px}
+  .understood .uh{font-family:var(--mono);font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-bottom:9px}
+  .pills{display:flex;flex-wrap:wrap;gap:7px}
+  .pill{font-family:var(--mono);font-size:10px;letter-spacing:.4px;color:var(--gold-hi);border:1px solid var(--goldl);background:rgba(232,191,112,.08);border-radius:7px;padding:5px 10px}
+  .pill .pk{color:var(--t4);text-transform:uppercase;font-size:8px;letter-spacing:1px;margin-right:5px}
+
+  .resultbar{margin-top:18px;font-size:13.5px;color:var(--t2);line-height:1.5}
+  .resultbar b{color:var(--gold-hi)}
+  .livechip{display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:#1a1206;background:var(--gold-hi);padding:2px 7px;border-radius:999px;font-weight:700;margin-bottom:8px}
+
+  .cands{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+  .cand{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 15px;display:flex;gap:14px;align-items:flex-start}
+  .cand .rank{font-family:var(--cg);font-weight:600;font-size:15px;color:var(--t4);min-width:22px;padding-top:3px}
+  .cand .body{flex:1;min-width:0}
+  .cand .nm{font-family:var(--cg);font-weight:600;font-size:18px;line-height:1.1}
+  .cand .meta{font-family:var(--mono);font-size:8.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--t3);margin-top:4px}
+  .cand .why{font-size:12.5px;line-height:1.45;color:var(--t2);margin-top:9px}
+  .cand .why .facet{color:var(--gold-hi);font-weight:600}
+  .cand .right{text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+  .cand .pnum{font-family:var(--cg);font-weight:600;font-size:32px;line-height:.85;color:var(--prov)}
+  .cand .pnum .tilde{font-size:18px;vertical-align:top;color:var(--t4)}
+  .cand .pl{font-family:var(--mono);font-size:7px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);margin-top:2px}
+  .cand .req{font-family:var(--body);font-size:11px;font-weight:600;color:var(--gold-hi);border:1px solid var(--goldl);background:rgba(232,191,112,.07);border-radius:8px;padding:7px 11px;cursor:pointer;white-space:nowrap;line-height:1.2;text-align:right}
+  .cand .req:active{transform:scale(.98)}
+
+  .nores{margin-top:16px;padding:16px;border:1px dashed rgba(154,163,174,.3);border-radius:13px;color:var(--t3);font-size:13px;line-height:1.55;text-align:center}
+
+  .honest{margin-top:22px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px 16px;font-size:12px;line-height:1.55;color:var(--t3)}
+  .honest b{color:var(--gold-hi)}
+  .foot{margin-top:18px;font-size:11px;color:var(--t4);line-height:1.6}
+  .searchagain{margin-top:16px;text-align:center}
+  .searchagain a{font-size:12.5px;color:var(--t3);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:#1c1811;border:1px solid var(--goldl);color:var(--bone);font-size:13px;padding:11px 17px;border-radius:11px;opacity:0;transition:.25s;z-index:90;pointer-events:none;max-width:320px;text-align:center;line-height:1.4}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top"><div class="brand"><span class="logo">F</span><b>Discovery</b></div><a href="/">Home</a></div>
+
+  <div class="lead" id="lead">
+    <div class="eye">✦ FieldCheck Discovery · for coaches</div>
+    <h1>Find the players the world <em>overlooks.</em></h1>
+    <p>Tell the Strategist what you need in plain words. It reads the field — graded and provisional — and ranks the athletes who actually fit, including the ones no recruiting service surfaced.</p>
+  </div>
+
+  <div class="ask" id="ask">
+    <label>What are you looking for?</label>
+    <textarea id="q" placeholder="Find me outside hitters in Texas, class of 2026, who project to a real college track…"></textarea>
+    <button class="askbtn" onclick="runDiscovery()">Search the field →</button>
+    <div class="examples" id="examples"></div>
+  </div>
+
+  <div class="run" id="run">
+    <div class="spin"></div>
+    <div class="rs" id="rs">Reading your ask…</div>
+    <div class="rsub" id="rsub"></div>
+  </div>
+
+  <div class="out" id="out">
+    <div class="understood" id="understood">
+      <div class="uh">What the agent understood</div>
+      <div class="pills" id="pills"></div>
+    </div>
+    <div class="resultbar" id="resultbar"></div>
+    <div class="cands" id="cands"></div>
+    <div class="nores" id="nores" style="display:none"></div>
+
+    <div class="honest">
+      🔒 <b>Provisional, and consent-first.</b> Greyed <span style="color:var(--prov)">~numbers</span> are provisional reads from the public record — not graded verdicts. Discovery shows the read and the athletic signal, never an athlete's contact details. <b>Request full verdict</b> notifies the athlete to claim and share — the player stays in control. That's how a recruiting market stays honest, and safe for minors.
+    </div>
+    <div class="foot">This prototype demonstrates the mechanism on illustrative candidates. The live Discovery agent reads the public record under its terms and surfaces real athletes, each with a provisional read.</div>
+    <div class="searchagain"><a onclick="reset()">New search</a></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+var EXAMPLES=[
+  'Outside hitters in Texas, 2026, real college track',
+  'Setters in the Midwest who project D1',
+  'Liberos, 2027, undervalued — high character',
+  'Middle blockers in California, 6.0+'
+];
+document.getElementById('examples').innerHTML=EXAMPLES.map(function(e){return '<div class="ex" onclick="useEx(this)">'+e+'</div>';}).join('');
+function useEx(el){ document.getElementById('q').value=el.textContent; runDiscovery(); }
+
+/* ============================================================
+   discoveryQuery() — THE SINGLE BACKEND INTEGRATION POINT.
+   Prototype: parses the natural-language ask locally and ranks
+   an illustrative candidate field with provisional reads.
+   LIVE: swap body for POST /.netlify/functions/discovery
+   (Claude parses intent + reads the public record) → SAME shape.
+   Honesty firewall: provisional reads only, no contact data,
+   full verdict is consent-routed through the athlete.
+   ============================================================ */
+var DISCOVERY_LIVE=false;
+function discoveryQuery(text){
+  return liveDiscovery(text)
+    .then(function(res){ return res || mockDiscovery(text); })
+    .catch(function(){ return mockDiscovery(text); });
+}
+function liveDiscovery(text){
+  return fetch('/.netlify/functions/discovery',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({query:text})})
+    .then(function(r){ return r.json(); })
+    .then(function(d){ if(d && d.result){ DISCOVERY_LIVE=true; return d.result; } return null; });
+}
+
+/* ---- local intent parse + candidate field (fallback + offline) ---- */
+var POS_MAP={'outside hitter':'OH','outside':'OH','oh':'OH','setter':'S','setters':'S','libero':'L','liberos':'L','middle':'MB','middle blocker':'MB','mb':'MB','opposite':'OPP','right side':'OPP'};
+var REGIONS=['texas','california','midwest','northeast','south','west','florida','ohio','illinois'];
+function parseAsk(text){
+  var t=(text||'').toLowerCase();
+  var pos=null; for(var k in POS_MAP){ if(t.indexOf(k)>=0){ pos=POS_MAP[k]; break; } }
+  var region=null; REGIONS.forEach(function(r){ if(t.indexOf(r)>=0) region=r.charAt(0).toUpperCase()+r.slice(1); });
+  var cls=(t.match(/20(2[0-9])/)||[])[0]||null;
+  var gradeMatch=t.match(/([3-9](\.[0-9])?)\s*\+?/); var minGrade=gradeMatch?parseFloat(gradeMatch[1]):null;
+  if(minGrade && (minGrade<3||minGrade>10)) minGrade=null;
+  var traits=[]; if(/charact|invisible|undervalu|overlook|gritty|grit|competit|mental|mindset/.test(t)) traits.push('invisible-four');
+  if(/d1|division 1|high.?major|power/.test(t)) traits.push('D1-projection');
+  return {pos:pos,region:region,cls:cls,minGrade:minGrade,traits:traits,raw:text};
+}
+var FIRST=['Reese','Camryn','Jordyn','Adaeze','Priya','Saylor','Maliah','Tatum','Brynn','Noelani','Devyn','Kaiya','Marisol','Aubrey','Sienna','Tess'];
+var LAST=['Calloway','Okafor','Vasquez','Nakamura','Brooks','Delgado','Whitfield','Asante','Romero','Kahale','Lindqvist','Boateng','Sandoval','Pierce','Ahn','Mbeki'];
+var SCHOOLS={'Texas':['Cedar Park HS, TX','Plano West HS, TX','Katy HS, TX','Austin Vandegrift, TX'],'California':['Mater Dei, CA','Mira Costa HS, CA','Redondo Union, CA','Archbishop Mitty, CA'],'Midwest':['Marist HS, IL','Mother McAuley, IL','Mentor HS, OH','Benet Academy, IL'],'_':['Westfield HS','Brentwood Academy','Liberty North HS','Pope HS']};
+function seed(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return function(){h+=0x6D2B79F5;var t=h;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};}
+
+function mockDiscovery(text){
+  return new Promise(function(resolve){
+    var ask=parseAsk(text);
+    var r=seed(text);
+    var pool=SCHOOLS[ask.region]||SCHOOLS['_'];
+    var n=4+Math.floor(r()*3);
+    var cands=[];
+    var facetNames=['competitiveness','power','volleyball IQ','ball control','mental strength','mindset','character','physical tools'];
+    for(var i=0;i<n;i++){
+      var num=Math.round((4.6+r()*2.0)*10)/10;            // provisional, conservative
+      if(ask.minGrade) num=Math.max(num, Math.round((ask.minGrade+r()*0.8)*10)/10);
+      num=Math.min(6.8,num);
+      var invis=ask.traits.indexOf('invisible-four')>=0;
+      var topFacet=invis ? ['competitiveness','mental strength','character','mindset'][Math.floor(r()*4)] : facetNames[Math.floor(r()*facetNames.length)];
+      cands.push({
+        name:FIRST[Math.floor(r()*FIRST.length)]+' '+LAST[Math.floor(r()*LAST.length)],
+        pos:ask.pos||['OH','S','MB','L','OPP'][Math.floor(r()*5)],
+        cls:ask.cls||['2026','2027'][Math.floor(r()*2)],
+        school:pool[Math.floor(r()*pool.length)],
+        num:num.toFixed(1),
+        facet:topFacet,
+        facetVal:(6.6+r()*1.6).toFixed(1),
+        provisional:true
+      });
+    }
+    cands.sort(function(a,b){return parseFloat(b.num)-parseFloat(a.num);});
+    setTimeout(function(){ resolve({ask:ask,candidates:cands}); },160);
+  });
+}
+
+function runDiscovery(){
+  var text=document.getElementById('q').value.trim();
+  if(!text){ toast('Tell the agent what you\u2019re looking for'); return; }
+  document.getElementById('ask').style.display='none';
+  document.getElementById('lead').style.display='none';
+  document.getElementById('out').classList.remove('on');
+  var run=document.getElementById('run'); run.classList.add('on');
+  var steps=[['Reading your ask…','position, region, class, level'],['Searching the field…','graded and provisional'],['Weighing honest fit…','no inflation, no wish-list'],['Ranking the overlooked…','the read others missed']];
+  var i=0; setStep(steps[0]);
+  var iv=setInterval(function(){ i++;
+    if(i>=steps.length){ clearInterval(iv); discoveryQuery(text).then(function(res){ run.classList.remove('on'); render(res); }); return; }
+    setStep(steps[i]);
+  },720);
+}
+function setStep(s){ document.getElementById('rs').textContent=s[0]; document.getElementById('rsub').textContent=s[1]; }
+
+function render(res){
+  document.getElementById('out').classList.add('on');
+  var ask=res.ask||{};
+  var pills=[];
+  if(ask.pos) pills.push(['position',ask.pos]);
+  if(ask.region) pills.push(['region',ask.region]);
+  if(ask.cls) pills.push(['class',ask.cls]);
+  if(ask.minGrade) pills.push(['min read','~'+ask.minGrade]);
+  if(ask.traits&&ask.traits.indexOf('invisible-four')>=0) pills.push(['priority','the invisible four']);
+  if(ask.traits&&ask.traits.indexOf('D1-projection')>=0) pills.push(['projection','D1']);
+  if(!pills.length) pills.push(['scope','open search']);
+  document.getElementById('pills').innerHTML=pills.map(function(p){return '<span class="pill"><span class="pk">'+p[0]+'</span>'+p[1]+'</span>';}).join('');
+
+  var cands=res.candidates||[];
+  if(!cands.length){
+    document.getElementById('resultbar').innerHTML='';
+    document.getElementById('cands').innerHTML='';
+    var nr=document.getElementById('nores'); nr.style.display='block';
+    nr.textContent='No honest matches surfaced for that ask yet. Try widening the region, class, or read — the field fills as more athletes are read.';
+    window.scrollTo({top:0,behavior:'smooth'}); return;
+  }
+  document.getElementById('nores').style.display='none';
+  document.getElementById('resultbar').innerHTML=(DISCOVERY_LIVE?'<span class="livechip">✦ live field read</span><br>':'')
+    +'<b>'+cands.length+' athletes</b> match your ask, ranked by honest read. Greyed numbers are provisional — from the public record, not yet graded.';
+  document.getElementById('cands').innerHTML=cands.map(function(c,idx){
+    return '<div class="cand"><div class="rank">'+(idx+1)+'</div>'
+      +'<div class="body"><div class="nm">'+c.name+'</div>'
+      +'<div class="meta">'+[c.pos,c.cls?'Class of '+c.cls:'',c.school].filter(Boolean).join(' · ')+'</div>'
+      +'<div class="why">Standout: <span class="facet">'+c.facet+' ('+(c.facetVal||'—')+')</span> — the kind of signal a box score hides.</div></div>'
+      +'<div class="right"><div><div class="pnum"><span class="tilde">~</span>'+c.num+'</div><div class="pl">provisional</div></div>'
+      +'<button class="req" onclick="requestVerdict(\''+c.name.replace(/'/g,"")+'\')">Request full verdict →</button></div></div>';
+  }).join('');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function requestVerdict(name){
+  toast('We\u2019ll notify '+name+' to claim and share their full verdict. The athlete stays in control.');
+}
+function reset(){
+  document.getElementById('out').classList.remove('on');
+  document.getElementById('ask').style.display='block';
+  document.getElementById('lead').style.display='block';
+  document.getElementById('q').value='';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toast(m){var el=document.getElementById('toast');el.textContent=m;el.classList.add('on');setTimeout(function(){el.classList.remove('on');},2600);}
+</script>
+</body>
+</html>
