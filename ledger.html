@@ -89,21 +89,17 @@
 
   <div class="integrity">
     <span class="ik">🔒</span>
-    <div>Append-only and tamper-evident. Each entry carries a content hash set the moment it's logged — <b>edits would break the hash, so we don't make them.</b> The record opens today and compounds from here. A competitor can copy a page; they can't copy two years of timestamps.</div>
+    <div>Append-only, tamper-evident. Each entry is hashed the moment it's logged — <b>edits would break the hash, so we don't make them.</b> A competitor can copy a page; they can't copy the timestamps.</div>
   </div>
 
   <div class="filters" id="filters"></div>
 
   <div class="ledger" id="ledger"></div>
 
-  <div class="addrow">
-    Reads from <b>Coverage</b> and <b>Discovery</b> log here automatically once the write path is live. <a href="/coverage">Get your read →</a>
-  </div>
-
   <div class="honest">
-    🔒 <b>Honest by construction.</b> Reads marked <span style="color:var(--prov)">tracking</span> are provisional — bets we've placed, outcomes still open. <span style="color:var(--gold-hi)">Reference</span> entries are established athletes used to anchor the scale, not predictions. We show <b>no accuracy rate yet</b> — because the record just opened, and a number we can't yet back would be exactly the kind of inflation we built FieldCheck to end. Check back as the outcomes land.
+    <span style="color:var(--prov)">Tracking</span> = a bet we've placed, outcome open · <span style="color:var(--gold-hi)">Reference</span> = an established athlete anchoring the scale, not a prediction. <b>No accuracy rate yet</b> — the record just opened, and a number we can't back would be the exact inflation we built FieldCheck to end. <a href="/coverage" style="color:var(--gold-hi);text-decoration:underline;text-underline-offset:3px">Get your read →</a>
   </div>
-  <div class="foot">The Record · append-only since June 2026 · 0 entries edited · 0 deleted</div>
+  <div class="foot">The Record · append-only since June 2026 · 0 edited · 0 deleted</div>
 </div>
 
 <script>

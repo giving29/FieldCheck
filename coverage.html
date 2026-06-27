@@ -68,6 +68,9 @@
   .conf .cfill{height:100%;background:var(--prov);border-radius:3px}
   .conf .ct{font-family:var(--mono);font-size:8px;letter-spacing:.5px;color:var(--t4);margin-top:5px}
 
+  .deeper{display:block;width:100%;margin:14px 18px 0;width:calc(100% - 36px);background:transparent;border:0;color:var(--t3);font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:8px;border-top:1px solid var(--line)}
+  .deeper:hover{color:var(--gold-hi)}
+  .evidence{margin:0 18px;animation:rise .3s ease}
   .signals{padding:12px 18px 4px}
   .signals .sgh{font-family:var(--mono);font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-bottom:9px}
   .sig{display:flex;gap:9px;align-items:flex-start;margin-bottom:8px;font-size:12.5px;line-height:1.4;color:var(--t2)}
@@ -152,23 +155,21 @@
           <div class="conf"><div class="cbar"><div class="cfill" id="p-conf" style="width:40%"></div></div><div class="ct" id="p-conft">low confidence · thin public evidence</div></div>
         </div>
       </div>
-      <div class="signals">
-        <div class="sgh">What we found</div>
-        <div id="p-signals"></div>
-        <div class="dossier" id="p-dossier" style="display:none"></div>
-      </div>
-      <div class="gap" id="p-gap"></div>
+      <div class="dossier" id="p-dossier" style="display:none"></div>
       <div class="claim">
         <button class="claimbtn" onclick="claim()">This is me — claim my read →</button>
-        <div class="claimsub">Claiming adds your clips and details. That's what turns a provisional read into a real, engine-graded FieldCheck verdict.</div>
+        <div class="claimsub">Claiming adds your film. That's what turns this provisional read into a real, engine-graded verdict.</div>
+      </div>
+      <button class="deeper" id="p-deeper" onclick="toggleEvidence()">See the evidence ↓</button>
+      <div class="evidence" id="p-evidence" style="display:none">
+        <div class="sgh">What the public record shows</div>
+        <div id="p-signals"></div>
+        <div class="gap" id="p-gap"></div>
       </div>
       <div class="notme"><a onclick="reset()">Not you? Search again</a></div>
     </div>
 
-    <div class="honest">
-      🔒 <b>Honest by design.</b> A provisional read is built from public signal only — it's a starting point, not a grade. Thin evidence means a careful, low-confidence read, never a confident fake. The real number comes when you claim it and the engine reads your film.
-    </div>
-    <div class="foot">This prototype shows the mechanism on illustrative data. The live Coverage agent reads structured public sources under their terms — we read to grade, we never rehost.</div>
+    <div class="foot">🔒 Provisional, from public signal only — a starting point, never a grade. Thin evidence stays a careful read; we never dress it up. The real number comes when you claim it and the engine reads your film.</div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -262,7 +263,7 @@ function render(q,res){
   document.getElementById('p-num').textContent=res.num;
   document.getElementById('p-band').textContent=res.band;
   document.getElementById('p-conf').style.width=res.conf+'%';
-  document.getElementById('p-conft').textContent=res.conf+'% confidence · '+(res.conf<45?'thin public evidence':res.conf<60?'moderate public evidence':'solid public evidence')+' — claim it to read the rest';
+  document.getElementById('p-conft').textContent=(res.conf<45?'thin':res.conf<60?'moderate':'solid')+' public evidence';
   var sh='';
   res.found.forEach(function(f){ sh+='<div class="sig"><span class="sk">'+f[0]+'</span><span>'+f[1]+'</span></div>'; });
   res.missing.forEach(function(m){ sh+='<div class="sig"><span class="sk miss">'+m[0]+'</span><span class="miss">'+m[1]+'</span></div>'; });
@@ -297,7 +298,14 @@ function renderDossier(d){
     +(types?'<div class="dtypes">'+types+'</div>':'')
     +(d.corroborated?'<div class="dcorr">'+d.corroborated+'</div>':'');
 }
+function toggleEvidence(){
+  var ev=document.getElementById('p-evidence'), btn=document.getElementById('p-deeper');
+  if(ev.style.display==='none'){ ev.style.display='block'; btn.textContent='Hide the evidence ↑'; }
+  else { ev.style.display='none'; btn.textContent='See the evidence ↓'; }
+}
 function reset(){
+  var ev=document.getElementById('p-evidence'); if(ev){ ev.style.display='none'; }
+  var db=document.getElementById('p-deeper'); if(db){ db.textContent='See the evidence ↓'; }
   document.getElementById('out').classList.remove('on');
   document.getElementById('search').style.display='block';
   document.getElementById('lead').style.display='block';
