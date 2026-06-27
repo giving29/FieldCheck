@@ -6,6 +6,8 @@
 
 const MODEL = 'claude-sonnet-4-6'; // swap to claude-opus-4-8 for max read quality, claude-haiku-4-5 for speed/cost
 
+const { checkAndCount, clientIp } = require('./_ratelimit');
+
 const SYS = `You are the FieldCheck Highlight Agent — an AI that watches an athlete's raw film and finds the moments that build the most honest, compelling case for them.
 
 You are given sampled key-frames from several clips plus the athlete's FieldCheck grade (8 facets, each 0–10). The four INVISIBLE facets — Competitiveness, Mental Strength, Mindset, Character — are FieldCheck's edge: the traits no normal highlight reel captures. Deliberately surface moments that show those, not just the obvious kills/blocks/buckets.
@@ -30,6 +32,10 @@ exports.handler = async (event) => {
   const athlete = body.athlete || {};
   const clips = Array.isArray(body.clips) ? body.clips.slice(0, 6) : [];
   if (!clips.length) return resp(200, { moments: null, reason: 'no_clips' });
+
+  // cost guard: per-IP throttle + global daily cap (UI falls back to local read on 429)
+  const gate = await checkAndCount(clientIp(event));
+  if (!gate.ok) return resp(200, { moments: null, reason: gate.reason });
 
   const labels = athlete.labels || [];
   const facets = athlete.facets || [];

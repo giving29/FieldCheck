@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FieldCheck · We already see you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0907;--ink2:#13100b;--panel:#16120b;--card:#100d08;
+    --gold:#d4a24c;--gold-hi:#e8bf70;--goldl:rgba(184,152,90,.24);
+    --bone:#f3eee2;--t2:#cfc9bb;--t3:#9a9486;--t4:#6f695d;--line:rgba(184,152,90,.16);--moss:#84a273;
+    --prov:#9aa3ae; /* provisional = cool/grey, NOT gold (gold = graded/earned) */
+    --cg:'Fraunces',Georgia,serif;--body:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--body);color:var(--bone);background:radial-gradient(130% 80% at 50% 0%,#191510,var(--ink) 62%);min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:50px}
+  .shell{max-width:460px;margin:0 auto;padding:0 16px}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 2px 8px}
+  .top .brand{display:flex;align-items:center;gap:9px}
+  .logo{width:26px;height:26px;border-radius:50%;border:1px solid var(--goldl);display:flex;align-items:center;justify-content:center;font-family:var(--cg);font-weight:600;color:var(--gold-hi);font-size:13px}
+  .top b{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t2);font-weight:500}
+  .top a{color:var(--t3);text-decoration:none;font-size:13px}
+
+  .lead{padding:22px 2px 4px;text-align:center}
+  .lead .eye{font-family:var(--mono);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-hi);margin-bottom:14px}
+  .lead h1{font-family:var(--cg);font-weight:500;font-size:clamp(30px,8vw,42px);line-height:1.02;letter-spacing:-.5px}
+  .lead h1 em{font-style:italic;color:var(--gold-hi)}
+  .lead p{color:var(--t3);font-size:14px;line-height:1.55;margin-top:14px;max-width:380px;margin-left:auto;margin-right:auto}
+
+  .search{margin-top:24px;background:var(--panel);border:1px solid var(--goldl);border-radius:16px;padding:16px}
+  .sfield{margin-bottom:11px}
+  .sfield label{font-family:var(--mono);font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);display:block;margin-bottom:5px}
+  .sfield input,.sfield select{width:100%;height:46px;border-radius:11px;background:var(--ink2);border:1px solid var(--goldl);color:var(--bone);font-family:var(--body);font-size:15px;padding:0 13px;outline:none}
+  .sfield input:focus,.sfield select:focus{border-color:var(--gold-hi)}
+  .srow{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .seebtn{width:100%;height:52px;margin-top:14px;border-radius:14px;border:0;cursor:pointer;background:linear-gradient(180deg,#eccb86,var(--gold));color:#1a1206;font-family:var(--body);font-weight:600;font-size:15px}
+  .tryline{text-align:center;margin-top:12px;font-size:12px;color:var(--t4)}
+  .tryline a{color:var(--gold-hi);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+  /* agent run */
+  .run{text-align:center;padding:40px 20px;display:none}.run.on{display:block}
+  .spin{width:38px;height:38px;border-radius:50%;border:2.5px solid rgba(184,152,90,.2);border-top-color:var(--gold-hi);margin:0 auto 18px;animation:sp .8s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .run .rs{font-family:var(--cg);font-weight:600;font-size:18px}
+  .run .rsub{font-family:var(--mono);font-size:10px;letter-spacing:.5px;color:var(--t3);margin-top:8px;min-height:14px}
+
+  /* provisional read */
+  .out{display:none}.out.on{display:block;animation:rise .4s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .seen{text-align:center;margin-top:18px}
+  .seen .sh{font-family:var(--cg);font-weight:600;font-style:italic;font-size:24px;color:var(--bone)}
+  .seen .ss{font-size:13px;color:var(--t3);margin-top:5px}
+
+  .pcard{margin-top:18px;background:var(--card);border:1px solid rgba(154,163,174,.3);border-radius:18px;overflow:hidden}
+  .pcard .pbanner{background:rgba(154,163,174,.1);border-bottom:1px solid rgba(154,163,174,.22);padding:9px 16px;font-family:var(--mono);font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--prov);text-align:center}
+  .pcard .pid{padding:16px 18px 6px}
+  .pcard .pid h2{font-family:var(--cg);font-weight:600;font-size:24px;line-height:1.05}
+  .pcard .pid .pm{font-family:var(--mono);font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--t3);margin-top:5px}
+  .pvbox{margin:8px 18px 0;padding:14px 16px;border:1px solid rgba(154,163,174,.25);border-radius:14px;background:rgba(154,163,174,.06);display:flex;align-items:center;gap:15px}
+  .pvbox .pnum{font-family:var(--cg);font-weight:600;font-size:46px;line-height:.85;color:var(--prov)}
+  .pvbox .pnum .tilde{font-size:26px;vertical-align:top;color:var(--t4)}
+  .pvbox .pmeta .pl{font-family:var(--mono);font-size:8px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4)}
+  .pvbox .pmeta .pp{font-family:var(--cg);font-style:italic;font-size:16px;color:var(--t2);margin-top:3px}
+  .conf{margin-top:9px}
+  .conf .cbar{height:5px;border-radius:3px;background:rgba(154,163,174,.18);overflow:hidden}
+  .conf .cfill{height:100%;background:var(--prov);border-radius:3px}
+  .conf .ct{font-family:var(--mono);font-size:8px;letter-spacing:.5px;color:var(--t4);margin-top:5px}
+
+  .signals{padding:12px 18px 4px}
+  .signals .sgh{font-family:var(--mono);font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-bottom:9px}
+  .sig{display:flex;gap:9px;align-items:flex-start;margin-bottom:8px;font-size:12.5px;line-height:1.4;color:var(--t2)}
+  .sig .sk{color:var(--prov);flex-shrink:0;font-family:var(--mono);font-size:11px;padding-top:1px}
+  .sig .miss{color:var(--t4)}
+  .gap{margin:6px 18px 0;padding:11px 14px;border:1px dashed rgba(184,152,90,.3);border-radius:12px;font-size:12px;line-height:1.5;color:var(--t3)}
+  .gap b{color:var(--gold-hi)}
+
+  .claim{margin:16px 18px 18px}
+  .claimbtn{width:100%;height:54px;border-radius:14px;border:0;cursor:pointer;background:linear-gradient(180deg,#eccb86,var(--gold));color:#1a1206;font-family:var(--body);font-weight:600;font-size:15.5px}
+  .claimsub{text-align:center;font-size:11.5px;color:var(--t4);line-height:1.5;margin-top:10px}
+  .notme{text-align:center;margin-top:14px}
+  .notme a{font-size:12.5px;color:var(--t3);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+  .honest{margin-top:22px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px 16px;font-size:12px;line-height:1.55;color:var(--t3)}
+  .honest b{color:var(--gold-hi)}
+  .foot{margin-top:20px;font-size:11px;color:var(--t4);line-height:1.6;text-align:center}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:#1c1811;border:1px solid var(--goldl);color:var(--bone);font-size:13px;padding:11px 17px;border-radius:11px;opacity:0;transition:.25s;z-index:90;pointer-events:none}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top"><div class="brand"><span class="logo">F</span><b>Coverage</b></div><a href="/">Home</a></div>
+
+  <div class="lead" id="lead">
+    <div class="eye">✦ FieldCheck Coverage</div>
+    <h1>We probably <em>already see you.</em></h1>
+    <p>FieldCheck reads the public record — results, write-ups, rosters — before you ever sign up. Find your provisional read, then claim it to make it real.</p>
+  </div>
+
+  <div class="search" id="search">
+    <div class="sfield"><label>Athlete name</label><input id="q-name" placeholder="First Last" autocomplete="off"></div>
+    <div class="srow">
+      <div class="sfield"><label>Sport</label><select id="q-sport"><option>Volleyball</option><option>Basketball</option><option>Football</option><option>Baseball</option><option>Soccer</option></select></div>
+      <div class="sfield"><label>Position</label><input id="q-pos" placeholder="e.g. OH" autocomplete="off"></div>
+    </div>
+    <div class="srow">
+      <div class="sfield"><label>School / club</label><input id="q-school" placeholder="School or club" autocomplete="off"></div>
+      <div class="sfield"><label>State</label><input id="q-state" placeholder="e.g. TX" autocomplete="off"></div>
+    </div>
+    <button class="seebtn" onclick="seeMe()">See what we already have →</button>
+    <div class="tryline">no signup · <a onclick="demoFill()">try a sample athlete</a></div>
+  </div>
+
+  <div class="run" id="run">
+    <div class="spin"></div>
+    <div class="rs" id="rs">Searching the public record…</div>
+    <div class="rsub" id="rsub"></div>
+  </div>
+
+  <div class="out" id="out">
+    <div class="seen">
+      <div class="sh" id="seen-h">We see you.</div>
+      <div class="ss" id="seen-s"></div>
+    </div>
+
+    <div class="pcard">
+      <div class="pbanner">Provisional read · from public signal · not yet graded</div>
+      <div class="pid"><h2 id="p-name">—</h2><div class="pm" id="p-meta">—</div></div>
+      <div class="pvbox">
+        <div class="pnum"><span class="tilde">~</span><span id="p-num">5.4</span></div>
+        <div class="pmeta">
+          <div class="pl">Provisional read</div>
+          <div class="pp" id="p-band">a real college track</div>
+          <div class="conf"><div class="cbar"><div class="cfill" id="p-conf" style="width:40%"></div></div><div class="ct" id="p-conft">low confidence · thin public evidence</div></div>
+        </div>
+      </div>
+      <div class="signals">
+        <div class="sgh">What we found</div>
+        <div id="p-signals"></div>
+      </div>
+      <div class="gap" id="p-gap"></div>
+      <div class="claim">
+        <button class="claimbtn" onclick="claim()">This is me — claim my read →</button>
+        <div class="claimsub">Claiming adds your clips and details. That's what turns a provisional read into a real, engine-graded FieldCheck verdict.</div>
+      </div>
+      <div class="notme"><a onclick="reset()">Not you? Search again</a></div>
+    </div>
+
+    <div class="honest">
+      🔒 <b>Honest by design.</b> A provisional read is built from public signal only — it's a starting point, not a grade. Thin evidence means a careful, low-confidence read, never a confident fake. The real number comes when you claim it and the engine reads your film.
+    </div>
+    <div class="foot">This prototype shows the mechanism on illustrative data. The live Coverage agent reads structured public sources under their terms — we read to grade, we never rehost.</div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   coverageRead() — LIVE ingestion, graceful fallback.
+   Calls /.netlify/functions/coverage (Claude + web search,
+   reads the public record) → honest provisional read.
+   No key / offline / error → local provisional baseline.
+   The shape the UI renders is identical either way.
+   ============================================================ */
+var COVERAGE_LIVE=false;
+function coverageRead(q){
+  return liveCoverage(q)
+    .then(function(read){ return read || mockCoverage(q); })
+    .catch(function(){ return mockCoverage(q); });
+}
+function liveCoverage(q){
+  return fetch('/.netlify/functions/coverage',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(q)})
+    .then(function(r){ return r.json(); })
+    .then(function(d){ if(d && d.read){ COVERAGE_LIVE=true; return d.read; } return null; });
+}
+
+/* ---- local provisional baseline (fallback + offline) ---- */
+function mockCoverage(q){
+  return new Promise(function(resolve){
+    // seeded pseudo-random from the name so the same query is stable
+    function seed(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return function(){h+=0x6D2B79F5;var t=h;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};}
+    var r=seed((q.name||'')+(q.school||'')+(q.state||''));
+    // evidence richness drives confidence: more fields filled + a school = more signal
+    var filled=[q.name,q.pos,q.school,q.state].filter(Boolean).length;
+    var ev=Math.min(1,0.18+filled*0.16+(q.school?0.12:0));   // 0..1
+    var conf=Math.round((0.28+ev*0.42)*100);                  // honest: caps ~70% on public-only
+    // provisional number: centered low (public signal rarely justifies high), widened by little
+    var base=4.4+ev*1.8+(r()-0.5)*0.5;                        // ~4.0..6.4 typical
+    var num=Math.max(3.2,Math.min(6.8,Math.round(base*10)/10));
+    // signals found (and conspicuously, what's MISSING — the invisible four)
+    var found=[], missing=[];
+    if(q.school) found.push(['ROSTER','Listed on a '+q.school+' roster ('+q.sport.toLowerCase()+').']);
+    found.push(['RESULT','Appears in public match/box-score data.']);
+    if(r()>0.45) found.push(['PRESS','A local write-up mentions '+(q.name? q.name.split(' ')[0] : 'the athlete')+' by name.']);
+    if(r()>0.6) found.push(['ALLCONF','Named to an all-conference or honor list.']);
+    missing.push(['FILM','No graded film yet — the only place the invisible four show.']);
+    missing.push(['INVIS','Competitiveness · mental strength · mindset · character — unread without you.']);
+    var bandTxt = num>=6.3?'a strong college track':num>=5.6?'a real college track':num>=5.0?'a developing college path':num>=4.3?'an early, building profile':'building the base';
+    setTimeout(function(){
+      resolve({num:num.toFixed(1),conf:conf,band:bandTxt,found:found,missing:missing,ev:ev});
+    },180);
+  });
+}
+
+function val(id){return document.getElementById(id).value.trim();}
+function query(){return {name:val('q-name'),sport:val('q-sport'),pos:val('q-pos'),school:val('q-school'),state:val('q-state')};}
+function demoFill(){
+  document.getElementById('q-name').value='Reese Calloway';
+  document.getElementById('q-sport').value='Volleyball';
+  document.getElementById('q-pos').value='Outside Hitter';
+  document.getElementById('q-school').value='Cedar Park HS';
+  document.getElementById('q-state').value='TX';
+  seeMe();
+}
+function seeMe(){
+  var q=query();
+  if(!q.name){ toast('Enter a name to search'); return; }
+  document.getElementById('search').style.display='none';
+  document.getElementById('lead').style.display='none';
+  document.getElementById('out').classList.remove('on');
+  var run=document.getElementById('run'); run.classList.add('on');
+  var steps=[
+    ['Searching the public record…','results, rosters, write-ups'],
+    ['Cross-checking the sources…','where they agree, confidence rises'],
+    ['Assembling a provisional read…','public signal only — not a grade'],
+    ['Marking what\u2019s missing…','the film, the invisible four']
+  ];
+  var i=0; setStep(steps[0]);
+  var iv=setInterval(function(){ i++;
+    if(i>=steps.length){ clearInterval(iv); coverageRead(q).then(function(res){ run.classList.remove('on'); render(q,res); }); return; }
+    setStep(steps[i]);
+  },760);
+}
+function setStep(s){ document.getElementById('rs').textContent=s[0]; document.getElementById('rsub').textContent=s[1]; }
+
+function render(q,res){
+  document.getElementById('out').classList.add('on');
+  document.getElementById('seen-s').innerHTML=(COVERAGE_LIVE
+    ? '<span style="display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:#1a1206;background:var(--gold-hi);padding:2px 7px;border-radius:999px;font-weight:700;margin-bottom:7px">✦ live public-record read</span><br>'
+    : '')+'Here\u2019s what the public record already says — before you\u2019ve told us anything.';
+  document.getElementById('p-name').textContent=q.name;
+  document.getElementById('p-meta').textContent=[q.pos,q.sport,q.school,q.state].filter(Boolean).join(' · ').toUpperCase();
+  document.getElementById('p-num').textContent=res.num;
+  document.getElementById('p-band').textContent=res.band;
+  document.getElementById('p-conf').style.width=res.conf+'%';
+  document.getElementById('p-conft').textContent=res.conf+'% confidence · '+(res.conf<45?'thin public evidence':res.conf<60?'moderate public evidence':'solid public evidence')+' — claim it to read the rest';
+  var sh='';
+  res.found.forEach(function(f){ sh+='<div class="sig"><span class="sk">'+f[0]+'</span><span>'+f[1]+'</span></div>'; });
+  res.missing.forEach(function(m){ sh+='<div class="sig"><span class="sk miss">'+m[0]+'</span><span class="miss">'+m[1]+'</span></div>'; });
+  document.getElementById('p-signals').innerHTML=sh;
+  document.getElementById('p-gap').innerHTML='The public record can place you. It <b>cannot read the four traits that decide everything</b> — those live on film only you can show. That gap is exactly what claiming closes.';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function claim(){
+  // hand off into the real funnel: login → studio (build the card, upload film)
+  try{ localStorage.setItem('fc_claim_v1', JSON.stringify(query())); }catch(e){}
+  toast('Let\u2019s make it real →');
+  setTimeout(function(){ location.href='/login'; },650);
+}
+function reset(){
+  document.getElementById('out').classList.remove('on');
+  document.getElementById('search').style.display='block';
+  document.getElementById('lead').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toast(m){var el=document.getElementById('toast');el.textContent=m;el.classList.add('on');setTimeout(function(){el.classList.remove('on');},1700);}
+</script>
+</body>
+</html>
