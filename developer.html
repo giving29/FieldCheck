@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FieldCheck · The Developer — how you close the gap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0907;--ink2:#13100b;--panel:#16120b;--card:#100d08;
+    --gold:#d4a24c;--gold-hi:#e8bf70;--goldl:rgba(184,152,90,.24);
+    --bone:#f3eee2;--t2:#cfc9bb;--t3:#9a9486;--t4:#6f695d;--line:rgba(184,152,90,.16);--moss:#84a273;
+    --prov:#9aa3ae;
+    --cg:'Fraunces',Georgia,serif;--body:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--body);color:var(--bone);background:radial-gradient(130% 80% at 50% 0%,#191510,var(--ink) 62%);min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:60px}
+  .shell{max-width:560px;margin:0 auto;padding:0 18px}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 2px 8px}
+  .top .brand{display:flex;align-items:center;gap:9px}
+  .logo{width:26px;height:26px;border-radius:50%;border:1px solid var(--goldl);display:flex;align-items:center;justify-content:center;font-family:var(--cg);font-weight:600;color:var(--gold-hi);font-size:13px}
+  .top b{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t2);font-weight:500}
+  .top a{color:var(--t3);text-decoration:none;font-size:13px}
+
+  .lead{padding:24px 2px 4px}
+  .lead .eye{font-family:var(--mono);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-hi);margin-bottom:14px}
+  .lead h1{font-family:var(--cg);font-weight:500;font-size:clamp(28px,7vw,40px);line-height:1.04;letter-spacing:-.5px}
+  .lead h1 em{font-style:italic;color:var(--gold-hi)}
+  .lead p{color:var(--t3);font-size:14.5px;line-height:1.55;margin-top:13px;max-width:460px}
+
+  /* current read banner */
+  .read{margin-top:22px;background:var(--panel);border:1px solid var(--goldl);border-radius:15px;padding:15px 17px;display:flex;align-items:center;gap:16px}
+  .read .rnum{font-family:var(--cg);font-weight:600;font-size:44px;line-height:.85;color:var(--gold-hi)}
+  .read .rwho{flex:1}
+  .read .rname{font-family:var(--cg);font-weight:600;font-size:19px;line-height:1.1}
+  .read .rmeta{font-family:var(--mono);font-size:8.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--t3);margin-top:4px}
+  .read .rrung{font-size:12px;color:var(--t2);margin-top:7px;line-height:1.4}
+  .read .rrung b{color:var(--gold-hi)}
+
+  .runbtn{width:100%;height:50px;margin-top:16px;border-radius:13px;border:0;cursor:pointer;background:linear-gradient(180deg,#eccb86,var(--gold));color:#1a1206;font-family:var(--body);font-weight:600;font-size:15px}
+
+  .run{text-align:center;padding:40px 20px;display:none}.run.on{display:block}
+  .spin{width:36px;height:36px;border-radius:50%;border:2.5px solid rgba(184,152,90,.2);border-top-color:var(--gold-hi);margin:0 auto 16px;animation:sp .8s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .run .rs{font-family:var(--cg);font-weight:600;font-size:17px}
+  .run .rsub{font-family:var(--mono);font-size:10px;letter-spacing:.5px;color:var(--t3);margin-top:8px;min-height:14px}
+
+  .out{display:none}.out.on{display:block;animation:rise .4s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  .sect{margin-top:24px}
+  .sect-h{font-family:var(--mono);font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--t3);margin-bottom:13px}
+
+  /* the gap / target */
+  .target{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:16px 17px;text-align:center}
+  .target .tlab{font-family:var(--mono);font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4)}
+  .target .tline{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px}
+  .target .tcur{font-family:var(--cg);font-weight:600;font-size:30px;color:var(--t2)}
+  .target .tarr{color:var(--t4);font-size:20px}
+  .target .ttar{font-family:var(--cg);font-weight:600;font-size:42px;color:var(--moss);line-height:.9}
+  .target .ttar .tt-t{font-size:22px;vertical-align:top;color:var(--t4)}
+  .target .tsub{font-size:12px;color:var(--t3);margin-top:11px;line-height:1.5}
+  .target .tsub b{color:var(--moss)}
+
+  /* facet focus cards */
+  .focus{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;margin-bottom:11px}
+  .focus .fh{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  .focus .fname{font-family:var(--cg);font-weight:600;font-size:18px}
+  .focus .fnums{font-family:var(--mono);font-size:11px;color:var(--t3);white-space:nowrap}
+  .focus .fnums b{color:var(--gold-hi)}
+  .focus .fbar{height:6px;border-radius:3px;background:rgba(184,152,90,.12);margin-top:10px;position:relative;overflow:hidden}
+  .focus .fbar .cur{position:absolute;left:0;top:0;bottom:0;background:var(--gold);border-radius:3px}
+  .focus .fbar .gain{position:absolute;top:0;bottom:0;background:rgba(132,162,115,.55);border-radius:3px}
+  .focus .why{font-size:12.5px;line-height:1.5;color:var(--t2);margin-top:12px}
+  .focus .work{margin-top:11px;display:flex;flex-direction:column;gap:7px}
+  .focus .w{display:flex;gap:9px;font-size:12.5px;line-height:1.45;color:var(--t2)}
+  .focus .w .wk{color:var(--gold-hi);flex-shrink:0;font-family:var(--mono);font-size:11px}
+  .focus .invis{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--moss);margin-top:11px;border-top:1px solid var(--line);padding-top:9px}
+
+  .honest{margin-top:22px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px 16px;font-size:12px;line-height:1.55;color:var(--t3)}
+  .honest b{color:var(--gold-hi)}
+  .cta2{margin-top:18px;display:flex;gap:10px}
+  .cta2 a{flex:1;text-align:center;text-decoration:none;padding:13px;border-radius:12px;font-family:var(--body);font-weight:600;font-size:13px}
+  .cta2 .pri{background:linear-gradient(180deg,#eccb86,var(--gold));color:#1a1206}
+  .cta2 .sec{border:1px solid var(--goldl);color:var(--gold-hi);background:var(--ink2)}
+  .foot{margin-top:18px;font-size:11px;color:var(--t4);line-height:1.6;text-align:center}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:#1c1811;border:1px solid var(--goldl);color:var(--bone);font-size:13px;padding:11px 17px;border-radius:11px;opacity:0;transition:.25s;z-index:90;pointer-events:none;text-align:center;max-width:320px;line-height:1.4}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top"><div class="brand"><span class="logo">F</span><b>The Developer</b></div><a href="/studio">Studio</a></div>
+
+  <div class="lead" id="lead">
+    <div class="eye">✦ FieldCheck Developer</div>
+    <h1>The number isn't a verdict. It's a <em>starting line.</em></h1>
+    <p>The Developer reads your verdict, finds the two facets with the most honest headroom, and shows you the work that moves them — and what moving them does to your number.</p>
+  </div>
+
+  <div class="read" id="read"></div>
+  <button class="runbtn" onclick="runDeveloper()">Build my development plan →</button>
+
+  <div class="run" id="run">
+    <div class="spin"></div>
+    <div class="rs" id="rs">Reading your verdict…</div>
+    <div class="rsub" id="rsub"></div>
+  </div>
+
+  <div class="out" id="out">
+    <div class="sect">
+      <div class="sect-h">If you close the gap</div>
+      <div class="target" id="target"></div>
+    </div>
+    <div class="sect">
+      <div class="sect-h">Where your headroom is — the two facets that move the number most</div>
+      <div id="focuses"></div>
+    </div>
+    <div class="honest">
+      🔒 <b>Earned, not given.</b> This is an honest projection, not a promise — the target is what the engine would read <i>if</i> the work shows up on film. We don't inflate to flatter. The fastest gains are usually the invisible four, because they're what the world overlooks and what you most control.
+    </div>
+    <div class="cta2">
+      <a class="pri" href="/studio">Upload film, re-grade →</a>
+      <a class="sec" href="/strategist">See where this lands me →</a>
+    </div>
+    <div class="foot">Re-grade as your film grows. The number moves when the work does.</div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+var LABELS=['Competitiveness','Power','Physical','Volleyball IQ','Mental Strength','Mindset','Ball Control','Character'];
+var INVIS=[0,4,5,7]; // the invisible four indices in LABELS
+
+/* read the verdict: ?a= base64 (from Studio share), else demo */
+function decodeA(s){ try{ return JSON.parse(decodeURIComponent(escape(atob(s)))); }catch(e){ return null; } }
+var qp=new URLSearchParams(location.search);
+var A=null;
+if(qp.get('a')){ A=decodeA(qp.get('a')); }
+if(!A){ A={ name:'Your Name', pos:'Outside Hitter', cls:'2026', sport:'Volleyball',
+  fc:{ num:'6.5', labels:LABELS, facets:[6.8,6.6,6.4,6.5,6.2,6.3,6.7,6.9] } }; }
+function facets(){ return (A.fc&&A.fc.facets)||[6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5]; }
+function labels(){ return (A.fc&&A.fc.labels)||LABELS; }
+function num(){ return parseFloat(A.fc&&A.fc.num)||6.5; }
+
+function rungName(n){ return n>=7.5?'once-in-a-generation':n>=7?'a HOF trajectory':n>=6.3?'a real college track':n>=5.6?'a developing college path':n>=5?'an early college profile':'building the base'; }
+function nextRung(n){ return n>=7?'the 7+ HOF tier':n>=6.3?'the 7 — HOF trajectory':n>=5.6?'a strong college track (6.3+)':n>=5?'a real college track (5.6+)':'a real college profile (5.0+)'; }
+
+function readPanel(){
+  var el=document.getElementById('read');
+  el.innerHTML='<div class="rnum">'+num().toFixed(1)+'</div>'
+    +'<div class="rwho"><div class="rname">'+(A.name||'Your read')+'</div>'
+    +'<div class="rmeta">'+[A.pos,A.cls?'Class of '+A.cls:'',A.sport].filter(Boolean).join(' · ')+'</div>'
+    +'<div class="rrung">Today you read as <b>'+rungName(num())+'</b>. Next rung: <b>'+nextRung(num())+'</b>.</div></div>';
+}
+
+/* ============================================================
+   developmentPlan() — THE SINGLE BACKEND INTEGRATION POINT.
+   Local: finds the 2 facets with most honest headroom (biased
+   to the invisible four — most movable, most overlooked) and
+   projects an honest target. LIVE: swap for POST
+   /.netlify/functions/coach (film-aware plan) → SAME shape.
+   Honest: target is "if the work shows on film," never a promise.
+   ============================================================ */
+function developmentPlan(){
+  return new Promise(function(resolve){
+    var f=facets(), L=labels(), base=num();
+    // headroom = distance below the athlete's own ceiling, weighted up for invisible four
+    var scored=f.map(function(v,i){
+      var ceiling=Math.min(9.0,Math.max.apply(null,f)+0.8);
+      var head=Math.max(0,ceiling-v);
+      var invisBoost=INVIS.indexOf(i)>=0?1.35:1.0; // the invisible four move the number most
+      return {i:i,label:L[i],val:v,head:head,score:head*invisBoost,invis:INVIS.indexOf(i)>=0};
+    }).sort(function(a,b){return b.score-a.score;});
+    var pick=scored.slice(0,2);
+    // honest projection: closing 2 facets lifts composite a fraction of their gain
+    var gain=pick.reduce(function(s,p){return s+Math.min(1.2,p.head)*0.5;},0);
+    var target=Math.min(9.0,Math.round((base+gain)*10)/10);
+    setTimeout(function(){ resolve({base:base,target:target,pick:pick}); },150);
+  });
+}
+
+var WORK={
+  'Competitiveness':['Chart your point-by-point response after an error — reset speed is the signal.','Put yourself in late-set, high-score reps in practice on purpose.','Film the moments the score tightens; that\u2019s where this shows.'],
+  'Power':['Add measured contact-point and approach-jump work; track the numbers.','Strength block targeting explosive triple-extension.','Capture top-end swings on film at full reach.'],
+  'Physical':['Conditioning that holds your swing quality into set 5.','Lateral and first-step speed work for defense.','Show late-match clips where your motor doesn\u2019t drop.'],
+  'Volleyball IQ':['Study reads: where you set up before the ball, not after.','Quick-game and tempo reps; show decisions, not just kills.','Film rotations where you solve the play early.'],
+  'Mental Strength':['Build a between-points reset routine and use it on camera.','Reps that follow a stuff or shank immediately with a clean swing.','Show the run right after adversity — that\u2019s the read.'],
+  'Mindset':['Capture the bench, the timeout, the teammate moments — coachability is visible.','Take feedback on film and show the adjustment next rep.','Document a skill you rebuilt; growth is a signal.'],
+  'Ball Control':['Serve-receive and dig consistency drills; track passing grades.','Show clean platform and hands under pressure.','Film the unglamorous reps — control is a tell.'],
+  'Character':['Let the culture moments be seen: huddles, lifts, the hard practice.','References from coaches who\u2019ll speak to who you are.','Show up the same on a bad day on film — that\u2019s character.']
+};
+
+function runDeveloper(){
+  readPanel();
+  document.getElementById('out').classList.remove('on');
+  var run=document.getElementById('run'); run.classList.add('on');
+  document.getElementById('lead').style.display='none';
+  document.getElementById('read').style.display='none';
+  document.querySelector('.runbtn').style.display='none';
+  var steps=[['Reading your verdict…','8 facets, your own ceiling'],['Finding your headroom…','where the number moves most'],['Weighting the invisible four…','what you most control'],['Writing honest work…','no inflation, no shortcuts']];
+  var i=0; setStep(steps[0]);
+  var iv=setInterval(function(){ i++;
+    if(i>=steps.length){ clearInterval(iv); developmentPlan().then(function(p){ run.classList.remove('on'); render(p); }); return; }
+    setStep(steps[i]);
+  },680);
+}
+function setStep(s){ document.getElementById('rs').textContent=s[0]; document.getElementById('rsub').textContent=s[1]; }
+
+function render(p){
+  document.getElementById('out').classList.add('on');
+  document.getElementById('target').innerHTML='<div class="tlab">honest projection · earned on film</div>'
+    +'<div class="tline"><span class="tcur">'+p.base.toFixed(1)+'</span><span class="tarr">→</span>'
+    +'<span class="ttar"><span class="tt-t">~</span>'+p.target.toFixed(1)+'</span></div>'
+    +'<div class="tsub">Close these two facets and the engine would read you near <b>'+p.target.toFixed(1)+'</b> — '+rungName(p.target)+'. That\u2019s the gap, and it\u2019s yours to take.</div>';
+
+  var maxF=Math.max.apply(null,facets().concat([9]));
+  document.getElementById('focuses').innerHTML=p.pick.map(function(f){
+    var ceiling=Math.min(9.0,Math.max.apply(null,facets())+0.8);
+    var curPct=(f.val/9)*100, gainPct=(Math.min(ceiling,f.val+Math.min(1.2,f.head))/9)*100 - curPct;
+    var work=(WORK[f.label]||['Show this on film, consistently.']).slice(0,3);
+    return '<div class="focus"><div class="fh"><div class="fname">'+f.label+'</div>'
+      +'<div class="fnums"><b>'+f.val.toFixed(1)+'</b> → '+Math.min(ceiling,f.val+Math.min(1.2,f.head)).toFixed(1)+'</div></div>'
+      +'<div class="fbar"><div class="gain" style="left:'+curPct+'%;width:'+Math.max(0,gainPct)+'%"></div><div class="cur" style="width:'+curPct+'%"></div></div>'
+      +'<div class="why">'+(f.invis?'One of the invisible four — the traits no ranking captures, and the ones that move your number the most.':'Real, visible headroom here — and it shows directly on film.')+'</div>'
+      +'<div class="work">'+work.map(function(w){return '<div class="w"><span class="wk">›</span><span>'+w+'</span></div>';}).join('')+'</div>'
+      +(f.invis?'<div class="invis">✦ invisible-four · highest leverage</div>':'')+'</div>';
+  }).join('');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toast(m){var el=document.getElementById('toast');el.textContent=m;el.classList.add('on');setTimeout(function(){el.classList.remove('on');},2200);}
+
+readPanel();
+</script>
+</body>
+</html>
