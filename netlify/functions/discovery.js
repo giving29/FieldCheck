@@ -23,10 +23,11 @@ Work FAST and efficiently: use at most 2 web searches total, then answer. Prefer
 First, parse the ask into: position (e.g. OH/S/MB/L/OPP), region/state, class year, minimum read, and trait priorities (e.g. "invisible-four" if they mention character/competitiveness/mental/mindset/undervalued/overlooked; "D1-projection" if they mention D1/power/high-major).
 
 Then return ONLY a JSON object — no prose, no markdown fences:
-{"ask":{"pos":"OH","region":"Texas","cls":"2026","minGrade":6.0,"traits":["invisible-four"]},"candidates":[{"name":"First Last","pos":"OH","cls":"2026","school":"School, ST","num":"6.1","facet":"competitiveness","facetVal":"7.2"}]}
+{"ask":{"pos":"OH","region":"Texas","cls":"2026","minGrade":6.0,"traits":["invisible-four"]},"candidates":[{"name":"First Last","pos":"OH","cls":"2026","school":"School, ST","num":"6.1","facet":"competitiveness","facetVal":"7.2","srcCount":3,"srcTypes":["ROSTER","RESULT","HONOR"]}]}
 - ask fields: use null for anything not specified. traits is an array (may be empty).
 - candidates: 0–4 real athletes, each with pos, cls, school (City/School + state), num (provisional, string), facet (their standout, lowercase), facetVal (string 0–10). Order by honest read, strongest first.
 - If you cannot confirm a real FULL NAME for a candidate, OMIT that candidate entirely. Never put a description, position, school, or placeholder in the name field — a name is a real person's first and last name or nothing.
+- For EACH candidate, from the sources you already saw while finding them, report srcCount = how many DISTINCT independent source types corroborate that athlete's identity/level (ROSTER, RESULT, PRESS, HONOR, PROFILE), and srcTypes = that list. Do NOT run extra searches for this — only count what you already encountered. If a candidate rests on a single source, srcCount = 1 (be honest).
 - If the public record cannot support real candidates, return "candidates": [].`;
 
 exports.handler = async (event) => {
@@ -68,6 +69,14 @@ exports.handler = async (event) => {
   }
 };
 
+function buildSources(c) {
+  var VALID = ['ROSTER','RESULT','PRESS','HONOR','PROFILE'];
+  var types = Array.isArray(c.srcTypes) ? c.srcTypes.map(function(t){return String(t).toUpperCase();}).filter(function(t){return VALID.indexOf(t)>=0;}) : [];
+  var n = types.length || Math.max(0, Math.min(5, parseInt(c.srcCount, 10) || 0));
+  if (types.length) n = types.length;
+  var agreement = n >= 3 ? 'strong' : n === 2 ? 'moderate' : n === 1 ? 'thin' : 'none';
+  return { count: n, agreement: agreement, types: types.slice(0, 5) };
+}
 function clampNum(v, lo, hi, dflt) {
   let n = parseFloat(v);
   if (!(n >= 0 && n <= 10)) n = dflt;
@@ -98,6 +107,7 @@ function parseResult(text) {
     num: clampNum(c.num, 3.2, 6.8, 4.8).toFixed(1),   // provisional, capped conservative
     facet: String(c.facet || 'competitiveness').toLowerCase().slice(0, 32),
     facetVal: clampNum(c.facetVal, 3.0, 8.0, 6.5).toFixed(1),
+    sources: buildSources(c),
     provisional: true
   })).filter(c => {
     var n = c.name || '';

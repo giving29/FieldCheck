@@ -63,7 +63,9 @@
   .cand .body{flex:1;min-width:0}
   .cand .nm{font-family:var(--cg);font-weight:600;font-size:18px;line-height:1.1}
   .cand .meta{font-family:var(--mono);font-size:8.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--t3);margin-top:4px}
-  .cand .why{font-size:12.5px;line-height:1.45;color:var(--t2);margin-top:9px}
+  .srcpill{display:inline-flex;align-items:center;gap:5px;margin-top:9px;font-family:var(--mono);font-size:8.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--moss);border:1px solid rgba(132,162,115,.4);background:rgba(132,162,115,.07);border-radius:7px;padding:4px 9px}
+.srcpill.thin{color:var(--prov);border-color:rgba(154,163,174,.4);background:rgba(154,163,174,.07)}
+.cand .why{font-size:12.5px;line-height:1.45;color:var(--t2);margin-top:9px}
   .cand .why .facet{color:var(--gold-hi);font-weight:600}
   .cand .right{text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
   .cand .pnum{font-family:var(--cg);font-weight:600;font-size:32px;line-height:.85;color:var(--prov)}
@@ -196,6 +198,7 @@ function mockDiscovery(text){
         num:num.toFixed(1),
         facet:topFacet,
         facetVal:(6.6+r()*1.6).toFixed(1),
+        sources:(function(){var n=2+Math.floor(r()*3);return {count:n,agreement:n>=3?'strong':'moderate',types:[]};})(),
         provisional:true
       });
     }
@@ -248,11 +251,20 @@ function render(res){
     return '<div class="cand"><div class="rank">'+(idx+1)+'</div>'
       +'<div class="body"><div class="nm">'+c.name+'</div>'
       +'<div class="meta">'+[c.pos,c.cls?'Class of '+c.cls:'',c.school].filter(Boolean).join(' · ')+'</div>'
-      +'<div class="why">Standout: <span class="facet">'+c.facet+' ('+(c.facetVal||'—')+')</span> — the kind of signal a box score hides.</div></div>'
+      +'<div class="why">Standout: <span class="facet">'+c.facet+' ('+(c.facetVal||'—')+')</span> — the kind of signal a box score hides.</div>'
+      +srcPill(c.sources)+'</div>'
       +'<div class="right"><div><div class="pnum"><span class="tilde">~</span>'+c.num+'</div><div class="pl">provisional</div></div>'
       +'<button class="req" onclick="requestVerdict(\''+c.name.replace(/'/g,"")+'\')">Request full verdict →</button></div></div>';
   }).join('');
   window.scrollTo({top:0,behavior:'smooth'});
+}
+function srcPill(d){
+  if(!d || !d.count) return '';
+  var strong = d.count>=2;
+  var label = d.count>=3 ? '✓ '+d.count+' sources agree'
+            : d.count===2 ? '✓ 2 sources agree'
+            : 'single source';
+  return '<div class="srcpill'+(strong?'':' thin')+'" title="Independent public source types corroborating this read">'+label+'</div>';
 }
 function requestVerdict(name){
   toast('We\u2019ll notify '+name+' to claim and share their full verdict. The athlete stays in control.');
