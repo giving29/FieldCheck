@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FieldCheck · The Loop — an engine that gets truer the longer it runs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0907;--ink2:#13100b;--panel:#16120b;--card:#100d08;
+    --gold:#d4a24c;--gold-hi:#e8bf70;--goldl:rgba(184,152,90,.24);
+    --bone:#f3eee2;--t2:#cfc9bb;--t3:#9a9486;--t4:#6f695d;--line:rgba(184,152,90,.16);
+    --moss:#84a273;--prov:#9aa3ae;--viz:#b48ed0;
+    --cg:'Fraunces',Georgia,serif;--body:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--body);color:var(--bone);background:radial-gradient(130% 80% at 50% 0%,#191510,var(--ink) 62%);min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:70px}
+  .shell{max-width:720px;margin:0 auto;padding:0 18px}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 2px 8px}
+  .top .brand{display:flex;align-items:center;gap:9px}
+  .logo{width:26px;height:26px;border-radius:50%;border:1px solid var(--goldl);display:flex;align-items:center;justify-content:center;font-family:var(--cg);font-weight:600;color:var(--gold-hi);font-size:13px}
+  .top b{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t2);font-weight:500}
+  .top a{color:var(--t3);text-decoration:none;font-size:13px}
+
+  /* honest vision banner */
+  .vbanner{margin:18px 2px 0;display:inline-flex;align-items:center;gap:9px;background:rgba(180,142,208,.08);border:1px solid rgba(180,142,208,.3);border-radius:999px;padding:7px 15px}
+  .vbanner .vd{width:7px;height:7px;border-radius:50%;background:var(--viz);box-shadow:0 0 10px var(--viz)}
+  .vbanner span{font-family:var(--mono);font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;color:#cbb3df}
+
+  .lead{padding:18px 2px 4px}
+  .lead h1{font-family:var(--cg);font-weight:500;font-size:clamp(30px,7.5vw,50px);line-height:1.02;letter-spacing:-.6px;max-width:640px}
+  .lead h1 em{font-style:italic;color:var(--gold-hi)}
+  .lead p{color:var(--t2);font-size:15.5px;line-height:1.6;margin-top:16px;max-width:600px}
+  .lead p b{color:var(--bone)}
+  .lead .honest-note{color:var(--t3);font-size:13px;line-height:1.55;margin-top:14px;max-width:600px;border-left:2px solid rgba(180,142,208,.4);padding-left:13px}
+
+  /* the loop visual */
+  .loopwrap{position:relative;width:min(92vw,520px);aspect-ratio:1;margin:40px auto 20px}
+  .loopwrap svg{position:absolute;inset:0;width:100%;height:100%}
+  .ring{fill:none;stroke:var(--line);stroke-width:1.5}
+  .ringglow{fill:none;stroke:rgba(212,162,76,.18);stroke-width:6}
+  .pulse{fill:var(--gold-hi);filter:drop-shadow(0 0 6px var(--gold-hi))}
+  .node{position:absolute;transform:translate(-50%,-50%);text-align:center;width:96px}
+  .node .dot{width:15px;height:15px;border-radius:50%;margin:0 auto 7px;border:2px solid var(--gold);background:var(--ink)}
+  .node.live .dot{background:var(--moss);border-color:var(--moss);box-shadow:0 0 10px rgba(132,162,115,.5)}
+  .node.building .dot{background:var(--gold);border-color:var(--gold-hi)}
+  .node.vision .dot{background:transparent;border-color:var(--viz);border-style:dashed}
+  .node .nt{font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;color:var(--bone)}
+  .node .ns{font-family:var(--mono);font-size:7.5px;letter-spacing:.8px;text-transform:uppercase;margin-top:3px}
+  .node.live .ns{color:var(--moss)}
+  .node.building .ns{color:var(--gold-hi)}
+  .node.vision .ns{color:var(--viz)}
+  .loopcenter{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;width:160px}
+  .loopcenter .lc-k{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t4)}
+  .loopcenter .lc-h{font-family:var(--cg);font-style:italic;font-weight:600;font-size:19px;line-height:1.15;color:var(--gold-hi);margin-top:6px}
+
+  .legend{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:8px}
+  .legend .lg{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--t3)}
+  .legend .lgd{width:9px;height:9px;border-radius:50%}
+  .legend .lgd.live{background:var(--moss)} .legend .lgd.building{background:var(--gold)} .legend .lgd.vision{background:transparent;border:1.5px dashed var(--viz)}
+
+  /* stage detail list */
+  .stages{margin-top:30px}
+  .sec-h{font-family:var(--mono);font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--t3);margin-bottom:14px}
+  .stage{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}
+  .stage:last-child{border-bottom:0}
+  .stage .sidx{font-family:var(--cg);font-weight:600;font-size:22px;color:var(--t4);line-height:1}
+  .stage .sh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .stage .sname{font-family:var(--cg);font-weight:600;font-size:18px}
+  .stage .stag{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:999px}
+  .stag.live{color:#1a1206;background:var(--moss)}
+  .stag.building{color:#1a1206;background:var(--gold)}
+  .stag.vision{color:var(--viz);border:1px dashed rgba(180,142,208,.5)}
+  .stage .sd{font-size:13.5px;line-height:1.55;color:var(--t2);margin-top:7px}
+  .stage .smap{font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:7px}
+  .stage .smap b{color:var(--gold-hi)}
+
+  .ml{margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.ml{grid-template-columns:1fr}}
+  .mlcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 17px}
+  .mlcard .mk{font-family:var(--mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:9px}
+  .mlcard.today .mk{color:var(--moss)} .mlcard.tomorrow .mk{color:var(--viz)}
+  .mlcard h3{font-family:var(--cg);font-weight:600;font-size:17px;line-height:1.15;margin-bottom:9px}
+  .mlcard p{font-size:13px;line-height:1.55;color:var(--t2)}
+  .mlcard p b{color:var(--bone)}
+
+  .thesis{margin-top:30px;background:var(--panel);border:1px solid var(--goldl);border-radius:15px;padding:20px 19px}
+  .thesis .tk{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-hi);margin-bottom:11px}
+  .thesis h2{font-family:var(--cg);font-weight:500;font-size:22px;line-height:1.2;letter-spacing:-.3px}
+  .thesis h2 em{font-style:italic;color:var(--gold-hi)}
+  .thesis p{font-size:14px;line-height:1.6;color:var(--t2);margin-top:12px}
+  .thesis p b{color:var(--bone)}
+
+  .honest{margin-top:22px;background:rgba(180,142,208,.05);border:1px solid rgba(180,142,208,.22);border-radius:13px;padding:15px 17px;font-size:12.5px;line-height:1.6;color:var(--t3)}
+  .honest b{color:#cbb3df}
+  .cta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
+  .cta a{flex:1;min-width:150px;text-align:center;text-decoration:none;padding:14px;border-radius:12px;font-family:var(--body);font-weight:600;font-size:13.5px}
+  .cta .pri{background:linear-gradient(180deg,#eccb86,var(--gold));color:#1a1206}
+  .cta .sec{border:1px solid var(--goldl);color:var(--gold-hi);background:var(--ink2)}
+  .foot{margin-top:18px;font-size:11px;color:var(--t4);line-height:1.6;text-align:center}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top"><div class="brand"><span class="logo">F</span><b>The Loop</b></div><a href="/methodology">Intelligence</a></div>
+
+  <div class="vbanner"><span class="vd"></span><span>The intended system · shown in prototype</span></div>
+
+  <div class="lead">
+    <h1>An engine that gets <em>truer</em> the longer it runs.</h1>
+    <p>FieldCheck isn't a static formula that scores you once. It's a loop: every read is a falsifiable bet, reality is the only label, and the gap between them teaches the engine to read truer next time. <b>The longer it runs, the harder it is to beat</b> — because it's trained on what actually happened, not on opinion.</p>
+    <div class="honest-note">This is the system we're building toward. The front of the loop runs today; the back half is the promise — stated out loud, on the record, so reality can hold us to it. We'll build it out over time, in the open.</div>
+  </div>
+
+  <!-- THE LOOP VISUAL -->
+  <div class="loopwrap" id="loopwrap">
+    <svg viewBox="0 0 600 600" aria-hidden="true">
+      <circle class="ringglow" cx="300" cy="300" r="210"/>
+      <circle class="ring" cx="300" cy="300" r="210"/>
+      <!-- a pulse travelling clockwise — the signal flowing -->
+      <circle class="pulse" r="5">
+        <animateMotion dur="9s" repeatCount="indefinite"
+          path="M300,90 A210,210 0 1,1 299.9,90 Z"/>
+      </circle>
+      <circle class="pulse" r="3.5" opacity="0.5">
+        <animateMotion dur="9s" begin="-3s" repeatCount="indefinite"
+          path="M300,90 A210,210 0 1,1 299.9,90 Z"/>
+      </circle>
+    </svg>
+
+    <div class="loopcenter">
+      <div class="lc-k">the result</div>
+      <div class="lc-h">the number<br>gets truer</div>
+    </div>
+
+    <!-- 6 nodes, positioned on the ring -->
+    <div class="node live"     style="left:50%;top:15%">   <div class="dot"></div><div class="nt">Read</div>     <div class="ns">live</div></div>
+    <div class="node live"     style="left:80.3%;top:32.5%"><div class="dot"></div><div class="nt">Evidence</div> <div class="ns">live</div></div>
+    <div class="node live"     style="left:80.3%;top:67.5%"><div class="dot"></div><div class="nt">Predict</div>  <div class="ns">live</div></div>
+    <div class="node building" style="left:50%;top:85%">   <div class="dot"></div><div class="nt">Outcome</div>  <div class="ns">building</div></div>
+    <div class="node vision"   style="left:19.7%;top:67.5%"><div class="dot"></div><div class="nt">Signal</div>   <div class="ns">vision</div></div>
+    <div class="node vision"   style="left:19.7%;top:32.5%"><div class="dot"></div><div class="nt">Tune</div>     <div class="ns">vision</div></div>
+  </div>
+
+  <div class="legend">
+    <div class="lg"><span class="lgd live"></span>live today</div>
+    <div class="lg"><span class="lgd building"></span>mechanism live, accruing</div>
+    <div class="lg"><span class="lgd vision"></span>the promise</div>
+  </div>
+
+  <!-- STAGE DETAIL -->
+  <div class="stages">
+    <div class="sec-h">The six stages — and where each one stands</div>
+
+    <div class="stage">
+      <div class="sidx">1</div>
+      <div><div class="sh"><span class="sname">Read</span><span class="stag live">live</span></div>
+        <div class="sd">The engine grades 8 facets against the sport's GOAT — including the invisible four (competitiveness, mental strength, mindset, character) that no ranking captures — into one honest number.</div>
+        <div class="smap">running as · <b>The Scout · Coverage</b></div></div>
+    </div>
+
+    <div class="stage">
+      <div class="sidx">2</div>
+      <div><div class="sh"><span class="sname">Evidence</span><span class="stag live">live</span></div>
+        <div class="sd">Cross-source agreement: the read is corroborated across independent public sources. Confidence rises when they agree, falls when they don't. The receipts behind the number.</div>
+        <div class="smap">running as · <b>the Dossier engine</b> (Coverage + Discovery)</div></div>
+    </div>
+
+    <div class="stage">
+      <div class="sidx">3</div>
+      <div><div class="sh"><span class="sname">Predict</span><span class="stag live">live</span></div>
+        <div class="sd">Every read is logged the day it's made — timestamped, append-only, tamper-evident. A falsifiable bet on the record. This is the step pay-to-play structurally won't take.</div>
+        <div class="smap">running as · <b>The Record</b></div></div>
+    </div>
+
+    <div class="stage">
+      <div class="sidx">4</div>
+      <div><div class="sh"><span class="sname">Outcome</span><span class="stag building">building</span></div>
+        <div class="sd">Reality answers. Commitments, awards, signings, results — the only ground truth. The mechanism is live; the outcomes accrue over time as athletes reach their level.</div>
+        <div class="smap">mechanism live in · <b>The Record</b> · resolves as outcomes land</div></div>
+    </div>
+
+    <div class="stage">
+      <div class="sidx">5</div>
+      <div><div class="sh"><span class="sname">Signal</span><span class="stag vision">the promise</span></div>
+        <div class="sd">Prediction minus outcome equals the error — the signal the engine learns from. Where the read was right, reality reinforces it; where it was wrong, reality corrects it.</div>
+        <div class="smap">intended · the reinforcement signal</div></div>
+    </div>
+
+    <div class="stage">
+      <div class="sidx">6</div>
+      <div><div class="sh"><span class="sname">Tune</span><span class="stag vision">the promise</span></div>
+        <div class="sd">The signal recalibrates the engine — facet weights, GOAT anchors, the scoring rules — so the next read is truer than the last. Then the loop runs again, sharper.</div>
+        <div class="smap">intended · the self-improving engine</div></div>
+    </div>
+  </div>
+
+  <!-- ML HONESTY -->
+  <div class="ml">
+    <div class="mlcard today">
+      <div class="mk">● what learns today</div>
+      <h3>Corroboration &amp; correction</h3>
+      <p>Cross-source agreement already moves confidence. A coach or athlete who disputes a read already teaches the engine. Every clip uploaded already sharpens the next read. <b>The loop's front half is live.</b></p>
+    </div>
+    <div class="mlcard tomorrow">
+      <div class="mk">○ what learns tomorrow</div>
+      <h3>Trained on outcomes</h3>
+      <p>As the dataset of (read → outcome) pairs grows, the engine will train directly on the only ground truth that matters — what actually happened. <b>An honest number that measurably predicts.</b> That's the promise we're building toward.</p>
+    </div>
+  </div>
+
+  <!-- THESIS -->
+  <div class="thesis">
+    <div class="tk">why this is uncopyable</div>
+    <h2>A paid ranking never makes a falsifiable prediction — so it has <em>nothing to be graded against.</em></h2>
+    <p>The loop only runs if you're willing to be wrong on the record. FieldCheck is. That's why a competitor can copy a page but not the loop: they'd need to have started logging predictions years ago, and a pay-to-play model can't — its number is for sale, not for testing. <b>Every day the loop runs, the moat deepens.</b></p>
+  </div>
+
+  <div class="honest">
+    <b>Said plainly:</b> this page describes the system we intend, shown in prototype. Stages 1–3 are live on prod today. Stage 4's mechanism is live and accruing real outcomes over time. Stages 5–6 — the reinforcement signal and the self-tuning engine — are the promise, on our roadmap, not yet shipped. We're stating the vision out loud and building it in the open, because a number you can trust is one whose maker will be graded by reality.
+  </div>
+
+  <div class="cta">
+    <a class="pri" href="/ledger">See The Record — where the loop starts →</a>
+    <a class="sec" href="/methodology">How the read works →</a>
+  </div>
+  <div class="foot">The Loop · the intended system, in prototype · we build it out in the open</div>
+</div>
+</body>
+</html>

@@ -64,6 +64,12 @@
   .badge.early{color:#1a1206;background:var(--early)}
   .badge.reference{color:var(--t3);border:1px solid var(--line)}
   .entry .date{font-family:var(--mono);font-size:9px;color:var(--t4);margin-top:7px;letter-spacing:.5px}
+  .entry.illustrative{opacity:.6;border-style:dashed}
+  .entry .outcome{margin-top:9px;padding:8px 11px;border-radius:9px;background:rgba(132,162,115,.08);border:1px solid rgba(132,162,115,.25);font-size:12px;line-height:1.5;color:var(--t2)}
+  .entry .outcome .ok{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--moss);margin-right:6px}
+  .entry .outcome b{color:var(--bone)}
+  .entry .outcome .osrc{display:block;font-family:var(--mono);font-size:8.5px;color:var(--t4);margin-top:3px}
+  .badge.illustrative{color:var(--t4);border:1px dashed var(--line)}
   .entry .hash{font-family:var(--mono);font-size:8px;color:var(--t4);margin-top:3px;opacity:.7}
 
   .addrow{margin-top:18px;text-align:center;padding:18px;border:1px dashed var(--line);border-radius:13px;font-size:13px;color:var(--t3);line-height:1.55}
@@ -97,7 +103,7 @@
   <div class="ledger" id="ledger"></div>
 
   <div class="honest">
-    <span style="color:var(--prov)">Tracking</span> = a bet we've placed, outcome open · <span style="color:var(--gold-hi)">Reference</span> = an established athlete anchoring the scale, not a prediction. <b>No accuracy rate yet</b> — the record just opened, and a number we can't back would be the exact inflation we built FieldCheck to end. <a href="/coverage" style="color:var(--gold-hi);text-decoration:underline;text-underline-offset:3px">Get your read →</a>
+    <span style="color:var(--prov)">Tracking</span> = a bet we've placed, outcome open · <span style="color:var(--gold-hi)">Reference</span> = an established athlete anchoring the scale, not a prediction. <b>No accuracy rate yet</b> — the record just opened, and a number we can't back would be the exact inflation we built FieldCheck to end. Entries resolve from <span style="color:var(--prov)">tracking</span> to <span style="color:var(--moss)">confirmed</span> as outcomes actually land — each with its source, never before. <a href="/loop" style="color:var(--gold-hi);text-decoration:underline;text-underline-offset:3px">See the full loop →</a> &nbsp;·&nbsp; <a href="/coverage" style="color:var(--gold-hi);text-decoration:underline;text-underline-offset:3px">Get your read →</a>
   </div>
   <div class="foot">The Record · append-only since June 2026 · 0 edited · 0 deleted</div>
 </div>
@@ -113,12 +119,16 @@
 var LEDGER=[
   // REFERENCE anchors — established athletes, used to anchor the scale (NOT predictions)
   {name:'Madisen Skinner', pos:'OH', cls:'Pro', read:'6.8', prov:false, status:'reference',
-   date:'2026-06-26', note:'Scale anchor · 3× NCAA champion, Honda Award, LOVB Finals MVP. Public-record read, capped (no film).'},
-  // TRACKING — provisional reads we've placed; outcomes open
+   date:'2026-06-26', note:'Scale anchor · 3× NCAA champion, Honda Award, LOVB Finals MVP. Public-record read, capped (no film).', outcome:null},
+  // TRACKING — provisional reads we've placed; outcomes OPEN (clock just started — nothing resolved yet, honestly)
   {name:'Henley Anderson', pos:'OH', cls:'2026', read:'6.5', prov:true, status:'tracking',
-   date:'2026-06-27', note:'Discovery read · Dripping Springs HS, TX. Physical projection the standout. Outcome: open.'},
+   date:'2026-06-27', note:'Discovery read · Dripping Springs HS, TX. Physical projection the standout.', outcome:null},
   {name:'Reese Calloway', pos:'OH', cls:'2026', read:'5.4', prov:true, status:'tracking',
-   date:'2026-06-27', note:'Coverage provisional · Cedar Park HS, TX. Thin public film — read will sharpen on upload.'}
+   date:'2026-06-27', note:'Coverage provisional · Cedar Park HS, TX. Thin public film — read will sharpen on upload.', outcome:null},
+  // ILLUSTRATIVE — shows the FORMAT a resolved entry takes. Clearly flagged, NOT a real athlete or claim.
+  {name:'— example —', pos:'', cls:'', read:'6.4', prov:true, status:'illustrative',
+   date:'(format)', note:'Shows how a resolved prediction will read once outcomes land. Not a real athlete or claim.',
+   outcome:{result:'Committed — Division I', when:'(later)', source:'(public commitment announcement)', verdict:'on-track'}}
 ];
 
 function shortHash(s){
@@ -162,12 +172,15 @@ function renderLedger(){
     var hash=shortHash(e.name+'|'+e.read+'|'+e.date);
     var numClass=e.status==='reference'?'ref':(e.prov?'prov':'');
     var t=e.prov?'<span class="t">~</span>':'';
-    var badgeTxt=e.status==='tracking'?'tracking':e.status==='confirmed'?'confirmed':e.status==='early'?'early call':'reference';
-    return '<div class="entry">'
+    var badgeTxt=e.status==='tracking'?'tracking':e.status==='confirmed'?'confirmed':e.status==='early'?'early call':e.status==='illustrative'?'format example':'reference';
+    var outcomeHtml = e.outcome ? '<div class="outcome '+(e.outcome.verdict||'')+'">'
+        +'<span class="ok">\u2192 outcome</span> <b>'+e.outcome.result+'</b>'
+        +'<span class="osrc">'+(e.outcome.when||'')+(e.outcome.source?' · '+e.outcome.source:'')+'</span></div>' : '';
+    return '<div class="entry'+(e.status==='illustrative'?' illustrative':'')+'">'
       +'<div class="num '+numClass+'">'+t+e.read+'</div>'
       +'<div class="mid"><div class="nm">'+e.name+'</div>'
       +'<div class="meta">'+[e.pos,e.cls].filter(Boolean).join(' · ')+'</div>'
-      +'<div class="note">'+e.note+'</div></div>'
+      +'<div class="note">'+e.note+'</div>'+outcomeHtml+'</div>'
       +'<div class="right"><span class="badge '+e.status+'">'+badgeTxt+'</span>'
       +'<div class="date">'+e.date+'</div><div class="hash">#'+hash+'</div></div>'
       +'</div>';
