@@ -18,9 +18,17 @@ THE HONESTY FIREWALL — non-negotiable:
 - The provisional number is 0–10, centered conservatively (public signal rarely justifies above ~6.5). Typical range 3.2–6.8.
 - ALWAYS surface what is MISSING: graded film and the four invisible facets (competitiveness, mental strength, mindset, character) cannot be read from the public record.
 
+THE DOSSIER — assemble evidence across INDEPENDENT source types and judge agreement:
+- Source types: ROSTER (official team/school roster), RESULT (box scores, match results, stat lines), PRESS (news write-ups, articles), HONOR (all-conference, all-state, award lists), PROFILE (club/recruiting profile pages).
+- For each signal you actually found, tag which source TYPE it came from.
+- "agreement": when the SAME underlying fact appears in 2+ INDEPENDENT source types, that is corroboration — it raises trust. Count how many distinct source types corroborate the athlete's identity/level. More independent types agreeing = higher confidence (still capped at 70 for public-only).
+- Be honest: if everything traces to a single source type, agreement is LOW even if the signal is loud.
+
 Return ONLY a JSON object — no prose, no markdown fences:
-{"num":"5.4","conf":42,"band":"a real college track","found":[["ROSTER","short sentence"],["RESULT","short sentence"]],"missing":[["FILM","No graded film yet — the only place the invisible four show."],["INVIS","Competitiveness, mental strength, mindset, character — unread without you."]]}
-"found" = 1–4 concrete public signals you ACTUALLY found (tag + short sentence). If none, found = [["NONE","Limited public signal under this name — a provisional baseline only."]].
+{"num":"5.4","conf":42,"band":"a real college track","found":[["ROSTER","short sentence","ROSTER"],["RESULT","short sentence","RESULT"]],"missing":[["FILM","No graded film yet — the only place the invisible four show."],["INVIS","Competitiveness, mental strength, mindset, character — unread without you."]],"dossier":{"sourceTypes":["ROSTER","RESULT","HONOR"],"agreement":"strong","corroborated":"Identity and level confirmed across roster, results, and an honors list."}}
+"found" = 1–4 concrete public signals you ACTUALLY found: [display-tag, short sentence, SOURCE_TYPE]. If none, found = [["NONE","Limited public signal under this name — a provisional baseline only.","NONE"]] and dossier.sourceTypes = [].
+"dossier.sourceTypes" = the DISTINCT independent source types you actually drew from (subset of ROSTER/RESULT/PRESS/HONOR/PROFILE). "agreement" = "strong" (3+ types), "moderate" (2 types), "thin" (1 type), or "none".
+"dossier.corroborated" = one honest sentence on what the independent sources agree on (or that they don't).
 "band" is one short phrase: "a strong college track" / "a real college track" / "a developing college path" / "an early, building profile" / "building the base".`;
 
 exports.handler = async (event) => {
@@ -74,14 +82,29 @@ function parseRead(text) {
   num = Math.max(3.2, Math.min(6.8, num));
   let conf = parseInt(o.conf, 10); if (!(conf >= 0 && conf <= 100)) conf = 38;
   conf = Math.max(25, Math.min(70, conf)); // public-only is capped at 70
+  const VALID_TYPES = ['ROSTER','RESULT','PRESS','HONOR','PROFILE'];
   const found = Array.isArray(o.found) && o.found.length
-    ? o.found.slice(0, 4).map(f => [String(f[0] || 'SIGNAL').slice(0, 12), String(f[1] || '').slice(0, 160)])
-    : [['NONE', 'Limited public signal under this name — a provisional baseline only.']];
+    ? o.found.slice(0, 4).map(f => [String(f[0] || 'SIGNAL').slice(0, 12), String(f[1] || '').slice(0, 160), String(f[2] || '').toUpperCase().slice(0, 10)])
+    : [['NONE', 'Limited public signal under this name — a provisional baseline only.', 'NONE']];
+  // build the dossier from declared source types, intersected with what's actually defensible
+  const dossierIn = (o.dossier && typeof o.dossier === 'object') ? o.dossier : {};
+  let types = Array.isArray(dossierIn.sourceTypes) ? dossierIn.sourceTypes.map(t => String(t).toUpperCase()).filter(t => VALID_TYPES.indexOf(t) >= 0) : [];
+  // also fold in any source types the found-signals actually carried
+  found.forEach(f => { if (VALID_TYPES.indexOf(f[2]) >= 0 && types.indexOf(f[2]) < 0) types.push(f[2]); });
+  types = types.slice(0, 5);
+  const sc = types.length;
+  const agreement = sc >= 3 ? 'strong' : sc === 2 ? 'moderate' : sc === 1 ? 'thin' : 'none';
+  const dossier = {
+    sourceTypes: types,
+    sourceCount: sc,
+    agreement: agreement,
+    corroborated: String(dossierIn.corroborated || (sc >= 2 ? 'Confirmed across independent public sources.' : sc === 1 ? 'Single-source signal — corroboration still thin.' : 'No corroborating public sources found.')).slice(0, 180)
+  };
   const missing = [
     ['FILM', 'No graded film yet — the only place the invisible four show.'],
     ['INVIS', 'Competitiveness, mental strength, mindset, character — unread without you.']
   ];
-  return { num: num.toFixed(1), conf: conf, band: String(o.band || 'an early, building profile').slice(0, 60), found: found, missing: missing, ev: conf / 100 };
+  return { num: num.toFixed(1), conf: conf, band: String(o.band || 'an early, building profile').slice(0, 60), found: found, missing: missing, dossier: dossier, ev: conf / 100 };
 }
 
 function resp(code, obj) {

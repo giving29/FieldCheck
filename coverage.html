@@ -73,6 +73,22 @@
   .sig{display:flex;gap:9px;align-items:flex-start;margin-bottom:8px;font-size:12.5px;line-height:1.4;color:var(--t2)}
   .sig .sk{color:var(--prov);flex-shrink:0;font-family:var(--mono);font-size:11px;padding-top:1px}
   .sig .miss{color:var(--t4)}
+  .dossier{margin:12px 18px 0;padding:13px 15px;border:1px solid rgba(132,162,115,.28);border-radius:13px;background:rgba(132,162,115,.05)}
+  .dossier .dh{display:flex;align-items:center;gap:9px}
+  .dossier .dh .dseal{width:22px;height:22px;border-radius:50%;background:rgba(132,162,115,.16);border:1px solid rgba(132,162,115,.5);display:flex;align-items:center;justify-content:center;color:var(--moss);font-size:12px;flex-shrink:0}
+  .dossier .dh .dtitle{font-family:var(--cg);font-weight:600;font-size:15px;color:var(--bone);line-height:1.15}
+  .dossier .dh .dtitle b{color:var(--moss)}
+  .dossier .dmeter{display:flex;gap:4px;margin-top:11px}
+  .dossier .dpip{flex:1;height:4px;border-radius:2px;background:rgba(154,163,174,.18)}
+  .dossier .dpip.on{background:var(--moss)}
+  .dossier .dtypes{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+  .dossier .dtype{font-family:var(--mono);font-size:8px;letter-spacing:.8px;text-transform:uppercase;color:var(--moss);border:1px solid rgba(132,162,115,.35);border-radius:6px;padding:4px 8px;background:rgba(132,162,115,.06)}
+  .dossier .dcorr{font-size:12px;line-height:1.5;color:var(--t2);margin-top:10px}
+  .dossier.thin{border-color:rgba(154,163,174,.28);background:rgba(154,163,174,.05)}
+  .dossier.thin .dh .dseal{background:rgba(154,163,174,.14);border-color:rgba(154,163,174,.4);color:var(--prov)}
+  .dossier.thin .dh .dtitle b{color:var(--prov)}
+  .dossier.thin .dpip.on{background:var(--prov)}
+  .dossier.thin .dtype{color:var(--prov);border-color:rgba(154,163,174,.35);background:rgba(154,163,174,.06)}
   .gap{margin:6px 18px 0;padding:11px 14px;border:1px dashed rgba(184,152,90,.3);border-radius:12px;font-size:12px;line-height:1.5;color:var(--t3)}
   .gap b{color:var(--gold-hi)}
 
@@ -139,6 +155,7 @@
       <div class="signals">
         <div class="sgh">What we found</div>
         <div id="p-signals"></div>
+        <div class="dossier" id="p-dossier" style="display:none"></div>
       </div>
       <div class="gap" id="p-gap"></div>
       <div class="claim">
@@ -250,6 +267,7 @@ function render(q,res){
   res.found.forEach(function(f){ sh+='<div class="sig"><span class="sk">'+f[0]+'</span><span>'+f[1]+'</span></div>'; });
   res.missing.forEach(function(m){ sh+='<div class="sig"><span class="sk miss">'+m[0]+'</span><span class="miss">'+m[1]+'</span></div>'; });
   document.getElementById('p-signals').innerHTML=sh;
+  renderDossier(res.dossier);
   document.getElementById('p-gap').innerHTML='The public record can place you. It <b>cannot read the four traits that decide everything</b> — those live on film only you can show. That gap is exactly what claiming closes.';
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -258,6 +276,26 @@ function claim(){
   try{ localStorage.setItem('fc_claim_v1', JSON.stringify(query())); }catch(e){}
   toast('Let\u2019s make it real →');
   setTimeout(function(){ location.href='/login'; },650);
+}
+function renderDossier(d){
+  var el=document.getElementById('p-dossier');
+  if(!el) return;
+  if(!d || !d.sourceCount){ el.style.display='none'; return; }
+  var sc=d.sourceCount||0;
+  var strong=(d.agreement==='strong'||d.agreement==='moderate');
+  el.className='dossier'+(strong?'':' thin');
+  el.style.display='block';
+  var TYPE_LABEL={ROSTER:'Roster',RESULT:'Results',PRESS:'Press',HONOR:'Honors',PROFILE:'Profile'};
+  var headline = sc>=3 ? 'Confirmed by <b>'+sc+' independent sources</b>'
+               : sc===2 ? 'Corroborated by <b>2 independent sources</b>'
+               : sc===1 ? '<b>Single source</b> — corroboration still thin'
+               : 'No corroborating sources yet';
+  var pips=''; for(var i=0;i<5;i++){ pips+='<div class="dpip'+(i<sc?' on':'')+'"></div>'; }
+  var types=(d.sourceTypes||[]).map(function(t){ return '<span class="dtype">'+(TYPE_LABEL[t]||t)+'</span>'; }).join('');
+  el.innerHTML='<div class="dh"><div class="dseal">✓</div><div class="dtitle">'+headline+'</div></div>'
+    +'<div class="dmeter">'+pips+'</div>'
+    +(types?'<div class="dtypes">'+types+'</div>':'')
+    +(d.corroborated?'<div class="dcorr">'+d.corroborated+'</div>':'');
 }
 function reset(){
   document.getElementById('out').classList.remove('on');
