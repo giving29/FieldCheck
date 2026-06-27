@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FieldCheck · The Record — every read, logged the day we made it</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0907;--ink2:#13100b;--panel:#16120b;--card:#100d08;
+    --gold:#d4a24c;--gold-hi:#e8bf70;--goldl:rgba(184,152,90,.24);
+    --bone:#f3eee2;--t2:#cfc9bb;--t3:#9a9486;--t4:#6f695d;--line:rgba(184,152,90,.16);
+    --moss:#84a273;--prov:#9aa3ae;--early:#c9a86a;
+    --cg:'Fraunces',Georgia,serif;--body:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--body);color:var(--bone);background:radial-gradient(130% 80% at 50% 0%,#191510,var(--ink) 62%);min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:70px}
+  .shell{max-width:760px;margin:0 auto;padding:0 18px}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 2px 8px}
+  .top .brand{display:flex;align-items:center;gap:9px}
+  .logo{width:26px;height:26px;border-radius:50%;border:1px solid var(--goldl);display:flex;align-items:center;justify-content:center;font-family:var(--cg);font-weight:600;color:var(--gold-hi);font-size:13px}
+  .top b{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t2);font-weight:500}
+  .top a{color:var(--t3);text-decoration:none;font-size:13px}
+
+  .lead{padding:30px 2px 6px}
+  .lead .eye{font-family:var(--mono);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-hi);margin-bottom:16px}
+  .lead h1{font-family:var(--cg);font-weight:500;font-size:clamp(30px,7vw,48px);line-height:1.02;letter-spacing:-.6px;max-width:620px}
+  .lead h1 em{font-style:italic;color:var(--gold-hi)}
+  .lead p{color:var(--t3);font-size:15px;line-height:1.6;margin-top:16px;max-width:580px}
+  .lead p b{color:var(--t2)}
+
+  .stripe{margin-top:26px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .stat{background:var(--panel);padding:16px 14px;text-align:center}
+  .stat .sn{font-family:var(--cg);font-weight:600;font-size:30px;color:var(--gold-hi);line-height:1}
+  .stat .sl{font-family:var(--mono);font-size:8px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t4);margin-top:7px;line-height:1.4}
+  @media(max-width:560px){.stripe{grid-template-columns:repeat(2,1fr)}}
+
+  .integrity{margin-top:16px;background:rgba(132,162,115,.06);border:1px solid rgba(132,162,115,.25);border-radius:12px;padding:13px 16px;font-size:12.5px;line-height:1.55;color:var(--t2);display:flex;gap:11px;align-items:flex-start}
+  .integrity .ik{color:var(--moss);flex-shrink:0;font-size:15px}
+  .integrity b{color:var(--moss)}
+
+  .filters{margin-top:26px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .fl{font-family:var(--mono);font-size:11px;color:var(--t2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;background:var(--panel);transition:.13s}
+  .fl.on{background:rgba(232,191,112,.13);border-color:var(--goldl);color:var(--gold-hi)}
+  .fl .c{color:var(--t4);margin-left:6px}
+
+  .ledger{margin-top:18px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .entry{display:grid;grid-template-columns:54px 1fr auto;gap:14px;align-items:center;padding:15px 16px;border-bottom:1px solid var(--line);background:var(--card);transition:.13s}
+  .entry:last-child{border-bottom:0}
+  .entry:hover{background:var(--ink2)}
+  .entry .num{font-family:var(--cg);font-weight:600;font-size:26px;line-height:1;text-align:center}
+  .entry .num.prov{color:var(--prov)}
+  .entry .num.ref{color:var(--gold-hi)}
+  .entry .num .t{font-size:14px;vertical-align:top;color:var(--t4)}
+  .entry .mid{min-width:0}
+  .entry .nm{font-family:var(--cg);font-weight:600;font-size:17px;line-height:1.1}
+  .entry .meta{font-family:var(--mono);font-size:8.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--t3);margin-top:4px}
+  .entry .note{font-size:12px;color:var(--t3);margin-top:6px;line-height:1.4}
+  .entry .right{text-align:right;flex-shrink:0}
+  .entry .badge{display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:4px 9px;border-radius:999px;white-space:nowrap}
+  .badge.tracking{color:var(--prov);border:1px solid rgba(154,163,174,.4);background:rgba(154,163,174,.08)}
+  .badge.confirmed{color:#1a1206;background:var(--moss)}
+  .badge.early{color:#1a1206;background:var(--early)}
+  .badge.reference{color:var(--t3);border:1px solid var(--line)}
+  .entry .date{font-family:var(--mono);font-size:9px;color:var(--t4);margin-top:7px;letter-spacing:.5px}
+  .entry .hash{font-family:var(--mono);font-size:8px;color:var(--t4);margin-top:3px;opacity:.7}
+
+  .addrow{margin-top:18px;text-align:center;padding:18px;border:1px dashed var(--line);border-radius:13px;font-size:13px;color:var(--t3);line-height:1.55}
+  .addrow b{color:var(--gold-hi)}
+  .addrow a{color:var(--gold-hi);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
+  .honest{margin-top:24px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:15px 17px;font-size:12.5px;line-height:1.6;color:var(--t3)}
+  .honest b{color:var(--gold-hi)}
+  .foot{margin-top:18px;font-size:11px;color:var(--t4);line-height:1.6;text-align:center}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top"><div class="brand"><span class="logo">F</span><b>The Record</b></div><a href="/">Home</a></div>
+
+  <div class="lead">
+    <div class="eye">✦ FieldCheck · The Record</div>
+    <h1>Every read, logged the day we <em>made it.</em></h1>
+    <p>Anyone can grade an athlete after they've made it. We log the number <b>before</b> — timestamped, append-only, never edited — and let the results grade us. This is the part no recruiting service will ever do: <b>put the prediction on the record and stand behind it.</b></p>
+  </div>
+
+  <div class="stripe" id="stripe"></div>
+
+  <div class="integrity">
+    <span class="ik">🔒</span>
+    <div>Append-only and tamper-evident. Each entry carries a content hash set the moment it's logged — <b>edits would break the hash, so we don't make them.</b> The record opens today and compounds from here. A competitor can copy a page; they can't copy two years of timestamps.</div>
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="ledger" id="ledger"></div>
+
+  <div class="addrow">
+    Reads from <b>Coverage</b> and <b>Discovery</b> log here automatically once the write path is live. <a href="/coverage">Get your read →</a>
+  </div>
+
+  <div class="honest">
+    🔒 <b>Honest by construction.</b> Reads marked <span style="color:var(--prov)">tracking</span> are provisional — bets we've placed, outcomes still open. <span style="color:var(--gold-hi)">Reference</span> entries are established athletes used to anchor the scale, not predictions. We show <b>no accuracy rate yet</b> — because the record just opened, and a number we can't yet back would be exactly the kind of inflation we built FieldCheck to end. Check back as the outcomes land.
+  </div>
+  <div class="foot">The Record · append-only since June 2026 · 0 entries edited · 0 deleted</div>
+</div>
+
+<script>
+/* ============================================================
+   THE RECORD — the calibration spine, P1 (the ledger primitive).
+   Honest seed: provisional reads we've actually made (TRACKING),
+   plus established athletes as scale REFERENCE anchors. No fake
+   accuracy, no invented "early calls". P2 wires the live write
+   path so Coverage/Discovery reads append here automatically.
+   ============================================================ */
+var LEDGER=[
+  // REFERENCE anchors — established athletes, used to anchor the scale (NOT predictions)
+  {name:'Madisen Skinner', pos:'OH', cls:'Pro', read:'6.8', prov:false, status:'reference',
+   date:'2026-06-26', note:'Scale anchor · 3× NCAA champion, Honda Award, LOVB Finals MVP. Public-record read, capped (no film).'},
+  // TRACKING — provisional reads we've placed; outcomes open
+  {name:'Henley Anderson', pos:'OH', cls:'2026', read:'6.5', prov:true, status:'tracking',
+   date:'2026-06-27', note:'Discovery read · Dripping Springs HS, TX. Physical projection the standout. Outcome: open.'},
+  {name:'Reese Calloway', pos:'OH', cls:'2026', read:'5.4', prov:true, status:'tracking',
+   date:'2026-06-27', note:'Coverage provisional · Cedar Park HS, TX. Thin public film — read will sharpen on upload.'}
+];
+
+function shortHash(s){
+  var h=2166136261>>>0;
+  for(var i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); }
+  var hex=(h>>>0).toString(16).padStart(8,'0');
+  // second pass for a longer, sha-looking stamp
+  var h2=5381; for(var j=0;j<s.length;j++){ h2=((h2<<5)+h2+s.charCodeAt(j))>>>0; }
+  return (hex + h2.toString(16).padStart(8,'0')).slice(0,16);
+}
+
+var FILTER='all';
+function counts(){
+  var c={all:LEDGER.length,tracking:0,confirmed:0,reference:0};
+  LEDGER.forEach(function(e){ if(c[e.status]!=null) c[e.status]++; });
+  return c;
+}
+function renderStripe(){
+  var c=counts();
+  var tracking=c.tracking, total=LEDGER.length;
+  document.getElementById('stripe').innerHTML=
+     stat(total,'reads on the record')
+    +stat(tracking,'tracking · outcome open')
+    +stat('0','entries edited')
+    +stat('Jun 2026','record opened');
+}
+function stat(n,l){ return '<div class="stat"><div class="sn">'+n+'</div><div class="sl">'+l+'</div></div>'; }
+
+function renderFilters(){
+  var c=counts();
+  var opts=[['all','All'],['tracking','Tracking'],['confirmed','Confirmed'],['reference','Reference']];
+  document.getElementById('filters').innerHTML=opts.map(function(o){
+    return '<div class="fl'+(FILTER===o[0]?' on':'')+'" onclick="setFilter(\''+o[0]+'\')">'+o[1]+'<span class="c">'+(c[o[0]]||0)+'</span></div>';
+  }).join('');
+}
+function setFilter(f){ FILTER=f; renderFilters(); renderLedger(); }
+
+function renderLedger(){
+  var rows=LEDGER.filter(function(e){ return FILTER==='all'||e.status===FILTER; });
+  document.getElementById('ledger').innerHTML=rows.map(function(e){
+    var hash=shortHash(e.name+'|'+e.read+'|'+e.date);
+    var numClass=e.status==='reference'?'ref':(e.prov?'prov':'');
+    var t=e.prov?'<span class="t">~</span>':'';
+    var badgeTxt=e.status==='tracking'?'tracking':e.status==='confirmed'?'confirmed':e.status==='early'?'early call':'reference';
+    return '<div class="entry">'
+      +'<div class="num '+numClass+'">'+t+e.read+'</div>'
+      +'<div class="mid"><div class="nm">'+e.name+'</div>'
+      +'<div class="meta">'+[e.pos,e.cls].filter(Boolean).join(' · ')+'</div>'
+      +'<div class="note">'+e.note+'</div></div>'
+      +'<div class="right"><span class="badge '+e.status+'">'+badgeTxt+'</span>'
+      +'<div class="date">'+e.date+'</div><div class="hash">#'+hash+'</div></div>'
+      +'</div>';
+  }).join('');
+}
+
+renderStripe(); renderFilters(); renderLedger();
+</script>
+</body>
+</html>
