@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Messenger · FieldCheck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0A0908;--ink2:#15130F;--gold:#D4A24C;--gold-hi:#EEC067;--golds:rgba(212,162,76,.10);--goldl:rgba(212,162,76,.30);--t:#F3EEE2;--t2:#CFC9BB;--t3:#9A9486;--t4:#6E685C;--rule:rgba(212,162,76,.16);--moss:#84a273;--mono:'JetBrains Mono',monospace}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--t);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .wrap{max-width:860px;margin:0 auto;padding:0 24px}
+  nav{padding:20px 0;font-family:var(--mono);font-size:10px;letter-spacing:1.6px;text-transform:uppercase}
+  nav a{color:var(--t3);text-decoration:none} nav a:hover{color:var(--gold)}
+  header{padding:46px 0 28px;border-bottom:1px solid var(--rule)}
+  .eyebrow{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  h1{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,5vw,52px);font-weight:500;letter-spacing:-.02em;line-height:1.02}
+  h1 em{font-style:italic;color:var(--gold)}
+  .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--t3);margin-top:12px;max-width:600px}
+  .modes{display:flex;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:11px;overflow:hidden;margin:30px 0 24px}
+  .mode{flex:1;background:var(--ink);padding:16px 18px;cursor:pointer;text-align:center;transition:background .15s}
+  .mode.on{background:var(--golds)} .mode:hover{background:rgba(212,162,76,.05)}
+  .mode .mt{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+  .mode .md{font-size:13px;color:var(--t2)}
+  .mode.on .md{color:var(--t)}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);margin-bottom:7px}
+  .field input,.field textarea{width:100%;background:var(--ink2);border:1px solid var(--rule);border-radius:9px;padding:12px 14px;color:var(--t);font-family:'Inter',sans-serif;font-size:14px}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--goldl)}
+  .field textarea{resize:vertical;min-height:62px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .go{width:100%;margin-top:8px;background:var(--gold);color:var(--ink);border:none;border-radius:9px;padding:15px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;cursor:pointer;transition:background .15s}
+  .go:hover{background:var(--gold-hi)} .go:disabled{opacity:.5;cursor:wait}
+  .out{margin-top:26px;display:none}
+  .out.show{display:block}
+  .draftbox{background:var(--ink2);border:1px solid var(--goldl);border-radius:12px;padding:22px 24px;white-space:pre-wrap;font-size:14.5px;line-height:1.7;color:var(--t)}
+  .acts{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .act{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold-hi);border:1px solid var(--goldl);border-radius:8px;padding:10px 15px;cursor:pointer;background:none;transition:background .15s}
+  .act:hover{background:var(--golds)}
+  .note{font-family:var(--mono);font-size:9px;letter-spacing:.5px;color:var(--t4);margin-top:16px;line-height:1.7}
+  .note b{color:var(--moss)}
+  .honest{margin:30px 0 60px;padding:18px 20px;border:1px dashed var(--goldl);border-radius:11px;color:var(--t3);font-size:13px;line-height:1.65}
+  .honest b{color:var(--gold-hi)}
+  .spin{display:inline-block;width:13px;height:13px;border:2px solid var(--goldl);border-top-color:var(--gold);border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px;margin-right:7px}
+  @keyframes s{to{transform:rotate(360deg)}}
+  @media(max-width:620px){.row{grid-template-columns:1fr}}
+</style></head><body>
+<div class="wrap">
+  <nav><a href="/">← FieldCheck</a> &nbsp;·&nbsp; <a href="/more">More</a> &nbsp;·&nbsp; <a href="/ledger">The Record</a></nav>
+  <header>
+    <div class="eyebrow">The Messenger · the outreach layer</div>
+    <h1>The number's only worth something <em>if it reaches the right person.</em></h1>
+    <div class="sub">A verdict, turned into a grounded message — player to coach, or coach to player. It carries the read, not the hype.</div>
+  </header>
+
+  <div class="modes">
+    <div class="mode on" id="m-p2c" onclick="setMode('player2coach')">
+      <div class="mt">I'm a player</div>
+      <div class="md">Reach a program</div>
+    </div>
+    <div class="mode" id="m-c2p" onclick="setMode('coach2player')">
+      <div class="mt">I'm a coach</div>
+      <div class="md">Reach a player I found</div>
+    </div>
+  </div>
+
+  <div class="field"><label id="l-athlete">Your name + position</label><input id="athlete" placeholder="e.g. Maya Chen, OH"></div>
+  <div class="row">
+    <div class="field"><label>FieldCheck read</label><input id="read" placeholder="e.g. 6.5"></div>
+    <div class="field"><label id="l-target">Program you're reaching</label><input id="target" placeholder="e.g. Stanford WVB"></div>
+  </div>
+  <div class="field"><label>Standout facets (comma-separated)</label><input id="facets" placeholder="e.g. competitiveness 7.2, mental strength 6.9"></div>
+  <div class="field"><label>Evidence on record (what backs the number)</label><textarea id="evidence" placeholder="e.g. All-region junior year; 3.4 kills/set; verified across roster + results"></textarea></div>
+
+  <button class="go" id="go" onclick="draft()">Draft the message</button>
+
+  <div class="out" id="out">
+    <div class="draftbox" id="draftbox"></div>
+    <div class="acts">
+      <button class="act" onclick="copyDraft()">Copy</button>
+      <button class="act" onclick="draft()">Redraft</button>
+    </div>
+    <div class="note">The Messenger <b>drafts; you send</b>. It never contacts anyone, never touches real contact info, and stores only a privacy-minimal record (who it was about, the read it carried, the date) — never your message or anyone's email.</div>
+  </div>
+
+  <div class="honest">
+    <b>How this stays honest:</b> the message is grounded in your verdict on The Record — a timestamped, falsifiable number, not a self-promotion. That's the whole pitch: a coach can <b>check the receipt</b>. For coach-to-player outreach, drafts stay strictly professional and route through proper channels — FieldCheck never auto-contacts an athlete.
+  </div>
+</div>
+
+<script>
+var MODE='player2coach';
+function setMode(m){
+  MODE=m;
+  document.getElementById('m-p2c').classList.toggle('on', m==='player2coach');
+  document.getElementById('m-c2p').classList.toggle('on', m==='coach2player');
+  if(m==='player2coach'){
+    document.getElementById('l-athlete').textContent='Your name + position';
+    document.getElementById('athlete').placeholder='e.g. Maya Chen, OH';
+    document.getElementById('l-target').textContent="Program you're reaching";
+    document.getElementById('target').placeholder='e.g. Stanford WVB';
+  } else {
+    document.getElementById('l-athlete').textContent='The player + position';
+    document.getElementById('athlete').placeholder="e.g. the athlete's name, OH";
+    document.getElementById('l-target').textContent='Your program';
+    document.getElementById('target').placeholder='e.g. Cal Volleyball';
+  }
+}
+function val(id){ return (document.getElementById(id).value||'').trim(); }
+function draft(){
+  var athlete=val('athlete'), read=val('read');
+  if(!athlete||!read){ alert('Add at least a name and the read.'); return; }
+  var btn=document.getElementById('go'); btn.disabled=true; btn.innerHTML='<span class="spin"></span>Drafting…';
+  var payload={ mode:MODE, athlete:athlete, read:read, target:val('target'),
+    facets: val('facets')?val('facets').split(',').map(function(x){return x.trim();}):[],
+    evidence: val('evidence')?val('evidence').split(';').map(function(x){return x.trim();}):[] };
+  fetch('/.netlify/functions/messenger?action=draft',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      btn.disabled=false; btn.textContent='Draft the message';
+      if(d.draft){
+        document.getElementById('draftbox').textContent=d.draft;
+        document.getElementById('out').classList.add('show');
+        // fire-and-forget privacy-minimal log (best effort; never blocks)
+        try{ fetch('/.netlify/functions/messenger?action=log',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({mode:MODE,athlete:athlete,target:val('target'),read:read})}); }catch(e){}
+      } else {
+        document.getElementById('draftbox').textContent='Could not draft right now ('+(d.reason||'error')+'). Try again in a moment.';
+        document.getElementById('out').classList.add('show');
+      }
+    })
+    .catch(function(){ btn.disabled=false; btn.textContent='Draft the message';
+      document.getElementById('draftbox').textContent='Network hiccup — try again.'; document.getElementById('out').classList.add('show'); });
+}
+function copyDraft(){
+  var t=document.getElementById('draftbox').textContent;
+  navigator.clipboard.writeText(t).then(function(){ event.target.textContent='Copied'; setTimeout(function(){event.target.textContent='Copy';},1400); });
+}
+setMode('player2coach');
+</script>
+</body></html>
