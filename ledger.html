@@ -64,21 +64,6 @@
   .badge.early{color:#1a1206;background:var(--early)}
   .badge.reference{color:var(--t3);border:1px solid var(--line)}
   .entry .date{font-family:var(--mono);font-size:9px;color:var(--t4);margin-top:7px;letter-spacing:.5px}
-  .entry.illustrative{opacity:.6;border-style:dashed}
-  .evtoggle{margin-top:9px;background:transparent;border:0;color:var(--t4);font-family:var(--mono);font-size:8.5px;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;padding:2px 0}
-  .evtoggle:hover{color:var(--gold-hi)}
-  .evbody{margin-top:8px;padding:10px 12px;border-radius:9px;background:rgba(184,152,90,.05);border:1px solid var(--line)}
-  .evbody .evhead{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--moss)}
-  .evbody .evhead.thin{color:var(--prov)}
-  .evbody .echips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
-  .evbody .echip{font-family:var(--mono);font-size:7.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--moss);border:1px solid rgba(132,162,115,.3);border-radius:5px;padding:3px 7px}
-  .evbody .esig{font-size:11.5px;line-height:1.45;color:var(--t2);margin-top:6px}
-  .evbody .evnote{font-family:var(--mono);font-size:8px;color:var(--t4);margin-top:9px;line-height:1.5;border-top:1px solid var(--line);padding-top:7px}
-  .entry .outcome{margin-top:9px;padding:8px 11px;border-radius:9px;background:rgba(132,162,115,.08);border:1px solid rgba(132,162,115,.25);font-size:12px;line-height:1.5;color:var(--t2)}
-  .entry .outcome .ok{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--moss);margin-right:6px}
-  .entry .outcome b{color:var(--bone)}
-  .entry .outcome .osrc{display:block;font-family:var(--mono);font-size:8.5px;color:var(--t4);margin-top:3px}
-  .badge.illustrative{color:var(--t4);border:1px dashed var(--line)}
   .entry .hash{font-family:var(--mono);font-size:8px;color:var(--t4);margin-top:3px;opacity:.7}
 
   .addrow{margin-top:18px;text-align:center;padding:18px;border:1px dashed var(--line);border-radius:13px;font-size:13px;color:var(--t3);line-height:1.55}
@@ -92,7 +77,7 @@
 </head>
 <body>
 <div class="shell">
-  <div class="top"><div class="brand"><span class="logo">F</span><b>The Record</b> <span id="live-badge" style="display:none;align-items:center;gap:5px;font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--moss);border:1px solid rgba(132,162,115,.4);border-radius:6px;padding:2px 7px;margin-left:8px"><span style="width:5px;height:5px;border-radius:50%;background:var(--moss);display:inline-block"></span>live store</span></div><a href="/">Home</a></div>
+  <div class="top"><div class="brand"><span class="logo">F</span><b>The Record</b></div><a href="/">Home</a></div>
 
   <div class="lead">
     <div class="eye">✦ FieldCheck · The Record</div>
@@ -104,17 +89,21 @@
 
   <div class="integrity">
     <span class="ik">🔒</span>
-    <div>Append-only, tamper-evident. Each entry is hashed the moment it's logged — <b>edits would break the hash, so we don't make them.</b> A competitor can copy a page; they can't copy the timestamps.</div>
+    <div>Append-only and tamper-evident. Each entry carries a content hash set the moment it's logged — <b>edits would break the hash, so we don't make them.</b> The record opens today and compounds from here. A competitor can copy a page; they can't copy two years of timestamps.</div>
   </div>
 
   <div class="filters" id="filters"></div>
 
   <div class="ledger" id="ledger"></div>
 
-  <div class="honest">
-    <span style="color:var(--prov)">Tracking</span> = a bet we've placed, outcome open · <span style="color:var(--gold-hi)">Reference</span> = an established athlete anchoring the scale, not a prediction. <b>No accuracy rate yet</b> — the record just opened, and a number we can't back would be the exact inflation we built FieldCheck to end. Entries resolve from <span style="color:var(--prov)">tracking</span> to <span style="color:var(--moss)">confirmed</span> as outcomes actually land — each with its source, never before. <a href="/loop" style="color:var(--gold-hi);text-decoration:underline;text-underline-offset:3px">See the full loop →</a> &nbsp;·&nbsp; <a href="/coverage" style="color:var(--gold-hi);text-decoration:underline;text-underline-offset:3px">Get your read →</a>
+  <div class="addrow">
+    Reads from <b>Coverage</b> and <b>Discovery</b> log here automatically once the write path is live. <a href="/coverage">Get your read →</a>
   </div>
-  <div class="foot">The Record · append-only since June 2026 · 0 edited · 0 deleted</div>
+
+  <div class="honest">
+    🔒 <b>Honest by construction.</b> Reads marked <span style="color:var(--prov)">tracking</span> are provisional — bets we've placed, outcomes still open. <span style="color:var(--gold-hi)">Reference</span> entries are established athletes used to anchor the scale, not predictions. We show <b>no accuracy rate yet</b> — because the record just opened, and a number we can't yet back would be exactly the kind of inflation we built FieldCheck to end. Check back as the outcomes land.
+  </div>
+  <div class="foot">The Record · append-only since June 2026 · 0 entries edited · 0 deleted</div>
 </div>
 
 <script>
@@ -128,45 +117,14 @@
 var LEDGER=[
   // REFERENCE anchors — established athletes, used to anchor the scale (NOT predictions)
   {name:'Madisen Skinner', pos:'OH', cls:'Pro', read:'6.8', prov:false, status:'reference',
-   date:'2026-06-26', note:'Scale anchor · 3× NCAA champion, Honda Award, LOVB Finals MVP. Public-record read, capped (no film).', outcome:null,
-   evidence:{sources:{count:5,types:['ROSTER','RESULT','HONOR','PRESS','PROFILE']}, signals:['3× NCAA champion (Kentucky / Texas)','Honda Award winner','LOVB Finals MVP','USA national team profile']}},
-  // TRACKING — provisional reads we've placed; outcomes OPEN (clock just started — nothing resolved yet, honestly)
+   date:'2026-06-26', note:'Scale anchor · 3× NCAA champion, Honda Award, LOVB Finals MVP. Public-record read, capped (no film).'},
+  // TRACKING — provisional reads we've placed; outcomes open
   {name:'Henley Anderson', pos:'OH', cls:'2026', read:'6.5', prov:true, status:'tracking',
-   date:'2026-06-27', note:'Discovery read · Dripping Springs HS, TX. Physical projection the standout.', outcome:null,
-   evidence:{sources:{count:2,types:['ROSTER','HONOR']}, signals:['Varsity roster, Dripping Springs HS','District honors mention','Physical/reach the standout projection']}},
+   date:'2026-06-27', note:'Discovery read · Dripping Springs HS, TX. Physical projection the standout. Outcome: open.'},
   {name:'Reese Calloway', pos:'OH', cls:'2026', read:'5.4', prov:true, status:'tracking',
-   date:'2026-06-27', note:'Coverage provisional · Cedar Park HS, TX. Thin public film — read will sharpen on upload.', outcome:null,
-   evidence:{sources:{count:1,types:['ROSTER']}, signals:['Single roster mention, Cedar Park HS','Thin public record — corroboration awaits upload']}},
-  // ILLUSTRATIVE — shows the FORMAT a resolved entry takes. Clearly flagged, NOT a real athlete or claim.
-  {name:'— example —', pos:'', cls:'', read:'6.4', prov:true, status:'illustrative',
-   date:'(format)', note:'Shows the full anatomy of a logged prediction: the read, the evidence frozen with it, and the outcome once it lands. Not a real athlete or claim.',
-   outcome:{result:'Committed — Division I', when:'(later)', source:'(public commitment announcement)', verdict:'on-track'},
-   evidence:{sources:{count:3,types:['ROSTER','RESULT','HONOR']}, signals:['(the corroborating signals we saw, frozen the day of the read)','(immutable — logged with the prediction)']}}
+   date:'2026-06-27', note:'Coverage provisional · Cedar Park HS, TX. Thin public film — read will sharpen on upload.'}
 ];
 
-function evidenceToggle(e, hash){
-  if(!e.evidence) return '';
-  var ev = e.evidence, sc = (ev.sources && ev.sources.count) || 0;
-  var types = (ev.sources && ev.sources.types) || [];
-  var TL = {ROSTER:'Roster',RESULT:'Results',PRESS:'Press',HONOR:'Honors',PROFILE:'Profile'};
-  var chips = types.map(function(t){ return '<span class="echip">'+(TL[t]||t)+'</span>'; }).join('');
-  var sigs = (ev.signals||[]).map(function(g){ return '<div class="esig">› '+g+'</div>'; }).join('');
-  var head = sc>=2 ? '\u2713 '+sc+' independent sources, logged with the read' : sc===1 ? 'single source, logged with the read' : 'evidence logged with the read';
-  return '<button class="evtoggle" onclick="toggleEv(\''+hash+'\')">\u25b8 the evidence we saw</button>'
-    +'<div class="evbody" id="ev-'+hash+'" style="display:none">'
-    +'<div class="evhead'+(sc>=2?'':' thin')+'">'+head+'</div>'
-    +(chips?'<div class="echips">'+chips+'</div>':'')
-    +sigs
-    +'<div class="evnote">Frozen the day of the read — part of the same tamper-evident hash. This is what we saw early, on the record.</div>'
-    +'</div>';
-}
-function toggleEv(h){
-  var el=document.getElementById('ev-'+h);
-  var btn=el && el.previousElementSibling;
-  if(!el) return;
-  if(el.style.display==='none'){ el.style.display='block'; if(btn) btn.innerHTML='\u25be hide the evidence'; }
-  else { el.style.display='none'; if(btn) btn.innerHTML='\u25b8 the evidence we saw'; }
-}
 function shortHash(s){
   var h=2166136261>>>0;
   for(var i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); }
@@ -185,10 +143,26 @@ function counts(){
 function renderStripe(){
   var c=counts();
   var tracking=c.tracking, total=LEDGER.length;
+  // P6 scoreboard: count resolved outcomes and the accuracy they imply — REAL data only.
+  // A read is "resolved" once its outcome lands (outcome != null on a prediction, not a reference).
+  // "correct" = the outcome verdict confirms the read held up (verdict 'on-track' or 'confirmed').
+  var resolved=0, correct=0;
+  LEDGER.forEach(function(e){
+    if(e.status==='reference') return;            // references anchor the scale; they aren't bets
+    var o=e.outcome;
+    if(o && typeof o==='object' && o.result){     // a real outcome has landed
+      resolved++;
+      if(o.verdict==='on-track' || o.verdict==='confirmed' || o.verdict==='beat') correct++;
+    }
+  });
+  // accuracy is honest-empty until outcomes actually resolve — never a fabricated number
+  var acc = resolved>0 ? (Math.round((correct/resolved)*100)+'%') : '—';
+  var accLabel = resolved>0 ? 'accuracy · '+correct+' of '+resolved+' resolved' : 'accuracy · awaiting first outcomes';
   document.getElementById('stripe').innerHTML=
      stat(total,'reads on the record')
     +stat(tracking,'tracking · outcome open')
-    +stat('0','entries edited')
+    +stat(String(resolved),'resolved · outcome landed')
+    +stat(acc,accLabel)
     +stat('Jun 2026','record opened');
 }
 function stat(n,l){ return '<div class="stat"><div class="sn">'+n+'</div><div class="sl">'+l+'</div></div>'; }
@@ -208,48 +182,19 @@ function renderLedger(){
     var hash=shortHash(e.name+'|'+e.read+'|'+e.date);
     var numClass=e.status==='reference'?'ref':(e.prov?'prov':'');
     var t=e.prov?'<span class="t">~</span>':'';
-    var badgeTxt=e.status==='tracking'?'tracking':e.status==='confirmed'?'confirmed':e.status==='early'?'early call':e.status==='illustrative'?'format example':'reference';
-    var outcomeHtml = e.outcome ? '<div class="outcome '+(e.outcome.verdict||'')+'">'
-        +'<span class="ok">\u2192 outcome</span> <b>'+e.outcome.result+'</b>'
-        +'<span class="osrc">'+(e.outcome.when||'')+(e.outcome.source?' · '+e.outcome.source:'')+'</span></div>' : '';
-    return '<div class="entry'+(e.status==='illustrative'?' illustrative':'')+'">'
+    var badgeTxt=e.status==='tracking'?'tracking':e.status==='confirmed'?'confirmed':e.status==='early'?'early call':'reference';
+    return '<div class="entry">'
       +'<div class="num '+numClass+'">'+t+e.read+'</div>'
       +'<div class="mid"><div class="nm">'+e.name+'</div>'
       +'<div class="meta">'+[e.pos,e.cls].filter(Boolean).join(' · ')+'</div>'
-      +'<div class="note">'+e.note+'</div>'+outcomeHtml+evidenceToggle(e,hash)+'</div>'
+      +'<div class="note">'+e.note+'</div></div>'
       +'<div class="right"><span class="badge '+e.status+'">'+badgeTxt+'</span>'
       +'<div class="date">'+e.date+'</div><div class="hash">#'+hash+'</div></div>'
       +'</div>';
   }).join('');
 }
 
-/* ---- P2: load live entries from the durable store; fall back to seed ---- */
-function loadLive(){
-  fetch('/.netlify/functions/ledger?action=list&v='+Date.now())
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      if(d && d.live && Array.isArray(d.entries) && d.entries.length){
-        // live store is the source of truth — use ONLY its entries (references live in the store too).
-        // order: references first (scale anchors), then the rest newest-first as returned.
-        var mapped = d.entries.map(function(e){
-          return { name:e.name, pos:e.pos, cls:e.cls, read:e.read, prov:e.prov!==false,
-                   status:e.status||'tracking', date:e.date, note:e.note||'',
-                   outcome:e.outcome||null, evidence:e.evidence||null };
-        });
-        var refs = mapped.filter(function(e){ return e.status==='reference'; });
-        var rest = mapped.filter(function(e){ return e.status!=='reference'; });
-        LEDGER = refs.concat(rest);
-        var badge = document.getElementById('live-badge');
-        if(badge){ badge.style.display='inline-flex'; }
-        renderStripe(); renderFilters(); renderLedger();
-      }
-      // else: not configured or empty -> seed stays, page unchanged
-    })
-    .catch(function(){ /* offline / error -> seed stays */ });
-}
-
 renderStripe(); renderFilters(); renderLedger();
-loadLive();
 </script>
 </body>
 </html>
