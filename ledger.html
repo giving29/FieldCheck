@@ -92,7 +92,7 @@
 </head>
 <body>
 <div class="shell">
-  <div class="top"><div class="brand"><span class="logo">F</span><b>The Record</b></div><a href="/">Home</a></div>
+  <div class="top"><div class="brand"><span class="logo">F</span><b>The Record</b> <span id="live-badge" style="display:none;align-items:center;gap:5px;font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--moss);border:1px solid rgba(132,162,115,.4);border-radius:6px;padding:2px 7px;margin-left:8px"><span style="width:5px;height:5px;border-radius:50%;background:var(--moss);display:inline-block"></span>live store</span></div><a href="/">Home</a></div>
 
   <div class="lead">
     <div class="eye">✦ FieldCheck · The Record</div>
@@ -223,7 +223,33 @@ function renderLedger(){
   }).join('');
 }
 
+/* ---- P2: load live entries from the durable store; fall back to seed ---- */
+function loadLive(){
+  fetch('/.netlify/functions/ledger?action=list&v='+Date.now())
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(d && d.live && Array.isArray(d.entries) && d.entries.length){
+        // live store is the source of truth — use ONLY its entries (references live in the store too).
+        // order: references first (scale anchors), then the rest newest-first as returned.
+        var mapped = d.entries.map(function(e){
+          return { name:e.name, pos:e.pos, cls:e.cls, read:e.read, prov:e.prov!==false,
+                   status:e.status||'tracking', date:e.date, note:e.note||'',
+                   outcome:e.outcome||null, evidence:e.evidence||null };
+        });
+        var refs = mapped.filter(function(e){ return e.status==='reference'; });
+        var rest = mapped.filter(function(e){ return e.status!=='reference'; });
+        LEDGER = refs.concat(rest);
+        var badge = document.getElementById('live-badge');
+        if(badge){ badge.style.display='inline-flex'; }
+        renderStripe(); renderFilters(); renderLedger();
+      }
+      // else: not configured or empty -> seed stays, page unchanged
+    })
+    .catch(function(){ /* offline / error -> seed stays */ });
+}
+
 renderStripe(); renderFilters(); renderLedger();
+loadLive();
 </script>
 </body>
 </html>
