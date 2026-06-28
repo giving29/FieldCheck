@@ -31,6 +31,47 @@ Return ONLY a JSON object — no prose, no markdown fences:
 "dossier.corroborated" = one honest sentence on what the independent sources agree on (or that they don't).
 "band" is one short phrase: "a strong college track" / "a real college track" / "a developing college path" / "an early, building profile" / "building the base".`;
 
+
+// --- P2: server-side auto-log a QUALIFYING read to The Record (integrity-safe) ---
+// Only logs reads that clear a real corroboration bar, so the ledger fills with signal,
+// not every random search. Fire-and-forget; wrapped so it can never break the user's read.
+async function autoLogRead(read, q, origin) {
+  try {
+    if (!process.env.FC_LEDGER_TOKEN) return;            // store not configured -> skip
+    if (!read || !read.num) return;                       // no number -> nothing to log
+    const num = parseFloat(read.num);
+    if (!isFinite(num)) return;
+    const dos = read.dossier || {};
+    const agree = dos.agreement || 'none';
+    // QUALITY BAR: need 2+ independent source types (strong/moderate). Thin/none never auto-logs.
+    if (agree !== 'strong' && agree !== 'moderate') return;
+    const types = Array.isArray(dos.sourceTypes) ? dos.sourceTypes : [];
+    if (types.length < 2) return;
+
+    const entry = {
+      name: q.name,
+      slug: String(q.name).toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 60),
+      pos: q.pos || '',
+      cls: q.state || '',
+      read: read.num,
+      prov: true,
+      status: 'tracking',
+      note: 'Coverage read \u00b7 ' + (q.school || 'public record') + (q.state ? ', ' + q.state : '') + '. Auto-logged on a corroborated read.',
+      evidence: {
+        sources: { count: types.length, types: types },
+        signals: (read.found || []).map(function (x) { return Array.isArray(x) ? x[1] : String(x); }).filter(Boolean).slice(0, 5)
+      },
+      source: 'coverage'
+    };
+
+    await fetch(origin + '/.netlify/functions/ledger?action=log', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-fc-token': process.env.FC_LEDGER_TOKEN },
+      body: JSON.stringify(entry)
+    });
+  } catch (e) { /* logging must never break the read */ }
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return resp(405, { error: 'POST only' });
   if (!process.env.ANTHROPIC_API_KEY) return resp(200, { read: null, reason: 'no_key' });
@@ -65,6 +106,10 @@ exports.handler = async (event) => {
     const data = await r.json();
     const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n');
     const read = parseRead(text);
+    // auto-log a qualifying read to The Record (server-side, integrity-safe, non-blocking on failure)
+    const proto = (event.headers && (event.headers['x-forwarded-proto'] || 'https'));
+    const host = (event.headers && (event.headers['host'] || event.headers['Host'])) || '';
+    if (host) { await autoLogRead(read, q, proto + '://' + host); }
     return resp(200, { read: read, model: MODEL });
   } catch (e) {
     return resp(200, { read: null, reason: 'fetch_error', detail: String(e).slice(0, 200) });
