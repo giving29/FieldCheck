@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>FieldCheck · The Feed</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,600&family=Inter:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0908;--gold:#D4A24C;--gold-hi:#EEC067;--t:#F3EEE2;--t2:#CFC9BB;--t3:#9A9486;--moss:#84a273;--blue:#7FB2E5;--mono:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#000;overflow:hidden;font-family:'Inter',sans-serif;color:var(--t)}
+/* top lane bar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:30;padding:14px 14px 10px;background:linear-gradient(to bottom,rgba(0,0,0,.75),transparent);display:flex;align-items:center;gap:18px;justify-content:center}
+.lane{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:rgba(255,255,255,.55);cursor:pointer;text-shadow:0 1px 6px rgba(0,0,0,.8);position:relative;padding-bottom:3px}
+.lane.on{color:#fff} .lane.on::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--gold);border-radius:2px}
+.lane.rising.on::after{background:var(--moss)} .lane .rd{color:var(--moss);font-size:9px;vertical-align:super}
+#feed{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+#feed::-webkit-scrollbar{display:none}
+.card{height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;background:#000;display:flex;flex-direction:column;justify-content:flex-end}
+.vid{position:absolute;inset:0;z-index:0;background:#000}
+.vid iframe{position:absolute;top:50%;left:50%;width:177.78vh;height:100vh;min-width:100vw;min-height:56.25vw;transform:translate(-50%,-50%);pointer-events:none;border:0}
+.scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.4) 38%,rgba(0,0,0,.1) 60%,rgba(0,0,0,.55) 100%)}
+.tapcatch{position:absolute;inset:0;z-index:2}
+.numwrap{position:absolute;top:62px;left:18px;z-index:5;display:flex;align-items:flex-start;gap:12px}
+.num{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:82px;line-height:.9;color:var(--gold-hi);text-shadow:0 3px 30px rgba(212,162,76,.5),0 2px 10px rgba(0,0,0,.7);letter-spacing:-2px;font-variant-numeric:tabular-nums}
+.numside{padding-top:14px}
+.grading{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.9;display:flex;align-items:center;gap:6px}
+.gdot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.often{font-family:var(--mono);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-top:5px}
+.tier{display:inline-block;font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-top:7px}
+.meta{position:relative;z-index:5;padding:0 76px 42px 18px}
+.voice{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.name{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:33px;line-height:1;margin-bottom:9px}
+.read{font-size:13px;line-height:1.5;color:var(--t2);max-width:96%}
+.facetpill{display:inline-flex;align-items:center;gap:7px;margin-top:13px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink);background:var(--gold);border-radius:20px;padding:7px 13px}
+.rail{position:absolute;right:12px;bottom:118px;z-index:6;display:flex;flex-direction:column;gap:20px;align-items:center}
+.act{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.act .ic{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.15)}
+.act .ic svg{width:23px;height:23px;fill:none;stroke:#fff;stroke-width:2}
+.act.on .ic{background:rgba(212,162,76,.25);border-color:var(--gold)} .act.on .ic svg{stroke:var(--gold-hi);fill:var(--gold-hi)}
+.act .lb{font-family:var(--mono);font-size:8.5px;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.soul{position:absolute;inset:0;z-index:8;background:rgba(8,7,6,.93);backdrop-filter:blur(10px);display:none;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
+.soul.show{display:flex}
+.soul .sn{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;margin-bottom:4px}
+.soul svg.poly{width:230px;height:230px;margin:8px 0}
+.soul .sfacet{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-top:4px}
+.soul .sline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:var(--t);margin-top:10px;max-width:300px;line-height:1.3}
+.soul .strust{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--moss);margin-top:18px;display:flex;align-items:center;gap:6px}
+.soul .sclose{margin-top:24px;font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);border:1px solid rgba(212,162,76,.3);border-radius:8px;padding:11px 20px}
+.cta-card{align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 50% 38%,#1a160f,#000)}
+.cta-card .ceyebrow{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.cta-card .ch{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:600;line-height:1.02;margin-bottom:16px;padding:0 24px}
+.cta-card .ch em{font-style:italic;color:var(--gold-hi)}
+.cta-card .cp{font-size:15px;color:var(--t2);max-width:300px;margin-bottom:30px;line-height:1.5}
+.cta-card .cbtn{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--ink);background:var(--gold);border-radius:11px;padding:16px 30px;text-decoration:none}
+/* Rising empty state */
+.rising-empty{align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 50% 40%,#0f140d,#000);padding:34px}
+.rising-empty .re-h{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600;color:var(--moss);line-height:1.05;margin-bottom:14px}
+.rising-empty .re-p{font-size:14.5px;color:var(--t2);max-width:300px;line-height:1.55;margin-bottom:26px}
+.rising-empty .re-btn{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);background:var(--moss);border-radius:11px;padding:15px 28px;text-decoration:none}
+.hint{position:fixed;bottom:20px;left:0;right:0;z-index:20;text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);animation:bob 1.6s infinite;pointer-events:none}
+@keyframes bob{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-5px);opacity:.8}}
+.hint.gone{display:none}
+</style></head><body>
+<div class="topbar">
+  <div class="lane" data-lane="greats" onclick="setLane('greats')">The Greats</div>
+  <div class="lane on" data-lane="foryou" onclick="setLane('foryou')">For You</div>
+  <div class="lane rising" data-lane="rising" onclick="setLane('rising')">Rising<span class="rd">●</span></div>
+</div>
+<div id="feed"></div>
+<div class="hint" id="hint">swipe up ↑</div>
+
+<script>
+var CLIPS=[
+ {t:"D1",sport:"football",voice:"The Blur",n:"Eugene Wilson III",yt:"coMViA2dLzY",read:"LSU · 1,000-yard SEC receiver · 4.43 speed into the end zone",facet:"Speed",num:7.1,lane:"both"},
+ {t:"D3",sport:"football",voice:"The Deep Threat",n:"Imhotep Cromer",yt:"VZVKu6_7C8k",st:42,read:"SUNY Brockport · the kind of D3 talent the world never scouts",facet:"Hands",num:5.6,lane:"both"},
+ {t:"Legend",sport:"basketball",voice:"The Maestro",n:"Luka Dončić",yt:"8ZtkzbPqhlo",read:"5× All-NBA First Team · a basketball genius at every level",facet:"Vision",num:9.2,lane:"greats"},
+ {t:"Legend",sport:"basketball",voice:"The Logo",n:"Caitlin Clark",yt:"kSA91GkQh9U",st:42,read:"NCAA all-time scoring leader · range that broke the sport open",facet:"Scoring",num:9.0,lane:"greats"},
+ {t:"D1",sport:"basketball",voice:"The Next",n:"AJ Dybantsa",yt:"kmhxcuhYNjk",read:"#1 recruit in America · projected top pick · everything",facet:"Scoring",num:7.6,lane:"both"},
+ {t:"D1",sport:"volleyball",voice:"The Pin",n:"Harper Murray",yt:"0uuWEERBHgk",read:"3× AVCA All-American · #1 recruit · the most dynamic pin hitter",facet:"Attack",num:7.3,lane:"both"},
+ {t:"D1",sport:"basketball",voice:"The Phenom",n:"Cooper Flagg",yt:"GGUaE_ow73Y",read:"2025 National Player of the Year · #1 overall pick",facet:"Two-Way",num:8.1,lane:"both"},
+ {t:"Legend",sport:"basketball",voice:"The Greek Freak",n:"Giannis Antetokounmpo",yt:"0USzJs9agOk",read:"NBA champion · 2× MVP · a force at the rim",facet:"Athleticism",num:9.1,lane:"greats"},
+ {t:"Legend",sport:"baseball",voice:"The Judge",n:"Aaron Judge",yt:"tZO9iete5nA",st:6,read:"3× MVP · AL home-run record (62) · the most feared power",facet:"Tools",num:9.0,lane:"greats"},
+ {t:"Legend",sport:"soccer",voice:"The Genius",n:"Lionel Messi",yt:"mMiL4_1Yewg",read:"8× Ballon d'Or · World Cup champion · more goals than anyone",facet:"Vision",num:9.4,lane:"greats"},
+ {t:"Legend",sport:"basketball",voice:"The Revolution",n:"Stephen Curry",yt:"ow98-i75_QY",st:26,read:"4× champion · the greatest shooter who ever lived",facet:"Scoring",num:9.2,lane:"greats"},
+ {t:"Legend",sport:"soccer",voice:"The Machine",n:"Cristiano Ronaldo",yt:"mxQOOMX4NQM",read:"900+ career goals · five Champions Leagues · relentless",facet:"Finishing",num:9.3,lane:"greats"},
+ {t:"Legend",sport:"basketball",voice:"The King",n:"LeBron James",yt:"hpeZOd1C-us",read:"all-time leading scorer · 21 seasons · a myth made real",facet:"Length",num:9.3,lane:"greats"},
+ {t:"D1",sport:"basketball",voice:"The Heir",n:"Cameron Boozer",yt:"1Ir_UeJDQMI",read:"2026 NABC National Player of the Year · Duke-bound",facet:"Scoring",num:7.4,lane:"both"},
+ {t:"D1",sport:"basketball",voice:"The Showstopper",n:"JuJu Watkins",yt:"nbTE_6vxZU4",read:"USC · rewriting the scoring books · a top WNBA pick in waiting",facet:"Scoring",num:7.7,lane:"both"},
+ {t:"Legend",sport:"volleyball",voice:"The GOAT",n:"Jordan Larson",yt:"clDqoxVSPC4",read:"Four-time Olympian · the measuring stick",facet:"Pedigree",num:9.0,lane:"greats"},
+ {t:"Legend",sport:"volleyball",voice:"The Closer",n:"Madisen Skinner",yt:"ArkevSLQucQ",read:"Back-to-back Finals MVP · the title-clinching kill, twice",facet:"Clutch",num:6.8,lane:"both"}
+];
+var SLINE={Speed:'Runs away from the angle.',Hands:'Snatches it clean out of the air.',Vision:'Sees the pass before it exists.',Scoring:'Three levels, no night off.',Attack:'Terminal — the point ends with her.','Two-Way':'Wins the game on both ends.',Athleticism:'A force the rim cannot hold.',Tools:'Loud contact, every at-bat.',Finishing:'The chance becomes a goal.',Length:'Plays bigger than the tape.',Pedigree:'The standard everyone is measured against.',Clutch:'The closer, every time it matters.'};
+var TIER={Legend:{c:'#D4A24C',l:'LEGEND'},D1:{c:'#7FB2E5',l:'D1'},D3:{c:'#9a876a',l:'D3'},Am:{c:'#84a273',l:'AMATEUR'}};
+var LANE='foryou', FEED=document.getElementById('feed');
+
+function laneClips(){
+  if(LANE==='greats') return CLIPS.filter(function(c){return c.lane==='greats'||c.lane==='both';});
+  // foryou = blended surprise rhythm (all), rising handled separately
+  return CLIPS.slice();
+}
+function poly(num){
+  var R=92,cx=115,cy=115,pts=[],ring=[];
+  for(var i=0;i<8;i++){var a=(i/8)*Math.PI*2-Math.PI/2;var v=Math.max(.28,Math.min(1,(num/10)+(Math.sin(i*2.1)*.07)));
+    pts.push((cx+Math.cos(a)*R*v).toFixed(1)+','+(cy+Math.sin(a)*R*v).toFixed(1));
+    ring.push((cx+Math.cos(a)*R).toFixed(1)+','+(cy+Math.sin(a)*R).toFixed(1));}
+  return '<svg class="poly" viewBox="0 0 230 230"><polygon points="'+ring.join(' ')+'" fill="none" stroke="rgba(212,162,76,.2)" stroke-width="1"/><polygon points="'+pts.join(' ')+'" fill="rgba(212,162,76,.22)" stroke="#EEC067" stroke-width="2" stroke-linejoin="round"/></svg>';
+}
+function cardHTML(c,i){
+  var tier=TIER[c.t]||{c:'#999',l:c.t},start=c.st||0;
+  var src='https://www.youtube.com/embed/'+c.yt+'?autoplay=0&mute=1&controls=0&loop=1&playlist='+c.yt+'&start='+start+'&modestbranding=1&playsinline=1&rel=0';
+  return '<section class="card" data-i="'+i+'" data-num="'+c.num+'" data-name="'+c.n+'">'
+   +'<div class="vid"><iframe data-src="'+src+'" allow="autoplay; encrypted-media" frameborder="0"></iframe></div>'
+   +'<div class="scrim"></div><div class="tapcatch" data-flip="'+i+'"></div>'
+   +'<div class="numwrap"><div class="num" id="num'+i+'">0.0</div><div class="numside">'
+     +'<div class="grading" id="grad'+i+'"><span class="gdot"></span>Grading</div>'
+     +'<div class="often">/ 10 · 10 stays open</div>'
+     +'<div class="tier" style="color:'+tier.c+';border:1px solid '+tier.c+'55;background:'+tier.c+'18">'+tier.l+'</div></div></div>'
+   +'<div class="rail">'
+     +'<div class="act" data-flip="'+i+'"><div class="ic"><svg viewBox="0 0 24 24"><polygon points="12,3 19,7 19,15 12,21 5,15 5,7"/><circle cx="12" cy="12" r="2.5" fill="#fff" stroke="none"/></svg></div><div class="lb">read</div></div>'
+     +'<div class="act" data-like="'+i+'"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21C7 17 3 13.5 3 9a4.5 4.5 0 0 1 9-1 4.5 4.5 0 0 1 9 1c0 4.5-4 8-9 12z"/></svg></div><div class="lb" id="lk'+i+'">0</div></div>'
+     +'<div class="act" data-share="'+i+'"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M12 3v13"/><path d="M7 8l5-5 5 5"/></svg></div><div class="lb">send</div></div></div>'
+   +'<div class="meta"><div class="voice">'+c.voice+'</div><div class="name">'+c.n+'</div>'
+     +'<div class="read">'+c.read+'</div><div class="facetpill">◆ standout: '+c.facet+'</div></div>'
+   +'<div class="soul" id="soul'+i+'"><div class="sn">'+c.n+'</div>'+poly(c.num)
+     +'<div class="sfacet">standout · '+c.facet+'</div><div class="sline">'+(SLINE[c.facet]||'A read that holds up on film.')+'</div>'
+     +'<div class="strust"><span style="width:5px;height:5px;border-radius:50%;background:var(--moss);display:inline-block"></span>on the record · '+c.num+' / 10</div>'
+     +'<div class="sclose" data-flip="'+i+'">← back to the clip</div></div></section>';
+}
+function ctaCard(){return '<section class="card cta-card"><div class="ceyebrow">★ Your turn</div><div class="ch">You\u2019re <em>next.</em></div><div class="cp">Drop your clip. Earn your honest number. Get seen — before the world does.</div><a class="cbtn" href="/coverage">See your number →</a></section>';}
+function risingEmpty(){return '<section class="card rising-empty"><div class="re-h">Rising starts<br>with you.</div><div class="re-p">This is where real young athletes post their clips and earn an honest number. Be one of the first faces on the board.</div><a class="re-btn" href="/coverage">Drop your clip →</a></section>';}
+
+var counted={};
+function build(){
+  counted={};
+  if(LANE==='rising'){ FEED.innerHTML=risingEmpty(); return; }
+  var data=laneClips();
+  FEED.innerHTML=data.map(cardHTML).join('')+ctaCard();
+  FEED.scrollTop=0;
+  document.querySelectorAll('.card').forEach(function(c){io.observe(c);});
+  activate(document.querySelector('.card[data-i="0"]'));
+}
+function setLane(l){LANE=l;document.querySelectorAll('.lane').forEach(function(x){x.classList.toggle('on',x.dataset.lane===l);});var h=document.getElementById('hint');if(h&&l==='rising')h.classList.add('gone');build();}
+function activate(card){
+  if(!card)return;var i=card.getAttribute('data-i');if(i===null)return;
+  var ifr=card.querySelector('iframe');if(ifr&&ifr.dataset.src&&!ifr.src){ifr.src=ifr.dataset.src;}
+  if(!counted[i]){counted[i]=true;var target=parseFloat(card.getAttribute('data-num')),el=document.getElementById('num'+i),g=document.getElementById('grad'+i);
+    var t0=performance.now(),dur=1100;function tick(now){var p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=(e*target).toFixed(1);if(p<1)requestAnimationFrame(tick);else{el.textContent=target.toFixed(1);if(g)g.style.display='none';}}requestAnimationFrame(tick);}
+}
+var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting&&en.intersectionRatio>0.6)activate(en.target);});},{threshold:[0,0.6,1]});
+FEED.addEventListener('scroll',function(){var h=document.getElementById('hint');if(h)h.classList.add('gone');},{passive:true});
+document.addEventListener('click',function(e){
+  var fl=e.target.closest('[data-flip]');if(fl){document.getElementById('soul'+fl.getAttribute('data-flip')).classList.toggle('show');return;}
+  var lk=e.target.closest('[data-like]');if(lk){var i=lk.getAttribute('data-like'),el=document.getElementById('lk'+i);lk.classList.toggle('on');el.textContent=lk.classList.contains('on')?'1':'0';return;}
+  var sh=e.target.closest('[data-share]');if(sh){var i=sh.getAttribute('data-share'),card=document.querySelector('.card[data-i="'+i+'"]'),n=card.getAttribute('data-name'),num=card.getAttribute('data-num');
+    if(navigator.share){navigator.share({title:'FieldCheck',text:n+' graded '+num+'/10 on FieldCheck — see the read.',url:location.origin+'/feed'}).catch(function(){});}
+    else{if(navigator.clipboard)navigator.clipboard.writeText(n+' · '+num+'/10 on FieldCheck');sh.querySelector('.lb').textContent='copied';}return;}
+});
+build();
+</script>
+</body></html>
