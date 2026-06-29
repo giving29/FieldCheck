@@ -6,27 +6,32 @@
 :root{--ink:#0A0908;--gold:#D4A24C;--gold-hi:#EEC067;--t:#F3EEE2;--t2:#CFC9BB;--t3:#9A9486;--moss:#84a273;--blue:#7FB2E5;--mono:'JetBrains Mono',monospace}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:#000;overflow:hidden;font-family:'Inter',sans-serif;color:var(--t)}
-/* top lane bar */
 .topbar{position:fixed;top:0;left:0;right:0;z-index:30;padding:14px 14px 10px;background:linear-gradient(to bottom,rgba(0,0,0,.75),transparent);display:flex;align-items:center;gap:18px;justify-content:center}
 .lane{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:rgba(255,255,255,.55);cursor:pointer;text-shadow:0 1px 6px rgba(0,0,0,.8);position:relative;padding-bottom:3px}
 .lane.on{color:#fff} .lane.on::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--gold);border-radius:2px}
 .lane.rising.on::after{background:var(--moss)} .lane .rd{color:var(--moss);font-size:9px;vertical-align:super}
-#feed{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+#feed{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-y}
 #feed::-webkit-scrollbar{display:none}
-.card{height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;background:#000;display:flex;flex-direction:column;justify-content:flex-end}
+.card{height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;background:#000;display:flex;flex-direction:column;justify-content:flex-end;touch-action:pan-y}
 .vid{position:absolute;inset:0;z-index:0;background:#000}
-.vid iframe{position:absolute;top:50%;left:50%;width:177.78vh;height:100vh;min-width:100vw;min-height:56.25vw;transform:translate(-50%,-50%);pointer-events:none;border:0}
-.scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.4) 38%,rgba(0,0,0,.1) 60%,rgba(0,0,0,.55) 100%)}
-.tapcatch{position:absolute;inset:0;z-index:2}
-.numwrap{position:absolute;top:62px;left:18px;z-index:5;display:flex;align-items:flex-start;gap:12px}
+/* iframe NO LONGER pointer-events:none — but we put a play overlay above it we control */
+.vid iframe{position:absolute;top:50%;left:50%;width:177.78vh;height:100vh;min-width:100vw;min-height:56.25vw;transform:translate(-50%,-50%);border:0;pointer-events:none}
+.scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.35) 38%,rgba(0,0,0,.05) 58%,rgba(0,0,0,.5) 100%);pointer-events:none}
+/* play/pause overlay — this is the tap target for the VIDEO (not soul) */
+.shield{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center}
+.playbtn{pointer-events:none;width:74px;height:74px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);border:1.5px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;transition:opacity .25s,transform .25s}
+.playbtn svg{width:32px;height:32px;fill:#fff;margin-left:4px}
+.card.playing .playbtn{pointer-events:none;opacity:0;transform:scale(.6);pointer-events:none}
+.numwrap{position:absolute;top:62px;left:18px;z-index:5;display:flex;align-items:flex-start;gap:12px;cursor:pointer;touch-action:pan-y}
 .num{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:82px;line-height:.9;color:var(--gold-hi);text-shadow:0 3px 30px rgba(212,162,76,.5),0 2px 10px rgba(0,0,0,.7);letter-spacing:-2px;font-variant-numeric:tabular-nums}
 .numside{padding-top:14px}
 .grading{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.9;display:flex;align-items:center;gap:6px}
 .gdot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.tapnum{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--gold-hi);opacity:.7;margin-top:6px}
 .often{font-family:var(--mono);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-top:5px}
 .tier{display:inline-block;font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-top:7px}
-.meta{position:relative;z-index:5;padding:0 76px 42px 18px}
+.meta{position:relative;z-index:5;padding:0 76px 42px 18px;pointer-events:none}
 .voice{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 .name{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:33px;line-height:1;margin-bottom:9px}
 .read{font-size:13px;line-height:1.5;color:var(--t2);max-width:96%}
@@ -37,21 +42,20 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Inter',sans-s
 .act .ic svg{width:23px;height:23px;fill:none;stroke:#fff;stroke-width:2}
 .act.on .ic{background:rgba(212,162,76,.25);border-color:var(--gold)} .act.on .ic svg{stroke:var(--gold-hi);fill:var(--gold-hi)}
 .act .lb{font-family:var(--mono);font-size:8.5px;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.8)}
-.soul{position:absolute;inset:0;z-index:8;background:rgba(8,7,6,.93);backdrop-filter:blur(10px);display:none;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
+.soul{position:absolute;inset:0;z-index:8;background:rgba(8,7,6,.95);backdrop-filter:blur(10px);display:none;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
 .soul.show{display:flex}
 .soul .sn{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;margin-bottom:4px}
 .soul svg.poly{width:230px;height:230px;margin:8px 0}
 .soul .sfacet{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-top:4px}
 .soul .sline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:var(--t);margin-top:10px;max-width:300px;line-height:1.3}
 .soul .strust{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--moss);margin-top:18px;display:flex;align-items:center;gap:6px}
-.soul .sclose{margin-top:24px;font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);border:1px solid rgba(212,162,76,.3);border-radius:8px;padding:11px 20px}
+.soul .sclose{margin-top:24px;font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);border:1px solid rgba(212,162,76,.3);border-radius:8px;padding:11px 20px;cursor:pointer}
 .cta-card{align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 50% 38%,#1a160f,#000)}
 .cta-card .ceyebrow{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
 .cta-card .ch{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:600;line-height:1.02;margin-bottom:16px;padding:0 24px}
 .cta-card .ch em{font-style:italic;color:var(--gold-hi)}
 .cta-card .cp{font-size:15px;color:var(--t2);max-width:300px;margin-bottom:30px;line-height:1.5}
 .cta-card .cbtn{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--ink);background:var(--gold);border-radius:11px;padding:16px 30px;text-decoration:none}
-/* Rising empty state */
 .rising-empty{align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 50% 40%,#0f140d,#000);padding:34px}
 .rising-empty .re-h{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600;color:var(--moss);line-height:1.05;margin-bottom:14px}
 .rising-empty .re-p{font-size:14.5px;color:var(--t2);max-width:300px;line-height:1.55;margin-bottom:26px}
@@ -66,8 +70,9 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Inter',sans-s
   <div class="lane rising" data-lane="rising" onclick="setLane('rising')">Rising<span class="rd">●</span></div>
 </div>
 <div id="feed"></div>
-<div class="hint" id="hint">swipe up ↑</div>
+<div class="hint" id="hint">tap to play · swipe up ↑</div>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
 var CLIPS=[
  {t:"D1",sport:"football",voice:"The Blur",n:"Eugene Wilson III",yt:"coMViA2dLzY",read:"LSU · 1,000-yard SEC receiver · 4.43 speed into the end zone",facet:"Speed",num:7.1,lane:"both"},
@@ -91,10 +96,13 @@ var CLIPS=[
 var SLINE={Speed:'Runs away from the angle.',Hands:'Snatches it clean out of the air.',Vision:'Sees the pass before it exists.',Scoring:'Three levels, no night off.',Attack:'Terminal — the point ends with her.','Two-Way':'Wins the game on both ends.',Athleticism:'A force the rim cannot hold.',Tools:'Loud contact, every at-bat.',Finishing:'The chance becomes a goal.',Length:'Plays bigger than the tape.',Pedigree:'The standard everyone is measured against.',Clutch:'The closer, every time it matters.'};
 var TIER={Legend:{c:'#D4A24C',l:'LEGEND'},D1:{c:'#7FB2E5',l:'D1'},D3:{c:'#9a876a',l:'D3'},Am:{c:'#84a273',l:'AMATEUR'}};
 var LANE='foryou', FEED=document.getElementById('feed');
+var players={}, apiReady=false, pendingPlay=null;
+
+// YouTube IFrame API ready
+window.onYouTubeIframeAPIReady=function(){apiReady=true;if(pendingPlay!==null){mountPlayer(pendingPlay);pendingPlay=null;}};
 
 function laneClips(){
   if(LANE==='greats') return CLIPS.filter(function(c){return c.lane==='greats'||c.lane==='both';});
-  // foryou = blended surprise rhythm (all), rising handled separately
   return CLIPS.slice();
 }
 function poly(num){
@@ -105,14 +113,15 @@ function poly(num){
   return '<svg class="poly" viewBox="0 0 230 230"><polygon points="'+ring.join(' ')+'" fill="none" stroke="rgba(212,162,76,.2)" stroke-width="1"/><polygon points="'+pts.join(' ')+'" fill="rgba(212,162,76,.22)" stroke="#EEC067" stroke-width="2" stroke-linejoin="round"/></svg>';
 }
 function cardHTML(c,i){
-  var tier=TIER[c.t]||{c:'#999',l:c.t},start=c.st||0;
-  var src='https://www.youtube.com/embed/'+c.yt+'?autoplay=0&mute=1&controls=0&loop=1&playlist='+c.yt+'&start='+start+'&modestbranding=1&playsinline=1&rel=0';
-  return '<section class="card" data-i="'+i+'" data-num="'+c.num+'" data-name="'+c.n+'">'
-   +'<div class="vid"><iframe data-src="'+src+'" allow="autoplay; encrypted-media" frameborder="0"></iframe></div>'
-   +'<div class="scrim"></div><div class="tapcatch" data-flip="'+i+'"></div>'
-   +'<div class="numwrap"><div class="num" id="num'+i+'">0.0</div><div class="numside">'
+  var tier=TIER[c.t]||{c:'#999',l:c.t};
+  return '<section class="card" data-i="'+i+'" data-yt="'+c.yt+'" data-st="'+(c.st||0)+'" data-num="'+c.num+'" data-name="'+c.n+'">'
+   +'<div class="vid"><div id="yt'+i+'"></div></div>'
+   +'<div class="scrim"></div>'
+   +'<div class="shield" data-shield="'+i+'"><div class="playbtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>'
+   +'<div class="numwrap" data-flip="'+i+'"><div class="num" id="num'+i+'">0.0</div><div class="numside">'
      +'<div class="grading" id="grad'+i+'"><span class="gdot"></span>Grading</div>'
      +'<div class="often">/ 10 · 10 stays open</div>'
+     +'<div class="tapnum">tap number → the read</div>'
      +'<div class="tier" style="color:'+tier.c+';border:1px solid '+tier.c+'55;background:'+tier.c+'18">'+tier.l+'</div></div></div>'
    +'<div class="rail">'
      +'<div class="act" data-flip="'+i+'"><div class="ic"><svg viewBox="0 0 24 24"><polygon points="12,3 19,7 19,15 12,21 5,15 5,7"/><circle cx="12" cy="12" r="2.5" fill="#fff" stroke="none"/></svg></div><div class="lb">read</div></div>'
@@ -130,30 +139,79 @@ function risingEmpty(){return '<section class="card rising-empty"><div class="re
 
 var counted={};
 function build(){
-  counted={};
+  counted={}; Object.keys(players).forEach(function(k){try{players[k].destroy();}catch(e){}}); players={};
   if(LANE==='rising'){ FEED.innerHTML=risingEmpty(); return; }
   var data=laneClips();
   FEED.innerHTML=data.map(cardHTML).join('')+ctaCard();
   FEED.scrollTop=0;
-  document.querySelectorAll('.card').forEach(function(c){io.observe(c);});
-  activate(document.querySelector('.card[data-i="0"]'));
+  document.querySelectorAll('.card[data-i]').forEach(function(c){io.observe(c);});
+  var first=document.querySelector('.card[data-i="0"]'); if(first){runCount(first);}
 }
 function setLane(l){LANE=l;document.querySelectorAll('.lane').forEach(function(x){x.classList.toggle('on',x.dataset.lane===l);});var h=document.getElementById('hint');if(h&&l==='rising')h.classList.add('gone');build();}
-function activate(card){
-  if(!card)return;var i=card.getAttribute('data-i');if(i===null)return;
-  var ifr=card.querySelector('iframe');if(ifr&&ifr.dataset.src&&!ifr.src){ifr.src=ifr.dataset.src;}
-  if(!counted[i]){counted[i]=true;var target=parseFloat(card.getAttribute('data-num')),el=document.getElementById('num'+i),g=document.getElementById('grad'+i);
-    var t0=performance.now(),dur=1100;function tick(now){var p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=(e*target).toFixed(1);if(p<1)requestAnimationFrame(tick);else{el.textContent=target.toFixed(1);if(g)g.style.display='none';}}requestAnimationFrame(tick);}
+
+function runCount(card){
+  var i=card.getAttribute('data-i'); if(i===null||counted[i])return; counted[i]=true;
+  var target=parseFloat(card.getAttribute('data-num')),el=document.getElementById('num'+i),g=document.getElementById('grad'+i);
+  var t0=performance.now(),dur=1100;function tick(now){var p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=(e*target).toFixed(1);if(p<1)requestAnimationFrame(tick);else{el.textContent=target.toFixed(1);if(g)g.style.display='none';}}requestAnimationFrame(tick);
 }
-var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting&&en.intersectionRatio>0.6)activate(en.target);});},{threshold:[0,0.6,1]});
+function mountPlayer(i){
+  var card=document.querySelector('.card[data-i="'+i+'"]'); if(!card)return;
+  if(!apiReady){pendingPlay=i;return;}
+  if(players[i]){players[i].playVideo();card.classList.add('playing');return;}
+  var yt=card.getAttribute('data-yt'),st=parseInt(card.getAttribute('data-st'))||0;
+  players[i]=new YT.Player('yt'+i,{videoId:yt,playerVars:{autoplay:1,mute:1,controls:0,loop:1,playlist:yt,start:st,modestbranding:1,playsinline:1,rel:0},
+    events:{onReady:function(e){e.target.mute();e.target.playVideo();card.classList.add('playing');},
+            onStateChange:function(e){if(e.data===YT.PlayerState.PLAYING)card.classList.add('playing');if(e.data===YT.PlayerState.PAUSED)card.classList.remove('playing');}}});
+}
+function togglePlay(i){
+  var card=document.querySelector('.card[data-i="'+i+'"]');
+  if(!players[i]){mountPlayer(i);return;}
+  var st=players[i].getPlayerState();
+  if(st===YT.PlayerState.PLAYING){players[i].pauseVideo();card.classList.remove('playing');}
+  else{players[i].playVideo();card.classList.add('playing');}
+}
+
+var io=new IntersectionObserver(function(es){es.forEach(function(en){
+  if(en.isIntersecting&&en.intersectionRatio>0.6){runCount(en.target);
+    // auto-attempt play on the card you land on (works desktop; mobile may need the tap)
+    var i=en.target.getAttribute('data-i'); if(i!==null)mountPlayer(i);
+  } else {
+    var i=en.target.getAttribute('data-i'); if(i!==null&&players[i]){try{players[i].pauseVideo();}catch(e){}en.target.classList.remove('playing');}
+  }
+});},{threshold:[0,0.6,1]});
+
 FEED.addEventListener('scroll',function(){var h=document.getElementById('hint');if(h)h.classList.add('gone');},{passive:true});
 document.addEventListener('click',function(e){
-  var fl=e.target.closest('[data-flip]');if(fl){document.getElementById('soul'+fl.getAttribute('data-flip')).classList.toggle('show');return;}
+  var fl=e.target.closest('[data-flip]');if(fl){e.stopPropagation();document.getElementById('soul'+fl.getAttribute('data-flip')).classList.toggle('show');return;}
   var lk=e.target.closest('[data-like]');if(lk){var i=lk.getAttribute('data-like'),el=document.getElementById('lk'+i);lk.classList.toggle('on');el.textContent=lk.classList.contains('on')?'1':'0';return;}
   var sh=e.target.closest('[data-share]');if(sh){var i=sh.getAttribute('data-share'),card=document.querySelector('.card[data-i="'+i+'"]'),n=card.getAttribute('data-name'),num=card.getAttribute('data-num');
     if(navigator.share){navigator.share({title:'FieldCheck',text:n+' graded '+num+'/10 on FieldCheck — see the read.',url:location.origin+'/feed'}).catch(function(){});}
     else{if(navigator.clipboard)navigator.clipboard.writeText(n+' · '+num+'/10 on FieldCheck');sh.querySelector('.lb').textContent='copied';}return;}
 });
+
+// ---- Touch shield: distinguish TAP (play/pause) from SWIPE (let feed scroll) ----
+(function(){
+  var startY=0,startX=0,moved=false,activeShield=null;
+  document.addEventListener('touchstart',function(e){
+    var sh=e.target.closest('[data-shield]'); if(!sh)return;
+    activeShield=sh; startY=e.touches[0].clientY; startX=e.touches[0].clientX; moved=false;
+  },{passive:true});
+  document.addEventListener('touchmove',function(e){
+    if(!activeShield)return;
+    var dy=Math.abs(e.touches[0].clientY-startY), dx=Math.abs(e.touches[0].clientX-startX);
+    if(dy>10||dx>10)moved=true; // it's a swipe, not a tap — do NOT preventDefault, let feed scroll
+  },{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(!activeShield)return;
+    if(!moved){ togglePlay(activeShield.getAttribute('data-shield')); } // a real tap
+    activeShield=null;
+  },{passive:true});
+  // desktop click fallback
+  document.addEventListener('click',function(e){
+    var sh=e.target.closest('[data-shield]'); if(sh){togglePlay(sh.getAttribute('data-shield'));}
+  });
+})();
+
 build();
 </script>
 </body></html>
