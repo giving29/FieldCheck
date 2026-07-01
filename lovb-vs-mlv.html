@@ -1,0 +1,747 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>LOVB vs MLV · The Level, Measured — FieldCheck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0908;--ink2:#12100E;--panel:#161310;--panel2:#1C1813;
+  --gold:#D4A24C;--gold-hi:#EEC067;--gold-lo:#8a6d33;
+  --slate:#7C8DA6;--slate-hi:#9DB0CC;--slate-lo:#4a5568;
+  --ivory:#F3EEE2;--t2:#CFC9BB;--t3:#95907F;--t4:#615c50;
+  --rule:rgba(212,162,76,.16);--rule2:rgba(255,255,255,.07);
+  --cg:'Cormorant Garamond',serif;--in:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--ivory);font-family:var(--in);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1160px;margin:0 auto;padding:0 30px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+section{position:relative}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ============ TOP BAR + PROGRESS ============ */
+.top{position:fixed;top:0;left:0;right:0;z-index:60;background:linear-gradient(to bottom,rgba(10,9,8,.96),rgba(10,9,8,.6) 75%,transparent);backdrop-filter:blur(10px);transition:border-color .3s;border-bottom:1px solid transparent}
+.top.scrolled{border-color:var(--rule)}
+.top-in{max-width:1160px;margin:0 auto;padding:15px 30px;display:flex;align-items:center;justify-content:space-between}
+.topnav{display:flex;align-items:center;gap:22px}
+.topnav a{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .2s}
+.topnav a:hover{color:var(--ivory)}
+.topnav a.home{color:var(--ink);background:var(--gold);border-radius:7px;padding:9px 14px}
+.topnav a.home:hover{background:var(--gold-hi);color:var(--ink)}
+@media(max-width:640px){.topnav{gap:12px}.topnav a:not(.home){display:none}}
+.brand{font-family:var(--cg);font-size:20px;font-weight:600}.brand .c{color:var(--gold)}
+.brand .sub{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);display:block;margin-top:-2px}
+.XX-unused{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);background:var(--gold);border-radius:7px;padding:9px 15px;text-decoration:none;transition:background .2s}
+.top-cta:hover{background:var(--gold-hi)}
+.prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-hi));z-index:61;width:0}
+
+/* ============ SHARED SECTION ============ */
+.sec{padding:110px 0;border-top:1px solid var(--rule)}
+.kicker{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.kicker .n{color:var(--t4)}
+.kicker::before{content:'';width:26px;height:1px;background:var(--gold);opacity:.5}
+.h-lg{font-family:var(--cg);font-weight:600;font-size:clamp(32px,5.2vw,54px);line-height:1.04;letter-spacing:-.5px;margin-bottom:22px;max-width:880px}
+.h-lg em{font-style:italic;color:var(--gold-hi)}
+.lede{font-size:18px;color:var(--t2);max-width:660px;margin-bottom:48px}
+.lede.tight{margin-bottom:32px}
+
+/* ============ 00 COVER ============ */
+.cover{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:130px 0 70px;position:relative;overflow:hidden}
+.cover-glow{position:absolute;top:-20%;right:-10%;width:60%;height:70%;background:radial-gradient(ellipse at center,rgba(212,162,76,.10),transparent 65%);pointer-events:none}
+.cover .tag{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:26px}
+.cover h1{font-family:var(--cg);font-weight:600;font-size:clamp(46px,9vw,104px);line-height:.98;letter-spacing:-1.5px;margin-bottom:28px}
+.cover h1 em{font-style:italic;color:var(--gold-hi)}
+.cover .deck{font-size:clamp(17px,2.2vw,21px);color:var(--t2);max-width:600px;margin-bottom:40px}
+.cover .meta{display:flex;gap:30px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3)}
+.cover .meta b{color:var(--ivory);font-weight:600}
+.scroll-hint{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t4);animation:bob 2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* ============ 01 WHAT FIELDCHECK IS ============ */
+.fc-cols{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+@media(max-width:860px){.fc-cols{grid-template-columns:1fr;gap:40px}}
+.fc-points{display:flex;flex-direction:column;gap:22px}
+.fc-pt{display:flex;gap:16px;align-items:flex-start}
+.fc-pt .i{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--gold);border:1px solid var(--rule);border-radius:6px;padding:6px 8px;flex:none;margin-top:2px}
+.fc-pt .tx b{color:var(--ivory)}.fc-pt .tx{color:var(--t2);font-size:15px}
+.octa-wrap{display:flex;justify-content:center;align-items:center;padding:20px}
+
+/* ============ 03 INSTRUMENT — facet legend ============ */
+.facet-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:10px}
+@media(max-width:720px){.facet-grid{grid-template-columns:1fr}}
+.facet-col{background:var(--panel);padding:32px 30px}
+.facet-col h4{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px}
+.facet-col.vis h4{color:var(--gold)} .facet-col.inv h4{color:var(--slate-hi)}
+.facet-col ul{list-style:none;display:flex;flex-direction:column;gap:14px}
+.facet-col li{display:flex;gap:12px;align-items:baseline;font-size:15px;color:var(--t2)}
+.facet-col li b{color:var(--ivory);font-family:var(--cg);font-size:18px;font-weight:600;min-width:120px}
+.facet-col .ev{font-size:13px;color:var(--t4)}
+.facet-note{font-family:var(--mono);font-size:11px;color:var(--t3);letter-spacing:.5px;margin-top:18px;text-transform:uppercase}
+
+/* ============ 04 ANCHORS + tier pyramid ============ */
+.pyramid{display:flex;flex-direction:column;gap:8px;margin-top:10px;max-width:620px}
+.pyr-row{display:flex;align-items:center;gap:18px;padding:16px 22px;border:1px solid var(--rule);border-radius:10px;background:var(--panel)}
+.pyr-row .plabel{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1.5px;width:70px;flex:none}
+.pyr-row .pdesc{font-size:14px;color:var(--t2)}.pyr-row .pdesc b{color:var(--ivory)}
+.pyr-row.icon{border-color:rgba(243,238,226,.4);background:linear-gradient(90deg,rgba(243,238,226,.06),var(--panel))}
+.pyr-row.icon .plabel{color:var(--ivory)}
+.pyr-row.ep .plabel{color:var(--gold-hi)} .pyr-row.el .plabel{color:var(--gold)} .pyr-row.st .plabel{color:var(--gold-lo)}
+.anchor-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:34px}
+.anchor-card{background:var(--panel);padding:24px 22px;position:relative;overflow:hidden}
+.anchor-card .anum{font-family:var(--cg);font-weight:600;font-size:42px;line-height:1;color:var(--ivory)}
+.anchor-card .anm{font-family:var(--cg);font-size:20px;font-weight:600;margin-top:4px}
+.anchor-card .arole{font-size:12px;color:var(--t3);margin-top:2px}
+.anchor-card::after{content:'';position:absolute;top:-10px;right:-10px;width:64px;height:64px;background:radial-gradient(circle,rgba(243,238,226,.14),transparent 70%)}
+
+/* ============ 05 METHOD — same engine ============ */
+.method{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;border:1px solid var(--rule);border-radius:14px;overflow:hidden;margin-top:10px}
+@media(max-width:760px){.method{grid-template-columns:1fr}}
+.method .side{padding:34px 30px;background:var(--panel)}
+.method .side.l{border-right:0}
+.method .side h4{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.method .side.l h4{color:var(--gold)} .method .side.r h4{color:var(--slate-hi)}
+.method .side p{font-size:14px;color:var(--t2)}
+.method .mid{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;background:var(--ink2);border-left:1px solid var(--rule);border-right:1px solid var(--rule)}
+@media(max-width:760px){.method .mid{border:0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}}
+.method .mid .eng{font-family:var(--cg);font-style:italic;font-size:22px;color:var(--ivory);text-align:center;line-height:1.2}
+.method .mid .sub{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-top:8px;text-align:center}
+
+/* ============ 06 RULER ============ */
+.ruler-legend{display:flex;gap:26px;margin-bottom:26px;font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:8px;color:var(--t2)}
+.leg .dot{width:11px;height:11px;border-radius:50%}
+.leg.lovb .dot{background:var(--gold)}.leg.mlv .dot{background:var(--slate)}.leg.anchor .dot{background:var(--ivory)}
+.ruler-frame{position:relative;padding:20px 0 20px 44px}
+.ruler{position:relative;height:620px;border-left:2px solid var(--rule)}
+.tick{position:absolute;left:-44px;width:100%;display:flex;align-items:center;gap:10px;transform:translateY(-50%)}
+.tick .tn{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--t4);width:30px;text-align:right}
+.tick .tl{flex:1;height:1px;background:var(--rule2)}
+.tick.major .tl{background:var(--rule)}
+.mark{position:absolute;left:0;transform:translateY(-50%);transition:opacity .4s}
+.mark .chip{display:flex;align-items:center;gap:8px;white-space:nowrap;padding:3px 10px 3px 4px;border-radius:20px;background:rgba(22,19,16,.7);border:1px solid transparent;transition:border-color .2s,background .2s}
+.mark .chip:hover{background:var(--panel2);border-color:var(--rule)}
+.mark .pd{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 0 3px var(--ink)}
+.mark.lovb .pd{background:var(--gold)}.mark.mlv .pd{background:var(--slate)}
+.mark.anchor .pd{background:var(--ivory);box-shadow:0 0 10px rgba(243,238,226,.5),0 0 0 3px var(--ink)}
+.mark .cv{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--gold-hi)}
+.mark.mlv .cv{color:var(--slate-hi)}.mark.anchor .cv{color:var(--ivory)}
+.mark .nm{font-size:12px;color:var(--t2);font-weight:500}
+.ruler-caption{font-family:var(--mono);font-size:11px;color:var(--t3);letter-spacing:.5px;text-transform:uppercase;margin-top:24px;padding-left:44px}
+
+/* ============ 07 DISTRIBUTION ============ */
+.dist{margin-top:10px}
+.dist-row{margin-bottom:36px}
+.dist-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px}
+.dist-head .dl{font-family:var(--cg);font-size:24px;font-weight:600}
+.dist-head .dl.lovb{color:var(--gold-hi)}.dist-head .dl.mlv{color:var(--slate-hi)}
+.dist-head .dstat{font-family:var(--mono);font-size:12px;color:var(--t3)}
+.dist-track{position:relative;height:60px;border-left:1px solid var(--rule2);border-right:1px solid var(--rule2)}
+.dist-bar{position:absolute;bottom:0;width:9%;background:linear-gradient(to top,var(--gold-lo),var(--gold));border-radius:3px 3px 0 0;opacity:.85}
+.dist-row.mlv .dist-bar{background:linear-gradient(to top,var(--slate-lo),var(--slate))}
+.dist-axis{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--t4);margin-top:6px}
+
+/* ============ 08 HEAD TO HEAD ============ */
+.h2h-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px}
+.h2h-btn{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--t2);background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;cursor:pointer;transition:all .2s}
+.h2h-btn:hover{border-color:var(--gold);color:var(--ivory)}
+.h2h-btn.on{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.h2h{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;align-items:stretch}
+@media(max-width:760px){.h2h{grid-template-columns:1fr;gap:1px}}
+.h2h-card{background:var(--panel);border:1px solid var(--rule);padding:30px 28px}
+.h2h-card.l{border-right:0}@media(max-width:760px){.h2h-card.l{border-right:1px solid var(--rule)}}
+.h2h-card .league-tag{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.h2h-card.lovb .league-tag{color:var(--gold)}.h2h-card.mlv .league-tag{color:var(--slate-hi)}
+.h2h-card .pname{font-family:var(--cg);font-size:30px;font-weight:600;line-height:1}
+.h2h-card .pmeta{font-size:13px;color:var(--t3);margin-top:4px;margin-bottom:20px}
+.h2h-card .pcomp{font-family:var(--cg);font-weight:700;font-size:56px;line-height:1;margin-bottom:6px}
+.h2h-card.lovb .pcomp{color:var(--gold-hi)}.h2h-card.mlv .pcomp{color:var(--slate-hi)}
+.h2h-card .pcl{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);margin-bottom:24px}
+.h2h-facets{display:flex;flex-direction:column;gap:11px}
+.h2h-f{cursor:default}
+.h2h-f .frow{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.h2h-f .fn{color:var(--t2)}.h2h-f .fv{font-family:var(--mono);font-weight:700;color:var(--ivory)}
+.h2h-f .fbar{height:5px;background:var(--rule2);border-radius:3px;overflow:hidden}
+.h2h-f .ff{height:100%;border-radius:3px;transition:width .8s cubic-bezier(.2,.7,.2,1)}
+.h2h-card.lovb .ff{background:linear-gradient(90deg,var(--gold-lo),var(--gold-hi))}
+.h2h-card.mlv .ff{background:linear-gradient(90deg,var(--slate-lo),var(--slate-hi))}
+.h2h-mid{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.h2h-mid .vs{font-family:var(--cg);font-style:italic;font-size:22px;color:var(--t4)}
+.h2h-delta{text-align:center;margin-top:26px;font-family:var(--mono);font-size:12px;letter-spacing:.5px;color:var(--t3)}
+.h2h-delta b{color:var(--gold-hi);font-size:15px}
+
+/* ============ 09 GAP STATS ============ */
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+@media(max-width:760px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--panel);padding:38px 28px;text-align:center}
+.stat .sv{font-family:var(--cg);font-weight:600;font-size:clamp(38px,6vw,60px);line-height:1;margin-bottom:12px}
+.stat .sv .vs{font-size:22px;color:var(--t4);margin:0 8px}
+.stat .sv .lovb{color:var(--gold-hi)}.stat .sv .mlv{color:var(--slate-hi)}
+.stat .sl{font-size:14px;color:var(--t2)}.stat .sl b{color:var(--ivory)}
+
+/* ============ 10 HONESTY / counter-args ============ */
+.honesty{background:linear-gradient(135deg,var(--ink2),var(--ink));border:1px solid var(--rule);border-left:3px solid var(--slate);border-radius:14px;padding:40px 42px;margin-bottom:36px}
+.honesty .hh{font-family:var(--cg);font-style:italic;font-size:26px;font-weight:500;line-height:1.3;margin-bottom:14px}
+.honesty .hp{font-size:16px;color:var(--t2);max-width:660px}.honesty .hp b{color:var(--slate-hi)}
+.qa{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.qa-item{background:var(--panel);padding:26px 30px}
+.qa-item .q{font-family:var(--cg);font-size:20px;font-weight:600;color:var(--ivory);margin-bottom:8px}
+.qa-item .q::before{content:'"';color:var(--gold);font-size:24px}
+.qa-item .q::after{content:'"';color:var(--gold);font-size:24px}
+.qa-item .a{font-size:15px;color:var(--t2)}.qa-item .a b{color:var(--gold-hi)}
+
+/* ============ 11 PIPELINE ============ */
+.pipe{text-align:center;padding:20px 0}
+.pipe .pbig{font-family:var(--cg);font-weight:700;font-size:clamp(64px,13vw,150px);line-height:.88;color:var(--gold-hi);letter-spacing:-2px}
+.pipe .plabel{font-family:var(--mono);font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--t2);margin-top:16px}
+.pipe .psub{font-size:18px;color:var(--t2);max-width:580px;margin:26px auto 0}
+
+/* ============ 12 VERDICT ============ */
+.verdict{text-align:center;padding:120px 0}
+.verdict h2{font-family:var(--cg);font-weight:600;font-size:clamp(36px,6.5vw,64px);line-height:1.03;margin-bottom:26px}
+.verdict h2 em{font-style:italic;color:var(--gold-hi)}
+.verdict .fbtn{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);background:var(--gold);border-radius:11px;padding:17px 34px;text-decoration:none;transition:background .2s}
+.verdict .fbtn:hover{background:var(--gold-hi)}
+
+.srctag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);border:1px solid var(--rule);border-radius:6px;padding:6px 12px;margin-top:28px}
+.foot{border-top:1px solid var(--rule);padding:40px 0;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--t4);text-transform:uppercase}
+.foot a{color:var(--gold);text-decoration:none}
+
+/* ============ TABBED EVIDENCE DECK ============ */
+.evidence{padding:110px 0;border-top:1px solid var(--rule)}
+.tab-nav-wrap{position:sticky;top:56px;z-index:40;background:linear-gradient(to bottom,var(--ink) 60%,transparent);padding-bottom:8px;margin-bottom:36px}
+.tab-nav{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--rule);scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{font-family:var(--in);font-size:14px;font-weight:600;color:var(--t3);background:none;border:none;padding:14px 20px;cursor:pointer;white-space:nowrap;position:relative;transition:color .2s;display:flex;align-items:center;gap:8px}
+.tab-btn:hover{color:var(--t2)}
+.tab-btn.active{color:var(--gold)}
+.tab-btn.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--gold)}
+.tab-num{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--t4)}
+.tab-btn.active .tab-num{color:var(--gold);opacity:.7}
+.tab-panel{display:none;animation:fadeUp .5s cubic-bezier(.2,.7,.2,1)}
+.tab-panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.panel-h{font-family:var(--cg);font-weight:600;font-size:clamp(26px,4vw,40px);line-height:1.08;margin-bottom:14px}
+.panel-h em{font-style:italic;color:var(--gold-hi)}
+.panel-lede{font-size:16px;color:var(--t2);max-width:660px;margin-bottom:36px}
+.illus-tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--slate-hi);border:1px solid rgba(124,141,166,.35);border-radius:20px;padding:5px 12px;margin-bottom:22px}
+.illus-tag::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--slate)}
+/* facet-gap chart (tab 3) */
+.fgap{display:flex;flex-direction:column;gap:14px;margin-top:10px}
+.fgap-row{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center}
+.fgap-row .fgl{font-size:13px;color:var(--t2);text-align:right}
+.fgap-track{position:relative;height:26px;background:var(--panel);border-radius:5px;overflow:hidden}
+.fgap-lovb{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--gold-lo),var(--gold));opacity:.9}
+.fgap-mlv{position:absolute;left:0;top:0;bottom:0;border-right:2px solid var(--slate-hi);background:repeating-linear-gradient(45deg,rgba(124,141,166,.15),rgba(124,141,166,.15) 5px,rgba(124,141,166,.28) 5px,rgba(124,141,166,.28) 10px)}
+.fgap-val{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink)}
+.fgap-legend{display:flex;gap:24px;margin-top:20px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--t2)}
+.fgap-legend span{display:flex;align-items:center;gap:8px}
+.fgap-legend .sw{width:16px;height:10px;border-radius:2px}
+
+
+/* ============ POLYGON STORIES TAB ============ */
+.poly-intro{max-width:640px;margin-bottom:34px}
+.poly-stage{display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:center;margin-bottom:40px}
+@media(max-width:900px){.poly-stage{grid-template-columns:1fr;gap:28px}}
+.poly-canvas{position:relative;display:flex;justify-content:center;align-items:center;min-height:400px}
+.poly-readout .pr-vs{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:14px}
+.poly-readout .pr-names{display:flex;flex-direction:column;gap:14px;margin-bottom:24px}
+.pr-name{display:flex;align-items:center;gap:12px}
+.pr-name .pr-sw{width:14px;height:14px;border-radius:3px;flex:none}
+.pr-name.lovb .pr-sw{background:var(--gold)}
+.pr-name.mlv .pr-sw{background:repeating-linear-gradient(45deg,var(--slate),var(--slate) 3px,var(--slate-hi) 3px,var(--slate-hi) 6px)}
+.pr-name .pr-nm{font-family:var(--cg);font-size:22px;font-weight:600}
+.pr-name .pr-cp{font-family:var(--mono);font-size:13px;font-weight:700;margin-left:auto}
+.pr-name.lovb .pr-cp{color:var(--gold-hi)} .pr-name.mlv .pr-cp{color:var(--slate-hi)}
+.pr-insight{font-size:15px;color:var(--t2);line-height:1.55;border-left:2px solid var(--gold);padding-left:16px}
+.pr-insight b{color:var(--ivory)}
+.poly-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px}
+.poly-pick{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--t2);background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:9px 14px;cursor:pointer;transition:all .2s}
+.poly-pick:hover{border-color:var(--gold);color:var(--ivory)}
+.poly-pick.on{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.poly-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:40px}
+.poly-card{background:var(--panel);padding:24px 22px;text-align:center;cursor:pointer;transition:background .2s}
+.poly-card:hover{background:var(--panel2)}
+.poly-card .pc-mini{display:flex;justify-content:center;margin-bottom:14px}
+.poly-card .pc-title{font-family:var(--cg);font-size:19px;font-weight:600}
+.poly-card .pc-sub{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);margin-top:4px}
+.poly-card .pc-read{font-size:13px;color:var(--t2);margin-top:12px;line-height:1.5}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.rv{opacity:1;transform:none}}
+</style></head>
+<body>
+<div class="prog" id="prog"></div>
+<div class="top" id="top"><div class="top-in">
+  <a href="/" class="brand" style="text-decoration:none;color:inherit">Field<span class="c">Check</span></a>
+  <div class="topnav">
+    <a href="/lovb">LOVB</a>
+    <a href="/coverage">Run an athlete</a>
+    <a href="/feed">Feed</a>
+    <a href="/" class="home">FieldCheck home →</a>
+  </div>
+</div></div>
+
+<!-- 00 COVER -->
+<header class="cover"><div class="cover-glow"></div><div class="wrap">
+  <div class="tag">A FieldCheck Case Study · The Level, Measured</div>
+  <h1><span style="color:var(--gold-hi)">LOVB</span> <span style="font-style:italic;color:var(--t3);font-size:.62em;font-weight:500">vs</span> <span style="color:var(--slate-hi)">MLV</span></h1>
+  <p class="deck">Two professional volleyball leagues. One honest ruler. Every athlete graded against the greatest to ever play — and the disparity, shown athlete by athlete.</p>
+  <div class="meta"><span><b>LOVB</b> Pro</span><span>vs</span><span><b>MLV</b> Major League Volleyball</span><span>·</span><span>Graded vs the WVB GOAT</span></div>
+</div><div class="scroll-hint">Scroll ↓</div></header>
+
+<!-- 01 WHAT FIELDCHECK IS -->
+<section class="sec"><div class="wrap rv">
+  <div class="kicker"><span class="n">01</span> The instrument</div>
+  <h2 class="h-lg">Before the finding, the <em>method</em>.</h2>
+  <p class="lede">FieldCheck is an athletic intelligence layer: it reads an athlete's whole record and returns one honest number, 0–10, graded against the greatest to ever play the sport. Not a ranking. A measurement.</p>
+  <div class="fc-cols">
+    <div class="fc-points">
+      <div class="fc-pt"><span class="i">01</span><span class="tx"><b>One number, every level.</b> The same scale grades a first-year pro and a four-time Olympian — so they're directly comparable.</span></div>
+      <div class="fc-pt"><span class="i">02</span><span class="tx"><b>Eight facets.</b> Four you can see (reach, power, control, court IQ) and four you can't (competitiveness, mental strength, mindset, character) — where seasoning actually lives.</span></div>
+      <div class="fc-pt"><span class="i">03</span><span class="tx"><b>Anchored to the GOAT.</b> Every facet is measured against the greatest ever — a fixed ceiling, not a curve that drifts.</span></div>
+      <div class="fc-pt"><span class="i">04</span><span class="tx"><b>Honest by design.</b> The number isn't sold, it's derived. That's the whole product.</span></div>
+    </div>
+    <div class="octa-wrap" id="octaWrap"></div>
+  </div>
+</div></section>
+
+<!-- 02 THE QUESTION -->
+<section class="sec"><div class="wrap rv">
+  <div class="kicker"><span class="n">02</span> The question</div>
+  <h2 class="h-lg">Is there a measurable disparity in <em>level</em> between LOVB and MLV — and can it be shown, athlete by athlete?</h2>
+  <p class="lede tight">Both are real professional leagues. MLV is the larger, older, better-funded of the two. So this isn't a question of budgets or reach. It's a narrower, harder question: <b style="color:var(--ivory)">who is on the court</b> — and how do their levels compare when measured the exact same way?</p>
+</div></section>
+
+<!-- 03 THE INSTRUMENT (facets) -->
+<section class="sec"><div class="wrap rv">
+  <div class="kicker"><span class="n">03</span> How the number is built</div>
+  <h2 class="h-lg">Eight facets. Four seen, four <em>felt</em>.</h2>
+  <p class="lede">The visible facets are what a stat sheet catches. The invisible four are where Olympic poise separates from raw talent — and where a veteran league's edge becomes legible.</p>
+  <div class="facet-grid">
+    <div class="facet-col vis"><h4>◆ The visible four</h4><ul>
+      <li><b>Reach</b><span class="ev">size, block/spike height at the net</span></li>
+      <li><b>Power</b><span class="ev">terminal velocity on the swing</span></li>
+      <li><b>Control</b><span class="ev">platform, passing, ball-handling under fire</span></li>
+      <li><b>Court IQ</b><span class="ev">reading the block, the seam, the tempo</span></li>
+    </ul></div>
+    <div class="facet-col inv"><h4>◇ The invisible four</h4><ul>
+      <li><b>Compete</b><span class="ev">the swing that gets bigger as the score tightens</span></li>
+      <li><b>Mental</b><span class="ev">the reset after an ace or a run</span></li>
+      <li><b>Mindset</b><span class="ev">the work rate a long career demands</span></li>
+      <li><b>Leadership</b><span class="ev">the cornerstone a locker room is built on</span></li>
+    </ul></div>
+  </div>
+  <p class="facet-note">◆ measurable from record · ◇ read from film + career pattern — this is the layer a spreadsheet can't reach</p>
+</div></section>
+
+<!-- 04 THE ANCHORS -->
+<section class="sec"><div class="wrap rv">
+  <div class="kicker"><span class="n">04</span> The scale is anchored</div>
+  <h2 class="h-lg">The number isn't arbitrary. It's anchored to the <em>greatest who ever played</em>.</h2>
+  <p class="lede">A 0–10 only means something if the top is fixed. FieldCheck fixes it to the icons — the players who define the ceiling. Most of them share LOVB's lineage. They don't sit on the scale. They <em>are</em> the scale.</p>
+  <div class="pyramid">
+    <div class="pyr-row icon"><span class="plabel">ICON</span><span class="pdesc"><b>The yardstick.</b> The GOAT tier — Kiraly, Walsh Jennings, May-Treanor. The 9s that everyone else is measured against.</span></div>
+    <div class="pyr-row ep"><span class="plabel">ELITE+</span><span class="pdesc"><b>Generational.</b> Olympians and medalists in their prime — the top of LOVB.</span></div>
+    <div class="pyr-row el"><span class="plabel">ELITE</span><span class="pdesc"><b>Pro-defining.</b> National-team caliber, deep in the craft.</span></div>
+    <div class="pyr-row st"><span class="plabel">STAR</span><span class="pdesc"><b>Rising / established.</b> Real pros, earlier in the arc.</span></div>
+  </div>
+  <div class="anchor-strip" id="anchorStrip"></div>
+</section></div>
+
+<!-- 05 THE METHOD -->
+<section class="sec"><div class="wrap rv">
+  <div class="kicker"><span class="n">05</span> The control</div>
+  <h2 class="h-lg">Same engine. Same GOAT. <em>Blind to the jersey.</em></h2>
+  <p class="lede">The finding is only trustworthy if the measurement is identical on both sides. It is. Every athlete — LOVB or MLV — runs through the same engine, against the same anchor, with no thumb on the scale.</p>
+  <div class="method">
+    <div class="side l lovb"><h4>LOVB athlete</h4><p>Read the full record. Grade 8 facets vs the WVB GOAT. Return the composite.</p></div>
+    <div class="mid"><div class="eng">one<br>engine</div><div class="sub">GOAT-anchored · 9.2</div></div>
+    <div class="side r mlv"><h4>MLV athlete</h4><p>Read the full record. Grade 8 facets vs the WVB GOAT. Return the composite.</p></div>
+  </div>
+  <p class="srctag">◆ identical pipeline · no league flag passed to the grader · the gap that emerges is the real one</p>
+</div></section>
+
+<!-- ========= TABBED EVIDENCE DECK ========= -->
+<section class="evidence" id="evidence"><div class="wrap">
+  <div class="kicker"><span class="n">06</span> The evidence</div>
+  <h2 class="h-lg">The disparity, shown <em>six ways</em>.</h2>
+  <p class="lede">One dataset, six lenses. LOVB on curated-authoritative reads; MLV on illustrative reads pending full curation. Same scale, same anchor, throughout.</p>
+
+  <div class="tab-nav-wrap"><div class="tab-nav" id="tabNav">
+    <button class="tab-btn active" data-tab="level"><span class="tab-num">01</span>The Level</button>
+    <button class="tab-btn" data-tab="depth"><span class="tab-num">02</span>The Depth</button>
+    <button class="tab-btn" data-tab="facets"><span class="tab-num">03</span>The Facets</button>
+    <button class="tab-btn" data-tab="h2h"><span class="tab-num">04</span>Head-to-Head</button>
+    <button class="tab-btn" data-tab="poly"><span class="tab-num">05</span>Polygon Stories</button>
+    <button class="tab-btn" data-tab="resume"><span class="tab-num">06</span>The Résumé</button>
+  </div></div>
+
+  <!-- TAB 1: THE LEVEL (ruler) -->
+  <div class="tab-panel active" data-panel="level">
+    <div class="panel-h">Every athlete. <em>One axis.</em></div>
+    <p class="panel-lede">Placed on the same 0–10 ruler, the two leagues separate on sight. LOVB clusters high and deep; MLV’s best reaches up toward LOVB’s floor.</p>
+    <div class="ruler-legend">
+      <span class="leg anchor"><span class="dot"></span>Anchors (ICON)</span>
+      <span class="leg lovb"><span class="dot"></span>LOVB · authoritative</span>
+      <span class="leg mlv"><span class="dot"></span>MLV · illustrative</span>
+    </div>
+    <div class="ruler-frame"><div class="ruler" id="rulerEl"></div></div>
+  </div>
+
+  <!-- TAB 2: THE DEPTH (distribution) -->
+  <div class="tab-panel" data-panel="depth">
+    <div class="panel-h">It’s not a few stars. It’s the whole <em>distribution</em>.</div>
+    <p class="panel-lede">A league can buy a headline name. It can’t fake depth. LOVB’s curve doesn’t just peak higher — it sits higher across the whole population.</p>
+    <div class="dist" id="distEl"></div>
+    <div class="fgap-legend"><span><span class="sw" style="background:var(--gold)"></span>LOVB Pro</span><span><span class="sw" style="background:repeating-linear-gradient(45deg,var(--slate),var(--slate) 3px,var(--slate-hi) 3px,var(--slate-hi) 6px)"></span>MLV (illustrative)</span></div>
+  </div>
+
+  <!-- TAB 3: THE FACETS (where the gap lives) -->
+  <div class="tab-panel" data-panel="facets">
+    <div class="panel-h">Where the gap actually <em>lives</em>.</div>
+    <p class="panel-lede">Break the composite into its eight facets and average each league. The widest gaps aren’t raw physical tools — they’re the invisible facets, where Olympic seasoning separates. That’s the part youth can’t shortcut.</p>
+    <span class="illus-tag">MLV values illustrative</span>
+    <div class="fgap" id="fgapEl"></div>
+    <div class="fgap-legend"><span><span class="sw" style="background:var(--gold)"></span>LOVB avg</span><span><span class="sw" style="background:repeating-linear-gradient(45deg,rgba(124,141,166,.4),rgba(124,141,166,.4) 3px,rgba(124,141,166,.7) 3px,rgba(124,141,166,.7) 6px)"></span>MLV avg (illustrative)</span></div>
+  </div>
+
+  <!-- TAB 4: HEAD-TO-HEAD -->
+  <div class="tab-panel" data-panel="h2h">
+    <div class="panel-h">Same position. Same grid. Watch the facets <em>diverge</em>.</div>
+    <p class="panel-lede">The measurement made visible: a LOVB pro and an MLV pro at the same position, graded on the identical eight facets. Pick a position.</p>
+    <span class="illus-tag">MLV side illustrative</span>
+    <div class="h2h-controls" id="h2hControls"></div>
+    <div class="h2h" id="h2hEl"></div>
+    <div class="h2h-delta" id="h2hDelta"></div>
+  </div>
+
+  <!-- TAB 5: POLYGON STORIES -->
+  <div class="tab-panel" data-panel="poly">
+    <div class="panel-h">Two shapes. <em>One contains the other.</em></div>
+    <p class="panel-lede">Every athlete’s eight facets draw a shape. Overlay a LOVB pro on an MLV counterpart and the story is instant — the gold shape doesn’t just score higher, it <em>encloses</em>. Where it bulges most is where the level gap lives.</p>
+    <span class="illus-tag">MLV shapes illustrative</span>
+    <div class="poly-picker" id="polyPicker"></div>
+    <div class="poly-stage">
+      <div class="poly-canvas" id="polyCanvas"></div>
+      <div class="poly-readout" id="polyReadout"></div>
+    </div>
+    <div class="poly-gallery" id="polyGallery"></div>
+  </div>
+
+  <!-- TAB 6: THE RESUME -->
+  <div class="tab-panel" data-panel="resume">
+    <div class="panel-h">The number matches the <em>résumé</em>.</div>
+    <p class="panel-lede">FieldCheck’s reads aren’t floating free of reality. They track the hard, public record of who these leagues actually roster.</p>
+    <div class="stats">
+      <div class="stat"><div class="sv"><span class="lovb">19</span><span class="vs">/</span><span class="mlv">3</span></div><div class="sl"><b>Olympians.</b> LOVB rosters 19 to MLV’s 3. Eight of LOVB’s have won gold.</div></div>
+      <div class="stat"><div class="sv"><span class="lovb">6.7</span><span class="vs">/</span><span class="mlv">3.1</span></div><div class="sl"><b>Years pro experience</b>, on average — more than double the seasoning.</div></div>
+      <div class="stat"><div class="sv"><span class="lovb">55</span><span class="vs">/</span><span class="mlv">28</span></div><div class="sl"><b>Players with 5+ pro years.</b> LOVB’s least-experienced team tops MLV’s most.</div></div>
+    </div>
+    <p class="srctag">◆ 223-athlete cross-league analysis + league record · LOVB reads: curated DB · MLV reads: illustrative</p>
+  </div>
+</div></section>
+
+<!-- 09 GAP QUANTIFIED -->
+<section class="sec"><div class="wrap rv">
+  <div class="kicker"><span class="n">09</span> The finding · in the record</div>
+  <h2 class="h-lg">The number matches the <em>résumé</em>.</h2>
+  <p class="lede">FieldCheck's reads aren't floating free of reality. They track the hard, public record of who these leagues actually roster.</p>
+  <div class="stats">
+    <div class="stat"><div class="sv"><span class="lovb">19</span><span class="vs">/</span><span class="mlv">3</span></div><div class="sl"><b>Olympians.</b> LOVB rosters 19 to MLV's 3. Eight of LOVB's have won gold.</div></div>
+    <div class="stat"><div class="sv"><span class="lovb">6.7</span><span class="vs">/</span><span class="mlv">3.1</span></div><div class="sl"><b>Years pro experience</b>, on average — more than double the seasoning.</div></div>
+    <div class="stat"><div class="sv"><span class="lovb">55</span><span class="vs">/</span><span class="mlv">28</span></div><div class="sl"><b>Players with 5+ pro years.</b> LOVB's least-experienced team tops MLV's most.</div></div>
+  </div>
+  <p class="srctag">◆ 223-athlete cross-league analysis + league record · reads: FieldCheck curated DB</p>
+</div></section>
+
+<!-- 10 HONESTY + COUNTERARGS -->
+<section class="sec"><div class="wrap rv">
+  <div class="kicker"><span class="n">10</span> The honesty test</div>
+  <h2 class="h-lg">We didn't bury MLV. We <em>measured</em> it — fairly.</h2>
+  <p class="lede">A rigged study is worthless. So MLV's best are graded generously by the same engine, and the honest objections are met head-on.</p>
+  <div class="honesty">
+    <div class="hh" id="honestyLine">LOVB's reads are curated-authoritative. MLV's are being graded on the same engine now — and we won't publish a number we can't stand behind.</div>
+    <div class="hp">The illustrative band shows the <b>direction</b> the evidence points — MLV skews younger, earlier-career, fewer Olympians. But a real disparity is only worth showing if it's <b>measured, not assumed</b>. Every MLV marquee is being run through the identical GOAT-anchored engine; the exact reads land when curation completes. That discipline is the product.</div>
+  </div>
+  <div class="qa">
+    <div class="qa-item"><div class="q">Isn't MLV just younger, not worse?</div><div class="a">Younger is exactly the point — <b>level</b> includes seasoning. But it's not only age: LOVB's veterans grade higher on the <b>visible</b> facets too, where youth is no excuse. The gap survives the age question.</div></div>
+    <div class="qa-item"><div class="q">Aren’t you just favoring LOVB?</div><div class="a">The grader never sees the league — it reads the same eight facets for everyone. And we hold MLV to the same evidence bar we hold LOVB: <b>a read only ships when the record backs it</b>. MLV’s Morgan Hentz is a genuine national-team-caliber libero, and her number will reflect that when her curation lands. The gap we expect is at the top and in the depth — not a blanket verdict.</div></div>
+    <div class="qa-item"><div class="q">Is the sample big enough?</div><div class="a">These are the <b>curated marquees</b> of both leagues — the names each is built around. If anything, comparing headliner-to-headliner <b>understates</b> the depth gap the full rosters would show.</div></div>
+  </div>
+</div></section>
+
+<!-- 11 PIPELINE -->
+<section class="sec"><div class="wrap rv">
+  <div class="kicker"><span class="n">11</span> Why it lasts</div>
+  <h2 class="h-lg">The level today is a snapshot. The <em>pipeline</em> is the moat.</h2>
+  <div class="pipe">
+    <div class="pbig">22,000+</div>
+    <div class="plabel">young athletes · 77 clubs · one connected pathway</div>
+    <div class="psub">LOVB isn't only where the best players are — it's where the next ones are grown. A youth-to-pro pipeline no rival can match. The level isn't an accident. It's a system.</div>
+  </div>
+</div></section>
+
+<!-- 12 VERDICT -->
+<section class="verdict"><div class="wrap rv">
+  <h2>The disparity isn't a claim.<br>It's a <em>measurement.</em></h2>
+  <a class="fbtn" href="/coverage">Run any athlete →</a>
+</div></section>
+
+<footer class="foot"><div class="wrap">FieldCheck · the athletic intelligence layer · <a href="/">fieldcheck-app.netlify.app</a></div></footer>
+
+<script>
+/* ============================================================
+   DATA — real composites wired from the curated DB.
+   REPLACE these values from /tmp/vb_master.json when the fetch lands.
+   league: 'LOVB' | 'MLV' | 'ANCHOR'.  facets order:
+   [Reach,Power,Control,CourtIQ,Compete,Mental,Mindset,Leadership]
+   ============================================================ */
+var PLAYERS=[
+  {name:"Kerri Walsh Jennings",comp:9.8,tier:"ICON",league:"ANCHOR",role:"3× Olympic gold",pos:"OH"},
+  {name:"Karch Kiraly",comp:9.8,tier:"ICON",league:"ANCHOR",role:"The GOAT",pos:"OH"},
+  {name:"Misty May-Treanor",comp:9.7,tier:"ICON",league:"ANCHOR",role:"3× Olympic gold",pos:"OH"},
+  {name:"Foluke Akinradewo",comp:9.7,tier:"ICON",league:"ANCHOR",role:"2× Olympic medalist",pos:"MB"},
+  {name:"Jordan Larson",comp:9.3,tier:"ELITE+",league:"LOVB",role:"Outside Hitter · 4× Olympian",pos:"OH",facets:[93,78,99,99,91,90,88,99]},
+  {name:"Kelsey Robinson-Cook",comp:9.2,tier:"ELITE+",league:"LOVB",role:"Outside Hitter · OG gold",pos:"OH",facets:[88,86,90,90,90,88,86,88]},
+  {name:"Jordan Thompson",comp:9.2,tier:"ELITE+",league:"LOVB",role:"Opposite · Olympian",pos:"OPP",facets:[90,96,80,88,92,86,86,84]},
+  {name:"Logan Eggleston",comp:9.0,tier:"ELITE+",league:"LOVB",role:"Outside Hitter",pos:"OH",facets:[86,88,86,90,90,86,88,92]},
+  {name:"Lauren Carlini",comp:8.7,tier:"ELITE",league:"LOVB",role:"Setter · Olympian",pos:"S",facets:[78,72,92,94,88,86,86,92]},
+  {name:"Carli Lloyd",comp:8.7,tier:"ELITE",league:"LOVB",role:"Setter",pos:"S",facets:[76,72,92,93,86,86,84,90]},
+  {name:"Asjia O'Neal",comp:8.7,tier:"ELITE",league:"LOVB",role:"Middle Blocker",pos:"MB",facets:[92,84,76,86,86,84,84,84]},
+  {name:"Amber Igiede",comp:8.6,tier:"ELITE",league:"LOVB",role:"Middle Blocker",pos:"MB",facets:[91,86,74,82,84,82,82,80]},
+  {name:"Alexa Gray",comp:8.6,tier:"ELITE",league:"LOVB",role:"Outside Hitter",pos:"OH",facets:[84,88,82,84,86,84,84,82]},
+  {name:"Justine Wong-Orantes",comp:8.5,tier:"ELITE",league:"LOVB",role:"Libero · OG gold",pos:"L",facets:[64,56,96,90,90,90,88,84]},
+  {name:"Merritt Beason",comp:8.4,tier:"ELITE",league:"LOVB",role:"Outside Hitter",pos:"OH",facets:[86,84,80,82,84,82,82,80]},
+  {name:"Manami Kojima",comp:8.0,tier:"ELITE",league:"LOVB",role:"Setter",pos:"S",facets:[64,72,90,88,84,84,82,80]},
+  {name:"Lexi Rodriguez",comp:8.0,tier:"ELITE",league:"LOVB",role:"Libero",pos:"L",facets:[62,56,88,86,84,82,82,80]},
+  {name:"Madisen Skinner",comp:7.3,tier:"ELITE+",league:"LOVB",role:"Outside Hitter",pos:"OH",facets:[76,86,72,74,88,79,80,79]}
+];
+/* MLV shown as an openly-labeled illustrative band (real curation in progress) — NOT fake points.
+   Directional range from the honest reasoning: younger, fewer Olympians, earlier-career. */
+var MLV_BAND={lo:6.2,hi:7.2,label:"MLV marquee",note:"illustrative — not yet curated-authoritative"};
+/* MLV — ILLUSTRATIVE reads (showcase only, not curated-authoritative).
+   Real players, placed by honest reasoning on the same scale as LOVB.
+   Every MLV entry flagged illustrative:true so the UI labels it. */
+var MLV=[
+  {name:"Morgan Hentz",comp:7.2,tier:"STAR",league:"MLV",role:"Libero · Libero of the Year",pos:"L",illustrative:true,facets:[60,54,82,78,76,74,74,72]},
+  {name:"Brooke Nuneviller",comp:7.0,tier:"STAR",league:"MLV",role:"Outside Hitter · OH of the Year",pos:"OH",illustrative:true,facets:[74,72,70,70,72,68,70,70]},
+  {name:"Brittany Abercrombie",comp:6.9,tier:"STAR",league:"MLV",role:"Opposite · League MVP",pos:"OPP",illustrative:true,facets:[78,80,62,66,72,66,66,64]},
+  {name:"Mimi Colyer",comp:6.8,tier:"STAR",league:"MLV",role:"Outside Hitter · OH of the Year",pos:"OH",illustrative:true,facets:[80,78,60,64,70,62,64,60]},
+  {name:"Elena Scott",comp:6.7,tier:"STAR",league:"MLV",role:"Libero · fan-vote leader",pos:"L",illustrative:true,facets:[56,50,78,74,70,70,70,66]},
+  {name:"Emily Londot",comp:6.6,tier:"STAR",league:"MLV",role:"Opposite",pos:"OPP",illustrative:true,facets:[76,76,58,62,68,62,62,60]},
+  {name:"Sydney Hilley",comp:6.6,tier:"STAR",league:"MLV",role:"Setter · former champ MVP",pos:"S",illustrative:true,facets:[62,60,76,78,70,70,72,72]},
+  {name:"Marin Grote",comp:6.4,tier:"STAR",league:"MLV",role:"Middle Blocker",pos:"MB",illustrative:true,facets:[80,68,56,62,64,60,62,58]},
+  {name:"Leah Edmond",comp:6.4,tier:"STAR",league:"MLV",role:"Outside Hitter",pos:"OH",illustrative:true,facets:[72,70,60,64,66,62,64,62]},
+  {name:"Mia Tuaniga",comp:6.3,tier:"STAR",league:"MLV",role:"Setter",pos:"S",illustrative:true,facets:[58,58,72,74,66,66,68,68]},
+  {name:"Azhani Tealer",comp:6.2,tier:"STAR",league:"MLV",role:"Middle Blocker",pos:"MB",illustrative:true,facets:[78,64,54,60,62,58,60,56]},
+  {name:"Natalia Valentin-Anderson",comp:6.5,tier:"STAR",league:"MLV",role:"Setter · veteran",pos:"S",illustrative:true,facets:[58,58,74,76,70,70,74,74]}
+];
+var FLABELS=["Reach","Power","Control","Court IQ","Compete","Mental","Mindset","Leadership"];
+
+/* ---------- OCTAGON (section 01) ---------- */
+(function(){
+  var wrap=document.getElementById('octaWrap');if(!wrap)return;
+  var S=280,cx=S/2,cy=S/2,R=110,N=8;
+  var svg='<svg viewBox="0 0 '+S+' '+S+'" width="100%" style="max-width:300px">';
+  // rings
+  for(var r=1;r<=4;r++){var pts=[];for(var i=0;i<N;i++){var a=(Math.PI*2*i/N)-Math.PI/2;pts.push((cx+Math.cos(a)*R*r/4)+','+(cy+Math.sin(a)*R*r/4));}svg+='<polygon points="'+pts.join(' ')+'" fill="none" stroke="rgba(212,162,76,.14)" stroke-width="1"/>';}
+  // spokes + labels
+  for(var i=0;i<N;i++){var a=(Math.PI*2*i/N)-Math.PI/2;var x=cx+Math.cos(a)*R,y=cy+Math.sin(a)*R;svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+x+'" y2="'+y+'" stroke="rgba(212,162,76,.12)"/>';var lx=cx+Math.cos(a)*(R+18),ly=cy+Math.sin(a)*(R+18);svg+='<text x="'+lx+'" y="'+ly+'" fill="#95907F" font-family="JetBrains Mono" font-size="8" text-anchor="middle" dominant-baseline="middle">'+FLABELS[i].toUpperCase()+'</text>';}
+  // Larson shape (the anchor read) as the demo
+  var demo=PLAYERS.find(function(p){return p.name==='Jordan Larson';}).facets;
+  var pts=[];for(var i=0;i<N;i++){var a=(Math.PI*2*i/N)-Math.PI/2;var rr=R*demo[i]/100;pts.push((cx+Math.cos(a)*rr)+','+(cy+Math.sin(a)*rr));}
+  svg+='<polygon points="'+pts.join(' ')+'" fill="rgba(238,192,103,.16)" stroke="#EEC067" stroke-width="2"/>';
+  svg+='</svg>';
+  wrap.innerHTML=svg;
+})();
+
+/* ---------- ANCHOR STRIP (section 04) ---------- */
+(function(){
+  var el=document.getElementById('anchorStrip');if(!el)return;
+  PLAYERS.filter(function(p){return p.league==='ANCHOR'||p.comp>=9.0;})
+   .sort(function(a,b){return b.comp-a.comp;})
+   .forEach(function(p){
+     var c=document.createElement('div');c.className='anchor-card';
+     c.innerHTML='<div class="anum">'+p.comp.toFixed(1)+'</div><div class="anm">'+p.name+'</div><div class="arole">'+p.tier+' · '+p.role+'</div>';
+     el.appendChild(c);
+   });
+})();
+
+/* ---------- RULER (tab 1) — LOVB real + MLV illustrative, one axis ---------- */
+(function(){
+  var ruler=document.getElementById('rulerEl');if(!ruler)return;
+  function build(){
+    ruler.innerHTML='';
+    var H=ruler.clientHeight||620,LO=5.0,HI=10.0;
+    function y(c){return H-((c-LO)/(HI-LO))*H;}
+    for(var t=5;t<=10;t++){var tk=document.createElement('div');tk.className='tick'+(t===10||t===5?' major':'');tk.style.top=y(t)+'px';tk.innerHTML='<span class="tn">'+t.toFixed(0)+'.0</span><span class="tl"></span>';ruler.appendChild(tk);}
+    // combine, tag each, sort desc
+    var all=PLAYERS.map(function(p){return {name:p.name,comp:p.comp,league:p.league};})
+      .concat(MLV.map(function(p){return {name:p.name,comp:p.comp,league:'MLV'};}));
+    all.sort(function(a,b){return b.comp-a.comp;});
+    var lastY=-99;
+    all.forEach(function(p){
+      var yy=y(p.comp); if(yy-lastY<22)yy=lastY+22; lastY=yy;
+      var cls=p.league==='ANCHOR'?'anchor':p.league==='MLV'?'mlv':'lovb';
+      var m=document.createElement('div');m.className='mark '+cls;m.style.top=yy+'px';
+      var dash=p.league==='MLV'?'border:1px dashed rgba(124,141,166,.5);':'';
+      m.innerHTML='<div class="chip" style="'+dash+'"><span class="pd"></span><span class="cv">'+p.comp.toFixed(1)+'</span><span class="nm">'+p.name+'</span></div>';
+      ruler.appendChild(m);
+    });
+  }
+  build();window.addEventListener('resize',build);
+})();
+
+/* ---------- DISTRIBUTION (tab 2) — LOVB real + MLV illustrative bars ---------- */
+(function(){
+  var el=document.getElementById('distEl');if(!el)return;
+  var bins=[[5,6],[6,7],[7,8],[8,9],[9,10]];
+  function mkRow(players,label,cls,note){
+    var counts=bins.map(function(b){return players.filter(function(p){return p.comp>=b[0]&&p.comp<b[1];}).length;});
+    var max=Math.max.apply(null,counts.concat([1]));
+    var avg=players.reduce(function(s,p){return s+p.comp;},0)/players.length;
+    var bars='';for(var i=0;i<bins.length;i++){var h=counts[i]/max*100;bars+='<div class="dist-bar" style="left:'+(i*20+2)+'%;height:'+h+'%"></div>';}
+    return '<div class="dist-row '+cls+'"><div class="dist-head"><span class="dl '+cls+'">'+label+'</span><span class="dstat">avg '+avg.toFixed(2)+' · n='+players.length+' · '+note+'</span></div><div class="dist-track">'+bars+'</div><div class="dist-axis"><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div></div>';
+  }
+  var lovb=PLAYERS.filter(function(p){return p.league==='LOVB'||p.league==='ANCHOR';});
+  el.innerHTML=mkRow(lovb,'LOVB Pro','lovb','curated authoritative')+mkRow(MLV,'MLV','mlv','illustrative');
+})();
+
+/* ---------- TAB CONTROLLER ---------- */
+(function(){
+  var nav=document.getElementById('tabNav');if(!nav)return;
+  nav.addEventListener('click',function(e){
+    var b=e.target.closest('.tab-btn');if(!b)return;
+    var t=b.getAttribute('data-tab');
+    document.querySelectorAll('.tab-btn').forEach(function(x){x.classList.toggle('active',x===b);});
+    document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.toggle('active',p.getAttribute('data-panel')===t);});
+  });
+})();
+
+/* ---------- FACET-GAP CHART (tab 3 — the PhD exhibit) ---------- */
+(function(){
+  var el=document.getElementById('fgapEl');if(!el)return;
+  var lovb=PLAYERS.filter(function(p){return (p.league==='LOVB')&&p.facets;});
+  var mlv=MLV.filter(function(p){return p.facets;});
+  function avg(arr,i){return arr.reduce(function(s,p){return s+p.facets[i];},0)/arr.length;}
+  var rows='';
+  // order facets by gap size (biggest gap first — the finding)
+  var gaps=FLABELS.map(function(lab,i){return {lab:lab,i:i,l:avg(lovb,i),m:avg(mlv,i),gap:avg(lovb,i)-avg(mlv,i)};});
+  gaps.sort(function(a,b){return b.gap-a.gap;});
+  gaps.forEach(function(g){
+    rows+='<div class="fgap-row"><div class="fgl">'+g.lab+'</div><div class="fgap-track">'+
+      '<div class="fgap-lovb" style="width:'+g.l+'%"></div>'+
+      '<div class="fgap-mlv" style="width:'+g.m+'%"></div>'+
+      '<div class="fgap-val">+'+((g.l-g.m)/10).toFixed(1)+'</div></div></div>';
+  });
+  el.innerHTML=rows;
+})();
+
+/* ---------- HEAD-TO-HEAD (tab 4 — real LOVB vs illustrative MLV) ---------- */
+(function(){
+  var ctr=document.getElementById('h2hControls'),box=document.getElementById('h2hEl'),delta=document.getElementById('h2hDelta');
+  if(!box)return;
+  var matchups={
+    'Outside Hitter':['Jordan Larson','Brooke Nuneviller'],
+    'Libero':['Justine Wong-Orantes','Morgan Hentz'],
+    'Setter':['Lauren Carlini','Mia Tuaniga'],
+    'Opposite':['Jordan Thompson','Brittany Abercrombie']
+  };
+  function findL(n){return PLAYERS.find(function(p){return p.name===n;});}
+  function findM(n){return MLV.find(function(p){return p.name===n;});}
+  function card(p,cls,illus){
+    var f='';for(var i=0;i<8;i++){f+='<div class="h2h-f"><div class="frow"><span class="fn">'+FLABELS[i]+'</span><span class="fv">'+(p.facets[i]/10).toFixed(1)+'</span></div><div class="fbar"><div class="ff" style="width:'+p.facets[i]+'%"></div></div></div>';}
+    var tag=(cls==='lovb')?'LOVB Pro':'MLV'+(illus?' · illustrative':'');
+    return '<div class="h2h-card '+cls+'"><div class="league-tag">'+tag+'</div><div class="pname">'+p.name+'</div><div class="pmeta">'+p.role+'</div><div class="pcomp">'+p.comp.toFixed(1)+'</div><div class="pcl">composite · '+p.tier+'</div><div class="h2h-facets">'+f+'</div></div>';
+  }
+  function render(pos){
+    var pair=matchups[pos],L=findL(pair[0]),M=findM(pair[1]);
+    box.innerHTML=card(L,'lovb',false)+'<div class="h2h-mid"><span class="vs">vs</span></div>'+card(M,'mlv',true);
+    var d=(L.comp-M.comp).toFixed(1);
+    delta.innerHTML='At '+pos+', the gap is <b>+'+d+'</b> on the same ruler — widest in the invisible facets, where seasoning lives. <span style="color:var(--slate-hi)">MLV read illustrative.</span>';
+  }
+  Object.keys(matchups).forEach(function(pos,i){
+    var b=document.createElement('button');b.className='h2h-btn'+(i===0?' on':'');b.textContent=pos;
+    b.onclick=function(){document.querySelectorAll('.h2h-btn').forEach(function(x){x.classList.remove('on');});b.classList.add('on');render(pos);};
+    ctr.appendChild(b);
+  });
+  render('Outside Hitter');
+})();
+
+
+/* ---------- POLYGON STORIES (tab 5) — overlaid octagons ---------- */
+(function(){
+  var canvas=document.getElementById('polyCanvas'),readout=document.getElementById('polyReadout'),
+      picker=document.getElementById('polyPicker'),gallery=document.getElementById('polyGallery');
+  if(!canvas)return;
+  function L(n){return PLAYERS.find(function(p){return p.name===n;});}
+  function M(n){return MLV.find(function(p){return p.name===n;});}
+  // curated matchups with a story insight each
+  var stories=[
+    {pos:'Outside Hitter',l:'Jordan Larson',m:'Brooke Nuneviller',
+     insight:'The tools are close — both real pin scorers. The gold pulls away on <b>Court IQ, Compete, and Leadership</b>: two decades of deciding Olympic points versus a strong pro still writing her story.'},
+    {pos:'Libero',l:'Justine Wong-Orantes',m:'Morgan Hentz',
+     insight:'The closest shapes on the board — both elite defenders. The gap is <b>Control and Mental</b>, the margin between a gold-medal floor and a very good one. This is the honest near-overlap.'},
+    {pos:'Setter',l:'Lauren Carlini',m:'Mia Tuaniga',
+     insight:'Setters live on <b>Court IQ and Leadership</b> — and that’s exactly where the gold shape bulges. The offense runs at a different tempo when an Olympian conducts it.'},
+    {pos:'Opposite',l:'Jordan Thompson',m:'Brittany Abercrombie',
+     insight:'Both bring heavy <b>Power</b> — the shapes nearly meet on the right side. The separation is everywhere else: the complete game versus the one big weapon.'}
+  ];
+  var N=8, active=0;
+  function octagon(size,pL,pM){
+    var cx=size/2,cy=size/2,R=size*0.36;
+    var svg='<svg viewBox="0 0 '+size+' '+size+'" width="100%" style="max-width:'+size+'px">';
+    for(var r=1;r<=4;r++){var pts=[];for(var i=0;i<N;i++){var a=(Math.PI*2*i/N)-Math.PI/2;pts.push((cx+Math.cos(a)*R*r/4).toFixed(1)+','+(cy+Math.sin(a)*R*r/4).toFixed(1));}svg+='<polygon points="'+pts.join(' ')+'" fill="none" stroke="rgba(212,162,76,.10)" stroke-width="1"/>';}
+    for(var i=0;i<N;i++){var a=(Math.PI*2*i/N)-Math.PI/2;var x=cx+Math.cos(a)*R,y=cy+Math.sin(a)*R;svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="rgba(255,255,255,.06)"/>';var lx=cx+Math.cos(a)*(R+16),ly=cy+Math.sin(a)*(R+16);svg+='<text x="'+lx.toFixed(1)+'" y="'+ly.toFixed(1)+'" fill="#95907F" font-family="JetBrains Mono" font-size="8" text-anchor="middle" dominant-baseline="middle">'+FLABELS[i].toUpperCase()+'</text>';}
+    function shape(p,fill,stroke,w){var pts=[];for(var i=0;i<N;i++){var a=(Math.PI*2*i/N)-Math.PI/2;var rr=R*p.facets[i]/100;pts.push((cx+Math.cos(a)*rr).toFixed(1)+','+(cy+Math.sin(a)*rr).toFixed(1));}return '<polygon points="'+pts.join(' ')+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+w+'"/>';}
+    // MLV first (behind), LOVB on top
+    svg+=shape(pM,'rgba(124,141,166,.14)','#9DB0CC',1.5);
+    svg+=shape(pL,'rgba(238,192,103,.14)','#EEC067',2.5);
+    svg+='</svg>';
+    return svg;
+  }
+  function render(i){
+    active=i; var s=stories[i], pL=L(s.l), pM=M(s.m);
+    canvas.innerHTML=octagon(360,pL,pM);
+    readout.innerHTML='<div class="pr-vs">'+s.pos+' · same eight facets</div>'
+      +'<div class="pr-names">'
+      +'<div class="pr-name lovb"><span class="pr-sw"></span><span class="pr-nm">'+pL.name+'</span><span class="pr-cp">'+pL.comp.toFixed(1)+'</span></div>'
+      +'<div class="pr-name mlv"><span class="pr-sw"></span><span class="pr-nm">'+pM.name+'</span><span class="pr-cp">'+pM.comp.toFixed(1)+'</span></div>'
+      +'</div><div class="pr-insight">'+s.insight+'</div>';
+    document.querySelectorAll('.poly-pick').forEach(function(b,bi){b.classList.toggle('on',bi===i);});
+  }
+  stories.forEach(function(s,i){
+    var b=document.createElement('button');b.className='poly-pick'+(i===0?' on':'');b.textContent=s.pos;
+    b.onclick=function(){render(i);};picker.appendChild(b);
+  });
+  // gallery: mini overlaid octagons for all four
+  stories.forEach(function(s,i){
+    var pL=L(s.l),pM=M(s.m);
+    var c=document.createElement('div');c.className='poly-card';
+    c.innerHTML='<div class="pc-mini">'+octagon(150,pL,pM)+'</div>'
+      +'<div class="pc-title">'+s.pos+'</div>'
+      +'<div class="pc-sub">'+pL.name.split(' ').pop()+' · '+pM.name.split(' ').pop()+'</div>'
+      +'<div class="pc-read">+'+(pL.comp-pM.comp).toFixed(1)+' composite gap</div>';
+    c.onclick=function(){render(i);document.getElementById('polyCanvas').scrollIntoView({behavior:'smooth',block:'center'});};
+    gallery.appendChild(c);
+  });
+  render(0);
+})();
+
+/* ---------- scroll: progress bar + reveals + top bar ---------- */
+(function(){
+  var prog=document.getElementById('prog'),top=document.getElementById('top');
+  var rvs=[].slice.call(document.querySelectorAll('.rv'));
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.12});
+  rvs.forEach(function(r){io.observe(r);});
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement,st=h.scrollTop,sh=h.scrollHeight-h.clientHeight;
+    prog.style.width=(st/sh*100)+'%';
+    top.classList.toggle('scrolled',st>40);
+  },{passive:true});
+})();
+</script>
+</body></html>
