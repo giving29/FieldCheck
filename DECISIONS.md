@@ -185,3 +185,16 @@ cd ~/Desktop/fieldcheck-proxy && git add . && git commit -m "FCBase___ — what 
 **Commits this session (verify `git log --oneline`):** Coverage+guard live, Discovery live, Developer, The Record (7b66062), Dossier (2f29279), audit+truthful-docs (2f590ba). Tags `site-live-20260627-*`.
 
 **Parked (unchanged):** apex-calibration (Olympians >7.4); engine recalibration on `lab`; durable rate-limiter upgrade (in-memory caps abuse, resets on cold start — Blobs/Upstash when traffic warrants); P2 datastore.
+
+## [DECISION · CANONICAL DB DISCOVERED — Jun 30 2026]
+The worker API (https://fieldcheck-proxy.sridhar-nallani.workers.dev) is the AUTHORITATIVE player DB.
+- /api/marquee/list → 274 curated players (55 volleyball), fields {slug,name,school,position,sport,tier}.
+- /api/marquee/verdict-instant?slug=&sport= → full 148KB record incl eval_grid.composite (THE number)
+  + pro_projection.lovb_tier. served_from:edge_cache_curated_db, curated_db_version:2026.Q2.
+- Real composites: Larson 9.3, Beason 8.4, DeBeer 7.4, Skinner 7.3, Murray 7.4.
+- Tier hierarchy ICON>ELITE+>ELITE>STAR is the built-in ANCHOR structure (Sridhar: anchor LOVB greats).
+- SUPERSEDES: the 5 stale local stores in index.html (FX/TRAJ/HERO/PROJ/reveal) AND the hand-authored
+  fc_reveal reads from this session (which had WRONG numbers, e.g. Larson 7.9).
+- Slug pattern: firstname-lastname-[lovbteam|school]-sport. Get exact slugs from /list, never guess.
+- LOVB well-represented; MLV (Hentz, Poulter) NOT in index → must be ADDED to the curated DB server-side.
+- TENET: player truth = the curated DB. Local stores are obsolete caches. Consolidate surfaces onto the DB.
