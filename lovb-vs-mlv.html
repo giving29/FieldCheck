@@ -212,10 +212,14 @@ section{position:relative}
 
 /* ============ TABBED EVIDENCE DECK ============ */
 .evidence{padding:110px 0;border-top:1px solid var(--rule)}
-.tab-nav-wrap{position:sticky;top:56px;z-index:40;background:linear-gradient(to bottom,var(--ink) 60%,transparent);padding-bottom:8px;margin-bottom:36px}
-.tab-nav{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--rule);scrollbar-width:none}
-.tab-nav::-webkit-scrollbar{display:none}
-.tab-btn{font-family:var(--in);font-size:14px;font-weight:600;color:var(--t3);background:none;border:none;padding:14px 20px;cursor:pointer;white-space:nowrap;position:relative;transition:color .2s;display:flex;align-items:center;gap:8px}
+.tab-nav-wrap{position:sticky;top:56px;z-index:40;background:linear-gradient(to bottom,var(--ink) 60%,transparent);padding-bottom:8px;margin-bottom:36px;position:relative}
+.tab-nav{display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--rule);scrollbar-width:thin;scrollbar-color:var(--gold-lo) transparent;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.tab-nav::-webkit-scrollbar{height:3px}
+.tab-nav::-webkit-scrollbar-thumb{background:var(--gold-lo);border-radius:3px}
+.tab-nav::after{content:'';position:sticky;right:0;top:0;flex:none;width:34px;align-self:stretch;background:linear-gradient(90deg,transparent,var(--ink));pointer-events:none;margin-left:-34px}
+.tab-btn{font-family:var(--in);font-size:13px;font-weight:600;color:var(--t3);background:none;border:none;padding:13px 15px;cursor:pointer;white-space:nowrap;position:relative;transition:color .2s;display:flex;align-items:center;gap:7px;scroll-snap-align:start;flex:none}
+@media(max-width:760px){.tab-nav{flex-wrap:nowrap}.tab-btn{font-size:12px;padding:12px 12px;gap:5px}.tab-nav::after{width:28px;margin-left:-28px}}
+@media(min-width:761px){.tab-nav{flex-wrap:wrap;overflow-x:visible}.tab-nav::after{display:none}}
 .tab-btn:hover{color:var(--t2)}
 .tab-btn.active{color:var(--gold)}
 .tab-btn.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--gold)}
@@ -270,6 +274,71 @@ section{position:relative}
 .poly-card .pc-sub{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);margin-top:4px}
 .poly-card .pc-read{font-size:13px;color:var(--t2);margin-top:12px;line-height:1.5}
 
+
+/* ============ WHAT EACH LEAGUE IS (reframe) ============ */
+.whatis{padding:100px 0;border-top:1px solid var(--rule)}
+.whatis-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:14px;overflow:hidden;margin-top:40px}
+@media(max-width:820px){.whatis-grid{grid-template-columns:1fr}}
+.wcard{background:var(--ink2);padding:38px 34px;position:relative}
+.wcard.lovb{background:linear-gradient(160deg,rgba(212,162,76,.07),var(--ink2))}
+.wcard.mlv{background:linear-gradient(160deg,rgba(124,141,166,.07),var(--ink2))}
+.wcard .wlabel{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.wcard.lovb .wlabel{color:var(--gold)} .wcard.mlv .wlabel{color:var(--slate-hi)}
+.wcard .wsub{font-family:var(--mono);font-size:10px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-bottom:24px}
+.wcard .wquote{font-family:var(--cg);font-size:23px;line-height:1.36;color:var(--ivory);font-style:italic;margin-bottom:14px}
+.wcard .wsrc{font-family:var(--mono);font-size:10px;color:var(--t4);letter-spacing:.5px;margin-bottom:26px}
+.wcard .wread{font-size:14px;color:var(--t2);line-height:1.55;border-top:1px solid var(--rule);padding-top:20px}
+.wcard .wread b{color:var(--ivory)}
+.whatis-punch{text-align:center;font-family:var(--cg);font-size:clamp(22px,3.4vw,32px);line-height:1.3;color:var(--t2);max-width:760px;margin:44px auto 0}
+.whatis-punch b{color:var(--gold-hi);font-style:italic}
+
+/* ============ THE MODEL (pipeline) ============ */
+.pipe{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:20px}
+@media(max-width:820px){.pipe{grid-template-columns:1fr;gap:24px}}
+.pipe-col{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:30px 26px}
+.pipe-col.lovb{border-color:var(--gold-lo)}
+.pipe-col h4{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px}
+.pipe-col.lovb h4{color:var(--gold)} .pipe-col.mlv h4{color:var(--slate-hi)}
+.pipe-layer{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule2)}
+.pipe-layer:last-child{border-bottom:none}
+.pipe-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;flex:none;text-align:center;line-height:1.1}
+.pipe-layer.top .pipe-icon{background:var(--gold);color:var(--ink)}
+.pipe-layer.mid .pipe-icon{background:rgba(212,162,76,.25);color:var(--gold-hi)}
+.pipe-layer.base .pipe-icon{background:rgba(212,162,76,.12);color:var(--gold-hi)}
+.pipe-col.mlv .pipe-layer.top .pipe-icon{background:var(--slate);color:var(--ink)}
+.pipe-col.mlv .pipe-layer .pipe-icon{background:rgba(124,141,166,.18);color:var(--slate-hi)}
+.pipe-txt .pt-t{font-size:14px;color:var(--ivory);font-weight:600}
+.pipe-txt .pt-s{font-size:12px;color:var(--t3)}
+.pipe-none{opacity:.4;font-style:italic}
+.pipe-moat{margin-top:26px;border-left:2px solid var(--gold);padding:6px 0 6px 18px;font-size:15px;color:var(--t2);line-height:1.55}
+.pipe-moat b{color:var(--ivory)}
+
+/* ============ OLYMPIC CORE (prime vs veteran) ============ */
+.ocore{margin-top:20px}
+.ocore-axis{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--t4);margin-bottom:10px}
+.ocore-band{position:relative;height:auto;background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:20px;margin-bottom:16px}
+.ocore-band h5{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+.ocore-band.lovb h5{color:var(--gold)} .ocore-band.mlv h5{color:var(--slate-hi)}
+.ochips{display:flex;flex-wrap:wrap;gap:8px}
+.ochip{font-size:12px;padding:7px 12px;border-radius:20px;border:1px solid var(--rule);color:var(--t2);background:var(--ink2)}
+.ochip b{color:var(--ivory)}
+.ochip.gold{border-color:var(--gold-lo);background:rgba(212,162,76,.08)}
+.ochip.prime{border-color:var(--gold);color:var(--gold-hi)}
+.ochip.slate{border-color:rgba(124,141,166,.35);background:rgba(124,141,166,.08);color:var(--slate-hi)}
+.ocore-note{font-size:13px;color:var(--t3);margin-top:8px;font-style:italic}
+
+/* ============ MLV SCORECARD (honesty) ============ */
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:12px;overflow:hidden;margin-top:20px}
+.scard{background:var(--ink2);padding:24px 22px}
+.scard .sc-cat{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-bottom:10px}
+.scard .sc-win{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;margin-bottom:12px}
+.sc-win.mlv{background:rgba(124,141,166,.18);color:var(--slate-hi)}
+.sc-win.lovb{background:rgba(212,162,76,.15);color:var(--gold-hi)}
+.sc-win.even{background:var(--rule);color:var(--t2)}
+.scard .sc-txt{font-size:13px;color:var(--t2);line-height:1.5}
+.score-pivot{text-align:center;font-family:var(--cg);font-size:clamp(20px,3vw,28px);line-height:1.35;color:var(--ivory);max-width:720px;margin:36px auto 0;font-style:italic}
+.score-pivot b{color:var(--gold-hi)}
+
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.rv{opacity:1;transform:none}}
 </style></head>
 <body>
@@ -278,7 +347,7 @@ section{position:relative}
   <a href="/" class="brand" style="text-decoration:none;color:inherit">Field<span class="c">Check</span></a>
   <div class="topnav">
     <a href="/lovb">LOVB</a>
-    <a href="/coverage">Run an athlete</a>
+    <a href="/verdict">Run an athlete</a>
     <a href="/feed">Feed</a>
     <a href="/" class="home">FieldCheck home →</a>
   </div>
@@ -315,9 +384,34 @@ section{position:relative}
   <p class="lede tight">Both are real professional leagues. MLV is the larger, older, better-funded of the two. So this isn't a question of budgets or reach. It's a narrower, harder question: <b style="color:var(--ivory)">who is on the court</b> — and how do their levels compare when measured the exact same way?</p>
 </div></section>
 
+
+<!-- 02.5 WHAT EACH LEAGUE IS -->
+<section class="whatis"><div class="wrap">
+  <div class="kicker"><span class="n">03</span> The reframe</div>
+  <h2 class="h-lg">This isn’t “who’s better.” It’s <em>what each league is</em>.</h2>
+  <p class="lede">Before a single grade, read how each league describes itself — in its own words. They’re not claiming the same thing. One sells scale. One sells level. That distinction is the whole story.</p>
+  <div class="whatis-grid">
+    <div class="wcard mlv">
+      <div class="wlabel">MLV · Major League Volleyball</div>
+      <div class="wsub">from their own site</div>
+      <div class="wquote">“The premier pathway from professional play to the world stage… a commitment to Olympic development.”</div>
+      <div class="wsrc">— provolleyball.com</div>
+      <div class="wread">MLV positions as the <b>pathway toward</b> the top — aligned to USA Volleyball as an Olympic <b>development</b> engine. A real league, competing hard — but by its own framing, still <b>climbing toward</b> the level, not sitting at it.</div>
+    </div>
+    <div class="wcard lovb">
+      <div class="wlabel">LOVB · League One Volleyball</div>
+      <div class="wsub">from their own site</div>
+      <div class="wquote">“The highest level of volleyball ever played on U.S. soil — Olympians, national team veterans, talent from 20 countries.”</div>
+      <div class="wsrc">— Tom Hogan, LOVB VP of Sport</div>
+      <div class="wread">LOVB positions as where the players who <b>already reached</b> the world stage come to play. Not a pathway to the top — <b>the top, brought home.</b> The claim is level, and level is the one thing an honest instrument can verify.</div>
+    </div>
+  </div>
+  <div class="whatis-punch">MLV frames itself as the <b>pathway</b>. LOVB is where the world’s best already play — and, it turns out, the bigger bet: <b>$160M+ raised, blue-chip owners, global media.</b> FieldCheck settles the one claim only measurement can: <b>where is the level?</b></div>
+</div></section>
+
 <!-- 03 THE INSTRUMENT (facets) -->
 <section class="sec"><div class="wrap rv">
-  <div class="kicker"><span class="n">03</span> How the number is built</div>
+  <div class="kicker"><span class="n">04</span> How the number is built</div>
   <h2 class="h-lg">Eight facets. Four seen, four <em>felt</em>.</h2>
   <p class="lede">The visible facets are what a stat sheet catches. The invisible four are where Olympic poise separates from raw talent — and where a veteran league's edge becomes legible.</p>
   <div class="facet-grid">
@@ -339,7 +433,7 @@ section{position:relative}
 
 <!-- 04 THE ANCHORS -->
 <section class="sec"><div class="wrap rv">
-  <div class="kicker"><span class="n">04</span> The scale is anchored</div>
+  <div class="kicker"><span class="n">05</span> The scale is anchored</div>
   <h2 class="h-lg">The number isn't arbitrary. It's anchored to the <em>greatest who ever played</em>.</h2>
   <p class="lede">A 0–10 only means something if the top is fixed. FieldCheck fixes it to the icons — the players who define the ceiling. Most of them share LOVB's lineage. They don't sit on the scale. They <em>are</em> the scale.</p>
   <div class="pyramid">
@@ -353,7 +447,7 @@ section{position:relative}
 
 <!-- 05 THE METHOD -->
 <section class="sec"><div class="wrap rv">
-  <div class="kicker"><span class="n">05</span> The control</div>
+  <div class="kicker"><span class="n">06</span> The control</div>
   <h2 class="h-lg">Same engine. Same GOAT. <em>Blind to the jersey.</em></h2>
   <p class="lede">The finding is only trustworthy if the measurement is identical on both sides. It is. Every athlete — LOVB or MLV — runs through the same engine, against the same anchor, with no thumb on the scale.</p>
   <div class="method">
@@ -366,9 +460,9 @@ section{position:relative}
 
 <!-- ========= TABBED EVIDENCE DECK ========= -->
 <section class="evidence" id="evidence"><div class="wrap">
-  <div class="kicker"><span class="n">06</span> The evidence</div>
-  <h2 class="h-lg">The disparity, shown <em>six ways</em>.</h2>
-  <p class="lede">One dataset, six lenses. LOVB on curated-authoritative reads; MLV on illustrative reads pending full curation. Same scale, same anchor, throughout.</p>
+  <div class="kicker"><span class="n">07</span> The evidence</div>
+  <h2 class="h-lg">The disparity, shown <em>nine ways</em>.</h2>
+  <p class="lede">One dataset, nine lenses. LOVB on curated-authoritative reads; MLV on illustrative reads pending full curation. Same scale, same anchor, throughout.</p>
 
   <div class="tab-nav-wrap"><div class="tab-nav" id="tabNav">
     <button class="tab-btn active" data-tab="level"><span class="tab-num">01</span>The Level</button>
@@ -376,7 +470,10 @@ section{position:relative}
     <button class="tab-btn" data-tab="facets"><span class="tab-num">03</span>The Facets</button>
     <button class="tab-btn" data-tab="h2h"><span class="tab-num">04</span>Head-to-Head</button>
     <button class="tab-btn" data-tab="poly"><span class="tab-num">05</span>Polygon Stories</button>
-    <button class="tab-btn" data-tab="resume"><span class="tab-num">06</span>The Résumé</button>
+    <button class="tab-btn" data-tab="model"><span class="tab-num">06</span>The Model</button>
+    <button class="tab-btn" data-tab="ocore"><span class="tab-num">07</span>The Olympic Core</button>
+    <button class="tab-btn" data-tab="score"><span class="tab-num">08</span>Why LOVB Leads</button>
+    <button class="tab-btn" data-tab="resume"><span class="tab-num">09</span>The Résumé</button>
   </div></div>
 
   <!-- TAB 1: THE LEVEL (ruler) -->
@@ -431,12 +528,83 @@ section{position:relative}
     <div class="poly-gallery" id="polyGallery"></div>
   </div>
 
-  <!-- TAB 6: THE RESUME -->
+  <!-- TAB 6: THE MODEL -->
+  <div class="tab-panel" data-panel="model">
+    <div class="panel-h">One league is a pyramid. The other is a <em>set of teams</em>.</div>
+    <p class="panel-lede">LOVB didn’t build a pro league and add youth camps. It started as 77 youth clubs and grew a pro league on top — a genuine pipeline from a 12-year-old’s first serve to the pro floor. MLV is eight independent franchises. That difference is structural, and it can’t be bought overnight.</p>
+    <div class="pipe">
+      <div class="pipe-col lovb">
+        <h4>LOVB · community-up</h4>
+        <div class="pipe-layer top"><div class="pipe-icon">PRO</div><div class="pipe-txt"><div class="pt-t">6 pro teams → 10 in 2027</div><div class="pt-s">the world’s best, sitting on top</div></div></div>
+        <div class="pipe-layer mid"><div class="pipe-icon">NCAA</div><div class="pipe-txt"><div class="pt-t">College pathway</div><div class="pt-s">All-Americans feed straight up</div></div></div>
+        <div class="pipe-layer base"><div class="pipe-icon">CLUB</div><div class="pipe-txt"><div class="pt-t">77 clubs · 28 states</div><div class="pt-s">22,000+ youth · 3,500+ coaches</div></div></div>
+        <div class="pipe-moat">A 14-year-old at an LOVB club in Houston watches Jordan Thompson play <b>the same week</b>. The pipeline is real — and it’s a <b>data moat</b> FieldCheck sits directly on.</div>
+      </div>
+      <div class="pipe-col mlv">
+        <h4>MLV · franchise model</h4>
+        <div class="pipe-layer top"><div class="pipe-icon">PRO</div><div class="pipe-txt"><div class="pt-t">8 pro franchises</div><div class="pt-s">independently owned, expanding</div></div></div>
+        <div class="pipe-layer mid"><div class="pipe-icon">—</div><div class="pipe-txt"><div class="pt-t pipe-none">no owned college layer</div><div class="pt-s">signs from the open market</div></div></div>
+        <div class="pipe-layer base"><div class="pipe-icon">—</div><div class="pipe-txt"><div class="pt-t pipe-none">no youth pipeline</div><div class="pt-s">strong on scale, not structure</div></div></div>
+        <div class="pipe-moat">MLV competes hard on business — crowds, broadcast, prize. What it doesn’t have is a <b>farm system feeding its own floor</b>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 7: THE OLYMPIC CORE -->
+  <div class="tab-panel" data-panel="ocore">
+    <div class="panel-h">Both leagues have Olympians. They’re not the <em>same</em> Olympians.</div>
+    <p class="panel-lede">The honest cut isn’t “haves vs have-nots.” MLV rosters real Olympic experience — but it skews international and veteran. LOVB concentrates the <em>current, prime</em> Team USA and active national-team core. That’s where the level gap actually comes from.</p>
+    <div class="ocore">
+      <div class="ocore-band lovb">
+        <h5>LOVB · current prime core</h5>
+        <div class="ochips">
+          <span class="ochip prime">Jordan Larson · <b>4× USA Olympian</b></span>
+          <span class="ochip prime">Kelsey Robinson-Cook · <b>USA gold</b></span>
+          <span class="ochip prime">Jordan Thompson · <b>USA Olympian</b></span>
+          <span class="ochip prime">Justine Wong-Orantes · <b>USA gold</b></span>
+          <span class="ochip gold">Carlini · USA</span>
+          <span class="ochip gold">Lexi Rodriguez · USA VNL (active)</span>
+          <span class="ochip gold">+ Olympic gold medalists Gong, da Silva, Buijs</span>
+        </div>
+        <div class="ocore-note">23 Olympic medals across 33 appearances · 75% national-team · current USA core</div>
+      </div>
+      <div class="ocore-axis"><span>▲ current · prime · Team USA</span><span>veteran · international · developmental ▼</span></div>
+      <div class="ocore-band mlv">
+        <h5>MLV · international / veteran experience</h5>
+        <div class="ochips">
+          <span class="ochip slate">Jovana Brakočević · SRB 3× Olympian (’08–’16)</span>
+          <span class="ochip slate">Shara Venegas · PUR Olympian (2016)</span>
+          <span class="ochip slate">Alisha Childress · USA bronze (2016)</span>
+          <span class="ochip slate">skews past-prime + overseas</span>
+        </div>
+        <div class="ocore-note">real Olympic pedigree — but veteran, international, and fewer; MLV frames itself as Olympic <i>development</i></div>
+      </div>
+    </div>
+  </div>
+
+    <!-- TAB 8: WHY LOVB LEADS (business + level) -->
+  <div class="tab-panel" data-panel="score">
+    <div class="panel-h">Not just the level. LOVB is winning the <em>business</em> too.</div>
+    <p class="panel-lede">The honest picture isn’t “LOVB has better players, MLV has the bigger business.” Follow the capital, the owners, the media, and the model — LOVB is building the more valuable, more durable asset. The level is the proof; the business is the moat.</p>
+    <div class="score">
+      <div class="scard"><div class="sc-cat">Capital Raised</div><span class="sc-win lovb">LOVB</span><div class="sc-txt"><b>$160M+</b> — Atwater, Ares, Left Lane, plus Synergy ($150M fund, Reggie Bush). Backers: Durant, Vonn, Candace Parker, BJK.</div></div>
+      <div class="scard"><div class="sc-cat">Franchise Owners</div><span class="sc-win lovb">LOVB</span><div class="sc-txt">Spurs Sports (Austin) · Houston Texans affiliate (Houston) · Jordan Larson (Nebraska) · Reggie Bush/Synergy (Salt Lake).</div></div>
+      <div class="scard"><div class="sc-cat">Global Media</div><span class="sc-win lovb">LOVB</span><div class="sc-txt">ESPN + USA Network primetime, plus broadcast across South America, Australia, NZ, and all 60 matches in SE Asia.</div></div>
+      <div class="scard"><div class="sc-cat">Digital Traction</div><span class="sc-win lovb">LOVB</span><div class="sc-txt"><b>191M</b> social impressions in season one; 1M+ engaged with championship content. Organic, not bought.</div></div>
+      <div class="scard"><div class="sc-cat">The Model (moat)</div><span class="sc-win lovb">LOVB</span><div class="sc-txt">Fans already in the building — 77 clubs, 22,000 youth. “The hardest asset in modern sport: trust.”</div></div>
+      <div class="scard"><div class="sc-cat">Expansion Pace</div><span class="sc-win lovb">LOVB</span><div class="sc-txt">To 10 teams in 2027 (LA, Minnesota, SF, Miami), two conferences — built on real communities, not planted flags.</div></div>
+      <div class="scard"><div class="sc-cat">The Level</div><span class="sc-win lovb">LOVB</span><div class="sc-txt">Measured here, nine ways: the world’s prime talent, stacked deeper on one honest ruler.</div></div>
+      <div class="scard"><div class="sc-cat">Youth Pipeline</div><span class="sc-win lovb">LOVB</span><div class="sc-txt">A real farm system feeding the pro floor — the thing MLV’s franchise model structurally can’t replicate.</div></div>
+    </div>
+    <div class="score-pivot">The level isn’t a lucky headline — it’s the visible tip of a <b>deeper structural lead</b>. LOVB assembled the talent, the capital, and the community. FieldCheck just makes the level <b>measurable</b>.</div>
+  </div>
+
+<!-- TAB 9: THE RESUME -->
   <div class="tab-panel" data-panel="resume">
     <div class="panel-h">The number matches the <em>résumé</em>.</div>
     <p class="panel-lede">FieldCheck’s reads aren’t floating free of reality. They track the hard, public record of who these leagues actually roster.</p>
     <div class="stats">
-      <div class="stat"><div class="sv"><span class="lovb">19</span><span class="vs">/</span><span class="mlv">3</span></div><div class="sl"><b>Olympians.</b> LOVB rosters 19 to MLV’s 3. Eight of LOVB’s have won gold.</div></div>
+      <div class="stat"><div class="sv"><span class="lovb">23</span><span class="vs">/</span><span class="mlv">33</span></div><div class="sl"><b>Olympic medals across 33 appearances</b> — LOVB’s league total. 75% have worn a national-team jersey; the core is <b>current</b> Team USA, not past-prime.</div></div>
       <div class="stat"><div class="sv"><span class="lovb">6.7</span><span class="vs">/</span><span class="mlv">3.1</span></div><div class="sl"><b>Years pro experience</b>, on average — more than double the seasoning.</div></div>
       <div class="stat"><div class="sv"><span class="lovb">55</span><span class="vs">/</span><span class="mlv">28</span></div><div class="sl"><b>Players with 5+ pro years.</b> LOVB’s least-experienced team tops MLV’s most.</div></div>
     </div>
@@ -446,7 +614,7 @@ section{position:relative}
 
 <!-- 09 GAP QUANTIFIED -->
 <section class="sec"><div class="wrap rv">
-  <div class="kicker"><span class="n">09</span> The finding · in the record</div>
+  <div class="kicker"><span class="n">08</span> The finding · in the record</div>
   <h2 class="h-lg">The number matches the <em>résumé</em>.</h2>
   <p class="lede">FieldCheck's reads aren't floating free of reality. They track the hard, public record of who these leagues actually roster.</p>
   <div class="stats">
@@ -459,7 +627,7 @@ section{position:relative}
 
 <!-- 10 HONESTY + COUNTERARGS -->
 <section class="sec"><div class="wrap rv">
-  <div class="kicker"><span class="n">10</span> The honesty test</div>
+  <div class="kicker"><span class="n">09</span> The honesty test</div>
   <h2 class="h-lg">We didn't bury MLV. We <em>measured</em> it — fairly.</h2>
   <p class="lede">A rigged study is worthless. So MLV's best are graded generously by the same engine, and the honest objections are met head-on.</p>
   <div class="honesty">
@@ -475,7 +643,7 @@ section{position:relative}
 
 <!-- 11 PIPELINE -->
 <section class="sec"><div class="wrap rv">
-  <div class="kicker"><span class="n">11</span> Why it lasts</div>
+  <div class="kicker"><span class="n">10</span> Why it lasts</div>
   <h2 class="h-lg">The level today is a snapshot. The <em>pipeline</em> is the moat.</h2>
   <div class="pipe">
     <div class="pbig">22,000+</div>
@@ -488,7 +656,12 @@ section{position:relative}
 <section class="verdict"><div class="wrap rv">
   <h2>The disparity isn't a claim.<br>It's a <em>measurement.</em></h2>
   <a class="fbtn" href="/coverage">Run any athlete →</a>
-</div></section>
+</div>
+  <div style="text-align:center;margin-top:40px">
+    <a href="/verdict" style="display:inline-block;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);background:var(--gold);border-radius:11px;padding:16px 32px;text-decoration:none">Run a real read →</a>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:12px;letter-spacing:.5px">type any athlete · see the live FieldCheck verdict</div>
+  </div>
+</section>
 
 <footer class="foot"><div class="wrap">FieldCheck · the athletic intelligence layer · <a href="/">fieldcheck-app.netlify.app</a></div></footer>
 
@@ -541,6 +714,14 @@ var MLV=[
 ];
 var FLABELS=["Reach","Power","Control","Court IQ","Compete","Mental","Mindset","Leadership"];
 
+/* deep-link a real LOVB/anchor player to their live FieldCheck verdict */
+function verdictUrl(name,league){
+  if(league==='MLV'||league==='MLV_BAND')return null; // MLV illustrative — no real verdict yet
+  var sp='womens-volleyball';
+  return '/verdict?q='+encodeURIComponent(name)+'&sport='+sp;
+}
+
+
 /* ---------- OCTAGON (section 01) ---------- */
 (function(){
   var wrap=document.getElementById('octaWrap');if(!wrap)return;
@@ -588,7 +769,9 @@ var FLABELS=["Reach","Power","Control","Court IQ","Compete","Mental","Mindset","
       var cls=p.league==='ANCHOR'?'anchor':p.league==='MLV'?'mlv':'lovb';
       var m=document.createElement('div');m.className='mark '+cls;m.style.top=yy+'px';
       var dash=p.league==='MLV'?'border:1px dashed rgba(124,141,166,.5);':'';
-      m.innerHTML='<div class="chip" style="'+dash+'"><span class="pd"></span><span class="cv">'+p.comp.toFixed(1)+'</span><span class="nm">'+p.name+'</span></div>';
+      var vu=verdictUrl(p.name,p.league);
+      var chipInner='<div class="chip" style="'+dash+(vu?'cursor:pointer;':'')+'"><span class="pd"></span><span class="cv">'+p.comp.toFixed(1)+'</span><span class="nm">'+p.name+(vu?' <span style="opacity:.5;font-size:9px">\u2197</span>':'')+'</span></div>';
+      m.innerHTML=vu?('<a href="'+vu+'" style="text-decoration:none;color:inherit" title="See '+p.name+'\u2019s live FieldCheck verdict">'+chipInner+'</a>'):chipInner;
       ruler.appendChild(m);
     });
   }
@@ -708,7 +891,7 @@ var FLABELS=["Reach","Power","Control","Court IQ","Compete","Mental","Mindset","
     canvas.innerHTML=octagon(360,pL,pM);
     readout.innerHTML='<div class="pr-vs">'+s.pos+' · same eight facets</div>'
       +'<div class="pr-names">'
-      +'<div class="pr-name lovb"><span class="pr-sw"></span><span class="pr-nm">'+pL.name+'</span><span class="pr-cp">'+pL.comp.toFixed(1)+'</span></div>'
+      +'<div class="pr-name lovb"><span class="pr-sw"></span><span class="pr-nm"><a href="'+verdictUrl(pL.name,"LOVB")+'" style="color:inherit;text-decoration:underline;text-decoration-color:var(--gold-lo)">'+pL.name+'</a></span><span class="pr-cp">'+pL.comp.toFixed(1)+'</span></div>'
       +'<div class="pr-name mlv"><span class="pr-sw"></span><span class="pr-nm">'+pM.name+'</span><span class="pr-cp">'+pM.comp.toFixed(1)+'</span></div>'
       +'</div><div class="pr-insight">'+s.insight+'</div>';
     document.querySelectorAll('.poly-pick').forEach(function(b,bi){b.classList.toggle('on',bi===i);});
