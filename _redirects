@@ -1,4 +1,3 @@
-/thesis                            /fieldcheck-thesis.html              200
 /v5-algorithm                      /v5-algorithm.html                   200
 /draft-intelligence                /fc-draft-intelligence.html          200
 /calibration                       /fc-calibration.html                 200
@@ -17,14 +16,11 @@
 /about                             /fieldcheck-about.html               200
 /pro-probability                   /fieldcheck-pro-probability.html     200
 /conference                        /fieldcheck-conference.html          200
-/predictions                       /PREDICTION_LEDGER_V1.html           200
 /moat                              /index.html                          200
 /methodology    /methodology.html    200
 /methodology/*    /methodology.html    200
 /pricing                           /index.html                          200
 /lovb                              /lovb.html          200
-/canonical                         /FC_CANONICAL_STATE_V1.html          200
-/fc_canonical_state_v1             /FC_CANONICAL_STATE_V1.html          200
 /players                           /for-players.html                    200
 /franchises                        /for-franchises.html                 200
 /gems                              /fieldcheck-gems.html                200
@@ -37,37 +33,26 @@
 /coach-dashboard                   /fieldcheck-coach-dashboard.html     200
 /shape                             /fieldcheck-shape-quiz.html          200
 /drop                              /fieldcheck-daily-drop.html          200
-/pitch                             /fieldcheck-pitch.html               200
 /voices    /methodology.html    200
-/deck                              /fieldcheck-deck.html                200
 /clips                             /fieldcheck-clips.html               200
 /add-clip                          /fieldcheck-add-clip.html            200
 /top100                            /fieldcheck-top100.html              200
-/deck-master   /deck-master.html   200
-/deck-kevin    /deck-kevin.html    200
-/deck-arjun    /deck-arjun.html    200
 /leaderboard                       /leaderboard.html                    200
 /more                             /fieldcheck-more.html               200
-/*                                 /index.html                          200
-
-/login  /login.html  200
-
-/studio  /studio.html  200
-
-/ai  /ai.html  200
-
-/strategist  /strategist.html  200
-
-/coverage  /coverage.html  200
-
-/discovery  /discovery.html  200
-
-/developer  /developer.html  200
-
-/ledger  /ledger.html  200
-
-/loop  /loop.html  200
-/messenger  /messenger.html  200
-/feed  /feed.html  200
-/lovb-vs-mlv                       /lovb-vs-mlv.html   200
+/login                             /login.html                          200
+/ai                                /ai.html                             200
+/coverage                          /coverage.html                       200
+/discovery                         /discovery.html                      200
+/loop                              /loop.html                           200
+/messenger                         /messenger.html                      200
+/feed                              /feed.html                           200
+/lovb-vs-mlv                       /lovb-vs-mlv.html                    200
 /verdict                           /fieldcheck-verdict.html             200
+
+
+# ── shareable decks (unguessable) ──
+/d/k-9f3a2c                        /d-k-9f3a2c.html                     200
+/d/a-7b1e4d                        /d-a-7b1e4d.html                     200
+/d/m-3c8f61                        /d-m-3c8f61.html                     200
+
+/*                                 /index.html                          200
