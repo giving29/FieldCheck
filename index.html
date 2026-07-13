@@ -358,12 +358,12 @@ body::before{
 <!-- ═══════════════ NAV ═══════════════ -->
 <section id="ephero">
   <nav>
-    <div class="nav-side left"><a href="/leaderboard">Leaderboard</a></div>
+    <div class="nav-side left"><a href="/verdict" style="color:var(--gold)">Run a verdict</a></div>
     <div class="nav-side right">
-      <a href="/feed" style="color:var(--gold-hi)">Feed</a>
       <a href="/lovb" style="color:var(--gold)">LOVB</a>
+      <a href="/lovb-vs-mlv" style="color:var(--gold-hi)">Case Study</a>
+      <a href="/feed">Feed</a>
       <a href="/methodology">Intelligence</a>
-      <a href="/more">More</a>
       <a href="/login" data-fc-auth>Register / Log in</a>
     </div>
   </nav>
@@ -1782,22 +1782,28 @@ function verdict(n){return '/fieldcheck-verdict.html?q='+encodeURIComponent(n);}
     </div>
     <div>
       <div class="colophon-col-title">Player</div>
-      <a href="/" class="colophon-col-link">Run a verdict</a>
+      <a href="/verdict" class="colophon-col-link">Run a verdict</a>
       <a href="/gems" class="colophon-col-link">Hidden gems</a>
       <a href="/video-iq" class="colophon-col-link">Video IQ</a>
     </div>
     <div>
-      <div class="colophon-col-title">Programs &amp; Franchises</div>
-      <a href="/coaches" class="colophon-col-link">College coaches</a>
+      <div class="colophon-col-title">For you</div>
+      <a href="/players" class="colophon-col-link">Players &amp; families</a>
+      <a href="/coaches" class="colophon-col-link">Coaches</a>
+      <a href="/franchises" class="colophon-col-link">Franchises</a>
       <a href="/fit" class="colophon-col-link">Program fit</a>
-      <a href="/for-franchises" class="colophon-col-link">For franchises</a>
+    </div>
+    <div>
+      <div class="colophon-col-title">Proof</div>
+      <a href="/lovb-vs-mlv" class="colophon-col-link">LOVB vs MLV</a>
+      <a href="/leaderboard" class="colophon-col-link">Leaderboard</a>
+      <a href="/nba-draft" class="colophon-col-link">NBA Draft call</a>
     </div>
     <div>
       <div class="colophon-col-title">Company</div>
       <a href="/about" class="colophon-col-link">About</a>
-      <a href="/methodology" class="colophon-col-link">Methodology</a>
-      <a href="/nba-draft" class="colophon-col-link">NBA Draft call</a>
-      <a href="/more" class="colophon-col-link">Explore everything</a>
+      <a href="/methodology" class="colophon-col-link">Intelligence</a>
+      <a href="/more" class="colophon-col-link">All tools</a>
     </div>
   </div>
   <div class="colophon-bottom">
