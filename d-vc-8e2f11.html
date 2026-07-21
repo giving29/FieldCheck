@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FieldCheck IQ · The Athlete Intelligence Layer · Investor Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0908; --ink2:#121110; --ink3:#1A1714; --ink4:#221E1A;
+  --t:#F5F1E8; --t2:rgba(245,241,232,.72); --t3:rgba(245,241,232,.46); --t4:rgba(245,241,232,.28);
+  --rule:rgba(245,241,232,.11); --rule2:rgba(245,241,232,.055);
+  --gold:#D4A24C; --gold-hi:#EEC067; --goldl:rgba(212,162,76,.30); --golds:rgba(212,162,76,.07);
+  --slate:#7C8DA6; --moss:#7C9B6E; --coral:#CF6B4C;
+  --an:"Anton",sans-serif; --cg:"Cormorant Garamond",serif; --in:"Inter",sans-serif; --mono:"JetBrains Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--ink);color:var(--t);font-family:var(--in);line-height:1.62;overflow-x:hidden}
+.wrap{max-width:1140px;margin:0 auto;padding:0 30px}
+a{color:inherit;text-decoration:none}
+
+/* nav */
+nav{position:sticky;top:0;z-index:80;background:rgba(10,9,8,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--rule)}
+.nav-in{max-width:1140px;margin:0 auto;padding:15px 30px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:var(--an);font-size:23px;letter-spacing:-.01em}
+.brand b{color:var(--gold);font-weight:400}
+.brand .iq{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:2px;color:var(--goldl);margin-left:5px}
+.nav-tag{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3)}
+
+/* hero */
+.hero{padding:100px 0 70px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;top:-25%;right:-10%;width:56vw;height:56vw;max-width:680px;max-height:680px;background:radial-gradient(circle,var(--golds),transparent 66%);pointer-events:none}
+.hero-eye{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:28px;position:relative;z-index:1}
+.hero-eye::before{content:"";width:26px;height:1px;background:var(--gold)}
+.hero-h{font-family:var(--cg);font-weight:500;font-size:clamp(48px,6.4vw,86px);line-height:1.0;letter-spacing:-.024em;margin-bottom:26px;position:relative;z-index:1}
+.hero-h em{font-style:italic;color:var(--gold-hi)}
+.hero-sub{font-size:20px;color:var(--t2);max-width:660px;line-height:1.55;position:relative;z-index:1}
+.hero-sub b{color:var(--t);font-weight:600}
+
+/* charter */
+.charter{padding:56px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--ink2)}
+.charter-eye{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.charter-h{font-family:var(--cg);font-weight:500;font-style:italic;font-size:clamp(26px,3.4vw,40px);line-height:1.16;letter-spacing:-.01em;max-width:940px}
+.charter-h b{color:var(--gold-hi);font-weight:600;font-style:normal}
+
+/* tab nav */
+.tab-nav-wrap{position:sticky;top:56px;z-index:70;background:rgba(10,9,8,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--rule)}
+.tab-nav{max-width:1140px;margin:0 auto;padding:0 30px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;background:transparent;border:none;color:var(--t3);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:16px 15px;cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.tab-btn:hover{color:var(--t2)}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-num{font-size:9px;color:var(--t4);font-weight:700}
+.tab-btn.active .tab-num{color:var(--goldl)}
+
+/* panels */
+.panel{display:none;padding:74px 0 90px;animation:fade .4s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.panel-eye{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.panel-h{font-family:var(--cg);font-weight:500;font-size:clamp(34px,4.6vw,56px);line-height:1.05;letter-spacing:-.02em;margin-bottom:20px;max-width:900px}
+.panel-h em{font-style:italic;color:var(--gold-hi)}
+.panel-lede{font-size:18px;color:var(--t2);max-width:720px;line-height:1.6;margin-bottom:44px}
+.panel-lede b{color:var(--t);font-weight:600}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px}
+.cards.two{grid-template-columns:repeat(2,1fr)}
+.cards.four{grid-template-columns:repeat(4,1fr)}
+@media(max-width:860px){.cards,.cards.two,.cards.four{grid-template-columns:1fr}}
+.card{background:var(--ink2);border:1px solid var(--rule);border-radius:14px;padding:28px 26px;transition:border-color .2s}
+.card:hover{border-color:var(--goldl)}
+.card-tag{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);margin-bottom:14px}
+.card.gold .card-tag{color:var(--gold)}
+.card-h{font-family:var(--cg);font-size:23px;font-weight:600;line-height:1.16;margin-bottom:11px;color:var(--t)}
+.card.gold .card-h{color:var(--gold-hi)}
+.card-b{font-size:14px;color:var(--t2);line-height:1.55}
+.card-b b{color:var(--t);font-weight:600}
+.card-big{font-family:var(--an);font-size:44px;line-height:1;color:var(--gold);margin-bottom:12px;letter-spacing:-.01em}
+
+/* section divider claim */
+.divider{margin:40px 0;padding:40px 34px;background:linear-gradient(150deg,var(--golds),transparent 64%);border:1px solid var(--goldl);border-radius:16px}
+.divider-h{font-family:var(--cg);font-weight:500;font-style:italic;font-size:clamp(24px,3.2vw,36px);line-height:1.14;letter-spacing:-.01em}
+.divider-h b{color:var(--gold-hi);font-weight:600;font-style:normal}
+.divider-sub{font-size:15px;color:var(--t2);margin-top:14px;max-width:760px;line-height:1.55}
+
+/* landscape table */
+.ltable{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:13.5px}
+.ltable th{text-align:left;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t3);padding:12px 14px;border-bottom:1px solid var(--rule)}
+.ltable td{padding:14px;border-bottom:1px solid var(--rule2);color:var(--t2);vertical-align:top;line-height:1.45}
+.ltable tr:hover td{background:var(--ink2)}
+.ltable .plat{font-weight:600;color:var(--t);font-family:var(--in)}
+.ltable .fc{background:var(--golds)}
+.ltable .fc .plat{color:var(--gold-hi)}
+.ltable .edge{color:var(--gold);font-weight:500}
+
+/* ladder (proof) */
+.ladder{display:flex;flex-direction:column;gap:9px;margin-top:8px}
+.rung{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:center}
+.rung-n{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--gold);text-align:right}
+.rung-bar{height:30px;border-radius:5px;position:relative;background:var(--ink3);overflow:hidden}
+.rung-fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,rgba(212,162,76,.45),var(--gold))}
+.rung.mlv .rung-n{color:var(--slate)}
+.rung.mlv .rung-fill{background:repeating-linear-gradient(45deg,rgba(124,141,166,.28),rgba(124,141,166,.28) 6px,rgba(124,141,166,.5) 6px,rgba(124,141,166,.5) 12px)}
+.rung-lbl{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--ink);z-index:2}
+.rung.mlv .rung-lbl{color:var(--t)}
+
+/* stat strip */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:8px 0 28px}
+@media(max-width:860px){.stats{grid-template-columns:1fr 1fr}}
+.stat{border-left:2px solid var(--goldl);padding-left:16px}
+.stat-n{font-family:var(--an);font-size:40px;line-height:1;color:var(--gold);letter-spacing:-.01em}
+.stat-l{font-size:12.5px;color:var(--t2);margin-top:8px;line-height:1.4}
+
+/* flywheel */
+.flow{display:flex;align-items:stretch;gap:0;margin:8px 0 20px;flex-wrap:wrap}
+.flow-node{flex:1;min-width:180px;background:var(--ink2);border:1px solid var(--rule);border-radius:12px;padding:22px 20px;position:relative}
+.flow-n{font-family:var(--an);font-size:30px;color:var(--gold);line-height:1;margin-bottom:12px}
+.flow-h{font-size:14.5px;font-weight:700;color:var(--t);margin-bottom:7px}
+.flow-b{font-size:12.5px;color:var(--t2);line-height:1.45}
+.flow-arrow{display:flex;align-items:center;color:var(--gold);font-size:22px;padding:0 8px}
+@media(max-width:860px){.flow-arrow{transform:rotate(90deg);padding:6px 0;justify-content:center;width:100%}}
+
+/* ask */
+.ask-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:8px 0 32px}
+@media(max-width:860px){.ask-grid{grid-template-columns:1fr}}
+.ask-card{background:var(--ink2);border:1px solid var(--goldl);border-radius:14px;padding:30px 26px}
+.ask-h{font-family:var(--cg);font-size:26px;font-weight:600;font-style:italic;color:var(--gold-hi);margin-bottom:12px}
+.ask-b{font-size:14px;color:var(--t2);line-height:1.55}
+.closing{font-family:var(--cg);font-weight:500;font-style:italic;font-size:clamp(26px,3.6vw,42px);line-height:1.14;letter-spacing:-.012em;max-width:900px;margin-top:12px}
+.closing b{color:var(--gold-hi);font-weight:600;font-style:normal}
+
+footer{border-top:1px solid var(--rule);padding:40px 0;font-family:var(--mono);font-size:10.5px;color:var(--t4);letter-spacing:.5px;text-align:center}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-in">
+  <div class="brand">Field<b>Check</b><span class="iq">IQ</span></div>
+  <div class="nav-tag">Investor Brief · 2026 · Confidential</div>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero"><div class="wrap">
+  <div class="hero-eye">The athlete intelligence layer</div>
+  <h1 class="hero-h">Every athlete has a number.<br>We built the one that's <em>honest</em>.</h1>
+  <p class="hero-sub">Sports evaluation runs on exposure, politics, and pay-to-play. FieldCheck reads the record and returns <b>one honest, uncapped rating per athlete</b> — any sport, amateur to GOAT — plus the identity, comps, and path behind it. <b>The UTR of every sport, and the intelligence layer on top.</b></p>
+</div></header>
+
+<!-- CHARTER -->
+<section class="charter"><div class="wrap">
+  <div class="charter-eye">What we believe</div>
+  <div class="charter-h">The best athlete in a town nobody scouts deserves the same instrument as the number-one recruit in America. Talent is everywhere. <b>Honest measurement is not.</b> We're building the layer that sees all of it — and never writes anyone off.</div>
+</div></section>
+
+<!-- TAB NAV -->
+<div class="tab-nav-wrap"><div class="tab-nav" id="tabNav">
+  <button class="tab-btn active" data-tab="problem"><span class="tab-num">01</span> Problem</button>
+  <button class="tab-btn" data-tab="product"><span class="tab-num">02</span> Product</button>
+  <button class="tab-btn" data-tab="moat"><span class="tab-num">03</span> Moat</button>
+  <button class="tab-btn" data-tab="landscape"><span class="tab-num">04</span> Landscape</button>
+  <button class="tab-btn" data-tab="proof"><span class="tab-num">05</span> Proof</button>
+  <button class="tab-btn" data-tab="audience"><span class="tab-num">06</span> Audience</button>
+  <button class="tab-btn" data-tab="traction"><span class="tab-num">07</span> Traction</button>
+  <button class="tab-btn" data-tab="team"><span class="tab-num">08</span> Team</button>
+  <button class="tab-btn" data-tab="ask"><span class="tab-num">09</span> Ask</button>
+</div></div>
+
+<div class="wrap">
+
+<!-- 01 PROBLEM -->
+<section class="panel active" data-panel="problem">
+  <div class="panel-eye">01 · The Problem</div>
+  <h2 class="panel-h">Sports evaluation is <em>broken</em> — and it fails the people who need it most.</h2>
+  <p class="panel-lede">Every athlete has a number in someone's head. Nobody will tell them the honest one, and no universal honest scale exists. The market runs on <b>access, exposure, and politics</b> — not truth.</p>
+  <div class="cards">
+    <div class="card">
+      <div class="card-tag">Recruiting services</div>
+      <div class="card-h">Sell hope to anxious parents</div>
+      <div class="card-b">$1,200–3,000/yr for exposure and encouragement. The business model <b>is</b> the conflict of interest. Coaches distrust the ratings because they're paid for.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Rankings & mock drafts</div>
+      <div class="card-h">Built for the top 1%</div>
+      <div class="card-b">247, Rivals, On3 treat pedigree as potential. Star ratings for the recruited elite — and <b>nothing</b> for the 99% who play just as hard in ZIP codes nobody scouts.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Film & stats</div>
+      <div class="card-h">Show what happened, never what you are</div>
+      <div class="card-b">Hudl gave everyone footage. But footage isn't an answer — and someone has to upload you before you even exist. A library, not a verdict.</div>
+    </div>
+  </div>
+  <div class="divider">
+    <div class="divider-h">Tennis solved this. It's called <b>UTR</b> — one honest number every player has, amateur to pro, that the whole sport trusts.</div>
+    <div class="divider-sub">Every other sport has nothing like it. No universal, honest, dynamic rating. That absence is the opportunity — and it's enormous: ~8 million U.S. high-school athletes alone, and not one of them can get a straight answer about where they stand.</div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">8M</div><div class="stat-l">U.S. high-school athletes — almost all invisible to the ranking machine</div></div>
+    <div class="stat"><div class="stat-n">$1.2K+</div><div class="stat-l">what services charge parents per year for exposure, not measurement</div></div>
+    <div class="stat"><div class="stat-n">1%</div><div class="stat-l">the slice rankings actually cover; the long tail is unserved</div></div>
+    <div class="stat"><div class="stat-n">0</div><div class="stat-l">universal honest ratings that exist outside of tennis</div></div>
+  </div>
+</section>
+
+<!-- 02 PRODUCT -->
+<section class="panel" data-panel="product">
+  <div class="panel-eye">02 · The Product</div>
+  <h2 class="panel-h">One honest number. Then the <em>identity</em> behind it.</h2>
+  <p class="panel-lede">FieldCheck reads the public record and returns a calibrated rating — then tells the athlete <b>who they are, who they play like, and the path that fits.</b> The film shows what happened. FieldCheck says how good you are, and how good you can be.</p>
+  <div class="cards">
+    <div class="card gold">
+      <div class="card-tag">The number</div>
+      <div class="card-h">Uncapped, UTR-style</div>
+      <div class="card-b">One rating per athlete on an <b>open-ended scale — no artificial ceiling.</b> GOATs land where they naturally land, the way Novak sits at ~16 in UTR. Men, women, any sport, one continuous ruler. Graded across 8 facets vs the sport's greatest. Tough — every point earned.</div>
+    </div>
+    <div class="card gold">
+      <div class="card-tag">The identity</div>
+      <div class="card-h">Who you are, who you play like</div>
+      <div class="card-b">Style, strengths, weaknesses — the persona no ranking gives you. Plus <b>hero comps</b>: the archetypes and greats you resemble, across sports. Not a star rating. A mirror.</div>
+    </div>
+    <div class="card gold">
+      <div class="card-tag">The path</div>
+      <div class="card-h">The two facets that move you up</div>
+      <div class="card-b">A development roadmap and a fit read — where you stand, what moves your number, and which programs fit. The answer to <b>"how good can I be, and what path fits me?"</b></div>
+    </div>
+  </div>
+  <div class="divider">
+    <div class="divider-h">Click any amateur and get a <b>real read</b> — before they ever sign up. We already see them.</div>
+    <div class="divider-sub">The same engine grades a 12-year-old in a town nobody scouts and a four-time Olympian, on the same scale. That's the product: the honest number, free to run, plus the intelligence layer — identity, comps, path, fit — that no incumbent owns.</div>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="card-tag">8 facets</div><div class="card-h">Four you can see, four you can't</div><div class="card-b">Reach, Power, Control, Court IQ — plus Compete, Mental, Mindset, Leadership. The invisible four are where careers are actually made, and where film is blind.</div></div>
+    <div class="card"><div class="card-tag">Free forever</div><div class="card-h">The number costs nothing</div><div class="card-b">Run any athlete, any sport, no signup. An honest measurement you have to pay for isn't honest. You pay for the tools built on top.</div></div>
+    <div class="card"><div class="card-tag">Agents</div><div class="card-h">The intelligence does the labor</div><div class="card-b">Six live agents — Scout, Editor, Strategist, Developer, Coverage, Discovery — do the work recruiting services charge humans for.</div></div>
+  </div>
+</section>
+
+<!-- 03 MOAT -->
+<section class="panel" data-panel="moat">
+  <div class="panel-eye">03 · The Moat</div>
+  <h2 class="panel-h">Where every other rating product stops, <em>ours compounds.</em></h2>
+  <p class="panel-lede">The moat isn't the model. It's <b>Coverage × Calibration × Utility</b> — three things at once. Incumbents can run one. None can run two. And the player graph underneath gets deeper every day.</p>
+  <div class="cards">
+    <div class="card gold"><div class="card-tag">Coverage</div><div class="card-h">We already see you</div><div class="card-b">A refinery that ingests four feedstock layers — structured public data, scraps, video in the wild, and player uploads — and reads <b>every athlete, before they sign up.</b> The amateur long tail is the moat nobody else will cover.</div></div>
+    <div class="card gold"><div class="card-tag">Calibration</div><div class="card-h">The loop with teeth</div><div class="card-b">"A FieldCheck 7.4 reaches D1 at X%" — validated against real outcomes, season after season. <b>Pay-to-play can never fake a calibrated number.</b> This is the deepest moat: it only gets truer with time.</div></div>
+    <div class="card gold"><div class="card-tag">Utility</div><div class="card-h">Agents replace the service layer</div><div class="card-b">The six agents turn the number into daily tools for players, coaches, and scouts — <b>the labor NCSA charges $3,000 for, done by software.</b></div></div>
+  </div>
+  <div class="divider">
+    <div class="divider-h">Players hand us the world's largest <b>graded amateur performance dataset</b> — voluntarily.</div>
+    <div class="divider-sub">Because their incentive and ours are the same. They want to be seen. We want the training data. Aligned incentives are the flywheel — and the dataset that results can't be bought, only built, and only by whoever built the instrument first.</div>
+  </div>
+  <div class="flow">
+    <div class="flow-node"><div class="flow-n">1</div><div class="flow-h">Clips feed the engine</div><div class="flow-b">A player uploads to be seen — and hands us graded performance data.</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><div class="flow-n">2</div><div class="flow-h">Badges pull the network</div><div class="flow-b">Shareable reads and the FC Top 100 turn every athlete into a distribution node.</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><div class="flow-n">3</div><div class="flow-h">Weekly re-grades retain</div><div class="flow-b">The number moves as the record grows — a reason to come back, UTR-style.</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><div class="flow-n">4</div><div class="flow-h">The graph deepens</div><div class="flow-b">Stats + video + attributes + style + path + outcomes — the moat compounds.</div></div>
+  </div>
+</section>
+
+<!-- 04 LANDSCAPE -->
+<section class="panel" data-panel="landscape">
+  <div class="panel-eye">04 · The Landscape</div>
+  <h2 class="panel-h">Incumbents own exposure. <em>Nobody owns meaning.</em></h2>
+  <p class="panel-lede">Recruiting networks, video platforms, stat tools, ranking media — each is strong where it started, and structurally locked out of the layer FieldCheck is building: <b>identity, fit, development, proof.</b></p>
+  <table class="ltable">
+    <thead><tr><th>Platform</th><th>What it mainly is</th><th>Where it's weak</th><th>FieldCheck's edge</th></tr></thead>
+    <tbody>
+      <tr class="fc"><td class="plat">FieldCheck</td><td>The athlete intelligence layer — identity, comps, path, proof</td><td>Early stage; building coverage & integrations</td><td class="edge">The meaning layer on top of stats, video & rankings</td></tr>
+      <tr><td class="plat">NCSA</td><td>Recruiting service & marketplace</td><td>Service-heavy; not personalized to identity or development</td><td class="edge">AI-native, player-first, insight-driven</td></tr>
+      <tr><td class="plat">Hudl</td><td>Video, highlights, team analysis</td><td>Great footage; not recruiting-fit or persona</td><td class="edge">Sit on top of video → identity, comps, strategy</td></tr>
+      <tr><td class="plat">FieldLevel</td><td>Coach-athlete recruiting network</td><td>Profile & exposure oriented</td><td class="edge">The intelligence layer <b>before</b> outreach</td></tr>
+      <tr><td class="plat">247 / Rivals / On3</td><td>Recruiting media, star rankings</td><td>Elite/ranked only; useless for the long tail</td><td class="edge">Serve the serious 99% — clarity, development, fit</td></tr>
+      <tr><td class="plat">MaxPreps</td><td>HS scores, rankings, public stats</td><td>Public data, not intelligence</td><td class="edge">Convert public stats into private insight + action</td></tr>
+      <tr><td class="plat">BallerTV</td><td>Event livestream & video archive</td><td>Raw video, not intelligence by itself</td><td class="edge">Consume the video signal → produce the "so what"</td></tr>
+    </tbody>
+  </table>
+  <div class="divider">
+    <div class="divider-h">FieldCheck should not be another Hudl, another NCSA, or another rankings site. It should be <b>the anti-ranking</b>.</div>
+    <div class="divider-sub">Not "where do you rank" — but "who are you, how good can you be, and what path fits you?" That's the more emotionally powerful product, and it's the layer the incumbents are structurally unable to become. The long-term moat is open, and it's the player graph.</div>
+  </div>
+</section>
+
+<!-- 05 PROOF -->
+<section class="panel" data-panel="proof">
+  <div class="panel-eye">05 · Proof, not promises</div>
+  <h2 class="panel-h">We measured two pro leagues. The gap <em>showed itself.</em></h2>
+  <p class="panel-lede">Nobody could settle whether LOVB or MLV plays at a higher level — marketing can't, loyalty can't, a championship only settles one night. So we measured every athlete on one ruler, blind to the jersey. <b>The same engine that grades a 12-year-old.</b></p>
+  <div class="cards two">
+    <div class="card">
+      <div class="card-h" style="margin-bottom:16px">MLV's ceiling reaches LOVB's floor. LOVB stacks a full league above.</div>
+      <div class="ladder">
+        <div class="rung"><div class="rung-n">9.3</div><div class="rung-bar"><div class="rung-fill" style="width:96%"></div><span class="rung-lbl">LOVB ceiling · Larson</span></div></div>
+        <div class="rung"><div class="rung-n">8.6</div><div class="rung-bar"><div class="rung-fill" style="width:88%"></div><span class="rung-lbl">LOVB average</span></div></div>
+        <div class="rung"><div class="rung-n">7.3</div><div class="rung-bar"><div class="rung-fill" style="width:74%"></div><span class="rung-lbl">LOVB floor · Skinner</span></div></div>
+        <div class="rung mlv"><div class="rung-n">7.2</div><div class="rung-bar"><div class="rung-fill" style="width:72%"></div><span class="rung-lbl">MLV ceiling · Abercrombie</span></div></div>
+        <div class="rung mlv"><div class="rung-n">6.5</div><div class="rung-bar"><div class="rung-fill" style="width:65%"></div><span class="rung-lbl">MLV average</span></div></div>
+      </div>
+    </div>
+    <div class="card gold">
+      <div class="card-tag">Why it matters</div>
+      <div class="card-h">The instrument works on a real, contested question nobody else could answer</div>
+      <div class="card-b">Built for a pro-league co-founder, targeting a league commissioner. Every athlete graded blind — no jersey, no money, no name. It's the same engine, same 8 facets, whether the subject is an Olympian or an unranked amateur. <b>That's the proof the number is honest.</b></div>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="card-big">36</div><div class="card-tag" style="color:var(--gold)">Case anchors</div><div class="card-b">verified reads the engine is calibrated against — the corpus that keeps the number honest.</div></div>
+    <div class="card"><div class="card-big">88%</div><div class="card-tag" style="color:var(--gold)">Accuracy</div><div class="card-b">on verified historical outcomes — and higher when the model diverges from consensus.</div></div>
+    <div class="card"><div class="card-big">6</div><div class="card-tag" style="color:var(--gold)">Sports live</div><div class="card-b">graded on one instrument — the cross-sport generality that makes it a layer, not a tool.</div></div>
+  </div>
+</section>
+
+<!-- 06 AUDIENCE -->
+<section class="panel" data-panel="audience">
+  <div class="panel-eye">06 · The Audience</div>
+  <h2 class="panel-h">Four people need the same number for <em>four different reasons.</em></h2>
+  <p class="panel-lede">The measurement is identical. What each side does with it — and pays for — is not. One instrument, four markets.</p>
+  <div class="cards four">
+    <div class="card gold"><div class="card-tag">Players & families</div><div class="card-h">Where do I stand?</div><div class="card-b">The honest read nobody's incentivized to give, plus the path to the next rung. The emotional hook: who am I, how good can I be?</div></div>
+    <div class="card"><div class="card-tag">Coaches</div><div class="card-h">Show me the board</div><div class="card-b">Every athlete on one scale — compare a D3 senior, a transfer, and a recruit without watching 40 hours of film.</div></div>
+    <div class="card"><div class="card-tag">Scouts & franchises</div><div class="card-h">Find the climber</div><div class="card-b">The athlete whose number is rising before the market prices them in. Cross-sport, cross-level, one instrument.</div></div>
+    <div class="card"><div class="card-tag">Programs</div><div class="card-h">Fit, not noise</div><div class="card-b">Match athletes to programs on the reality of the read, not the loudest exposure package.</div></div>
+  </div>
+  <div class="divider">
+    <div class="divider-h">Every side that touches the number <b>makes it more valuable</b> — and feeds the same graph.</div>
+    <div class="divider-sub">Players supply performance. Coaches and scouts supply usage and outcomes. The Discovery agent auto-logs corroborated candidates. Both sides of the market self-populate the spine — which is why the network compounds instead of leaking.</div>
+  </div>
+</section>
+
+<!-- 07 TRACTION -->
+<section class="panel" data-panel="traction">
+  <div class="panel-eye">07 · Traction</div>
+  <h2 class="panel-h">The engine is <em>live.</em> The proof is shipped.</h2>
+  <p class="panel-lede">This isn't a concept. The instrument runs, grades across six sports, and has produced a flagship case study in the hands of a real pro-league founder.</p>
+  <div class="cards">
+    <div class="card gold"><div class="card-tag">Product live</div><div class="card-h">The engine grades on demand</div><div class="card-b">Run any athlete, any of six sports, and get a calibrated read with the 8-facet polygon — free, no signup, in the browser today.</div></div>
+    <div class="card gold"><div class="card-tag">Flagship proof</div><div class="card-h">LOVB vs MLV, shipped</div><div class="card-b">A deep, tabbed evidence study measuring two pro leagues athlete-by-athlete — built for and delivered to a league co-founder, targeting the commissioner.</div></div>
+    <div class="card gold"><div class="card-tag">The flywheel is built</div><div class="card-h">Uploads, badges, the feed</div><div class="card-b">The Rising lane, shareable reads, and the FC Top 100 are live — the moat-building mechanics are shipped, not roadmap.</div></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">6</div><div class="stat-l">sports graded on one instrument, live today</div></div>
+    <div class="stat"><div class="stat-n">6</div><div class="stat-l">AI agents in production doing the service-layer labor</div></div>
+    <div class="stat"><div class="stat-n">1</div><div class="stat-l">flagship pro-league case study in a founder's hands</div></div>
+    <div class="stat"><div class="stat-n">100%</div><div class="stat-l">built solo + AI — a lean cost structure most can't match</div></div>
+  </div>
+</section>
+
+<!-- 08 TEAM -->
+<section class="panel" data-panel="team">
+  <div class="panel-eye">08 · The Team</div>
+  <h2 class="panel-h">One founder. AI leverage. <em>A defensible reason it's lean.</em></h2>
+  <p class="panel-lede">FieldCheck was built solo, using AI as the team. That's not a gap — it's the thesis in miniature: <b>the moat was never the code.</b></p>
+  <div class="cards">
+    <div class="card"><div class="card-tag">The build</div><div class="card-h">Solo founder + AI, shipping fast</div><div class="card-b">A live engine, six sports, six agents, a flagship case study — built without a traditional team. Lean burn, high velocity, and a cost structure that compounds the advantage.</div></div>
+    <div class="card gold"><div class="card-tag">The real moat</div><div class="card-h">Data, calibration, philosophy</div><div class="card-b">Not the code — the code is examinable. The moat is the player graph, the calibration corpus, the scoring philosophy, and the constraints. Those don't copy.</div></div>
+    <div class="card"><div class="card-tag">The firewall</div><div class="card-h">Constraints we will never break</div><div class="card-b">Never charge an athlete to see their verdict. No payola. No biased ads. In a market of conflicts of interest, refusing to lie <b>is</b> the brand.</div></div>
+  </div>
+  <div class="divider">
+    <div class="divider-h">The right capital turns a proven solo build into <b>the category-defining company.</b></div>
+    <div class="divider-sub">The instrument is validated. The moat mechanics are shipped. What scales it now is coverage, calibration depth, and the team to run the layer at the size the market deserves.</div>
+  </div>
+</section>
+
+<!-- 09 ASK -->
+<section class="panel" data-panel="ask">
+  <div class="panel-eye">09 · The Ask</div>
+  <h2 class="panel-h">Raise to scale the <em>layer.</em></h2>
+  <p class="panel-lede">We've proven the model, shipped the engine, and built the flywheel — solo. This round scales the three legs of the moat into the category-defining athletic intelligence layer.</p>
+  <div class="ask-grid">
+    <div class="ask-card"><div class="ask-h">Coverage</div><div class="ask-b">Expand the refinery across sports and the amateur long tail — every athlete, seen, before they sign up.</div></div>
+    <div class="ask-card"><div class="ask-h">Calibration</div><div class="ask-b">Deepen the outcome loop — turn every read into a validated, uncapped, trusted number that only gets truer.</div></div>
+    <div class="ask-card"><div class="ask-h">The agent layer</div><div class="ask-b">Ship the utility that makes players, coaches, and scouts depend on the number daily — and replaces the service incumbents.</div></div>
+  </div>
+  <div class="closing">The UTR of every sport. The honest number every athlete has — and the identity, path, and proof behind it. <b>Free forever, because that's the moat.</b></div>
+</section>
+
+</div>
+
+<footer>FieldCheck IQ · the athlete intelligence layer · © 2026 ThinkDifferent Holdings · Confidential investor brief</footer>
+
+<script>
+(function(){
+  var btns=document.querySelectorAll('.tab-btn'),panels=document.querySelectorAll('.panel');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.getAttribute('data-tab');
+      btns.forEach(function(x){x.classList.remove('active');});
+      panels.forEach(function(p){p.classList.remove('active');});
+      b.classList.add('active');
+      document.querySelector('[data-panel="'+t+'"]').classList.add('active');
+      window.scrollTo({top:document.querySelector('.tab-nav-wrap').offsetTop-60,behavior:'smooth'});
+    });
+  });
+})();
+</script>
+</body>
+</html>
