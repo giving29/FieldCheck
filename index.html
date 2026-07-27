@@ -433,6 +433,8 @@ body::before{
 </div>
 <!-- end FC live-journeys strip -->
 
+<!-- PARKED_CLIPS_START :: to un-park, delete this line, the </template> wrapper, the <template...> wrapper, and PARKED_CLIPS_END -->
+<template id="parked-greatest-clips" data-parked="moments-in-motion">
 <!-- ====== THE GREATEST CLIPS — home reel ====== -->
 <div class="gcfilm">
 <!-- MOMENTS REEL -->
@@ -1744,6 +1746,8 @@ function verdict(n){return '/fieldcheck-verdict.html?q='+encodeURIComponent(n);}
   reel.addEventListener('touchend',function(){ rto=setTimeout(function(){ reel.classList.remove('touched'); },2500); });
 </script>
 <!-- ====== end Greatest Clips ====== -->
+</template>
+<!-- PARKED_CLIPS_END -->
 
 <section class="aud">
   <div class="aud-h-row">
