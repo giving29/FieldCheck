@@ -83,64 +83,131 @@ a:hover{opacity:0.75}
 </style>
 </head>
 <body>
-<nav style="position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,0,0,.06);padding:16px 0">
-  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between">
-    <a href="/" style="font-family:'Fraunces',serif;font-weight:600;font-size:20px">FieldCheck</a>
-    <a href="/verdict" style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;letter-spacing:.5px">Run a verdict &rarr;</a>
+
+<div class="wrap">
+  <nav class="fc-nav">
+    <div class="fc-logo">Field<span>Check</span></div>
+    <div class="fc-nav-links">
+      <a href="/">// home</a>
+      <a href="/lovb">// lovb hub</a>
+      <a href="/lovb/about" class="active">// about</a>
+      <a href="/lovb/sources">// sources</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">About · Who built this · And why</div>
+    <h1>The platform <span class="italic">behind the platform.</span></h1>
+    <p class="hero-deck">FieldCheck-LOVB is an independent capability layer for the LOVB ecosystem. Built and maintained from the ThinkDifferent Holdings portfolio. Our job is to make every player, coach, scout, club, parent <em>more capable</em> — by making the data layer they navigate clearer, more honest, and free of commercial incentive distortion.</p>
+  </section>
+</div>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">I</span> · The build</div>
+    <h2 class="section-h">A capability platform, <span class="italic">not a check.</span></h2>
+    <div class="essay">
+      <p>FieldCheck started as something narrower — a "trust layer where retail loses to information asymmetry." A check before commitment. It still serves that purpose for other XCheck verticals like <b>RentCheck</b> and <b>JobCheck</b>. <em>For LOVB, it became something else.</em></p>
+      <p>Volleyball doesn't have a trust crisis the way rentals or job offers do. What volleyball has is an <b>information density problem</b>. The pathway is opaque if you're new. The pro league is young. The athletes who anchor the league have stories most fans haven't yet read. The 90-club junior network is sprawling. <a href="/lovb/atlas">The atlas didn't exist yet.</a></p>
+      <p>So we built it. Not as a check on LOVB — as a <em>capability multiplier around it</em>. The premise: <b>everyone who interacts with the LOVB ecosystem becomes more capable when the data layer is clear, free, and source-grounded.</b> Players make better pathway decisions. Coaches benchmark realistically. Scouts find prospects faster. Broadcasters write better pre-game packages. Parents ask sharper questions. Clubs see where they fit. <em>LOVB itself becomes stronger by having an articulate independent ecosystem around it.</em></p>
+      <p>That's the build. Not an audit. Not a critique. A capability layer.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">II</span> · The operating principles</div>
+    <h2 class="section-h">Seven commitments, <span class="italic">in writing.</span></h2>
+    <div class="essay">
+      <p>How a capability layer earns trust over time is by stating the rules and then living them. These are the seven operating principles. They appear on every persona-facing surface, and they govern every backlog decision.</p>
+    </div>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-num">1</div>
+        <div class="principle-name">Public-record <span class="italic">sourcing.</span></div>
+        <div class="principle-detail">Every claim cites a <b>LOVB page, named publication, or public registry</b>. The full source manifest lives at <a href="/lovb/sources">/lovb/sources</a>.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">2</div>
+        <div class="principle-name">CI <span class="italic">on every score.</span></div>
+        <div class="principle-detail">Where we offer probability bands (the Pathway tool), <b>confidence intervals are always visible</b>. Honest uncertainty over inflated confidence.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">3</div>
+        <div class="principle-name">No school <span class="italic">money.</span></div>
+        <div class="principle-detail">No college, no club, no high school pays to be featured or ranked. <b>We don't rank.</b> We don't sell visibility.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">4</div>
+        <div class="principle-name">No affiliate <span class="italic">fees.</span></div>
+        <div class="principle-detail">No commercial relationship with recruiting services, agents, coaching certifications, or any layer in the ecosystem we describe.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">5</div>
+        <div class="principle-name">Walk-away <span class="italic">default.</span></div>
+        <div class="principle-detail">Every recommendation supports <b>declining as a valid choice</b>. We never frame the platform as a "must use" for anyone.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">6</div>
+        <div class="principle-name">LOVB language <span class="italic">stays LOVB's.</span></div>
+        <div class="principle-detail">"Founding Athlete," "Whole Athlete Training," "Coach of Coaches," "Icons" — <b>we cite, we don't claim</b>. The language belongs to LOVB.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">7</div>
+        <div class="principle-name">Athletes own <span class="italic">their profiles.</span></div>
+        <div class="principle-detail">Any athlete profiled here can <b>claim and edit</b> their own card details via the claim flow. Verification by LOVB-confirmed email or social handle.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">III</span> · The architecture</div>
+    <h2 class="section-h">Where this <span class="italic">lives.</span></h2>
+    <div class="essay">
+      <p>FieldCheck-LOVB is one of several verticals under the <b>XCheck portfolio</b>, which sits inside <b>ThinkDifferent Holdings</b>. Other verticals include EdgeCheck (Internet-era commerce), FieldCheck-Sports (the umbrella platform with multi-sport architecture), RentCheck (rental vetting), SchoolCheck (K-12 evaluation), JobCheck (employer vetting). <em>All share the "trust layer where retail loses to information asymmetry" thesis</em> — but LOVB pivoted further toward the capability-layer framing because that's what the data ecosystem there actually needs.</p>
+      <p>The platform runs on a small static-site stack — Netlify for hosting, a Cloudflare Worker for the source-checker proxy. <b>No tracking, no third-party analytics, no email-capture-and-resell pipelines.</b> The Pathway tool runs entirely in the browser; nothing leaves your device unless you choose to submit.</p>
+      <p>The full <a href="/lovb/sources">source manifest</a>, the <a href="/lovb/changelog">change log</a>, and the <a href="/lovb/embed">embed kit</a> together describe everything we ship. There's no hidden tier, no "Pro," no premium content. <em>Everything we publish, we publish freely.</em></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">IV</span> · The relationship with LOVB</div>
+    <h2 class="section-h">Independent. <span class="italic">Aligned.</span></h2>
+
+    <div class="dna-block">
+      <div class="dna-eyebrow">// What "independent" actually means</div>
+      <h3 class="dna-h">We don't take <span class="italic">LOVB money.</span></h3>
+      <p class="dna-body">FieldCheck-LOVB is <b>not commercially affiliated with League One Volleyball Inc.</b> We don't have a sponsorship, partnership, advertising relationship, or any financial flow from LOVB. We don't have a content licensing agreement. We don't have early access to LOVB news. <em>We're cousins, not children.</em></p>
+      <p class="dna-body" style="margin-top:18px">What we are is <b>aligned</b>. We think LOVB's success matters because the broader U.S. women's volleyball ecosystem needs the league it built. <em>If LOVB gets stronger because the data ecosystem around it gets stronger, that's a good outcome — for them, for us, for everyone in volleyball.</em> That's the relationship. Independent in money, aligned in mission.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-num">§ <span class="gold">V</span> · Contact + corrections</div>
+    <h2 class="section-h">How to <span class="italic">reach us.</span></h2>
+    <div class="essay">
+      <p>If you're an <b>athlete, coach, owner, parent, or scout</b> mentioned anywhere on the platform and you want to claim, correct, or remove content — file a <a href="/dispute">dispute</a>. We honor takedown requests within 48 hours. Corrections inside 24.</p>
+      <p>If you're a <b>journalist or researcher</b> who'd like to source from the platform, everything we publish is <b>CC BY-SA 4.0 licensed</b> — share with attribution. No API key required for the embed kit; details at <a href="/lovb/embed">/lovb/embed</a>.</p>
+      <p>If you're <b>LOVB itself</b> and want to suggest content updates, partnerships, or operational changes — the same dispute link reaches us. We treat LOVB-originated suggestions the same way we treat anyone else's: read fully, respond honestly, action what's warranted.</p>
+    </div>
+
+    <div class="contact-block" style="margin-top:32px">
+      <div class="contact-text"><b>Have an issue? Tell us.</b><br>48-hour takedown SLA. 24-hour correction SLA.</div>
+      <a href="/dispute" class="btn">File a dispute →</a>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-display">About · Independent · Free · Source-Grounded</div>
+    <p>The about page is here so you can decide whether to trust the rest. Read the <a href="/lovb/sources">source manifest</a> to verify our sourcing discipline; read the <a href="/lovb/changelog">changelog</a> to see what's shipped; read the <a href="/lovb/embed">embed terms</a> to see how openly we publish.</p>
+    <p>This platform exists because the ecosystem around LOVB deserves an articulate independent voice. We hope we are useful to you.</p>
+    <div class="footer-disclaimer">Independent and unaffiliated with LOVB. "LOVB" and related marks are properties of League One Volleyball Inc. ThinkDifferent Holdings is the parent entity behind this platform.</div>
   </div>
-</nav>
+</footer>
 
-<header style="padding:88px 0 40px"><div class="wrap">
-  <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;opacity:.55;margin-bottom:22px">About FieldCheck</div>
-  <h1>Why FieldCheck exists.</h1>
-  <p style="font-size:21px;line-height:1.55;max-width:660px;opacity:.8;margin-top:8px">FieldCheck is the athlete intelligence layer &mdash; one honest, uncapped rating for every athlete, in every sport, plus the identity and path behind it. Built to give the kid nobody scouts the same straight answer as the number-one recruit in the country.</p>
-</div></header>
-
-<section style="padding:20px 0 44px"><div class="wrap">
-  <h2 class="section-h">The straight answer nobody is paid to give.</h2>
-  <p style="margin-bottom:16px">Sports evaluation runs on access, exposure, and politics. The families with private coaches and paid services win; everyone else is invisible. FieldCheck exists to break that &mdash; to read the public record for <em>every</em> athlete and return a calibrated, honest number, free, no matter who you are or where you play.</p>
-  <p>It is one instrument across every sport &mdash; the same engine grades a twelve-year-old in a town nobody scouts and a four-time Olympian. Not a ranking. Not exposure for sale. A measurement.</p>
-</div></section>
-
-<section style="padding:44px 0;border-top:1px solid rgba(0,0,0,.08)"><div class="wrap">
-  <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;opacity:.55;margin-bottom:18px">The number</div>
-  <h2 class="section-h">One number. No ceiling.</h2>
-  <p style="margin-bottom:16px">FieldCheck gives every athlete a single honest rating &mdash; graded across eight facets against the greatest to ever play the sport. There is no cap at ten. The GOATs land where they naturally land, the way Novak sits near sixteen in tennis&rsquo;s UTR, and everyone else falls honestly beneath them.</p>
-  <p>One continuous scale &mdash; men, women, any sport, amateur to GOAT. Tough by design: every point is earned, and the number always has room to climb. <strong>The rating you can&rsquo;t buy, inflate, or fake.</strong></p>
-</div></section>
-
-<section style="padding:44px 0;border-top:1px solid rgba(0,0,0,.08)"><div class="wrap">
-  <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;opacity:.55;margin-bottom:18px">Who built this</div>
-  <h2 class="section-h">Who built this.</h2>
-  <p style="margin-bottom:16px">Built by one operator, not a committee. <strong>Sridhar Nallani</strong> &mdash; twenty-five years building and running technology at scale, including CIO and CTO roles across Macy&rsquo;s, Gap, Microsoft, and PROG Holdings. FieldCheck is built the way the best products are: close to the problem, fast, and without the layers that dull the truth.</p>
-  <p>The moat was never the code. It is the calibration, the data, the scoring philosophy, and the commitments below &mdash; the things that don&rsquo;t copy.</p>
-</div></section>
-
-<section style="padding:44px 0;border-top:1px solid rgba(0,0,0,.08)"><div class="wrap">
-  <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;opacity:.55;margin-bottom:18px">Seven commitments</div>
-  <h2 class="section-h">Seven commitments.</h2>
-  <ol style="list-style:none;counter-reset:c;padding:0;margin-top:8px">
-    <li style="counter-increment:c;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.07)"><strong>We never charge an athlete to see their own verdict.</strong> The number is free, forever.</li>
-    <li style="counter-increment:c;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.07)"><strong>We never take money to inflate a read.</strong> No pay-to-rank, no sponsored scores, ever.</li>
-    <li style="counter-increment:c;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.07)"><strong>We publish our methodology.</strong> How the number is built is open to examination.</li>
-    <li style="counter-increment:c;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.07)"><strong>Thin data is labeled thin.</strong> When the record is incomplete, we say so &mdash; we don&rsquo;t dress it up.</li>
-    <li style="counter-increment:c;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.07)"><strong>Amateurs matter as much as stars.</strong> The kid nobody scouts gets the same instrument as the No. 1 recruit.</li>
-    <li style="counter-increment:c;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.07)"><strong>Corrections are logged, not hidden.</strong> When we&rsquo;re wrong, we fix it in the open.</li>
-    <li style="counter-increment:c;padding:14px 0"><strong>We never sell athlete data.</strong> The graph exists to serve the athlete, not to be sold out from under them.</li>
-  </ol>
-</div></section>
-
-<section style="padding:44px 0;border-top:1px solid rgba(0,0,0,.08)"><div class="wrap">
-  <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;opacity:.55;margin-bottom:18px">Independent</div>
-  <h2 class="section-h">Independent. No conflicts.</h2>
-  <p>No conflicts. No investors steering the read. No league, agency, or program can buy a better number. In a market built on conflicts of interest, refusing to lie is the whole point &mdash; and the reason the number is worth trusting.</p>
-</div></section>
-
-<section style="padding:64px 0 96px;border-top:1px solid rgba(0,0,0,.08)"><div class="wrap">
-  <h2 class="section-h">Ready to read a player?</h2>
-  <p style="margin-bottom:24px;opacity:.8">Every athlete. Every sport. One honest number.</p>
-  <a href="/verdict" style="display:inline-block;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;padding:14px 28px;border:1px solid currentColor;border-radius:8px">Run a verdict &rarr;</a>
-</div></section>
-
-
-</body></html>
+</body>
+</html>
