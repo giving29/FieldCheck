@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldCheck × LOVB — Deal & Endgame</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0908; --ink2:#121110; --ink3:#1A1714; --ink4:#221E1A;
+  --t:#F5F1E8; --t2:rgba(245,241,232,.72); --t3:rgba(245,241,232,.46); --t4:rgba(245,241,232,.28);
+  --rule:rgba(245,241,232,.11); --rule2:rgba(245,241,232,.055);
+  --gold:#D4A24C; --gold-hi:#EEC067; --goldl:rgba(212,162,76,.30); --golds:rgba(212,162,76,.07);
+  --slate:#7C8DA6; --moss:#7C9B6E; --coral:#CF6B4C;
+  --an:"Anton",sans-serif; --cg:"Cormorant Garamond",serif; --in:"Inter",sans-serif; --mono:"JetBrains Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--ink);color:var(--t);font-family:var(--in);line-height:1.62;overflow-x:hidden}
+.wrap{max-width:1140px;margin:0 auto;padding:0 30px}
+a{color:inherit;text-decoration:none}
+
+/* nav */
+nav{position:sticky;top:0;z-index:80;background:rgba(10,9,8,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--rule)}
+.nav-in{max-width:1140px;margin:0 auto;padding:15px 30px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:var(--an);font-size:23px;letter-spacing:-.01em}
+.brand b{color:var(--gold);font-weight:400}
+.brand .iq{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:2px;color:var(--goldl);margin-left:5px}
+.nav-tag{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3)}
+
+/* hero */
+.hero{padding:100px 0 70px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;top:-25%;right:-10%;width:56vw;height:56vw;max-width:680px;max-height:680px;background:radial-gradient(circle,var(--golds),transparent 66%);pointer-events:none}
+.hero-eye{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:28px;position:relative;z-index:1}
+.hero-eye::before{content:"";width:26px;height:1px;background:var(--gold)}
+.hero-h{font-family:var(--cg);font-weight:500;font-size:clamp(48px,6.4vw,86px);line-height:1.0;letter-spacing:-.024em;margin-bottom:26px;position:relative;z-index:1}
+.hero-h em{font-style:italic;color:var(--gold-hi)}
+.hero-sub{font-size:20px;color:var(--t2);max-width:660px;line-height:1.55;position:relative;z-index:1}
+.hero-sub b{color:var(--t);font-weight:600}
+.hero-founder{font-family:var(--mono);font-size:12px;color:var(--t3);margin-top:22px;letter-spacing:.3px;line-height:1.5;max-width:620px}
+
+/* charter */
+.charter{padding:56px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--ink2)}
+.charter-eye{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.charter-h{font-family:var(--cg);font-weight:500;font-style:italic;font-size:clamp(26px,3.4vw,40px);line-height:1.16;letter-spacing:-.01em;max-width:940px}
+.charter-h b{color:var(--gold-hi);font-weight:600;font-style:normal}
+
+/* tab nav */
+.tab-nav-wrap{position:sticky;top:56px;z-index:70;background:rgba(10,9,8,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--rule)}
+.tab-nav{max-width:1140px;margin:0 auto;padding:0 30px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;background:transparent;border:none;color:var(--t3);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:16px 15px;cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.tab-btn:hover{color:var(--t2)}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-num{font-size:9px;color:var(--t4);font-weight:700}
+.tab-btn.active .tab-num{color:var(--goldl)}
+
+/* panels */
+.panel{display:none;padding:74px 0 90px;animation:fade .4s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.panel-eye{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.panel-h{font-family:var(--cg);font-weight:500;font-size:clamp(34px,4.6vw,56px);line-height:1.05;letter-spacing:-.02em;margin-bottom:20px;max-width:900px}
+.panel-h em{font-style:italic;color:var(--gold-hi)}
+.panel-lede{font-size:18px;color:var(--t2);max-width:720px;line-height:1.6;margin-bottom:44px}
+.panel-lede b{color:var(--t);font-weight:600}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px}
+.cards.two{grid-template-columns:repeat(2,1fr)}
+.cards.four{grid-template-columns:repeat(4,1fr)}
+@media(max-width:860px){.cards,.cards.two,.cards.four{grid-template-columns:1fr}}
+.card{background:var(--ink2);border:1px solid var(--rule);border-radius:14px;padding:28px 26px;transition:border-color .2s}
+.card:hover{border-color:var(--goldl)}
+.card-tag{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);margin-bottom:14px}
+.card.gold .card-tag{color:var(--gold)}
+.card-h{font-family:var(--cg);font-size:23px;font-weight:600;line-height:1.16;margin-bottom:11px;color:var(--t)}
+.card.gold .card-h{color:var(--gold-hi)}
+.card-b{font-size:14px;color:var(--t2);line-height:1.55}
+.card-b b{color:var(--t);font-weight:600}
+.card-big{font-family:var(--an);font-size:44px;line-height:1;color:var(--gold);margin-bottom:12px;letter-spacing:-.01em}
+
+/* section divider claim */
+.divider{margin:40px 0;padding:40px 34px;background:linear-gradient(150deg,var(--golds),transparent 64%);border:1px solid var(--goldl);border-radius:16px}
+.divider-h{font-family:var(--cg);font-weight:500;font-style:italic;font-size:clamp(24px,3.2vw,36px);line-height:1.14;letter-spacing:-.01em}
+.divider-h b{color:var(--gold-hi);font-weight:600;font-style:normal}
+.divider-sub{font-size:15px;color:var(--t2);margin-top:14px;max-width:760px;line-height:1.55}
+
+/* landscape table */
+.ltable{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:13.5px}
+.ltable th{text-align:left;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t3);padding:12px 14px;border-bottom:1px solid var(--rule)}
+.ltable td{padding:14px;border-bottom:1px solid var(--rule2);color:var(--t2);vertical-align:top;line-height:1.45}
+.ltable tr:hover td{background:var(--ink2)}
+.ltable .plat{font-weight:600;color:var(--t);font-family:var(--in)}
+.ltable .fc{background:var(--golds)}
+.ltable .fc .plat{color:var(--gold-hi)}
+.ltable .edge{color:var(--gold);font-weight:500}
+
+/* ladder (proof) */
+.ladder{display:flex;flex-direction:column;gap:9px;margin-top:8px}
+.rung{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:center}
+.rung-n{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--gold);text-align:right}
+.rung-bar{height:30px;border-radius:5px;position:relative;background:var(--ink3);overflow:hidden}
+.rung-fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,rgba(212,162,76,.45),var(--gold))}
+.rung.mlv .rung-n{color:var(--slate)}
+.rung.mlv .rung-fill{background:repeating-linear-gradient(45deg,rgba(124,141,166,.28),rgba(124,141,166,.28) 6px,rgba(124,141,166,.5) 6px,rgba(124,141,166,.5) 12px)}
+.rung-lbl{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--ink);z-index:2}
+.rung.mlv .rung-lbl{color:var(--t)}
+
+/* stat strip */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:8px 0 28px}
+@media(max-width:860px){.stats{grid-template-columns:1fr 1fr}}
+.stat{border-left:2px solid var(--goldl);padding-left:16px}
+.stat-n{font-family:var(--an);font-size:40px;line-height:1;color:var(--gold);letter-spacing:-.01em}
+.stat-l{font-size:12.5px;color:var(--t2);margin-top:8px;line-height:1.4}
+
+/* flywheel */
+.flow{display:flex;align-items:stretch;gap:0;margin:8px 0 20px;flex-wrap:wrap}
+.flow-node{flex:1;min-width:180px;background:var(--ink2);border:1px solid var(--rule);border-radius:12px;padding:22px 20px;position:relative}
+.flow-n{font-family:var(--an);font-size:30px;color:var(--gold);line-height:1;margin-bottom:12px}
+.flow-h{font-size:14.5px;font-weight:700;color:var(--t);margin-bottom:7px}
+.flow-b{font-size:12.5px;color:var(--t2);line-height:1.45}
+.flow-arrow{display:flex;align-items:center;color:var(--gold);font-size:22px;padding:0 8px}
+@media(max-width:860px){.flow-arrow{transform:rotate(90deg);padding:6px 0;justify-content:center;width:100%}}
+
+/* ask */
+.ask-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:8px 0 32px}
+@media(max-width:860px){.ask-grid{grid-template-columns:1fr}}
+.ask-card{background:var(--ink2);border:1px solid var(--goldl);border-radius:14px;padding:30px 26px}
+.ask-h{font-family:var(--cg);font-size:26px;font-weight:600;font-style:italic;color:var(--gold-hi);margin-bottom:12px}
+.ask-b{font-size:14px;color:var(--t2);line-height:1.55}
+.closing{font-family:var(--cg);font-weight:500;font-style:italic;font-size:clamp(26px,3.6vw,42px);line-height:1.14;letter-spacing:-.012em;max-width:900px;margin-top:12px}
+.closing b{color:var(--gold-hi);font-weight:600;font-style:normal}
+
+footer{border-top:1px solid var(--rule);padding:40px 0;font-family:var(--mono);font-size:10.5px;color:var(--t4);letter-spacing:.5px;text-align:center}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<style>
+body{margin:0}
+.gp-nav{position:sticky;top:0;z-index:100;background:rgba(20,18,16,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:0}
+.gp-nav-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:8px;padding:0 24px;overflow-x:auto}
+.gp-brand{font-family:'Anton',sans-serif;font-size:17px;letter-spacing:.5px;color:var(--t);padding:18px 20px 18px 0;white-space:nowrap;text-transform:uppercase}
+.gp-brand span{color:var(--gold)}
+.gp-tab{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);background:none;border:none;padding:20px 16px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s}
+.gp-tab:hover{color:var(--t2)}
+.gp-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.gp-wrap{max-width:1100px;margin:0 auto;padding:56px 24px 100px}
+.gp-page{display:none;animation:fadeup .5s ease}
+.gp-page.active{display:block}
+@keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.gp-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:20px}
+.gp-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,6vw,64px);line-height:1.02;letter-spacing:-.02em;color:var(--t);margin:0 0 20px;font-weight:500}
+.gp-h1 em{font-style:italic;color:var(--gold)}
+.gp-lede{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;line-height:1.5;color:var(--t2);max-width:760px;margin-bottom:14px}
+.gp-principle{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3);letter-spacing:.5px;margin-bottom:48px;padding-left:16px;border-left:2px solid var(--gold)}
+.gp-section{margin-bottom:44px}
+.gp-kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.75;margin-bottom:16px}
+.gp-body{font-family:'Inter',sans-serif;font-size:15.5px;line-height:1.7;color:var(--t2);max-width:820px;margin-bottom:14px}
+.gp-body b{color:var(--t);font-weight:600}
+.opt{border:1px solid var(--line);border-radius:14px;padding:26px 30px;margin-bottom:16px;background:linear-gradient(160deg,rgba(255,255,255,.015),transparent)}
+.opt.rec{border-color:rgba(212,162,76,.4);box-shadow:0 0 40px rgba(212,162,76,.06)}
+.opt-top{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+.opt-tag{font-family:'Anton',sans-serif;font-size:12px;letter-spacing:1px;color:var(--bg);background:var(--gold);padding:4px 11px;border-radius:5px;text-transform:uppercase}
+.opt-name{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:500;color:var(--t);letter-spacing:-.01em}
+.opt-desc{font-family:'Inter',sans-serif;font-size:14.5px;line-height:1.6;color:var(--t2);margin:10px 0 14px}
+.opt-desc b{color:var(--t);font-weight:600}
+.opt-row{display:flex;gap:20px;flex-wrap:wrap}
+.opt-col{flex:1;min-width:240px}
+.opt-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.opt-lbl.pro{color:#7C9B6E}.opt-lbl.con{color:var(--t3)}
+.opt-txt{font-family:'Inter',sans-serif;font-size:13.5px;line-height:1.55;color:var(--t2)}
+.callout{border:1px solid rgba(212,162,76,.3);border-radius:12px;padding:22px 26px;margin:24px 0;background:rgba(212,162,76,.04)}
+.callout-h{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.step-row{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+.step-n{font-family:'Anton',sans-serif;font-size:22px;color:var(--gold);min-width:36px;line-height:1}
+.step-txt{font-family:'Inter',sans-serif;font-size:14.5px;line-height:1.6;color:var(--t2)}
+.step-txt b{color:var(--t);font-weight:600}
+.path{border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-bottom:14px;background:linear-gradient(160deg,rgba(255,255,255,.015),transparent)}
+.path-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:var(--t);margin-bottom:10px;letter-spacing:-.01em}
+.path-name em{font-style:italic;color:var(--gold)}
+.path-txt{font-family:'Inter',sans-serif;font-size:14.5px;line-height:1.6;color:var(--t2)}
+.path-txt b{color:var(--t);font-weight:600}
+.big-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.4vw,34px);font-style:italic;line-height:1.3;color:var(--t);letter-spacing:-.01em;max-width:820px;margin:8px 0 20px}
+.big-quote em{color:var(--gold)}
+.gp-foot{max-width:1100px;margin:0 auto;padding:30px 24px 60px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);letter-spacing:.5px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<nav class="gp-nav"><div class="gp-nav-in">
+  <div class="gp-brand">FieldCheck <span>×</span> LOVB</div>
+  <button class="gp-tab active" data-page="deal">The Deal</button>
+  <button class="gp-tab" data-page="path">The Path</button>
+  <button class="gp-tab" data-page="endgame">The Endgame</button>
+</div></nav>
+
+<div class="gp-wrap">
+
+<!-- ===== THE DEAL ===== -->
+<section class="gp-page active" data-page="deal">
+  <div class="gp-eyebrow">The Business Arrangement</div>
+  <h1 class="gp-h1">Five ways to structure it. <em>One smart sequence.</em></h1>
+  <p class="gp-lede">There are five ways to build the FieldCheck × LOVB relationship. They aren't mutually exclusive — the smart play sequences them.</p>
+  <div class="gp-principle">Landing LOVB matters more than monetizing LOVB — right now.</div>
+
+  <div class="opt">
+    <div class="opt-top"><span class="opt-tag">Option A</span><span class="opt-name">LOVB as a paying customer</span></div>
+    <div class="opt-desc">A recurring fee — a league-wide intelligence license, or per-club subscriptions as it scales.</div>
+    <div class="opt-row">
+      <div class="opt-col"><div class="opt-lbl pro">Why it's good</div><div class="opt-txt">Cleanest. Real recurring revenue proves the model, funds growth, keeps FieldCheck independent — and recurring revenue is exactly what drives a high exit multiple later.</div></div>
+      <div class="opt-col"><div class="opt-lbl con">The trade-off</div><div class="opt-txt">Slower cash up front; a young league may be budget-conscious early.</div></div>
+    </div>
+  </div>
+
+  <div class="opt">
+    <div class="opt-top"><span class="opt-tag">Option B</span><span class="opt-name">LOVB invests in FieldCheck</span></div>
+    <div class="opt-desc">LOVB or its backers put capital in for a minority stake.</div>
+    <div class="opt-row">
+      <div class="opt-col"><div class="opt-lbl pro">Why it's good</div><div class="opt-txt">Capital + deep alignment — they want us to win. A league investing is powerful validation for other investors.</div></div>
+      <div class="opt-col"><div class="opt-lbl con">The trade-off</div><div class="opt-txt">Gives up equity; a strategic on the cap table can complicate future acquirers. Best kept minority and clean, if done at all.</div></div>
+    </div>
+  </div>
+
+  <div class="opt">
+    <div class="opt-top"><span class="opt-tag">Option C</span><span class="opt-name">Revenue share</span></div>
+    <div class="opt-desc">FieldCheck takes a cut of the value it drives — incremental ticket sales, sponsorship, fan products tied to FieldCheck features.</div>
+    <div class="opt-row">
+      <div class="opt-col"><div class="opt-lbl pro">Why it's good</div><div class="opt-txt">Aligns us to outcomes, easy for LOVB to say yes (paid from upside), lucrative if the ticket-sales thesis is real.</div></div>
+      <div class="opt-col"><div class="opt-lbl con">The trade-off</div><div class="opt-txt">Attribution is hard, revenue less predictable. Best as a kicker on top — not the core model.</div></div>
+    </div>
+  </div>
+
+  <div class="opt">
+    <div class="opt-top"><span class="opt-tag">Option D</span><span class="opt-name">Design partner</span></div>
+    <div class="opt-desc">LOVB gets it low or no cost now; we get the roster, the case study, the logo, the proof. Monetize later.</div>
+    <div class="opt-row">
+      <div class="opt-col"><div class="opt-lbl pro">Why it's good</div><div class="opt-txt">Removes all friction to landing LOVB — the real near-term goal. The logo + case study are worth more than early cash right now.</div></div>
+      <div class="opt-col"><div class="opt-lbl con">The trade-off</div><div class="opt-txt">Leaves money on the table short-term; must set paid-conversion terms up front so "free" has an expiration.</div></div>
+    </div>
+  </div>
+
+  <div class="opt rec">
+    <div class="opt-top"><span class="opt-tag">Option E</span><span class="opt-name">The Hybrid — recommended</span></div>
+    <div class="opt-desc">Sequence them — the best of all four, in order.</div>
+    <div class="step-row"><div class="step-n">1</div><div class="step-txt"><b>Design partner now</b> — land LOVB, get the roster, ship the case study, lock the logo. Set paid-conversion terms in writing now.</div></div>
+    <div class="step-row"><div class="step-n">2</div><div class="step-txt"><b>Convert to a paid license</b> — once value is proven, a real league license + per-club as it expands.</div></div>
+    <div class="step-row"><div class="step-n">3</div><div class="step-txt"><b>Add a revenue-share kicker</b> — on fan / ticket products where value is attributable.</div></div>
+    <div class="step-row"><div class="step-n">4</div><div class="step-txt"><b>Keep the door open</b> to a small, clean strategic investment — only if terms don't spook future acquirers.</div></div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-h">The one hard line — independence</div>
+    <p class="gp-body" style="margin:0">FieldCheck's whole thesis is the independent, cross-league intelligence layer — every league, every sport. No single league takes a big stake cheaply or locks exclusivity. A league <b>using</b> us is better than a league <b>owning</b> us. Independence is worth more — to the mission and to the multiple.</p>
+  </div>
+</section>
+
+<!-- ===== THE PATH ===== -->
+<section class="gp-page" data-page="path">
+  <div class="gp-eyebrow">The Guiding Principle</div>
+  <h1 class="gp-h1">Land it first. <em>Monetize once it's proven.</em></h1>
+  <p class="gp-lede">Right now, landing LOVB matters more than monetizing LOVB. The roster, the case study, the "a pro league uses us" proof are worth far more to growth and valuation than an early check from a young league.</p>
+
+  <div class="gp-section" style="margin-top:8px">
+    <div class="gp-kicker">The sequence</div>
+    <div class="step-row"><div class="step-n">1</div><div class="step-txt"><b>Land as a design partner.</b> Free or low-cost. Get the roster, ship the case study, lock the logo. This is Sprint 0's real prize.</div></div>
+    <div class="step-row"><div class="step-n">2</div><div class="step-txt"><b>Prove the value.</b> The head-to-head, the whole-league grading, the fan-facing angles. Show, don't tell.</div></div>
+    <div class="step-row"><div class="step-n">3</div><div class="step-txt"><b>Convert to recurring revenue.</b> A real league license, per-club as it expands. Now it's a business.</div></div>
+    <div class="step-row"><div class="step-n">4</div><div class="step-txt"><b>Layer the upside.</b> Revenue-share kicker on the fan / ticket products FieldCheck drives.</div></div>
+    <div class="step-row"><div class="step-n">5</div><div class="step-txt"><b>Expand.</b> Clubs, then leagues, then sports — the same engine, a wider surface, compounding value.</div></div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-h">Why this order wins</div>
+    <p class="gp-body" style="margin:0">Every step earns the next and raises the value of the whole. We never ask for everything up front — we prove, then monetize, then expand. It's the same principle as the sprints: <b>keep showing value, and the value compounds.</b></p>
+  </div>
+</section>
+
+<!-- ===== THE ENDGAME ===== -->
+<section class="gp-page" data-page="endgame">
+  <div class="gp-eyebrow">The Endgame</div>
+  <h1 class="gp-h1">It takes off on its own — <em>or a giant pays a premium.</em></h1>
+  <p class="gp-lede">The beautiful part: the same build serves both. This can become an independent, cash-generating company AND something a major strategic pays a premium to acquire. We don't have to choose.</p>
+
+  <div class="path">
+    <div class="path-name">Path 1 — <em>Strategic acquisition</em></div>
+    <div class="path-txt">A data / video / media / league platform — Hudl, Genius Sports, Sportradar, a broadcaster — acquires FieldCheck as the intelligence layer on top of their stack. <b>What drives the multiple:</b> recurring revenue, a proprietary data moat, multi-league adoption, being a must-have. It pays most after multi-sport traction — when FieldCheck is a gap they must fill or a threat they can't ignore. One league using us is a feature; many leagues depending on us is a bidding war.</div>
+  </div>
+
+  <div class="path">
+    <div class="path-name">Path 2 — <em>Private equity / financial</em></div>
+    <div class="path-txt">Once FieldCheck is cash-flowing across leagues, PE buys profitable vertical-SaaS at healthy multiples. Less dramatic than a strategic bidding war, more reliable.</div>
+  </div>
+
+  <div class="path">
+    <div class="path-name">Path 3 — <em>Independent, cash-flowing</em></div>
+    <div class="path-txt">The data-flywheel business throws off real cash without ever selling. The optionality itself is power: we <b>can</b> sell, we don't <b>have</b> to — which paradoxically produces better offers.</div>
+  </div>
+
+  <div class="path">
+    <div class="path-name">Path 4 — <em>Acqui-merge</em></div>
+    <div class="path-txt">Merge into a larger sports-tech platform for stock + cash, ride their scale. A middle ground.</div>
+  </div>
+
+  <div class="gp-section" style="margin-top:36px">
+    <div class="gp-kicker">The counterintuitive truth</div>
+    <div class="big-quote">The way to sell for a big multiple is to build like <em>we never will.</em></div>
+    <p class="gp-body">Acquirers pay premiums for independence, traction, and inevitability. Build FieldCheck as "the thing Hudl should buy" and we make ourselves dependent and cheap. Build it as "the independent layer every league is adopting" and a strategic <b>has</b> to buy us — and pays up — because we've become impossible to ignore.</p>
+    <p class="gp-body"><b>Two levers move the multiple most:</b> recurring revenue and a dataset nobody can replicate. We already have the data-moat thesis. Layer real recurring revenue and multi-league adoption on top, and FieldCheck becomes exactly what strategics overpay for.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-h">Why this aligns everyone</div>
+    <p class="gp-body" style="margin:0">Every horizon we build — differentiation, the talent graph, the clubs, the pipeline, the standard — simultaneously grows independent value AND raises the acquisition price. The same sprints serve both dreams. Everyone who helps land leagues, close the raise, and expand is building the exact things that drive the exit — so all our upside points the same direction.</p>
+  </div>
+</section>
+
+</div>
+
+<div class="gp-foot">FieldCheck × LOVB · deal &amp; endgame · a ThinkDifferent Holdings company · 2026</div>
+
+<script>
+document.querySelectorAll('.gp-tab').forEach(function(t){
+  t.addEventListener('click',function(){
+    var p=t.getAttribute('data-page');
+    document.querySelectorAll('.gp-tab').forEach(function(x){x.classList.remove('active')});
+    document.querySelectorAll('.gp-page').forEach(function(x){x.classList.remove('active')});
+    t.classList.add('active');
+    document.querySelector('.gp-page[data-page="'+p+'"]').classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+</script>
+</body></html>
