@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldCheck × LOVB — The Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0908; --ink2:#121110; --ink3:#1A1714; --ink4:#221E1A;
+  --t:#F5F1E8; --t2:rgba(245,241,232,.72); --t3:rgba(245,241,232,.46); --t4:rgba(245,241,232,.28);
+  --rule:rgba(245,241,232,.11); --rule2:rgba(245,241,232,.055);
+  --gold:#D4A24C; --gold-hi:#EEC067; --goldl:rgba(212,162,76,.30); --golds:rgba(212,162,76,.07);
+  --slate:#7C8DA6; --moss:#7C9B6E; --coral:#CF6B4C;
+  --an:"Anton",sans-serif; --cg:"Cormorant Garamond",serif; --in:"Inter",sans-serif; --mono:"JetBrains Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--ink);color:var(--t);font-family:var(--in);line-height:1.62;overflow-x:hidden}
+.wrap{max-width:1140px;margin:0 auto;padding:0 30px}
+a{color:inherit;text-decoration:none}
+
+/* nav */
+nav{position:sticky;top:0;z-index:80;background:rgba(10,9,8,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--rule)}
+.nav-in{max-width:1140px;margin:0 auto;padding:15px 30px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:var(--an);font-size:23px;letter-spacing:-.01em}
+.brand b{color:var(--gold);font-weight:400}
+.brand .iq{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:2px;color:var(--goldl);margin-left:5px}
+.nav-tag{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3)}
+
+/* hero */
+.hero{padding:100px 0 70px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;top:-25%;right:-10%;width:56vw;height:56vw;max-width:680px;max-height:680px;background:radial-gradient(circle,var(--golds),transparent 66%);pointer-events:none}
+.hero-eye{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:28px;position:relative;z-index:1}
+.hero-eye::before{content:"";width:26px;height:1px;background:var(--gold)}
+.hero-h{font-family:var(--cg);font-weight:500;font-size:clamp(48px,6.4vw,86px);line-height:1.0;letter-spacing:-.024em;margin-bottom:26px;position:relative;z-index:1}
+.hero-h em{font-style:italic;color:var(--gold-hi)}
+.hero-sub{font-size:20px;color:var(--t2);max-width:660px;line-height:1.55;position:relative;z-index:1}
+.hero-sub b{color:var(--t);font-weight:600}
+.hero-founder{font-family:var(--mono);font-size:12px;color:var(--t3);margin-top:22px;letter-spacing:.3px;line-height:1.5;max-width:620px}
+
+/* charter */
+.charter{padding:56px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--ink2)}
+.charter-eye{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.charter-h{font-family:var(--cg);font-weight:500;font-style:italic;font-size:clamp(26px,3.4vw,40px);line-height:1.16;letter-spacing:-.01em;max-width:940px}
+.charter-h b{color:var(--gold-hi);font-weight:600;font-style:normal}
+
+/* tab nav */
+.tab-nav-wrap{position:sticky;top:56px;z-index:70;background:rgba(10,9,8,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--rule)}
+.tab-nav{max-width:1140px;margin:0 auto;padding:0 30px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;background:transparent;border:none;color:var(--t3);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:16px 15px;cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.tab-btn:hover{color:var(--t2)}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-num{font-size:9px;color:var(--t4);font-weight:700}
+.tab-btn.active .tab-num{color:var(--goldl)}
+
+/* panels */
+.panel{display:none;padding:74px 0 90px;animation:fade .4s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.panel-eye{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.panel-h{font-family:var(--cg);font-weight:500;font-size:clamp(34px,4.6vw,56px);line-height:1.05;letter-spacing:-.02em;margin-bottom:20px;max-width:900px}
+.panel-h em{font-style:italic;color:var(--gold-hi)}
+.panel-lede{font-size:18px;color:var(--t2);max-width:720px;line-height:1.6;margin-bottom:44px}
+.panel-lede b{color:var(--t);font-weight:600}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px}
+.cards.two{grid-template-columns:repeat(2,1fr)}
+.cards.four{grid-template-columns:repeat(4,1fr)}
+@media(max-width:860px){.cards,.cards.two,.cards.four{grid-template-columns:1fr}}
+.card{background:var(--ink2);border:1px solid var(--rule);border-radius:14px;padding:28px 26px;transition:border-color .2s}
+.card:hover{border-color:var(--goldl)}
+.card-tag{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t4);margin-bottom:14px}
+.card.gold .card-tag{color:var(--gold)}
+.card-h{font-family:var(--cg);font-size:23px;font-weight:600;line-height:1.16;margin-bottom:11px;color:var(--t)}
+.card.gold .card-h{color:var(--gold-hi)}
+.card-b{font-size:14px;color:var(--t2);line-height:1.55}
+.card-b b{color:var(--t);font-weight:600}
+.card-big{font-family:var(--an);font-size:44px;line-height:1;color:var(--gold);margin-bottom:12px;letter-spacing:-.01em}
+
+/* section divider claim */
+.divider{margin:40px 0;padding:40px 34px;background:linear-gradient(150deg,var(--golds),transparent 64%);border:1px solid var(--goldl);border-radius:16px}
+.divider-h{font-family:var(--cg);font-weight:500;font-style:italic;font-size:clamp(24px,3.2vw,36px);line-height:1.14;letter-spacing:-.01em}
+.divider-h b{color:var(--gold-hi);font-weight:600;font-style:normal}
+.divider-sub{font-size:15px;color:var(--t2);margin-top:14px;max-width:760px;line-height:1.55}
+
+/* landscape table */
+.ltable{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:13.5px}
+.ltable th{text-align:left;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t3);padding:12px 14px;border-bottom:1px solid var(--rule)}
+.ltable td{padding:14px;border-bottom:1px solid var(--rule2);color:var(--t2);vertical-align:top;line-height:1.45}
+.ltable tr:hover td{background:var(--ink2)}
+.ltable .plat{font-weight:600;color:var(--t);font-family:var(--in)}
+.ltable .fc{background:var(--golds)}
+.ltable .fc .plat{color:var(--gold-hi)}
+.ltable .edge{color:var(--gold);font-weight:500}
+
+/* ladder (proof) */
+.ladder{display:flex;flex-direction:column;gap:9px;margin-top:8px}
+.rung{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:center}
+.rung-n{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--gold);text-align:right}
+.rung-bar{height:30px;border-radius:5px;position:relative;background:var(--ink3);overflow:hidden}
+.rung-fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,rgba(212,162,76,.45),var(--gold))}
+.rung.mlv .rung-n{color:var(--slate)}
+.rung.mlv .rung-fill{background:repeating-linear-gradient(45deg,rgba(124,141,166,.28),rgba(124,141,166,.28) 6px,rgba(124,141,166,.5) 6px,rgba(124,141,166,.5) 12px)}
+.rung-lbl{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--ink);z-index:2}
+.rung.mlv .rung-lbl{color:var(--t)}
+
+/* stat strip */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:8px 0 28px}
+@media(max-width:860px){.stats{grid-template-columns:1fr 1fr}}
+.stat{border-left:2px solid var(--goldl);padding-left:16px}
+.stat-n{font-family:var(--an);font-size:40px;line-height:1;color:var(--gold);letter-spacing:-.01em}
+.stat-l{font-size:12.5px;color:var(--t2);margin-top:8px;line-height:1.4}
+
+/* flywheel */
+.flow{display:flex;align-items:stretch;gap:0;margin:8px 0 20px;flex-wrap:wrap}
+.flow-node{flex:1;min-width:180px;background:var(--ink2);border:1px solid var(--rule);border-radius:12px;padding:22px 20px;position:relative}
+.flow-n{font-family:var(--an);font-size:30px;color:var(--gold);line-height:1;margin-bottom:12px}
+.flow-h{font-size:14.5px;font-weight:700;color:var(--t);margin-bottom:7px}
+.flow-b{font-size:12.5px;color:var(--t2);line-height:1.45}
+.flow-arrow{display:flex;align-items:center;color:var(--gold);font-size:22px;padding:0 8px}
+@media(max-width:860px){.flow-arrow{transform:rotate(90deg);padding:6px 0;justify-content:center;width:100%}}
+
+/* ask */
+.ask-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:8px 0 32px}
+@media(max-width:860px){.ask-grid{grid-template-columns:1fr}}
+.ask-card{background:var(--ink2);border:1px solid var(--goldl);border-radius:14px;padding:30px 26px}
+.ask-h{font-family:var(--cg);font-size:26px;font-weight:600;font-style:italic;color:var(--gold-hi);margin-bottom:12px}
+.ask-b{font-size:14px;color:var(--t2);line-height:1.55}
+.closing{font-family:var(--cg);font-weight:500;font-style:italic;font-size:clamp(26px,3.6vw,42px);line-height:1.14;letter-spacing:-.012em;max-width:900px;margin-top:12px}
+.closing b{color:var(--gold-hi);font-weight:600;font-style:normal}
+
+footer{border-top:1px solid var(--rule);padding:40px 0;font-family:var(--mono);font-size:10.5px;color:var(--t4);letter-spacing:.5px;text-align:center}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<style>
+/* ===== game-plan site specifics ===== */
+body{margin:0}
+.gp-nav{position:sticky;top:0;z-index:100;background:rgba(20,18,16,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:0}
+.gp-nav-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:8px;padding:0 24px;overflow-x:auto}
+.gp-brand{font-family:'Anton',sans-serif;font-size:17px;letter-spacing:.5px;color:var(--t);padding:18px 20px 18px 0;white-space:nowrap;text-transform:uppercase}
+.gp-brand span{color:var(--gold)}
+.gp-tab{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);background:none;border:none;padding:20px 16px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s}
+.gp-tab:hover{color:var(--t2)}
+.gp-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.gp-wrap{max-width:1100px;margin:0 auto;padding:56px 24px 100px}
+.gp-page{display:none;animation:fadeup .5s ease}
+.gp-page.active{display:block}
+@keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.gp-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:20px}
+.gp-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,6vw,64px);line-height:1.02;letter-spacing:-.02em;color:var(--t);margin:0 0 20px;font-weight:500}
+.gp-h1 em{font-style:italic;color:var(--gold)}
+.gp-lede{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;line-height:1.5;color:var(--t2);max-width:760px;margin-bottom:14px}
+.gp-principle{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3);letter-spacing:.5px;margin-bottom:48px;padding-left:16px;border-left:2px solid var(--gold)}
+.gp-section{margin-bottom:44px}
+.gp-kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.75;margin-bottom:16px}
+.gp-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3.6vw,38px);line-height:1.1;letter-spacing:-.01em;color:var(--t);margin:0 0 8px;font-weight:500}
+.gp-h2 em{font-style:italic;color:var(--gold)}
+.gp-body{font-family:'Inter',sans-serif;font-size:15.5px;line-height:1.7;color:var(--t2);max-width:820px;margin-bottom:14px}
+.gp-body b,.gp-body strong{color:var(--t);font-weight:600}
+/* horizon cards */
+.horizon{border:1px solid var(--line);border-radius:14px;padding:28px 30px;margin-bottom:18px;background:linear-gradient(160deg,rgba(255,255,255,.015),transparent);position:relative}
+.horizon-n{font-family:'Anton',sans-serif;font-size:13px;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+.horizon-h{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:500;color:var(--t);margin-bottom:14px;letter-spacing:-.01em}
+.horizon-row{display:flex;gap:22px;margin-bottom:8px;flex-wrap:wrap}
+.horizon-item{flex:1;min-width:220px}
+.horizon-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:5px}
+.horizon-txt{font-family:'Inter',sans-serif;font-size:14.5px;line-height:1.6;color:var(--t2)}
+.horizon-txt b{color:var(--t);font-weight:600}
+/* sprint cards */
+.sprint{border:1px solid var(--line);border-radius:14px;padding:26px 30px;margin-bottom:16px;background:linear-gradient(160deg,rgba(255,255,255,.015),transparent)}
+.sprint.audition{border-color:rgba(212,162,76,.4);box-shadow:0 0 40px rgba(212,162,76,.06)}
+.sprint-top{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+.sprint-tag{font-family:'Anton',sans-serif;font-size:12px;letter-spacing:1px;color:var(--bg);background:var(--gold);padding:4px 11px;border-radius:5px;text-transform:uppercase}
+.sprint-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:var(--t);letter-spacing:-.01em}
+.sprint-when{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);letter-spacing:.5px}
+.sprint-ship{font-family:'Inter',sans-serif;font-size:15px;color:var(--t);font-weight:600;margin:12px 0 14px}
+.sprint-tasks{list-style:none;padding:0;margin:0 0 14px}
+.sprint-tasks li{font-family:'Inter',sans-serif;font-size:14px;line-height:1.9;color:var(--t2);padding-left:26px;position:relative}
+.sprint-tasks li::before{content:'☐';position:absolute;left:0;color:var(--gold);opacity:.7}
+.sprint-earns{font-family:'Inter',sans-serif;font-size:13.5px;color:var(--t3);font-style:italic;padding-top:12px;border-top:1px solid var(--line)}
+.sprint-earns b{color:var(--gold);font-style:normal;font-weight:600}
+/* partner cards */
+.partner{border:1px solid var(--line);border-radius:14px;padding:28px 30px;margin-bottom:18px;background:linear-gradient(160deg,rgba(255,255,255,.015),transparent)}
+.partner.lead{border-color:rgba(212,162,76,.4)}
+.partner-name{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.partner-role{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--t2);margin-bottom:16px}
+.partner-block{margin-bottom:14px}
+.partner-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:5px}
+.partner-txt{font-family:'Inter',sans-serif;font-size:14.5px;line-height:1.65;color:var(--t2)}
+.partner-txt b{color:var(--t);font-weight:600}
+.quote{font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;line-height:1.55;color:var(--t);border-left:2px solid var(--gold);padding:4px 0 4px 20px;margin:16px 0;max-width:760px}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.pill{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(212,162,76,.3);border-radius:100px;padding:5px 12px}
+.callout{border:1px solid rgba(212,162,76,.3);border-radius:12px;padding:22px 26px;margin:24px 0;background:rgba(212,162,76,.04)}
+.callout-h{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.map-row{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.map-said{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--t2);flex:1}
+.map-where{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.5px;white-space:nowrap}
+.gp-foot{max-width:1100px;margin:0 auto;padding:30px 24px 60px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);letter-spacing:.5px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<nav class="gp-nav"><div class="gp-nav-in">
+  <div class="gp-brand">FieldCheck <span>×</span> LOVB</div>
+  <button class="gp-tab active" data-page="vision">The Vision</button>
+  <button class="gp-tab" data-page="sprints">The Sprints</button>
+  <button class="gp-tab" data-page="partners">Partnership</button>
+  <button class="gp-tab" data-page="call">Where We Start</button>
+</div></nav>
+
+<div class="gp-wrap">
+
+<!-- ===== VISION ===== -->
+<section class="gp-page active" data-page="vision">
+  <div class="gp-eyebrow">The Strategic Roadmap</div>
+  <h1 class="gp-h1">The door is differentiation.<br>The house is <em>the whole league.</em></h1>
+  <p class="gp-lede">FieldCheck is the independent talent-intelligence engine. LOVB is the wedge, the proof, and the first platform customer.</p>
+  <div class="gp-principle">A ton of sprints · keep showcasing value · that's how we build big — Kevin's principle, our method.</div>
+
+  <div class="gp-section">
+    <div class="gp-kicker">The Five Horizons</div>
+    <p class="gp-body">Each horizon is a level of the same company. We don't need permission for all of it up front — each earns the next. But we hold the whole picture, so every sprint points somewhere.</p>
+  </div>
+
+  <div class="horizon">
+    <div class="horizon-n">Horizon 1 — Differentiation · the wedge</div>
+    <div class="horizon-h">An independent number that proves LOVB is the superior league.</div>
+    <div class="horizon-row">
+      <div class="horizon-item"><div class="horizon-lbl">Why it wins</div><div class="horizon-txt">MLV can't buy an outside number that says they're better. LOVB can just <b>be</b> better and let the engine show it. Marketing is a claim; FieldCheck is proof.</div></div>
+      <div class="horizon-item"><div class="horizon-lbl">Who uses it</div><div class="horizon-txt">The league — sponsor decks, press, chairman conversations. Fans — the story of the gap.</div></div>
+    </div>
+  </div>
+
+  <div class="horizon">
+    <div class="horizon-n">Horizon 2 — The whole-league talent graph</div>
+    <div class="horizon-h">Every LOVB athlete graded, tracked over time, on one honest scale.</div>
+    <div class="horizon-row">
+      <div class="horizon-item"><div class="horizon-lbl">Why it wins</div><div class="horizon-txt">Becomes the shared source of truth for who's good, who's rising, who fits where — a living graph the league owns.</div></div>
+      <div class="horizon-item"><div class="horizon-lbl">Revenue</div><div class="horizon-txt">Per-team / league SaaS. The graph is the product.</div></div>
+    </div>
+  </div>
+
+  <div class="horizon">
+    <div class="horizon-n">Horizon 3 — The clubs · Kevin's ticket-sales insight</div>
+    <div class="horizon-h">Open it to every club. Each gets its roster + a fan-facing angle.</div>
+    <div class="horizon-row">
+      <div class="horizon-item"><div class="horizon-lbl">Why it wins</div><div class="horizon-txt">Kevin's exact point — this drives <b>ticket sales</b> and engagement. Unlimited angles: rivalries, matchups, "the number says tonight's game is closer than the standings suggest."</div></div>
+      <div class="horizon-item"><div class="horizon-lbl">Revenue</div><div class="horizon-txt">Club subscriptions; fan-facing premium; sponsorship of the "FieldCheck rating" as a fixture.</div></div>
+    </div>
+  </div>
+
+  <div class="horizon">
+    <div class="horizon-n">Horizon 4 — The pipeline · development + recruiting</div>
+    <div class="horizon-h">Extend the graph down — college, juniors, international.</div>
+    <div class="horizon-row">
+      <div class="horizon-item"><div class="horizon-lbl">Why it wins</div><div class="horizon-txt">LOVB competes for talent; an independent development-tracking engine is a real edge.</div></div>
+      <div class="horizon-item"><div class="horizon-lbl">Revenue</div><div class="horizon-txt">Recruiting-intelligence SaaS; the pipeline data compounds the moat.</div></div>
+    </div>
+  </div>
+
+  <div class="horizon">
+    <div class="horizon-n">Horizon 5 — The standard · beyond LOVB</div>
+    <div class="horizon-h">FieldCheck becomes the independent talent number for the sport — then every sport.</div>
+    <div class="horizon-row">
+      <div class="horizon-item"><div class="horizon-lbl">Why it wins</div><div class="horizon-txt">Once a league runs on it, it's infrastructure. Other leagues, sports, and media license it.</div></div>
+      <div class="horizon-item"><div class="horizon-lbl">Revenue</div><div class="horizon-txt">The platform. Multi-league, multi-sport, media + data licensing. <b>The $1B version.</b></div></div>
+    </div>
+  </div>
+
+  <div class="gp-section" style="margin-top:44px">
+    <div class="gp-kicker">What Kevin said → where it lives</div>
+    <div class="map-row"><div class="map-said">"Top 15–20 vs MLV, position by position"</div><div class="map-where">Horizon 1</div></div>
+    <div class="map-row"><div class="map-said">"Rank all the rosters, showcase LOVB superiority"</div><div class="map-where">Horizon 1–2</div></div>
+    <div class="map-row"><div class="map-said">"Open to all clubs → ticket sales"</div><div class="map-where">Horizon 3</div></div>
+    <div class="map-row"><div class="map-said">"Unlimited possibilities and angles"</div><div class="map-where">Horizon 3–5</div></div>
+    <div class="map-row"><div class="map-said">"Way bigger than even this"</div><div class="map-where">Horizon 4–5</div></div>
+    <div class="map-row"><div class="map-said">"A ton of sprints, keep showcasing value"</div><div class="map-where">The method</div></div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-h">What we hold that Kevin didn't say</div>
+    <p class="gp-body" style="margin:0"><b>We own the core.</b> FieldCheck owns the engine, the data, the product, the company. Kevin accelerates distribution and capital. Every horizon is the same engine pointed at a wider surface — the moat is ours; partners make it spread faster.</p>
+  </div>
+</section>
+
+<!-- ===== SPRINTS ===== -->
+<section class="gp-page" data-page="sprints">
+  <div class="gp-eyebrow">The Tactical Sprint Map</div>
+  <h1 class="gp-h1">Ship value. <em>Earn the next door.</em></h1>
+  <p class="gp-lede">Each sprint ships standalone value and unlocks the next level of access. We never ask for everything — we earn it one proof at a time.</p>
+  <div class="gp-principle">Sprints ~1–3 weeks · value-first · we move at Kevin's rhythm.</div>
+
+  <div class="sprint audition">
+    <div class="sprint-top"><span class="sprint-tag">Sprint 0</span><span class="sprint-name">The Head-to-Head Proof</span><span class="sprint-when">first proof</span></div>
+    <div class="sprint-ship">Ship: LOVB top 15–20 vs MLV top 15–20, position by position + full-roster ranking, LOVB superior.</div>
+    <ul class="sprint-tasks">
+      <li>Get LOVB roster from Kevin — <b>the one unlock</b></li>
+      <li>Compile MLV rosters (public sources)</li>
+      <li>Grade every athlete both sides through the engine</li>
+      <li>Position view — OH vs OH, setter vs setter, libero, MB, opposite</li>
+      <li>Full-roster ranked view, both sides</li>
+      <li>The takeaway lines — "LOVB is the top league, the number proves it"</li>
+      <li>Package — clean shareable page + deck</li>
+    </ul>
+    <div class="sprint-earns">Earns: <b>league trust → the roster relationship → Sprint 1.</b> Engine note: relative ordering is exactly what a comparison needs — reliable today, no recalibration blocker.</div>
+  </div>
+
+  <div class="sprint">
+    <div class="sprint-top"><span class="sprint-tag">Sprint 1</span><span class="sprint-name">The Differentiation Asset</span><span class="sprint-when">league-ready</span></div>
+    <div class="sprint-ship">Ship: every LOVB athlete graded, packaged for sponsors / recruiting / fan-facing.</div>
+    <ul class="sprint-tasks">
+      <li>Full LOVB roster graded + profiles</li>
+      <li>Sponsor-deck version — the "we're the top league" asset</li>
+      <li>Fan-facing version — the gap as a story</li>
+      <li>A living page LOVB can point anyone to</li>
+    </ul>
+    <div class="sprint-earns">Earns: <b>league adoption → Sprint 2 club conversations.</b></div>
+  </div>
+
+  <div class="sprint">
+    <div class="sprint-top"><span class="sprint-tag">Sprint 2</span><span class="sprint-name">Club Pilot</span><span class="sprint-when">one club, prove ticket-sales</span></div>
+    <div class="sprint-ship">Ship: one LOVB club, fully graded, with a fan-facing "how your club stacks up" angle.</div>
+    <ul class="sprint-tasks">
+      <li>Kevin opens one club — the friendliest / most engaged</li>
+      <li>Club roster graded + rivalry / matchup angles</li>
+      <li>A fan-facing artifact the club can post</li>
+      <li>Measure engagement — the ticket-sales thesis, tested small</li>
+    </ul>
+    <div class="sprint-earns">Earns: <b>proof the club model works → roll to all clubs.</b></div>
+  </div>
+
+  <div class="sprint">
+    <div class="sprint-top"><span class="sprint-tag">Sprint 3</span><span class="sprint-name">Club Rollout</span><span class="sprint-when">all clubs</span></div>
+    <div class="sprint-ship">Ship: every club graded, each with its own fan-facing angle + matchup storylines.</div>
+    <div class="sprint-earns">Earns: <b>FieldCheck becomes a league-wide fixture → the platform conversation.</b></div>
+  </div>
+
+  <div class="sprint">
+    <div class="sprint-top"><span class="sprint-tag">Sprint 4</span><span class="sprint-name">The Living Graph</span><span class="sprint-when">infrastructure</span></div>
+    <div class="sprint-ship">Ship: the talent graph updates over time — rising players, development tracking, a dashboard for the league office + clubs.</div>
+    <div class="sprint-earns">Earns: <b>FieldCheck is now infrastructure LOVB runs on. Sticky. Defensible.</b></div>
+  </div>
+
+  <div class="sprint">
+    <div class="sprint-top"><span class="sprint-tag">Sprint 5</span><span class="sprint-name">Pipeline</span><span class="sprint-when">recruiting + development</span></div>
+    <div class="sprint-ship">Ship: college / juniors / international grading — who's coming up, who to recruit.</div>
+    <div class="sprint-earns">Earns: <b>recruiting-intelligence line + deeper moat.</b></div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-h">Parallel tracks — run alongside, not blocking</div>
+    <p class="gp-body" style="margin:0 0 10px"><b>The raise:</b> Kevin + Sridhar work the seed round in parallel. LOVB traction from each sprint feeds the raise; the raise funds faster sprints. Virtuous loop.</p>
+    <p class="gp-body" style="margin:0 0 10px"><b>The roster ask:</b> the single dependency for Sprint 0. Everything waits on it. Get it first.</p>
+    <p class="gp-body" style="margin:0"><b>People:</b> Katlyn (with Kevin's blessing, ~Sprint 1), Karan (after Sprint 0 proves out).</p>
+  </div>
+</section>
+
+<!-- ===== TOGETHER ===== -->
+<section class="gp-page" data-page="partners">
+  <div class="gp-eyebrow">Building This Together</div>
+  <h1 class="gp-h1">You in the room. <em>That changes everything.</em></h1>
+  <p class="gp-lede">You said you could be a great part of this — and I agree completely. Here’s how I see us building it together.</p>
+  <div class="gp-section" style="margin-top:8px">
+    <div class="gp-kicker">Why this fits</div>
+    <p class="gp-body">The engine, the data, the product — that’s my lane, and it’s built. What turns a great product into a category is <b>distribution, relationships, and capital</b> — exactly what you bring. LOVB access, the deal experience, connecting the outside world, the raise. It’s the most complementary kind of partnership: we’re not competing for the same work, we’re covering each other’s blind spots.</p>
+  </div>
+  <div class="partner lead">
+    <div class="partner-name">The role I see for you</div>
+    <div class="partner-role">Central. A real partner — not an advisor on the sidelines.</div>
+    <div class="partner-block"><div class="partner-lbl">What you’d own</div><div class="partner-txt">The LOVB relationship and the doors it opens · the outside-world connections · a real seat in the raise · and the go-to-market as this expands club by club. The things you’re already brilliant at.</div></div>
+    <div class="pill-row"><span class="pill">Founding / Strategic Partner</span><span class="pill">Rewarded for what you land</span><span class="pill">Built to grow</span></div>
+    <div class="partner-block"><div class="partner-lbl">How I’d want to structure it</div><div class="partner-txt">A real partner stake, structured so you’re <b>rewarded richly for the things you uniquely deliver</b> — landing the LOVB partnership, helping close the raise, opening the club expansion. The more you make happen, the bigger your share of what we build. I want you genuinely invested in the upside, because that upside is huge.</div></div>
+    <div class="quote">“I want you central — a real partner, not an advisor on the sidelines. Let’s build it so you’re rewarded richly for the LOVB deal, the raise, and the club expansion. We ship the first sprint together, prove the model, and lock it in as we go. I want a real partner, and I want to build it right — for both of us.”</div>
+  </div>
+  <div class="gp-section" style="margin-top:8px">
+    <div class="gp-kicker">Others we might bring in</div>
+    <p class="gp-body">You mentioned Katlyn — I’d love your read on whether she should be part of this too, and how. And I have a close relationship with <b>Karan Yaramadla</b> (Founder/CEO of Jade Global) who could add real firepower on the business and capital side as we scale. I want to build the right team, deliberately, around the people who make this bigger.</p>
+  </div>
+  <div class="callout">
+    <div class="callout-h">How I want to work</div>
+    <p class="gp-body" style="margin:0">Your principle — a ton of sprints, keep showcasing value — is exactly how I want to run this. We prove it together, sprint by sprint, and let the wins define the shape. Nothing theoretical. We ship, we show, we build.</p>
+  </div>
+</section>
+
+<!-- ===== THE CALL ===== -->
+<section class="gp-page" data-page="call">
+  <div class="gp-eyebrow">Where We Start</div>
+  <h1 class="gp-h1">The ideas <em>you sparked.</em></h1>
+  <p class="gp-lede">You asked what I’m thinking for next steps. Here it is — built around the ideas you put on the table.</p>
+
+  <div class="gp-section" style="margin-top:8px">
+    <div class="gp-kicker">The ideas on the table</div>
+    <p class="gp-body"><b>The showcase:</b> LOVB top 15–20 vs MLV top 15–20, position by position ("our outside hitter is way better than yours"). Then rank all of both rosters and showcase LOVB's superiority.</p>
+    <p class="gp-body"><b>The bigger vision:</b> opening this to all the clubs to drive ticket sales — the unlimited possibilities and angles you saw. And your instinct that this could be way bigger than even that. I think you’re right.</p>
+    <p class="gp-body"><b>His operating philosophy:</b> "It's just a ton of sprints and keep showcasing value — that's how we build big."</p>
+  </div>
+
+  <div class="gp-section">
+    <div class="gp-kicker">What you bring</div>
+    <p class="gp-body">He and Katlyn were in the room selling the LOVB idea to many companies. He was part of deals done with Hudl. He can connect the dots with the outside world, help raise money, and he's a great salesman. He said <b>he can be a great part of all this</b> — and he's interested.</p>
+  </div>
+
+  <div class="gp-section">
+    <div class="gp-kicker">The next step</div>
+    <p class="gp-body">Kevin isn't pitching a project — he's pitching a company. He walked himself from "showcase" to "unlimited angles" to "way bigger than this": he sees the platform. Everything he offered is <b>go-to-market and capital</b> — the exact gap a technical founder-plus-AI has. Fully complementary. The strongest kind of partner.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-h">The one unlock</div>
+    <p class="gp-body" style="margin:0">Everything starts with <b>the LOVB roster.</b> It's Sprint 0's only dependency and the next ask to Kevin. Get the roster → grade the league → the whole roadmap opens.</p>
+  </div>
+</section>
+
+</div>
+
+<div class="gp-foot">FieldCheck × LOVB · prepared for Kevin Wong · a ThinkDifferent Holdings company · 2026</div>
+
+<script>
+document.querySelectorAll('.gp-tab').forEach(function(t){
+  t.addEventListener('click',function(){
+    var p=t.getAttribute('data-page');
+    document.querySelectorAll('.gp-tab').forEach(function(x){x.classList.remove('active')});
+    document.querySelectorAll('.gp-page').forEach(function(x){x.classList.remove('active')});
+    t.classList.add('active');
+    document.querySelector('.gp-page[data-page="'+p+'"]').classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+</script>
+</body></html>
